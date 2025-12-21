@@ -11,7 +11,7 @@
 
 **The All-in-One Productivity Powerhouse** *Notes • Todos • Finance • Journal • Clipboard Manager*
 
-[Report Bug](https://github.com/yourusername/copyclip/issues) · [Request Feature](https://github.com/yourusername/copyclip/issues)
+[Report Bug](https://github.com/technopradyumn/CopyClip/issues) · [Request Feature](https://github.com/technopradyumn/CopyClip/issues)
 
 </div>
 
@@ -97,11 +97,11 @@ Follow these steps to get a local copy up and running.
 
 1.  **Clone the repository**
     ```bash
-    git clone https://github.com/technopradyumn/CopyClip.git
+    git clone [https://github.com/technopradyumn/CopyClip.git](https://github.com/technopradyumn/CopyClip.git)
     ```
 2.  **Navigate to the project directory**
     ```bash
-    cd copyclip
+    cd CopyClip
     ```
 3.  **Install dependencies**
     ```bash
@@ -116,17 +116,25 @@ Follow these steps to get a local copy up and running.
 
 ## 📂 Project Structure
 
-A quick look at the top-level directory structure.
+A quick look at the top-level directory structure based on clean architecture.
 
 ```text
 lib/
+├── l10n/                # Localization files
 ├── src/
-│   ├── core/            # Shared widgets, utilities, and theme data
-│   ├── features/        # Feature-based folders (Notes, Todos, etc.)
-│   │   ├── notes/
-│   │   ├── todos/
-│   │   ├── expenses/
-│   │   ├── journal/
-│   │   └── clipboard/
-│   └── app.dart         # Main app entry point
-└── main.dart            # Application root
+│   ├── core/            # Core functionality shared across features
+│   │   ├── router/      # App routing configuration
+│   │   ├── services/    # Global services (e.g., NotificationService)
+│   │   ├── theme/       # App themes and styles
+│   │   └── widgets/     # Reusable global widgets (e.g., GlassDialog)
+│   ├── features/        # Feature-based modules
+│   │   ├── calendar/    # Calendar feature logic & UI
+│   │   ├── clipboard/   # Clipboard manager logic & UI
+│   │   ├── dashboard/   # Main dashboard logic & UI
+│   │   ├── expenses/    # Expense tracker logic & UI
+│   │   ├── journal/     # Journaling feature logic & UI
+│   │   ├── notes/       # Note-taking logic & UI
+│   │   ├── settings/    # App settings logic & UI
+│   │   └── todos/       # Todo list logic & UI
+│   └── app.dart         # Main application widget
+└── main.dart            # Application entry point
