@@ -1,0 +1,18 @@
+
+{
+  "@@locale": "en",
+  "settings": "Settings",
+  "notes": "Notes",
+  "todos": "Todos",
+  "journal": "Journal",
+  "clipboard": "Clipboard",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "share": "Share",
+  "copy": "Copy",
+  "unsavedChanges": "Unsaved Changes",
+  "confirmDelete": "Confirm Delete",
+  "discard": "Discard"
+}

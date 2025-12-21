@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accessibility_service_description">This service is required to capture clipboard events in the background so that your copied text can be saved even when the app is closed.</string>
+</resources>
