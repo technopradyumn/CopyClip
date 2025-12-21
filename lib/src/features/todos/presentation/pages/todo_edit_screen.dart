@@ -9,6 +9,8 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/widgets/glass_dialog.dart'; // Ensure GlassDialog is imported if it wasn't
+
 // --- Snapshot Class for Undo/Redo ---
 class TodoFormState {
   final String task;
@@ -101,7 +103,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
   void _loadCategories() {
     if (Hive.isBoxOpen('todos_box')) {
       final box = Hive.box<Todo>('todos_box');
-      final existingCategories = box.values.map((e) => e.category).toSet().toList();
+      final existingCategories = box.values.where((t) => !t.isDeleted).map((e) => e.category).toSet().toList(); // ADDED FILTER
       if (existingCategories.isNotEmpty) {
         setState(() {
           _suggestions = {..._suggestions, ...existingCategories}.toList();
@@ -352,13 +354,28 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
     context.pop();
   }
 
+  // REFACTORED: Soft delete for single todo
   void _deleteTodo() {
-    if (widget.todo != null) {
-      final box = Hive.box<Todo>('todos_box');
-      box.delete(widget.todo!.id);
-      NotificationService().cancelNotification(widget.todo!.id.hashCode);
-      context.pop();
-    }
+    if (widget.todo == null) return;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => GlassDialog(
+        title: "Move Task to Recycle Bin?",
+        content: "You can restore this task later from settings.",
+        confirmText: "Move",
+        isDestructive: true,
+        onConfirm: () {
+          final todo = widget.todo!;
+          todo.isDeleted = true;
+          todo.deletedAt = DateTime.now();
+          todo.save();
+          NotificationService().cancelNotification(todo.id.hashCode);
+          Navigator.pop(ctx); // Close dialog
+          context.pop(); // Go back from edit screen
+        },
+      ),
+    );
   }
 
   @override

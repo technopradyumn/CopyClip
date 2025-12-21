@@ -1,20 +1,26 @@
+import 'dart:convert';
 import 'dart:ui';
-import 'package:copyclip/src/core/router/app_router.dart';
-import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
-import 'package:copyclip/src/features/expenses/data/expense_model.dart';
-import 'package:copyclip/src/features/journal/data/journal_model.dart';
-import 'package:copyclip/src/features/notes/data/note_model.dart';
-import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
+
+import 'package:copyclip/src/core/router/app_router.dart';
+import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+
+// Feature Models
 import '../../../clipboard/data/clipboard_model.dart';
-import '../../../clipboard/presentation/widgets/clipboard_card.dart';
 import '../../../dashboard/presentation/pages/dashboard_screen.dart';
-import '../../../../core/widgets/glass_dialog.dart';
+import '../../../expenses/data/expense_model.dart';
+import '../../../journal/data/journal_model.dart';
+import '../../../notes/data/note_model.dart';
+import '../../../todos/data/todo_model.dart';
+
+// Feature Cards
+import '../../../clipboard/presentation/widgets/clipboard_card.dart';
 import '../../../expenses/presentation/widgets/expense_card.dart';
 import '../../../journal/presentation/widgets/journal_card.dart';
 import '../../../notes/presentation/widgets/note_card.dart';
@@ -32,6 +38,7 @@ class DateDetailsScreen extends StatefulWidget {
 
 class _DateDetailsScreenState extends State<DateDetailsScreen> {
   late List<GlobalSearchResult> _currentItems;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -39,137 +46,129 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
     _currentItems = List.from(widget.items);
   }
 
-  // --- REFRESH LOGIC ---
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   void _refreshData() {
     final dateKey = DateFormat('yyyy-MM-dd').format(widget.date);
     List<GlobalSearchResult> freshResults = [];
 
-    // Note
-    freshResults.addAll(Hive.box<Note>('notes_box').values
-        .where((e) => DateFormat('yyyy-MM-dd').format(e.updatedAt) == dateKey)
-        .map((e) => GlobalSearchResult(id: e.id, title: e.title, subtitle: e.content, type: 'Note', route: AppRouter.noteEdit, argument: e)));
-
-    // Todo
-    freshResults.addAll(Hive.box<Todo>('todos_box').values
-        .where((e) => e.dueDate != null && DateFormat('yyyy-MM-dd').format(e.dueDate!) == dateKey)
-        .map((e) => GlobalSearchResult(id: e.id, title: e.task, subtitle: e.isDone ? "Completed" : "Pending", type: 'Todo', route: AppRouter.todoEdit, argument: e, isCompleted: e.isDone)));
-
-    // Expense
-    freshResults.addAll(Hive.box<Expense>('expenses_box').values
-        .where((e) => DateFormat('yyyy-MM-dd').format(e.date) == dateKey)
-        .map((e) => GlobalSearchResult(id: e.id, title: e.title, subtitle: "${e.isIncome ? '+' : '-'} ${e.currency}${e.amount}", type: 'Expense', route: AppRouter.expenseEdit, argument: e)));
-
-    // Journal
-    freshResults.addAll(Hive.box<JournalEntry>('journal_box').values
-        .where((e) => DateFormat('yyyy-MM-dd').format(e.date) == dateKey)
-        .map((e) => GlobalSearchResult(id: e.id, title: e.title, subtitle: e.content, type: 'Journal', route: AppRouter.journalEdit, argument: e)));
-
-    // Clipboard
-    freshResults.addAll(Hive.box<ClipboardItem>('clipboard_box').values
-        .where((e) => DateFormat('yyyy-MM-dd').format(e.createdAt) == dateKey)
-        .map((e) => GlobalSearchResult(id: e.id, title: e.content, subtitle: "Copied at ${DateFormat('HH:mm').format(e.createdAt)}", type: 'Clipboard', route: AppRouter.clipboardEdit, argument: e)));
-
-    if (mounted) {
-      setState(() {
-        _currentItems = freshResults;
-      });
+    if (Hive.isBoxOpen('notes_box')) {
+      freshResults.addAll(Hive.box<Note>('notes_box').values
+          .where((e) => !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.updatedAt) == dateKey)
+          .map((e) => GlobalSearchResult(id: e.id, title: e.title, subtitle: e.content, type: 'Note', route: AppRouter.noteEdit, argument: e)));
     }
+
+    if (Hive.isBoxOpen('todos_box')) {
+      freshResults.addAll(Hive.box<Todo>('todos_box').values
+          .where((e) => !e.isDeleted && e.dueDate != null && DateFormat('yyyy-MM-dd').format(e.dueDate!) == dateKey)
+          .map((e) => GlobalSearchResult(id: e.id, title: e.task, subtitle: e.isDone ? "Completed" : "Pending", type: 'Todo', route: AppRouter.todoEdit, argument: e, isCompleted: e.isDone)));
+    }
+
+    if (Hive.isBoxOpen('expenses_box')) {
+      freshResults.addAll(Hive.box<Expense>('expenses_box').values
+          .where((e) => !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.date) == dateKey)
+          .map((e) => GlobalSearchResult(id: e.id, title: e.title, subtitle: "${e.isIncome ? '+' : '-'} ${e.currency}${e.amount}", type: 'Expense', route: AppRouter.expenseEdit, argument: e)));
+    }
+
+    if (Hive.isBoxOpen('journal_box')) {
+      freshResults.addAll(Hive.box<JournalEntry>('journal_box').values
+          .where((e) => !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.date) == dateKey)
+          .map((e) => GlobalSearchResult(id: e.id, title: e.title, subtitle: e.content, type: 'Journal', route: AppRouter.journalEdit, argument: e)));
+    }
+
+    if (Hive.isBoxOpen('clipboard_box')) {
+      freshResults.addAll(Hive.box<ClipboardItem>('clipboard_box').values
+          .where((e) => !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.createdAt) == dateKey)
+          .map((e) => GlobalSearchResult(id: e.id, title: e.content, subtitle: "Copied at ${DateFormat('HH:mm').format(e.createdAt)}", type: 'Clipboard', route: AppRouter.clipboardEdit, argument: e)));
+    }
+
+    if (mounted) setState(() => _currentItems = freshResults);
   }
 
-  // --- ACTIONS ---
   void _deleteItem(GlobalSearchResult res) {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
         title: "Delete Item?",
-        content: "This action cannot be undone.",
+        content: "This will move the item to the recycle bin.",
         confirmText: "Delete",
         isDestructive: true,
         onConfirm: () {
+          final dynamic item = res.argument;
+          item.isDeleted = true;
+          item.deletedAt = DateTime.now();
+          item.save();
           Navigator.pop(ctx);
-          // Delete based on type
-          if (res.type == 'Note') Hive.box<Note>('notes_box').delete(res.id);
-          else if (res.type == 'Todo') Hive.box<Todo>('todos_box').delete(res.id);
-          else if (res.type == 'Expense') Hive.box<Expense>('expenses_box').delete(res.id);
-          else if (res.type == 'Journal') Hive.box<JournalEntry>('journal_box').delete(res.id);
-          else if (res.type == 'Clipboard') Hive.box<ClipboardItem>('clipboard_box').delete(res.id);
-
-          _refreshData(); // Refresh list after delete
+          _refreshData();
         },
       ),
     );
   }
 
-  void _copyContent(String text) {
-    Clipboard.setData(ClipboardData(text: text));
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Copied"), behavior: SnackBarBehavior.floating));
+  String _getCleanText(String content) {
+    if (!content.startsWith('[')) return content;
+    try {
+      final List<dynamic> delta = jsonDecode(content);
+      String plainText = "";
+      for (var op in delta) {
+        if (op is Map && op.containsKey('insert') && op['insert'] is String) {
+          plainText += op['insert'];
+        }
+      }
+      return plainText.trim();
+    } catch (_) { return content; }
   }
-
-  void _shareContent(String text) => Share.share(text);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
 
     return GlassScaffold(
       showBackArrow: true,
       title: null,
       body: Column(
         children: [
-          // --- TOP BAR ---
+          const SizedBox(height: 44),
+          // --- FIXED HEADER ---
           Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 0, right: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               children: [
                 IconButton(
-                  icon: Icon(Icons.arrow_back_ios_new, color: theme.iconTheme.color),
+                  icon: const Icon(Icons.arrow_back_ios_new, size: 20),
                   onPressed: () => context.pop(),
                 ),
-                Hero(
-                  tag: 'calendar_icon',
-                  child: Icon(Icons.event_available, color: colorScheme.primary, size: 28),
-                ),
+                Icon(Icons.event_available, color: theme.colorScheme.primary, size: 24),
                 const SizedBox(width: 12),
-                Hero(
-                  tag: 'calendar_title',
-                  child: Material(
-                    type: MaterialType.transparency,
-                    child: Text(
-                      DateFormat('EEEE, d MMMM yyyy').format(widget.date),
-                      style: textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
+                Expanded(
+                  child: Text(
+                    DateFormat('EEEE, d MMMM yyyy').format(widget.date),
+                    style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
-                const Spacer(),
                 Text(
-                    "${_currentItems.length} items",
-                    style: textTheme.bodySmall?.copyWith(color: colorScheme.onSurface.withOpacity(0.5))
+                  "${_currentItems.length} items",
+                  style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5)),
                 ),
               ],
             ),
           ),
 
-          // --- LIST ---
+          // --- SCROLLABLE LIST ---
           Expanded(
             child: _currentItems.isEmpty
-                ? Center(child: Text("Nothing recorded for this day", style: textTheme.bodyLarge?.copyWith(color: colorScheme.onSurface.withOpacity(0.3))))
-                : ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              physics: const BouncingScrollPhysics(),
+                ? Center(child: Text("Nothing recorded for this day", style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.3))))
+                : ListView.separated(
+              controller: _scrollController,
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 100),
+              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
               itemCount: _currentItems.length,
-              itemBuilder: (context, index) {
-                final res = _currentItems[index];
-
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: _buildItemCard(res),
-                );
-              },
+              separatorBuilder: (context, index) => const SizedBox(height: 12),
+              itemBuilder: (context, index) => _buildItemCard(_currentItems[index]),
             ),
           ),
         ],
@@ -178,65 +177,52 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
   }
 
   Widget _buildItemCard(GlobalSearchResult res) {
-    // 1. NOTES
-    if (res.type == 'Note') {
-      final note = res.argument as Note;
-      return NoteCard(
-        note: note,
-        isSelected: false,
-        onTap: () async { await context.push(res.route, extra: note); _refreshData(); },
-        onCopy: () => _copyContent(note.content),
-        onShare: () => _shareContent("${note.title}\n\n${note.content}"),
-        onDelete: () => _deleteItem(res),
-      );
+    switch (res.type) {
+      case 'Note':
+        final note = res.argument as Note;
+        return NoteCard(
+          note: note, isSelected: false,
+          onTap: () async { await context.push(res.route, extra: note); _refreshData(); },
+          onCopy: () => Clipboard.setData(ClipboardData(text: _getCleanText(note.content))),
+          onShare: () => Share.share(_getCleanText(note.content)),
+          onDelete: () => _deleteItem(res),
+          onColorChanged: (newColor) { setState(() => note.colorValue = newColor.value); note.save(); },
+        );
+      case 'Journal':
+        final entry = res.argument as JournalEntry;
+        return JournalCard(
+          entry: entry, isSelected: false,
+          onTap: () async { await context.push(res.route, extra: entry); _refreshData(); },
+          onCopy: () => Clipboard.setData(ClipboardData(text: _getCleanText(entry.content))),
+          onShare: () => Share.share(_getCleanText(entry.content)),
+          onDelete: () => _deleteItem(res),
+          onColorChanged: (newColor) { setState(() => entry.colorValue = newColor.value); entry.save(); },
+        );
+      case 'Clipboard':
+        final item = res.argument as ClipboardItem;
+        return ClipboardCard(
+          item: item, isSelected: false,
+          onTap: () async { await context.push(res.route, extra: item); _refreshData(); },
+          onCopy: () => Clipboard.setData(ClipboardData(text: _getCleanText(item.content))),
+          onShare: () => Share.share(_getCleanText(item.content)),
+          onDelete: () => _deleteItem(res),
+          onColorChanged: (newColor) { setState(() => item.colorValue = newColor.value); item.save(); },
+        );
+      case 'Todo':
+        final todo = res.argument as Todo;
+        return TodoCard(
+          todo: todo, isSelected: false,
+          onTap: () async { await context.push(res.route, extra: todo); _refreshData(); },
+          onToggleDone: () { setState(() { todo.isDone = !todo.isDone; todo.save(); _refreshData(); }); },
+        );
+      case 'Expense':
+        final exp = res.argument as Expense;
+        return ExpenseCard(
+          expense: exp, isSelected: false,
+          onTap: () async { await context.push(res.route, extra: exp); _refreshData(); },
+        );
+      default:
+        return const SizedBox.shrink();
     }
-    // 2. TODOS
-    else if (res.type == 'Todo') {
-      final todo = res.argument as Todo;
-      return TodoCard(
-        todo: todo,
-        isSelected: false,
-        onTap: () async { await context.push(res.route, extra: todo); _refreshData(); },
-        onToggleDone: () {
-          setState(() { todo.isDone = !todo.isDone; todo.save(); _refreshData(); });
-        },
-      );
-    }
-    // 3. EXPENSES
-    else if (res.type == 'Expense') {
-      final expense = res.argument as Expense;
-      return ExpenseCard(
-        expense: expense,
-        isSelected: false,
-        onTap: () async { await context.push(res.route, extra: expense); _refreshData(); },
-      );
-    }
-    // 4. JOURNAL
-    else if (res.type == 'Journal') {
-      final entry = res.argument as JournalEntry;
-      return JournalCard(
-        entry: entry,
-        isSelected: false,
-        onTap: () async { await context.push(res.route, extra: entry); _refreshData(); },
-        onCopy: () => _copyContent(entry.content),
-        onShare: () => _shareContent("${entry.title}\n\n${entry.content}"),
-        onDelete: () => _deleteItem(res),
-      );
-    }
-    // 5. CLIPBOARD
-    else if (res.type == 'Clipboard') {
-      final item = res.argument as ClipboardItem;
-      return ClipboardCard(
-        item: item,
-        isSelected: false,
-        onTap: () async { await context.push(res.route, extra: item); _refreshData(); },
-        onCopy: () => _copyContent(item.content),
-        onShare: () => _shareContent(item.content),
-        onDelete: () => _deleteItem(res),
-      );
-    }
-
-    // Fallback (should not happen if data is correct)
-    return const SizedBox.shrink();
   }
 }

@@ -77,20 +77,30 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
     });
   }
 
-  // --- ADDED DIALOG HERE ---
+  // REFACTORED: Soft delete for selected expenses
   void _deleteSelected() {
     if (_selectedIds.isEmpty) return;
 
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete ${_selectedIds.length} Transactions?",
-        content: "This action cannot be undone.",
-        confirmText: "Delete",
+        title: "Move ${_selectedIds.length} Transactions to Bin?",
+        content: "You can restore them later from settings.",
+        confirmText: "Move",
         isDestructive: true,
         onConfirm: () {
           final box = Hive.box<Expense>('expenses_box');
-          for (var id in _selectedIds) box.delete(id);
+          final now = DateTime.now();
+          final expensesToSoftDelete = box.values
+              .where((e) => !e.isDeleted && _selectedIds.contains(e.id))
+              .toList();
+
+          for (var expense in expensesToSoftDelete) {
+            expense.isDeleted = true;
+            expense.deletedAt = now;
+            expense.save();
+          }
+
           setState(() {
             _selectedIds.clear();
             _isSelectionMode = false;
@@ -106,14 +116,20 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
     final surfaceColor = theme.scaffoldBackgroundColor;
     final onSurfaceColor = theme.colorScheme.onSurface;
     final primaryColor = theme.colorScheme.primary;
+    final box = Hive.box<Expense>('expenses_box');
+    
+    // Filter categories from active expenses only
+    final categories = box.values
+        .where((e) => !e.isDeleted)
+        .map((e) => e.category)
+        .toSet()
+        .toList()
+      ..sort();
 
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        final box = Hive.box<Expense>('expenses_box');
-        final categories = box.values.map((e) => e.category).toSet().toList()..sort();
-
         return Container(
           decoration: BoxDecoration(
             color: surfaceColor,
@@ -296,7 +312,11 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                 ),
               ),
             ),
-            IconButton(icon: Icon(Icons.select_all, color: onSurfaceColor), onPressed: () => _selectAll(Hive.box<Expense>('expenses_box').values.toList())),
+            IconButton(
+              icon: Icon(Icons.select_all, color: onSurfaceColor),
+              // Select all active/filtered expenses
+              onPressed: () => _selectAll(Hive.box<Expense>('expenses_box').values.where((e) => !e.isDeleted).toList()),
+            ),
             IconButton(icon: Icon(Icons.delete, color: deleteColor), onPressed: _deleteSelected),
           ],
         ),
@@ -425,15 +445,16 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
         ),
         body: Column(
           children: [
+            SizedBox(height: 32),
             _buildTopBar(),
-
             Expanded(
               child: ValueListenableBuilder(
                 valueListenable: Hive.box<Expense>('expenses_box').listenable(),
                 builder: (_, Box<Expense> box, __) {
-                  var expenses = box.values.toList();
+                  // Filter out deleted items first
+                  var expenses = box.values.where((e) => !e.isDeleted).toList();
 
-                  // 1. Calculate Totals
+                  // 1. Calculate Totals (only from active expenses)
                   Map<String, double> totals = {};
                   for (var e in expenses) {
                     double val = e.isIncome ? e.amount : -e.amount;
@@ -441,7 +462,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                   }
                   if (totals.isEmpty) totals['\$'] = 0.0;
 
-                  // 2. Filter
+                  // 2. Filter (on active expenses list)
                   if (_searchQuery.isNotEmpty) {
                     expenses = expenses.where((e) => e.title.toLowerCase().contains(_searchQuery)).toList();
                   }

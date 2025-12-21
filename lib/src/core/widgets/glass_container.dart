@@ -22,8 +22,8 @@ class GlassContainer extends StatefulWidget {
     this.margin = EdgeInsets.zero,
     this.onTap,
     this.borderRadius = 24,
-    this.blur = 3,
-    this.opacity = 0.1,
+    this.blur = 10, // Increased default blur for better glass effect
+    this.opacity = 0.2, // Increased default opacity so colors are visible
     this.color,
   });
 
@@ -34,49 +34,46 @@ class GlassContainer extends StatefulWidget {
 class _GlassContainerState extends State<GlassContainer> {
   @override
   Widget build(BuildContext context) {
-    // If widget.color is provided, use it; otherwise use Theme surface color
-    final Color effectiveBaseColor = widget.color ?? Theme.of(context).colorScheme.surface;
+    // Determine base color
+    final Color baseColor = widget.color ?? Theme.of(context).colorScheme.surface;
     final Color outlineColor = Theme.of(context).dividerColor;
 
-    // Build the container content
-    Widget content = Container(
-      width: widget.width,
-      height: widget.height,
-      padding: widget.padding,
-      decoration: BoxDecoration(
-        // Always use opacity for glass effect
-        color: effectiveBaseColor.withOpacity(widget.opacity),
-        borderRadius: BorderRadius.circular(widget.borderRadius),
-        border: Border.all(
-          color: outlineColor.withOpacity(0.4),
-          width: 1.5,
-        ),
-        // Always apply gradient
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            effectiveBaseColor.withOpacity(widget.opacity + 0.1),
-            effectiveBaseColor.withOpacity(widget.opacity / 2),
-          ],
-        ),
-      ),
-      child: widget.child,
-    );
-
-    // If tap handler is present, wrap in GestureDetector
-    if (widget.onTap != null) {
-      content = GestureDetector(onTap: widget.onTap, child: content);
-    }
+    // Helper to safely apply opacity (clamped between 0.0 and 1.0 to prevent crashes)
+    Color safeOpacity(Color c, double o) => c.withOpacity(o.clamp(0.0, 1.0));
 
     return Padding(
       padding: widget.margin,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(widget.borderRadius),
-        // Always apply BackdropFilter
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: widget.blur, sigmaY: widget.blur),
-          child: content,
+          child: GestureDetector(
+            onTap: widget.onTap,
+            child: Container(
+              width: widget.width,
+              height: widget.height,
+              padding: widget.padding,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(widget.borderRadius),
+                border: Border.all(
+                  color: outlineColor.withOpacity(0.2),
+                  width: 1.5,
+                ),
+                // BUG FIX: Removed 'color' property because it cannot be used with 'gradient'
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    // Richer colors: Top left is slightly more opaque
+                    safeOpacity(baseColor, widget.opacity + 0.1),
+                    // Bottom right is slightly more transparent
+                    safeOpacity(baseColor, widget.opacity * 0.5),
+                  ],
+                ),
+              ),
+              child: widget.child,
+            ),
+          ),
         ),
       ),
     );

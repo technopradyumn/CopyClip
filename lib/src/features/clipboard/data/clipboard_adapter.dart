@@ -17,23 +17,20 @@ class ClipboardItemAdapter extends TypeAdapter<ClipboardItem> {
       createdAt: fields[2] as DateTime,
       type: fields[3] as String,
       sortIndex: fields[4] as int? ?? 0,
+      colorValue: fields[5] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ClipboardItem obj) {
     writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
-      ..write(obj.content)
-      ..writeByte(2)
-      ..write(obj.createdAt)
-      ..writeByte(3)
-      ..write(obj.type)
-      ..writeByte(4)
-      ..write(obj.sortIndex);
+      ..writeByte(6)
+      ..writeByte(0)..write(obj.id)
+      ..writeByte(1)..write(obj.content)
+      ..writeByte(2)..write(obj.createdAt)
+      ..writeByte(3)..write(obj.type)
+      ..writeByte(4)..write(obj.sortIndex)
+      ..writeByte(5)..write(obj.colorValue);
   }
 
   @override

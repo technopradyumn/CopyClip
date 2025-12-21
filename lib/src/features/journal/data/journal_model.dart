@@ -26,6 +26,15 @@ class JournalEntry extends HiveObject {
   @HiveField(7)
   bool isFavorite;
 
+  @HiveField(8)
+  int? colorValue;
+
+  @HiveField(10)
+  bool isDeleted = false;
+
+  @HiveField(11)
+  DateTime? deletedAt;
+
   JournalEntry({
     required this.id,
     required this.title,
@@ -35,9 +44,11 @@ class JournalEntry extends HiveObject {
     this.sortIndex = 0,
     this.tags = const [],
     this.isFavorite = false,
+    this.colorValue,
+    this.isDeleted = false,
+    this.deletedAt,
   });
 
-  // --- Backup Support ---
   Map<String, dynamic> toJson() => {
     'id': id,
     'title': title,
@@ -47,6 +58,9 @@ class JournalEntry extends HiveObject {
     'sortIndex': sortIndex,
     'tags': tags,
     'isFavorite': isFavorite,
+    'colorValue': colorValue,
+    'isDeleted': isDeleted,
+    'deletedAt': deletedAt?.toIso8601String(),
   };
 
   factory JournalEntry.fromJson(Map<String, dynamic> json) => JournalEntry(
@@ -56,8 +70,10 @@ class JournalEntry extends HiveObject {
     date: DateTime.parse(json['date']),
     mood: json['mood'] ?? 'Neutral',
     sortIndex: json['sortIndex'] ?? 0,
-    // Safely convert JSON list to List<String>
     tags: json['tags'] != null ? List<String>.from(json['tags']) : [],
     isFavorite: json['isFavorite'] ?? false,
+    colorValue: json['colorValue'],
+    isDeleted: json['isDeleted'] ?? false,
+    deletedAt: json['deletedAt'] != null ? DateTime.parse(json['deletedAt']) : null,
   );
 }

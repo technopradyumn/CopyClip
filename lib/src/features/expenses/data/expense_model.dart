@@ -26,6 +26,12 @@ class Expense extends HiveObject {
   @HiveField(7)
   int sortIndex;
 
+  @HiveField(10)
+  bool isDeleted = false;
+
+  @HiveField(11)
+  DateTime? deletedAt;
+
   Expense({
     required this.id,
     required this.title,
@@ -35,6 +41,8 @@ class Expense extends HiveObject {
     required this.category,
     required this.isIncome,
     this.sortIndex = 0,
+    this.isDeleted = false,
+    this.deletedAt,
   });
 
   // --- Backup Support ---
@@ -47,6 +55,8 @@ class Expense extends HiveObject {
     'category': category,
     'isIncome': isIncome,
     'sortIndex': sortIndex,
+    'isDeleted': isDeleted,
+    'deletedAt': deletedAt?.toIso8601String(),
   };
 
   factory Expense.fromJson(Map<String, dynamic> json) => Expense(
@@ -59,5 +69,7 @@ class Expense extends HiveObject {
     category: json['category'],
     isIncome: json['isIncome'] ?? false,
     sortIndex: json['sortIndex'] ?? 0,
+    isDeleted: json['isDeleted'] ?? false,
+    deletedAt: json['deletedAt'] != null ? DateTime.parse(json['deletedAt']) : null,
   );
 }

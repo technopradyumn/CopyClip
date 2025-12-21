@@ -98,20 +98,27 @@ class _TodosScreenState extends State<TodosScreen> {
     });
   }
 
+  // REFACTORED: Soft delete for selected todos
   void _deleteSelected() {
     if (_selectedTodoIds.isEmpty) return;
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete ${_selectedTodoIds.length} Tasks?",
-        content: "This action cannot be undone.",
-        confirmText: "Delete",
+        title: "Move ${_selectedTodoIds.length} Tasks to Bin?",
+        content: "You can restore them later from settings.",
+        confirmText: "Move",
         isDestructive: true,
         onConfirm: () {
           final box = Hive.box<Todo>('todos_box');
+          final now = DateTime.now();
           for (var id in _selectedTodoIds) {
-            box.delete(id);
-            NotificationService().cancelNotification(id.hashCode);
+            final item = box.get(id);
+            if (item != null) {
+              item.isDeleted = true;
+              item.deletedAt = now;
+              item.save();
+              NotificationService().cancelNotification(id.hashCode);
+            }
           }
           setState(() {
             _selectedTodoIds.clear();
@@ -123,18 +130,27 @@ class _TodosScreenState extends State<TodosScreen> {
     );
   }
 
+  // REFACTORED: Soft delete for all todos
   void _deleteAll() {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete All Tasks?",
-        content: "This cannot be undone.",
-        confirmText: "Delete All",
+        title: "Move All Tasks to Bin?",
+        content: "This will move all active tasks to the recycle bin.",
+        confirmText: "Move All",
         isDestructive: true,
         onConfirm: () {
           final box = Hive.box<Todo>('todos_box');
-          for (var key in box.keys) NotificationService().cancelNotification(key.hashCode);
-          box.clear();
+          final now = DateTime.now();
+          // Filter to only move active items
+          final activeTodos = box.values.where((t) => !t.isDeleted).toList();
+
+          for (var todo in activeTodos) {
+            todo.isDeleted = true;
+            todo.deletedAt = now;
+            todo.save();
+            NotificationService().cancelNotification(todo.id.hashCode);
+          }
           Navigator.pop(ctx);
         },
       ),
@@ -272,6 +288,7 @@ class _TodosScreenState extends State<TodosScreen> {
         floatingActionButton: _isSelectionMode ? null : FloatingActionButton(onPressed: () => _openTodoEditor(null), backgroundColor: colorScheme.primary, heroTag: 'fab_new_todo', child: Icon(Icons.add, color: colorScheme.onPrimary)),
         body: Column(
           children: [
+            SizedBox(height: 32),
             _buildCustomTopBar(),
             Padding(
               padding: const EdgeInsets.only(right: 16, left: 16, top: 0, bottom: 8),
@@ -298,7 +315,7 @@ class _TodosScreenState extends State<TodosScreen> {
               child: ValueListenableBuilder(
                 valueListenable: Hive.box<Todo>('todos_box').listenable(),
                 builder: (_, Box<Todo> box, __) {
-                  List<Todo> todos = box.values.toList();
+                  List<Todo> todos = box.values.where((t) => !t.isDeleted).toList(); // ADDED FILTER
                   if (_searchQuery.isNotEmpty) {
                     todos = todos.where((t) => t.task.toLowerCase().contains(_searchQuery) || t.category.toLowerCase().contains(_searchQuery)).toList();
                   }
@@ -386,6 +403,6 @@ class _TodosScreenState extends State<TodosScreen> {
   Widget _buildCustomTopBar() {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    return Padding(padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8), child: Row(children: [IconButton(icon: Icon(_isSelectionMode?Icons.close:Icons.arrow_back_ios_new, color: theme.iconTheme.color), onPressed: () => _isSelectionMode ? setState((){_isSelectionMode=false;_selectedTodoIds.clear();}) : context.pop()), Expanded(child: _isSelectionMode ? Center(child: Text('${_selectedTodoIds.length} Selected', style: theme.textTheme.titleLarge)) : Row(children: [Hero(tag:'todos', child: Icon(Icons.check_circle_outline, size: 32, color: colorScheme.primary)), const SizedBox(width: 10), Hero(tag:'todos_title', child: Material(type:MaterialType.transparency, child: Text("To-Dos", style: theme.textTheme.titleLarge?.copyWith(fontSize: 28))))])), if(_isSelectionMode) ...[IconButton(icon: Icon(Icons.select_all, color: theme.iconTheme.color), onPressed: () => _selectAll(Hive.box<Todo>('todos_box').values.toList())), IconButton(icon: Icon(Icons.delete, color: colorScheme.error), onPressed: _deleteSelected)] else ...[IconButton(icon: Icon(Icons.check_circle_outline, color: theme.iconTheme.color?.withOpacity(0.54)), onPressed: ()=>setState(()=>_isSelectionMode=true)), IconButton(icon: Icon(Icons.filter_list, color: theme.iconTheme.color), onPressed: _showFilterMenu), IconButton(icon: Icon(Icons.delete_sweep_outlined, color: colorScheme.error), onPressed: _deleteAll)]]));
+    return Padding(padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8), child: Row(children: [IconButton(icon: Icon(_isSelectionMode?Icons.close:Icons.arrow_back_ios_new, color: theme.iconTheme.color), onPressed: () => _isSelectionMode ? setState((){_isSelectionMode=false;_selectedTodoIds.clear();}) : context.pop()), Expanded(child: _isSelectionMode ? Center(child: Text('${_selectedTodoIds.length} Selected', style: theme.textTheme.titleLarge)) : Row(children: [Hero(tag:'todos', child: Icon(Icons.check_circle_outline, size: 32, color: colorScheme.primary)), const SizedBox(width: 10), Hero(tag:'todos_title', child: Material(type:MaterialType.transparency, child: Text("To-Dos", style: theme.textTheme.titleLarge?.copyWith(fontSize: 28))))])), if(_isSelectionMode) ...[IconButton(icon: Icon(Icons.select_all, color: theme.iconTheme.color), onPressed: () => _selectAll(Hive.box<Todo>('todos_box').values.where((t) => !t.isDeleted).toList())), IconButton(icon: Icon(Icons.delete, color: colorScheme.error), onPressed: _deleteSelected)] else ...[IconButton(icon: Icon(Icons.check_circle_outline, color: theme.iconTheme.color?.withOpacity(0.54)), onPressed: ()=>setState(()=>_isSelectionMode=true)), IconButton(icon: Icon(Icons.filter_list, color: theme.iconTheme.color), onPressed: _showFilterMenu), IconButton(icon: Icon(Icons.delete_sweep_outlined, color: colorScheme.error), onPressed: _deleteAll)]]));
   }
 }

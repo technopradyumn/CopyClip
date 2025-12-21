@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
@@ -191,7 +192,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final q = query.toLowerCase();
 
     // Notes
-    final notes = Hive.box<Note>('notes_box').values;
+    final notes = Hive.box<Note>('notes_box').values.where((n) => !n.isDeleted);
     for (var note in notes) {
       if (note.title.toLowerCase().contains(q) || note.content.toLowerCase().contains(q)) {
         results.add(GlobalSearchResult(
@@ -206,7 +207,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     // Todos
-    final todos = Hive.box<Todo>('todos_box').values;
+    final todos = Hive.box<Todo>('todos_box').values.where((t) => !t.isDeleted);
     for (var todo in todos) {
       if (todo.task.toLowerCase().contains(q)) {
         results.add(GlobalSearchResult(
@@ -222,7 +223,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     // Expenses
-    final expenses = Hive.box<Expense>('expenses_box').values;
+    final expenses = Hive.box<Expense>('expenses_box').values.where((e) => !e.isDeleted);
     for (var expense in expenses) {
       if (expense.title.toLowerCase().contains(q)) {
         results.add(GlobalSearchResult(
@@ -237,7 +238,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     // Journal
-    final journals = Hive.box<JournalEntry>('journal_box').values;
+    final journals = Hive.box<JournalEntry>('journal_box').values.where((j) => !j.isDeleted);
     for (var entry in journals) {
       if (entry.title.toLowerCase().contains(q) || entry.content.toLowerCase().contains(q)) {
         results.add(GlobalSearchResult(
@@ -252,7 +253,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     // Clipboard
-    final clips = Hive.box<ClipboardItem>('clipboard_box').values;
+    final clips = Hive.box<ClipboardItem>('clipboard_box').values.where((c) => !c.isDeleted);
     for (var clip in clips) {
       if (clip.content.toLowerCase().contains(q)) {
         results.add(GlobalSearchResult(
@@ -278,17 +279,35 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void _shareContent(String text) => Share.share(text);
 
   void _deleteItem(GlobalSearchResult res) {
-    // Delete based on type
-    if (res.type == 'Note') Hive.box<Note>('notes_box').delete(res.id);
-    else if (res.type == 'Todo') Hive.box<Todo>('todos_box').delete(res.id);
-    else if (res.type == 'Expense') Hive.box<Expense>('expenses_box').delete(res.id);
-    else if (res.type == 'Journal') Hive.box<JournalEntry>('journal_box').delete(res.id);
-    else if (res.type == 'Clipboard') Hive.box<ClipboardItem>('clipboard_box').delete(res.id);
+    final dynamic item = res.argument;
+    final now = DateTime.now();
 
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Deleted item")));
+    if (item is Note) {
+      item.isDeleted = true;
+      item.deletedAt = now;
+      item.save();
+    } else if (item is Todo) {
+      item.isDeleted = true;
+      item.deletedAt = now;
+      item.save();
+    } else if (item is Expense) {
+      item.isDeleted = true;
+      item.deletedAt = now;
+      item.save();
+    } else if (item is JournalEntry) {
+      item.isDeleted = true;
+      item.deletedAt = now;
+      item.save();
+    } else if (item is ClipboardItem) {
+      item.isDeleted = true;
+      item.deletedAt = now;
+      item.save();
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Moved to Recycle Bin")));
     // Remove from UI
     setState(() {
-      _searchResults.removeWhere((item) => item.id == res.id);
+      _searchResults.removeWhere((i) => i.id == res.id);
     });
   }
 
@@ -540,61 +559,111 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // Helper to choose the right Card based on Type
-  // IMPORTANT: Cards contain their own internal Hero tags, preserving animation.
+  String _getCleanText(String content) {
+    if (!content.startsWith('[')) return content;
+    try {
+      final List<dynamic> delta = jsonDecode(content);
+      String plainText = "";
+      for (var op in delta) {
+        if (op.containsKey('insert') && op['insert'] is String) {
+          plainText += op['insert'];
+        }
+      }
+      return plainText.trim();
+    } catch (_) {
+      return content;
+    }
+  }
+
   Widget _buildSearchItem(GlobalSearchResult res) {
     switch (res.type) {
       case 'Note':
+        final note = res.argument as Note;
         return NoteCard(
-          note: res.argument as Note,
+          note: note,
           isSelected: false,
-          onTap: () => context.push(res.route, extra: res.argument),
-          onCopy: () => _copyContent((res.argument as Note).content),
-          onShare: () => _shareContent((res.argument as Note).content),
+          // Hero tag: note_background_${note.id}
+          onTap: () async {
+            await context.push(res.route, extra: note);
+            if (mounted) setState(() {}); // Refresh if color/content changed
+          },
+          onCopy: () => _copyContent(_getCleanText(note.content)),
+          onShare: () => _shareContent(_getCleanText(note.content)),
           onDelete: () => _deleteItem(res),
+          onColorChanged: (newColor) {
+            setState(() => note.colorValue = newColor.value);
+            note.save();
+          },
         );
-      case 'Todo':
-        return TodoCard(
-          todo: res.argument as Todo,
+
+      case 'Journal':
+        final entry = res.argument as JournalEntry;
+        return JournalCard(
+          entry: entry,
           isSelected: false,
-          onTap: () => context.push(res.route, extra: res.argument),
+          // Hero tag: journal_bg_${entry.id}
+          onTap: () async {
+            await context.push(res.route, extra: entry);
+            if (mounted) setState(() {});
+          },
+          onCopy: () => _copyContent(_getCleanText(entry.content)),
+          onShare: () => _shareContent(_getCleanText(entry.content)),
+          onDelete: () => _deleteItem(res),
+          onColorChanged: (newColor) {
+            setState(() => entry.colorValue = newColor.value);
+            entry.save();
+          },
+        );
+
+      case 'Clipboard':
+        final item = res.argument as ClipboardItem;
+        return ClipboardCard(
+          item: item,
+          isSelected: false,
+          // Hero tag: clip_bg_${item.id}
+          onTap: () async {
+            await context.push(res.route, extra: item);
+            if (mounted) setState(() {});
+          },
+          onCopy: () => _copyContent(_getCleanText(item.content)),
+          onShare: () => _shareContent(_getCleanText(item.content)),
+          onDelete: () => _deleteItem(res),
+          onColorChanged: (newColor) {
+            setState(() => item.colorValue = newColor.value);
+            item.save();
+          },
+        );
+
+      case 'Todo':
+        final todo = res.argument as Todo;
+        return TodoCard(
+          todo: todo,
+          isSelected: false,
+          onTap: () async {
+            await context.push(res.route, extra: todo);
+            if (mounted) setState(() {});
+          },
           onToggleDone: () {
-            final todo = res.argument as Todo;
             setState(() {
               todo.isDone = !todo.isDone;
               todo.save();
             });
           },
         );
+
       case 'Expense':
+        final expense = res.argument as Expense;
         return ExpenseCard(
-          expense: res.argument as Expense,
+          expense: expense,
           isSelected: false,
-          onTap: () => context.push(res.route, extra: res.argument),
+          onTap: () async {
+            await context.push(res.route, extra: expense);
+            if (mounted) setState(() {});
+          },
         );
-      case 'Journal':
-        return JournalCard(
-          entry: res.argument as JournalEntry,
-          isSelected: false,
-          onTap: () => context.push(res.route, extra: res.argument),
-          onCopy: () => _copyContent((res.argument as JournalEntry).content),
-          onShare: () => _shareContent((res.argument as JournalEntry).content),
-          onDelete: () => _deleteItem(res),
-        );
-      case 'Clipboard':
-        return ClipboardCard(
-          item: res.argument as ClipboardItem,
-          isSelected: false,
-          onTap: () => context.push(res.route, extra: res.argument),
-          onCopy: () => _copyContent((res.argument as ClipboardItem).content),
-          onShare: () => _shareContent((res.argument as ClipboardItem).content),
-          onDelete: () => _deleteItem(res),
-        );
+
       default:
-        return GlassContainer(
-          padding: const EdgeInsets.all(16),
-          child: Text(res.title),
-        );
+        return const SizedBox.shrink();
     }
   }
 }

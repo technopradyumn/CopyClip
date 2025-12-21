@@ -16,8 +16,11 @@ import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'src/l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -175,12 +178,24 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
       title: 'CopyClip',
       debugShowCheckedModeBanner: false,
 
-      // 2. Use the local variable `themeManager`, NOT `widget.themeManager`
+      // 2. Use the local variable `themeManager`
       themeMode: themeManager.themeMode,
       theme: AppTheme.lightTheme(themeManager.primaryColor),
       darkTheme: AppTheme.darkTheme(themeManager.primaryColor),
 
       routerConfig: router,
+
+      // 3. Add Localization Delegates (FIX for Quill Error)
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        FlutterQuillLocalizations.delegate, // <--- Added this line
+      ],
+
+      // 4. Add Supported Locales
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

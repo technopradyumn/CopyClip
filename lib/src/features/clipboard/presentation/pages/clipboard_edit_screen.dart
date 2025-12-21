@@ -1,16 +1,22 @@
-import 'dart:async';
-import 'dart:ui';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
-import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
-import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
+import '../../../../core/widgets/glass_scaffold.dart';
+import '../../../../core/widgets/glass_dialog.dart';
+import '../../../../core/widgets/glass_rich_text_editor.dart';
 import '../../data/clipboard_model.dart';
 
 class ClipboardEditScreen extends StatefulWidget {
@@ -21,23 +27,19 @@ class ClipboardEditScreen extends StatefulWidget {
   State<ClipboardEditScreen> createState() => _ClipboardEditScreenState();
 }
 
-// Snapshot class for Undo/Redo
-class _ClipboardSnapshot {
-  final String content;
-  _ClipboardSnapshot(this.content);
-}
-
 class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
-  final _controller = TextEditingController();
-  late DateTime _selectedDate;
+  final GlobalKey _boundaryKey = GlobalKey();
+  late QuillController _quillController;
+  final FocusNode _focusNode = FocusNode();
+  final ScrollController _scrollController = ScrollController();
+
+  DateTime _selectedDate = DateTime.now();
+  late DateTime _initialDate;
   late Box<ClipboardItem> _clipboardBox;
 
-  // Undo/Redo State
-  final List<_ClipboardSnapshot> _undoStack = [];
-  final List<_ClipboardSnapshot> _redoStack = [];
-  Timer? _debounceTimer;
-  bool _isInternalUpdate = false;
-  String _initialContent = "";
+  Color _scaffoldColor = Colors.white;
+  late Color _initialColor;
+  String _initialContentJson = "";
 
   @override
   void initState() {
@@ -45,99 +47,19 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
     _clipboardBox = Hive.box<ClipboardItem>('clipboard_box');
 
     if (widget.item != null) {
-      _controller.text = widget.item!.content;
       _selectedDate = widget.item!.createdAt;
-    } else {
-      _selectedDate = DateTime.now();
+      _scaffoldColor = widget.item!.colorValue != null
+          ? Color(widget.item!.colorValue!)
+          : Colors.white;
     }
 
-    _initialContent = _controller.text;
-    _undoStack.add(_ClipboardSnapshot(_controller.text));
-
-    _controller.addListener(_onTextChanged);
+    _initialDate = _selectedDate;
+    _initialColor = _scaffoldColor;
+    _initQuill();
   }
-
-  @override
-  void dispose() {
-    _debounceTimer?.cancel();
-    _controller.dispose();
-    super.dispose();
-  }
-
-  // --- UNDO / REDO LOGIC ---
-
-  void _onTextChanged() {
-    if (_isInternalUpdate) return;
-
-    if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
-    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
-      final currentContent = _controller.text;
-
-      if (_undoStack.isNotEmpty) {
-        if (_undoStack.last.content == currentContent) return;
-      }
-
-      if (mounted) {
-        setState(() {
-          _undoStack.add(_ClipboardSnapshot(currentContent));
-          _redoStack.clear();
-        });
-      }
-    });
-  }
-
-  void _undo() {
-    if (_undoStack.length <= 1) return;
-    setState(() {
-      _isInternalUpdate = true;
-      _redoStack.add(_undoStack.removeLast());
-      final previous = _undoStack.last;
-      _controller.text = previous.content;
-      _isInternalUpdate = false;
-    });
-  }
-
-  void _redo() {
-    if (_redoStack.isEmpty) return;
-    setState(() {
-      _isInternalUpdate = true;
-      final next = _redoStack.removeLast();
-      _undoStack.add(next);
-      _controller.text = next.content;
-      _isInternalUpdate = false;
-    });
-  }
-
-  // --- NAVIGATION GUARD ---
-
-  Future<bool> _onWillPop() async {
-    final isDirty = _controller.text != _initialContent;
-
-    if (!isDirty) return true;
-    final result = await showDialog<String>(
-      context: context,
-      builder: (ctx) => GlassDialog(
-        title: "Unsaved Changes",
-        content: "Do you want to save your clip before leaving?",
-        confirmText: "Save",
-        cancelText: "Discard",
-        onConfirm: () => Navigator.pop(ctx, 'save'),
-        onCancel: () => Navigator.pop(ctx, 'discard'),
-      ),
-    );
-
-    if (result == 'save') {
-      _save();
-      return true;
-    } else if (result == 'discard') {
-      return true;
-    }
-    return false;
-  }
-
-  // --- DATE PICKER ---
 
   void _pickDateTime() {
+    _focusNode.unfocus();
     final surfaceColor = Theme.of(context).colorScheme.surface;
     final primaryColor = Theme.of(context).colorScheme.primary;
     final onSurfaceColor = Theme.of(context).colorScheme.onSurface;
@@ -159,9 +81,9 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                   child: Text(
                     'Done',
                     style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                        color: primaryColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold
                     ),
                   ),
                 ),
@@ -172,8 +94,8 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                     brightness: Theme.of(context).brightness,
                     textTheme: CupertinoTextThemeData(
                       dateTimePickerTextStyle: TextStyle(
-                        color: onSurfaceColor,
-                        fontSize: 20,
+                          color: onSurfaceColor,
+                          fontSize: 20
                       ),
                     ),
                   ),
@@ -193,202 +115,278 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
     );
   }
 
-  // --- ACTIONS ---
-
-  void _save() {
-    if (_controller.text.isEmpty) return;
-
-    final id = widget.item?.id ?? const Uuid().v4();
-    final type = _detectType(_controller.text);
-
-    final newItem = ClipboardItem(
-      id: id,
-      content: _controller.text,
-      createdAt: _selectedDate,
-      type: type,
-      sortIndex: widget.item?.sortIndex ?? 0,
-    );
-
-    _clipboardBox.put(id, newItem);
-    _initialContent = _controller.text;
-  }
-
-  String _detectType(String text) {
-    if (text.startsWith('http')) return 'link';
-    if (RegExp(r'^\+?[0-9]{7,15}$').hasMatch(text)) return 'phone';
-    if (text.startsWith('#') || text.startsWith('Color')) return 'color';
-    return 'text';
-  }
-
-  void _delete() {
-    if (widget.item != null) {
-      _clipboardBox.delete(widget.item!.id);
+  void _initQuill() {
+    Document doc;
+    try {
+      if (widget.item != null && widget.item!.content.isNotEmpty) {
+        doc = Document.fromJson(jsonDecode(widget.item!.content));
+      } else {
+        doc = Document();
+      }
+    } catch (e) {
+      doc = Document()..insert(0, widget.item?.content ?? "");
     }
-    context.pop();
+    _quillController = QuillController(
+      document: doc,
+      selection: const TextSelection.collapsed(offset: 0),
+    );
+    _initialContentJson = jsonEncode(_quillController.document.toDelta().toJson());
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final heroTag = widget.item != null ? 'clip_bg_${widget.item!.id}' : 'new_clip';
+  void _showColorPicker() {
+    final List<Color> palette = [
+      const Color(0xFFFFFFFF), const Color(0xFFFFCC00),
+      const Color(0xFFFD7971), const Color(0xFF007AFF),
+      const Color(0xFF34C759), const Color(0xFFAF52DE),
+    ];
 
-    final onSurfaceColor = Theme.of(context).colorScheme.onSurface;
-    final primaryColor = Theme.of(context).colorScheme.primary;
-    final errorColor = Theme.of(context).colorScheme.error;
-    final surfaceColor = Theme.of(context).colorScheme.surface;
-    final dividerColor = Theme.of(context).dividerColor;
-    final textTheme = Theme.of(context).textTheme;
-
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: GlassScaffold(
-        showBackArrow: true,
-        title: widget.item == null ? 'New Clip' : 'Edit Clip',
-        actions: [
-          IconButton(
-            icon: Icon(Icons.copy, color: onSurfaceColor.withOpacity(0.54)),
-            tooltip: 'Copy',
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: _controller.text));
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Copied"), behavior: SnackBarBehavior.floating)
-              );
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.share, color: onSurfaceColor.withOpacity(0.54)),
-            tooltip: 'Share',
-            onPressed: () => Share.share(_controller.text),
-          ),
-          if (widget.item != null)
-            IconButton(
-              icon: Icon(Icons.delete_outline, color: errorColor),
-              tooltip: 'Delete',
-              onPressed: _delete,
-            ),
-          IconButton(
-            icon: Icon(Icons.check, color: primaryColor),
-            tooltip: 'Save',
-            onPressed: () {
-              _save();
-              context.pop();
-            },
-          ),
-        ],
-        body: Column(
-          children: [
-            // --- TOP BAR (Date + Undo/Redo) ---
-            Padding(
-              padding: const EdgeInsets.only(top: 90, left: 16.0, right: 16.0, bottom: 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: _pickDateTime,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: surfaceColor.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: dividerColor.withOpacity(0.2)),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.access_time_filled, size: 14, color: primaryColor),
-                              const SizedBox(width: 6),
-                              Text(
-                                DateFormat('MMM dd, h:mm a').format(_selectedDate),
-                                style: textTheme.bodySmall?.copyWith(
-                                  color: onSurfaceColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => GlassDialog(
+          title: "Clip Theme",
+          confirmText: "Save",
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Wrap(
+                  spacing: 12, runSpacing: 12,
+                  children: palette.map((color) {
+                    final isSelected = _scaffoldColor.value == color.value;
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() => _scaffoldColor = color);
+                        setDialogState(() {});
+                      },
+                      child: Container(
+                        width: 44, height: 44,
+                        decoration: BoxDecoration(
+                          color: color, shape: BoxShape.circle,
+                          border: Border.all(
+                              color: isSelected ? Colors.white : Colors.white.withOpacity(0.3),
+                              width: isSelected ? 3 : 1.5
                           ),
                         ),
+                        child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 20) : null,
                       ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.undo,
-                          color: _undoStack.length > 1 ? onSurfaceColor : onSurfaceColor.withOpacity(0.3),
-                        ),
-                        onPressed: _undoStack.length > 1 ? _undo : null,
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.redo,
-                          color: _redoStack.isNotEmpty ? onSurfaceColor : onSurfaceColor.withOpacity(0.3),
-                        ),
-                        onPressed: _redoStack.isNotEmpty ? _redo : null,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            // --- EDITOR AREA ---
-            Expanded(
-              child: Hero(
-                tag: heroTag,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(24),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: surfaceColor.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(24),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            surfaceColor.withOpacity(0.15),
-                            surfaceColor.withOpacity(0.05),
-                          ],
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: TextField(
-                            controller: _controller,
-                            maxLines: null,
-                            expands: true,
-                            textAlignVertical: TextAlignVertical.top,
-                            style: textTheme.bodyLarge?.copyWith(
-                              color: onSurfaceColor.withOpacity(0.9),
-                              height: 1.6,
-                              fontSize: 16,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: 'Paste or type content here...',
-                              hintStyle: textTheme.bodyLarge?.copyWith(
-                                color: onSurfaceColor.withOpacity(0.24),
-                              ),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.zero,
-                            ),
-                          ),
-                        ),
-                      ),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 250),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: ColorPicker(
+                      pickerColor: _scaffoldColor,
+                      onColorChanged: (color) {
+                        setState(() => _scaffoldColor = color);
+                        setDialogState(() {});
+                      },
+                      pickerAreaHeightPercent: 0.4,
+                      enableAlpha: false,
+                      labelTypes: const [],
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
+          onConfirm: () => Navigator.pop(context),
         ),
       ),
     );
   }
+
+  void _save() {
+    final contentJson = jsonEncode(_quillController.document.toDelta().toJson());
+    if (_quillController.document.toPlainText().trim().isEmpty) return;
+
+    final id = widget.item?.id ?? const Uuid().v4();
+
+    final newItem = ClipboardItem(
+      id: id,
+      content: contentJson,
+      createdAt: _selectedDate,
+      type: 'rich_text',
+      sortIndex: widget.item?.sortIndex ?? 0,
+      colorValue: _scaffoldColor.value,
+    );
+
+    _clipboardBox.put(id, newItem);
+    _initialContentJson = contentJson;
+    _initialDate = _selectedDate;
+    _initialColor = _scaffoldColor;
+  }
+
+  Future<void> _exportToImage() async {
+    try {
+      RenderRepaintBoundary? boundary = _boundaryKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      if (boundary == null) return;
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      var byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      var pngBytes = byteData!.buffer.asUint8List();
+      final tempDir = await getTemporaryDirectory();
+      File file = File('${tempDir.path}/clip_${DateTime.now().millisecond}.png');
+      await file.writeAsBytes(pngBytes);
+      await Share.shareXFiles([XFile(file.path)]);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: $e")));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isColorDark = ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
+
+    // MATCHING HERO TAG: Must be identical to ClipboardCard
+    final String heroTag = widget.item != null
+        ? 'clip_bg_${widget.item!.id}'
+        : 'new_clip_hero';
+
+    return WillPopScope(
+      onWillPop: () async {
+        final currentJson = jsonEncode(_quillController.document.toDelta().toJson());
+        bool hasChanges = currentJson != _initialContentJson ||
+            _selectedDate != _initialDate ||
+            _scaffoldColor.value != _initialColor.value;
+
+        if (!hasChanges) return true;
+
+        final result = await showDialog<String>(
+          context: context,
+          builder: (ctx) => GlassDialog(
+            title: "Unsaved Changes",
+            content: "Save your clip before leaving?",
+            confirmText: "Save",
+            cancelText: "Discard",
+            onConfirm: () => Navigator.pop(ctx, 'save'),
+            onCancel: () => Navigator.pop(ctx, 'discard'),
+          ),
+        );
+        if (result == 'save') { _save(); return true; }
+        return result == 'discard';
+      },
+      child: GlassScaffold(
+        showBackArrow: true,
+        backgroundColor: _scaffoldColor,
+        title: widget.item == null ? 'New Clip' : 'Edit Clip',
+        actions: [
+          GestureDetector(
+            onTap: _showColorPicker,
+            child: Container(
+              margin: const EdgeInsets.only(right: 8),
+              width: 26, height: 26,
+              decoration: BoxDecoration(
+                color: _scaffoldColor, shape: BoxShape.circle,
+                border: Border.all(color: isColorDark ? Colors.white54 : Colors.black26),
+              ),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.copy, size: 18),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: _quillController.document.toPlainText()));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Copied plain text")));
+            },
+          ),
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.ios_share, size: 20),
+            onSelected: (val) { if (val == 'image') _exportToImage(); },
+            itemBuilder: (ctx) => [const PopupMenuItem(value: 'image', child: Text("Export as Image"))],
+          ),
+          IconButton(
+            icon: const Icon(Icons.check),
+            onPressed: () { _save(); context.pop(); },
+          ),
+        ],
+        // WRAP THE BODY IN HERO
+        body: Hero(
+          tag: heroTag,
+          child: Material(
+            type: MaterialType.transparency, // Prevents text style reset during flight
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: CustomPaint(
+                    painter: CanvasGridPainter(color: isColorDark ? Colors.white10 : Colors.black12),
+                  ),
+                ),
+                RepaintBoundary(
+                  key: _boundaryKey,
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 90),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: InkWell(
+                              onTap: _pickDateTime,
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: isColorDark ? Colors.white12 : Colors.black12,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.access_time, size: 14, color: isColorDark ? Colors.white70 : Colors.black54),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      DateFormat('MMM dd, yyyy  •  hh:mm a').format(_selectedDate),
+                                      style: TextStyle(
+                                        color: isColorDark ? Colors.white70 : Colors.black87,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 11,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: GlassRichTextEditor(
+                            controller: _quillController,
+                            focusNode: _focusNode,
+                            scrollController: _scrollController,
+                            hintText: "Paste or type content here...",
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CanvasGridPainter extends CustomPainter {
+  final Color color;
+  CanvasGridPainter({required this.color});
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = color..strokeWidth = 0.5;
+    for (double i = 0; i < size.width; i += 30) {
+      canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint);
+    }
+    for (double i = 0; i < size.height; i += 30) {
+      canvas.drawLine(Offset(0, i), Offset(size.width, i), paint);
+    }
+  }
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

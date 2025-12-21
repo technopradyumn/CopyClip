@@ -23,6 +23,12 @@ class Todo extends HiveObject {
   @HiveField(6)
   int sortIndex;
 
+  @HiveField(10)
+  bool isDeleted = false;
+
+  @HiveField(11)
+  DateTime? deletedAt;
+
   Todo({
     required this.id,
     required this.task,
@@ -31,6 +37,8 @@ class Todo extends HiveObject {
     this.dueDate,
     this.hasReminder = false,
     this.sortIndex = 0,
+    this.isDeleted = false,
+    this.deletedAt,
   });
 
   // --- Backup Support ---
@@ -42,6 +50,8 @@ class Todo extends HiveObject {
     'dueDate': dueDate?.toIso8601String(),
     'hasReminder': hasReminder,
     'sortIndex': sortIndex,
+    'isDeleted': isDeleted,
+    'deletedAt': deletedAt?.toIso8601String(),
   };
 
   factory Todo.fromJson(Map<String, dynamic> json) => Todo(
@@ -52,5 +62,7 @@ class Todo extends HiveObject {
     dueDate: json['dueDate'] != null ? DateTime.parse(json['dueDate']) : null,
     hasReminder: json['hasReminder'] ?? false,
     sortIndex: json['sortIndex'] ?? 0,
+    isDeleted: json['isDeleted'] ?? false,
+    deletedAt: json['deletedAt'] != null ? DateTime.parse(json['deletedAt']) : null,
   );
 }

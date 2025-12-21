@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -57,10 +58,10 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
 
     if (content != null && content.trim().isNotEmpty) {
       final box = Hive.box<ClipboardItem>('clipboard_box');
-      bool exists = box.values.any((item) => item.content.trim() == content.trim());
+      bool exists = box.values.any((item) => !item.isDeleted && item.content.trim() == content.trim());
 
       if (!exists) {
-        final allItems = box.values.toList();
+        final allItems = box.values.where((item) => !item.isDeleted).toList();
         final Map<String, ClipboardItem> updates = {};
 
         // Push everything down
@@ -141,38 +142,44 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
 
   // --- DELETE LOGIC START ---
 
-  // Single Item Delete (Triggered from Card)
   void _deleteItem(ClipboardItem item) {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete Clip?",
-        content: "This action cannot be undone.",
-        confirmText: "Delete",
+        title: "Move to Recycle Bin?",
+        content: "You can restore it later from settings.",
+        confirmText: "Move",
         isDestructive: true,
         onConfirm: () {
-          Hive.box<ClipboardItem>('clipboard_box').delete(item.id);
+          item.isDeleted = true;
+          item.deletedAt = DateTime.now();
+          item.save();
           Navigator.pop(ctx);
         },
       ),
     );
   }
 
-  // Bulk Delete (Triggered from Top Bar)
   void _deleteSelected() {
     if (_selectedIds.isEmpty) return;
 
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete ${_selectedIds.length} Clips?",
-        content: "This action cannot be undone.",
-        confirmText: "Delete",
+        title: "Move ${_selectedIds.length} Items to Bin?",
+        content: "You can restore them later.",
+        confirmText: "Move",
         isDestructive: true,
         onConfirm: () {
           final box = Hive.box<ClipboardItem>('clipboard_box');
+          final now = DateTime.now();
           for (var id in _selectedIds) {
-            box.delete(id);
+            final item = box.get(id);
+            if (item != null) {
+              item.isDeleted = true;
+              item.deletedAt = now;
+              item.save();
+            }
           }
           setState(() {
             _selectedIds.clear();
@@ -184,17 +191,22 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
     );
   }
 
-  // Delete All (Triggered from Top Bar)
   void _deleteAll() {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Clear History?",
-        content: "This will delete all clipboard items forever.",
-        confirmText: "Delete All",
+        title: "Move All to Bin?",
+        content: "This will move all visible items to the recycle bin.",
+        confirmText: "Move All",
         isDestructive: true,
         onConfirm: () {
-          Hive.box<ClipboardItem>('clipboard_box').clear();
+          final box = Hive.box<ClipboardItem>('clipboard_box');
+          final now = DateTime.now();
+          for (var item in _items) { // _items contains the currently filtered list
+            item.isDeleted = true;
+            item.deletedAt = now;
+            item.save();
+          }
           Navigator.pop(ctx);
         },
       ),
@@ -255,6 +267,20 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
     );
   }
 
+  String _getCleanText(String content) {
+    if (!content.startsWith('[')) return content;
+    try {
+      final List<dynamic> delta = jsonDecode(content);
+      String plainText = "";
+      for (var op in delta) {
+        if (op.containsKey('insert') && op['insert'] is String) {
+          plainText += op['insert'];
+        }
+      }
+      return plainText.trim();
+    } catch (_) { return content; }
+  }
+
   String _formatTime(DateTime date) {
     final now = DateTime.now();
     final diff = now.difference(date);
@@ -290,6 +316,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
         ),
         body: Column(
           children: [
+            SizedBox(height: 32),
             _buildTopBar(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -320,7 +347,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
               child: ValueListenableBuilder(
                 valueListenable: Hive.box<ClipboardItem>('clipboard_box').listenable(),
                 builder: (context, Box<ClipboardItem> box, _) {
-                  _items = box.values.toList().cast<ClipboardItem>();
+                  _items = box.values.where((item) => !item.isDeleted).toList();
 
                   if (_currentSort == ClipSortOption.custom) {
                     _items.sort((a, b) => a.sortIndex.compareTo(b.sortIndex));
@@ -360,29 +387,29 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
                           final item = _items[index];
                           final selected = _selectedIds.contains(item.id);
 
-                          // --- REPLACED INLINE UI WITH ClipboardCard ---
-                          return Container(
+                          return ClipboardCard(
                             key: ValueKey(item.id),
-                            margin: const EdgeInsets.only(bottom: 10),
-                            child: ClipboardCard(
-                              item: item,
-                              isSelected: selected,
-                              onTap: () async {
-                                if (_isSelectionMode) {
-                                  setState(() => _selectedIds.contains(item.id) ? _selectedIds.remove(item.id) : _selectedIds.add(item.id));
-                                  if (_selectedIds.isEmpty) _isSelectionMode = false;
-                                } else {
-                                  await context.push(AppRouter.clipboardEdit, extra: item);
-                                  if (mounted) setState(() {});
-                                }
-                              },
-                              onLongPress: !canReorder
-                                  ? () => setState(() { _isSelectionMode = true; _selectedIds.add(item.id); })
-                                  : null,
-                              onCopy: () => _copyItem(item),
-                              onShare: () => Share.share(item.content),
-                              onDelete: () => _deleteItem(item), // Hook up single delete here
-                            ),
+                            item: item,
+                            isSelected: selected,
+                            onTap: () async {
+                              if (_isSelectionMode) {
+                                setState(() => _selectedIds.contains(item.id) ? _selectedIds.remove(item.id) : _selectedIds.add(item.id));
+                                if (_selectedIds.isEmpty) _isSelectionMode = false;
+                              } else {
+                                await context.push(AppRouter.clipboardEdit, extra: item);
+                              }
+                            },
+                            onCopy: () {
+                              final text = _getCleanText(item.content);
+                              Clipboard.setData(ClipboardData(text: text));
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Clean text copied")));
+                            },
+                            onShare: () => Share.share(_getCleanText(item.content)),
+                            onDelete: () => _deleteItem(item),
+                            onColorChanged: (newColor) {
+                              setState(() => item.colorValue = newColor.value);
+                              item.save(); // Direct Hive save
+                            },
                           );
                         },
                       );

@@ -125,7 +125,8 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
   void _loadExistingCategories() {
     if (Hive.isBoxOpen('expenses_box')) {
       final box = Hive.box<Expense>('expenses_box');
-      final existing = box.values.map((e) => e.category).toSet().toList();
+      // ADDED FILTER: Only load categories from active expenses
+      final existing = box.values.where((e) => !e.isDeleted).map((e) => e.category).toSet().toList();
       if (existing.isNotEmpty) {
         setState(() => _categorySuggestions = {..._categorySuggestions, ...existing}.toList()..sort());
       }
@@ -386,29 +387,27 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
     if (mounted) context.pop();
   }
 
+  // REFACTORED: Soft delete for single transaction
   void _confirmDelete() {
     if (widget.expense == null) return;
 
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete Transaction?",
-        content: "This action cannot be undone.",
-        confirmText: "Delete",
+        title: "Move Transaction to Recycle Bin?",
+        content: "You can restore this transaction later from settings.",
+        confirmText: "Move",
         isDestructive: true,
         onConfirm: () {
+          final expense = widget.expense!;
+          expense.isDeleted = true;
+          expense.deletedAt = DateTime.now();
+          expense.save();
           Navigator.pop(ctx); // Close dialog
-          _delete(); // Perform delete
+          context.pop(); // Go back from edit screen
         },
       ),
     );
-  }
-
-  void _delete() {
-    if (widget.expense != null) {
-      Hive.box<Expense>('expenses_box').delete(widget.expense!.id);
-      context.pop();
-    }
   }
 
   @override

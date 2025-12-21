@@ -17,16 +17,17 @@ class JournalEntryAdapter extends TypeAdapter<JournalEntry> {
       content: fields[2] as String,
       date: fields[3] as DateTime,
       mood: fields[4] as String,
-      sortIndex: fields[5] ?? 0,
+      sortIndex: fields[5] as int? ?? 0,
       tags: (fields[6] as List?)?.cast<String>() ?? [],
-      isFavorite: fields[7] == null ? false : fields[7] as bool,
+      isFavorite: fields[7] as bool? ?? false,
+      colorValue: fields[8] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, JournalEntry obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)..write(obj.id)
       ..writeByte(1)..write(obj.title)
       ..writeByte(2)..write(obj.content)
@@ -34,16 +35,7 @@ class JournalEntryAdapter extends TypeAdapter<JournalEntry> {
       ..writeByte(4)..write(obj.mood)
       ..writeByte(5)..write(obj.sortIndex)
       ..writeByte(6)..write(obj.tags)
-      ..writeByte(7)..write(obj.isFavorite);
+      ..writeByte(7)..write(obj.isFavorite)
+      ..writeByte(8)..write(obj.colorValue);
   }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is JournalEntryAdapter &&
-              runtimeType == other.runtimeType &&
-              typeId == other.typeId;
 }

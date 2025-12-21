@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
@@ -60,36 +61,73 @@ class _JournalScreenState extends State<JournalScreen> {
     super.dispose();
   }
 
-  // --- Logic: Actions ---
+  String _getMoodEmoji(String mood) {
+    switch (mood) {
+      case 'Happy': return '😊';
+      case 'Excited': return '🤩';
+      case 'Neutral': return '😐';
+      case 'Sad': return '😔';
+      case 'Stressed': return '😫';
+      default: return '😐';
+    }
+  }
+
+  String _formatJournalForExport(JournalEntry entry) {
+    // Extract clean text from JSON Delta
+    String body = "";
+    try {
+      final List<dynamic> delta = jsonDecode(entry.content);
+      for (var op in delta) {
+        if (op is Map && op.containsKey('insert') && op['insert'] is String) {
+          body += op['insert'];
+        }
+      }
+    } catch (e) {
+      body = entry.content; // Fallback
+    }
+
+    final dateStr = DateFormat('EEEE, MMM dd, yyyy').format(entry.date);
+    final tagsStr = entry.tags.isNotEmpty ? "\nTags: #${entry.tags.join(' #')}" : "";
+
+    // RETURN CLEAN FORMATTED TEXT
+    return "📅 $dateStr\n"
+        "Mood: ${_getMoodEmoji(entry.mood)} ${entry.mood}\n\n"
+        "TITLE: ${entry.title}\n"
+        "--------------------------\n"
+        "${body.trim()}\n"
+        "$tagsStr";
+  }
+
   void _copyEntry(JournalEntry entry) {
-    Clipboard.setData(ClipboardData(text: "${entry.title}\n\n${entry.content}"));
+    final text = _formatJournalForExport(entry);
+    Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            "Copied to clipboard",
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-          ),
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          duration: const Duration(milliseconds: 1000),
+          content: const Text("Journal entry copied (clean text)"),
           behavior: SnackBarBehavior.floating,
+          backgroundColor: Theme.of(context).colorScheme.surface,
         )
     );
   }
 
-  void _shareEntry(JournalEntry entry) => Share.share("${entry.title}\n\n${entry.content}");
+  void _shareEntry(JournalEntry entry) {
+    final text = _formatJournalForExport(entry);
+    Share.share(text);
+  }
 
+  // REFACTORED: Soft delete for single entry
   void _confirmDeleteEntry(JournalEntry entry) {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete Entry?",
-        content: "This cannot be undone.",
-        confirmText: "Delete",
+        title: "Move Entry to Recycle Bin?",
+        content: "You can restore this entry later from settings.",
+        confirmText: "Move",
         isDestructive: true,
         onConfirm: () {
-          entry.delete();
+          entry.isDeleted = true;
+          entry.deletedAt = DateTime.now();
+          entry.save();
           Navigator.pop(ctx);
         },
       ),
@@ -100,34 +138,67 @@ class _JournalScreenState extends State<JournalScreen> {
 
   void _selectAllToggle(List<JournalEntry> entries) {
     setState(() {
-      final allIds = entries.map((e) => e.id).toSet();
-      if (_selectedIds.length == allIds.length) {
+      final allActiveIds = entries.where((e) => !e.isDeleted).map((e) => e.id).toSet();
+      if (_selectedIds.length == allActiveIds.length) {
         _selectedIds.clear();
         _isSelectionMode = false;
       } else {
-        _selectedIds.addAll(allIds);
+        _selectedIds.addAll(allActiveIds);
         _isSelectionMode = true;
       }
     });
   }
 
+  // REFACTORED: Soft delete for selected entries
   void _deleteSelected() {
-    final box = Hive.box<JournalEntry>('journal_box');
-    final toDel = box.values.where((e)=>_selectedIds.contains(e.id)).toList();
-    for(var e in toDel) e.delete();
-    setState(() { _selectedIds.clear(); _isSelectionMode = false; });
+    if (_selectedIds.isEmpty) return;
+    showDialog(
+      context: context,
+      builder: (ctx) => GlassDialog(
+        title: "Move ${_selectedIds.length} Entries to Bin?",
+        content: "You can restore them later from settings.",
+        confirmText: "Move",
+        isDestructive: true,
+        onConfirm: () {
+          final box = Hive.box<JournalEntry>('journal_box');
+          final now = DateTime.now();
+          final entriesToSoftDelete = box.values
+              .where((e) => !e.isDeleted && _selectedIds.contains(e.id))
+              .toList();
+
+          for (var entry in entriesToSoftDelete) {
+            entry.isDeleted = true;
+            entry.deletedAt = now;
+            entry.save();
+          }
+
+          setState(() { _selectedIds.clear(); _isSelectionMode = false; });
+          Navigator.pop(ctx);
+        },
+      ),
+    );
   }
 
+  // REFACTORED: Soft delete for all entries
   void _deleteAll() {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete All Entries?",
-        content: "This will permanently remove all journal entries. This action cannot be undone.",
-        confirmText: "Delete All",
+        title: "Move All Entries to Bin?",
+        content: "This will move all active entries to the recycle bin.",
+        confirmText: "Move All",
         isDestructive: true,
         onConfirm: () {
-          Hive.box<JournalEntry>('journal_box').clear();
+          final box = Hive.box<JournalEntry>('journal_box');
+          final now = DateTime.now();
+          final activeEntries = box.values.where((e) => !e.isDeleted).toList();
+
+          for (var entry in activeEntries) {
+            entry.isDeleted = true;
+            entry.deletedAt = now;
+            entry.save();
+          }
+
           Navigator.pop(ctx);
         },
       ),
@@ -225,8 +296,8 @@ class _JournalScreenState extends State<JournalScreen> {
         ),
         body: Column(
           children: [
+            SizedBox(height: 32),
             _buildTopBar(),
-
             if (!_isSelectionMode && _searchQuery.isEmpty)
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
@@ -277,10 +348,13 @@ class _JournalScreenState extends State<JournalScreen> {
                 valueListenable: Hive.box<JournalEntry>('journal_box').listenable(),
                 builder: (_, Box<JournalEntry> box, __) {
                   List<JournalEntry> entries;
+                  // ADDED FILTER: Filter out deleted items
+                  final activeEntries = box.values.where((e) => !e.isDeleted).toList().cast<JournalEntry>();
+
                   if (_isReordering) {
                     entries = _reorderingList;
                   } else {
-                    entries = box.values.toList();
+                    entries = activeEntries;
                     if (_searchQuery.isNotEmpty) {
                       entries = entries.where((e) =>
                       e.title.toLowerCase().contains(_searchQuery) ||
@@ -315,7 +389,6 @@ class _JournalScreenState extends State<JournalScreen> {
                       final entry = entries[index];
                       final selected = _selectedIds.contains(entry.id);
 
-                      // --- REPLACED INLINE UI WITH JournalCard ---
                       return Container(
                         key: ValueKey(entry.id),
                         margin: const EdgeInsets.only(bottom: 10),
@@ -323,14 +396,16 @@ class _JournalScreenState extends State<JournalScreen> {
                           entry: entry,
                           isSelected: selected,
                           onTap: () => _isSelectionMode ? _toggleSelection(entry.id) : _openEditor(entry),
-                          onLongPress: canReorder ? null : () {
-                            if(!_isSelectionMode) {
-                              setState(() { _isSelectionMode = true; _selectedIds.add(entry.id); });
-                            }
-                          },
                           onCopy: () => _copyEntry(entry),
                           onShare: () => _shareEntry(entry),
                           onDelete: () => _confirmDeleteEntry(entry),
+                          // NEW COLOR PICKER LOGIC
+                          onColorChanged: (newColor) {
+                            setState(() {
+                              entry.colorValue = newColor.value;
+                            });
+                            entry.save(); // Save immediately to Hive
+                          },
                         ),
                       );
                     },

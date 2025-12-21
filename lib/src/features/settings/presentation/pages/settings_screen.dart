@@ -1,12 +1,21 @@
-import 'dart:ui'; // Required for ImageFilter
+import 'dart:ui';
+import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import '../../../../core/services/backup_service.dart';
 import '../../../../core/theme/theme_manager.dart';
+import '../../../clipboard/data/clipboard_model.dart';
+import '../../../expenses/data/expense_model.dart';
+import '../../../journal/data/journal_model.dart';
+import '../../../notes/data/note_model.dart';
+import '../../../todos/data/todo_model.dart';
+import 'recycle_bin_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -24,6 +33,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _checkServiceStatus();
+    _runAutoCleanup(); // Runs the 30-day deletion logic on open
   }
 
   @override
@@ -32,12 +42,62 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     super.dispose();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _checkServiceStatus();
+  // --- RECYCLE BIN LOGIC ---
+
+  /// Permanently deletes items from all boxes that have been in the trash for > 30 days
+  Future<void> _runAutoCleanup() async {
+    final boxes = ['notes_box', 'todos_box', 'expenses_box', 'journal_box', 'clipboard_box'];
+    final now = DateTime.now();
+    int cleanedCount = 0;
+
+    for (var boxName in boxes) {
+      if (Hive.isBoxOpen(boxName)) {
+        final box = Hive.box(boxName);
+        final toDelete = box.values.where((item) {
+          try {
+            // Check if item is marked deleted and if 30 days have passed
+            if (item.isDeleted == true && item.deletedAt != null) {
+              return now.difference(item.deletedAt!).inDays >= 30;
+            }
+          } catch (e) {
+            debugPrint("Cleanup check skipped for an item in $boxName");
+          }
+          return false;
+        }).toList();
+
+        for (var item in toDelete) {
+          await item.delete(); // Permanent removal from Hive
+          cleanedCount++;
+        }
+      }
     }
+    if (cleanedCount > 0) debugPrint("Auto-Cleanup: Removed $cleanedCount expired items.");
   }
+
+  /// Calculates total items currently in the Recycle Bin across all features
+  int _getTrashCount() {
+    int total = 0;
+
+    // You must specify the <Type> for each box to avoid the HiveError
+    if (Hive.isBoxOpen('notes_box')) {
+      total += Hive.box<Note>('notes_box').values.where((item) => item.isDeleted == true).length;
+    }
+    if (Hive.isBoxOpen('todos_box')) {
+      total += Hive.box<Todo>('todos_box').values.where((item) => item.isDeleted == true).length;
+    }
+    if (Hive.isBoxOpen('expenses_box')) {
+      total += Hive.box<Expense>('expenses_box').values.where((item) => item.isDeleted == true).length;
+    }
+    if (Hive.isBoxOpen('journal_box')) {
+      total += Hive.box<JournalEntry>('journal_box').values.where((item) => item.isDeleted == true).length;
+    }
+    if (Hive.isBoxOpen('clipboard_box')) {
+      total += Hive.box<ClipboardItem>('clipboard_box').values.where((item) => item.isDeleted == true).length;
+    }
+
+    return total;
+  }
+  // --- EXISTING UTILITIES ---
 
   Future<void> _checkServiceStatus() async {
     try {
@@ -48,10 +108,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     }
   }
 
-  // --- GLASS SNACKBAR ---
   void _showGlassSnackBar(String message, {bool isError = false}) {
     if (!mounted) return;
-
     final theme = Theme.of(context);
     final color = isError ? theme.colorScheme.error : Colors.greenAccent;
 
@@ -60,294 +118,235 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         backgroundColor: Colors.transparent,
         elevation: 0,
         behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 3),
-        content: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surface.withOpacity(0.8),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: color.withOpacity(0.5), width: 1),
-                boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 20, spreadRadius: 5),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Icon(isError ? Icons.error_outline : Icons.check_circle_outline, color: color),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurface,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+        content: GlassContainer(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          borderRadius: 16,
+          color: theme.colorScheme.surface,
+          opacity: 0.9,
+          child: Row(
+            children: [
+              Icon(isError ? Icons.error_outline : Icons.check_circle_outline, color: color),
+              const SizedBox(width: 12),
+              Expanded(child: Text(message, style: TextStyle(color: theme.colorScheme.onSurface, fontWeight: FontWeight.w600))),
+            ],
           ),
         ),
       ),
     );
   }
 
-  // --- DIALOG LOGIC ---
+  // --- DIALOGS ---
 
-  void _showExportDialog(BuildContext context) {
+  void _showExportDialog() {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
         title: "Backup Data",
         content: "Save a JSON file containing all your data?",
         confirmText: "Export Now",
-        isDestructive: false,
         onConfirm: () async {
           Navigator.pop(ctx);
-          await Future.delayed(const Duration(milliseconds: 300));
-          if (!mounted) return;
-
           try {
             await BackupService.createBackup(context);
+            _showGlassSnackBar("Backup saved successfully!");
           } catch (e) {
-            _showGlassSnackBar("Export failed: ${e.toString().split(':').last}", isError: true);
+            _showGlassSnackBar("Export failed", isError: true);
           }
         },
       ),
     );
   }
 
-  void _showImportDialog(BuildContext context) {
+  void _showImportDialog() {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
         title: "Import Data",
-        content: "Select a backup file to merge with your current data. Existing items will not be overwritten.",
+        content: "Merge a backup file with your current items?",
         confirmText: "Select File",
-        isDestructive: false, // Changed to false since we are appending
         onConfirm: () async {
           Navigator.pop(ctx);
-          await Future.delayed(const Duration(milliseconds: 300));
-          if (!mounted) return;
-
           try {
-            final int addedCount = await BackupService.restoreBackup(context);
-            _showGlassSnackBar("Success! $addedCount new items added.");
+            final count = await BackupService.restoreBackup(context);
+            _showGlassSnackBar("Imported $count new items.");
+            setState(() {});
           } catch (e) {
-            if (!e.toString().contains("cancelled")) {
-              _showGlassSnackBar("Import failed: ${e.toString().split(':').last}", isError: true);
-            }
+            _showGlassSnackBar("Import failed", isError: true);
           }
         },
       ),
     );
   }
-
-  // --- BUILD UI ---
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final onSurfaceColor = theme.colorScheme.onSurface;
     final primaryColor = theme.colorScheme.primary;
-    final dividerColor = theme.dividerColor;
     final textTheme = theme.textTheme;
     final themeManager = Provider.of<ThemeManager>(context);
-
     final glassTint = primaryColor.withOpacity(0.08);
 
     return GlassScaffold(
       title: "Settings",
-      showBackArrow: false,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 90),
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
-          physics: const BouncingScrollPhysics(),
-          children: [
-
-            // --- APPEARANCE ---
-            Text("Appearance", style: textTheme.titleMedium?.copyWith(color: primaryColor, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 12),
-
-            GlassContainer(
-              color: glassTint,
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(Icons.brightness_6, color: primaryColor),
-                    title: Text("Theme Mode", style: textTheme.bodyLarge?.copyWith(color: onSurfaceColor)),
-                    subtitle: Text(
-                      _getThemeModeName(themeManager.themeMode),
-                      style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.54)),
-                    ),
-                    trailing: _buildThemeDropdown(context, themeManager),
-                  ),
-                  Divider(color: dividerColor, height: 1),
-                  ListTile(
-                    leading: Icon(Icons.palette, color: primaryColor),
-                    title: Text("Accent Color", style: textTheme.bodyLarge?.copyWith(color: onSurfaceColor)),
-                    subtitle: Text("Customize app identity", style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.54))),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildColorDot(Colors.amberAccent, themeManager),
-                        _buildColorDot(Colors.blueAccent, themeManager),
-                        _buildColorDot(Colors.greenAccent, themeManager),
-                        _buildColorDot(Colors.purpleAccent, themeManager),
-                        _buildColorDot(Colors.redAccent, themeManager),
-                        _buildColorDot(Colors.cyanAccent, themeManager),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 24),
-
-            // --- GENERAL ---
-            Text("General", style: textTheme.titleMedium?.copyWith(color: primaryColor, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 12),
-            GlassContainer(
-              color: glassTint,
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-              child: ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                leading: Icon(
-                  _isServiceEnabled ? Icons.bolt : Icons.bolt_outlined,
-                  color: _isServiceEnabled ? Colors.greenAccent : onSurfaceColor.withOpacity(0.54),
+      showBackArrow: true,
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(20, 100, 20, 40),
+        physics: const BouncingScrollPhysics(),
+        children: [
+          // --- APPEARANCE ---
+          _buildSectionHeader("Appearance", primaryColor),
+          GlassContainer(
+            color: glassTint,
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.brightness_6, color: primaryColor),
+                  title: Text("Theme Mode", style: textTheme.bodyLarge),
+                  trailing: _buildThemeDropdown(themeManager),
                 ),
-                title: Text("Auto Clipboard Capture", style: textTheme.bodyLarge?.copyWith(color: onSurfaceColor)),
-                subtitle: Text(
-                  _isServiceEnabled ? "Service is active" : "Requires Accessibility Permission",
-                  style: TextStyle(
-                      color: _isServiceEnabled ? Colors.greenAccent : onSurfaceColor.withOpacity(0.54),
-                      fontSize: 12
+                const Divider(indent: 50),
+                ListTile(
+                  leading: Icon(Icons.palette, color: primaryColor),
+                  title: Text("Accent Color", style: textTheme.bodyLarge),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildColorDot(Colors.amberAccent, themeManager),
+                      _buildColorDot(Colors.blueAccent, themeManager),
+                      _buildColorDot(Colors.greenAccent, themeManager),
+                      _buildColorDot(Colors.purpleAccent, themeManager),
+                      _buildColorDot(Colors.redAccent, themeManager),
+                      _buildColorDot(Colors.cyanAccent, themeManager),
+                    ],
                   ),
                 ),
-                trailing: Switch(
-                  value: _isServiceEnabled,
-                  activeColor: primaryColor,
-                  onChanged: (val) async {
-                    await platform.invokeMethod('openAccessibilitySettings');
-                  },
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // --- PRIVACY & TRASH ---
+          _buildSectionHeader("Privacy & Maintenance", primaryColor),
+          GlassContainer(
+            color: glassTint,
+            padding: const EdgeInsets.all(4),
+            child: ListTile(
+              leading: Icon(Icons.delete_sweep_outlined, color: primaryColor),
+              title: Text("Recycle Bin", style: textTheme.bodyLarge),
+              subtitle: Text("${_getTrashCount()} items • Auto-deletes in 30 days",
+                  style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.5))),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+              onTap: () async {
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RecycleBinScreen())
+                );
+                setState(() {});
+              },
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // --- AUTOMATION ---
+          _buildSectionHeader("General", primaryColor),
+          GlassContainer(
+            color: glassTint,
+            child: ListTile(
+              leading: Icon(_isServiceEnabled ? Icons.bolt : Icons.bolt_outlined,
+                  color: _isServiceEnabled ? Colors.greenAccent : onSurfaceColor.withOpacity(0.5)),
+              title: Text("Auto Clipboard Capture", style: textTheme.bodyLarge),
+              subtitle: Text(_isServiceEnabled ? "Service is active" : "Requires Accessibility Permission",
+                  style: TextStyle(fontSize: 12, color: _isServiceEnabled ? Colors.greenAccent : onSurfaceColor.withOpacity(0.5))),
+              trailing: Switch(
+                value: _isServiceEnabled,
+                activeColor: primaryColor,
+                onChanged: (_) async => await platform.invokeMethod('openAccessibilitySettings'),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // --- DATA ---
+          _buildSectionHeader("Data & Backup", primaryColor),
+          GlassContainer(
+            color: glassTint,
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.upload_file, color: primaryColor),
+                  title: Text("Export Data", style: textTheme.bodyLarge),
+                  onTap: _showExportDialog,
                 ),
-              ),
+                const Divider(indent: 50),
+                ListTile(
+                  leading: Icon(Icons.download, color: primaryColor),
+                  title: Text("Import Data", style: textTheme.bodyLarge),
+                  onTap: _showImportDialog,
+                ),
+              ],
             ),
+          ),
 
-            const SizedBox(height: 24),
+          const SizedBox(height: 24),
 
-            // --- DATA & BACKUP ---
-            Text("Data & Backup", style: textTheme.titleMedium?.copyWith(color: primaryColor, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 12),
-            GlassContainer(
-              color: glassTint,
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(Icons.upload_file, color: primaryColor),
-                    title: Text("Export Data", style: textTheme.bodyLarge?.copyWith(color: onSurfaceColor)),
-                    subtitle: Text("Save backup file", style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.54))),
-                    onTap: () => _showExportDialog(context),
-                  ),
-                  Divider(color: dividerColor, height: 1),
-                  ListTile(
-                    leading: Icon(Icons.download, color: primaryColor),
-                    title: Text("Import Data", style: textTheme.bodyLarge?.copyWith(color: onSurfaceColor)),
-                    subtitle: Text("Merge backup with current data", style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.54))),
-                    onTap: () => _showImportDialog(context),
-                  ),
-                ],
-              ),
+          // --- ABOUT ---
+          _buildSectionHeader("About", primaryColor),
+          GlassContainer(
+            color: glassTint,
+            child: ListTile(
+              title: Text("Version", style: textTheme.bodyLarge),
+              trailing: Text("1.0.0", style: TextStyle(color: onSurfaceColor.withOpacity(0.4))),
             ),
-
-            const SizedBox(height: 24),
-
-            // --- ABOUT ---
-            Text("About", style: textTheme.titleMedium?.copyWith(color: primaryColor, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 12),
-            GlassContainer(
-              color: glassTint,
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-              child: ListTile(
-                title: Text("Version", style: textTheme.bodyLarge?.copyWith(color: onSurfaceColor)),
-                trailing: Text("1.0.0", style: textTheme.bodyLarge?.copyWith(color: onSurfaceColor.withOpacity(0.38))),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  String _getThemeModeName(ThemeMode mode) {
-    switch (mode) {
-      case ThemeMode.system: return "System Default";
-      case ThemeMode.light: return "Light Mode";
-      case ThemeMode.dark: return "Dark Mode";
-    }
+  Widget _buildSectionHeader(String title, Color color) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 4, bottom: 8),
+      child: Text(title, style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 14)),
+    );
   }
 
-  Widget _buildThemeDropdown(BuildContext context, ThemeManager manager) {
-    final theme = Theme.of(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: theme.dividerColor.withOpacity(0.3)),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<ThemeMode>(
-          value: manager.themeMode,
-          dropdownColor: theme.cardColor,
-          icon: Icon(Icons.arrow_drop_down, color: theme.colorScheme.primary),
-          style: theme.textTheme.bodyMedium,
-          items: const [
-            DropdownMenuItem(value: ThemeMode.system, child: Text("System")),
-            DropdownMenuItem(value: ThemeMode.light, child: Text("Light")),
-            DropdownMenuItem(value: ThemeMode.dark, child: Text("Dark")),
-          ],
-          onChanged: (ThemeMode? newMode) {
-            if (newMode != null) manager.setThemeMode(newMode);
-          },
-        ),
+  Widget _buildThemeDropdown(ThemeManager manager) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<ThemeMode>(
+        value: manager.themeMode,
+        icon: const Icon(Icons.arrow_drop_down),
+        onChanged: (mode) => mode != null ? manager.setThemeMode(mode) : null,
+        items: const [
+          DropdownMenuItem(value: ThemeMode.system, child: Text("System")),
+          DropdownMenuItem(value: ThemeMode.light, child: Text("Light")),
+          DropdownMenuItem(value: ThemeMode.dark, child: Text("Dark")),
+        ],
       ),
     );
   }
 
   Widget _buildColorDot(Color color, ThemeManager manager) {
-    final bool isSelected = manager.primaryColor.value == color.value;
+    final isSelected = manager.primaryColor.value == color.value;
     return GestureDetector(
       onTap: () => manager.setPrimaryColor(color),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        width: 32,
-        height: 32,
+        width: 34, height: 34,
         decoration: BoxDecoration(
           color: color,
           shape: BoxShape.circle,
           border: isSelected ? Border.all(color: Colors.white, width: 2.5) : null,
-          boxShadow: [
-            BoxShadow(
-                color: color.withOpacity(0.4),
-                blurRadius: isSelected ? 8 : 4,
-                spreadRadius: isSelected ? 2 : 1
-            )
-          ],
+          boxShadow: isSelected ? [BoxShadow(color: color.withOpacity(0.4), blurRadius: 10)] : null,
         ),
-        child: isSelected ? const Icon(Icons.check, size: 16, color: Colors.black) : null,
+        child: isSelected ? const Icon(Icons.check, size: 18, color: Colors.black) : null,
       ),
     );
   }

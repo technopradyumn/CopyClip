@@ -11,6 +11,7 @@ import '../../features/journal/presentation/pages/journal_edit_screen.dart';
 import '../../features/notes/data/note_model.dart';
 import '../../features/notes/presentation/pages/note_edit_screen.dart';
 import '../../features/notes/presentation/pages/notes_screen.dart';
+import '../../features/settings/presentation/pages/recycle_bin_screen.dart';
 import '../../features/settings/presentation/pages/settings_screen.dart';
 import '../../features/todos/data/todo_model.dart';
 import '../../features/todos/presentation/pages/todo_edit_screen.dart';
@@ -41,6 +42,7 @@ class AppRouter {
   static const String dateDetail = "/calendar/date";
 
   static const String settings = "/settings";
+  static const String recycleBin = "settings/recycle-bin";
 
 }
 
@@ -126,6 +128,11 @@ List<GoRoute> getAuthRoutes() {
     GoRoute(
       path: AppRouter.settings,
       builder: (context, state) => const SettingsScreen(),
+    ),
+
+    GoRoute(
+      path: AppRouter.recycleBin,
+      builder: (context, state) => const RecycleBinScreen(),
     ),
 
   ];

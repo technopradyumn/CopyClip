@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
@@ -11,6 +13,7 @@ class ClipboardCard extends StatelessWidget {
   final VoidCallback onCopy;
   final VoidCallback onShare;
   final VoidCallback onDelete;
+  final Function(Color) onColorChanged; // Added for realtime color pick
 
   const ClipboardCard({
     super.key,
@@ -21,7 +24,35 @@ class ClipboardCard extends StatelessWidget {
     required this.onCopy,
     required this.onShare,
     required this.onDelete,
+    required this.onColorChanged,
   });
+
+  /// Logic to extract clean text and the first image from Quill JSON
+  Map<String, dynamic> _parseContent(String jsonSource) {
+    if (jsonSource.isEmpty) return {"text": "No content", "imageUrl": null};
+    if (!jsonSource.startsWith('[')) return {"text": jsonSource, "imageUrl": null};
+    try {
+      final List<dynamic> delta = jsonDecode(jsonSource);
+      String plainText = "";
+      String? firstImageUrl;
+
+      for (var op in delta) {
+        if (op.containsKey('insert')) {
+          final insertData = op['insert'];
+          if (insertData is String) {
+            plainText += insertData;
+          } else if (insertData is Map && firstImageUrl == null) {
+            if (insertData.containsKey('image')) {
+              firstImageUrl = insertData['image'];
+            }
+          }
+        }
+      }
+      return {"text": plainText.trim(), "imageUrl": firstImageUrl};
+    } catch (e) {
+      return {"text": jsonSource, "imageUrl": null};
+    }
+  }
 
   IconData _getTypeIconData(String type) {
     switch (type) {
@@ -34,97 +65,137 @@ class ClipboardCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final onSurfaceColor = theme.colorScheme.onSurface;
-    final primaryColor = theme.colorScheme.primary;
-    final errorColor = theme.colorScheme.error;
+    final parsed = _parseContent(item.content);
+    final String previewText = parsed['text'];
+    final String? imageUrl = parsed['imageUrl'];
+
+    final Color clipThemeColor = item.colorValue != null
+        ? Color(item.colorValue!)
+        : theme.colorScheme.surface;
+
+    final bool isDarkColor = ThemeData.estimateBrightnessForColor(clipThemeColor) == Brightness.dark;
+    final Color contentColor = isDarkColor ? Colors.white : Colors.black87;
 
     return GestureDetector(
-      onLongPress: onLongPress,
       onTap: onTap,
+      onLongPress: onLongPress,
       child: Hero(
         tag: 'clip_bg_${item.id}',
-        child: Stack(
-          children: [
-            GlassContainer(
-              opacity: isSelected ? 0.3 : 0.1,
-              padding: const EdgeInsets.all(16),
-              margin: EdgeInsets.zero,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(_getTypeIconData(item.type), color: theme.colorScheme.primary.withOpacity(0.5), size: 20),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Material(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          transform: isSelected ? Matrix4.identity().scaled(0.98) : Matrix4.identity(),
+          child: GlassContainer(
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.all(16),
+            color: clipThemeColor,
+            opacity: isSelected ? 0.9 : 0.8,
+            blur: 3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(_getTypeIconData(item.type), color: contentColor.withOpacity(0.5), size: 20),
+                        const SizedBox(width: 8),
+                        Material(
                           type: MaterialType.transparency,
                           child: Text(
-                            item.content,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+                            DateFormat('MMM dd, h:mm a').format(item.createdAt),
+                            style: theme.textTheme.bodySmall?.copyWith(color: contentColor.withOpacity(0.5)),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Material(
-                        type: MaterialType.transparency,
-                        child: Text(
-                          DateFormat('MMM dd, h:mm a').format(item.createdAt),
-                          style: theme.textTheme.bodySmall?.copyWith(
-                              color: onSurfaceColor.withOpacity(0.38)
-                          ),
-                        ),
-                      ),
-                      IgnorePointer(
-                        ignoring: isSelected,
-                        child: Row(
-                          children: [
-                            IconButton(
-                                icon: Icon(Icons.copy, size: 18, color: onSurfaceColor.withOpacity(0.38)),
-                                onPressed: onCopy
-                            ),
-                            const SizedBox(width: 4),
-                            IconButton(
-                                icon: Icon(Icons.share, size: 18, color: onSurfaceColor.withOpacity(0.38)),
-                                onPressed: onShare
-                            ),
-                            const SizedBox(width: 4),
-                            // Added Delete Button
-                            IconButton(
-                                icon: Icon(Icons.delete_outline, size: 18, color: errorColor.withOpacity(0.8)),
-                                onPressed: onDelete
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            if (isSelected)
-              Positioned(
-                top: 12,
-                right: 12,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                      color: primaryColor,
-                      shape: BoxShape.circle
-                  ),
-                  child: Icon(Icons.check, size: 14, color: theme.colorScheme.onPrimary),
+                      ],
+                    ),
+                    Icon(
+                      isSelected ? Icons.check_circle : Icons.radio_button_unchecked,
+                      size: 20,
+                      color: isSelected ? theme.colorScheme.primary : contentColor.withOpacity(0.2),
+                    ),
+                  ],
                 ),
-              ),
-          ],
+                const SizedBox(height: 12),
+                if (imageUrl != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(File(imageUrl), height: 120, width: double.infinity, fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => Image.network(imageUrl, height: 120, width: double.infinity, fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => const SizedBox.shrink())),
+                    ),
+                  ),
+                Material(
+                  type: MaterialType.transparency,
+                  child: Text(
+                    previewText,
+                    maxLines: imageUrl != null ? 2 : 4,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodyMedium?.copyWith(color: contentColor, height: 1.3),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    _QuickColorPicker(
+                      onColorSelected: onColorChanged,
+                      currentColor: clipThemeColor,
+                    ),
+                    const Spacer(),
+                    IgnorePointer(
+                      ignoring: isSelected,
+                      child: Row(
+                        children: [
+                          _smallBtn(Icons.copy_rounded, onCopy, contentColor),
+                          _smallBtn(Icons.share_rounded, onShare, contentColor),
+                          _smallBtn(Icons.delete_outline_rounded, onDelete, Colors.redAccent),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _smallBtn(IconData icon, VoidCallback onPressed, Color color) {
+    return IconButton(
+      visualDensity: VisualDensity.compact,
+      icon: Icon(icon, size: 18, color: color.withOpacity(0.6)),
+      onPressed: onPressed,
+    );
+  }
+}
+
+class _QuickColorPicker extends StatelessWidget {
+  final Function(Color) onColorSelected;
+  final Color currentColor;
+  const _QuickColorPicker({required this.onColorSelected, required this.currentColor});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Color> palette = [Colors.white, const Color(0xFFFFCC00), const Color(0xFFFF3B30), const Color(0xFF007AFF), const Color(0xFF34C759)];
+    return Row(
+      children: palette.map((color) {
+        final isSelected = currentColor.value == color.value;
+        return GestureDetector(
+          onTap: () => onColorSelected(color),
+          child: Container(
+            margin: const EdgeInsets.only(right: 8),
+            width: 22, height: 22,
+            decoration: BoxDecoration(
+              color: color, shape: BoxShape.circle,
+              border: Border.all(color: isSelected ? Colors.blue : Colors.white.withOpacity(0.5), width: isSelected ? 2 : 1),
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 }

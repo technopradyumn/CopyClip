@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
@@ -35,34 +36,82 @@ class _NotesScreenState extends State<NotesScreen> {
     super.dispose();
   }
 
-  // --- ACTIONS ---
   void _copyNote(Note note) {
-    final text = "${note.title}\n\n${note.content}";
-    Clipboard.setData(ClipboardData(text: text));
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Note copied", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface)),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+    // 1. Parse the Delta JSON
+    try {
+      final List<dynamic> delta = jsonDecode(note.content);
+      String cleanContent = "";
+
+      for (var op in delta) {
+        if (op is Map && op.containsKey('insert') && op['insert'] is String) {
+          cleanContent += op['insert'];
+        }
+      }
+
+      final String textToCopy = cleanContent.trim();
+      if (textToCopy.isNotEmpty) {
+        Clipboard.setData(ClipboardData(text: textToCopy));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Content copied"),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    } catch (_) {
+      // Fallback for non-json content
+      if (note.content.isNotEmpty) {
+        Clipboard.setData(ClipboardData(text: note.content));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Content copied"),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    }
   }
 
   void _shareNote(Note note) {
-    Share.share("${note.title}\n\n${note.content}");
+    // 1. Parse the Delta JSON
+    try {
+      final List<dynamic> delta = jsonDecode(note.content);
+      String cleanContent = "";
+
+      for (var op in delta) {
+        if (op is Map && op.containsKey('insert') && op['insert'] is String) {
+          cleanContent += op['insert'];
+        }
+      }
+
+      // 2. Share only the editor content
+      final String textToShare = cleanContent.trim();
+
+      if (textToShare.isNotEmpty) {
+        Share.share(textToShare);
+      }
+    } catch (_) {
+      // Fallback for non-json content
+      if (note.content.isNotEmpty) {
+        Share.share(note.content);
+      }
+    }
   }
 
+  // REFACTORED: Soft delete for single note
   void _confirmDeleteNote(Note note) {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete Note?",
-        content: "This action cannot be undone.",
-        confirmText: "Delete",
+        title: "Move Note to Recycle Bin?",
+        content: "You can restore this note later from settings.",
+        confirmText: "Move",
         isDestructive: true,
         onConfirm: () {
           Navigator.pop(ctx);
-          note.delete();
+          note.isDeleted = true;
+          note.deletedAt = DateTime.now();
+          note.save();
         },
       ),
     );
@@ -96,7 +145,7 @@ class _NotesScreenState extends State<NotesScreen> {
 
   void _selectAll(List<Note> notes) {
     setState(() {
-      final ids = notes.map((e) => e.id).toSet();
+      final ids = notes.where((n) => !n.isDeleted).map((e) => e.id).toSet();
       if (_selectedNoteIds.containsAll(ids)) {
         _selectedNoteIds.clear();
         _isSelectionMode = false;
@@ -106,21 +155,32 @@ class _NotesScreenState extends State<NotesScreen> {
     });
   }
 
+  // REFACTORED: Soft delete for selected notes
   void _deleteSelected() {
     if (_selectedNoteIds.isEmpty) return;
     showDialog(
       context: context,
       barrierDismissible: true,
       builder: (ctx) => GlassDialog(
-        title: "Delete ${_selectedNoteIds.length} Notes?",
-        content: "This action cannot be undone.",
-        confirmText: "Delete",
+        title: "Move ${_selectedNoteIds.length} Notes to Bin?",
+        content: "You can restore them later from settings.",
+        confirmText: "Move",
         isDestructive: true,
         onConfirm: () {
           Navigator.pop(ctx);
           final box = Hive.box<Note>('notes_box');
-          final notesToDelete = box.values.where((n) => _selectedNoteIds.contains(n.id)).toList();
-          for (var note in notesToDelete) note.delete();
+          final now = DateTime.now();
+          // Filter notes that are active AND currently selected
+          final notesToSoftDelete = box.values
+              .where((n) => !n.isDeleted && _selectedNoteIds.contains(n.id))
+              .toList();
+
+          for (var note in notesToSoftDelete) {
+            note.isDeleted = true;
+            note.deletedAt = now;
+            note.save();
+          }
+
           setState(() {
             _selectedNoteIds.clear();
             _isSelectionMode = false;
@@ -130,18 +190,27 @@ class _NotesScreenState extends State<NotesScreen> {
     );
   }
 
+  // REFACTORED: Soft delete for all notes
   void _deleteAll() {
     showDialog(
       context: context,
       barrierDismissible: true,
       builder: (ctx) => GlassDialog(
-        title: "Delete All Notes?",
-        content: "This will permanently remove all notes. This action cannot be undone.",
-        confirmText: "Delete All",
+        title: "Move All Notes to Bin?",
+        content: "This will move all active notes to the recycle bin.",
+        confirmText: "Move All",
         isDestructive: true,
         onConfirm: () {
           Navigator.pop(ctx);
-          Hive.box<Note>('notes_box').clear();
+          final box = Hive.box<Note>('notes_box');
+          final now = DateTime.now();
+          final activeNotes = box.values.where((n) => !n.isDeleted).toList();
+
+          for (var note in activeNotes) {
+            note.isDeleted = true;
+            note.deletedAt = now;
+            note.save();
+          }
         },
       ),
     );
@@ -155,6 +224,7 @@ class _NotesScreenState extends State<NotesScreen> {
     context.push(AppRouter.noteEdit, extra: note);
   }
 
+  // REFACTORED: Use note.save() instead of box.clear() and box.addAll()
   void _onReorder(int oldIndex, int newIndex) async {
     if (newIndex > oldIndex) newIndex -= 1;
     setState(() {
@@ -163,9 +233,11 @@ class _NotesScreenState extends State<NotesScreen> {
       _reorderingList.insert(newIndex, item);
     });
 
-    final box = Hive.box<Note>('notes_box');
-    await box.clear();
-    await box.addAll(_reorderingList);
+    // Update sortIndex for all reordered items and save
+    for (int i = 0; i < _reorderingList.length; i++) {
+      _reorderingList[i].sortIndex = i;
+      _reorderingList[i].save();
+    }
 
     if (mounted) {
       setState(() {
@@ -237,6 +309,7 @@ class _NotesScreenState extends State<NotesScreen> {
         ),
         body: Column(
           children: [
+            SizedBox(height: 32),
             _buildCustomTopBar(),
             Padding(
               padding: const EdgeInsets.only(right: 16, left: 16, top: 0, bottom: 8),
@@ -277,10 +350,13 @@ class _NotesScreenState extends State<NotesScreen> {
                 builder: (_, Box<Note> box, __) {
                   List<Note> notes;
 
+                  // Filter out deleted items first
+                  final activeNotes = box.values.where((n) => !n.isDeleted).toList().cast<Note>();
+
                   if (_isReordering) {
                     notes = _reorderingList;
                   } else {
-                    notes = box.values.toList().cast<Note>();
+                    notes = activeNotes;
                     if (_searchQuery.isNotEmpty) {
                       notes = notes.where((n) => n.title.toLowerCase().contains(_searchQuery) || n.content.toLowerCase().contains(_searchQuery)).toList();
                     }
@@ -299,6 +375,8 @@ class _NotesScreenState extends State<NotesScreen> {
                         notes.sort((a, b) => b.title.toLowerCase().compareTo(a.title.toLowerCase()));
                         break;
                       case NoteSortOption.custom:
+                        // For custom sort, we sort the active notes by sortIndex
+                        notes.sort((a, b) => a.sortIndex.compareTo(b.sortIndex));
                         break;
                     }
                     _reorderingList = List.from(notes);
@@ -318,25 +396,28 @@ class _NotesScreenState extends State<NotesScreen> {
                     buildDefaultDragHandles: canReorder,
                     proxyDecorator: (child, index, animation) => AnimatedBuilder(animation: animation, builder: (_, __) => Transform.scale(scale: 1.05, child: Material(color: Colors.transparent, child: child))),
 
-                    itemBuilder: (_, index) {
-                      final note = notes[index];
-                      final selected = _selectedNoteIds.contains(note.id);
+                      // Inside your ReorderableListView.builder or ListView.builder
+                      itemBuilder: (_, index) {
+                        final note = notes[index];
+                        final selected = _selectedNoteIds.contains(note.id);
 
-                      // --- INTEGRATED NOTE CARD ---
-                      return Container(
-                        key: ValueKey(note.id),
-                        margin: const EdgeInsets.only(bottom: 10),
-                        child: NoteCard(
+                        return NoteCard(
+                          key: ValueKey(note.id),
                           note: note,
                           isSelected: selected,
                           onTap: () => _isSelectionMode ? _toggleSelection(note.id) : _openNoteEditor(note),
-                          onLongPress: !canReorder ? () => _enterSelectionMode(note.id) : null,
                           onCopy: () => _copyNote(note),
                           onShare: () => _shareNote(note),
                           onDelete: () => _confirmDeleteNote(note),
-                        ),
-                      );
-                    },
+                          // SAVE TO DATABASE ON CLICK
+                          onColorChanged: (newColor) {
+                            setState(() {
+                              note.colorValue = newColor.value; // Real-time UI update
+                            });
+                            note.save(); // Direct Hive save
+                          },
+                        );
+                      }
                   );
                 },
               ),
@@ -381,7 +462,7 @@ class _NotesScreenState extends State<NotesScreen> {
             ),
           ),
           if (_isSelectionMode) ...[
-            IconButton(icon: Icon(Icons.select_all, color: onSurfaceColor), onPressed: () => _selectAll(Hive.box<Note>('notes_box').values.toList().cast<Note>())),
+            IconButton(icon: Icon(Icons.select_all, color: onSurfaceColor), onPressed: () => _selectAll(Hive.box<Note>('notes_box').values.where((n) => !n.isDeleted).toList().cast<Note>())),
             IconButton(icon: Icon(Icons.delete, color: errorColor), onPressed: _deleteSelected),
           ] else ...[
             IconButton(icon: Icon(Icons.check_circle_outline, color: onSurfaceColor.withOpacity(0.54)), onPressed: () => setState(() => _isSelectionMode = true)),

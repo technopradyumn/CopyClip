@@ -16,13 +16,14 @@ class NoteAdapter extends TypeAdapter<Note> {
       title: fields[1] as String,
       content: fields[2] as String,
       updatedAt: fields[3] as DateTime,
+      colorValue: fields[4] as int?, // Added this field
     );
   }
 
   @override
   void write(BinaryWriter writer, Note obj) {
     writer
-      ..writeByte(4) // Number of fields
+      ..writeByte(5) // Increased from 4 to 5
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -30,7 +31,9 @@ class NoteAdapter extends TypeAdapter<Note> {
       ..writeByte(2)
       ..write(obj.content)
       ..writeByte(3)
-      ..write(obj.updatedAt);
+      ..write(obj.updatedAt)
+      ..writeByte(4) // New field index
+      ..write(obj.colorValue);
   }
 
   @override
