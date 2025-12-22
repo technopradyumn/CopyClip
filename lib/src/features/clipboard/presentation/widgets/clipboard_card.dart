@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
 
+import '../../../../core/app_content_palette.dart';
+
 class ClipboardCard extends StatelessWidget {
   final ClipboardItem item;
   final bool isSelected;
@@ -13,7 +15,7 @@ class ClipboardCard extends StatelessWidget {
   final VoidCallback onCopy;
   final VoidCallback onShare;
   final VoidCallback onDelete;
-  final Function(Color) onColorChanged; // Added for realtime color pick
+  final Function(Color) onColorChanged;
 
   const ClipboardCard({
     super.key,
@@ -180,19 +182,46 @@ class _QuickColorPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Color> palette = [Colors.white, const Color(0xFFFFCC00), const Color(0xFFFF3B30), const Color(0xFF007AFF), const Color(0xFF34C759)];
+    final List<Color> palette = AppContentPalette.palette;
+    final theme = Theme.of(context);
+
     return Row(
       children: palette.map((color) {
         final isSelected = currentColor.value == color.value;
+        final contrastColor = AppContentPalette.getContrastColor(color);
+        final primaryColor = theme.colorScheme.primary;
+
         return GestureDetector(
           onTap: () => onColorSelected(color),
-          child: Container(
-            margin: const EdgeInsets.only(right: 8),
-            width: 22, height: 22,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            margin: const EdgeInsets.only(right: 6),
+            width: 24,
+            height: 24,
             decoration: BoxDecoration(
-              color: color, shape: BoxShape.circle,
-              border: Border.all(color: isSelected ? Colors.blue : Colors.white.withOpacity(0.5), width: isSelected ? 2 : 1),
+              color: color,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isSelected
+                    ? primaryColor
+                    : contrastColor.withOpacity(0.2),
+                width: isSelected ? 2.5 : 1,
+              ),
+              boxShadow: isSelected ? [
+                BoxShadow(
+                  color: primaryColor.withOpacity(0.3),
+                  blurRadius: 8,
+                  spreadRadius: 1,
+                )
+              ] : null,
             ),
+            child: isSelected
+                ? Icon(
+              Icons.check,
+              size: 14,
+              color: contrastColor,
+            )
+                : null,
           ),
         );
       }).toList(),

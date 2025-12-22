@@ -18,6 +18,7 @@ import '../../../../core/widgets/glass_dialog.dart';
 import '../../../../core/widgets/glass_scaffold.dart';
 import '../../../../core/widgets/glass_rich_text_editor.dart';
 import '../../data/note_model.dart';
+import '../../../../core/app_content_palette.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final Note? note;
@@ -38,7 +39,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
   late DateTime _initialDate;
   late Box<Note> _notesBox;
 
-  Color _scaffoldColor = Colors.white;
+  Color _scaffoldColor = AppContentPalette.palette.first;
   late Color _initialColor;
 
   String _initialTitle = "";
@@ -54,7 +55,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       _selectedDate = widget.note!.updatedAt;
       _scaffoldColor = widget.note!.colorValue != null
           ? Color(widget.note!.colorValue!)
-          : Colors.white;
+          : AppContentPalette.palette.first;
     }
 
     _initialTitle = _titleController.text;
@@ -164,11 +165,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
   }
 
   void _showColorPicker() {
-    final List<Color> palette = [
-      const Color(0xFFFFFFFF), const Color(0xFFFFCC00),
-      const Color(0xFFFD7971), const Color(0xFF007AFF),
-      const Color(0xFF34C759), const Color(0xFFAF52DE),
-    ];
+    final List<Color> palette = AppContentPalette.palette;
 
     showDialog(
       context: context,
@@ -245,7 +242,10 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    // 1. Define Contrast Logic at the top
     final isColorDark = ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
+    final contrastColor = isColorDark ? Colors.white : Colors.black87;
 
     final String heroTag = widget.note != null
         ? 'note_background_${widget.note!.id}'
@@ -278,39 +278,61 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       child: GlassScaffold(
         showBackArrow: true,
         backgroundColor: _scaffoldColor,
+        // Pass contrastColor to the Scaffold if it supports title/arrow color overrides
         title: widget.note == null ? 'New Note' : 'Edit Note',
         actions: [
+          // 1. Color Picker Trigger
           GestureDetector(
             onTap: _showColorPicker,
             child: Container(
               margin: const EdgeInsets.only(right: 8),
               width: 26, height: 26,
               decoration: BoxDecoration(
-                color: _scaffoldColor, shape: BoxShape.circle,
-                border: Border.all(color: isColorDark ? Colors.white54 : Colors.black26),
+                color: _scaffoldColor,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: contrastColor.withOpacity(0.4),
+                  width: 1.5,
+                ),
               ),
+              child: Icon(Icons.palette_outlined, size: 14, color: contrastColor.withOpacity(0.7)),
             ),
           ),
+
+          // 2. Copy Button
           IconButton(
-            icon: const Icon(Icons.copy, size: 18),
+            icon: Icon(Icons.copy, size: 18, color: contrastColor),
             onPressed: () {
               final cleanText = _getCleanPlainText();
               if (cleanText.isNotEmpty) {
                 Clipboard.setData(ClipboardData(text: cleanText));
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Content copied (Title excluded)"), behavior: SnackBarBehavior.floating),
+                  SnackBar(
+                    content: const Text("Content copied"),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: contrastColor,
+                  ),
                 );
               }
             },
           ),
+
+          // 3. Export/Share Button
           PopupMenuButton<String>(
-            icon: const Icon(Icons.ios_share, size: 20),
+            icon: Icon(Icons.ios_share, size: 20, color: contrastColor),
             onSelected: (val) { if (val == 'image') _exportToImage(); },
-            itemBuilder: (ctx) => [const PopupMenuItem(value: 'image', child: Text("Export as Image"))],
+            itemBuilder: (ctx) => [
+              const PopupMenuItem(value: 'image', child: Text("Export as Image")),
+            ],
           ),
+
+          // 4. Save/Check Button
           IconButton(
-            icon: const Icon(Icons.check),
-            onPressed: () { _saveNote(); context.pop(); },
+            icon: Icon(Icons.check, color: contrastColor),
+            onPressed: () {
+              _saveNote();
+              context.pop();
+            },
           ),
         ],
         body: Hero(
@@ -319,8 +341,11 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
             type: MaterialType.transparency,
             child: Stack(
               children: [
+                // 2. Grid lines adapt to contrast
                 Positioned.fill(
-                  child: CustomPaint(painter: CanvasGridPainter(color: isColorDark ? Colors.white10 : Colors.black12)),
+                  child: CustomPaint(
+                    painter: CanvasGridPainter(color: contrastColor.withOpacity(0.08)),
+                  ),
                 ),
                 RepaintBoundary(
                   key: _boundaryKey,
@@ -329,22 +354,24 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                     child: Column(
                       children: [
                         const SizedBox(height: 70),
+                        // 3. Title adapt to contrast
                         Padding(
                           padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
                           child: TextField(
                             controller: _titleController,
                             style: theme.textTheme.headlineSmall?.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: isColorDark ? Colors.white : Colors.black87,
+                              color: contrastColor,
                             ),
                             decoration: InputDecoration(
                               hintText: 'Title (Optional)',
                               border: InputBorder.none,
                               isDense: true,
-                              hintStyle: TextStyle(color: isColorDark ? Colors.white38 : Colors.black38),
+                              hintStyle: TextStyle(color: contrastColor.withOpacity(0.3)),
                             ),
                           ),
                         ),
+                        // 4. Date badge adapt to contrast
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 4),
                           child: Align(
@@ -355,23 +382,29 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                               child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                                 decoration: BoxDecoration(
-                                  color: isColorDark ? Colors.white12 : Colors.black12,
+                                  color: contrastColor.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Text(
                                   DateFormat('MMM dd, yyyy  •  hh:mm a').format(_selectedDate),
-                                  style: TextStyle(color: isColorDark ? Colors.white70 : Colors.black87, fontWeight: FontWeight.bold, fontSize: 11),
+                                  style: TextStyle(
+                                      color: contrastColor.withOpacity(0.8),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 11
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
+                        // 5. Editor adapt to contrast
                         Expanded(
                           child: GlassRichTextEditor(
                             controller: _quillController,
                             focusNode: _editorFocusNode,
                             scrollController: _editorScrollController,
                             hintText: "Start typing...",
+                            editorBackgroundColor: _scaffoldColor,
                           ),
                         ),
                       ],

@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // Ensure intl package is in pubspec.yaml
+import 'package:intl/intl.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/features/notes/data/note_model.dart';
 import 'dart:io';
+import '../../../../core/app_content_palette.dart';
 
 class NoteCard extends StatelessWidget {
   final Note note;
@@ -59,12 +60,14 @@ class NoteCard extends StatelessWidget {
     final String previewText = parsed['text'];
     final String? imageUrl = parsed['imageUrl'];
 
+    // Use AppContentPalette helper to get the color
     final Color noteThemeColor = note.colorValue != null
-        ? Color(note.colorValue!)
-        : theme.colorScheme.surface;
+        ? AppContentPalette.getColorFromValue(note.colorValue!)
+        : AppContentPalette.palette[0];
 
-    final bool isDarkColor = ThemeData.estimateBrightnessForColor(noteThemeColor) == Brightness.dark;
-    final Color contentColor = isDarkColor ? Colors.white : Colors.black87;
+    // Use AppContentPalette helper for contrast color
+    final Color contentColor = AppContentPalette.getContrastColor(noteThemeColor);
+    final bool isDarkColor = contentColor == Colors.white; // Simplified dark check
 
     return GestureDetector(
       onTap: onTap,
@@ -213,13 +216,12 @@ class _QuickColorPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Color> dotPalette = [
-      Colors.white,
-      const Color(0xFFFFCC00),
-      const Color(0xFFFF3B30),
-      const Color(0xFF007AFF),
-      const Color(0xFF34C759),
-    ];
+    final List<Color> dotPalette = AppContentPalette.palette;
+
+    final theme = Theme.of(context);
+    // Determine the contrast color for the selected dot's border
+    final contrastColorForDot = theme.colorScheme.primary;
+
 
     return Row(
       children: dotPalette.map((color) {
@@ -234,11 +236,12 @@ class _QuickColorPicker extends StatelessWidget {
               color: color,
               shape: BoxShape.circle,
               border: Border.all(
-                color: isSelected ? Colors.blue : Colors.white.withOpacity(0.5),
+                color: isSelected ? contrastColorForDot : color.withOpacity(0.5),
                 width: isSelected ? 2 : 1,
               ),
               boxShadow: isSelected ? [BoxShadow(color: color.withOpacity(0.5), blurRadius: 4)] : null,
             ),
+            child: isSelected ? Icon(Icons.check, size: 14, color: AppContentPalette.getContrastColor(color)) : null,
           ),
         );
       }).toList(),

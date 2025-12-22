@@ -541,7 +541,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                   padding: const EdgeInsets.only(top: 8.0, left: 12),
                   child: Text(
                     "We'll send you a notification at this time.",
-                    style: textTheme.bodySmall?.copyWith(color: colorScheme.onSurface.withOpacity(0.4)),
+                    style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.onSurface.withOpacity(0.4)),
                   ),
                 ),
 

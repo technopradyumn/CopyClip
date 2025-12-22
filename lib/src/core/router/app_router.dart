@@ -4,6 +4,7 @@ import '../../features/calendar/presentation/pages/date_detail_screen.dart';
 import '../../features/clipboard/data/clipboard_model.dart';
 import '../../features/clipboard/presentation/pages/clipboard_edit_screen.dart';
 import '../../features/dashboard/presentation/pages/dashboard_screen.dart';
+import '../../features/dashboard/presentation/pages/global_search_screen.dart';
 import '../../features/expenses/data/expense_model.dart';
 import '../../features/expenses/presentation/pages/expense_edit_screen.dart';
 import '../../features/journal/data/journal_model.dart';
@@ -43,6 +44,8 @@ class AppRouter {
 
   static const String settings = "/settings";
   static const String recycleBin = "settings/recycle-bin";
+
+  static const String globalSearch = "/global-search";
 
 }
 
@@ -133,6 +136,11 @@ List<GoRoute> getAuthRoutes() {
     GoRoute(
       path: AppRouter.recycleBin,
       builder: (context, state) => const RecycleBinScreen(),
+    ),
+
+    GoRoute(
+      path: AppRouter.globalSearch,
+      builder: (context, state) => const GlobalSearchScreen(),
     ),
 
   ];

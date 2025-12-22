@@ -11,7 +11,6 @@ class GlassScaffold extends StatefulWidget {
   final bool showBackArrow;
   final Color? backgroundColor;
   final bool enableGlassEffect;
-  final bool resizeToAvoidBottomInset;
 
   const GlassScaffold({
     super.key,
@@ -22,7 +21,6 @@ class GlassScaffold extends StatefulWidget {
     this.showBackArrow = false,
     this.backgroundColor,
     this.enableGlassEffect = true,
-    this.resizeToAvoidBottomInset = true,
   });
 
   @override
@@ -30,64 +28,114 @@ class GlassScaffold extends StatefulWidget {
 }
 
 class _GlassScaffoldState extends State<GlassScaffold> {
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
 
-    final SystemUiOverlayStyle systemUiOverlayStyle = isDark
+    final baseColor =
+        widget.backgroundColor ?? theme.scaffoldBackgroundColor;
+
+    final bool isBackgroundDark =
+        ThemeData.estimateBrightnessForColor(baseColor) ==
+            Brightness.dark;
+
+    final contentColor =
+    isBackgroundDark ? Colors.white : Colors.black87;
+
+    final overlayStyle = isBackgroundDark
         ? SystemUiOverlayStyle.light
         : SystemUiOverlayStyle.dark;
 
-    final Color effectiveBackgroundColor = widget.backgroundColor ?? theme.scaffoldBackgroundColor;
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: systemUiOverlayStyle.copyWith(statusBarColor: Colors.transparent),
+      value: overlayStyle.copyWith(
+        statusBarColor: Colors.transparent,
+      ),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: baseColor,
+
+        // ❌ DO NOT let Scaffold resize automatically
+        resizeToAvoidBottomInset: false,
+
         extendBodyBehindAppBar: true,
-        resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+
         appBar: widget.title != null
             ? AppBar(
           backgroundColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
-          systemOverlayStyle: systemUiOverlayStyle,
+          systemOverlayStyle: overlayStyle,
           leading: widget.showBackArrow
               ? IconButton(
-            icon: Icon(Icons.arrow_back_ios_new, size: 20, color: colorScheme.onSurface),
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              size: 20,
+              color: contentColor,
+            ),
             onPressed: () => context.pop(),
           )
               : null,
           title: Text(
             widget.title!,
             style: theme.textTheme.titleLarge?.copyWith(
-              color: colorScheme.onSurface,
+              color: contentColor,
               fontWeight: FontWeight.bold,
             ),
           ),
           actions: widget.actions,
         )
             : null,
+
         body: Stack(
           children: [
             Positioned.fill(
               child: DecoratedBox(
-                decoration: BoxDecoration(color: effectiveBackgroundColor),
+                decoration: BoxDecoration(color: baseColor),
               ),
             ),
 
             Positioned.fill(
-              child: Material(
-                color: Colors.transparent,
-                child: widget.body,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      isBackgroundDark
+                          ? Colors.white10
+                          : Colors.white.withOpacity(0.6),
+                      isBackgroundDark
+                          ? Colors.transparent
+                          : Colors.white.withOpacity(0.2),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            if (widget.enableGlassEffect)
+              Positioned.fill(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                  child: Container(color: Colors.transparent),
+                ),
+              ),
+
+            // ✅ Manual keyboard handling (THIS FIXES BLACK SCREEN)
+            Positioned.fill(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: bottomInset),
+                child: Material(
+                  color: Colors.transparent,
+                  child: widget.body,
+                ),
               ),
             ),
           ],
         ),
+
         floatingActionButton: widget.floatingActionButton,
       ),
     );

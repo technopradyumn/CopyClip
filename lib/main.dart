@@ -17,13 +17,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'src/l10n/app_localizations.dart';
 
+// Placeholder for your FeatureItem class
+class FeatureItem {
+  final String id;
+  final String title;
+  final String description;
+
+  FeatureItem({required this.id, required this.title, required this.description});
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
@@ -51,12 +63,23 @@ void main() async {
     systemNavigationBarColor: Colors.transparent,
   ));
 
+  await _initializeWidgetData();
+
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeManager(),
       child: const CopyClipApp(),
     ),
   );
+}
+
+Future<void> _initializeWidgetData() async {
+  final String? title = await HomeWidget.getWidgetData<String>('title');
+  if (title != null) return;
+
+  await HomeWidget.saveWidgetData<String>('title', 'Clipboard');
+  await HomeWidget.saveWidgetData<String>('description', 'Access your clipboard history');
+  await HomeWidget.saveWidgetData<String>('deeplink', 'copyclip://clipboard');
 }
 
 class CopyClipApp extends StatefulWidget {
@@ -73,6 +96,7 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    platform.setMethodCallHandler(_handlePlatformChannelMethods);
     _syncAllClips();
     _configureSelectNotificationSubject();
     _handleInitialNotification();
@@ -94,10 +118,18 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
     }
   }
 
+  Future<void> _handlePlatformChannelMethods(MethodCall call) async {
+    if (call.method == "handleWidgetNavigation") {
+      final String? route = call.arguments as String?;
+      if (route != null) {
+        router.go(route);
+      }
+    }
+  }
+
   Future<void> _syncAllClips() async {
     try {
       final List<dynamic>? pendingClips = await platform.invokeMethod('getPendingClips');
-
       if (pendingClips != null && pendingClips.isNotEmpty) {
         for (var text in pendingClips) {
           await _saveToHive(text.toString());
@@ -111,22 +143,16 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
   Future<void> _saveToHive(String text) async {
     final box = Hive.box<ClipboardItem>('clipboard_box');
     final cleanText = text.trim();
-
     if (cleanText.isEmpty) return;
-
     bool alreadyExists = box.values.any((item) => item.content.trim() == cleanText);
-
     if (!alreadyExists) {
-      final String uniqueId = DateTime.now().microsecondsSinceEpoch.toString();
-
       final newItem = ClipboardItem(
-        id: uniqueId,
+        id: DateTime.now().microsecondsSinceEpoch.toString(),
         content: cleanText,
         createdAt: DateTime.now(),
         type: _detectType(cleanText),
         sortIndex: box.length,
       );
-
       await box.put(newItem.id, newItem);
     }
   }
@@ -140,22 +166,16 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
 
   Future<void> _handleInitialNotification() async {
     final notificationPlugin = NotificationService().flutterLocalNotificationsPlugin;
-    final NotificationAppLaunchDetails? launchDetails =
-    await notificationPlugin.getNotificationAppLaunchDetails();
-
-    if (launchDetails != null &&
-        launchDetails.didNotificationLaunchApp &&
-        launchDetails.notificationResponse?.payload != null) {
-      final String payload = launchDetails.notificationResponse!.payload!;
-      Future.delayed(const Duration(milliseconds: 500), () {
-        _navigateToTodo(payload);
-      });
+    final launchDetails = await notificationPlugin.getNotificationAppLaunchDetails();
+    if (launchDetails?.didNotificationLaunchApp == true && launchDetails?.notificationResponse?.payload != null) {
+      final payload = launchDetails!.notificationResponse!.payload!;
+      Future.delayed(const Duration(milliseconds: 500), () => _navigateToTodo(payload));
     }
   }
 
   void _navigateToTodo(String payload) {
     final box = Hive.box<Todo>('todos_box');
-    final Todo? todoToEdit = box.get(payload);
+    final todoToEdit = box.get(payload);
     if (todoToEdit != null) {
       router.push(AppRouter.todoEdit, extra: todoToEdit);
     }
@@ -171,30 +191,21 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // 1. Get the provider
     final themeManager = Provider.of<ThemeManager>(context);
-
     return MaterialApp.router(
       title: 'CopyClip',
       debugShowCheckedModeBanner: false,
-
-      // 2. Use the local variable `themeManager`
       themeMode: themeManager.themeMode,
       theme: AppTheme.lightTheme(themeManager.primaryColor),
       darkTheme: AppTheme.darkTheme(themeManager.primaryColor),
-
       routerConfig: router,
-
-      // 3. Add Localization Delegates (FIX for Quill Error)
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-        FlutterQuillLocalizations.delegate, // <--- Added this line
+        FlutterQuillLocalizations.delegate,
       ],
-
-      // 4. Add Supported Locales
       supportedLocales: AppLocalizations.supportedLocales,
     );
   }
@@ -213,11 +224,47 @@ class AccessibilityServiceManager {
 
   static Future<bool> isServiceEnabled() async {
     try {
-      final bool isEnabled = await platform.invokeMethod('isServiceEnabled');
-      return isEnabled;
+      return await platform.invokeMethod('isServiceEnabled');
     } on PlatformException catch (e) {
       print("Error checking service status: ${e.message}");
       return false;
+    }
+  }
+}
+
+@pragma("vm:entry-point")
+void homeWidgetBackgroundCallback(Uri? uri) async {
+  if (uri?.scheme == 'copyclip') {
+    final featureId = uri?.host;
+    if (featureId != null) {
+      WidgetsFlutterBinding.ensureInitialized();
+      await Hive.initFlutter();
+      Hive.registerAdapter(NoteAdapter());
+      Hive.registerAdapter(TodoAdapter());
+      Hive.registerAdapter(ExpenseAdapter());
+      Hive.registerAdapter(JournalEntryAdapter());
+      Hive.registerAdapter(ClipboardItemAdapter());
+      await Hive.openBox<Todo>('todos_box');
+
+      final routesMap = {
+        'notes': AppRouter.notes,
+        'todos': AppRouter.todos,
+        'expenses': AppRouter.expenses,
+        'journal': AppRouter.journal,
+        'calendar': AppRouter.calendar,
+        'clipboard': AppRouter.clipboard,
+      };
+
+      final route = routesMap[featureId];
+
+      if (route != null) {
+        const platform = MethodChannel('com.technopradyumn.copyclip/widget_handler');
+        try {
+          await platform.invokeMethod('navigateTo', {'route': route});
+        } catch (e) {
+          debugPrint("Widget navigation failed: $e");
+        }
+      }
     }
   }
 }

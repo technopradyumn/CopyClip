@@ -18,6 +18,7 @@ import '../../../../core/widgets/glass_scaffold.dart';
 import '../../../../core/widgets/glass_dialog.dart';
 import '../../../../core/widgets/glass_rich_text_editor.dart';
 import '../../data/clipboard_model.dart';
+import '../../../../core/app_content_palette.dart';
 
 class ClipboardEditScreen extends StatefulWidget {
   final ClipboardItem? item;
@@ -37,7 +38,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
   late DateTime _initialDate;
   late Box<ClipboardItem> _clipboardBox;
 
-  Color _scaffoldColor = Colors.white;
+  Color _scaffoldColor = AppContentPalette.palette.first;
   late Color _initialColor;
   String _initialContentJson = "";
 
@@ -50,7 +51,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
       _selectedDate = widget.item!.createdAt;
       _scaffoldColor = widget.item!.colorValue != null
           ? Color(widget.item!.colorValue!)
-          : Colors.white;
+          : AppContentPalette.palette.first;
     }
 
     _initialDate = _selectedDate;
@@ -134,11 +135,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
   }
 
   void _showColorPicker() {
-    final List<Color> palette = [
-      const Color(0xFFFFFFFF), const Color(0xFFFFCC00),
-      const Color(0xFFFD7971), const Color(0xFF007AFF),
-      const Color(0xFF34C759), const Color(0xFFAF52DE),
-    ];
+    final List<Color> palette = AppContentPalette.palette;
 
     showDialog(
       context: context,
@@ -239,9 +236,11 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isColorDark = ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
 
-    // MATCHING HERO TAG: Must be identical to ClipboardCard
+    // 1. Dynamic Contrast Calculation
+    final isColorDark = ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
+    final contrastColor = isColorDark ? Colors.white : Colors.black87;
+
     final String heroTag = widget.item != null
         ? 'clip_bg_${widget.item!.id}'
         : 'new_clip_hero';
@@ -274,6 +273,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
         backgroundColor: _scaffoldColor,
         title: widget.item == null ? 'New Clip' : 'Edit Clip',
         actions: [
+          // Color Picker Swatch
           GestureDetector(
             onTap: _showColorPicker,
             child: Container(
@@ -281,37 +281,48 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
               width: 26, height: 26,
               decoration: BoxDecoration(
                 color: _scaffoldColor, shape: BoxShape.circle,
-                border: Border.all(color: isColorDark ? Colors.white54 : Colors.black26),
+                // Border reacts to background luminance
+                border: Border.all(color: contrastColor.withOpacity(0.4), width: 1.5),
               ),
+              child: Icon(Icons.palette_outlined, size: 14, color: contrastColor.withOpacity(0.6)),
             ),
           ),
+          // Copy Button
           IconButton(
-            icon: const Icon(Icons.copy, size: 18),
+            icon: Icon(Icons.copy, size: 18, color: contrastColor),
             onPressed: () {
               Clipboard.setData(ClipboardData(text: _quillController.document.toPlainText()));
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Copied plain text")));
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text("Copied plain text"),
+                  behavior: SnackBarBehavior.floating,
+                  backgroundColor: contrastColor,
+                ),
+              );
             },
           ),
+          // Share Menu
           PopupMenuButton<String>(
-            icon: const Icon(Icons.ios_share, size: 20),
+            icon: Icon(Icons.ios_share, size: 20, color: contrastColor),
             onSelected: (val) { if (val == 'image') _exportToImage(); },
             itemBuilder: (ctx) => [const PopupMenuItem(value: 'image', child: Text("Export as Image"))],
           ),
+          // Check/Save Button
           IconButton(
-            icon: const Icon(Icons.check),
+            icon: Icon(Icons.check, color: contrastColor),
             onPressed: () { _save(); context.pop(); },
           ),
         ],
-        // WRAP THE BODY IN HERO
         body: Hero(
           tag: heroTag,
           child: Material(
-            type: MaterialType.transparency, // Prevents text style reset during flight
+            type: MaterialType.transparency,
             child: Stack(
               children: [
+                // 2. Adaptive Canvas Grid
                 Positioned.fill(
                   child: CustomPaint(
-                    painter: CanvasGridPainter(color: isColorDark ? Colors.white10 : Colors.black12),
+                    painter: CanvasGridPainter(color: contrastColor.withOpacity(0.08)),
                   ),
                 ),
                 RepaintBoundary(
@@ -321,6 +332,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                     child: Column(
                       children: [
                         const SizedBox(height: 90),
+                        // 3. Adaptive Date/Time Badge
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
                           child: Align(
@@ -331,18 +343,18 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                               child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                                 decoration: BoxDecoration(
-                                  color: isColorDark ? Colors.white12 : Colors.black12,
+                                  color: contrastColor.withOpacity(0.08),
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(Icons.access_time, size: 14, color: isColorDark ? Colors.white70 : Colors.black54),
+                                    Icon(Icons.access_time, size: 14, color: contrastColor.withOpacity(0.7)),
                                     const SizedBox(width: 8),
                                     Text(
                                       DateFormat('MMM dd, yyyy  •  hh:mm a').format(_selectedDate),
                                       style: TextStyle(
-                                        color: isColorDark ? Colors.white70 : Colors.black87,
+                                        color: contrastColor,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 11,
                                       ),
@@ -353,12 +365,14 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                             ),
                           ),
                         ),
+                        // 4. Editor with passed contrast color
                         Expanded(
                           child: GlassRichTextEditor(
                             controller: _quillController,
                             focusNode: _focusNode,
                             scrollController: _scrollController,
                             hintText: "Paste or type content here...",
+                            editorBackgroundColor: _scaffoldColor,
                           ),
                         ),
                       ],

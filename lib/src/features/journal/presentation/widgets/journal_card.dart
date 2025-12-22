@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/features/journal/data/journal_model.dart';
 
+import '../../../../core/app_content_palette.dart';
+
 class JournalCard extends StatelessWidget {
   final JournalEntry entry;
   final bool isSelected;
@@ -214,19 +216,43 @@ class _QuickColorPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Color> palette = [Colors.white, const Color(0xFFFFCC00), const Color(0xFFFF3B30), const Color(0xFF007AFF), const Color(0xFF34C759)];
+    final List<Color> palette = AppContentPalette.palette;
+    final theme = Theme.of(context);
+
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: palette.map((color) {
         final isSelected = currentColor.value == color.value;
+        final contrastColor = AppContentPalette.getContrastColor(color);
+        final appPrimary = theme.colorScheme.primary;
+
         return GestureDetector(
           onTap: () => onColorSelected(color),
-          child: Container(
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
             margin: const EdgeInsets.only(right: 6),
-            width: 20, height: 20,
+            width: 24,
+            height: 24,
             decoration: BoxDecoration(
-              color: color, shape: BoxShape.circle,
-              border: Border.all(color: isSelected ? Colors.blue : Colors.white.withOpacity(0.5), width: isSelected ? 2 : 1),
+              color: color,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isSelected
+                    ? appPrimary
+                    : contrastColor.withOpacity(0.2),
+                width: isSelected ? 2.5 : 1,
+              ),
+              boxShadow: isSelected ? [
+                BoxShadow(
+                  color: color.withOpacity(0.4),
+                  blurRadius: 8,
+                  spreadRadius: 1,
+                )
+              ] : null,
             ),
+            child: isSelected
+                ? Icon(Icons.check, size: 16, color: contrastColor)
+                : null,
           ),
         );
       }).toList(),

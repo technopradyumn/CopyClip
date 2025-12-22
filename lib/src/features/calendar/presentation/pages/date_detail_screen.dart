@@ -11,15 +11,13 @@ import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 
-// Feature Models
+// Models & Cards
 import '../../../clipboard/data/clipboard_model.dart';
 import '../../../dashboard/presentation/pages/dashboard_screen.dart';
 import '../../../expenses/data/expense_model.dart';
 import '../../../journal/data/journal_model.dart';
 import '../../../notes/data/note_model.dart';
 import '../../../todos/data/todo_model.dart';
-
-// Feature Cards
 import '../../../clipboard/presentation/widgets/clipboard_card.dart';
 import '../../../expenses/presentation/widgets/expense_card.dart';
 import '../../../journal/presentation/widgets/journal_card.dart';
@@ -37,56 +35,233 @@ class DateDetailsScreen extends StatefulWidget {
 }
 
 class _DateDetailsScreenState extends State<DateDetailsScreen> {
-  late List<GlobalSearchResult> _currentItems;
-  final ScrollController _scrollController = ScrollController();
+  late List<GlobalSearchResult> _allData;
+  String _searchQuery = "";
+  String _selectedFilter = "All";
+  final List<String> _filters = ["All", "Note", "Todo", "Expense", "Journal", "Clipboard"];
 
   @override
   void initState() {
     super.initState();
-    _currentItems = List.from(widget.items);
+    _allData = List.from(widget.items);
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
+  // --- REFRESH LOGIC ---
   void _refreshData() {
     final dateKey = DateFormat('yyyy-MM-dd').format(widget.date);
     List<GlobalSearchResult> freshResults = [];
 
-    if (Hive.isBoxOpen('notes_box')) {
-      freshResults.addAll(Hive.box<Note>('notes_box').values
-          .where((e) => !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.updatedAt) == dateKey)
-          .map((e) => GlobalSearchResult(id: e.id, title: e.title, subtitle: e.content, type: 'Note', route: AppRouter.noteEdit, argument: e)));
+    void addFromBox<T>(String boxName, GlobalSearchResult Function(T) mapper) {
+      if (Hive.isBoxOpen(boxName)) {
+        freshResults.addAll(Hive.box<T>(boxName).values
+            .where((e) => !(e as dynamic).isDeleted &&
+            DateFormat('yyyy-MM-dd').format((e as dynamic).date ?? (e as dynamic).updatedAt ?? (e as dynamic).createdAt) == dateKey)
+            .map(mapper));
+      }
     }
 
-    if (Hive.isBoxOpen('todos_box')) {
-      freshResults.addAll(Hive.box<Todo>('todos_box').values
-          .where((e) => !e.isDeleted && e.dueDate != null && DateFormat('yyyy-MM-dd').format(e.dueDate!) == dateKey)
-          .map((e) => GlobalSearchResult(id: e.id, title: e.task, subtitle: e.isDone ? "Completed" : "Pending", type: 'Todo', route: AppRouter.todoEdit, argument: e, isCompleted: e.isDone)));
-    }
+    // Individual loaders to handle model differences
+    addFromBox<Note>('notes_box', (e) => GlobalSearchResult(id: e.id, title: e.title, subtitle: e.content, type: 'Note', route: AppRouter.noteEdit, argument: e));
+    addFromBox<Todo>('todos_box', (e) => GlobalSearchResult(id: e.id, title: e.task, subtitle: e.isDone ? "Completed" : "Pending", type: 'Todo', route: AppRouter.todoEdit, argument: e, isCompleted: e.isDone));
+    addFromBox<Expense>('expenses_box', (e) => GlobalSearchResult(id: e.id, title: e.title, subtitle: "${e.currency}${e.amount}", type: 'Expense', route: AppRouter.expenseEdit, argument: e));
+    addFromBox<JournalEntry>('journal_box', (e) => GlobalSearchResult(id: e.id, title: e.title, subtitle: e.content, type: 'Journal', route: AppRouter.journalEdit, argument: e));
+    addFromBox<ClipboardItem>('clipboard_box', (e) => GlobalSearchResult(id: e.id, title: e.content, subtitle: "Clipboard", type: 'Clipboard', route: AppRouter.clipboardEdit, argument: e));
 
-    if (Hive.isBoxOpen('expenses_box')) {
-      freshResults.addAll(Hive.box<Expense>('expenses_box').values
-          .where((e) => !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.date) == dateKey)
-          .map((e) => GlobalSearchResult(id: e.id, title: e.title, subtitle: "${e.isIncome ? '+' : '-'} ${e.currency}${e.amount}", type: 'Expense', route: AppRouter.expenseEdit, argument: e)));
-    }
+    if (mounted) setState(() => _allData = freshResults);
+  }
 
-    if (Hive.isBoxOpen('journal_box')) {
-      freshResults.addAll(Hive.box<JournalEntry>('journal_box').values
-          .where((e) => !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.date) == dateKey)
-          .map((e) => GlobalSearchResult(id: e.id, title: e.title, subtitle: e.content, type: 'Journal', route: AppRouter.journalEdit, argument: e)));
-    }
+  // --- FILTERING ENGINE ---
+  List<GlobalSearchResult> _getFilteredItems() {
+    return _allData.where((item) {
+      final matchesSearch = item.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+          item.subtitle.toLowerCase().contains(_searchQuery.toLowerCase());
+      final matchesFilter = _selectedFilter == "All" || item.type == _selectedFilter;
+      return matchesSearch && matchesFilter;
+    }).toList();
+  }
 
-    if (Hive.isBoxOpen('clipboard_box')) {
-      freshResults.addAll(Hive.box<ClipboardItem>('clipboard_box').values
-          .where((e) => !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.createdAt) == dateKey)
-          .map((e) => GlobalSearchResult(id: e.id, title: e.content, subtitle: "Copied at ${DateFormat('HH:mm').format(e.createdAt)}", type: 'Clipboard', route: AppRouter.clipboardEdit, argument: e)));
-    }
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final onSurface = theme.colorScheme.onSurface;
+    final displayItems = _getFilteredItems();
 
-    if (mounted) setState(() => _currentItems = freshResults);
+    return GlassScaffold(
+      showBackArrow: false,
+      title: null,
+      body: Column(
+        children: [
+          const SizedBox(height: 50),
+          _buildTopBar(theme, onSurface),
+          _buildSearchBar(theme, onSurface),
+          _buildFilterChips(theme, onSurface),
+
+          Expanded(
+            child: displayItems.isEmpty
+                ? _buildEmptyState(onSurface)
+                : ListView.separated(
+              padding: const EdgeInsets.fromLTRB(16, 10, 16, 100),
+              physics: const BouncingScrollPhysics(),
+              itemCount: displayItems.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 12),
+              itemBuilder: (context, index) => _buildItemCard(displayItems[index]),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTopBar(ThemeData theme, Color onSurface) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Row(
+        children: [
+          IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: onSurface, size: 20),
+            onPressed: () => context.pop(),
+          ),
+          Expanded(
+            child: Text(
+              DateFormat('MMMM d, yyyy').format(widget.date),
+              style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: onSurface),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(color: onSurface.withOpacity(0.1), borderRadius: BorderRadius.circular(20)),
+            child: Text("${_allData.length} total", style: TextStyle(fontSize: 11, color: onSurface.withOpacity(0.6))),
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchBar(ThemeData theme, Color onSurface) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Container(
+        height: 44,
+        decoration: BoxDecoration(
+          color: onSurface.withOpacity(0.08),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: TextField(
+          onChanged: (val) => setState(() => _searchQuery = val),
+          style: TextStyle(color: onSurface, fontSize: 14),
+          decoration: InputDecoration(
+            hintText: "Search in this day...",
+            hintStyle: TextStyle(color: onSurface.withOpacity(0.4), fontSize: 14),
+            prefixIcon: Icon(Icons.search_rounded, color: theme.colorScheme.primary, size: 20),
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.symmetric(vertical: 10),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFilterChips(ThemeData theme, Color onSurface) {
+    return SizedBox(
+      height: 50, // Slightly increased height to accommodate the chips comfortably
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        itemCount: _filters.length,
+        itemBuilder: (context, index) {
+          final filter = _filters[index];
+          final isSelected = _selectedFilter == filter;
+
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: FilterChip(
+              label: Text(
+                filter == "Todo" ? "To-Dos" : filter == "Expense" ? "Finance" : filter,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  color: isSelected ? theme.colorScheme.primary : onSurface.withOpacity(0.8),
+                ),
+              ),
+              selected: isSelected,
+              onSelected: (val) => setState(() => _selectedFilter = filter),
+
+              // --- BACKGROUND COLORS ---
+              // Color when the chip is NOT selected
+              backgroundColor: onSurface.withOpacity(0.06),
+              // Color when the chip IS selected
+              selectedColor: theme.colorScheme.primary.withOpacity(0.15),
+
+              // --- UI REFINEMENTS ---
+              checkmarkColor: theme.colorScheme.primary,
+              showCheckmark: true, // Set to false if you want a cleaner look
+              pressElevation: 2,
+
+              // Border logic
+              shape: StadiumBorder(
+                side: BorderSide(
+                  color: isSelected
+                      ? theme.colorScheme.primary
+                      : onSurface.withOpacity(0.12),
+                  width: 1,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(Color onSurface) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.search_off_rounded, size: 48, color: onSurface.withOpacity(0.2)),
+          const SizedBox(height: 12),
+          Text("No items found matching criteria", style: TextStyle(color: onSurface.withOpacity(0.4))),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildItemCard(GlobalSearchResult res) {
+    switch (res.type) {
+      case 'Note':
+        return NoteCard(note: res.argument, isSelected: false,
+          onTap: () async { await context.push(res.route, extra: res.argument); _refreshData(); },
+          onDelete: () => _deleteItem(res),
+          onColorChanged: (c) { res.argument.colorValue = c.value; res.argument.save(); setState(() {}); },
+          onCopy: () => Clipboard.setData(ClipboardData(text: res.subtitle)),
+          onShare: () => Share.share(res.subtitle),
+        );
+      case 'Todo':
+        return TodoCard(todo: res.argument, isSelected: false,
+            onTap: () async { await context.push(res.route, extra: res.argument); _refreshData(); },
+            onToggleDone: () { res.argument.isDone = !res.argument.isDone; res.argument.save(); _refreshData(); });
+      case 'Expense':
+        return ExpenseCard(expense: res.argument, isSelected: false,
+            onTap: () async { await context.push(res.route, extra: res.argument); _refreshData(); });
+      case 'Journal':
+        return JournalCard(entry: res.argument, isSelected: false,
+          onTap: () async { await context.push(res.route, extra: res.argument); _refreshData(); },
+          onDelete: () => _deleteItem(res),
+          onColorChanged: (c) { res.argument.colorValue = c.value; res.argument.save(); setState(() {}); },
+          onCopy: () => Clipboard.setData(ClipboardData(text: res.subtitle)),
+          onShare: () => Share.share(res.subtitle),
+        );
+      case 'Clipboard':
+        return ClipboardCard(item: res.argument, isSelected: false,
+          onTap: () async { await context.push(res.route, extra: res.argument); _refreshData(); },
+          onDelete: () => _deleteItem(res),
+          onColorChanged: (c) { res.argument.colorValue = c.value; res.argument.save(); setState(() {}); },
+          onCopy: () => Clipboard.setData(ClipboardData(text: res.title)),
+          onShare: () => Share.share(res.title),
+        );
+      default: return const SizedBox.shrink();
+    }
   }
 
   void _deleteItem(GlobalSearchResult res) {
@@ -107,122 +282,5 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
         },
       ),
     );
-  }
-
-  String _getCleanText(String content) {
-    if (!content.startsWith('[')) return content;
-    try {
-      final List<dynamic> delta = jsonDecode(content);
-      String plainText = "";
-      for (var op in delta) {
-        if (op is Map && op.containsKey('insert') && op['insert'] is String) {
-          plainText += op['insert'];
-        }
-      }
-      return plainText.trim();
-    } catch (_) { return content; }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return GlassScaffold(
-      showBackArrow: true,
-      title: null,
-      body: Column(
-        children: [
-          const SizedBox(height: 44),
-          // --- FIXED HEADER ---
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new, size: 20),
-                  onPressed: () => context.pop(),
-                ),
-                Icon(Icons.event_available, color: theme.colorScheme.primary, size: 24),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    DateFormat('EEEE, d MMMM yyyy').format(widget.date),
-                    style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Text(
-                  "${_currentItems.length} items",
-                  style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5)),
-                ),
-              ],
-            ),
-          ),
-
-          // --- SCROLLABLE LIST ---
-          Expanded(
-            child: _currentItems.isEmpty
-                ? Center(child: Text("Nothing recorded for this day", style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.3))))
-                : ListView.separated(
-              controller: _scrollController,
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 100),
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              itemCount: _currentItems.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
-              itemBuilder: (context, index) => _buildItemCard(_currentItems[index]),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildItemCard(GlobalSearchResult res) {
-    switch (res.type) {
-      case 'Note':
-        final note = res.argument as Note;
-        return NoteCard(
-          note: note, isSelected: false,
-          onTap: () async { await context.push(res.route, extra: note); _refreshData(); },
-          onCopy: () => Clipboard.setData(ClipboardData(text: _getCleanText(note.content))),
-          onShare: () => Share.share(_getCleanText(note.content)),
-          onDelete: () => _deleteItem(res),
-          onColorChanged: (newColor) { setState(() => note.colorValue = newColor.value); note.save(); },
-        );
-      case 'Journal':
-        final entry = res.argument as JournalEntry;
-        return JournalCard(
-          entry: entry, isSelected: false,
-          onTap: () async { await context.push(res.route, extra: entry); _refreshData(); },
-          onCopy: () => Clipboard.setData(ClipboardData(text: _getCleanText(entry.content))),
-          onShare: () => Share.share(_getCleanText(entry.content)),
-          onDelete: () => _deleteItem(res),
-          onColorChanged: (newColor) { setState(() => entry.colorValue = newColor.value); entry.save(); },
-        );
-      case 'Clipboard':
-        final item = res.argument as ClipboardItem;
-        return ClipboardCard(
-          item: item, isSelected: false,
-          onTap: () async { await context.push(res.route, extra: item); _refreshData(); },
-          onCopy: () => Clipboard.setData(ClipboardData(text: _getCleanText(item.content))),
-          onShare: () => Share.share(_getCleanText(item.content)),
-          onDelete: () => _deleteItem(res),
-          onColorChanged: (newColor) { setState(() => item.colorValue = newColor.value); item.save(); },
-        );
-      case 'Todo':
-        final todo = res.argument as Todo;
-        return TodoCard(
-          todo: todo, isSelected: false,
-          onTap: () async { await context.push(res.route, extra: todo); _refreshData(); },
-          onToggleDone: () { setState(() { todo.isDone = !todo.isDone; todo.save(); _refreshData(); }); },
-        );
-      case 'Expense':
-        final exp = res.argument as Expense;
-        return ExpenseCard(
-          expense: exp, isSelected: false,
-          onTap: () async { await context.push(res.route, extra: exp); _refreshData(); },
-        );
-      default:
-        return const SizedBox.shrink();
-    }
   }
 }

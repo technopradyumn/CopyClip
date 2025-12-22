@@ -39,6 +39,25 @@ class MainActivity: FlutterActivity() {
                 else -> result.notImplemented()
             }
         }
+
+        // --- NEW: Handler for Widget Navigation ---
+        val widgetChannelName = "com.technopradyumn.copyclip/widget_handler"
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, widgetChannelName).setMethodCallHandler { call, result ->
+            if (call.method == "navigateTo") {
+                val route = call.argument<String>("route")
+                if (route != null) {
+                    // Send the route back to Dart side to handle navigation via GoRouter
+                    // We use the existing eventChannel here to trigger the Dart side logic,
+                    // as direct GoRouter manipulation from native is complex.
+                    eventChannel?.invokeMethod("handleWidgetNavigation", route)
+                    result.success(true)
+                } else {
+                    result.error("INVALID_ARGUMENT", "Route argument missing for navigation", null)
+                }
+            } else {
+                result.notImplemented()
+            }
+        }
     }
 
     private fun readAndClearClipQueue(): ArrayList<String> {

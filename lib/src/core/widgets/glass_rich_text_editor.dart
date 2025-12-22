@@ -3,19 +3,89 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'timestamp_embed.dart';
 
-class GlassRichTextEditor extends StatelessWidget {
+class GlassRichTextEditor extends StatefulWidget {
   final QuillController controller;
   final FocusNode focusNode;
   final ScrollController scrollController;
   final String? hintText;
+
+  /// 👇 IMPORTANT: editor background color
+  final Color editorBackgroundColor;
 
   const GlassRichTextEditor({
     super.key,
     required this.controller,
     required this.focusNode,
     required this.scrollController,
+    required this.editorBackgroundColor,
     this.hintText,
   });
+
+  @override
+  State<GlassRichTextEditor> createState() => _GlassRichTextEditorState();
+}
+
+class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
+  Brightness? _lastBgBrightness;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final bgBrightness =
+    ThemeData.estimateBrightnessForColor(widget.editorBackgroundColor);
+    final themeBrightness = Theme.of(context).brightness;
+
+    final bool shouldApplyTextColor =
+    // White BG + Light Mode
+    (bgBrightness == Brightness.light &&
+        themeBrightness == Brightness.light) ||
+
+        // White BG + Dark Mode
+        (bgBrightness == Brightness.light &&
+            themeBrightness == Brightness.dark) ||
+
+        // Black BG + Light Mode
+        (bgBrightness == Brightness.dark &&
+            themeBrightness == Brightness.light) ||
+
+        // Black BG + Dark Mode
+        (bgBrightness == Brightness.dark &&
+            themeBrightness == Brightness.dark);
+
+    if (!shouldApplyTextColor) return;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _applyDefaultTextColor(
+        bgBrightness: bgBrightness,
+        themeBrightness: themeBrightness,
+      );
+    });
+  }
+
+
+  void _applyDefaultTextColor({
+    required Brightness bgBrightness,
+    required Brightness themeBrightness,
+  }) {
+    // White BG + Any Mode → BLACK
+    if (bgBrightness == Brightness.light) {
+      widget.controller.formatSelection(
+        Attribute.fromKeyValue('color', '#000000'),
+      );
+      return;
+    }
+
+    // Black BG + Any Mode → WHITE
+    if (bgBrightness == Brightness.dark) {
+      widget.controller.formatSelection(
+        Attribute.fromKeyValue('color', '#ffffff'),
+      );
+      return;
+    }
+
+    // Else → do nothing
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,25 +94,29 @@ class GlassRichTextEditor extends StatelessWidget {
 
     return Column(
       children: [
+        // TOOLBAR
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          height: 54,
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          height: 38,
           decoration: BoxDecoration(
             color: colorScheme.surface.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(color: colorScheme.primary.withOpacity(0.2), width: 1.2),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: colorScheme.primary.withOpacity(0.2),
+              width: 1.2,
+            ),
             boxShadow: [
               BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 15,
-                  offset: const Offset(0, 5)
-              )
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 15,
+                offset: const Offset(0, 5),
+              ),
             ],
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(10),
             child: QuillSimpleToolbar(
-              controller: controller,
+              controller: widget.controller,
               config: QuillSimpleToolbarConfig(
                 embedButtons: FlutterQuillEmbeds.toolbarButtons(),
                 showFontFamily: true,
@@ -76,44 +150,31 @@ class GlassRichTextEditor extends StatelessWidget {
                 showLineHeightButton: true,
                 showSmallButton: true,
                 multiRowsDisplay: false,
-                toolbarSectionSpacing: 4,
-                buttonOptions: QuillSimpleToolbarButtonOptions(
-                  base: QuillToolbarBaseButtonOptions(
-                    iconTheme: QuillIconTheme(
-                      iconButtonSelectedData: IconButtonData(
-                        style: IconButton.styleFrom(
-                          foregroundColor: colorScheme.primary,
-                          backgroundColor: colorScheme.primary.withOpacity(0.2),
-                        ),
-                      ),
-                      iconButtonUnselectedData: IconButtonData(
-                        style: IconButton.styleFrom(
-                          foregroundColor: colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
               ),
             ),
           ),
         ),
+
+        // EDITOR
         Expanded(
-          child: QuillEditor(
-            controller: controller,
-            focusNode: focusNode,
-            scrollController: scrollController,
-            config: QuillEditorConfig(
-              placeholder: hintText ?? 'Start writing...',
-              padding: const EdgeInsets.fromLTRB(24, 10, 24, 20),
-              autoFocus: false,
-              expands: true,
-              scrollable: true,
-              scrollPhysics: const BouncingScrollPhysics(),
-              embedBuilders: [
-                ...FlutterQuillEmbeds.editorBuilders(),
-                TimeStampEmbedBuilder(),
-              ],
+          child: Container(
+            color: Colors.transparent,
+            child: QuillEditor(
+              controller: widget.controller,
+              focusNode: widget.focusNode,
+              scrollController: widget.scrollController,
+              config: QuillEditorConfig(
+                placeholder: widget.hintText ?? 'Start writing...',
+                padding: const EdgeInsets.fromLTRB(24, 10, 24, 20),
+                autoFocus: false,
+                expands: true,
+                scrollable: true,
+                scrollPhysics: const BouncingScrollPhysics(),
+                embedBuilders: [
+                  ...FlutterQuillEmbeds.editorBuilders(),
+                  TimeStampEmbedBuilder(),
+                ],
+              ),
             ),
           ),
         ),

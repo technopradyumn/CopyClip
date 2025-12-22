@@ -12,11 +12,13 @@ import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart'; // Added Import
 import '../../../../core/widgets/glass_scaffold.dart';
 import '../../../../core/widgets/glass_dialog.dart';
 import '../../../../core/widgets/glass_rich_text_editor.dart';
 import '../../../clipboard/presentation/pages/clipboard_edit_screen.dart';
 import '../../data/journal_model.dart';
+import '../../../../core/app_content_palette.dart'; // Added Import
 
 class JournalEditScreen extends StatefulWidget {
   final JournalEntry? entry;
@@ -39,7 +41,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   String _selectedMood = 'Neutral';
   bool _isFavorite = false;
 
-  Color _scaffoldColor = Colors.white;
+  Color _scaffoldColor = AppContentPalette.palette.first;
   late Color _initialColor;
   String _initialTitle = "";
   String _initialContentJson = "";
@@ -60,7 +62,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       _selectedDate = widget.entry!.date;
       _selectedMood = widget.entry!.mood;
       _isFavorite = widget.entry!.isFavorite;
-      _scaffoldColor = widget.entry!.colorValue != null ? Color(widget.entry!.colorValue!) : Colors.white;
+      _scaffoldColor = widget.entry!.colorValue != null ? Color(widget.entry!.colorValue!) : AppContentPalette.palette.first;
     }
 
     _initialTitle = _titleController.text;
@@ -159,6 +161,66 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
     );
   }
 
+  // --- COLOR PICKER ---
+  void _showColorPicker() {
+    final List<Color> palette = AppContentPalette.palette;
+
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => GlassDialog(
+          title: "Entry Theme",
+          confirmText: "Save",
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Wrap(
+                  spacing: 12, runSpacing: 12,
+                  children: palette.map((color) {
+                    final isSelected = _scaffoldColor.value == color.value;
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() => _scaffoldColor = color);
+                        setDialogState(() {});
+                      },
+                      child: Container(
+                        width: 44, height: 44,
+                        decoration: BoxDecoration(
+                          color: color, shape: BoxShape.circle,
+                          border: Border.all(color: isSelected ? Colors.white : Colors.white24, width: isSelected ? 3 : 1.5),
+                        ),
+                        child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 20) : null,
+                      ),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 250),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: ColorPicker(
+                      pickerColor: _scaffoldColor,
+                      onColorChanged: (color) {
+                        setState(() => _scaffoldColor = color);
+                        setDialogState(() {});
+                      },
+                      pickerAreaHeightPercent: 0.4,
+                      enableAlpha: false,
+                      labelTypes: const [],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          onConfirm: () => Navigator.pop(context),
+        ),
+      ),
+    );
+  }
+
   // --- EXPORT & SHARE ---
   Future<void> _exportToImage() async {
     try {
@@ -203,10 +265,11 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isColorDark = ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
-    final textColor = isColorDark ? Colors.white : Colors.black87;
 
-    // MATCHING HERO TAG: Must be identical to the tag in JournalCard
+    // 1. Centralized Dynamic Contrast Logic
+    final isColorDark = ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
+    final contrastColor = isColorDark ? Colors.white : Colors.black87;
+
     final String heroTag = widget.entry != null
         ? 'journal_bg_${widget.entry!.id}'
         : 'journal_new_hero';
@@ -237,29 +300,51 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
         backgroundColor: _scaffoldColor,
         title: widget.entry == null ? 'New Entry' : 'Edit Entry',
         actions: [
+          // Color Theme Swatch
+          GestureDetector(
+            onTap: _showColorPicker,
+            child: Container(
+              margin: const EdgeInsets.only(right: 8),
+              width: 26, height: 26,
+              decoration: BoxDecoration(
+                color: _scaffoldColor, shape: BoxShape.circle,
+                border: Border.all(color: contrastColor.withOpacity(0.4), width: 1.5),
+              ),
+              child: Icon(Icons.palette_outlined, size: 14, color: contrastColor.withOpacity(0.6)),
+            ),
+          ),
+          // Favorite Star
           IconButton(
-            icon: Icon(_isFavorite ? Icons.star : Icons.star_border, color: _isFavorite ? Colors.amberAccent : textColor.withOpacity(0.5)),
+            icon: Icon(
+                _isFavorite ? Icons.star : Icons.star_border,
+                color: _isFavorite ? Colors.amberAccent : contrastColor.withOpacity(0.5)
+            ),
             onPressed: () => setState(() => _isFavorite = !_isFavorite),
           ),
-          IconButton(
-            icon: const Icon(Icons.copy, size: 18),
-            onPressed: () => Clipboard.setData(ClipboardData(text: _quillController.document.toPlainText())),
-          ),
+          // Share/Export
           PopupMenuButton<String>(
-            icon: const Icon(Icons.ios_share, size: 20),
+            icon: Icon(Icons.ios_share, size: 20, color: contrastColor),
             onSelected: (val) { if (val == 'image') _exportToImage(); },
             itemBuilder: (ctx) => [const PopupMenuItem(value: 'image', child: Text("Export as Image"))],
           ),
-          IconButton(icon: const Icon(Icons.check), onPressed: () { _saveEntry(); context.pop(); }),
+          // Save
+          IconButton(
+              icon: Icon(Icons.check, color: contrastColor),
+              onPressed: () { _saveEntry(); context.pop(); }
+          ),
         ],
-        // WRAP BODY IN HERO
         body: Hero(
           tag: heroTag,
           child: Material(
-            type: MaterialType.transparency, // Required for clean text flight
+            type: MaterialType.transparency,
             child: Stack(
               children: [
-                Positioned.fill(child: CustomPaint(painter: CanvasGridPainter(color: isColorDark ? Colors.white10 : Colors.black12))),
+                // Dynamic Grid Lines
+                Positioned.fill(
+                    child: CustomPaint(
+                        painter: CanvasGridPainter(color: contrastColor.withOpacity(0.08))
+                    )
+                ),
                 RepaintBoundary(
                   key: _boundaryKey,
                   child: Container(
@@ -267,6 +352,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                     child: Column(
                       children: [
                         const SizedBox(height: 80),
+                        // Date and Mood Row
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                           child: Row(
@@ -277,12 +363,18 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                                 borderRadius: BorderRadius.circular(20),
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                                  decoration: BoxDecoration(color: isColorDark ? Colors.white12 : Colors.black.withOpacity(0.05), borderRadius: BorderRadius.circular(20)),
+                                  decoration: BoxDecoration(
+                                      color: contrastColor.withOpacity(0.08),
+                                      borderRadius: BorderRadius.circular(20)
+                                  ),
                                   child: Row(
                                     children: [
-                                      Icon(Icons.calendar_month, size: 14, color: textColor.withOpacity(0.7)),
+                                      Icon(Icons.calendar_month, size: 14, color: contrastColor.withOpacity(0.7)),
                                       const SizedBox(width: 8),
-                                      Text(DateFormat('MMM dd, yyyy  •  hh:mm a').format(_selectedDate), style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12)),
+                                      Text(
+                                          DateFormat('MMM dd, yyyy  •  hh:mm a').format(_selectedDate),
+                                          style: TextStyle(color: contrastColor, fontWeight: FontWeight.bold, fontSize: 12)
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -291,27 +383,42 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                                 onTap: _showMoodPicker,
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary.withOpacity(0.1), shape: BoxShape.circle, border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.2))),
+                                  decoration: BoxDecoration(
+                                      color: contrastColor.withOpacity(0.08),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: contrastColor.withOpacity(0.1))
+                                  ),
                                   child: Text(_moodMap[_selectedMood]!, style: const TextStyle(fontSize: 22)),
                                 ),
                               ),
                             ],
                           ),
                         ),
+                        // Title Input
                         Padding(
                           padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
                           child: TextField(
                             controller: _titleController,
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textColor, letterSpacing: -0.5),
-                            decoration: InputDecoration(hintText: 'Entry Title', border: InputBorder.none, hintStyle: TextStyle(color: textColor.withOpacity(0.25))),
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: contrastColor,
+                                letterSpacing: -0.5
+                            ),
+                            decoration: InputDecoration(
+                                hintText: 'Entry Title',
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(color: contrastColor.withOpacity(0.25))
+                            ),
                           ),
                         ),
+                        // Tags Input
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24),
                           child: TextField(
                             controller: _tagsController,
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
+                                color: theme.colorScheme.primary,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500
                             ),
@@ -319,22 +426,24 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                               hintText: '#journal #thoughts',
                               border: InputBorder.none,
                               isDense: true,
-                              hintStyle: TextStyle(color: textColor.withOpacity(0.15)),
+                              hintStyle: TextStyle(color: contrastColor.withOpacity(0.15)),
                               prefixIcon: Icon(
                                   Icons.local_offer_outlined,
                                   size: 14,
-                                  color: Theme.of(context).colorScheme.primary.withOpacity(0.6)
+                                  color: theme.colorScheme.primary.withOpacity(0.6)
                               ),
                               prefixIconConstraints: const BoxConstraints(minWidth: 24, maxHeight: 20),
                             ),
                           ),
                         ),
+                        // Editor
                         Expanded(
                           child: GlassRichTextEditor(
                             controller: _quillController,
                             focusNode: _editorFocusNode,
                             scrollController: _editorScrollController,
                             hintText: "Dear Diary...",
+                            editorBackgroundColor: _scaffoldColor,
                           ),
                         ),
                       ],
