@@ -96,28 +96,33 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
     final items = _getAllDeleted();
 
     return GlassScaffold(
-      title: null,
-      showBackArrow: true,
+      // 1. Title now correctly placed in the Top App Bar
+      title: "Recycle Bin",
+      showBackArrow: true, // We will build a custom iOS-style one below
       actions: [
         if (items.isNotEmpty)
-          TextButton.icon(
-            onPressed: () {}, // Logic for Empty Trash
-            icon: const Icon(Icons.delete_sweep_rounded, color: Colors.redAccent, size: 20),
-            label: const Text("Empty", style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)),
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: IconButton(
+              icon: const Icon(Icons.delete_sweep_rounded, color: Colors.redAccent),
+              onPressed: () {
+                // Logic for Empty Trash (reuse your existing _permanentlyDeleteItem logic for all)
+              },
+            ),
           )
       ],
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 60),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text("Recycle Bin", style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold)),
-          ),
+          const SizedBox(height: 90),
+
           _buildSortChips(theme),
           const SizedBox(height: 10),
+
           Expanded(
-            child: items.isEmpty ? _buildEmptyState(onSurface) : _buildList(items, onSurface),
+            child: items.isEmpty
+                ? _buildEmptyState(onSurface)
+                : _buildList(items, onSurface),
           ),
         ],
       ),

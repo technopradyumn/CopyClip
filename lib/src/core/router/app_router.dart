@@ -12,6 +12,8 @@ import '../../features/journal/presentation/pages/journal_edit_screen.dart';
 import '../../features/notes/data/note_model.dart';
 import '../../features/notes/presentation/pages/note_edit_screen.dart';
 import '../../features/notes/presentation/pages/notes_screen.dart';
+import '../../features/settings/presentation/pages/feedback_screen.dart';
+import '../../features/settings/presentation/pages/privacy_policy_screen.dart';
 import '../../features/settings/presentation/pages/recycle_bin_screen.dart';
 import '../../features/settings/presentation/pages/settings_screen.dart';
 import '../../features/todos/data/todo_model.dart';
@@ -44,6 +46,8 @@ class AppRouter {
 
   static const String settings = "/settings";
   static const String recycleBin = "settings/recycle-bin";
+  static const String privacyPolicy = "/settings/privacy-policy";
+  static const String feedback = "/settings/feedback";
 
   static const String globalSearch = "/global-search";
 
@@ -136,6 +140,15 @@ List<GoRoute> getAuthRoutes() {
     GoRoute(
       path: AppRouter.recycleBin,
       builder: (context, state) => const RecycleBinScreen(),
+    ),
+
+    GoRoute(
+      path: AppRouter.privacyPolicy,
+      builder: (context, state) => const PrivacyPolicyScreen(),
+    ),
+    GoRoute(
+      path: AppRouter.feedback,
+      builder: (context, state) => const FeedbackScreen(),
     ),
 
     GoRoute(

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/services/backup_service.dart';
 import '../../../../core/theme/theme_manager.dart';
 import '../../../clipboard/data/clipboard_model.dart';
@@ -24,27 +26,32 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObserver {
+class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   static const platform = MethodChannel('com.technopradyumn.copyclip/accessibility');
   bool _isServiceEnabled = false;
+  late AnimationController _rotationController;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _rotationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    )..repeat();
     _checkServiceStatus();
-    _runAutoCleanup(); // Runs the 30-day deletion logic on open
+    _runAutoCleanup();
   }
 
   @override
   void dispose() {
+    _rotationController.dispose();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   // --- RECYCLE BIN LOGIC ---
 
-  /// Permanently deletes items from all boxes that have been in the trash for > 30 days
   Future<void> _runAutoCleanup() async {
     final boxes = ['notes_box', 'todos_box', 'expenses_box', 'journal_box', 'clipboard_box'];
     final now = DateTime.now();
@@ -55,7 +62,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         final box = Hive.box(boxName);
         final toDelete = box.values.where((item) {
           try {
-            // Check if item is marked deleted and if 30 days have passed
             if (item.isDeleted == true && item.deletedAt != null) {
               return now.difference(item.deletedAt!).inDays >= 30;
             }
@@ -66,7 +72,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         }).toList();
 
         for (var item in toDelete) {
-          await item.delete(); // Permanent removal from Hive
+          await item.delete();
           cleanedCount++;
         }
       }
@@ -74,11 +80,9 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     if (cleanedCount > 0) debugPrint("Auto-Cleanup: Removed $cleanedCount expired items.");
   }
 
-  /// Calculates total items currently in the Recycle Bin across all features
   int _getTrashCount() {
     int total = 0;
 
-    // You must specify the <Type> for each box to avoid the HiveError
     if (Hive.isBoxOpen('notes_box')) {
       total += Hive.box<Note>('notes_box').values.where((item) => item.isDeleted == true).length;
     }
@@ -97,6 +101,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
 
     return total;
   }
+
   // --- EXISTING UTILITIES ---
 
   Future<void> _checkServiceStatus() async {
@@ -133,6 +138,16 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         ),
       ),
     );
+  }
+
+  // --- URL LAUNCHER ---
+  Future<void> _launchURL(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      _showGlassSnackBar("Could not open link", isError: true);
+    }
   }
 
   // --- DIALOGS ---
@@ -188,122 +203,326 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     final glassTint = primaryColor.withOpacity(0.08);
 
     return GlassScaffold(
-      title: "Settings",
-      showBackArrow: true,
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 100, 20, 40),
-        physics: const BouncingScrollPhysics(),
+      title: null,
+      showBackArrow: false,
+      body: Column(
         children: [
-          // --- APPEARANCE ---
-          _buildSectionHeader("Appearance", primaryColor),
-          GlassContainer(
-            color: glassTint,
-            padding: const EdgeInsets.all(8),
-            child: Column(
+          // Custom Top Bar with Hero Animation
+          Padding(
+            padding: const EdgeInsets.only(top: 40, left: 24, right: 24, bottom: 10),
+            child: Row(
               children: [
-                ListTile(
-                  leading: Icon(Icons.brightness_6, color: primaryColor),
-                  title: Text("Theme Mode", style: textTheme.bodyLarge),
-                  trailing: _buildThemeDropdown(themeManager),
+                IconButton(
+                  icon: Icon(Icons.arrow_back_ios_new, color: theme.iconTheme.color),
+                  onPressed: () => context.pop(),
                 ),
-                const Divider(indent: 50),
-                ListTile(
-                  leading: Icon(Icons.palette, color: primaryColor),
-                  title: Text("Accent Color", style: textTheme.bodyLarge),
+                const SizedBox(width: 8),
+                Hero(
+                  tag: 'settings_icon',
+                  child: RotationTransition(
+                    turns: _rotationController,
+                    child: Icon(
+                      Icons.settings_outlined,
+                      size: 32,
+                      color: primaryColor,
+                    ),
+                  ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                const SizedBox(width: 12),
+                Text(
+                  "Settings",
+                  style: theme.textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          // Settings Content
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
+              physics: const BouncingScrollPhysics(),
+              children: [
+                // --- APPEARANCE ---
+                _buildSectionHeader("Appearance", primaryColor),
+                GlassContainer(
+                  color: glassTint,
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
                     children: [
-                      _buildColorDot(Colors.amberAccent, themeManager),
-                      _buildColorDot(Colors.blueAccent, themeManager),
-                      _buildColorDot(Colors.greenAccent, themeManager),
-                      _buildColorDot(Colors.purpleAccent, themeManager),
-                      _buildColorDot(Colors.redAccent, themeManager),
-                      _buildColorDot(Colors.cyanAccent, themeManager),
+                      ListTile(
+                        leading: Icon(Icons.brightness_6, color: primaryColor),
+                        title: Text("Theme Mode", style: textTheme.bodyLarge),
+                        trailing: _buildThemeDropdown(themeManager),
+                      ),
+                      const Divider(indent: 50),
+                      ListTile(
+                        leading: Icon(Icons.palette, color: primaryColor),
+                        title: Text("Accent Color", style: textTheme.bodyLarge),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            _buildColorDot(Colors.amberAccent, themeManager),
+                            _buildColorDot(Colors.blueAccent, themeManager),
+                            _buildColorDot(Colors.greenAccent, themeManager),
+                            _buildColorDot(Colors.purpleAccent, themeManager),
+                            _buildColorDot(Colors.redAccent, themeManager),
+                            _buildColorDot(Colors.cyanAccent, themeManager),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
 
-          const SizedBox(height: 24),
+                const SizedBox(height: 24),
 
-          // --- PRIVACY & TRASH ---
-          _buildSectionHeader("Privacy & Maintenance", primaryColor),
-          GlassContainer(
-            color: glassTint,
-            padding: const EdgeInsets.all(4),
-            child: ListTile(
-              leading: Icon(Icons.delete_sweep_outlined, color: primaryColor),
-              title: Text("Recycle Bin", style: textTheme.bodyLarge),
-              subtitle: Text("${_getTrashCount()} items • Auto-deletes in 30 days",
-                  style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.5))),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-              onTap: () async {
-                await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const RecycleBinScreen())
-                );
-                setState(() {});
-              },
-            ),
-          ),
-
-          const SizedBox(height: 24),
-
-          // --- AUTOMATION ---
-          _buildSectionHeader("General", primaryColor),
-          GlassContainer(
-            color: glassTint,
-            child: ListTile(
-              leading: Icon(_isServiceEnabled ? Icons.bolt : Icons.bolt_outlined,
-                  color: _isServiceEnabled ? Colors.greenAccent : onSurfaceColor.withOpacity(0.5)),
-              title: Text("Auto Clipboard Capture", style: textTheme.bodyLarge),
-              subtitle: Text(_isServiceEnabled ? "Service is active" : "Requires Accessibility Permission",
-                  style: TextStyle(fontSize: 12, color: _isServiceEnabled ? Colors.greenAccent : onSurfaceColor.withOpacity(0.5))),
-              trailing: Switch(
-                value: _isServiceEnabled,
-                activeColor: primaryColor,
-                onChanged: (_) async => await platform.invokeMethod('openAccessibilitySettings'),
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 24),
-
-          // --- DATA ---
-          _buildSectionHeader("Data & Backup", primaryColor),
-          GlassContainer(
-            color: glassTint,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(Icons.upload_file, color: primaryColor),
-                  title: Text("Export Data", style: textTheme.bodyLarge),
-                  onTap: _showExportDialog,
+                _buildSectionHeader("Recycle Bin", primaryColor),
+                GlassContainer(
+                  color: glassTint,
+                  padding: const EdgeInsets.all(4),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(Icons.delete_sweep_outlined, color: primaryColor),
+                        title: Text("Recycle Bin", style: textTheme.bodyLarge),
+                        subtitle: Text("${_getTrashCount()} items • Auto-deletes in 30 days",
+                            style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.5))),
+                        trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+                        onTap: () async {
+                          await Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const RecycleBinScreen())
+                          );
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                const Divider(indent: 50),
-                ListTile(
-                  leading: Icon(Icons.download, color: primaryColor),
-                  title: Text("Import Data", style: textTheme.bodyLarge),
-                  onTap: _showImportDialog,
+
+                const SizedBox(height: 24),
+
+                // --- AUTOMATION ---
+                _buildSectionHeader("General", primaryColor),
+                GlassContainer(
+                  color: glassTint,
+                  child: ListTile(
+                    leading: Icon(_isServiceEnabled ? Icons.bolt : Icons.bolt_outlined,
+                        color: _isServiceEnabled ? Colors.greenAccent : onSurfaceColor.withOpacity(0.5)),
+                    title: Text("Auto Clipboard Capture", style: textTheme.bodyLarge),
+                    subtitle: Text(_isServiceEnabled ? "Service is active" : "Requires Accessibility Permission",
+                        style: TextStyle(fontSize: 12, color: _isServiceEnabled ? Colors.greenAccent : onSurfaceColor.withOpacity(0.5))),
+                    trailing: Switch(
+                      value: _isServiceEnabled,
+                      activeColor: primaryColor,
+                      onChanged: (_) async => await platform.invokeMethod('openAccessibilitySettings'),
+                    ),
+                  ),
                 ),
+
+                const SizedBox(height: 24),
+
+                // --- DATA ---
+                _buildSectionHeader("Data & Backup", primaryColor),
+                GlassContainer(
+                  color: glassTint,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(Icons.upload_file, color: primaryColor),
+                        title: Text("Export Data", style: textTheme.bodyLarge),
+                        onTap: _showExportDialog,
+                      ),
+                      const Divider(indent: 50),
+                      ListTile(
+                        leading: Icon(Icons.download, color: primaryColor),
+                        title: Text("Import Data", style: textTheme.bodyLarge),
+                        onTap: _showImportDialog,
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // --- FEEDBACK & SUPPORT ---
+                _buildSectionHeader("Feedback & Support", primaryColor),
+                GlassContainer(
+                  color: glassTint,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(Icons.feedback_outlined, color: primaryColor),
+                        title: Text("Send Feedback", style: textTheme.bodyLarge),
+                        subtitle: Text("Help us improve", style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.5))),
+                        trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+                        onTap: () => context.push(AppRouter.feedback),
+                      ),
+                      // const Divider(indent: 50),
+                      // ListTile(
+                      //   leading: Icon(Icons.star_outline, color: primaryColor),
+                      //   title: Text("Rate on Play Store", style: textTheme.bodyLarge),
+                      //   onTap: () => _launchURL("https://play.google.com/store/apps/details?id=com.technopradyumn.copyclip"),
+                      // ),
+                      // const Divider(indent: 50),
+                      // ListTile(
+                      //   leading: Icon(Icons.share_outlined, color: primaryColor),
+                      //   title: Text("Share App", style: textTheme.bodyLarge),
+                      //   onTap: () {
+                      //     // Implement share functionality
+                      //     _showGlassSnackBar("Share feature coming soon!");
+                      //   },
+                      // ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // --- DEVELOPER INFO ---
+                _buildSectionHeader("Credits", primaryColor),
+                GlassContainer(
+                  color: glassTint,
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundColor: primaryColor.withOpacity(0.2),
+                        child: Icon(Icons.person, size: 40, color: primaryColor),
+                        // backgroundImage: const AssetImage('assets/images/developer.png'),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        "Pradyumn",
+                        style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "Mobile App Developer",
+                        style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.6)),
+                      ),
+                      const SizedBox(height: 6),
+                      const Divider(indent: 40, endIndent: 40),
+                      const SizedBox(height: 3),
+                      Text(
+                        "Brangunandan",
+                        style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        "UI/UX Designer",
+                        style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.6)),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: _buildSocialButton(
+                              icon: Icons.work_outline,
+                              label: "LinkedIn",
+                              color: const Color(0xFF0077B5),
+                              onTap: () => _launchURL("https://www.linkedin.com/in/technopradyumn"),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Flexible(
+                            child: _buildSocialButton(
+                              icon: Icons.camera_alt_outlined,
+                              label: "Instagram",
+                              color: const Color(0xFFE4405F),
+                              onTap: () => _launchURL("https://www.instagram.com/pradyumnx"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // --- PRIVACY & TRASH ---
+                _buildSectionHeader("Privacy & Maintenance", primaryColor),
+                GlassContainer(
+                  color: glassTint,
+                  padding: const EdgeInsets.all(4),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(Icons.privacy_tip_outlined, color: primaryColor),
+                        title: Text("Privacy Policy", style: textTheme.bodyLarge),
+                        trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+                        onTap: () => context.push(AppRouter.privacyPolicy),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // --- ABOUT ---
+                _buildSectionHeader("About", primaryColor),
+                GlassContainer(
+                  color: glassTint,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text("Version", style: textTheme.bodyLarge),
+                        trailing: Text(version, style: TextStyle(color: onSurfaceColor.withOpacity(0.4))),
+                      ),
+                      ListTile(
+                        title: Text("Build Number", style: textTheme.bodyLarge),
+                        trailing: Text(buildNumber, style: TextStyle(color: onSurfaceColor.withOpacity(0.4))),
+                      ),
+                      ListTile(
+                        title: Text("Open Source Licenses", style: textTheme.bodyLarge),
+                        trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+                        onTap: () {
+                          showLicensePage(
+                            context: context,
+                            applicationName: "CopyClip",
+                            applicationVersion: "1.0.0",
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+
+                // Footer
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: onSurfaceColor.withOpacity(0.03),
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(
+                      color: onSurfaceColor.withOpacity(0.05),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.auto_awesome, size: 12, color: primaryColor.withOpacity(0.6)),
+                      const SizedBox(width: 8),
+                      Text(
+                        "CRAFTED WITH EXCELLENCE",
+                        style: textTheme.labelSmall?.copyWith(
+                          color: onSurfaceColor.withOpacity(0.5),
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 40),
               ],
-            ),
-          ),
-
-          const SizedBox(height: 24),
-
-          // --- ABOUT ---
-          _buildSectionHeader("About", primaryColor),
-          GlassContainer(
-            color: glassTint,
-            child: ListTile(
-              title: Text("Version", style: textTheme.bodyLarge),
-              trailing: Text("1.0.0", style: TextStyle(color: onSurfaceColor.withOpacity(0.4))),
             ),
           ),
         ],
@@ -347,6 +566,37 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
           boxShadow: isSelected ? [BoxShadow(color: color.withOpacity(0.4), blurRadius: 10)] : null,
         ),
         child: isSelected ? const Icon(Icons.check, size: 18, color: Colors.black) : null,
+      ),
+    );
+  }
+
+  Widget _buildSocialButton({
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: color.withOpacity(0.3)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: color, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              label,
+              style: TextStyle(color: color, fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
       ),
     );
   }

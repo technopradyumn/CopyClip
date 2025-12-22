@@ -50,12 +50,13 @@ class DashboardScreen extends StatefulWidget {
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProviderStateMixin {
   bool _boxesOpened = false;
   List<String> _order = [];
   String? _draggedId;
   Offset? _dragPosition;
   final GlobalKey _gridKey = GlobalKey();
+  late AnimationController _settingsAnimationController;
 
   final Map<String, FeatureItem> _features = {
     'notes': FeatureItem('notes', 'Notes', Icons.note_alt_outlined, Colors.amberAccent, AppRouter.notes, 'Create and manage your notes'),
@@ -66,10 +67,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
     'clipboard': FeatureItem('clipboard', 'Clipboard', Icons.paste, Colors.purpleAccent, AppRouter.clipboard, 'Access your clipboard history'),
   };
 
+  final Map<String, Color> featureColors = {
+    'notes': Color(0xFFFF9A85),
+    'todos': Color(0xFF82CFFD),
+    'expenses': Color(0xFFFFB77B),
+    'journal': Color(0xFF9B7DFF),
+    'calendar': Color(0xFF7DE3A0),
+    'clipboard': Color(0xFFFF92D0),
+  };
+
   @override
   void initState() {
     super.initState();
+    _settingsAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
     _initHive();
+  }
+
+  @override
+  void dispose() {
+    _settingsAnimationController.dispose();
+    super.dispose();
   }
 
   Future<void> _initHive() async {
@@ -145,25 +165,64 @@ class _DashboardScreenState extends State<DashboardScreen> {
     await HomeWidget.saveWidgetData<String>('title', feature.title);
     await HomeWidget.saveWidgetData<String>('description', feature.description);
     await HomeWidget.saveWidgetData<String>('deeplink', uri.toString());
-    // Save color information as an integer (ARGB format)
-    await HomeWidget.saveWidgetData<int>('color', feature.color.value); 
-    await HomeWidget.updateWidget(
-      name: 'HomeWidgetProvider',
-      androidName: 'HomeWidgetProvider',
-    );
+    await HomeWidget.saveWidgetData<int>('color', feature.color.value);
+    await HomeWidget.updateWidget(name: 'HomeWidgetProvider', androidName: 'HomeWidgetProvider');
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    if (!_boxesOpened) return const GlassScaffold(body: Center(child: CircularProgressIndicator()));
+  Widget _buildFeatureCard(ThemeData theme, FeatureItem item, {bool isDragging = false}) {
+    final Color baseColor = featureColors[item.id] ?? item.color;
 
-    return GlassScaffold(
-      body: Column(
+    return GlassContainer(
+      color: baseColor.withOpacity(0.15),
+      opacity: isDragging ? 0.3 : 0.15,
+      blur: 20,
+      borderRadius: 32,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildTopHeader(theme),
-          Expanded(
-            child: _buildReorderableGrid(theme),
+          Hero(
+            tag: '${item.id}_icon',
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    baseColor.withOpacity(0.6),
+                    baseColor.withOpacity(0.9),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: baseColor.withOpacity(0.3),
+                    blurRadius: 12,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
+              ),
+              child: Icon(
+                item.icon,
+                size: 32,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          Hero(
+            tag: '${item.id}_title',
+            child: Material(
+              type: MaterialType.transparency,
+              child: Text(
+                item.title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: theme.colorScheme.onSurface,
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -186,7 +245,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           Row(
             children: [
-              // Stylish Search Button
               IconButton(
                 icon: Container(
                   padding: const EdgeInsets.all(12),
@@ -203,8 +261,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               const SizedBox(width: 8),
               IconButton(
-                icon: Icon(Icons.settings_outlined, color: theme.colorScheme.onSurface.withOpacity(0.7)),
-                onPressed: () => context.push(AppRouter.settings),
+                icon: Hero(
+                  tag: 'settings_icon',
+                  child: RotationTransition(
+                    turns: _settingsAnimationController,
+                    child: Icon(
+                      Icons.settings_outlined,
+                      color: theme.colorScheme.onSurface.withOpacity(0.7),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  _settingsAnimationController.forward(from: 0.0);
+                  context.push(AppRouter.settings);
+                },
               ),
             ],
           ),
@@ -228,18 +298,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: Stack(
               children: [
                 for (int i = 0; i < _order.length; i++)
-                  _buildAnimatedItem(i, _order[i], itemWidth, itemHeight),
+                  _buildAnimatedItem(i, _order[i], itemWidth, itemHeight, theme),
 
-                // Dragging Overlay
                 if (_draggedId != null && _dragPosition != null)
                   Positioned(
                     left: _dragPosition!.dx - 24 - (itemWidth / 2),
-                    top: _dragPosition!.dy - 180 - (itemHeight / 2), // Adjusted for header height
+                    top: _dragPosition!.dy - 180 - (itemHeight / 2),
                     child: IgnorePointer(
                       child: SizedBox(
                         width: itemWidth,
                         height: itemHeight,
-                        child: _buildFeatureCard(_features[_draggedId]!, isDragging: true),
+                        child: _buildFeatureCard(theme, _features[_draggedId]!, isDragging: true),
                       ),
                     ),
                   ),
@@ -251,7 +320,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildAnimatedItem(int index, String id, double width, double height) {
+  Widget _buildAnimatedItem(int index, String id, double width, double height, ThemeData theme) {
     final isDragging = id == _draggedId;
     final int col = index % 2;
     final int row = index ~/ 2;
@@ -269,68 +338,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: SizedBox(
           width: width,
           height: height,
-          child: isDragging ? const SizedBox.shrink() : _buildFeatureCard(_features[id]!),
+          child: isDragging
+              ? Opacity(opacity: 0.0, child: _buildFeatureCard(theme, _features[id]!))
+              : _buildFeatureCard(theme, _features[id]!),
         ),
       ),
     );
   }
 
-  Widget _buildFeatureCard(FeatureItem item, {bool isDragging = false}) {
-    return GlassContainer(
-      color: item.color.withOpacity(0.1),
-      opacity: isDragging ? 0.3 : 0.15,
-      blur: 15,
-      borderRadius: 28,
-      child: Stack(
-        alignment: Alignment.center,
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    if (!_boxesOpened) return const GlassScaffold(body: Center(child: CircularProgressIndicator()));
+
+    return GlassScaffold(
+      body: Column(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: item.color.withOpacity(0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(item.icon, size: 30, color: item.color),
-              ),
-              const SizedBox(height: 12),
-              Text(item.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-            ],
-          ),
-          Positioned(
-            top: 8,
-            right: 8,
-            child: Material(
-              color: Colors.transparent,
-              child: IconButton(
-                icon: const Icon(Icons.push_pin_outlined, size: 20),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Pin to Home Screen'),
-                      content: Text('Do you want to pin ${item.title} to your home screen?'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            _pinFeatureToHome(item);
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('Pin'),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
+          _buildTopHeader(theme),
+          Expanded(child: _buildReorderableGrid(theme)),
         ],
       ),
     );

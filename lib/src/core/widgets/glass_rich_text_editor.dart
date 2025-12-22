@@ -91,9 +91,35 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+
 
     return Column(
       children: [
+        // EDITOR
+        Expanded(
+          child: Container(
+            color: Colors.transparent,
+            child: QuillEditor(
+              controller: widget.controller,
+              focusNode: widget.focusNode,
+              scrollController: widget.scrollController,
+              config: QuillEditorConfig(
+                placeholder: widget.hintText ?? 'Start writing...',
+                padding: const EdgeInsets.fromLTRB(24, 10, 24, 20),
+                autoFocus: false,
+                expands: true,
+                scrollable: true,
+                scrollPhysics: const BouncingScrollPhysics(),
+                embedBuilders: [
+                  ...FlutterQuillEmbeds.editorBuilders(),
+                  TimeStampEmbedBuilder(),
+                ],
+              ),
+            ),
+          ),
+        ),
+
         // TOOLBAR
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -155,29 +181,16 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
           ),
         ),
 
-        // EDITOR
-        Expanded(
-          child: Container(
-            color: Colors.transparent,
-            child: QuillEditor(
-              controller: widget.controller,
-              focusNode: widget.focusNode,
-              scrollController: widget.scrollController,
-              config: QuillEditorConfig(
-                placeholder: widget.hintText ?? 'Start writing...',
-                padding: const EdgeInsets.fromLTRB(24, 10, 24, 20),
-                autoFocus: false,
-                expands: true,
-                scrollable: true,
-                scrollPhysics: const BouncingScrollPhysics(),
-                embedBuilders: [
-                  ...FlutterQuillEmbeds.editorBuilders(),
-                  TimeStampEmbedBuilder(),
-                ],
-              ),
-            ),
+        AnimatedSize(
+          duration: Duration(milliseconds: bottomInset > 0 ? 350 : 350),
+          curve: bottomInset > 0
+              ? Curves.easeOutCubic
+              : Curves.easeInOutCubic,
+          alignment: Alignment.topCenter,
+          child: SizedBox(
+            height: bottomInset > 10 ? 10 : 30,
           ),
-        ),
+        )
       ],
     );
   }

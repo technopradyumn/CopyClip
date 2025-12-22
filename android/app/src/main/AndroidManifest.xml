@@ -99,6 +99,13 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <queries>
+            <intent>
+                <action android:name="android.intent.action.SENDTO" />
+                <data android:scheme="mailto" />
+            </intent>
+        </queries>
+
     </application>
 
     <queries>
