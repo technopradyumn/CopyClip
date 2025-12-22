@@ -5,11 +5,21 @@
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <!-- Required for a Foreground Service -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.SENDTO" />
+            <data android:scheme="mailto" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+    </queries>
 
     <application
         android:label="CopyClip"
@@ -37,7 +47,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
-            <!-- Deep Link Intent Filter -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -50,7 +59,6 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
-        <!-- Home Widget Provider Registration -->
         <receiver
             android:name="es.antonborri.home_widget.HomeWidgetProvider"
             android:exported="true">
@@ -76,7 +84,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- Updated service to run in the foreground -->
         <service
             android:name=".ClipboardAccessibilityService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
@@ -99,19 +106,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <queries>
-            <intent>
-                <action android:name="android.intent.action.SENDTO" />
-                <data android:scheme="mailto" />
-            </intent>
-        </queries>
-
     </application>
-
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.PROCESS_TEXT"/>
-            <data android:mimeType="text/plain"/>
-        </intent>
-    </queries>
 </manifest>
