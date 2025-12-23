@@ -4,6 +4,7 @@ import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
@@ -31,6 +32,9 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   bool _isServiceEnabled = false;
   late AnimationController _rotationController;
 
+  String _version = "1.0.0";
+  String _buildNumber = "1";
+
   @override
   void initState() {
     super.initState();
@@ -41,6 +45,15 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     )..repeat();
     _checkServiceStatus();
     _runAutoCleanup();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      _version = info.version;
+      _buildNumber = info.buildNumber;
+    });
   }
 
   @override
@@ -472,11 +485,12 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                     children: [
                       ListTile(
                         title: Text("Version", style: textTheme.bodyLarge),
-                        trailing: Text(version, style: TextStyle(color: onSurfaceColor.withOpacity(0.4))),
+                        trailing: Text(_version, style: TextStyle(color: onSurfaceColor.withOpacity(0.4))),
                       ),
                       ListTile(
                         title: Text("Build Number", style: textTheme.bodyLarge),
-                        trailing: Text(buildNumber, style: TextStyle(color: onSurfaceColor.withOpacity(0.4))),
+                        // Keep build number if you plan to release on App Store/Play Store
+                        trailing: Text(_buildNumber, style: TextStyle(color: onSurfaceColor.withOpacity(0.4))),
                       ),
                       ListTile(
                         title: Text("Open Source Licenses", style: textTheme.bodyLarge),
@@ -485,7 +499,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                           showLicensePage(
                             context: context,
                             applicationName: "CopyClip",
-                            applicationVersion: "1.0.0",
+                            applicationVersion: _version,
                           );
                         },
                       ),

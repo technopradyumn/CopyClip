@@ -181,16 +181,10 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
           ),
         ),
 
-        AnimatedSize(
-          duration: Duration(milliseconds: bottomInset > 0 ? 350 : 350),
-          curve: bottomInset > 0
-              ? Curves.easeOutCubic
-              : Curves.easeInOutCubic,
-          alignment: Alignment.topCenter,
-          child: SizedBox(
-            height: bottomInset > 10 ? 10 : 30,
-          ),
-        )
+        SizedBox(
+          height: bottomInset > 10 ? 10 : 30,
+          width: double.infinity,
+        ),
       ],
     );
   }

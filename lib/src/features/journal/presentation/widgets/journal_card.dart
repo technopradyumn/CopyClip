@@ -81,6 +81,7 @@ class JournalCard extends StatelessWidget {
 
     final bool isDarkColor = ThemeData.estimateBrightnessForColor(cardBaseColor) == Brightness.dark;
     final Color contentColor = isDarkColor ? Colors.white : Colors.black87;
+    final primaryColor = theme.colorScheme.primary;
 
     return GestureDetector(
       onTap: onTap,
@@ -109,7 +110,13 @@ class JournalCard extends StatelessWidget {
                         Text(DateFormat('dd').format(entry.date),
                             style: theme.textTheme.headlineSmall?.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: contentColor)),
                         const SizedBox(height: 8),
-                        Text(_getMoodEmoji(entry.mood), style: const TextStyle(fontSize: 24)),
+                        Material(
+                          type: MaterialType.transparency,
+                          child: Text(
+                            _getMoodEmoji(entry.mood),
+                            style: const TextStyle(fontSize: 24),
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(width: 8),
@@ -154,6 +161,39 @@ class JournalCard extends StatelessWidget {
                                   fit: BoxFit.cover,
                                   errorBuilder: (_, __, ___) => Image.network(imageUrl, height: 100, fit: BoxFit.cover,
                                       errorBuilder: (c,e,s) => const SizedBox.shrink()),
+                                ),
+                              ),
+                            ),
+
+                          if (entry.tags != null && entry.tags!.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12.0),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                child: Row(
+                                  children: entry.tags!.map((tag) => Container(
+                                    margin: const EdgeInsets.only(right: 6),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: primaryColor.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(6),
+                                      border: Border.all(
+                                        color: primaryColor.withOpacity(0.05),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      '#$tag',
+                                      style: theme.textTheme.bodySmall?.copyWith(
+                                        color: primaryColor,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  )).toList(),
                                 ),
                               ),
                             ),
