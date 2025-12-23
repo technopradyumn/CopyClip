@@ -101,6 +101,7 @@ dependencies:
   quill_native_bridge_android: ^0.0.1+2
   quiver: ^3.2.1
   package_info_plus: ^8.0.0
+  flutter_timezone: ^5.0.1
 
 
 dev_dependencies:
