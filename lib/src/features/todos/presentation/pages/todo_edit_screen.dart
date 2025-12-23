@@ -316,7 +316,9 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
 
   void _saveTodo() {
     if (_taskController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter a task')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please enter a task'))
+      );
       return;
     }
 
@@ -331,23 +333,42 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
       id: id,
       task: _taskController.text.trim(),
       category: _categoryController.text.trim().isEmpty ? 'General' : _categoryController.text.trim(),
-      dueDate: finalDate, // Use the sanitized date
+      dueDate: finalDate,
       hasReminder: _hasReminder,
       isDone: _isDone,
       sortIndex: widget.todo?.sortIndex ?? 0,
     );
 
+    // 1. Persist to Hive
     box.put(id, newTodo);
 
+    // 2. Manage Notifications
+    // We only show a notification if:
+    // - Reminder is ON
+    // - Date is in the FUTURE
+    // - Task is NOT yet done
     if (_hasReminder && finalDate != null && finalDate.isAfter(DateTime.now()) && !_isDone) {
-      NotificationService().scheduleNotification(
+
+      // If you want a persistent "Instant" notification that stays in the tray:
+      NotificationService().showInstantNotification(
         id: notifId,
         title: 'Task Reminder',
+        body: newTodo.task,
+        payload: newTodo.id, // CRITICAL: Links the "Mark Done" button to this ID
+      );
+
+      // OR, if you want it to trigger only at the specific due date:
+      /*
+      NotificationService().scheduleNotification(
+        id: notifId,
+        title: 'Task Due Now',
         body: newTodo.task,
         scheduledDate: finalDate,
         payload: newTodo.id,
       );
+      */
     } else {
+      // 3. Cleanup: If the task is finished or reminder turned off, remove the notification
       NotificationService().cancelNotification(notifId);
     }
 

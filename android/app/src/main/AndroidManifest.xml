@@ -24,7 +24,9 @@
     <application
         android:label="CopyClip"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/copyclip_logo"
+        android:roundIcon="@drawable/copyclip_logo"
+        android:banner="@drawable/copyclip_logo"
         android:enableOnBackInvokedCallback="true"
         android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true">

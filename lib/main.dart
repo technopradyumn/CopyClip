@@ -1,5 +1,4 @@
 import 'package:copyclip/src/core/router/app_router.dart';
-import 'package:copyclip/src/core/router/main_router.dart';
 import 'package:copyclip/src/core/services/notification_service.dart';
 import 'package:copyclip/src/core/theme/app_theme.dart';
 import 'package:copyclip/src/core/theme/theme_manager.dart';
@@ -15,33 +14,48 @@ import 'package:copyclip/src/features/todos/data/todo_adapter.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'src/core/router/main_router.dart';
 import 'src/l10n/app_localizations.dart';
 
-// Placeholder for your FeatureItem class
-class FeatureItem {
-  final String id;
-  final String title;
-  final String description;
+@pragma("vm:entry-point")
+Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
+  if (uri == null || uri.scheme != 'copyclip') return;
 
-  FeatureItem({required this.id, required this.title, required this.description});
+  final featureId = uri.host;
+
+  final routesMap = {
+    'notes': AppRouter.notes,
+    'todos': AppRouter.todos,
+    'expenses': AppRouter.expenses,
+    'journal': AppRouter.journal,
+    'calendar': AppRouter.calendar,
+    'clipboard': AppRouter.clipboard,
+  };
+
+  final route = routesMap[featureId];
+  if (route == null) return;
+
+  const channel = MethodChannel('com.technopradyumn.copyclip/widget_handler');
+  try {
+    await channel.invokeMethod('navigateTo', {'route': route});
+  } catch (_) {}
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  HomeWidget.registerBackgroundCallback(homeWidgetBackgroundCallback);
   HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
   await Hive.initFlutter();
-
-  await NotificationService().init();
 
   Hive.registerAdapter(NoteAdapter());
   Hive.registerAdapter(TodoAdapter());
@@ -49,19 +63,17 @@ void main() async {
   Hive.registerAdapter(JournalEntryAdapter());
   Hive.registerAdapter(ClipboardItemAdapter());
 
-  await Hive.openBox<Note>('notes_box');
-  await Hive.openBox<Todo>('todos_box');
-  await Hive.openBox<Expense>('expenses_box');
-  await Hive.openBox<JournalEntry>('journal_box');
-  await Hive.openBox<ClipboardItem>('clipboard_box');
-  await Hive.openBox('settings');
-  await Hive.openBox('theme_box');
+  await NotificationService().init();
 
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.light,
-    systemNavigationBarColor: Colors.transparent,
-  ));
+  await Future.wait([
+    Hive.openBox<Note>('notes_box'),
+    Hive.openBox<Todo>('todos_box'),
+    Hive.openBox<Expense>('expenses_box'),
+    Hive.openBox<JournalEntry>('journal_box'),
+    Hive.openBox<ClipboardItem>('clipboard_box'),
+    Hive.openBox('settings'),
+    Hive.openBox('theme_box'),
+  ]);
 
   await _initializeWidgetData();
 
@@ -74,12 +86,12 @@ void main() async {
 }
 
 Future<void> _initializeWidgetData() async {
-  final String? title = await HomeWidget.getWidgetData<String>('title');
+  final title = await HomeWidget.getWidgetData<String>('title');
   if (title != null) return;
 
-  await HomeWidget.saveWidgetData<String>('title', 'Clipboard');
-  await HomeWidget.saveWidgetData<String>('description', 'Access your clipboard history');
-  await HomeWidget.saveWidgetData<String>('deeplink', 'copyclip://clipboard');
+  await HomeWidget.saveWidgetData('title', 'Clipboard');
+  await HomeWidget.saveWidgetData('description', 'Access clipboard history');
+  await HomeWidget.saveWidgetData('deeplink', 'copyclip://clipboard');
 }
 
 class CopyClipApp extends StatefulWidget {
@@ -89,20 +101,36 @@ class CopyClipApp extends StatefulWidget {
   State<CopyClipApp> createState() => _CopyClipAppState();
 }
 
-class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
-  static const platform = MethodChannel('com.technopradyumn.copyclip/accessibility');
+class _CopyClipAppState extends State<CopyClipApp>
+    with WidgetsBindingObserver {
+  static const MethodChannel platform =
+  MethodChannel('com.technopradyumn.copyclip/accessibility');
+  static const MethodChannel widgetChannel =
+  MethodChannel('com.technopradyumn.copyclip/widget_handler');
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    platform.setMethodCallHandler(_handlePlatformChannelMethods);
-    _syncAllClips();
-    _configureSelectNotificationSubject();
+
+    platform.setMethodCallHandler(_handleNativeCalls);
+    widgetChannel.setMethodCallHandler(_handleNativeCalls);
+
+    _syncClipboard();
     _handleInitialNotification();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      NotificationService().init();
-    });
+    _configureNotificationListener();
+    widgetChannel.setMethodCallHandler(_handleNativeCalls);
+  }
+
+  Future<void> _handleNativeCalls(MethodCall call) async {
+    if (call.method == 'navigateTo') {
+      final route = call.arguments is Map
+          ? call.arguments['route']
+          : call.arguments;
+      if (route is String) {
+        router.push(route);
+      }
+    }
   }
 
   @override
@@ -111,93 +139,80 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _syncAllClips();
-    }
-  }
-
-  Future<void> _handlePlatformChannelMethods(MethodCall call) async {
-    if (call.method == "handleWidgetNavigation") {
-      final String? route = call.arguments as String?;
-      if (route != null) {
-        router.go(route);
-      }
-    }
-  }
-
-  Future<void> _syncAllClips() async {
+  Future<void> _syncClipboard() async {
     try {
-      final List<dynamic>? pendingClips = await platform.invokeMethod('getPendingClips');
-      if (pendingClips != null && pendingClips.isNotEmpty) {
-        for (var text in pendingClips) {
-          await _saveToHive(text.toString());
+      final List<dynamic>? clips =
+      await platform.invokeMethod('getPendingClips');
+
+      if (clips == null) return;
+
+      final box = Hive.box<ClipboardItem>('clipboard_box');
+
+      for (final text in clips) {
+        final clean = text.toString().trim();
+        if (clean.isEmpty) continue;
+
+        final exists =
+        box.values.any((e) => e.content.trim() == clean);
+
+        if (!exists) {
+          box.put(
+            DateTime.now().microsecondsSinceEpoch.toString(),
+            ClipboardItem(
+              id: DateTime.now().microsecondsSinceEpoch.toString(),
+              content: clean,
+              createdAt: DateTime.now(),
+              type: _detectType(clean),
+              sortIndex: box.length,
+            ),
+          );
         }
       }
-    } catch (e) {
-      debugPrint("Multi-sync Error: $e");
-    }
-  }
-
-  Future<void> _saveToHive(String text) async {
-    final box = Hive.box<ClipboardItem>('clipboard_box');
-    final cleanText = text.trim();
-    if (cleanText.isEmpty) return;
-    bool alreadyExists = box.values.any((item) => item.content.trim() == cleanText);
-    if (!alreadyExists) {
-      final newItem = ClipboardItem(
-        id: DateTime.now().microsecondsSinceEpoch.toString(),
-        content: cleanText,
-        createdAt: DateTime.now(),
-        type: _detectType(cleanText),
-        sortIndex: box.length,
-      );
-      await box.put(newItem.id, newItem);
-    }
+    } catch (_) {}
   }
 
   String _detectType(String text) {
     if (text.startsWith('http')) return 'link';
     if (RegExp(r'^\+?[0-9]{7,15}$').hasMatch(text)) return 'phone';
-    if (text.startsWith('#') || text.startsWith('Color')) return 'color';
+    if (text.startsWith('#')) return 'color';
     return 'text';
   }
 
   Future<void> _handleInitialNotification() async {
-    final notificationPlugin = NotificationService().flutterLocalNotificationsPlugin;
-    final launchDetails = await notificationPlugin.getNotificationAppLaunchDetails();
-    if (launchDetails?.didNotificationLaunchApp == true && launchDetails?.notificationResponse?.payload != null) {
-      final payload = launchDetails!.notificationResponse!.payload!;
-      Future.delayed(const Duration(milliseconds: 500), () => _navigateToTodo(payload));
+    final details = await NotificationService()
+        .flutterLocalNotificationsPlugin
+        .getNotificationAppLaunchDetails();
+
+    if (details?.didNotificationLaunchApp == true &&
+        details?.notificationResponse?.payload != null) {
+      _openTodo(details!.notificationResponse!.payload!);
     }
   }
 
-  void _navigateToTodo(String payload) {
-    final box = Hive.box<Todo>('todos_box');
-    final todoToEdit = box.get(payload);
-    if (todoToEdit != null) {
-      router.push(AppRouter.todoEdit, extra: todoToEdit);
-    }
-  }
-
-  void _configureSelectNotificationSubject() {
-    NotificationService().onNotifications.stream.listen((String? payload) {
-      if (payload != null) {
-        _navigateToTodo(payload);
-      }
+  void _configureNotificationListener() {
+    NotificationService().onNotifications.listen((payload) {
+      if (payload != null) _openTodo(payload);
     });
+  }
+
+  void _openTodo(String id) {
+    final box = Hive.box<Todo>('todos_box');
+    final todo = box.get(id);
+    if (todo != null) {
+      router.push(AppRouter.todoEdit, extra: todo);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final themeManager = Provider.of<ThemeManager>(context);
+    final theme = context.watch<ThemeManager>();
+
     return MaterialApp.router(
       title: 'CopyClip',
       debugShowCheckedModeBanner: false,
-      themeMode: themeManager.themeMode,
-      theme: AppTheme.lightTheme(themeManager.primaryColor),
-      darkTheme: AppTheme.darkTheme(themeManager.primaryColor),
+      themeMode: theme.themeMode,
+      theme: AppTheme.lightTheme(theme.primaryColor),
+      darkTheme: AppTheme.darkTheme(theme.primaryColor),
       routerConfig: router,
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -208,63 +223,5 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
     );
-  }
-}
-
-class AccessibilityServiceManager {
-  static const platform = MethodChannel('com.technopradyumn.copyclip/accessibility');
-
-  static Future<void> requestPermission() async {
-    try {
-      await platform.invokeMethod('openAccessibilitySettings');
-    } on PlatformException catch (e) {
-      print("Error opening accessibility settings: ${e.message}");
-    }
-  }
-
-  static Future<bool> isServiceEnabled() async {
-    try {
-      return await platform.invokeMethod('isServiceEnabled');
-    } on PlatformException catch (e) {
-      print("Error checking service status: ${e.message}");
-      return false;
-    }
-  }
-}
-
-@pragma("vm:entry-point")
-void homeWidgetBackgroundCallback(Uri? uri) async {
-  if (uri?.scheme == 'copyclip') {
-    final featureId = uri?.host;
-    if (featureId != null) {
-      WidgetsFlutterBinding.ensureInitialized();
-      await Hive.initFlutter();
-      Hive.registerAdapter(NoteAdapter());
-      Hive.registerAdapter(TodoAdapter());
-      Hive.registerAdapter(ExpenseAdapter());
-      Hive.registerAdapter(JournalEntryAdapter());
-      Hive.registerAdapter(ClipboardItemAdapter());
-      await Hive.openBox<Todo>('todos_box');
-
-      final routesMap = {
-        'notes': AppRouter.notes,
-        'todos': AppRouter.todos,
-        'expenses': AppRouter.expenses,
-        'journal': AppRouter.journal,
-        'calendar': AppRouter.calendar,
-        'clipboard': AppRouter.clipboard,
-      };
-
-      final route = routesMap[featureId];
-
-      if (route != null) {
-        const platform = MethodChannel('com.technopradyumn.copyclip/widget_handler');
-        try {
-          await platform.invokeMethod('navigateTo', {'route': route});
-        } catch (e) {
-          debugPrint("Widget navigation failed: $e");
-        }
-      }
-    }
   }
 }
