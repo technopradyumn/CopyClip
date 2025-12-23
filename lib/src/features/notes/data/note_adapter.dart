@@ -16,24 +16,25 @@ class NoteAdapter extends TypeAdapter<Note> {
       title: fields[1] as String,
       content: fields[2] as String,
       updatedAt: fields[3] as DateTime,
-      colorValue: fields[4] as int?, // Added this field
+      colorValue: fields[4] as int?,
+      sortIndex: fields[5] as int? ?? 0,
+      isDeleted: fields[6] as bool? ?? false,
+      deletedAt: fields[7] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Note obj) {
     writer
-      ..writeByte(5) // Increased from 4 to 5
-      ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
-      ..write(obj.title)
-      ..writeByte(2)
-      ..write(obj.content)
-      ..writeByte(3)
-      ..write(obj.updatedAt)
-      ..writeByte(4) // New field index
-      ..write(obj.colorValue);
+      ..writeByte(8) // Updated count to include all fields (0 through 7)
+      ..writeByte(0)..write(obj.id)
+      ..writeByte(1)..write(obj.title)
+      ..writeByte(2)..write(obj.content)
+      ..writeByte(3)..write(obj.updatedAt)
+      ..writeByte(4)..write(obj.colorValue)
+      ..writeByte(5)..write(obj.sortIndex)
+      ..writeByte(6)..write(obj.isDeleted)
+      ..writeByte(7)..write(obj.deletedAt);
   }
 
   @override

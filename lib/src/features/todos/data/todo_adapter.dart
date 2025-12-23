@@ -18,25 +18,27 @@ class TodoAdapter extends TypeAdapter<Todo> {
       isDone: fields[3] as bool,
       dueDate: fields[4] as DateTime?,
       hasReminder: fields[5] as bool,
+      // FIX: Read the new fields
+      sortIndex: fields[6] as int? ?? 0,
+      isDeleted: fields[10] as bool? ?? false,
+      deletedAt: fields[11] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Todo obj) {
     writer
-      ..writeByte(6) // Total number of fields
-      ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
-      ..write(obj.task)
-      ..writeByte(2)
-      ..write(obj.category)
-      ..writeByte(3)
-      ..write(obj.isDone)
-      ..writeByte(4)
-      ..write(obj.dueDate)
-      ..writeByte(5)
-      ..write(obj.hasReminder);
+      ..writeByte(9) // Updated count to 9 (Original 6 + 3 new fields)
+      ..writeByte(0)..write(obj.id)
+      ..writeByte(1)..write(obj.task)
+      ..writeByte(2)..write(obj.category)
+      ..writeByte(3)..write(obj.isDone)
+      ..writeByte(4)..write(obj.dueDate)
+      ..writeByte(5)..write(obj.hasReminder)
+      ..writeByte(6)..write(obj.sortIndex)
+    // FIX: Explicitly write the deletion fields
+      ..writeByte(10)..write(obj.isDeleted)
+      ..writeByte(11)..write(obj.deletedAt);
   }
 
   @override
