@@ -325,8 +325,6 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
     final box = Hive.box<Todo>('todos_box');
     final String id = widget.todo?.id ?? DateTime.now().millisecondsSinceEpoch.toString();
     final int notifId = id.hashCode;
-
-    // Ensure date is cleared if reminder is off
     final DateTime? finalDate = _hasReminder ? _selectedDate : null;
 
     final newTodo = Todo(
@@ -339,26 +337,10 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
       sortIndex: widget.todo?.sortIndex ?? 0,
     );
 
-    // 1. Persist to Hive
     box.put(id, newTodo);
 
-    // 2. Manage Notifications
-    // We only show a notification if:
-    // - Reminder is ON
-    // - Date is in the FUTURE
-    // - Task is NOT yet done
     if (_hasReminder && finalDate != null && finalDate.isAfter(DateTime.now()) && !_isDone) {
 
-      // If you want a persistent "Instant" notification that stays in the tray:
-      NotificationService().showInstantNotification(
-        id: notifId,
-        title: 'Task Reminder',
-        body: newTodo.task,
-        payload: newTodo.id, // CRITICAL: Links the "Mark Done" button to this ID
-      );
-
-      // OR, if you want it to trigger only at the specific due date:
-      /*
       NotificationService().scheduleNotification(
         id: notifId,
         title: 'Task Due Now',
@@ -366,9 +348,8 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
         scheduledDate: finalDate,
         payload: newTodo.id,
       );
-      */
+
     } else {
-      // 3. Cleanup: If the task is finished or reminder turned off, remove the notification
       NotificationService().cancelNotification(notifId);
     }
 
