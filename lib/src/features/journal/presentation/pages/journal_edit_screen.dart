@@ -77,45 +77,18 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
 
     // ✅ Add focus listener for keyboard handling
     _editorFocusNode.addListener(_onFocusChanged);
-    _quillController.addListener(_onEditorContentChanged);
   }
 
-  void _onEditorContentChanged() {
-    if (_editorFocusNode.hasFocus) {
-      Future.delayed(const Duration(milliseconds: 100), () {
-        if (mounted && _editorScrollController.hasClients) {
-          final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-          if (bottomInset > 10) {
-            final maxScroll = _editorScrollController.position.maxScrollExtent;
-            if (maxScroll > 0) {
-              _editorScrollController.jumpTo(maxScroll);
-            }
-          }
-        }
-      });
-    }
-  }
-
+  // ✅ Handle focus changes and ensure cursor visibility
   void _onFocusChanged() {
     if (_editorFocusNode.hasFocus) {
-      // ✅ Increased delay for keyboard animation
-      Future.delayed(const Duration(milliseconds: 500), () {
+      Future.delayed(const Duration(milliseconds: 300), () {
         if (mounted && _editorScrollController.hasClients) {
-          final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-
-          // Only scroll if keyboard is actually visible
-          if (bottomInset > 10) {
-            final maxScroll = _editorScrollController.position.maxScrollExtent;
-
-            // Scroll to bottom to show cursor
-            if (maxScroll > 0) {
-              _editorScrollController.animateTo(
-                maxScroll,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeOutCubic,
-              );
-            }
-          }
+          _editorScrollController.animateTo(
+            _editorScrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeOut,
+          );
         }
       });
     }
@@ -124,7 +97,6 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   @override
   void dispose() {
     _editorFocusNode.removeListener(_onFocusChanged);
-    _quillController.removeListener(_onEditorContentChanged);
     _editorFocusNode.dispose();
     _editorScrollController.dispose();
     _quillController.dispose();

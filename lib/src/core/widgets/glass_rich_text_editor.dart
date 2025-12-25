@@ -90,48 +90,45 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     _initSpeech();
   }
 
-// ✅ CRITICAL FIX: This is the key change
   void _onFocusChange() {
     if (widget.focusNode.hasFocus) {
-      // Schedule cursor visibility check AFTER the frame is built
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _ensureCursorVisible();
       });
     }
   }
 
-// ✅ IMPROVED: More reliable cursor visibility logic
   void _ensureCursorVisible() {
     if (!mounted || !widget.focusNode.hasFocus) return;
 
-    // Wait for keyboard animation (longer delay for reliability)
-    Future.delayed(const Duration(milliseconds: 500), () {
+    final selection = widget.controller.selection;
+    if (!selection.isCollapsed) return;
+
+    // Wait for keyboard animation to complete
+    Future.delayed(const Duration(milliseconds: 400), () {
       if (!mounted || !widget.scrollController.hasClients) return;
 
       final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+      if (bottomInset > 100) { // Keyboard is visible
+        // Scroll to make cursor visible above keyboard
+        final currentOffset = widget.scrollController.offset;
+        final maxScroll = widget.scrollController.position.maxScrollExtent;
 
-      // If keyboard is visible (more than 50px)
-      if (bottomInset > 50) {
-        final renderBox = context.findRenderObject() as RenderBox?;
-        if (renderBox != null) {
-          // Get the cursor position
-          final selection = widget.controller.selection;
-
-          // Always scroll to show cursor when keyboard appears
-          final maxScroll = widget.scrollController.position.maxScrollExtent;
-          final currentScroll = widget.scrollController.offset;
-
-          // Calculate target scroll position (leave some space above keyboard)
-          final targetScroll = maxScroll > 0 ? maxScroll : currentScroll + 100;
-
+        // Scroll to bottom if needed
+        if (currentOffset < maxScroll) {
           widget.scrollController.animateTo(
-            targetScroll,
+            maxScroll,
             duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOutCubic,
+            curve: Curves.easeOut,
           );
         }
       }
     });
+  }
+
+  void _initSpeech() async {
+    _speechEnabled = await _speechToText.initialize();
+    setState(() {});
   }
 
   @override
@@ -144,18 +141,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
   }
 
   void _onControllerChange() {
-    if (mounted) {
-      setState(() {});
-      // ✅ ADDED: Ensure cursor stays visible when content changes
-      if (widget.focusNode.hasFocus) {
-        _ensureCursorVisible();
-      }
-    }
-  }
-
-  void _initSpeech() async {
-    _speechEnabled = await _speechToText.initialize();
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   void _toggleDropdown(String dropdown) {
