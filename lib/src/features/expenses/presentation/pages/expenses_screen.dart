@@ -445,7 +445,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
         ),
         body: Column(
           children: [
-            SizedBox(height: 32),
             _buildTopBar(),
             Expanded(
               child: ValueListenableBuilder(

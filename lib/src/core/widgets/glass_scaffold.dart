@@ -55,8 +55,8 @@ class _GlassScaffoldState extends State<GlassScaffold> {
       child: Scaffold(
         backgroundColor: baseColor,
 
-        // ❌ DO NOT let Scaffold resize automatically
-        resizeToAvoidBottomInset: false,
+        // ✅ CRITICAL: Let Scaffold handle keyboard padding automatically
+        resizeToAvoidBottomInset: true,
 
         extendBodyBehindAppBar: true,
 
@@ -90,12 +90,14 @@ class _GlassScaffoldState extends State<GlassScaffold> {
 
         body: Stack(
           children: [
+            // Background Color
             Positioned.fill(
               child: DecoratedBox(
                 decoration: BoxDecoration(color: baseColor),
               ),
             ),
 
+            // Gradient Overlay
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
@@ -115,6 +117,7 @@ class _GlassScaffoldState extends State<GlassScaffold> {
               ),
             ),
 
+            // Glass Effect
             if (widget.enableGlassEffect)
               Positioned.fill(
                 child: BackdropFilter(
@@ -123,10 +126,9 @@ class _GlassScaffoldState extends State<GlassScaffold> {
                 ),
               ),
 
-            // ✅ Manual keyboard handling (THIS FIXES BLACK SCREEN)
+            // ✅ Body Content - Wrap in SafeArea
             Positioned.fill(
-              child: Padding(
-                padding: EdgeInsets.only(bottom: bottomInset),
+              child: SafeArea(
                 child: Material(
                   color: Colors.transparent,
                   child: widget.body,

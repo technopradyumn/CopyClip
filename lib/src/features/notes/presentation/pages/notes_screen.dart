@@ -309,7 +309,6 @@ class _NotesScreenState extends State<NotesScreen> {
         ),
         body: Column(
           children: [
-            SizedBox(height: 32),
             _buildCustomTopBar(),
             Padding(
               padding: const EdgeInsets.only(right: 16, left: 16, top: 0, bottom: 8),

@@ -19,13 +19,13 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
         isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = "1.8"
     }
 
     defaultConfig {
@@ -38,34 +38,28 @@ android {
     }
 
     signingConfigs {
-        println("🔐 Loaded keystore properties:")
-        println("  keyAlias = ${keystoreProperties["keyAlias"]}")
-        println("  keyPassword = ${keystoreProperties["keyPassword"]}")
-        println("  storeFile = ${keystoreProperties["storeFile"]}")
-        println("  storePassword = ${keystoreProperties["storePassword"]}")
         create("release") {
-            val keyAliasValue = keystoreProperties["keyAlias"] as? String
-            val keyPasswordValue = keystoreProperties["keyPassword"] as? String
-            val storeFileValue = keystoreProperties["storeFile"] as? String
-            val storePasswordValue = keystoreProperties["storePassword"] as? String
+            val keyAliasValue = keystoreProperties["keyAlias"] as String
+            val keyPasswordValue = keystoreProperties["keyPassword"] as String
+            val storeFileValue = keystoreProperties["storeFile"] as String
+            val storePasswordValue = keystoreProperties["storePassword"] as String
 
-            if (
-                keyAliasValue != null &&
-                keyPasswordValue != null &&
-                storeFileValue != null &&
-                storePasswordValue != null
-            ) {
-                keyAlias = keyAliasValue
-                keyPassword = keyPasswordValue
-                storeFile = file(storeFileValue)
-                storePassword = storePasswordValue
-            }
+            keyAlias = keyAliasValue
+            keyPassword = keyPasswordValue
+            storeFile = file(storeFileValue)
+            storePassword = storePasswordValue
         }
     }
 
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = false
+            isShrinkResources = false
+        }
+
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }

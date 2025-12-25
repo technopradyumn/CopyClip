@@ -191,7 +191,6 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
       title: null,
       body: Column(
         children: [
-          const SizedBox(height: 52),
           _buildIntegratedSearchBar(theme),
           const SizedBox(height: 12),
           _buildHorizontalFilterChips(theme),

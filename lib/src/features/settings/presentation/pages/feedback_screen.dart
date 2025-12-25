@@ -133,8 +133,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 70),
-
               // Header Card
               GlassContainer(
                 color: primaryColor.withOpacity(0.1),

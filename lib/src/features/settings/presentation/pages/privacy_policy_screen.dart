@@ -14,7 +14,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
     return GlassScaffold(
       title: "Privacy Policy",
       body: ListView(
-        padding: const EdgeInsets.only(left: 20, right: 20,top: 100,bottom: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20,bottom: 20),
         physics: const BouncingScrollPhysics(),
         children: [
           _buildSection(

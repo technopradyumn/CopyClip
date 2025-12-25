@@ -65,7 +65,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 54),
+
             _buildHeader(theme, onSurface),
             const SizedBox(height: 10),
             _buildCalendarCard(theme, onSurface),

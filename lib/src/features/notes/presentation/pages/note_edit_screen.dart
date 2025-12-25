@@ -6,14 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_quill/quill_delta.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-
 import '../../../../core/widgets/glass_dialog.dart';
 import '../../../../core/widgets/glass_scaffold.dart';
 import '../../../../core/widgets/glass_rich_text_editor.dart';
@@ -63,6 +66,34 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
     _initialColor = _scaffoldColor;
 
     _initQuill();
+
+    // ✅ Add focus listener for keyboard handling
+    _editorFocusNode.addListener(_onFocusChanged);
+  }
+
+  // ✅ Handle focus changes and ensure cursor visibility
+  void _onFocusChanged() {
+    if (_editorFocusNode.hasFocus) {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        if (mounted && _editorScrollController.hasClients) {
+          _editorScrollController.animateTo(
+            _editorScrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeOut,
+          );
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _editorFocusNode.removeListener(_onFocusChanged);
+    _editorFocusNode.dispose();
+    _editorScrollController.dispose();
+    _quillController.dispose();
+    _titleController.dispose();
+    super.dispose();
   }
 
   void _initQuill() {
@@ -83,7 +114,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
     _initialContentJson = jsonEncode(_quillController.document.toDelta().toJson());
   }
 
-  // Extracts ONLY the text from the Quill editor (ignores images/JSON/obj)
   String _getCleanPlainText() {
     return _quillController.document.toPlainText().trim();
   }
@@ -139,7 +169,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
   }
 
   void _saveNote() {
-    final title = _titleController.text.trim(); // Can be empty
+    final title = _titleController.text.trim();
     final contentJson = jsonEncode(_quillController.document.toDelta().toJson());
 
     if (widget.note != null) {
@@ -223,27 +253,92 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
     );
   }
 
-  Future<void> _exportToImage() async {
-    try {
-      RenderRepaintBoundary? boundary = _boundaryKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
-      if (boundary == null) return;
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-      var byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      var pngBytes = byteData!.buffer.asUint8List();
-      final tempDir = await getTemporaryDirectory();
-      File file = File('${tempDir.path}/note_${DateTime.now().millisecond}.png');
-      await file.writeAsBytes(pngBytes);
-      await Share.shareXFiles([XFile(file.path)]);
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: $e")));
+  Future<List<pw.Widget>> _buildPdfWidgetsFromDelta(Delta delta) async {
+    final List<pw.Widget> widgets = [];
+    List<pw.InlineSpan> currentLineSpans = [];
+
+    for (final Operation op in delta.operations) {
+      if (op.data == null) continue;
+
+      final dynamic insert = op.data;
+      if (insert is! String) continue;
+
+      final String text = insert;
+      final attributes = op.attributes ?? {};
+
+      pw.TextStyle style = const pw.TextStyle(fontSize: 16);
+      if (attributes['bold'] == true) style = style.copyWith(fontWeight: pw.FontWeight.bold);
+      if (attributes['italic'] == true) style = style.copyWith(fontStyle: pw.FontStyle.italic);
+      if (attributes['underline'] == true) style = style.copyWith(decoration: pw.TextDecoration.underline);
+
+      if (text.contains('\n')) {
+        final parts = text.split('\n');
+
+        for (int i = 0; i < parts.length; i++) {
+          if (parts[i].isNotEmpty) {
+            currentLineSpans.add(pw.TextSpan(text: parts[i], style: style));
+          }
+
+          if (i < parts.length - 1) {
+            if (currentLineSpans.isNotEmpty) {
+              widgets.add(
+                pw.RichText(
+                  text: pw.TextSpan(children: currentLineSpans),
+                ),
+              );
+              currentLineSpans = [];
+            }
+
+            widgets.add(pw.SizedBox(height: 12));
+          }
+        }
+      } else {
+        currentLineSpans.add(pw.TextSpan(text: text, style: style));
+      }
     }
+
+    if (currentLineSpans.isNotEmpty) {
+      widgets.add(pw.RichText(text: pw.TextSpan(children: currentLineSpans)));
+    }
+
+    return widgets;
+  }
+
+  Future<void> _exportToPdf() async {
+    final pdf = pw.Document();
+    final delta = _quillController.document.toDelta();
+
+    final pdfWidgets = await _buildPdfWidgetsFromDelta(delta);
+
+    pdf.addPage(
+      pw.MultiPage(
+        pageTheme: pw.PageTheme(
+          margin: const pw.EdgeInsets.all(40),
+          theme: pw.ThemeData.withFont(
+            base: await PdfGoogleFonts.openSansRegular(),
+            bold: await PdfGoogleFonts.openSansBold(),
+            italic: await PdfGoogleFonts.openSansItalic(),
+          ),
+        ),
+        build: (context) => pdfWidgets,
+      ),
+    );
+
+    final bytes = await pdf.save();
+    final dir = await getTemporaryDirectory();
+    final file = File('${dir.path}/content_${DateTime.now().millisecondsSinceEpoch}.pdf');
+    await file.writeAsBytes(bytes);
+
+    await Share.shareXFiles(
+      [XFile(file.path)],
+      subject: 'Exported Content',
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // 1. Define Contrast Logic at the top
     final isColorDark = ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
     final contrastColor = isColorDark ? Colors.white : Colors.black87;
 
@@ -278,10 +373,8 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       child: GlassScaffold(
         showBackArrow: true,
         backgroundColor: _scaffoldColor,
-        // Pass contrastColor to the Scaffold if it supports title/arrow color overrides
         title: widget.note == null ? 'New Note' : 'Edit Note',
         actions: [
-          // 1. Color Picker Trigger
           GestureDetector(
             onTap: _showColorPicker,
             child: Container(
@@ -299,7 +392,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
             ),
           ),
 
-          // 2. Copy Button
           IconButton(
             icon: Icon(Icons.copy, size: 18, color: contrastColor),
             onPressed: () {
@@ -317,16 +409,14 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
             },
           ),
 
-          // 3. Export/Share Button
           PopupMenuButton<String>(
             icon: Icon(Icons.ios_share, size: 20, color: contrastColor),
-            onSelected: (val) { if (val == 'image') _exportToImage(); },
+            onSelected: (val) { if (val == 'pdf') _exportToPdf(); },
             itemBuilder: (ctx) => [
-              const PopupMenuItem(value: 'image', child: Text("Export as Image")),
+              const PopupMenuItem(value: 'pdf', child: Text("Export as PDF")),
             ],
           ),
 
-          // 4. Save/Check Button
           IconButton(
             icon: Icon(Icons.check, color: contrastColor),
             onPressed: () {
@@ -341,7 +431,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
             type: MaterialType.transparency,
             child: Stack(
               children: [
-                // 2. Grid lines adapt to contrast
                 Positioned.fill(
                   child: CustomPaint(
                     painter: CanvasGridPainter(color: contrastColor.withOpacity(0.08)),
@@ -353,10 +442,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                     color: Colors.transparent,
                     child: Column(
                       children: [
-                        const SizedBox(height: 70),
-                        // 3. Title adapt to contrast
+                        const SizedBox(height: 0),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
+                          padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
                           child: TextField(
                             controller: _titleController,
                             style: theme.textTheme.headlineSmall?.copyWith(
@@ -371,7 +459,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                             ),
                           ),
                         ),
-                        // 4. Date badge adapt to contrast
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 4),
                           child: Align(
@@ -397,13 +484,11 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                             ),
                           ),
                         ),
-                        // 5. Editor adapt to contrast
                         Expanded(
                           child: GlassRichTextEditor(
                             controller: _quillController,
                             focusNode: _editorFocusNode,
                             scrollController: _editorScrollController,
-                            hintText: "Start typing...",
                             editorBackgroundColor: _scaffoldColor,
                           ),
                         ),

@@ -211,7 +211,6 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
         ),
         body: Column(
           children: [
-            const SizedBox(height: 32),
             _buildTopBar(),
             _buildSearchBar(onSurfaceColor),
             Expanded(

@@ -6,11 +6,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
-
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
-
 // Models & Cards
 import '../../../clipboard/data/clipboard_model.dart';
 import '../../../dashboard/presentation/pages/dashboard_screen.dart';
@@ -91,7 +89,6 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
       title: null,
       body: Column(
         children: [
-          const SizedBox(height: 50),
           _buildTopBar(theme, onSurface),
           _buildSearchBar(theme, onSurface),
           _buildFilterChips(theme, onSurface),

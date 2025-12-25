@@ -232,7 +232,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
   Widget _buildTopHeader(ThemeData theme) {
     final primaryColor = theme.colorScheme.primary;
     return Container(
-      padding: const EdgeInsets.only(top: 60, left: 24, right: 24, bottom: 20),
+      padding: const EdgeInsets.only(left: 24, right: 24, bottom: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

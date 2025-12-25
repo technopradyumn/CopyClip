@@ -222,7 +222,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         children: [
           // Custom Top Bar with Hero Animation
           Padding(
-            padding: const EdgeInsets.only(top: 40, left: 24, right: 24, bottom: 10),
+            padding: const EdgeInsets.only(left: 24, right: 24, bottom: 10),
             child: Row(
               children: [
                 IconButton(
@@ -277,12 +277,11 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            _buildColorDot(Colors.amberAccent, themeManager),
+                            _buildColorDot(Colors.lightBlue, themeManager),
                             _buildColorDot(Colors.blueAccent, themeManager),
-                            _buildColorDot(Colors.greenAccent, themeManager),
+                            _buildColorDot(Colors.teal, themeManager),
                             _buildColorDot(Colors.purpleAccent, themeManager),
                             _buildColorDot(Colors.redAccent, themeManager),
-                            _buildColorDot(Colors.cyanAccent, themeManager),
                           ],
                         ),
                       ),

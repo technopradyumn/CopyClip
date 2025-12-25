@@ -296,7 +296,6 @@ class _JournalScreenState extends State<JournalScreen> {
         ),
         body: Column(
           children: [
-            SizedBox(height: 32),
             _buildTopBar(),
             if (!_isSelectionMode && _searchQuery.isEmpty)
               Padding(

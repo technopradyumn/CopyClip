@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 
 class ThemeManager extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;
-  Color _primaryColor = Colors.amberAccent; // Default color
+  Color _primaryColor = Colors.lightBlue;
 
   ThemeMode get themeMode => _themeMode;
   Color get primaryColor => _primaryColor;
@@ -22,7 +22,7 @@ class ThemeManager extends ChangeNotifier {
     else _themeMode = ThemeMode.system;
 
     // Load Primary Color
-    final colorValue = box.get('primary_color_value', defaultValue: Colors.amberAccent.value);
+    final colorValue = box.get('primary_color_value', defaultValue: Colors.lightBlue.value);
     _primaryColor = Color(colorValue);
 
     notifyListeners();

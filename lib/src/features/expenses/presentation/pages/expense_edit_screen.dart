@@ -449,7 +449,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
               ),
           ],
           body: SingleChildScrollView(
-            padding: const EdgeInsets.only(top: 90, left: 20, right: 20, bottom: 40),
+            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
             physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

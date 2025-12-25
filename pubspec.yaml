@@ -102,6 +102,8 @@ dependencies:
   quiver: ^3.2.1
   package_info_plus: ^8.0.0
   flutter_timezone: ^5.0.1
+  speech_to_text: ^7.3.0
+  flex_color_picker: ^3.5.1
 
 
 dev_dependencies:

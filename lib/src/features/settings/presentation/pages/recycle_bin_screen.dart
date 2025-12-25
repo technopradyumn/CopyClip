@@ -206,7 +206,6 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
       ],
       body: Column(
         children: [
-          const SizedBox(height: 100),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
