@@ -870,9 +870,6 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     const SizedBox(width: 4),
                     _buildDivider(),
                     const SizedBox(width: 4),
-                    const SizedBox(width: 4),
-                    _buildDivider(),
-                    const SizedBox(width: 4),
                     _buildIconButton(icon: Icons.format_indent_increase, tooltip: 'Increase Indent', onPressed: () => widget.controller.indentSelection(true)),
                     _buildIconButton(icon: Icons.format_indent_decrease, tooltip: 'Decrease Indent', onPressed: () => widget.controller.indentSelection(false)),
                     const SizedBox(width: 4),
@@ -1054,6 +1051,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
           ),
         ),
         // Main Quill Editor
+        SizedBox(height: 5),
         Expanded(
           child: Container(
             color: Colors.transparent,

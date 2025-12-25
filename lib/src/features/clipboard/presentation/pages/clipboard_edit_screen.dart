@@ -479,7 +479,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 86,
+                  top: 90,
                   left: 2,
                   child: Container(
                     decoration: BoxDecoration(
@@ -487,7 +487,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.arrow_forward_ios, size: 16, color: contrastColor),
+                      child: Icon(Icons.arrow_forward_ios, size: 16, color: contrastColor.withAlpha(60)),
                     ),
                   ),
                 ),
