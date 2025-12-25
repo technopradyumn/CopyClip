@@ -1072,7 +1072,6 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
               focusNode: widget.focusNode,
               scrollController: widget.scrollController,
               config: QuillEditorConfig(
-                placeholder: 'Start writing...',
                 padding: const EdgeInsets.fromLTRB(24, 10, 24, 100), // Extra bottom padding
                 autoFocus: false,
                 expands: false,
@@ -1089,11 +1088,6 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
             ),
           ),
         ),
-
-        // SizedBox(
-        //   height: bottomInset > 10 ? 10 : 30,
-        //   width: double.infinity,
-        // ),
 
       ],
     );
