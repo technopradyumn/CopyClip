@@ -64,20 +64,46 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
 
     // ✅ Add listener to handle keyboard appearance
     _focusNode.addListener(_onFocusChanged);
+    _quillController.addListener(_onEditorContentChanged);
+  }
+
+  void _onEditorContentChanged() {
+    if (_focusNode.hasFocus) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        if (mounted && _scrollController.hasClients) {
+          final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+          if (bottomInset > 10) {
+            final maxScroll = _scrollController.position.maxScrollExtent;
+            if (maxScroll > 0) {
+              _scrollController.jumpTo(maxScroll);
+            }
+          }
+        }
+      });
+    }
   }
 
   // ✅ Handle focus changes and ensure cursor visibility
   void _onFocusChanged() {
     if (_focusNode.hasFocus) {
-      // Small delay to ensure keyboard is fully visible
-      Future.delayed(const Duration(milliseconds: 300), () {
+      // ✅ Increased delay for keyboard animation
+      Future.delayed(const Duration(milliseconds: 500), () {
         if (mounted && _scrollController.hasClients) {
-          // Scroll to ensure cursor is visible
-          _scrollController.animateTo(
-            _scrollController.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeOut,
-          );
+          final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+
+          // Only scroll if keyboard is actually visible
+          if (bottomInset > 10) {
+            final maxScroll = _scrollController.position.maxScrollExtent;
+
+            // Scroll to bottom to show cursor
+            if (maxScroll > 0) {
+              _scrollController.animateTo(
+                maxScroll,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOutCubic,
+              );
+            }
+          }
         }
       });
     }
@@ -86,6 +112,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
   @override
   void dispose() {
     _focusNode.removeListener(_onFocusChanged);
+    _quillController.removeListener(_onEditorContentChanged);
     _focusNode.dispose();
     _scrollController.dispose();
     _quillController.dispose();
