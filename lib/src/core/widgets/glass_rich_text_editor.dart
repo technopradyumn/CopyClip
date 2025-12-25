@@ -15,6 +15,7 @@ import 'package:printing/printing.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'timestamp_embed.dart'; // Full color picker
 
@@ -403,25 +404,52 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
   }
 
   Future<void> _insertLink() async {
-    final link = await showDialog<String>(
+    final selection = widget.controller.selection;
+    final plainText = widget.controller.document.toPlainText();
+
+    int start = selection.start;
+    int end = selection.end;
+
+    // 👇 LOGIC: If selection is just a cursor (collapsed), expand it to the word boundaries
+    if (selection.isCollapsed) {
+      // Look backwards for space
+      while (start > 0 && !RegExp(r'\s').hasMatch(plainText[start - 1])) {
+        start--;
+      }
+      // Look forwards for space
+      while (end < plainText.length && !RegExp(r'\s').hasMatch(plainText[end])) {
+        end++;
+      }
+    }
+
+    final selectedText = plainText.substring(start, end);
+
+    final List<String>? result = await showDialog<List<String>>(
       context: context,
       builder: (context) {
-        final controller = TextEditingController();
+        final urlController = TextEditingController(text: selectedText.contains('.') ? selectedText : '');
+        final textController = TextEditingController(text: selectedText);
         return AlertDialog(
           title: const Text('Insert Link'),
-          content: TextField(
-            controller: controller,
-            decoration: const InputDecoration(hintText: 'https://example.com'),
-            keyboardType: TextInputType.url,
-            autofocus: true,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: textController,
+                decoration: const InputDecoration(labelText: 'Display Text'),
+              ),
+              TextField(
+                controller: urlController,
+                decoration: const InputDecoration(labelText: 'URL (e.g. https://...)'),
+                keyboardType: TextInputType.url,
+                autofocus: true,
+              ),
+            ],
           ),
           actions: [
             TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
             TextButton(
-              onPressed: () {
-                final text = controller.text.trim();
-                if (text.isNotEmpty) Navigator.pop(context, text);
-              },
+              onPressed: () => Navigator.pop(context, [textController.text, urlController.text]),
               child: const Text('Insert'),
             ),
           ],
@@ -429,9 +457,19 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
       },
     );
 
-    if (link != null && link.isNotEmpty) {
-      final linkAttr = Attribute.clone(Attribute.link, link);
-      widget.controller.formatSelection(linkAttr);
+    if (result != null && result[1].isNotEmpty) {
+      final display = result[0].isEmpty ? result[1] : result[0];
+      final url = result[1];
+
+      // Replace the detected "word" or selection with the link
+      widget.controller.replaceText(start, end - start, display, null);
+      widget.controller.formatText(start, display.length, Attribute.fromKeyValue('link', url));
+
+      // Move cursor to end
+      widget.controller.updateSelection(
+        TextSelection.collapsed(offset: start + display.length),
+        ChangeSource.local,
+      );
     }
   }
 
@@ -440,17 +478,34 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     if (result != null && result.files.isNotEmpty) {
       final filePath = result.files.first.path!;
       final fileName = result.files.first.name;
+
+      // Get current cursor position
       final index = widget.controller.selection.baseOffset;
 
-      widget.controller.replaceText(
-        index,
-        0,
-        fileName,
-        TextSelection.collapsed(offset: index + fileName.length),
+      // 1. Insert the text (the filename)
+      widget.controller.replaceText(index, 0, fileName, null);
+
+      // 2. Apply the link attribute to the EXACT range of the filename
+      // Using formatText is more stable than formatSelection for programmatic links
+      widget.controller.formatText(
+          index,
+          fileName.length,
+          Attribute.fromKeyValue('link', 'file://$filePath')
       );
 
-      final fileLinkAttr = Attribute.clone(Attribute.link, 'file://$filePath');
-      widget.controller.formatSelection(fileLinkAttr);
+      // 3. Move cursor to the end of the filename and add a space
+      // This "breaks" the link format so the user can continue typing normally
+      widget.controller.updateSelection(
+        TextSelection.collapsed(offset: index + fileName.length),
+        ChangeSource.local,
+      );
+
+      // Insert a space to separate the link from next text
+      widget.controller.replaceText(index + fileName.length, 0, ' ', null);
+      widget.controller.updateSelection(
+        TextSelection.collapsed(offset: index + fileName.length + 1),
+        ChangeSource.local,
+      );
     }
   }
 
@@ -883,7 +938,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildIconButton(icon: Icons.link, tooltip: 'Insert Link', onPressed: _insertLink),
                     _buildIconButton(icon: Icons.image, tooltip: 'Insert Image', onPressed: _insertImage),
                     _buildIconButton(icon: Icons.videocam, tooltip: 'Insert Video', onPressed: _insertVideo),
-                    _buildIconButton(icon: Icons.attach_file, tooltip: 'Insert File', onPressed: _insertFile),
+                    // _buildIconButton(icon: Icons.attach_file, tooltip: 'Insert File', onPressed: _insertFile),
 
                     _buildDivider(),
 
@@ -1072,6 +1127,13 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                   TimeStampEmbedBuilder(),
                 ],
                 customStyles: customStyles,
+                onLaunchUrl: (url) async {
+                  if (url == null) return;
+                  final uri = Uri.tryParse(url);
+                  if (uri != null && await canLaunchUrl(uri)) {
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  }
+                },
               ),
             ),
           ),
