@@ -28,7 +28,6 @@ Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
   if (uri == null || uri.scheme != 'copyclip') return;
 
   final featureId = uri.host;
-
   final routesMap = {
     'notes': AppRouter.notes,
     'todos': AppRouter.todos,
@@ -49,14 +48,11 @@ Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   HomeWidget.registerBackgroundCallback(homeWidgetBackgroundCallback);
   HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
-
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
   await Hive.initFlutter();
-
   Hive.registerAdapter(NoteAdapter());
   Hive.registerAdapter(TodoAdapter());
   Hive.registerAdapter(ExpenseAdapter());
@@ -83,41 +79,7 @@ void main() async {
       child: const CopyClipApp(),
     ),
   );
-
-  Future(() => _bootstrapServices());
 }
-
-Future<void> _bootstrapServices() async {
-  await Future.delayed(Duration.zero); // allow first frame
-
-  HomeWidget.registerBackgroundCallback(homeWidgetBackgroundCallback);
-  HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
-
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
-  await Hive.initFlutter();
-
-  Hive.registerAdapter(NoteAdapter());
-  Hive.registerAdapter(TodoAdapter());
-  Hive.registerAdapter(ExpenseAdapter());
-  Hive.registerAdapter(JournalEntryAdapter());
-  Hive.registerAdapter(ClipboardItemAdapter());
-
-  await Future.wait([
-    Hive.openBox<Note>('notes_box'),
-    Hive.openBox<Todo>('todos_box'),
-    Hive.openBox<Expense>('expenses_box'),
-    Hive.openBox<JournalEntry>('journal_box'),
-    Hive.openBox<ClipboardItem>('clipboard_box'),
-    Hive.openBox('settings'),
-    Hive.openBox('theme_box'),
-  ]);
-
-  await NotificationService().init();
-
-  await _initializeWidgetData();
-}
-
 
 Future<void> _initializeWidgetData() async {
   final title = await HomeWidget.getWidgetData<String>('title');
@@ -135,84 +97,29 @@ class CopyClipApp extends StatefulWidget {
   State<CopyClipApp> createState() => _CopyClipAppState();
 }
 
-class _CopyClipAppState extends State<CopyClipApp>
-    with WidgetsBindingObserver {
-  static const MethodChannel platform =
-  MethodChannel('com.technopradyumn.copyclip/accessibility');
+class _CopyClipAppState extends State<CopyClipApp> {
+  // Removed 'accessibility' channel
   static const MethodChannel widgetChannel =
   MethodChannel('com.technopradyumn.copyclip/widget_handler');
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-
-    platform.setMethodCallHandler(_handleNativeCalls);
     widgetChannel.setMethodCallHandler(_handleNativeCalls);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _syncClipboard();
       _handleInitialNotification();
       _configureNotificationListener();
     });
-
-    widgetChannel.setMethodCallHandler(_handleNativeCalls);
   }
 
   Future<void> _handleNativeCalls(MethodCall call) async {
     if (call.method == 'navigateTo') {
-      final route = call.arguments is Map
-          ? call.arguments['route']
-          : call.arguments;
+      final route = call.arguments is Map ? call.arguments['route'] : call.arguments;
       if (route is String) {
         router.push(route);
       }
     }
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  Future<void> _syncClipboard() async {
-    try {
-      final List<dynamic>? clips =
-      await platform.invokeMethod('getPendingClips');
-
-      if (clips == null) return;
-
-      final box = Hive.box<ClipboardItem>('clipboard_box');
-
-      for (final text in clips) {
-        final clean = text.toString().trim();
-        if (clean.isEmpty) continue;
-
-        final exists =
-        box.values.any((e) => e.content.trim() == clean);
-
-        if (!exists) {
-          box.put(
-            DateTime.now().microsecondsSinceEpoch.toString(),
-            ClipboardItem(
-              id: DateTime.now().microsecondsSinceEpoch.toString(),
-              content: clean,
-              createdAt: DateTime.now(),
-              type: _detectType(clean),
-              sortIndex: box.length,
-            ),
-          );
-        }
-      }
-    } catch (_) {}
-  }
-
-  String _detectType(String text) {
-    if (text.startsWith('http')) return 'link';
-    if (RegExp(r'^\+?[0-9]{7,15}$').hasMatch(text)) return 'phone';
-    if (text.startsWith('#')) return 'color';
-    return 'text';
   }
 
   Future<void> _handleInitialNotification() async {

@@ -28,8 +28,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObserver, SingleTickerProviderStateMixin {
-  static const platform = MethodChannel('com.technopradyumn.copyclip/accessibility');
-  bool _isServiceEnabled = false;
   late AnimationController _rotationController;
 
   String _version = "1.0.0";
@@ -43,7 +41,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
       vsync: this,
       duration: const Duration(seconds: 3),
     )..repeat();
-    _checkServiceStatus();
     _runAutoCleanup();
     _initPackageInfo();
   }
@@ -113,17 +110,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     }
 
     return total;
-  }
-
-  // --- EXISTING UTILITIES ---
-
-  Future<void> _checkServiceStatus() async {
-    try {
-      final bool status = await platform.invokeMethod('isServiceEnabled');
-      setState(() => _isServiceEnabled = status);
-    } catch (e) {
-      debugPrint("Status check failed: $e");
-    }
   }
 
   void _showGlassSnackBar(String message, {bool isError = false}) {
@@ -317,27 +303,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
 
                 const SizedBox(height: 24),
 
-                // --- AUTOMATION ---
-                _buildSectionHeader("General", primaryColor),
-                GlassContainer(
-                  color: glassTint,
-                  child: ListTile(
-                    leading: Icon(_isServiceEnabled ? Icons.bolt : Icons.bolt_outlined,
-                        color: _isServiceEnabled ? Colors.greenAccent : onSurfaceColor.withOpacity(0.5)),
-                    title: Text("Auto Clipboard Capture", style: textTheme.bodyLarge),
-                    subtitle: Text(_isServiceEnabled ? "Service is active" : "Requires Accessibility Permission",
-                        style: TextStyle(fontSize: 12, color: _isServiceEnabled ? Colors.greenAccent : onSurfaceColor.withOpacity(0.5))),
-                    trailing: Switch(
-                      value: _isServiceEnabled,
-                      activeColor: primaryColor,
-                      onChanged: (_) async => await platform.invokeMethod('openAccessibilitySettings'),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 24),
-
-                // --- DATA ---
                 _buildSectionHeader("Data & Backup", primaryColor),
                 GlassContainer(
                   color: glassTint,
