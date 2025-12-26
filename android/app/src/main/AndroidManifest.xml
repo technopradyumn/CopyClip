@@ -25,9 +25,7 @@
     <application
         android:label="CopyClip"
         android:name="${applicationName}"
-        android:icon="@drawable/copyclip_logo"
-        android:roundIcon="@drawable/copyclip_logo"
-        android:banner="@drawable/copyclip_logo"
+        android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true"
         android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true">
@@ -38,6 +36,8 @@
             android:launchMode="singleTop"
             android:taskAffinity=""
             android:theme="@style/LaunchTheme"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@drawable/copyclip_logo"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">

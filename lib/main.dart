@@ -83,7 +83,41 @@ void main() async {
       child: const CopyClipApp(),
     ),
   );
+
+  Future(() => _bootstrapServices());
 }
+
+Future<void> _bootstrapServices() async {
+  await Future.delayed(Duration.zero); // allow first frame
+
+  HomeWidget.registerBackgroundCallback(homeWidgetBackgroundCallback);
+  HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
+
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+  await Hive.initFlutter();
+
+  Hive.registerAdapter(NoteAdapter());
+  Hive.registerAdapter(TodoAdapter());
+  Hive.registerAdapter(ExpenseAdapter());
+  Hive.registerAdapter(JournalEntryAdapter());
+  Hive.registerAdapter(ClipboardItemAdapter());
+
+  await Future.wait([
+    Hive.openBox<Note>('notes_box'),
+    Hive.openBox<Todo>('todos_box'),
+    Hive.openBox<Expense>('expenses_box'),
+    Hive.openBox<JournalEntry>('journal_box'),
+    Hive.openBox<ClipboardItem>('clipboard_box'),
+    Hive.openBox('settings'),
+    Hive.openBox('theme_box'),
+  ]);
+
+  await NotificationService().init();
+
+  await _initializeWidgetData();
+}
+
 
 Future<void> _initializeWidgetData() async {
   final title = await HomeWidget.getWidgetData<String>('title');
@@ -116,9 +150,12 @@ class _CopyClipAppState extends State<CopyClipApp>
     platform.setMethodCallHandler(_handleNativeCalls);
     widgetChannel.setMethodCallHandler(_handleNativeCalls);
 
-    _syncClipboard();
-    _handleInitialNotification();
-    _configureNotificationListener();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _syncClipboard();
+      _handleInitialNotification();
+      _configureNotificationListener();
+    });
+
     widgetChannel.setMethodCallHandler(_handleNativeCalls);
   }
 
