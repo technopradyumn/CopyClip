@@ -12,6 +12,8 @@ class GlassContainer extends StatefulWidget {
   final double blur;
   final double opacity;
   final Color? color;
+  final Color? borderColor;
+  final double borderWidth;
 
   const GlassContainer({
     super.key,
@@ -25,6 +27,8 @@ class GlassContainer extends StatefulWidget {
     this.blur = 10, // Increased default blur for better glass effect
     this.opacity = 0.2, // Increased default opacity so colors are visible
     this.color,
+    this.borderColor,
+    this.borderWidth = 1.5,
   });
 
   @override
@@ -36,7 +40,7 @@ class _GlassContainerState extends State<GlassContainer> {
   Widget build(BuildContext context) {
     // Determine base color
     final Color baseColor = widget.color ?? Theme.of(context).colorScheme.surface;
-    final Color outlineColor = Theme.of(context).dividerColor;
+    final Color outlineColor = widget.borderColor ?? Theme.of(context).dividerColor;
 
     // Helper to safely apply opacity (clamped between 0.0 and 1.0 to prevent crashes)
     Color safeOpacity(Color c, double o) => c.withOpacity(o.clamp(0.0, 1.0));
@@ -56,8 +60,8 @@ class _GlassContainerState extends State<GlassContainer> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(widget.borderRadius),
                 border: Border.all(
-                  color: outlineColor.withOpacity(0.2),
-                  width: 1.5,
+                  color: safeOpacity(outlineColor, 0.2),
+                  width: widget.borderWidth,
                 ),
                 // BUG FIX: Removed 'color' property because it cannot be used with 'gradient'
                 gradient: LinearGradient(

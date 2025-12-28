@@ -24,6 +24,10 @@ class HeaderItem extends ListItem {
   HeaderItem(this.category, this.count, this.total, this.isExpanded);
 }
 
+class DividerItem extends ListItem {
+  DividerItem();
+}
+
 class TodoItemWrapper extends ListItem {
   final Todo todo;
   final bool isVisible;
@@ -37,7 +41,7 @@ class TodosScreen extends StatefulWidget {
   State<TodosScreen> createState() => _TodosScreenState();
 }
 
-class _TodosScreenState extends State<TodosScreen> {
+class _TodosScreenState extends State<TodosScreen> with SingleTickerProviderStateMixin {
   bool _isSelectionMode = false;
   final Set<String> _selectedTodoIds = {};
   final TextEditingController _searchController = TextEditingController();
@@ -47,10 +51,52 @@ class _TodosScreenState extends State<TodosScreen> {
   List<ListItem> _reorderingList = [];
   bool _isReordering = false;
 
+  late AnimationController _entryAnimationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _entryAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
+    _entryAnimationController.forward();
+  }
+
   @override
   void dispose() {
     _searchController.dispose();
+    _entryAnimationController.dispose();
     super.dispose();
+  }
+
+  Widget _buildBouncingItem(int index, Widget child, Key key) {
+    return AnimatedBuilder(
+      key: key,
+      animation: _entryAnimationController,
+      builder: (context, child) {
+        final double start = (index * 0.05).clamp(0.0, 0.8);
+        final double end = (start + 0.4).clamp(0.0, 1.0);
+
+        if (_entryAnimationController.value >= end) {
+          return child!;
+        }
+
+        final animation = CurvedAnimation(
+          parent: _entryAnimationController,
+          curve: Interval(start, end, curve: Curves.elasticOut),
+        );
+
+        return Transform.scale(
+          scale: animation.value,
+          child: Opacity(
+            opacity: animation.value.clamp(0.0, 1.0),
+            child: child,
+          ),
+        );
+      },
+      child: child,
+    );
   }
 
   Future<bool> _onWillPop() async {
@@ -98,7 +144,6 @@ class _TodosScreenState extends State<TodosScreen> {
     });
   }
 
-  // REFACTORED: Soft delete for selected todos
   void _deleteSelected() {
     if (_selectedTodoIds.isEmpty) return;
     showDialog(
@@ -130,7 +175,6 @@ class _TodosScreenState extends State<TodosScreen> {
     );
   }
 
-  // REFACTORED: Soft delete for all todos
   void _deleteAll() {
     showDialog(
       context: context,
@@ -142,7 +186,6 @@ class _TodosScreenState extends State<TodosScreen> {
         onConfirm: () {
           final box = Hive.box<Todo>('todos_box');
           final now = DateTime.now();
-          // Filter to only move active items
           final activeTodos = box.values.where((t) => !t.isDeleted).toList();
 
           for (var todo in activeTodos) {
@@ -159,8 +202,6 @@ class _TodosScreenState extends State<TodosScreen> {
 
   void _showFilterMenu() {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -233,8 +274,29 @@ class _TodosScreenState extends State<TodosScreen> {
       final categoryTodos = grouped[category]!;
       if (_currentSort == TodoSortOption.custom) categoryTodos.sort((a, b) => a.sortIndex.compareTo(b.sortIndex));
       final isExpanded = _categoryExpansionState[category] ?? true;
-      flatList.add(HeaderItem(category, categoryTodos.where((t) => t.isDone).length, categoryTodos.length, isExpanded));
-      for (var todo in categoryTodos) flatList.add(TodoItemWrapper(todo, isVisible: isExpanded));
+      final completedCount = categoryTodos.where((t) => t.isDone).length;
+      final activeCount = categoryTodos.length - completedCount;
+
+      flatList.add(HeaderItem(category, completedCount, categoryTodos.length, isExpanded));
+
+      if (isExpanded) {
+        // Add active todos
+        final activeTodos = categoryTodos.where((t) => !t.isDone).toList();
+        for (var todo in activeTodos) {
+          flatList.add(TodoItemWrapper(todo, isVisible: true));
+        }
+
+        // Add divider if there are completed todos
+        if (completedCount > 0) {
+          flatList.add(DividerItem());
+
+          // Add completed todos
+          final completedTodos = categoryTodos.where((t) => t.isDone).toList();
+          for (var todo in completedTodos) {
+            flatList.add(TodoItemWrapper(todo, isVisible: true));
+          }
+        }
+      }
     }
     return flatList;
   }
@@ -242,7 +304,7 @@ class _TodosScreenState extends State<TodosScreen> {
   void _onReorder(int oldIndex, int newIndex) {
     if (newIndex > oldIndex) newIndex -= 1;
     final movedItem = _reorderingList[oldIndex];
-    if (movedItem is HeaderItem) return;
+    if (movedItem is HeaderItem || movedItem is DividerItem) return;
 
     if (movedItem is TodoItemWrapper) {
       setState(() {
@@ -251,9 +313,8 @@ class _TodosScreenState extends State<TodosScreen> {
         _reorderingList.insert(newIndex, movedItem);
       });
 
-      // Save logic (simplified for brevity but functional)
       String currentCategory = movedItem.todo.category;
-      for(int i = newIndex; i >= 0; i--) {
+      for (int i = newIndex; i >= 0; i--) {
         if (_reorderingList[i] is HeaderItem) {
           currentCategory = (_reorderingList[i] as HeaderItem).category;
           break;
@@ -270,7 +331,7 @@ class _TodosScreenState extends State<TodosScreen> {
       }
 
       Future.delayed(const Duration(milliseconds: 300), () {
-        if(mounted) setState(() => _isReordering = false);
+        if (mounted) setState(() => _isReordering = false);
       });
     }
   }
@@ -290,7 +351,7 @@ class _TodosScreenState extends State<TodosScreen> {
           children: [
             _buildCustomTopBar(),
             Padding(
-              padding: const EdgeInsets.only(right: 16, left: 16, top: 0, bottom: 8),
+              padding: const EdgeInsets.only(right: 16, left: 16, top: 0, bottom: 0),
               child: SizedBox(
                 height: 44,
                 child: TextField(
@@ -314,13 +375,9 @@ class _TodosScreenState extends State<TodosScreen> {
               child: ValueListenableBuilder(
                 valueListenable: Hive.box<Todo>('todos_box').listenable(),
                 builder: (_, Box<Todo> box, __) {
-                  List<Todo> todos = box.values.where((t) => !t.isDeleted).toList(); // ADDED FILTER
+                  List<Todo> todos = box.values.where((t) => !t.isDeleted).toList();
                   if (_searchQuery.isNotEmpty) {
                     todos = todos.where((t) => t.task.toLowerCase().contains(_searchQuery) || t.category.toLowerCase().contains(_searchQuery)).toList();
-                  }
-
-                  if (_currentSort != TodoSortOption.custom) {
-                    // Sorting logic applied here same as before...
                   }
 
                   final flatList = _generateFlatList(todos);
@@ -332,7 +389,7 @@ class _TodosScreenState extends State<TodosScreen> {
 
                   return ReorderableListView.builder(
                     physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                     itemCount: _isReordering ? _reorderingList.length : flatList.length,
                     buildDefaultDragHandles: false,
                     onReorder: canReorder ? _onReorder : (a, b) {},
@@ -341,13 +398,51 @@ class _TodosScreenState extends State<TodosScreen> {
                     itemBuilder: (_, index) {
                       final item = _isReordering ? _reorderingList[index] : flatList[index];
 
-                      if (item is HeaderItem) return Container(key: ValueKey('header_${item.category}'), margin: const EdgeInsets.only(top: 10, bottom: 4), child: _buildHeader(item, todos));
+                      Key itemKey;
+                      Widget childWidget;
 
-                      if (item is TodoItemWrapper) {
-                        // --- INTEGRATED TODO CARD ---
-                        Widget card = Container(
-                          key: ValueKey(item.todo.id),
-                          margin: item.isVisible ? const EdgeInsets.only(bottom: 12) : EdgeInsets.zero,
+                      if (item is HeaderItem) {
+                        itemKey = ValueKey('header_${item.category}');
+                        childWidget = Container(
+                          margin: const EdgeInsets.only(top: 0, bottom: 0),
+                          child: _buildHeader(item, todos),
+                        );
+                      } else if (item is DividerItem) {
+                        itemKey = ValueKey('divider_$index');
+                        childWidget = Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Divider(
+                                  color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.3),
+                                  thickness: 1,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                child: Text(
+                                  'Completed',
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Divider(
+                                  color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.3),
+                                  thickness: 1,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else if (item is TodoItemWrapper) {
+                        itemKey = ValueKey(item.todo.id);
+                        childWidget = Container(
+                          margin: EdgeInsets.zero,
                           child: item.isVisible ? TodoCard(
                             todo: item.todo,
                             isSelected: _selectedTodoIds.contains(item.todo.id),
@@ -356,10 +451,19 @@ class _TodosScreenState extends State<TodosScreen> {
                             onToggleDone: () => _toggleTodoDone(item.todo),
                           ) : const SizedBox(),
                         );
-                        if (canReorder) return ReorderableDelayedDragStartListener(key: ValueKey(item.todo.id), index: index, child: card);
-                        return card;
+
+                        if (canReorder) {
+                          childWidget = ReorderableDelayedDragStartListener(
+                            index: index,
+                            child: childWidget,
+                          );
+                        }
+                      } else {
+                        itemKey = ValueKey('empty_$index');
+                        childWidget = const SizedBox.shrink();
                       }
-                      return const SizedBox.shrink(key: ValueKey('empty'));
+
+                      return _buildBouncingItem(index, childWidget, itemKey);
                     },
                   );
                 },
@@ -392,7 +496,13 @@ class _TodosScreenState extends State<TodosScreen> {
             const SizedBox(width: 8),
             Expanded(child: Text(item.category.toUpperCase(), style: TextStyle(color: item.isExpanded ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.7), fontWeight: FontWeight.bold, letterSpacing: 1.2, fontSize: 13))),
             if (_isSelectionMode) Icon(allSelected ? Icons.check_circle : (someSelected ? Icons.remove_circle_outline : Icons.circle_outlined), color: (allSelected || someSelected) ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.38), size: 20)
-            else Text('${item.count}/${item.total}', style: TextStyle(color: colorScheme.onSurface.withOpacity(0.38), fontSize: 12)),
+            else Container(
+              decoration: BoxDecoration(
+                color: colorScheme.onPrimary.withOpacity(0.38)
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text('${item.count}/${item.total}', style: TextStyle(color: colorScheme.onSurface.withOpacity(0.38), fontSize: 12)),
+            ),
           ],
         ),
       ),

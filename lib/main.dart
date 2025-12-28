@@ -1,4 +1,17 @@
+import 'dart:async';
+import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_quill/flutter_quill.dart' hide Text;
+import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:home_widget/home_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
+import 'package:copyclip/src/core/router/main_router.dart';
 import 'package:copyclip/src/core/services/notification_service.dart';
 import 'package:copyclip/src/core/theme/app_theme.dart';
 import 'package:copyclip/src/core/theme/theme_manager.dart';
@@ -12,15 +25,6 @@ import 'package:copyclip/src/features/notes/data/note_adapter.dart';
 import 'package:copyclip/src/features/notes/data/note_model.dart';
 import 'package:copyclip/src/features/todos/data/todo_adapter.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_quill/flutter_quill.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:home_widget/home_widget.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'src/core/router/main_router.dart';
 import 'src/l10n/app_localizations.dart';
 
 @pragma("vm:entry-point")
@@ -48,19 +52,29 @@ Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // 1. Register Background Callback
   HomeWidget.registerBackgroundCallback(homeWidgetBackgroundCallback);
   HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
+
+  // 2. Enable Edge-to-Edge and Landscape for Tablets
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
+  // 3. Initialize Hive
   await Hive.initFlutter();
+  await CanvasDatabase().init();
+
+  // 4. Register Adapters
   Hive.registerAdapter(NoteAdapter());
   Hive.registerAdapter(TodoAdapter());
   Hive.registerAdapter(ExpenseAdapter());
   Hive.registerAdapter(JournalEntryAdapter());
   Hive.registerAdapter(ClipboardItemAdapter());
 
+  // 5. Initialize Services
   await NotificationService().init();
 
+  // 6. Open Boxes
   await Future.wait([
     Hive.openBox<Note>('notes_box'),
     Hive.openBox<Todo>('todos_box'),
@@ -82,12 +96,12 @@ void main() async {
 }
 
 Future<void> _initializeWidgetData() async {
-  final title = await HomeWidget.getWidgetData<String>('title');
+  final String? title = await HomeWidget.getWidgetData<String>('title');
   if (title != null) return;
 
-  await HomeWidget.saveWidgetData('title', 'Clipboard');
-  await HomeWidget.saveWidgetData('description', 'Access clipboard history');
-  await HomeWidget.saveWidgetData('deeplink', 'copyclip://clipboard');
+  await HomeWidget.saveWidgetData<String>('title', 'Clipboard');
+  await HomeWidget.saveWidgetData<String>('description', 'Access your clipboard history');
+  await HomeWidget.saveWidgetData<String>('deeplink', 'copyclip://clipboard');
 }
 
 class CopyClipApp extends StatefulWidget {
@@ -97,49 +111,67 @@ class CopyClipApp extends StatefulWidget {
   State<CopyClipApp> createState() => _CopyClipAppState();
 }
 
-class _CopyClipAppState extends State<CopyClipApp> {
-  // Removed 'accessibility' channel
-  static const MethodChannel widgetChannel =
-  MethodChannel('com.technopradyumn.copyclip/widget_handler');
+class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
+  // Method Channels
+  static const widgetChannel = MethodChannel('com.technopradyumn.copyclip/widget_handler');
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    // Channel Handlers
     widgetChannel.setMethodCallHandler(_handleNativeCalls);
 
+    // Initial Setup
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _handleInitialNotification();
       _configureNotificationListener();
     });
   }
 
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
   Future<void> _handleNativeCalls(MethodCall call) async {
     if (call.method == 'navigateTo') {
-      final route = call.arguments is Map ? call.arguments['route'] : call.arguments;
-      if (route is String) {
+      final dynamic args = call.arguments;
+      String? route;
+
+      if (args is String) {
+        route = args;
+      } else if (args is Map) {
+        route = args['route'];
+      }
+
+      if (route != null) {
         router.push(route);
       }
     }
   }
 
   Future<void> _handleInitialNotification() async {
-    final details = await NotificationService()
-        .flutterLocalNotificationsPlugin
-        .getNotificationAppLaunchDetails();
-
-    if (details?.didNotificationLaunchApp == true &&
-        details?.notificationResponse?.payload != null) {
-      _openTodo(details!.notificationResponse!.payload!);
+    final notificationPlugin = NotificationService().flutterLocalNotificationsPlugin;
+    final launchDetails = await notificationPlugin.getNotificationAppLaunchDetails();
+    if (launchDetails?.didNotificationLaunchApp == true && launchDetails?.notificationResponse?.payload != null) {
+      final payload = launchDetails!.notificationResponse!.payload!;
+      Future.delayed(const Duration(milliseconds: 500), () => _openTodo(payload));
     }
   }
 
   void _configureNotificationListener() {
-    NotificationService().onNotifications.listen((payload) {
-      if (payload != null) _openTodo(payload);
+    NotificationService().onNotifications.listen((String? payload) {
+      if (payload != null) {
+        _openTodo(payload);
+      }
     });
   }
 
   void _openTodo(String id) {
+    if (!Hive.isBoxOpen('todos_box')) return;
     final box = Hive.box<Todo>('todos_box');
     final todo = box.get(id);
     if (todo != null) {
@@ -149,23 +181,32 @@ class _CopyClipAppState extends State<CopyClipApp> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.watch<ThemeManager>();
+    final themeManager = Provider.of<ThemeManager>(context);
 
-    return MaterialApp.router(
-      title: 'CopyClip',
-      debugShowCheckedModeBanner: false,
-      themeMode: theme.themeMode,
-      theme: AppTheme.lightTheme(theme.primaryColor),
-      darkTheme: AppTheme.darkTheme(theme.primaryColor),
-      routerConfig: router,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        FlutterQuillLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
+    // --- INITIALIZE SCREEN UTIL HERE ---
+    return ScreenUtilInit(
+      // Standard iPhone 13/14 size as base design (390 x 844)
+      designSize: const Size(390, 844),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp.router(
+          title: 'CopyClip',
+          debugShowCheckedModeBanner: false,
+          themeMode: themeManager.themeMode,
+          theme: AppTheme.lightTheme(themeManager.primaryColor),
+          darkTheme: AppTheme.darkTheme(themeManager.primaryColor),
+          routerConfig: router,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            FlutterQuillLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+        );
+      },
     );
   }
 }

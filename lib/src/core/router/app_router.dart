@@ -1,6 +1,9 @@
+import 'package:copyclip/src/features/canvas/presentation/pages/canvas_edit_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/calendar/presentation/pages/calendar_screen.dart';
 import '../../features/calendar/presentation/pages/date_detail_screen.dart';
+import '../../features/canvas/presentation/pages/canvas_folder_screen.dart';
+import '../../features/canvas/presentation/pages/canvs_screen.dart';
 import '../../features/clipboard/data/clipboard_model.dart';
 import '../../features/clipboard/presentation/pages/clipboard_edit_screen.dart';
 import '../../features/dashboard/presentation/pages/dashboard_screen.dart';
@@ -43,6 +46,10 @@ class AppRouter {
 
   static const String calendar = "/calendar";
   static const String dateDetail = "/calendar/date";
+
+  static const String canvas = '/canvas';
+  static const String canvasFolder = '/canvas/folder';
+  static const String canvasEdit = '/canvas/edit';
 
   static const String settings = "/settings";
   static const String recycleBin = "settings/recycle-bin";
@@ -129,6 +136,39 @@ List<GoRoute> getAuthRoutes() {
           date: extras['date'] as DateTime,
           items: extras['items'] as List<GlobalSearchResult>,
         );
+      },
+    ),
+
+    GoRoute(
+      path: AppRouter.canvas,
+      builder: (context, state) => const CanvasScreen(),
+    ),
+
+    // Canvas Folder Screen (shows all notes in a folder)
+    GoRoute(
+      path: AppRouter.canvasFolder,
+      builder: (context, state) {
+        // Expecting folderId as extra parameter
+        final String folderId = state.extra as String;
+        return CanvasFolderScreen(folderId: folderId);
+      },
+    ),
+
+    GoRoute(
+      path: AppRouter.canvasEdit,
+      builder: (context, state) {
+        final extra = state.extra;
+        String? noteId;
+        String? folderId;
+
+        if (extra is String) {
+          noteId = extra;
+        } else if (extra is Map<String, dynamic>) {
+          noteId = extra['noteId'] as String?;
+          folderId = extra['folderId'] as String?;
+        }
+
+        return CanvasEditScreen(noteId: noteId, folderId: folderId);
       },
     ),
 

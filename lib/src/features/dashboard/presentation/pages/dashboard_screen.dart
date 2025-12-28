@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:home_widget/home_widget.dart';
+
+// --- Imports from your project structure ---
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
-import 'package:home_widget/home_widget.dart';
 import '../../../clipboard/data/clipboard_model.dart';
 import '../../../expenses/data/expense_model.dart';
 import '../../../journal/data/journal_model.dart';
@@ -50,13 +52,17 @@ class DashboardScreen extends StatefulWidget {
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProviderStateMixin {
+class _DashboardScreenState extends State<DashboardScreen> with TickerProviderStateMixin {
   bool _boxesOpened = false;
   List<String> _order = [];
   String? _draggedId;
   Offset? _dragPosition;
   final GlobalKey _gridKey = GlobalKey();
+
   late AnimationController _settingsAnimationController;
+
+  // 1. NEW: Entry Animation Controller
+  late AnimationController _entryAnimationController;
 
   final Map<String, FeatureItem> _features = {
     'notes': FeatureItem('notes', 'Notes', Icons.note_alt_outlined, Colors.amberAccent, AppRouter.notes, 'Create and manage your notes'),
@@ -65,15 +71,17 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
     'journal': FeatureItem('journal', 'Journal', Icons.book_outlined, Colors.blueAccent, AppRouter.journal, 'Write down your thoughts'),
     'calendar': FeatureItem('calendar', 'Calendar', Icons.calendar_today_outlined, Colors.orangeAccent, AppRouter.calendar, 'Organize your schedule'),
     'clipboard': FeatureItem('clipboard', 'Clipboard', Icons.paste, Colors.purpleAccent, AppRouter.clipboard, 'Access your clipboard history'),
+    'canvas': FeatureItem('canvas', 'Canvas', Icons.gesture, Colors.tealAccent, AppRouter.canvas, 'Draw and sketch freely'),
   };
 
   final Map<String, Color> featureColors = {
-    'notes': Color(0xFFFF9A85),
-    'todos': Color(0xFF82CFFD),
-    'expenses': Color(0xFFFFB77B),
-    'journal': Color(0xFF9B7DFF),
-    'calendar': Color(0xFF7DE3A0),
-    'clipboard': Color(0xFFFF92D0),
+    'notes': const Color(0xFFFF9A85),
+    'todos': const Color(0xFF82CFFD),
+    'expenses': const Color(0xFFFFB77B),
+    'journal': const Color(0xFF9B7DFF),
+    'calendar': const Color(0xFF7DE3A0),
+    'clipboard': const Color(0xFFFF92D0),
+    'canvas': const Color(0xFF4DB6AC),
   };
 
   @override
@@ -83,12 +91,23 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
+
+    // 2. NEW: Initialize Entry Animation
+    _entryAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500), // Total time for all items to pop in
+    );
+
+    // Start the animation
+    _entryAnimationController.forward();
+
     _initHive();
   }
 
   @override
   void dispose() {
     _settingsAnimationController.dispose();
+    _entryAnimationController.dispose(); // Dispose entry controller
     super.dispose();
   }
 
@@ -137,8 +156,12 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
     if (box == null) return;
 
     final Offset localPos = box.globalToLocal(details.globalPosition);
+
+    // Calculate total rows based on current item count (2 items per row)
+    final int maxRows = (_order.length / 2).ceil();
+
     int col = (localPos.dx / (itemWidth + 16)).floor().clamp(0, 1);
-    int row = (localPos.dy / (itemHeight + 16)).floor().clamp(0, 2);
+    int row = (localPos.dy / (itemHeight + 16)).floor().clamp(0, maxRows - 1);
 
     int newIndex = (row * 2 + col).clamp(0, _order.length - 1);
     int oldIndex = _order.indexOf(_draggedId!);
@@ -167,6 +190,33 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
     await HomeWidget.saveWidgetData<String>('deeplink', uri.toString());
     await HomeWidget.saveWidgetData<int>('color', feature.color.value);
     await HomeWidget.updateWidget(name: 'HomeWidgetProvider', androidName: 'HomeWidgetProvider');
+  }
+
+  // 3. NEW: Animation Helper
+  // This calculates the stagger delay based on index
+  Widget _buildBouncingItemWrapper(int index, Widget child) {
+    return AnimatedBuilder(
+      animation: _entryAnimationController,
+      builder: (context, child) {
+        // Calculate interval for this specific item (Staggered effect)
+        final double start = (index * 0.1).clamp(0.0, 0.8);
+        final double end = (start + 0.5).clamp(0.0, 1.0);
+
+        final animation = CurvedAnimation(
+          parent: _entryAnimationController,
+          curve: Interval(start, end, curve: Curves.elasticOut), // The Bounce
+        );
+
+        return Transform.scale(
+          scale: animation.value,
+          child: Opacity(
+            opacity: animation.value.clamp(0.0, 1.0),
+            child: child,
+          ),
+        );
+      },
+      child: child,
+    );
   }
 
   Widget _buildFeatureCard(ThemeData theme, FeatureItem item, {bool isDragging = false}) {
@@ -289,12 +339,15 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
         final double itemWidth = (constraints.maxWidth - 64) / 2;
         final double itemHeight = itemWidth * 1.1;
 
+        final int rowCount = (_order.length / 2).ceil();
+        final double totalHeight = (itemHeight + 16) * rowCount + 100;
+
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: SizedBox(
             key: _gridKey,
-            height: (itemHeight + 16) * 3 + 100,
+            height: totalHeight,
             child: Stack(
               children: [
                 for (int i = 0; i < _order.length; i++)
@@ -334,13 +387,22 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
         onLongPressStart: (d) => _onDragStart(id, d),
         onLongPressMoveUpdate: (d) => _onDragUpdate(d, width, height),
         onLongPressEnd: (_) => _onDragEnd(),
-        onTap: () => context.push(_features[id]!.route),
-        child: SizedBox(
-          width: width,
-          height: height,
-          child: isDragging
-              ? Opacity(opacity: 0.0, child: _buildFeatureCard(theme, _features[id]!))
-              : _buildFeatureCard(theme, _features[id]!),
+        onTap: () {
+          final route = _features[id]?.route;
+          if (route != null) {
+            context.push(route);
+          }
+        },
+        // 4. UPDATED: Wrap content with Bouncing Wrapper
+        child: _buildBouncingItemWrapper(
+          index,
+          SizedBox(
+            width: width,
+            height: height,
+            child: isDragging
+                ? Opacity(opacity: 0.0, child: _buildFeatureCard(theme, _features[id]!))
+                : _buildFeatureCard(theme, _features[id]!),
+          ),
         ),
       ),
     );
