@@ -1,67 +1,143 @@
+// lib/src/features/canvas/data/canvas_adapter.dart
+
 import 'package:hive/hive.dart';
 import 'package:flutter/material.dart';
+import 'canvas_model.dart';
 
-// Drawing Stroke Adapter
 class DrawingStrokeAdapter extends TypeAdapter<DrawingStroke> {
   @override
   final int typeId = 10;
 
   @override
   DrawingStroke read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
+    final numFields = reader.readByte();
     final fields = <int, dynamic>{};
-    for (var i = 0; i < numOfFields; i++) {
-      final fieldId = reader.readByte();
-      fields[fieldId] = reader.read();
+    for (var i = 0; i < numFields; i++) {
+      fields[reader.readByte()] = reader.read();
     }
 
     return DrawingStroke(
-      points: List<double>.from(fields[0] as List),
+      points: List<double>.from(fields[0] ?? []),
       color: fields[1] as int,
-      strokeWidth: fields[2] as double,
+      strokeWidth: (fields[2] as num?)?.toDouble() ?? 2.0,
       createdAt: fields[3] as DateTime,
-      penType: fields[4] as int? ?? 0, // Add penType with default
+      penType: fields[4] as int? ?? 0,
     );
   }
 
   @override
   void write(BinaryWriter writer, DrawingStroke obj) {
-    writer.writeByte(5); // Changed from 4 to 5
-    writer.writeByte(0);
-    writer.write(obj.points);
-    writer.writeByte(1);
-    writer.write(obj.color);
-    writer.writeByte(2);
-    writer.write(obj.strokeWidth);
-    writer.writeByte(3);
-    writer.write(obj.createdAt);
-    writer.writeByte(4);
-    writer.write(obj.penType); // Add penType serialization
+    writer
+      ..writeByte(5)
+      ..writeByte(0)
+      ..write(obj.points)
+      ..writeByte(1)
+      ..write(obj.color)
+      ..writeByte(2)
+      ..write(obj.strokeWidth)
+      ..writeByte(3)
+      ..write(obj.createdAt)
+      ..writeByte(4)
+      ..write(obj.penType);
   }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is DrawingStrokeAdapter &&
-              runtimeType == other.runtimeType &&
-              typeId == other.typeId;
 }
 
-// Canvas Note Adapter
-class CanvasNoteAdapter extends TypeAdapter<CanvasNote> {
+class CanvasTextAdapter extends TypeAdapter<CanvasText> {
   @override
   final int typeId = 11;
 
   @override
-  CanvasNote read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
+  CanvasText read(BinaryReader reader) {
+    final numFields = reader.readByte();
     final fields = <int, dynamic>{};
-    for (var i = 0; i < numOfFields; i++) {
-      final fieldId = reader.readByte();
-      fields[fieldId] = reader.read();
+    for (var i = 0; i < numFields; i++) {
+      fields[reader.readByte()] = reader.read();
+    }
+
+    final positionData = fields[2] as List<dynamic>? ?? [0.0, 0.0];
+    return CanvasText(
+      id: fields[0] as String,
+      text: fields[1] as String? ?? '',
+      position: Offset(
+        (positionData[0] as num).toDouble(),
+        (positionData[1] as num).toDouble(),
+      ),
+      color: fields[3] as int,
+      fontSize: (fields[4] as num?)?.toDouble() ?? 20.0,
+      containerWidth: (fields[5] as num?)?.toDouble() ?? 200.0,
+      containerHeight: (fields[6] as num?)?.toDouble() ?? 100.0,
+      bold: fields[7] as bool? ?? false,
+      italic: fields[8] as bool? ?? false,
+      underline: fields[9] as bool? ?? false,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, CanvasText obj) {
+    writer
+      ..writeByte(10)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.text)
+      ..writeByte(2)
+      ..write([obj.position.dx, obj.position.dy])
+      ..writeByte(3)
+      ..write(obj.color)
+      ..writeByte(4)
+      ..write(obj.fontSize)
+      ..writeByte(5)
+      ..write(obj.containerWidth)
+      ..writeByte(6)
+      ..write(obj.containerHeight)
+      ..writeByte(7)
+      ..write(obj.bold)
+      ..writeByte(8)
+      ..write(obj.italic)
+      ..writeByte(9)
+      ..write(obj.underline);
+  }
+}
+
+class CanvasPageAdapter extends TypeAdapter<CanvasPage> {
+  @override
+  final int typeId = 14;
+
+  @override
+  CanvasPage read(BinaryReader reader) {
+    final numFields = reader.readByte();
+    final fields = <int, dynamic>{};
+    for (var i = 0; i < numFields; i++) {
+      fields[reader.readByte()] = reader.read();
+    }
+
+    return CanvasPage(
+      strokes: (fields[0] as List?)?.cast<DrawingStroke>() ?? [],
+      textElements: (fields[1] as List?)?.cast<CanvasText>() ?? [],
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, CanvasPage obj) {
+    writer
+      ..writeByte(2)
+      ..writeByte(0)
+      ..write(obj.strokes)
+      ..writeByte(1)
+      ..write(obj.textElements);
+  }
+}
+
+class CanvasNoteAdapter extends TypeAdapter<CanvasNote> {
+  @override
+  final int typeId = 15;
+
+  @override
+  CanvasNote read(BinaryReader reader) {
+    final numFields = reader.readByte();
+    final fields = <int, dynamic>{};
+    for (var i = 0; i < numFields; i++) {
+      fields[reader.readByte()] = reader.read();
     }
 
     return CanvasNote(
@@ -69,72 +145,61 @@ class CanvasNoteAdapter extends TypeAdapter<CanvasNote> {
       title: fields[1] as String,
       folderId: fields[2] as String,
       description: fields[3] as String?,
-      strokes: (fields[4] as List?)?.cast<DrawingStroke>() ?? [],
-      textBlocks: (fields[5] as List?)?.cast<String>() ?? [],
-      createdAt: fields[6] as DateTime,
-      lastModified: fields[7] as DateTime,
-      isFavorite: fields[8] as bool,
-      isDeleted: fields[9] as bool,
-      deletedAt: fields[10] as DateTime?,
-      thumbnailPath: fields[11] as String?,
-      backgroundColor: Color(fields[12] as int? ?? Colors.white.value),
+      pages: (fields[4] as List?)?.cast<CanvasPage>() ?? [CanvasPage()],
+      createdAt: fields[5] as DateTime,
+      lastModified: fields[6] as DateTime,
+      isFavorite: fields[7] as bool? ?? false,
+      isDeleted: fields[8] as bool? ?? false,
+      deletedAt: fields[9] as DateTime?,
+      thumbnailPath: fields[10] as String?,
+      backgroundColor: Color(fields[11] as int? ?? Colors.white.value),
+      horizontalScroll: fields[12] as bool? ?? false,
     );
   }
 
   @override
   void write(BinaryWriter writer, CanvasNote obj) {
-    writer.writeByte(13);
-    writer.writeByte(0);
-    writer.write(obj.id);
-    writer.writeByte(1);
-    writer.write(obj.title);
-    writer.writeByte(2);
-    writer.write(obj.folderId);
-    writer.writeByte(3);
-    writer.write(obj.description);
-    writer.writeByte(4);
-    writer.write(obj.strokes);
-    writer.writeByte(5);
-    writer.write(obj.textBlocks);
-    writer.writeByte(6);
-    writer.write(obj.createdAt);
-    writer.writeByte(7);
-    writer.write(obj.lastModified);
-    writer.writeByte(8);
-    writer.write(obj.isFavorite);
-    writer.writeByte(9);
-    writer.write(obj.isDeleted);
-    writer.writeByte(10);
-    writer.write(obj.deletedAt);
-    writer.writeByte(11);
-    writer.write(obj.thumbnailPath);
-    writer.writeByte(12);
-    writer.write(obj.backgroundColor.value);
+    writer
+      ..writeByte(13)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.title)
+      ..writeByte(2)
+      ..write(obj.folderId)
+      ..writeByte(3)
+      ..write(obj.description)
+      ..writeByte(4)
+      ..write(obj.pages)
+      ..writeByte(5)
+      ..write(obj.createdAt)
+      ..writeByte(6)
+      ..write(obj.lastModified)
+      ..writeByte(7)
+      ..write(obj.isFavorite)
+      ..writeByte(8)
+      ..write(obj.isDeleted)
+      ..writeByte(9)
+      ..write(obj.deletedAt)
+      ..writeByte(10)
+      ..write(obj.thumbnailPath)
+      ..writeByte(11)
+      ..write(obj.backgroundColor.value)
+      ..writeByte(12)
+      ..write(obj.horizontalScroll);
   }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is CanvasNoteAdapter &&
-              runtimeType == other.runtimeType &&
-              typeId == other.typeId;
 }
 
-// Canvas Folder Adapter
 class CanvasFolderAdapter extends TypeAdapter<CanvasFolder> {
   @override
   final int typeId = 12;
 
   @override
   CanvasFolder read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
+    final numFields = reader.readByte();
     final fields = <int, dynamic>{};
-    for (var i = 0; i < numOfFields; i++) {
-      final fieldId = reader.readByte();
-      fields[fieldId] = reader.read();
+    for (var i = 0; i < numFields; i++) {
+      fields[reader.readByte()] = reader.read();
     }
 
     return CanvasFolder(
@@ -144,253 +209,63 @@ class CanvasFolderAdapter extends TypeAdapter<CanvasFolder> {
       color: Color(fields[3] as int? ?? 0xFF64B5F6),
       createdAt: fields[4] as DateTime,
       lastModified: fields[5] as DateTime,
-      isDeleted: fields[6] as bool,
+      isDeleted: fields[6] as bool? ?? false,
       deletedAt: fields[7] as DateTime?,
-      sortIndex: fields[8] as int,
+      sortIndex: fields[8] as int? ?? 0,
     );
   }
 
   @override
   void write(BinaryWriter writer, CanvasFolder obj) {
-    writer.writeByte(9);
-    writer.writeByte(0);
-    writer.write(obj.id);
-    writer.writeByte(1);
-    writer.write(obj.name);
-    writer.writeByte(2);
-    writer.write(obj.parentFolderId);
-    writer.writeByte(3);
-    writer.write(obj.color.value);
-    writer.writeByte(4);
-    writer.write(obj.createdAt);
-    writer.writeByte(5);
-    writer.write(obj.lastModified);
-    writer.writeByte(6);
-    writer.write(obj.isDeleted);
-    writer.writeByte(7);
-    writer.write(obj.deletedAt);
-    writer.writeByte(8);
-    writer.write(obj.sortIndex);
+    writer
+      ..writeByte(9)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.parentFolderId)
+      ..writeByte(3)
+      ..write(obj.color.value)
+      ..writeByte(4)
+      ..write(obj.createdAt)
+      ..writeByte(5)
+      ..write(obj.lastModified)
+      ..writeByte(6)
+      ..write(obj.isDeleted)
+      ..writeByte(7)
+      ..write(obj.deletedAt)
+      ..writeByte(8)
+      ..write(obj.sortIndex);
   }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is CanvasFolderAdapter &&
-              runtimeType == other.runtimeType &&
-              typeId == other.typeId;
-}
-
-// --- Stroke Model for Drawing ---
-class DrawingStroke {
-  List<double> points;
-  int color;
-  double strokeWidth;
-  DateTime createdAt;
-  int penType; // Add penType field
-
-  DrawingStroke({
-    required this.points,
-    required this.color,
-    this.strokeWidth = 2.0,
-    DateTime? createdAt,
-    this.penType = 0, // Default to ballpoint
-  }) : createdAt = createdAt ?? DateTime.now();
-
-  Map<String, dynamic> toJson() => {
-    'points': points,
-    'color': color,
-    'strokeWidth': strokeWidth,
-    'createdAt': createdAt.toIso8601String(),
-    'penType': penType,
-  };
-
-  factory DrawingStroke.fromJson(Map<String, dynamic> json) => DrawingStroke(
-    points: List<double>.from(json['points'] ?? []),
-    color: json['color'] ?? Colors.black.value,
-    strokeWidth: (json['strokeWidth'] ?? 2.0).toDouble(),
-    createdAt: json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
-        : DateTime.now(),
-    penType: json['penType'] ?? 0,
-  );
-}
-
-// --- Canvas Note Model ---
-class CanvasNote extends HiveObject {
-  static const String boxName = 'canvas_notes';
-
-  late String id;
-  late String title;
-  late String folderId;
-  String? description;
-  late List<DrawingStroke> strokes;
-  late List<String> textBlocks;
-  late DateTime createdAt;
-  late DateTime lastModified;
-  late bool isFavorite;
-  late bool isDeleted;
-  DateTime? deletedAt;
-  String? thumbnailPath;
-  late Color backgroundColor;
-
-  CanvasNote({
-    required this.id,
-    required this.title,
-    required this.folderId,
-    this.description,
-    List<DrawingStroke>? strokes,
-    List<String>? textBlocks,
-    DateTime? createdAt,
-    DateTime? lastModified,
-    this.isFavorite = false,
-    this.isDeleted = false,
-    this.deletedAt,
-    this.thumbnailPath,
-    Color? backgroundColor,
-  }) {
-    this.strokes = strokes ?? [];
-    this.textBlocks = textBlocks ?? [];
-    this.createdAt = createdAt ?? DateTime.now();
-    this.lastModified = lastModified ?? DateTime.now();
-    this.backgroundColor = backgroundColor ?? Colors.white;
-  }
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'title': title,
-    'folderId': folderId,
-    'description': description,
-    'strokes': strokes.map((s) => s.toJson()).toList(),
-    'textBlocks': textBlocks,
-    'createdAt': createdAt.toIso8601String(),
-    'lastModified': lastModified.toIso8601String(),
-    'isFavorite': isFavorite,
-    'isDeleted': isDeleted,
-    'deletedAt': deletedAt?.toIso8601String(),
-    'thumbnailPath': thumbnailPath,
-    'backgroundColor': backgroundColor.value,
-  };
-
-  factory CanvasNote.fromJson(Map<String, dynamic> json) => CanvasNote(
-    id: json['id'],
-    title: json['title'],
-    folderId: json['folderId'],
-    description: json['description'],
-    strokes: (json['strokes'] as List?)
-        ?.map((s) => DrawingStroke.fromJson(s))
-        .toList(),
-    textBlocks: List<String>.from(json['textBlocks'] ?? []),
-    createdAt: json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
-        : DateTime.now(),
-    lastModified: json['lastModified'] != null
-        ? DateTime.parse(json['lastModified'])
-        : DateTime.now(),
-    isFavorite: json['isFavorite'] ?? false,
-    isDeleted: json['isDeleted'] ?? false,
-    deletedAt: json['deletedAt'] != null
-        ? DateTime.parse(json['deletedAt'])
-        : null,
-    thumbnailPath: json['thumbnailPath'],
-    backgroundColor:
-    Color(json['backgroundColor'] ?? Colors.white.value),
-  );
-}
-
-// --- Canvas Folder Model ---
-class CanvasFolder extends HiveObject {
-  static const String boxName = 'canvas_folders';
-
-  late String id;
-  late String name;
-  String? parentFolderId;
-  late Color color;
-  late DateTime createdAt;
-  late DateTime lastModified;
-  late bool isDeleted;
-  DateTime? deletedAt;
-  late int sortIndex;
-
-  CanvasFolder({
-    required this.id,
-    required this.name,
-    this.parentFolderId,
-    Color? color,
-    DateTime? createdAt,
-    DateTime? lastModified,
-    this.isDeleted = false,
-    this.deletedAt,
-    this.sortIndex = 0,
-  }) {
-    this.color = color ?? const Color(0xFF64B5F6);
-    this.createdAt = createdAt ?? DateTime.now();
-    this.lastModified = lastModified ?? DateTime.now();
-  }
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'parentFolderId': parentFolderId,
-    'color': color.value,
-    'createdAt': createdAt.toIso8601String(),
-    'lastModified': lastModified.toIso8601String(),
-    'isDeleted': isDeleted,
-    'deletedAt': deletedAt?.toIso8601String(),
-    'sortIndex': sortIndex,
-  };
-
-  factory CanvasFolder.fromJson(Map<String, dynamic> json) => CanvasFolder(
-    id: json['id'],
-    name: json['name'],
-    parentFolderId: json['parentFolderId'],
-    color: Color(json['color'] ?? 0xFF64B5F6),
-    createdAt: json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
-        : DateTime.now(),
-    lastModified: json['lastModified'] != null
-        ? DateTime.parse(json['lastModified'])
-        : DateTime.now(),
-    isDeleted: json['isDeleted'] ?? false,
-    deletedAt: json['deletedAt'] != null
-        ? DateTime.parse(json['deletedAt'])
-        : null,
-    sortIndex: json['sortIndex'] ?? 0,
-  );
 }
 
 // --- Database Service ---
 class CanvasDatabase {
   static final CanvasDatabase _instance = CanvasDatabase._internal();
 
-  factory CanvasDatabase() {
-    return _instance;
-  }
+  factory CanvasDatabase() => _instance;
 
   CanvasDatabase._internal();
+
+  static const String notesBoxName = 'canvas_notes';
+  static const String foldersBoxName = 'canvas_folders';
 
   late Box<CanvasNote> _notesBox;
   late Box<CanvasFolder> _foldersBox;
 
   Future<void> init() async {
-    // Register adapters first
-    if (!Hive.isAdapterRegistered(10)) {
-      Hive.registerAdapter(DrawingStrokeAdapter());
-    }
-    if (!Hive.isAdapterRegistered(11)) {
-      Hive.registerAdapter(CanvasNoteAdapter());
-    }
-    if (!Hive.isAdapterRegistered(12)) {
-      Hive.registerAdapter(CanvasFolderAdapter());
-    }
+    // Register all adapters
+    if (!Hive.isAdapterRegistered(10)) Hive.registerAdapter(DrawingStrokeAdapter());
+    if (!Hive.isAdapterRegistered(11)) Hive.registerAdapter(CanvasTextAdapter());
+    if (!Hive.isAdapterRegistered(12)) Hive.registerAdapter(CanvasFolderAdapter());
+    if (!Hive.isAdapterRegistered(14)) Hive.registerAdapter(CanvasPageAdapter());
+    if (!Hive.isAdapterRegistered(15)) Hive.registerAdapter(CanvasNoteAdapter());
 
-    _notesBox = await Hive.openBox<CanvasNote>(CanvasNote.boxName);
-    _foldersBox = await Hive.openBox<CanvasFolder>(CanvasFolder.boxName);
+    _notesBox = await Hive.openBox<CanvasNote>(notesBoxName);
+    _foldersBox = await Hive.openBox<CanvasFolder>(foldersBoxName);
 
-    // Create default folder if none exist
+    // Create default folder if none exists
     if (_foldersBox.isEmpty) {
       final defaultFolder = CanvasFolder(
         id: 'default',
@@ -463,7 +338,9 @@ class CanvasDatabase {
       folder.deletedAt = DateTime.now();
       await _foldersBox.put(id, folder);
 
-      for (var note in getNotesByFolder(id)) {
+      // Soft delete all notes in this folder
+      final notesInFolder = getNotesByFolder(id);
+      for (var note in notesInFolder) {
         await deleteNote(note.id);
       }
     }

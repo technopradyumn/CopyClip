@@ -7,6 +7,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import '../../data/canvas_adapter.dart';
+import '../../data/canvas_model.dart';
 
 enum BrushShape { round, square, marker, calligraphy, pencil, pen, highlighter, spray }
 
@@ -69,14 +70,26 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
     if (widget.noteId != null) {
       _currentNote = db.getNote(widget.noteId!)!;
       _titleController = TextEditingController(text: _currentNote.title);
-      _strokes = List.from(_currentNote.strokes);
+
+      // Use first page (create if missing)
+      final page = _currentNote.pages.isEmpty ? CanvasPage() : _currentNote.pages[0];
+      _strokes = List.from(page.strokes);
+      _textElements = List.from(page.textElements);
+
+      // Ensure at least one page
+      if (_currentNote.pages.isEmpty) {
+        _currentNote.pages.add(page);
+      }
     } else {
       _currentNote = CanvasNote(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         title: 'Untitled Note',
         folderId: widget.folderId ?? 'default',
+        pages: [CanvasPage()], // Explicitly create first page
       );
       _titleController = TextEditingController(text: 'Untitled Note');
+      _strokes = [];
+      _textElements = [];
     }
   }
 
@@ -84,7 +97,18 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
     _currentNote.title = _titleController.text.isEmpty
         ? 'Untitled Note'
         : _titleController.text;
-    _currentNote.strokes = _strokes;
+
+    // Ensure we have at least one page
+    if (_currentNote.pages.isEmpty) {
+      _currentNote.pages.add(CanvasPage());
+    }
+
+    // Update the first page with current strokes and text
+    _currentNote.pages[0] = CanvasPage(
+      strokes: _strokes,
+      textElements: _textElements,
+    );
+
     _currentNote.lastModified = DateTime.now();
     await CanvasDatabase().saveNote(_currentNote);
   }
@@ -115,7 +139,6 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   }
 
   void _addNewText() {
-    // Add text in center of visible canvas area
     final centerX = (MediaQuery.of(context).size.width / 2 - _panOffset.dx) / _zoomLevel;
     final centerY = (MediaQuery.of(context).size.height / 2 - _panOffset.dy) / _zoomLevel;
 
@@ -123,9 +146,14 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
       final newText = CanvasText(
         id: DateTime.now().toString(),
         text: 'Type here...',
-        position: Offset(centerX - 75, centerY - 25), // Center the default text box
-        color: _selectedColor,
-        fontSize: 20,
+        position: Offset(centerX - 100, centerY - 50),
+        color: _selectedColor.value,
+        fontSize: 20.0,
+        containerWidth: 200.0,
+        containerHeight: 100.0,
+        bold: false,
+        italic: false,
+        underline: false,
       );
       _textElements.add(newText);
       _selectedTextId = newText.id;
@@ -367,26 +395,46 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   }
 
   Widget _buildEditableText(CanvasText text, bool isSelected, ColorScheme colorScheme) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final focusNode = FocusNode(); // For controlling keyboard
+
+    // Auto-unfocus when tapping outside or on unfocus button
+    void unfocus() {
+      focusNode.unfocus();
+      setState(() {
+        _selectedTextId = null; // Deselect after editing
+      });
+    }
+
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _selectedTextId = isSelected ? null : text.id;
-        });
+        if (isSelected) {
+          unfocus();
+        } else {
+          setState(() {
+            _selectedTextId = text.id;
+          });
+          focusNode.requestFocus(); // Focus text field when selected
+        }
       },
-      onPanUpdate: isSelected ? (details) {
+      onPanUpdate: isSelected
+          ? (details) {
         setState(() {
           text.position += details.delta / _zoomLevel;
         });
-      } : null,
+      }
+          : null,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
+          // Main text container
           Container(
-            padding: const EdgeInsets.all(8),
+            width: text.containerWidth,
             constraints: BoxConstraints(
-              minWidth: text.containerWidth,
               minHeight: text.containerHeight,
+              maxWidth: screenWidth * 0.9,
             ),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               border: Border.all(
                 color: isSelected
@@ -394,167 +442,197 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     : Colors.transparent,
                 width: isSelected ? 2 : 1,
               ),
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(8),
             ),
-            child: IntrinsicWidth(
-              child: IntrinsicHeight(
-                child: TextField(
-                  controller: TextEditingController(text: text.text)
-                    ..selection = TextSelection.collapsed(offset: text.text.length),
-                  enabled: isSelected,
-                  maxLines: null,
-                  style: TextStyle(
-                    color: text.color,
-                    fontSize: text.fontSize,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    isDense: true,
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                  onChanged: (value) {
-                    text.text = value;
-                  },
-                  onTap: () {
-                    setState(() {
-                      _selectedTextId = text.id;
-                    });
-                  },
-                ),
+            child: TextField(
+              focusNode: focusNode,
+              controller: TextEditingController(text: text.text)
+                ..selection = TextSelection.collapsed(offset: text.text.length),
+              enabled: isSelected,
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              textAlignVertical: TextAlignVertical.top,
+              style: TextStyle(
+                color: Color(text.color),
+                fontSize: text.fontSize,
+                fontWeight: FontWeight.w500,
+                height: 1.4,
               ),
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
+              ),
+              onChanged: (value) {
+                text.text = value;
+                // No need for setState here — parent rebuilds via selection
+              },
+              onSubmitted: (_) => unfocus(), // Enter key also unfocuses
             ),
           ),
-          // Delete button (top-right)
+
+          // === DELETE BUTTON (top-right) ===
           if (isSelected)
             Positioned(
-              top: -10,
-              right: -10,
+              top: -12,
+              right: -12,
               child: GestureDetector(
-                onTap: () => _deleteText(text.id),
+                onTapDown: (_) => _deleteText(text.id), // Instant response
                 child: Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
+                  width: 30,
+                  height: 30,
+                  decoration: const BoxDecoration(
                     color: Colors.red,
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 4,
+                        color: Colors.black26,
+                        blurRadius: 6,
+                        offset: Offset(0, 2),
                       ),
                     ],
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.close,
+                    size: 18,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+
+          // === RESIZE HANDLE (bottom-right) ===
+          if (isSelected)
+            Positioned(
+              bottom: -12,
+              right: -12,
+              child: GestureDetector(
+                onPanUpdate: (details) {
+                  setState(() {
+                    final newWidth = (text.containerWidth + details.delta.dx / _zoomLevel)
+                        .clamp(80.0, screenWidth * 0.9);
+                    final newHeight = (text.containerHeight + details.delta.dy / _zoomLevel)
+                        .clamp(50.0, 600.0);
+
+                    text.containerWidth = newWidth;
+                    text.containerHeight = newHeight;
+                  });
+                },
+                child: Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    color: colorScheme.primary,
+                    shape: BoxShape.circle,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 6,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.arrow_outward,
                     size: 16,
                     color: Colors.white,
                   ),
                 ),
               ),
             ),
-          // Resize handle (bottom-right)
-          if (isSelected)
-            Positioned(
-              bottom: -10,
-              right: -10,
-              child: GestureDetector(
-                onPanUpdate: (details) {
-                  setState(() {
-                    // Resize container
-                    text.containerWidth = (text.containerWidth + details.delta.dx / _zoomLevel)
-                        .clamp(50.0, 500.0);
-                    text.containerHeight = (text.containerHeight + details.delta.dy / _zoomLevel)
-                        .clamp(30.0, 500.0);
 
-                    // Also increase font size proportionally
-                    final sizeDelta = (details.delta.dx + details.delta.dy) / 2;
-                    text.fontSize = (text.fontSize + sizeDelta / (_zoomLevel * 10))
-                        .clamp(10.0, 100.0);
-                  });
-                },
-                child: Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    color: colorScheme.primary,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 4,
-                      ),
-                    ],
-                  ),
-                  child: Icon(
-                    Icons.arrow_outward,
-                    size: 14,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          // Zoom in/out buttons (top-left and below it)
+          // === FONT SIZE CONTROLS (top-left) ===
           if (isSelected)
             Positioned(
-              top: -10,
-              left: -10,
+              top: -12,
+              left: -12,
               child: Column(
                 children: [
+                  // Increase font
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        text.fontSize = (text.fontSize + 2).clamp(10.0, 100.0);
+                        text.fontSize = (text.fontSize + 3).clamp(10.0, 100.0);
                       });
                     },
                     child: Container(
-                      width: 24,
-                      height: 24,
+                      width: 30,
+                      height: 30,
                       decoration: BoxDecoration(
                         color: colorScheme.primary,
                         shape: BoxShape.circle,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 4,
+                            color: Colors.black26,
+                            blurRadius: 6,
+                            offset: Offset(0, 2),
                           ),
                         ],
                       ),
-                      child: Icon(
-                        Icons.add,
-                        size: 16,
-                        color: Colors.white,
-                      ),
+                      child: const Icon(Icons.add, size: 18, color: Colors.white),
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 6),
+                  // Decrease font
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        text.fontSize = (text.fontSize - 2).clamp(10.0, 100.0);
+                        text.fontSize = (text.fontSize - 3).clamp(10.0, 100.0);
                       });
                     },
                     child: Container(
-                      width: 24,
-                      height: 24,
+                      width: 30,
+                      height: 30,
                       decoration: BoxDecoration(
                         color: colorScheme.primary,
                         shape: BoxShape.circle,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 4,
+                            color: Colors.black26,
+                            blurRadius: 6,
+                            offset: Offset(0, 2),
                           ),
                         ],
                       ),
-                      child: Icon(
-                        Icons.remove,
-                        size: 16,
-                        color: Colors.white,
-                      ),
+                      child: const Icon(Icons.remove, size: 18, color: Colors.white),
                     ),
                   ),
                 ],
+              ),
+            ),
+
+          // === UNFOCUS / DONE BUTTON (top-center) ===
+          if (isSelected)
+            Positioned(
+              top: -12,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: GestureDetector(
+                  onTap: unfocus,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 6,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      'Done',
+                      style: TextStyle(
+                        color: colorScheme.onPrimary,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
         ],
@@ -638,35 +716,53 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                   Icon(
                     _isErasing ? Icons.cleaning_services : Icons.line_weight,
                     size: 16,
-                    color: colorScheme.onSurface.withOpacity(0.6),
+                    color: colorScheme.onSurface.withOpacity(0.7),
                   ),
+
+                  const SizedBox(width: 8),
+
                   SizedBox(
-                    width: 100,
+                    width: 110,
                     child: SliderTheme(
-                      data: SliderThemeData(
-                        trackHeight: 2,
-                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6),
+                      data: SliderTheme.of(context).copyWith(
+                        trackHeight: 4,
+                        activeTrackColor: colorScheme.primary,
+                        inactiveTrackColor: colorScheme.onSurface.withOpacity(0.2),
+                        thumbColor: colorScheme.primary,
+                        overlayColor: colorScheme.primary.withOpacity(0.15),
+                        overlayShape: const RoundSliderOverlayShape(overlayRadius: 14),
+                        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
+                        trackShape: const RoundedRectSliderTrackShape(),
                       ),
                       child: Slider(
                         value: _isErasing ? _eraserSize : _strokeWidth,
                         min: _isErasing ? 5 : 1,
                         max: _isErasing ? 50 : 15,
-                        onChanged: (val) => setState(() {
-                          if (_isErasing) {
-                            _eraserSize = val;
-                          } else {
-                            _strokeWidth = val;
-                          }
-                        }),
+                        onChanged: (val) {
+                          setState(() {
+                            if (_isErasing) {
+                              _eraserSize = val;
+                            } else {
+                              _strokeWidth = val;
+                            }
+                          });
+                        },
                       ),
                     ),
                   ),
-                  Text(
-                    '${_isErasing ? _eraserSize.toInt() : _strokeWidth.toInt()}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.onSurface.withOpacity(0.6),
+
+                  const SizedBox(width: 6),
+
+                  Container(
+                    width: 28,
+                    alignment: Alignment.center,
+                    child: Text(
+                      '${(_isErasing ? _eraserSize : _strokeWidth).toInt()}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
                     ),
                   ),
                 ],
@@ -804,81 +900,91 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   void _showBrushGrid(BuildContext context, ColorScheme colorScheme) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
+        final height = MediaQuery.of(context).size.height;
+
         return Dialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          child: Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Select Brush',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: height * 0.65,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  const Text(
+                    'Select Brush',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                ),
-                SizedBox(height: 20),
-                GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: BrushShape.values.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: 1,
-                  ),
-                  itemBuilder: (context, index) {
-                    final brush = BrushShape.values[index];
-                    final isSelected = _brushShape == brush;
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() => _brushShape = brush);
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: isSelected
-                              ? colorScheme.primary.withOpacity(0.2)
-                              : colorScheme.surface,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: isSelected
-                                ? colorScheme.primary
-                                : colorScheme.outline.withOpacity(0.3),
-                            width: isSelected ? 2 : 1,
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              _getBrushIconForShape(brush),
-                              size: 28,
+
+                  const SizedBox(height: 16),
+
+                  Expanded(
+                    child: GridView.builder(
+                      itemCount: BrushShape.values.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: 1,
+                      ),
+                      itemBuilder: (context, index) {
+                        final brush = BrushShape.values[index];
+                        final isSelected = _brushShape == brush;
+
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() => _brushShape = brush);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
                               color: isSelected
-                                  ? colorScheme.primary
-                                  : colorScheme.onSurface.withOpacity(0.7),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              _getBrushName(brush),
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                                  ? colorScheme.primary.withOpacity(0.15)
+                                  : colorScheme.surface,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
                                 color: isSelected
                                     ? colorScheme.primary
-                                    : colorScheme.onSurface.withOpacity(0.7),
+                                    : colorScheme.outline.withOpacity(0.3),
+                                width: isSelected ? 2 : 1,
                               ),
-                              textAlign: TextAlign.center,
                             ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ],
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  _getBrushIconForShape(brush),
+                                  size: 28,
+                                  color: isSelected
+                                      ? colorScheme.primary
+                                      : colorScheme.onSurface.withOpacity(0.7),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  _getBrushName(brush),
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight:
+                                    isSelected ? FontWeight.w600 : FontWeight.normal,
+                                    color: isSelected
+                                        ? colorScheme.primary
+                                        : colorScheme.onSurface.withOpacity(0.7),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -1382,25 +1488,4 @@ class DrawingPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(DrawingPainter oldDelegate) => oldDelegate.strokes != strokes;
-}
-
-// Canvas Text Model - Updated with container size properties
-class CanvasText {
-  final String id;
-  String text;
-  Offset position;
-  final Color color;
-  double fontSize;
-  double containerWidth;
-  double containerHeight;
-
-  CanvasText({
-    required this.id,
-    required this.text,
-    required this.position,
-    required this.color,
-    required this.fontSize,
-    this.containerWidth = 150.0,
-    this.containerHeight = 50.0,
-  });
 }
