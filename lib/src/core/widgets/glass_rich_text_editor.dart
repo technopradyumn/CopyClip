@@ -43,8 +43,16 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
   int _currentMatchIndex = -1;
 
   final List<String> _fontFamilies = [
-    'Sans Serif', 'Serif', 'Monospace', 'Roboto', 'Arial',
-    'Times New Roman', 'Courier New', 'Georgia', 'Verdana', 'Helvetica',
+    'Sans Serif',
+    'Serif',
+    'Monospace',
+    'Roboto',
+    'Arial',
+    'Times New Roman',
+    'Courier New',
+    'Georgia',
+    'Verdana',
+    'Helvetica',
   ];
 
   final List<Map<String, dynamic>> _fontSizes = [
@@ -52,11 +60,16 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     {'label': 'Normal', 'value': null},
     {'label': 'Large', 'value': 'large'},
     {'label': 'Huge', 'value': 'huge'},
-    {'label': '10', 'value': '10'}, {'label': '12', 'value': '12'},
-    {'label': '14', 'value': '14'}, {'label': '16', 'value': '16'},
-    {'label': '18', 'value': '18'}, {'label': '20', 'value': '20'},
-    {'label': '24', 'value': '24'}, {'label': '28', 'value': '28'},
-    {'label': '32', 'value': '32'}, {'label': '36', 'value': '36'},
+    {'label': '10', 'value': '10'},
+    {'label': '12', 'value': '12'},
+    {'label': '14', 'value': '14'},
+    {'label': '16', 'value': '16'},
+    {'label': '18', 'value': '18'},
+    {'label': '20', 'value': '20'},
+    {'label': '24', 'value': '24'},
+    {'label': '28', 'value': '28'},
+    {'label': '32', 'value': '32'},
+    {'label': '36', 'value': '36'},
     {'label': '48', 'value': '48'},
   ];
 
@@ -110,7 +123,8 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
       if (!mounted || !widget.scrollController.hasClients) return;
 
       final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-      if (bottomInset > 100) { // Keyboard is visible
+      if (bottomInset > 100) {
+        // Keyboard is visible
         // Scroll to make cursor visible above keyboard
         final currentOffset = widget.scrollController.offset;
         final maxScroll = widget.scrollController.position.maxScrollExtent;
@@ -181,7 +195,11 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
 
   void _showWordCount() {
     final text = widget.controller.document.toPlainText();
-    final wordCount = text.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
+    final wordCount = text
+        .trim()
+        .split(RegExp(r'\s+'))
+        .where((w) => w.isNotEmpty)
+        .length;
     final charCount = text.length;
     final readingTime = (wordCount / 200).ceil();
 
@@ -189,15 +207,25 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
       context: context,
       builder: (_) => AlertDialog(
         title: const Text('Document Statistics'),
-        content: Text('Words: $wordCount\nCharacters: $charCount\nEstimated Reading Time: $readingTime min'),
-        actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('OK'))],
+        content: Text(
+          'Words: $wordCount\nCharacters: $charCount\nEstimated Reading Time: $readingTime min',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
   }
 
   void _selectAll() {
     widget.controller.updateSelection(
-      TextSelection(baseOffset: 0, extentOffset: widget.controller.document.length - 1),
+      TextSelection(
+        baseOffset: 0,
+        extentOffset: widget.controller.document.length - 1,
+      ),
       ChangeSource.local,
     );
   }
@@ -206,7 +234,9 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     setState(() => widget.controller.readOnly = !widget.controller.readOnly);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(widget.controller.readOnly ? 'Editor locked' : 'Editor unlocked'),
+        content: Text(
+          widget.controller.readOnly ? 'Editor locked' : 'Editor unlocked',
+        ),
         duration: const Duration(seconds: 1),
       ),
     );
@@ -235,8 +265,11 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
         final currentSize = _getCurrentAttributeValue('size');
         if (currentSize == null) return 'Normal';
         final size = _fontSizes.firstWhere(
-              (s) => s['value']?.toString() == currentSize,
-          orElse: () => {'label': currentSize ?? 'Normal', 'value': currentSize},
+          (s) => s['value']?.toString() == currentSize,
+          orElse: () => {
+            'label': currentSize ?? 'Normal',
+            'value': currentSize,
+          },
         );
         return size['label'];
       case 'fontFamily':
@@ -245,7 +278,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
         final currentHeader = _getCurrentAttributeValue('header');
         if (currentHeader == null) return 'Normal';
         final heading = _headings.firstWhere(
-              (h) => h['value'].toString() == currentHeader,
+          (h) => h['value'].toString() == currentHeader,
           orElse: () => {'label': 'H$currentHeader', 'value': currentHeader},
         );
         return heading['label'];
@@ -253,8 +286,11 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
         final currentLineHeight = _getCurrentAttributeValue('line-height');
         if (currentLineHeight == null) return 'Spacing';
         final height = _lineHeights.firstWhere(
-              (h) => h['value'].toString() == currentLineHeight,
-          orElse: () => {'label': currentLineHeight ?? 'Normal', 'value': currentLineHeight},
+          (h) => h['value'].toString() == currentLineHeight,
+          orElse: () => {
+            'label': currentLineHeight ?? 'Normal',
+            'value': currentLineHeight,
+          },
         );
         return height['label'];
       default:
@@ -278,17 +314,23 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
 
   void _toggleAlignment(Attribute alignment) {
     final isActive = _isAlignmentActive(alignment);
-    widget.controller.formatSelection(isActive ? Attribute.clone(alignment, null) : alignment);
+    widget.controller.formatSelection(
+      isActive ? Attribute.clone(alignment, null) : alignment,
+    );
   }
 
   void _toggleList(Attribute listType) {
     final isActive = _isListActive(listType);
-    widget.controller.formatSelection(isActive ? Attribute.clone(listType, null) : listType);
+    widget.controller.formatSelection(
+      isActive ? Attribute.clone(listType, null) : listType,
+    );
   }
 
   void _toggleFormat(Attribute attribute) {
     final isActive = _hasAttribute(attribute);
-    widget.controller.formatSelection(isActive ? Attribute.clone(attribute, null) : attribute);
+    widget.controller.formatSelection(
+      isActive ? Attribute.clone(attribute, null) : attribute,
+    );
   }
 
   Future<void> _pickColor(bool isBackground) async {
@@ -301,8 +343,12 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
 
     if (currentHex != null && currentHex.startsWith('#')) {
       try {
-        final String hex = currentHex.startsWith('#') ? currentHex.substring(1) : currentHex;
-        initialColor = Color(int.parse(hex.length == 6 ? '0xFF$hex' : '0x$hex'));
+        final String hex = currentHex.startsWith('#')
+            ? currentHex.substring(1)
+            : currentHex;
+        initialColor = Color(
+          int.parse(hex.length == 6 ? '0xFF$hex' : '0x$hex'),
+        );
       } catch (_) {}
     }
 
@@ -366,7 +412,8 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     } else {
       // This applies the selected hex color
       final int rgb = picked.value & 0xFFFFFF;
-      final String hex = '#${rgb.toRadixString(16).padLeft(6, '0').toUpperCase()}';
+      final String hex =
+          '#${rgb.toRadixString(16).padLeft(6, '0').toUpperCase()}';
       widget.controller.formatSelection(Attribute.clone(attr, hex));
     }
 
@@ -417,7 +464,8 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
         start--;
       }
       // Look forwards for space
-      while (end < plainText.length && !RegExp(r'\s').hasMatch(plainText[end])) {
+      while (end < plainText.length &&
+          !RegExp(r'\s').hasMatch(plainText[end])) {
         end++;
       }
     }
@@ -427,7 +475,9 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     final List<String>? result = await showDialog<List<String>>(
       context: context,
       builder: (context) {
-        final urlController = TextEditingController(text: selectedText.contains('.') ? selectedText : '');
+        final urlController = TextEditingController(
+          text: selectedText.contains('.') ? selectedText : '',
+        );
         final textController = TextEditingController(text: selectedText);
         return AlertDialog(
           title: const Text('Insert Link'),
@@ -440,16 +490,24 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
               ),
               TextField(
                 controller: urlController,
-                decoration: const InputDecoration(labelText: 'URL (e.g. https://...)'),
+                decoration: const InputDecoration(
+                  labelText: 'URL (e.g. https://...)',
+                ),
                 keyboardType: TextInputType.url,
                 autofocus: true,
               ),
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
             TextButton(
-              onPressed: () => Navigator.pop(context, [textController.text, urlController.text]),
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, [
+                textController.text,
+                urlController.text,
+              ]),
               child: const Text('Insert'),
             ),
           ],
@@ -463,7 +521,11 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
 
       // Replace the detected "word" or selection with the link
       widget.controller.replaceText(start, end - start, display, null);
-      widget.controller.formatText(start, display.length, Attribute.fromKeyValue('link', url));
+      widget.controller.formatText(
+        start,
+        display.length,
+        Attribute.fromKeyValue('link', url),
+      );
 
       // Move cursor to end
       widget.controller.updateSelection(
@@ -488,9 +550,9 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
       // 2. Apply the link attribute to the EXACT range of the filename
       // Using formatText is more stable than formatSelection for programmatic links
       widget.controller.formatText(
-          index,
-          fileName.length,
-          Attribute.fromKeyValue('link', 'file://$filePath')
+        index,
+        fileName.length,
+        Attribute.fromKeyValue('link', 'file://$filePath'),
       );
 
       // 3. Move cursor to the end of the filename and add a space
@@ -515,7 +577,10 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     if (image != null) {
       final index = widget.controller.selection.baseOffset;
       widget.controller.document.insert(index, BlockEmbed.image(image.path));
-      widget.controller.updateSelection(TextSelection.collapsed(offset: index + 1), ChangeSource.local);
+      widget.controller.updateSelection(
+        TextSelection.collapsed(offset: index + 1),
+        ChangeSource.local,
+      );
     }
   }
 
@@ -525,11 +590,15 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     if (video != null) {
       final index = widget.controller.selection.baseOffset;
       widget.controller.document.insert(index, BlockEmbed.video(video.path));
-      widget.controller.updateSelection(TextSelection.collapsed(offset: index + 1), ChangeSource.local);
+      widget.controller.updateSelection(
+        TextSelection.collapsed(offset: index + 1),
+        ChangeSource.local,
+      );
     }
   }
 
-  void _toggleEmojiPicker() => setState(() => _showEmojiPicker = !_showEmojiPicker);
+  void _toggleEmojiPicker() =>
+      setState(() => _showEmojiPicker = !_showEmojiPicker);
 
   void _insertEmoji(String emoji) {
     final index = widget.controller.selection.baseOffset;
@@ -537,7 +606,8 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     widget.controller.replaceText(index, length, emoji, null);
   }
 
-  void _toggleSearchReplace() => setState(() => _showSearchReplace = !_showSearchReplace);
+  void _toggleSearchReplace() =>
+      setState(() => _showSearchReplace = !_showSearchReplace);
 
   List<int> _findAllMatches() {
     final query = _findController.text;
@@ -643,6 +713,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
   }
 
   void _startVoiceTyping() => _speechToText.listen(onResult: _onSpeechResult);
+
   void _stopVoiceTyping() => _speechToText.stop();
 
   void _onSpeechResult(SpeechRecognitionResult result) {
@@ -652,16 +723,29 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
 
   Future<void> _exportToPdf() async {
     final pdf = pw.Document();
-    pdf.addPage(pw.Page(build: (ctx) => pw.Center(child: pw.Text(widget.controller.document.toPlainText()))));
+    pdf.addPage(
+      pw.Page(
+        build: (ctx) =>
+            pw.Center(child: pw.Text(widget.controller.document.toPlainText())),
+      ),
+    );
     await Printing.sharePdf(bytes: await pdf.save(), filename: 'document.pdf');
   }
 
   Future<void> _printDocument() async {
-    await Printing.layoutPdf(onLayout: (_) async {
-      final pdf = pw.Document();
-      pdf.addPage(pw.Page(build: (ctx) => pw.Center(child: pw.Text(widget.controller.document.toPlainText()))));
-      return pdf.save();
-    });
+    await Printing.layoutPdf(
+      onLayout: (_) async {
+        final pdf = pw.Document();
+        pdf.addPage(
+          pw.Page(
+            build: (ctx) => pw.Center(
+              child: pw.Text(widget.controller.document.toPlainText()),
+            ),
+          ),
+        );
+        return pdf.save();
+      },
+    );
   }
 
   void _uppercaseSelection() {
@@ -705,8 +789,16 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     final plain = widget.controller.document.toPlainText();
     final lineStart = plain.lastIndexOf('\n', sel.baseOffset - 1) + 1;
     final lineEnd = plain.indexOf('\n', sel.baseOffset);
-    final lineText = plain.substring(lineStart, lineEnd == -1 ? plain.length : lineEnd);
-    widget.controller.replaceText(lineEnd == -1 ? plain.length : lineEnd, 0, '\n$lineText', null);
+    final lineText = plain.substring(
+      lineStart,
+      lineEnd == -1 ? plain.length : lineEnd,
+    );
+    widget.controller.replaceText(
+      lineEnd == -1 ? plain.length : lineEnd,
+      0,
+      '\n$lineText',
+      null,
+    );
   }
 
   void _sortLines() {
@@ -752,21 +844,33 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
 
     final customStyles = DefaultStyles(
       h1: DefaultTextBlockStyle(
-        defaultTextStyle.style.copyWith(fontSize: 34, height: 1.083, fontWeight: FontWeight.bold),
+        defaultTextStyle.style.copyWith(
+          fontSize: 34,
+          height: 1.083,
+          fontWeight: FontWeight.bold,
+        ),
         const HorizontalSpacing(0, 0),
         const VerticalSpacing(16, 0),
         VerticalSpacing.zero,
         null,
       ),
       h2: DefaultTextBlockStyle(
-        defaultTextStyle.style.copyWith(fontSize: 30, height: 1.067, fontWeight: FontWeight.bold),
+        defaultTextStyle.style.copyWith(
+          fontSize: 30,
+          height: 1.067,
+          fontWeight: FontWeight.bold,
+        ),
         const HorizontalSpacing(0, 0),
         const VerticalSpacing(12, 0),
         VerticalSpacing.zero,
         null,
       ),
       h3: DefaultTextBlockStyle(
-        defaultTextStyle.style.copyWith(fontSize: 24, height: 1.083, fontWeight: FontWeight.bold),
+        defaultTextStyle.style.copyWith(
+          fontSize: 24,
+          height: 1.083,
+          fontWeight: FontWeight.bold,
+        ),
         const HorizontalSpacing(0, 0),
         const VerticalSpacing(10, 0),
         VerticalSpacing.zero,
@@ -787,11 +891,22 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
       inlineCode: InlineCodeStyle(
         backgroundColor: colorScheme.surfaceContainerHighest,
         radius: const Radius.circular(4),
-        style: TextStyle(fontSize: 14, color: colorScheme.primary, fontFamily: 'monospace'),
+        style: TextStyle(
+          fontSize: 14,
+          color: colorScheme.primary,
+          fontFamily: 'monospace',
+        ),
       ),
-      link: TextStyle(color: colorScheme.primary, decoration: TextDecoration.underline),
+      link: TextStyle(
+        color: colorScheme.primary,
+        decoration: TextDecoration.underline,
+      ),
       placeHolder: DefaultTextBlockStyle(
-        defaultTextStyle.style.copyWith(fontSize: 18, height: 1.5, color: colorScheme.onSurface.withOpacity(0.4)),
+        defaultTextStyle.style.copyWith(
+          fontSize: 18,
+          height: 1.5,
+          color: colorScheme.onSurface.withOpacity(0.4),
+        ),
         const HorizontalSpacing(0, 0),
         VerticalSpacing.zero,
         VerticalSpacing.zero,
@@ -806,18 +921,37 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
         null,
       ),
       quote: DefaultTextBlockStyle(
-        TextStyle(color: colorScheme.onSurface.withOpacity(0.7), fontSize: 16, fontStyle: FontStyle.italic),
+        TextStyle(
+          color: colorScheme.onSurface.withOpacity(0.7),
+          fontSize: 16,
+          fontStyle: FontStyle.italic,
+        ),
         const HorizontalSpacing(16, 0),
         const VerticalSpacing(8, 8),
         const VerticalSpacing(6, 2),
-        BoxDecoration(border: Border(left: BorderSide(width: 4, color: colorScheme.primary.withOpacity(0.3)))),
+        BoxDecoration(
+          border: Border(
+            left: BorderSide(
+              width: 4,
+              color: colorScheme.primary.withOpacity(0.3),
+            ),
+          ),
+        ),
       ),
       code: DefaultTextBlockStyle(
-        TextStyle(color: colorScheme.onSurface, fontFamily: 'monospace', fontSize: 14, height: 1.4),
+        TextStyle(
+          color: colorScheme.onSurface,
+          fontFamily: 'monospace',
+          fontSize: 14,
+          height: 1.4,
+        ),
         const HorizontalSpacing(16, 16),
         const VerticalSpacing(8, 8),
         VerticalSpacing.zero,
-        BoxDecoration(color: colorScheme.surfaceContainerHighest, borderRadius: BorderRadius.circular(8)),
+        BoxDecoration(
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(8),
+        ),
       ),
     );
 
@@ -826,13 +960,48 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
 
     return Column(
       children: [
-        // Pinned Toolbar + Panels (always above keyboard)
+        Expanded(
+          child: Container(
+            color: Colors.transparent,
+            child: QuillEditor(
+              controller: widget.controller,
+              focusNode: widget.focusNode,
+              scrollController: widget.scrollController,
+              config: QuillEditorConfig(
+                placeholder: "Write here...",
+                padding: const EdgeInsets.fromLTRB(24, 10, 24, 100),
+                autoFocus: false,
+                expands: false,
+                scrollable: true,
+                scrollPhysics: const BouncingScrollPhysics(),
+                enableInteractiveSelection: true,
+                showCursor: true,
+                embedBuilders: [
+                  ...FlutterQuillEmbeds.editorBuilders(),
+                  TimeStampEmbedBuilder(),
+                ],
+                customStyles: customStyles,
+                onLaunchUrl: (url) async {
+                  if (url == null) return;
+                  final uri = Uri.tryParse(url);
+                  if (uri != null && await canLaunchUrl(uri)) {
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  }
+                },
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 5),
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
           decoration: BoxDecoration(
             color: colorScheme.surface.withOpacity(0.95),
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: colorScheme.primary.withOpacity(0.2), width: 1.2),
+            border: Border.all(
+              color: colorScheme.primary.withOpacity(0.2),
+              width: 1.2,
+            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.12),
@@ -849,17 +1018,60 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                 height: 36,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 0,
+                    vertical: 0,
+                  ),
                   children: [
-                    _buildIconButton(icon: Icons.picture_as_pdf, tooltip: 'Export to PDF', onPressed: _exportToPdf),
-                    _buildIconButton(icon: widget.controller.readOnly ? Icons.lock : Icons.lock_open, tooltip: 'Lock/Unlock Editor', onPressed: _toggleReadOnly),
-                    _buildIconButton(icon: Icons.undo, tooltip: 'Undo', isDisabled: !canUndo, onPressed: canUndo ? widget.controller.undo : null),
-                    _buildIconButton(icon: Icons.redo, tooltip: 'Redo', isDisabled: !canRedo, onPressed: canRedo ? widget.controller.redo : null),
+                    _buildIconButton(
+                      icon: Icons.picture_as_pdf,
+                      tooltip: 'Export to PDF',
+                      onPressed: _exportToPdf,
+                    ),
+                    _buildIconButton(
+                      icon: widget.controller.readOnly
+                          ? Icons.lock
+                          : Icons.lock_open,
+                      tooltip: 'Lock/Unlock Editor',
+                      onPressed: _toggleReadOnly,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.undo,
+                      tooltip: 'Undo',
+                      isDisabled: !canUndo,
+                      onPressed: canUndo ? widget.controller.undo : null,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.redo,
+                      tooltip: 'Redo',
+                      isDisabled: !canRedo,
+                      onPressed: canRedo ? widget.controller.redo : null,
+                    ),
                     const SizedBox(width: 4),
-                    _buildIconButton(icon: Icons.format_bold, tooltip: 'Bold', isSelected: _hasAttribute(Attribute.bold), onPressed: () => _toggleFormat(Attribute.bold)),
-                    _buildIconButton(icon: Icons.format_italic, tooltip: 'Italic', isSelected: _hasAttribute(Attribute.italic), onPressed: () => _toggleFormat(Attribute.italic)),
-                    _buildIconButton(icon: Icons.format_underlined, tooltip: 'Underline', isSelected: _hasAttribute(Attribute.underline), onPressed: () => _toggleFormat(Attribute.underline)),
-                    _buildIconButton(icon: Icons.strikethrough_s, tooltip: 'Strikethrough', isSelected: _hasAttribute(Attribute.strikeThrough), onPressed: () => _toggleFormat(Attribute.strikeThrough)),
+                    _buildIconButton(
+                      icon: Icons.format_bold,
+                      tooltip: 'Bold',
+                      isSelected: _hasAttribute(Attribute.bold),
+                      onPressed: () => _toggleFormat(Attribute.bold),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.format_italic,
+                      tooltip: 'Italic',
+                      isSelected: _hasAttribute(Attribute.italic),
+                      onPressed: () => _toggleFormat(Attribute.italic),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.format_underlined,
+                      tooltip: 'Underline',
+                      isSelected: _hasAttribute(Attribute.underline),
+                      onPressed: () => _toggleFormat(Attribute.underline),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.strikethrough_s,
+                      tooltip: 'Strikethrough',
+                      isSelected: _hasAttribute(Attribute.strikeThrough),
+                      onPressed: () => _toggleFormat(Attribute.strikeThrough),
+                    ),
                     const SizedBox(width: 4),
                     _buildIconButton(
                       icon: Icons.palette,
@@ -881,7 +1093,8 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                       tooltip: 'Background Color',
                       iconColor: () {
                         final style = widget.controller.getSelectionStyle();
-                        final hex = style.attributes['background']?.value as String?;
+                        final hex =
+                            style.attributes['background']?.value as String?;
                         if (hex == null || !hex.startsWith('#')) return null;
                         try {
                           return Color(int.parse('0xFF${hex.substring(1)}'));
@@ -894,70 +1107,214 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     const SizedBox(width: 4),
 
                     const SizedBox(width: 4),
-                    _buildDropdownButton(title: _getDropdownDisplayText('fontSize'), icon: Icons.format_size, dropdownKey: 'fontSize'),
+                    _buildDropdownButton(
+                      title: _getDropdownDisplayText('fontSize'),
+                      icon: Icons.format_size,
+                      dropdownKey: 'fontSize',
+                    ),
                     const SizedBox(width: 4),
-                    _buildDropdownButton(title: _getDropdownDisplayText('fontFamily'), icon: Icons.font_download, dropdownKey: 'fontFamily'),
+                    _buildDropdownButton(
+                      title: _getDropdownDisplayText('fontFamily'),
+                      icon: Icons.font_download,
+                      dropdownKey: 'fontFamily',
+                    ),
                     const SizedBox(width: 4),
-                    _buildDropdownButton(title: _getDropdownDisplayText('heading'), icon: Icons.title, dropdownKey: 'heading'),
+                    _buildDropdownButton(
+                      title: _getDropdownDisplayText('heading'),
+                      icon: Icons.title,
+                      dropdownKey: 'heading',
+                    ),
                     const SizedBox(width: 4),
-                    _buildDropdownButton(title: _getDropdownDisplayText('lineHeight'), icon: Icons.format_line_spacing, dropdownKey: 'lineHeight'),
+                    _buildDropdownButton(
+                      title: _getDropdownDisplayText('lineHeight'),
+                      icon: Icons.format_line_spacing,
+                      dropdownKey: 'lineHeight',
+                    ),
                     const SizedBox(width: 12),
 
-                    _buildIconButton(icon: Icons.format_align_left, tooltip: 'Align Left', isSelected: _isAlignmentActive(Attribute.leftAlignment), onPressed: () => _toggleAlignment(Attribute.leftAlignment)),
-                    _buildIconButton(icon: Icons.format_align_center, tooltip: 'Align Center', isSelected: _isAlignmentActive(Attribute.centerAlignment), onPressed: () => _toggleAlignment(Attribute.centerAlignment)),
-                    _buildIconButton(icon: Icons.format_align_right, tooltip: 'Align Right', isSelected: _isAlignmentActive(Attribute.rightAlignment), onPressed: () => _toggleAlignment(Attribute.rightAlignment)),
-                    _buildIconButton(icon: Icons.format_align_justify, tooltip: 'Align Justify', isSelected: _isAlignmentActive(Attribute.justifyAlignment), onPressed: () => _toggleAlignment(Attribute.justifyAlignment)),
+                    _buildIconButton(
+                      icon: Icons.format_align_left,
+                      tooltip: 'Align Left',
+                      isSelected: _isAlignmentActive(Attribute.leftAlignment),
+                      onPressed: () =>
+                          _toggleAlignment(Attribute.leftAlignment),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.format_align_center,
+                      tooltip: 'Align Center',
+                      isSelected: _isAlignmentActive(Attribute.centerAlignment),
+                      onPressed: () =>
+                          _toggleAlignment(Attribute.centerAlignment),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.format_align_right,
+                      tooltip: 'Align Right',
+                      isSelected: _isAlignmentActive(Attribute.rightAlignment),
+                      onPressed: () =>
+                          _toggleAlignment(Attribute.rightAlignment),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.format_align_justify,
+                      tooltip: 'Align Justify',
+                      isSelected: _isAlignmentActive(
+                        Attribute.justifyAlignment,
+                      ),
+                      onPressed: () =>
+                          _toggleAlignment(Attribute.justifyAlignment),
+                    ),
                     _buildDivider(),
-                    _buildIconButton(icon: Icons.format_list_numbered, tooltip: 'Numbered List', isSelected: _isListActive(Attribute.ol), onPressed: () => _toggleList(Attribute.ol)),
-                    _buildIconButton(icon: Icons.format_list_bulleted, tooltip: 'Bulleted List', isSelected: _isListActive(Attribute.ul), onPressed: () => _toggleList(Attribute.ul)),
-                    _buildIconButton(icon: Icons.checklist, tooltip: 'Checklist', isSelected: _isListActive(Attribute.unchecked), onPressed: () => _toggleList(Attribute.unchecked)),
+                    _buildIconButton(
+                      icon: Icons.format_list_numbered,
+                      tooltip: 'Numbered List',
+                      isSelected: _isListActive(Attribute.ol),
+                      onPressed: () => _toggleList(Attribute.ol),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.format_list_bulleted,
+                      tooltip: 'Bulleted List',
+                      isSelected: _isListActive(Attribute.ul),
+                      onPressed: () => _toggleList(Attribute.ul),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.checklist,
+                      tooltip: 'Checklist',
+                      isSelected: _isListActive(Attribute.unchecked),
+                      onPressed: () => _toggleList(Attribute.unchecked),
+                    ),
                     const SizedBox(width: 12),
                     _buildDivider(),
                     const SizedBox(width: 8),
-                    _buildIconButton(icon: Icons.subscript, tooltip: 'Subscript', isSelected: _hasAttribute(Attribute.subscript), onPressed: () => _toggleFormat(Attribute.subscript)),
-                    _buildIconButton(icon: Icons.superscript, tooltip: 'Superscript', isSelected: _hasAttribute(Attribute.superscript), onPressed: () => _toggleFormat(Attribute.superscript)),
-                    _buildIconButton(icon: Icons.code, tooltip: 'Inline Code', isSelected: _hasAttribute(Attribute.inlineCode), onPressed: () => _toggleFormat(Attribute.inlineCode)),
-                    _buildIconButton(icon: Icons.format_size, tooltip: 'Small Text', isSelected: _hasAttribute(Attribute.small), onPressed: () => _toggleFormat(Attribute.small)),
+                    _buildIconButton(
+                      icon: Icons.subscript,
+                      tooltip: 'Subscript',
+                      isSelected: _hasAttribute(Attribute.subscript),
+                      onPressed: () => _toggleFormat(Attribute.subscript),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.superscript,
+                      tooltip: 'Superscript',
+                      isSelected: _hasAttribute(Attribute.superscript),
+                      onPressed: () => _toggleFormat(Attribute.superscript),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.code,
+                      tooltip: 'Inline Code',
+                      isSelected: _hasAttribute(Attribute.inlineCode),
+                      onPressed: () => _toggleFormat(Attribute.inlineCode),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.format_size,
+                      tooltip: 'Small Text',
+                      isSelected: _hasAttribute(Attribute.small),
+                      onPressed: () => _toggleFormat(Attribute.small),
+                    ),
                     const SizedBox(width: 4),
                     _buildDivider(),
                     const SizedBox(width: 4),
-                    _buildIconButton(icon: Icons.format_clear, tooltip: 'Clear Format', onPressed: _clearFormat),
+                    _buildIconButton(
+                      icon: Icons.format_clear,
+                      tooltip: 'Clear Format',
+                      onPressed: _clearFormat,
+                    ),
                     const SizedBox(width: 4),
                     _buildDivider(),
                     const SizedBox(width: 4),
-                    _buildIconButton(icon: Icons.format_indent_increase, tooltip: 'Increase Indent', onPressed: () => widget.controller.indentSelection(true)),
-                    _buildIconButton(icon: Icons.format_indent_decrease, tooltip: 'Decrease Indent', onPressed: () => widget.controller.indentSelection(false)),
+                    _buildIconButton(
+                      icon: Icons.format_indent_increase,
+                      tooltip: 'Increase Indent',
+                      onPressed: () => widget.controller.indentSelection(true),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.format_indent_decrease,
+                      tooltip: 'Decrease Indent',
+                      onPressed: () => widget.controller.indentSelection(false),
+                    ),
                     const SizedBox(width: 4),
                     _buildDivider(),
                     const SizedBox(width: 4),
-                    _buildIconButton(icon: Icons.code, tooltip: 'Code Block', isSelected: _hasAttribute(Attribute.codeBlock), onPressed: () => _toggleFormat(Attribute.codeBlock)),
-                    _buildIconButton(icon: Icons.format_quote, tooltip: 'Block Quote', isSelected: _hasAttribute(Attribute.blockQuote), onPressed: () => _toggleFormat(Attribute.blockQuote)),
+                    _buildIconButton(
+                      icon: Icons.code,
+                      tooltip: 'Code Block',
+                      isSelected: _hasAttribute(Attribute.codeBlock),
+                      onPressed: () => _toggleFormat(Attribute.codeBlock),
+                    ),
+                    _buildIconButton(
+                      icon: Icons.format_quote,
+                      tooltip: 'Block Quote',
+                      isSelected: _hasAttribute(Attribute.blockQuote),
+                      onPressed: () => _toggleFormat(Attribute.blockQuote),
+                    ),
                     const SizedBox(width: 4),
                     _buildDivider(),
                     const SizedBox(width: 4),
-                    _buildIconButton(icon: Icons.link, tooltip: 'Insert Link', onPressed: _insertLink),
-                    _buildIconButton(icon: Icons.image, tooltip: 'Insert Image', onPressed: _insertImage),
-                    _buildIconButton(icon: Icons.videocam, tooltip: 'Insert Video', onPressed: _insertVideo),
+                    _buildIconButton(
+                      icon: Icons.link,
+                      tooltip: 'Insert Link',
+                      onPressed: _insertLink,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.image,
+                      tooltip: 'Insert Image',
+                      onPressed: _insertImage,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.videocam,
+                      tooltip: 'Insert Video',
+                      onPressed: _insertVideo,
+                    ),
+
                     // _buildIconButton(icon: Icons.attach_file, tooltip: 'Insert File', onPressed: _insertFile),
-
                     _buildDivider(),
 
-                    _buildIconButton(icon: Icons.access_time, tooltip: 'Insert Time', onPressed: _insertTimestamp),
-                    _buildIconButton(icon: Icons.calendar_today, tooltip: 'Insert Date', onPressed: _insertDate),
-                    _buildIconButton(icon: Icons.horizontal_rule, tooltip: 'Horizontal Line', onPressed: _insertHorizontalLine),
-                    _buildIconButton(icon: Icons.analytics, tooltip: 'Word Count', onPressed: _showWordCount),
-                    _buildIconButton(icon: Icons.select_all, tooltip: 'Select All', onPressed: _selectAll),
-                    _buildIconButton(icon: Icons.search, tooltip: 'Search & Replace', onPressed: _toggleSearchReplace),
-                    _buildIconButton(icon: Icons.emoji_emotions, tooltip: 'Emoji Picker', onPressed: _toggleEmojiPicker),
+                    _buildIconButton(
+                      icon: Icons.access_time,
+                      tooltip: 'Insert Time',
+                      onPressed: _insertTimestamp,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.calendar_today,
+                      tooltip: 'Insert Date',
+                      onPressed: _insertDate,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.horizontal_rule,
+                      tooltip: 'Horizontal Line',
+                      onPressed: _insertHorizontalLine,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.analytics,
+                      tooltip: 'Word Count',
+                      onPressed: _showWordCount,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.select_all,
+                      tooltip: 'Select All',
+                      onPressed: _selectAll,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.search,
+                      tooltip: 'Search & Replace',
+                      onPressed: _toggleSearchReplace,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.emoji_emotions,
+                      tooltip: 'Emoji Picker',
+                      onPressed: _toggleEmojiPicker,
+                    ),
                     _buildIconButton(
                       icon: Icons.arrow_upward,
                       tooltip: 'Uppercase Selection',
                       isSelected: () {
                         final sel = widget.controller.selection;
-                        if (sel.isCollapsed || sel.start >= sel.end) return false;
-                        final selectedText = widget.controller.document.getPlainText(sel.start, sel.end - sel.start);
+                        if (sel.isCollapsed || sel.start >= sel.end)
+                          return false;
+                        final selectedText = widget.controller.document
+                            .getPlainText(sel.start, sel.end - sel.start);
                         if (selectedText.isEmpty) return false;
-                        final lettersOnly = selectedText.replaceAll(RegExp(r'[^a-zA-Z]'), '');
+                        final lettersOnly = selectedText.replaceAll(
+                          RegExp(r'[^a-zA-Z]'),
+                          '',
+                        );
                         if (lettersOnly.isEmpty) return false;
                         return lettersOnly == lettersOnly.toUpperCase();
                       }(),
@@ -968,18 +1325,35 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                       tooltip: 'Lowercase Selection',
                       isSelected: () {
                         final sel = widget.controller.selection;
-                        if (sel.isCollapsed || sel.start >= sel.end) return false;
-                        final selectedText = widget.controller.document.getPlainText(sel.start, sel.end - sel.start);
+                        if (sel.isCollapsed || sel.start >= sel.end)
+                          return false;
+                        final selectedText = widget.controller.document
+                            .getPlainText(sel.start, sel.end - sel.start);
                         if (selectedText.isEmpty) return false;
-                        final lettersOnly = selectedText.replaceAll(RegExp(r'[^a-zA-Z]'), '');
+                        final lettersOnly = selectedText.replaceAll(
+                          RegExp(r'[^a-zA-Z]'),
+                          '',
+                        );
                         if (lettersOnly.isEmpty) return false;
                         return lettersOnly == lettersOnly.toLowerCase();
                       }(),
                       onPressed: _lowercaseSelection,
                     ),
-                    _buildIconButton(icon: Icons.control_point_duplicate_rounded, tooltip: 'Duplicate Line', onPressed: _duplicateLine),
-                    _buildIconButton(icon: Icons.format_quote, tooltip: 'Insert Random Quote', onPressed: _insertRandomQuote),
-                    _buildIconButton(icon: Icons.print, tooltip: 'Print Document', onPressed: _printDocument),
+                    _buildIconButton(
+                      icon: Icons.control_point_duplicate_rounded,
+                      tooltip: 'Duplicate Line',
+                      onPressed: _duplicateLine,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.format_quote,
+                      tooltip: 'Insert Random Quote',
+                      onPressed: _insertRandomQuote,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.print,
+                      tooltip: 'Print Document',
+                      onPressed: _printDocument,
+                    ),
                   ],
                 ),
               ),
@@ -990,7 +1364,11 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                   constraints: const BoxConstraints(maxHeight: 200),
                   decoration: BoxDecoration(
                     color: colorScheme.surface,
-                    border: Border(top: BorderSide(color: colorScheme.primary.withOpacity(0.2))),
+                    border: Border(
+                      top: BorderSide(
+                        color: colorScheme.primary.withOpacity(0.2),
+                      ),
+                    ),
                   ),
                   child: _buildDropdownContent(_expandedDropdown!),
                 ),
@@ -1054,7 +1432,9 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                                 Text(
                                   matchText,
                                   style: TextStyle(
-                                    color: matches.isEmpty ? Colors.grey : colorScheme.primary,
+                                    color: matches.isEmpty
+                                        ? Colors.grey
+                                        : colorScheme.primary,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -1063,13 +1443,17 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                                     IconButton(
                                       icon: const Icon(Icons.arrow_upward),
                                       tooltip: 'Previous Match',
-                                      onPressed: matches.isEmpty ? null : _findPrevious,
+                                      onPressed: matches.isEmpty
+                                          ? null
+                                          : _findPrevious,
                                       color: colorScheme.primary,
                                     ),
                                     IconButton(
                                       icon: const Icon(Icons.arrow_downward),
                                       tooltip: 'Next Match',
-                                      onPressed: matches.isEmpty ? null : _findNext,
+                                      onPressed: matches.isEmpty
+                                          ? null
+                                          : _findNext,
                                       color: colorScheme.primary,
                                     ),
                                   ],
@@ -1105,47 +1489,22 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
             ],
           ),
         ),
-        // Main Quill Editor
         SizedBox(height: 5),
-        Expanded(
-          child: Container(
-            color: Colors.transparent,
-            child: QuillEditor(
-              controller: widget.controller,
-              focusNode: widget.focusNode,
-              scrollController: widget.scrollController,
-              config: QuillEditorConfig(
-                padding: const EdgeInsets.fromLTRB(24, 10, 24, 100), // Extra bottom padding
-                autoFocus: false,
-                expands: false,
-                scrollable: true,
-                scrollPhysics: const ClampingScrollPhysics(),
-                enableInteractiveSelection: true,
-                showCursor: true,
-                embedBuilders: [
-                  ...FlutterQuillEmbeds.editorBuilders(),
-                  TimeStampEmbedBuilder(),
-                ],
-                customStyles: customStyles,
-                onLaunchUrl: (url) async {
-                  if (url == null) return;
-                  final uri = Uri.tryParse(url);
-                  if (uri != null && await canLaunchUrl(uri)) {
-                    await launchUrl(uri, mode: LaunchMode.externalApplication);
-                  }
-                },
-              ),
-            ),
-          ),
-        ),
-
       ],
     );
   }
 
-  Widget _buildDivider() => Container(width: 1, height: 24, color: Theme.of(context).colorScheme.primary.withOpacity(0.2));
+  Widget _buildDivider() => Container(
+    width: 1,
+    height: 24,
+    color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+  );
 
-  Widget _buildDropdownButton({required String title, required IconData icon, required String dropdownKey}) {
+  Widget _buildDropdownButton({
+    required String title,
+    required IconData icon,
+    required String dropdownKey,
+  }) {
     final colorScheme = Theme.of(context).colorScheme;
     final isExpanded = _expandedDropdown == dropdownKey;
     return InkWell(
@@ -1154,16 +1513,40 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         decoration: BoxDecoration(
-          color: isExpanded ? colorScheme.primary.withOpacity(0.1) : Colors.transparent,
+          color: isExpanded
+              ? colorScheme.primary.withOpacity(0.1)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(6),
-          border: Border.all(color: isExpanded ? colorScheme.primary.withOpacity(0.3) : Colors.transparent),
+          border: Border.all(
+            color: isExpanded
+                ? colorScheme.primary.withOpacity(0.3)
+                : Colors.transparent,
+          ),
         ),
-        child: Row(mainAxisSize: MainAxisSize.min, children: [
-          Icon(icon, size: 16, color: isExpanded ? colorScheme.primary : colorScheme.onSurface),
-          const SizedBox(width: 4),
-          Text(title, style: TextStyle(fontSize: 12, color: isExpanded ? colorScheme.primary : colorScheme.onSurface, fontWeight: FontWeight.w500)),
-          Icon(isExpanded ? Icons.expand_less : Icons.expand_more, size: 16, color: isExpanded ? colorScheme.primary : colorScheme.onSurface),
-        ]),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              size: 16,
+              color: isExpanded ? colorScheme.primary : colorScheme.onSurface,
+            ),
+            const SizedBox(width: 4),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 12,
+                color: isExpanded ? colorScheme.primary : colorScheme.onSurface,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Icon(
+              isExpanded ? Icons.expand_less : Icons.expand_more,
+              size: 16,
+              color: isExpanded ? colorScheme.primary : colorScheme.onSurface,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -1172,46 +1555,101 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     final colorScheme = Theme.of(context).colorScheme;
     switch (key) {
       case 'fontSize':
-        return ListView.builder(padding: const EdgeInsets.all(8), itemCount: _fontSizes.length, itemBuilder: (_, i) {
-          final item = _fontSizes[i];
-          final value = item['value']?.toString();
-          final selected = (_getCurrentAttributeValue('size') == value) || (value == null && _getCurrentAttributeValue('size') == null);
-          return InkWell(
-            onTap: () {
-              widget.controller.formatSelection(value == null ? Attribute.clone(Attribute.size, null) : Attribute.fromKeyValue('size', value));
-              _closeAllDropdowns();
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              decoration: BoxDecoration(color: selected ? colorScheme.primary.withOpacity(0.1) : Colors.transparent, borderRadius: BorderRadius.circular(6)),
-              child: Row(children: [
-                if (selected) Icon(Icons.check, size: 18, color: colorScheme.primary),
-                if (selected) const SizedBox(width: 8),
-                Text(item['label'], style: TextStyle(fontSize: 14, color: selected ? colorScheme.primary : colorScheme.onSurface)),
-              ]),
-            ),
-          );
-        });
+        return ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: _fontSizes.length,
+          itemBuilder: (_, i) {
+            final item = _fontSizes[i];
+            final value = item['value']?.toString();
+            final selected =
+                (_getCurrentAttributeValue('size') == value) ||
+                (value == null && _getCurrentAttributeValue('size') == null);
+            return InkWell(
+              onTap: () {
+                widget.controller.formatSelection(
+                  value == null
+                      ? Attribute.clone(Attribute.size, null)
+                      : Attribute.fromKeyValue('size', value),
+                );
+                _closeAllDropdowns();
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: selected
+                      ? colorScheme.primary.withOpacity(0.1)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Row(
+                  children: [
+                    if (selected)
+                      Icon(Icons.check, size: 18, color: colorScheme.primary),
+                    if (selected) const SizedBox(width: 8),
+                    Text(
+                      item['label'],
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: selected
+                            ? colorScheme.primary
+                            : colorScheme.onSurface,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
       case 'fontFamily':
-        return ListView.builder(padding: const EdgeInsets.all(8), itemCount: _fontFamilies.length, itemBuilder: (_, i) {
-          final font = _fontFamilies[i];
-          final selected = _getCurrentAttributeValue('font') == font;
-          return InkWell(
-            onTap: () {
-              widget.controller.formatSelection(Attribute.fromKeyValue('font', font));
-              _closeAllDropdowns();
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              decoration: BoxDecoration(color: selected ? colorScheme.primary.withOpacity(0.1) : Colors.transparent, borderRadius: BorderRadius.circular(6)),
-              child: Row(children: [
-                if (selected) Icon(Icons.check, size: 18, color: colorScheme.primary),
-                if (selected) const SizedBox(width: 8),
-                Text(font, style: TextStyle(fontFamily: font, fontSize: 14, color: selected ? colorScheme.primary : colorScheme.onSurface)),
-              ]),
-            ),
-          );
-        });
+        return ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: _fontFamilies.length,
+          itemBuilder: (_, i) {
+            final font = _fontFamilies[i];
+            final selected = _getCurrentAttributeValue('font') == font;
+            return InkWell(
+              onTap: () {
+                widget.controller.formatSelection(
+                  Attribute.fromKeyValue('font', font),
+                );
+                _closeAllDropdowns();
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: selected
+                      ? colorScheme.primary.withOpacity(0.1)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Row(
+                  children: [
+                    if (selected)
+                      Icon(Icons.check, size: 18, color: colorScheme.primary),
+                    if (selected) const SizedBox(width: 8),
+                    Text(
+                      font,
+                      style: TextStyle(
+                        fontFamily: font,
+                        fontSize: 14,
+                        color: selected
+                            ? colorScheme.primary
+                            : colorScheme.onSurface,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
       case 'heading':
         return ListView.builder(
           padding: const EdgeInsets.all(8),
@@ -1220,7 +1658,9 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
             final item = _headings[i];
             final value = item['value'] as int;
             final currentHeader = _getCurrentAttributeValue('header');
-            final selected = (currentHeader == null && value == 0) || currentHeader == value.toString();
+            final selected =
+                (currentHeader == null && value == 0) ||
+                currentHeader == value.toString();
 
             return InkWell(
               onTap: () {
@@ -1229,26 +1669,38 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                   widget.controller.formatSelection(Attribute.header);
                 } else {
                   // Apply specific header level
-                  widget.controller.formatSelection(Attribute.fromKeyValue('header', value));
+                  widget.controller.formatSelection(
+                    Attribute.fromKeyValue('header', value),
+                  );
                 }
                 _closeAllDropdowns();
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
-                  color: selected ? colorScheme.primary.withOpacity(0.1) : Colors.transparent,
+                  color: selected
+                      ? colorScheme.primary.withOpacity(0.1)
+                      : Colors.transparent,
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Row(
                   children: [
-                    if (selected) Icon(Icons.check, size: 18, color: colorScheme.primary),
+                    if (selected)
+                      Icon(Icons.check, size: 18, color: colorScheme.primary),
                     if (selected) const SizedBox(width: 8),
                     Text(
                       item['label'],
                       style: TextStyle(
                         fontSize: value == 0 ? 14 : 22 - value * 3,
-                        fontWeight: value == 0 ? FontWeight.normal : FontWeight.bold,
-                        color: selected ? colorScheme.primary : colorScheme.onSurface,
+                        fontWeight: value == 0
+                            ? FontWeight.normal
+                            : FontWeight.bold,
+                        color: selected
+                            ? colorScheme.primary
+                            : colorScheme.onSurface,
                       ),
                     ),
                   ],
@@ -1258,26 +1710,52 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
           },
         );
       case 'lineHeight':
-        return ListView.builder(padding: const EdgeInsets.all(8), itemCount: _lineHeights.length, itemBuilder: (_, i) {
-          final item = _lineHeights[i];
-          final value = item['value'];
-          final selected = _getCurrentAttributeValue('line-height') == value.toString();
-          return InkWell(
-            onTap: () {
-              widget.controller.formatSelection(Attribute.fromKeyValue('line-height', value));
-              _closeAllDropdowns();
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              decoration: BoxDecoration(color: selected ? colorScheme.primary.withOpacity(0.1) : Colors.transparent, borderRadius: BorderRadius.circular(6)),
-              child: Row(children: [
-                if (selected) Icon(Icons.check, size: 18, color: colorScheme.primary),
-                if (selected) const SizedBox(width: 8),
-                Text(item['label'], style: TextStyle(fontSize: 14, color: selected ? colorScheme.primary : colorScheme.onSurface)),
-              ]),
-            ),
-          );
-        });
+        return ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: _lineHeights.length,
+          itemBuilder: (_, i) {
+            final item = _lineHeights[i];
+            final value = item['value'];
+            final selected =
+                _getCurrentAttributeValue('line-height') == value.toString();
+            return InkWell(
+              onTap: () {
+                widget.controller.formatSelection(
+                  Attribute.fromKeyValue('line-height', value),
+                );
+                _closeAllDropdowns();
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: selected
+                      ? colorScheme.primary.withOpacity(0.1)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Row(
+                  children: [
+                    if (selected)
+                      Icon(Icons.check, size: 18, color: colorScheme.primary),
+                    if (selected) const SizedBox(width: 8),
+                    Text(
+                      item['label'],
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: selected
+                            ? colorScheme.primary
+                            : colorScheme.onSurface,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
       default:
         return const SizedBox.shrink();
     }
@@ -1297,7 +1775,9 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     final Color effectiveIconColor = isDisabled
         ? colorScheme.onSurface.withOpacity(0.3)
         : (iconColor ?? // Use custom color if provided
-        (isSelected ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.7)));
+              (isSelected
+                  ? colorScheme.primary
+                  : colorScheme.onSurface.withOpacity(0.7)));
 
     return Tooltip(
       message: tooltip,
@@ -1308,18 +1788,18 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
           padding: const EdgeInsets.all(8),
           margin: const EdgeInsets.symmetric(horizontal: 2),
           decoration: BoxDecoration(
-            color: isSelected ? colorScheme.primary.withOpacity(0.15) : Colors.transparent,
+            color: isSelected
+                ? colorScheme.primary.withOpacity(0.15)
+                : Colors.transparent,
             borderRadius: BorderRadius.circular(6),
             border: Border.all(
-              color: isSelected ? colorScheme.primary.withOpacity(0.4) : Colors.transparent,
+              color: isSelected
+                  ? colorScheme.primary.withOpacity(0.4)
+                  : Colors.transparent,
               width: 1,
             ),
           ),
-          child: Icon(
-            icon,
-            size: 18,
-            color: effectiveIconColor,
-          ),
+          child: Icon(icon, size: 18, color: effectiveIconColor),
         ),
       ),
     );

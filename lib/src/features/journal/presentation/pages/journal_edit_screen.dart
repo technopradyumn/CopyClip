@@ -26,6 +26,7 @@ import '../../../../core/app_content_palette.dart';
 
 class JournalEditScreen extends StatefulWidget {
   final JournalEntry? entry;
+
   const JournalEditScreen({super.key, this.entry});
 
   @override
@@ -52,9 +53,14 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   String _initialMood = "";
 
   final Map<String, String> _moodMap = {
-    'Happy': '😊', 'Excited': '🤩', 'Neutral': '😐',
-    'Sad': '😔', 'Stressed': '😫', 'Angry': '😡',
-    'Cool': '😎', 'Love': '😍',
+    'Happy': '😊',
+    'Excited': '🤩',
+    'Neutral': '😐',
+    'Sad': '😔',
+    'Stressed': '😫',
+    'Angry': '😡',
+    'Cool': '😎',
+    'Love': '😍',
   };
 
   @override
@@ -66,7 +72,9 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       _selectedDate = widget.entry!.date;
       _selectedMood = widget.entry!.mood;
       _isFavorite = widget.entry!.isFavorite;
-      _scaffoldColor = widget.entry!.colorValue != null ? Color(widget.entry!.colorValue!) : AppContentPalette.palette.first;
+      _scaffoldColor = widget.entry!.colorValue != null
+          ? Color(widget.entry!.colorValue!)
+          : AppContentPalette.palette.first;
     }
 
     _initialTitle = _titleController.text;
@@ -120,7 +128,9 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       document: doc,
       selection: const TextSelection.collapsed(offset: 0),
     );
-    _initialContentJson = jsonEncode(_quillController.document.toDelta().toJson());
+    _initialContentJson = jsonEncode(
+      _quillController.document.toDelta().toJson(),
+    );
   }
 
   void _pickDateTime() {
@@ -135,17 +145,23 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text("Done", style: TextStyle(fontWeight: FontWeight.bold))
+                onPressed: () => Navigator.pop(context),
+                child: const Text(
+                  "Done",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             Expanded(
               child: CupertinoTheme(
-                data: CupertinoThemeData(brightness: Theme.of(context).brightness),
+                data: CupertinoThemeData(
+                  brightness: Theme.of(context).brightness,
+                ),
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.dateAndTime,
                   initialDateTime: _selectedDate,
-                  onDateTimeChanged: (val) => setState(() => _selectedDate = val),
+                  onDateTimeChanged: (val) =>
+                      setState(() => _selectedDate = val),
                 ),
               ),
             ),
@@ -177,11 +193,21 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                   duration: const Duration(milliseconds: 200),
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isSelected ? Theme.of(context).colorScheme.primary.withOpacity(0.2) : Colors.white.withOpacity(0.05),
+                    color: isSelected
+                        ? Theme.of(context).colorScheme.primary.withOpacity(0.2)
+                        : Colors.white.withOpacity(0.05),
                     shape: BoxShape.circle,
-                    border: Border.all(color: isSelected ? Theme.of(context).colorScheme.primary : Colors.transparent, width: 2),
+                    border: Border.all(
+                      color: isSelected
+                          ? Theme.of(context).colorScheme.primary
+                          : Colors.transparent,
+                      width: 2,
+                    ),
                   ),
-                  child: Text(entry.value, style: const TextStyle(fontSize: 28)),
+                  child: Text(
+                    entry.value,
+                    style: const TextStyle(fontSize: 28),
+                  ),
                 ),
               );
             }).toList(),
@@ -206,7 +232,8 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Wrap(
-                  spacing: 12, runSpacing: 12,
+                  spacing: 12,
+                  runSpacing: 12,
                   children: palette.map((color) {
                     final isSelected = _scaffoldColor.value == color.value;
                     return GestureDetector(
@@ -215,12 +242,23 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                         setDialogState(() {});
                       },
                       child: Container(
-                        width: 44, height: 44,
+                        width: 44,
+                        height: 44,
                         decoration: BoxDecoration(
-                          color: color, shape: BoxShape.circle,
-                          border: Border.all(color: isSelected ? Colors.white : Colors.white24, width: isSelected ? 3 : 1.5),
+                          color: color,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: isSelected ? Colors.white : Colors.white24,
+                            width: isSelected ? 3 : 1.5,
+                          ),
                         ),
-                        child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 20) : null,
+                        child: isSelected
+                            ? const Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 20,
+                              )
+                            : null,
                       ),
                     );
                   }).toList(),
@@ -265,15 +303,21 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       final attributes = op.attributes ?? {};
 
       pw.TextStyle style = const pw.TextStyle(fontSize: 16);
-      if (attributes['bold'] == true) style = style.copyWith(fontWeight: pw.FontWeight.bold);
-      if (attributes['italic'] == true) style = style.copyWith(fontStyle: pw.FontStyle.italic);
-      if (attributes['underline'] == true) style = style.copyWith(decoration: pw.TextDecoration.underline);
+      if (attributes['bold'] == true)
+        style = style.copyWith(fontWeight: pw.FontWeight.bold);
+      if (attributes['italic'] == true)
+        style = style.copyWith(fontStyle: pw.FontStyle.italic);
+      if (attributes['underline'] == true)
+        style = style.copyWith(decoration: pw.TextDecoration.underline);
 
       if (attributes['header'] != null) {
         final int level = attributes['header'] as int;
-        if (level == 1) style = style.copyWith(fontSize: 28, fontWeight: pw.FontWeight.bold);
-        else if (level == 2) style = style.copyWith(fontSize: 24, fontWeight: pw.FontWeight.bold);
-        else if (level == 3) style = style.copyWith(fontSize: 20, fontWeight: pw.FontWeight.bold);
+        if (level == 1)
+          style = style.copyWith(fontSize: 28, fontWeight: pw.FontWeight.bold);
+        else if (level == 2)
+          style = style.copyWith(fontSize: 24, fontWeight: pw.FontWeight.bold);
+        else if (level == 3)
+          style = style.copyWith(fontSize: 20, fontWeight: pw.FontWeight.bold);
       }
 
       if (text.contains('\n')) {
@@ -285,9 +329,9 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
 
           if (i < parts.length - 1) {
             if (currentLineSpans.isNotEmpty) {
-              widgets.add(pw.RichText(
-                text: pw.TextSpan(children: currentLineSpans),
-              ));
+              widgets.add(
+                pw.RichText(text: pw.TextSpan(children: currentLineSpans)),
+              );
               currentLineSpans = [];
             }
             widgets.add(pw.SizedBox(height: 12));
@@ -308,7 +352,9 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   Future<void> _exportToPdf() async {
     final pdf = pw.Document();
     final delta = _quillController.document.toDelta();
-    final title = _titleController.text.trim().isEmpty ? 'Untitled Entry' : _titleController.text.trim();
+    final title = _titleController.text.trim().isEmpty
+        ? 'Untitled Entry'
+        : _titleController.text.trim();
 
     final moodEmoji = _moodMap[_selectedMood] ?? '';
     final tags = _tagsController.text.trim();
@@ -335,7 +381,13 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
                   pw.Expanded(
-                    child: pw.Text(title, style: pw.TextStyle(fontSize: 28, fontWeight: pw.FontWeight.bold)),
+                    child: pw.Text(
+                      title,
+                      style: pw.TextStyle(
+                        fontSize: 28,
+                        fontWeight: pw.FontWeight.bold,
+                      ),
+                    ),
                   ),
                   pw.Text(moodEmoji, style: const pw.TextStyle(fontSize: 30)),
                 ],
@@ -343,11 +395,20 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
               pw.SizedBox(height: 8),
               pw.Text(
                 DateFormat('MMMM dd, yyyy • hh:mm a').format(_selectedDate),
-                style: const pw.TextStyle(fontSize: 14, color: PdfColors.grey700),
+                style: const pw.TextStyle(
+                  fontSize: 14,
+                  color: PdfColors.grey700,
+                ),
               ),
               if (tags.isNotEmpty) ...[
                 pw.SizedBox(height: 4),
-                pw.Text(tags, style: const pw.TextStyle(fontSize: 12, color: PdfColors.blue700)),
+                pw.Text(
+                  tags,
+                  style: const pw.TextStyle(
+                    fontSize: 12,
+                    color: PdfColors.blue700,
+                  ),
+                ),
               ],
               pw.SizedBox(height: 20),
               pw.Divider(thickness: 1),
@@ -360,7 +421,9 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
 
     final bytes = await pdf.save();
     final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/journal_${DateTime.now().millisecondsSinceEpoch}.pdf');
+    final file = File(
+      '${dir.path}/journal_${DateTime.now().millisecondsSinceEpoch}.pdf',
+    );
     await file.writeAsBytes(bytes);
 
     await Share.shareXFiles([XFile(file.path)], subject: title);
@@ -368,8 +431,14 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
 
   void _saveEntry() {
     final title = _titleController.text.trim();
-    final contentJson = jsonEncode(_quillController.document.toDelta().toJson());
-    final tags = _tagsController.text.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+    final contentJson = jsonEncode(
+      _quillController.document.toDelta().toJson(),
+    );
+    final tags = _tagsController.text
+        .split(',')
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
 
     final box = Hive.box<JournalEntry>('journal_box');
     if (widget.entry != null) {
@@ -382,11 +451,18 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       widget.entry!.colorValue = _scaffoldColor.value;
       widget.entry!.save();
     } else {
-      box.add(JournalEntry(
-        id: const Uuid().v4(), title: title, content: contentJson,
-        date: _selectedDate, mood: _selectedMood, tags: tags,
-        isFavorite: _isFavorite, colorValue: _scaffoldColor.value,
-      ));
+      box.add(
+        JournalEntry(
+          id: const Uuid().v4(),
+          title: title,
+          content: contentJson,
+          date: _selectedDate,
+          mood: _selectedMood,
+          tags: tags,
+          isFavorite: _isFavorite,
+          colorValue: _scaffoldColor.value,
+        ),
+      );
     }
   }
 
@@ -394,7 +470,8 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final isColorDark = ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
+    final isColorDark =
+        ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
     final contrastColor = isColorDark ? Colors.white : Colors.black87;
 
     final String heroTag = widget.entry != null
@@ -403,8 +480,11 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        final currentJson = jsonEncode(_quillController.document.toDelta().toJson());
-        bool hasChanges = _titleController.text != _initialTitle ||
+        final currentJson = jsonEncode(
+          _quillController.document.toDelta().toJson(),
+        );
+        bool hasChanges =
+            _titleController.text != _initialTitle ||
             currentJson != _initialContentJson ||
             _selectedDate != _initialDate ||
             _selectedMood != _initialMood ||
@@ -412,14 +492,20 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
 
         if (!hasChanges) return true;
         final result = await showDialog<String>(
-          context: context, builder: (ctx) => GlassDialog(
-          title: "Unsaved Changes", content: "Save your journal entry?",
-          confirmText: "Save", cancelText: "Discard",
-          onConfirm: () => Navigator.pop(ctx, 'save'),
-          onCancel: () => Navigator.pop(ctx, 'discard'),
-        ),
+          context: context,
+          builder: (ctx) => GlassDialog(
+            title: "Unsaved Changes",
+            content: "Save your journal entry?",
+            confirmText: "Save",
+            cancelText: "Discard",
+            onConfirm: () => Navigator.pop(ctx, 'save'),
+            onCancel: () => Navigator.pop(ctx, 'discard'),
+          ),
         );
-        if (result == 'save') { _saveEntry(); return true; }
+        if (result == 'save') {
+          _saveEntry();
+          return true;
+        }
         return result == 'discard';
       },
       child: GlassScaffold(
@@ -431,18 +517,29 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
             onTap: _showColorPicker,
             child: Container(
               margin: const EdgeInsets.only(right: 8),
-              width: 26, height: 26,
+              width: 26,
+              height: 26,
               decoration: BoxDecoration(
-                color: _scaffoldColor, shape: BoxShape.circle,
-                border: Border.all(color: contrastColor.withOpacity(0.4), width: 1.5),
+                color: _scaffoldColor,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: contrastColor.withOpacity(0.4),
+                  width: 1.5,
+                ),
               ),
-              child: Icon(Icons.palette_outlined, size: 14, color: contrastColor.withOpacity(0.6)),
+              child: Icon(
+                Icons.palette_outlined,
+                size: 14,
+                color: contrastColor.withOpacity(0.6),
+              ),
             ),
           ),
           IconButton(
             icon: Icon(
-                _isFavorite ? Icons.star : Icons.star_border,
-                color: _isFavorite ? Colors.amberAccent : contrastColor.withOpacity(0.5)
+              _isFavorite ? Icons.star : Icons.star_border,
+              color: _isFavorite
+                  ? Colors.amberAccent
+                  : contrastColor.withOpacity(0.5),
             ),
             onPressed: () => setState(() => _isFavorite = !_isFavorite),
           ),
@@ -456,121 +553,158 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
             ],
           ),
           IconButton(
-              icon: Icon(Icons.check, color: contrastColor),
-              onPressed: () { _saveEntry(); context.pop(); }
+            icon: Icon(Icons.check, color: contrastColor),
+            onPressed: () {
+              _saveEntry();
+              context.pop();
+            },
           ),
         ],
-        body: Hero(
-          tag: heroTag,
-          child: Material(
-            type: MaterialType.transparency,
-            child: Stack(
-              children: [
-                Positioned.fill(
+        body: SafeArea(
+          child: Hero(
+            tag: heroTag,
+            child: Material(
+              type: MaterialType.transparency,
+              child: Stack(
+                children: [
+                  Positioned.fill(
                     child: CustomPaint(
-                        painter: CanvasGridPainter(color: contrastColor.withOpacity(0.08))
-                    )
-                ),
-                RepaintBoundary(
-                  key: _boundaryKey,
-                  child: Container(
-                    color: Colors.transparent,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                onTap: _pickDateTime,
-                                borderRadius: BorderRadius.circular(20),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                                  decoration: BoxDecoration(
+                      painter: CanvasGridPainter(
+                        color: contrastColor.withOpacity(0.08),
+                      ),
+                    ),
+                  ),
+                  RepaintBoundary(
+                    key: _boundaryKey,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 0,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  onTap: _pickDateTime,
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 14,
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
                                       color: contrastColor.withOpacity(0.08),
-                                      borderRadius: BorderRadius.circular(20)
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.calendar_month, size: 14, color: contrastColor.withOpacity(0.7)),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                          DateFormat('MMM dd, yyyy  •  hh:mm a').format(_selectedDate),
-                                          style: TextStyle(color: contrastColor, fontWeight: FontWeight.bold, fontSize: 12)
-                                      ),
-                                    ],
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.calendar_month,
+                                          size: 14,
+                                          color: contrastColor.withOpacity(0.7),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          DateFormat(
+                                            'MMM dd, yyyy  •  hh:mm a',
+                                          ).format(_selectedDate),
+                                          style: TextStyle(
+                                            color: contrastColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: _showMoodPicker,
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
+                                GestureDetector(
+                                  onTap: _showMoodPicker,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
                                       color: contrastColor.withOpacity(0.08),
                                       shape: BoxShape.circle,
-                                      border: Border.all(color: contrastColor.withOpacity(0.1))
+                                      border: Border.all(
+                                        color: contrastColor.withOpacity(0.1),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      _moodMap[_selectedMood]!,
+                                      style: const TextStyle(fontSize: 22),
+                                    ),
                                   ),
-                                  child: Text(_moodMap[_selectedMood]!, style: const TextStyle(fontSize: 22)),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                          child: TextField(
-                            controller: _titleController,
-                            style: TextStyle(
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                            child: TextField(
+                              controller: _titleController,
+                              style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
                                 color: contrastColor,
-                                letterSpacing: -0.5
-                            ),
-                            decoration: InputDecoration(
+                                letterSpacing: -0.5,
+                              ),
+                              decoration: InputDecoration(
                                 hintText: 'Entry Title',
                                 border: InputBorder.none,
-                                hintStyle: TextStyle(color: contrastColor.withOpacity(0.25))
+                                hintStyle: TextStyle(
+                                  color: contrastColor.withOpacity(0.25),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: TextField(
-                            controller: _tagsController,
-                            style: TextStyle(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                            child: TextField(
+                              controller: _tagsController,
+                              style: TextStyle(
                                 color: theme.colorScheme.primary,
                                 fontSize: 13,
-                                fontWeight: FontWeight.w500
-                            ),
-                            decoration: InputDecoration(
-                              hintText: '#journal #thoughts',
-                              border: InputBorder.none,
-                              isDense: true,
-                              hintStyle: TextStyle(color: contrastColor.withOpacity(0.15)),
-                              prefixIcon: Icon(
+                                fontWeight: FontWeight.w500,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: '#journal #thoughts',
+                                border: InputBorder.none,
+                                isDense: true,
+                                hintStyle: TextStyle(
+                                  color: contrastColor.withOpacity(0.15),
+                                ),
+                                prefixIcon: Icon(
                                   Icons.local_offer_outlined,
                                   size: 14,
-                                  color: theme.colorScheme.primary.withOpacity(0.6)
+                                  color: theme.colorScheme.primary.withOpacity(
+                                    0.6,
+                                  ),
+                                ),
+                                prefixIconConstraints: const BoxConstraints(
+                                  minWidth: 24,
+                                  maxHeight: 20,
+                                ),
                               ),
-                              prefixIconConstraints: const BoxConstraints(minWidth: 24, maxHeight: 20),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: GlassRichTextEditor(
-                            controller: _quillController,
-                            focusNode: _editorFocusNode,
-                            scrollController: _editorScrollController,
-                            editorBackgroundColor: _scaffoldColor,
+                          Expanded(
+                            child: GlassRichTextEditor(
+                              controller: _quillController,
+                              focusNode: _editorFocusNode,
+                              scrollController: _editorScrollController,
+                              editorBackgroundColor: _scaffoldColor,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -581,13 +715,22 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
 
 class CanvasGridPainter extends CustomPainter {
   final Color color;
+
   CanvasGridPainter({required this.color});
+
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = color..strokeWidth = 0.5;
-    for (double i = 0; i < size.width; i += 30) { canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint); }
-    for (double i = 0; i < size.height; i += 30) { canvas.drawLine(Offset(0, i), Offset(size.width, i), paint); }
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 0.5;
+    for (double i = 0; i < size.width; i += 30) {
+      canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint);
+    }
+    for (double i = 0; i < size.height; i += 30) {
+      canvas.drawLine(Offset(0, i), Offset(size.width, i), paint);
+    }
   }
+
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

@@ -26,6 +26,7 @@ import '../../../../core/app_content_palette.dart';
 
 class ClipboardEditScreen extends StatefulWidget {
   final ClipboardItem? item;
+
   const ClipboardEditScreen({super.key, this.item});
 
   @override
@@ -115,9 +116,9 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                   child: Text(
                     'Done',
                     style: TextStyle(
-                        color: primaryColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold
+                      color: primaryColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -128,15 +129,16 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                     brightness: Theme.of(context).brightness,
                     textTheme: CupertinoTextThemeData(
                       dateTimePickerTextStyle: TextStyle(
-                          color: onSurfaceColor,
-                          fontSize: 20
+                        color: onSurfaceColor,
+                        fontSize: 20,
                       ),
                     ),
                   ),
                   child: CupertinoDatePicker(
                     mode: CupertinoDatePickerMode.dateAndTime,
                     initialDateTime: _selectedDate,
-                    onDateTimeChanged: (val) => setState(() => _selectedDate = val),
+                    onDateTimeChanged: (val) =>
+                        setState(() => _selectedDate = val),
                     use24hFormat: false,
                     minuteInterval: 1,
                   ),
@@ -164,7 +166,9 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
       document: doc,
       selection: const TextSelection.collapsed(offset: 0),
     );
-    _initialContentJson = jsonEncode(_quillController.document.toDelta().toJson());
+    _initialContentJson = jsonEncode(
+      _quillController.document.toDelta().toJson(),
+    );
   }
 
   void _showColorPicker() {
@@ -181,7 +185,8 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Wrap(
-                  spacing: 12, runSpacing: 12,
+                  spacing: 12,
+                  runSpacing: 12,
                   children: palette.map((color) {
                     final isSelected = _scaffoldColor.value == color.value;
                     return GestureDetector(
@@ -190,15 +195,25 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                         setDialogState(() {});
                       },
                       child: Container(
-                        width: 44, height: 44,
+                        width: 44,
+                        height: 44,
                         decoration: BoxDecoration(
-                          color: color, shape: BoxShape.circle,
+                          color: color,
+                          shape: BoxShape.circle,
                           border: Border.all(
-                              color: isSelected ? Colors.white : Colors.white.withOpacity(0.3),
-                              width: isSelected ? 3 : 1.5
+                            color: isSelected
+                                ? Colors.white
+                                : Colors.white.withOpacity(0.3),
+                            width: isSelected ? 3 : 1.5,
                           ),
                         ),
-                        child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 20) : null,
+                        child: isSelected
+                            ? const Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 20,
+                              )
+                            : null,
                       ),
                     );
                   }).toList(),
@@ -230,7 +245,9 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
   }
 
   void _save() {
-    final contentJson = jsonEncode(_quillController.document.toDelta().toJson());
+    final contentJson = jsonEncode(
+      _quillController.document.toDelta().toJson(),
+    );
     if (_quillController.document.toPlainText().trim().isEmpty) return;
 
     final id = widget.item?.id ?? const Uuid().v4();
@@ -264,17 +281,28 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
       final attributes = op.attributes ?? {};
 
       pw.TextStyle style = const pw.TextStyle(fontSize: 16);
-      if (attributes['bold'] == true) style = style.copyWith(fontWeight: pw.FontWeight.bold);
-      if (attributes['italic'] == true) style = style.copyWith(fontStyle: pw.FontStyle.italic);
-      if (attributes['underline'] == true) style = style.copyWith(decoration: pw.TextDecoration.underline);
+      if (attributes['bold'] == true)
+        style = style.copyWith(fontWeight: pw.FontWeight.bold);
+      if (attributes['italic'] == true)
+        style = style.copyWith(fontStyle: pw.FontStyle.italic);
+      if (attributes['underline'] == true)
+        style = style.copyWith(decoration: pw.TextDecoration.underline);
       if (attributes['color'] != null) {
-        style = style.copyWith(color: PdfColor.fromInt(int.parse(attributes['color'].toString().replaceAll('#', '0xff'))));
+        style = style.copyWith(
+          color: PdfColor.fromInt(
+            int.parse(attributes['color'].toString().replaceAll('#', '0xff')),
+          ),
+        );
       }
 
       if (attributes['header'] != null) {
         final int level = attributes['header'] as int;
         style = style.copyWith(
-          fontSize: level == 1 ? 28 : level == 2 ? 24 : 20,
+          fontSize: level == 1
+              ? 28
+              : level == 2
+              ? 24
+              : 20,
           fontWeight: pw.FontWeight.bold,
         );
       }
@@ -288,10 +316,12 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
 
           if (i < parts.length - 1) {
             if (currentSpans.isNotEmpty) {
-              widgets.add(pw.RichText(
-                text: pw.TextSpan(children: currentSpans),
-                softWrap: true,
-              ));
+              widgets.add(
+                pw.RichText(
+                  text: pw.TextSpan(children: currentSpans),
+                  softWrap: true,
+                ),
+              );
               currentSpans = [];
             }
             widgets.add(pw.SizedBox(height: 12));
@@ -331,7 +361,9 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
 
     final bytes = await pdf.save();
     final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/clip_${DateTime.now().millisecondsSinceEpoch}.pdf');
+    final file = File(
+      '${dir.path}/clip_${DateTime.now().millisecondsSinceEpoch}.pdf',
+    );
     await file.writeAsBytes(bytes);
 
     await Share.shareXFiles([XFile(file.path)], subject: 'Clipboard Content');
@@ -341,7 +373,8 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final isColorDark = ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
+    final isColorDark =
+        ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
     final contrastColor = isColorDark ? Colors.white : Colors.black87;
 
     final String heroTag = widget.item != null
@@ -350,8 +383,11 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        final currentJson = jsonEncode(_quillController.document.toDelta().toJson());
-        bool hasChanges = currentJson != _initialContentJson ||
+        final currentJson = jsonEncode(
+          _quillController.document.toDelta().toJson(),
+        );
+        bool hasChanges =
+            currentJson != _initialContentJson ||
             _selectedDate != _initialDate ||
             _scaffoldColor.value != _initialColor.value;
 
@@ -368,7 +404,10 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
             onCancel: () => Navigator.pop(ctx, 'discard'),
           ),
         );
-        if (result == 'save') { _save(); return true; }
+        if (result == 'save') {
+          _save();
+          return true;
+        }
         return result == 'discard';
       },
       child: GlassScaffold(
@@ -380,18 +419,29 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
             onTap: _showColorPicker,
             child: Container(
               margin: const EdgeInsets.only(right: 8),
-              width: 26, height: 26,
+              width: 26,
+              height: 26,
               decoration: BoxDecoration(
-                color: _scaffoldColor, shape: BoxShape.circle,
-                border: Border.all(color: contrastColor.withOpacity(0.4), width: 1.5),
+                color: _scaffoldColor,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: contrastColor.withOpacity(0.4),
+                  width: 1.5,
+                ),
               ),
-              child: Icon(Icons.palette_outlined, size: 14, color: contrastColor.withOpacity(0.6)),
+              child: Icon(
+                Icons.palette_outlined,
+                size: 14,
+                color: contrastColor.withOpacity(0.6),
+              ),
             ),
           ),
           IconButton(
             icon: Icon(Icons.copy, size: 18, color: contrastColor),
             onPressed: () {
-              Clipboard.setData(ClipboardData(text: _quillController.document.toPlainText()));
+              Clipboard.setData(
+                ClipboardData(text: _quillController.document.toPlainText()),
+              );
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: const Text("Copied plain text"),
@@ -412,86 +462,92 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
           ),
           IconButton(
             icon: Icon(Icons.check, color: contrastColor),
-            onPressed: () { _save(); context.pop(); },
+            onPressed: () {
+              _save();
+              context.pop();
+            },
           ),
         ],
-        body: Hero(
-          tag: heroTag,
-          child: Material(
-            type: MaterialType.transparency,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: CustomPaint(
-                    painter: CanvasGridPainter(color: contrastColor.withOpacity(0.08)),
+        body: SafeArea(
+          child: Hero(
+            tag: heroTag,
+            child: Material(
+              type: MaterialType.transparency,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: CustomPaint(
+                      painter: CanvasGridPainter(
+                        color: contrastColor.withOpacity(0.08),
+                      ),
+                    ),
                   ),
-                ),
-                RepaintBoundary(
-                  key: _boundaryKey,
-                  child: Container(
-                    color: Colors.transparent,
-                    child: Column(
-                      children: [
-                        // const SizedBox(height: 90),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: InkWell(
-                              onTap: _pickDateTime,
-                              borderRadius: BorderRadius.circular(20),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: contrastColor.withOpacity(0.08),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(Icons.access_time, size: 14, color: contrastColor.withOpacity(0.7)),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      DateFormat('MMM dd, yyyy  •  hh:mm a').format(_selectedDate),
-                                      style: TextStyle(
-                                        color: contrastColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 11,
+                  RepaintBoundary(
+                    key: _boundaryKey,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Column(
+                        children: [
+                          // const SizedBox(height: 90),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 22,
+                              vertical: 8,
+                            ),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: InkWell(
+                                onTap: _pickDateTime,
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: contrastColor.withOpacity(0.08),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.access_time,
+                                        size: 14,
+                                        color: contrastColor.withOpacity(0.7),
                                       ),
-                                    ),
-                                  ],
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        DateFormat(
+                                          'MMM dd, yyyy  •  hh:mm a',
+                                        ).format(_selectedDate),
+                                        style: TextStyle(
+                                          color: contrastColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 11,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        // ✅ Editor wrapped properly
-                        Expanded(
-                          child: GlassRichTextEditor(
-                            controller: _quillController,
-                            focusNode: _focusNode,
-                            scrollController: _scrollController,
-                            editorBackgroundColor: _scaffoldColor,
+                          // ✅ Editor wrapped properly
+                          Expanded(
+                            child: GlassRichTextEditor(
+                              controller: _quillController,
+                              focusNode: _focusNode,
+                              scrollController: _scrollController,
+                              editorBackgroundColor: _scaffoldColor,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 90,
-                  left: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.arrow_forward_ios, size: 16, color: contrastColor.withAlpha(60)),
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -502,10 +558,14 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
 
 class CanvasGridPainter extends CustomPainter {
   final Color color;
+
   CanvasGridPainter({required this.color});
+
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = color..strokeWidth = 0.5;
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 0.5;
     for (double i = 0; i < size.width; i += 30) {
       canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint);
     }
@@ -513,6 +573,7 @@ class CanvasGridPainter extends CustomPainter {
       canvas.drawLine(Offset(0, i), Offset(size.width, i), paint);
     }
   }
+
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

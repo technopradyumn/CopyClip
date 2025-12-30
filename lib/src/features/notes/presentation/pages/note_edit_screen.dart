@@ -25,6 +25,7 @@ import '../../../../core/app_content_palette.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final Note? note;
+
   const NoteEditScreen({super.key, this.note});
 
   @override
@@ -111,7 +112,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       document: doc,
       selection: const TextSelection.collapsed(offset: 0),
     );
-    _initialContentJson = jsonEncode(_quillController.document.toDelta().toJson());
+    _initialContentJson = jsonEncode(
+      _quillController.document.toDelta().toJson(),
+    );
   }
 
   String _getCleanPlainText() {
@@ -140,7 +143,11 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     'Done',
-                    style: TextStyle(color: primaryColor, fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -149,13 +156,17 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                   data: CupertinoThemeData(
                     brightness: Theme.of(context).brightness,
                     textTheme: CupertinoTextThemeData(
-                      dateTimePickerTextStyle: TextStyle(color: onSurfaceColor, fontSize: 20),
+                      dateTimePickerTextStyle: TextStyle(
+                        color: onSurfaceColor,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                   child: CupertinoDatePicker(
                     mode: CupertinoDatePickerMode.dateAndTime,
                     initialDateTime: _selectedDate,
-                    onDateTimeChanged: (val) => setState(() => _selectedDate = val),
+                    onDateTimeChanged: (val) =>
+                        setState(() => _selectedDate = val),
                     use24hFormat: false,
                     minuteInterval: 1,
                   ),
@@ -170,7 +181,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
 
   void _saveNote() {
     final title = _titleController.text.trim();
-    final contentJson = jsonEncode(_quillController.document.toDelta().toJson());
+    final contentJson = jsonEncode(
+      _quillController.document.toDelta().toJson(),
+    );
 
     if (widget.note != null) {
       widget.note!.title = title;
@@ -208,7 +221,8 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Wrap(
-                  spacing: 12, runSpacing: 12,
+                  spacing: 12,
+                  runSpacing: 12,
                   children: palette.map((color) {
                     final isSelected = _scaffoldColor.value == color.value;
                     return GestureDetector(
@@ -217,12 +231,23 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                         setDialogState(() {});
                       },
                       child: Container(
-                        width: 44, height: 44,
+                        width: 44,
+                        height: 44,
                         decoration: BoxDecoration(
-                          color: color, shape: BoxShape.circle,
-                          border: Border.all(color: isSelected ? Colors.white : Colors.white24, width: isSelected ? 3 : 1.5),
+                          color: color,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: isSelected ? Colors.white : Colors.white24,
+                            width: isSelected ? 3 : 1.5,
+                          ),
                         ),
-                        child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 20) : null,
+                        child: isSelected
+                            ? const Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 20,
+                              )
+                            : null,
                       ),
                     );
                   }).toList(),
@@ -267,9 +292,12 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       final attributes = op.attributes ?? {};
 
       pw.TextStyle style = const pw.TextStyle(fontSize: 16);
-      if (attributes['bold'] == true) style = style.copyWith(fontWeight: pw.FontWeight.bold);
-      if (attributes['italic'] == true) style = style.copyWith(fontStyle: pw.FontStyle.italic);
-      if (attributes['underline'] == true) style = style.copyWith(decoration: pw.TextDecoration.underline);
+      if (attributes['bold'] == true)
+        style = style.copyWith(fontWeight: pw.FontWeight.bold);
+      if (attributes['italic'] == true)
+        style = style.copyWith(fontStyle: pw.FontStyle.italic);
+      if (attributes['underline'] == true)
+        style = style.copyWith(decoration: pw.TextDecoration.underline);
 
       if (text.contains('\n')) {
         final parts = text.split('\n');
@@ -282,9 +310,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
           if (i < parts.length - 1) {
             if (currentLineSpans.isNotEmpty) {
               widgets.add(
-                pw.RichText(
-                  text: pw.TextSpan(children: currentLineSpans),
-                ),
+                pw.RichText(text: pw.TextSpan(children: currentLineSpans)),
               );
               currentLineSpans = [];
             }
@@ -326,20 +352,20 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
 
     final bytes = await pdf.save();
     final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/content_${DateTime.now().millisecondsSinceEpoch}.pdf');
+    final file = File(
+      '${dir.path}/content_${DateTime.now().millisecondsSinceEpoch}.pdf',
+    );
     await file.writeAsBytes(bytes);
 
-    await Share.shareXFiles(
-      [XFile(file.path)],
-      subject: 'Exported Content',
-    );
+    await Share.shareXFiles([XFile(file.path)], subject: 'Exported Content');
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final isColorDark = ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
+    final isColorDark =
+        ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
     final contrastColor = isColorDark ? Colors.white : Colors.black87;
 
     final String heroTag = widget.note != null
@@ -348,8 +374,11 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        final currentJson = jsonEncode(_quillController.document.toDelta().toJson());
-        bool hasChanges = _titleController.text != _initialTitle ||
+        final currentJson = jsonEncode(
+          _quillController.document.toDelta().toJson(),
+        );
+        bool hasChanges =
+            _titleController.text != _initialTitle ||
             currentJson != _initialContentJson ||
             _scaffoldColor.value != _initialColor.value ||
             _selectedDate != _initialDate;
@@ -367,7 +396,10 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
             onCancel: () => Navigator.pop(ctx, 'discard'),
           ),
         );
-        if (result == 'save') { _saveNote(); return true; }
+        if (result == 'save') {
+          _saveNote();
+          return true;
+        }
         return result == 'discard';
       },
       child: GlassScaffold(
@@ -379,7 +411,8 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
             onTap: _showColorPicker,
             child: Container(
               margin: const EdgeInsets.only(right: 8),
-              width: 26, height: 26,
+              width: 26,
+              height: 26,
               decoration: BoxDecoration(
                 color: _scaffoldColor,
                 shape: BoxShape.circle,
@@ -388,7 +421,11 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                   width: 1.5,
                 ),
               ),
-              child: Icon(Icons.palette_outlined, size: 14, color: contrastColor.withOpacity(0.7)),
+              child: Icon(
+                Icons.palette_outlined,
+                size: 14,
+                color: contrastColor.withOpacity(0.7),
+              ),
             ),
           ),
 
@@ -411,7 +448,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
 
           PopupMenuButton<String>(
             icon: Icon(Icons.ios_share, size: 20, color: contrastColor),
-            onSelected: (val) { if (val == 'pdf') _exportToPdf(); },
+            onSelected: (val) {
+              if (val == 'pdf') _exportToPdf();
+            },
             itemBuilder: (ctx) => [
               const PopupMenuItem(value: 'pdf', child: Text("Export as PDF")),
             ],
@@ -425,78 +464,92 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
             },
           ),
         ],
-        body: Hero(
-          tag: heroTag,
-          child: Material(
-            type: MaterialType.transparency,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: CustomPaint(
-                    painter: CanvasGridPainter(color: contrastColor.withOpacity(0.08)),
+        body: SafeArea(
+          child: Hero(
+            tag: heroTag,
+            child: Material(
+              type: MaterialType.transparency,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: CustomPaint(
+                      painter: CanvasGridPainter(
+                        color: contrastColor.withOpacity(0.08),
+                      ),
+                    ),
                   ),
-                ),
-                RepaintBoundary(
-                  key: _boundaryKey,
-                  child: Container(
-                    color: Colors.transparent,
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 0),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                          child: TextField(
-                            controller: _titleController,
-                            style: theme.textTheme.headlineSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: contrastColor,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: 'Title (Optional)',
-                              border: InputBorder.none,
-                              isDense: true,
-                              hintStyle: TextStyle(color: contrastColor.withOpacity(0.3)),
+                  RepaintBoundary(
+                    key: _boundaryKey,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 0),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                            child: TextField(
+                              controller: _titleController,
+                              style: theme.textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: contrastColor,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'Title (Optional)',
+                                border: InputBorder.none,
+                                isDense: true,
+                                hintStyle: TextStyle(
+                                  color: contrastColor.withOpacity(0.3),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 4),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: InkWell(
-                              onTap: _pickDateTime,
-                              borderRadius: BorderRadius.circular(20),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: contrastColor.withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Text(
-                                  DateFormat('MMM dd, yyyy  •  hh:mm a').format(_selectedDate),
-                                  style: TextStyle(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 22,
+                              vertical: 4,
+                            ),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: InkWell(
+                                onTap: _pickDateTime,
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: contrastColor.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Text(
+                                    DateFormat(
+                                      'MMM dd, yyyy  •  hh:mm a',
+                                    ).format(_selectedDate),
+                                    style: TextStyle(
                                       color: contrastColor.withOpacity(0.8),
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 11
+                                      fontSize: 11,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: GlassRichTextEditor(
-                            controller: _quillController,
-                            focusNode: _editorFocusNode,
-                            scrollController: _editorScrollController,
-                            editorBackgroundColor: _scaffoldColor,
+                          Expanded(
+                            child: GlassRichTextEditor(
+                              controller: _quillController,
+                              focusNode: _editorFocusNode,
+                              scrollController: _editorScrollController,
+                              editorBackgroundColor: _scaffoldColor,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -507,13 +560,22 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
 
 class CanvasGridPainter extends CustomPainter {
   final Color color;
+
   CanvasGridPainter({required this.color});
+
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = color..strokeWidth = 0.5;
-    for (double i = 0; i < size.width; i += 30) { canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint); }
-    for (double i = 0; i < size.height; i += 30) { canvas.drawLine(Offset(0, i), Offset(size.width, i), paint); }
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 0.5;
+    for (double i = 0; i < size.width; i += 30) {
+      canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint);
+    }
+    for (double i = 0; i < size.height; i += 30) {
+      canvas.drawLine(Offset(0, i), Offset(size.width, i), paint);
+    }
   }
+
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

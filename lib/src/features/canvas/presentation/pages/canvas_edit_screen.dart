@@ -42,10 +42,8 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   double _zoomLevel = 1.0;
   Offset _panOffset = Offset.zero;
 
-  // Text editing
-  TextEditingController _textEditController = TextEditingController();
-  Offset? _textPosition;
-  bool _showTextInput = false;
+  // Selected text for editing
+  String? _selectedTextId;
 
   // Tool options
   bool _showToolOptions = false;
@@ -112,42 +110,31 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
       _isTextMode = true;
       _isDrawingMode = false;
       _isErasing = false;
-      _showTextInput = false;
-      _textPosition = null;
+      _selectedTextId = null;
     });
   }
 
-  void _addTextAtPosition(Offset position) {
+  void _addNewText() {
+    // Add text in center of visible canvas area
+    final centerX = (MediaQuery.of(context).size.width / 2 - _panOffset.dx) / _zoomLevel;
+    final centerY = (MediaQuery.of(context).size.height / 2 - _panOffset.dy) / _zoomLevel;
+
     setState(() {
-      _textPosition = position;
-      _showTextInput = true;
-      _textEditController.clear();
+      final newText = CanvasText(
+        id: DateTime.now().toString(),
+        text: 'Type here...',
+        position: Offset(centerX - 75, centerY - 25), // Center the default text box
+        color: _selectedColor,
+        fontSize: 20,
+      );
+      _textElements.add(newText);
+      _selectedTextId = newText.id;
     });
-  }
-
-  void _confirmText() {
-    if (_textPosition != null && _textEditController.text.isNotEmpty) {
-      setState(() {
-        _textElements.add(
-          CanvasText(
-            id: DateTime.now().toString(),
-            text: _textEditController.text,
-            position: _textPosition!,
-            color: _selectedColor,
-            fontSize: 20,
-          ),
-        );
-        _showTextInput = false;
-        _textPosition = null;
-        _textEditController.clear();
-      });
-    }
   }
 
   @override
   void dispose() {
     _titleController.dispose();
-    _textEditController.dispose();
     _toolbarAnimController.dispose();
     super.dispose();
   }
@@ -284,188 +271,293 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: GestureDetector(
-          onTapDown: _isTextMode && !_showTextInput
-              ? (details) {
-            final localPos = details.localPosition;
-            final adjustedPos = Offset(
-              (localPos.dx - _panOffset.dx) / _zoomLevel,
-              (localPos.dy - _panOffset.dy) / _zoomLevel,
-            );
-            _addTextAtPosition(adjustedPos);
-          }
-              : null,
-          onPanUpdate: (details) {
-            if (!_isDrawingMode && !_isTextMode) {
-              setState(() {
-                _panOffset += details.delta;
-                _panOffset = _clampOffset(_panOffset);
-              });
-            }
-          },
-          onDoubleTap: () {
-            setState(() {
-              _zoomLevel = 1.0;
-              _panOffset = Offset.zero;
-            });
-          },
-          child: Transform.translate(
-            offset: _panOffset,
-            child: Transform.scale(
-              scale: _zoomLevel,
-              alignment: Alignment.center,
-              child: Container(
-                color: _currentNote.backgroundColor,
-                width: double.infinity,
-                height: double.infinity,
-                child: Stack(
-                  children: [
-                    CustomPaint(
-                      painter: DrawingPainter(_strokes),
-                      size: Size.infinite,
+        child: Stack(
+          children: [
+            GestureDetector(
+              onPanUpdate: (details) {
+                if (!_isDrawingMode && !_isTextMode) {
+                  setState(() {
+                    _panOffset += details.delta;
+                    _panOffset = _clampOffset(_panOffset);
+                  });
+                }
+              },
+              onDoubleTap: () {
+                setState(() {
+                  _zoomLevel = 1.0;
+                  _panOffset = Offset.zero;
+                });
+              },
+              child: Transform.translate(
+                offset: _panOffset,
+                child: Transform.scale(
+                  scale: _zoomLevel,
+                  alignment: Alignment.center,
+                  child: Container(
+                    color: _currentNote.backgroundColor,
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: Stack(
+                      children: [
+                        CustomPaint(
+                          painter: DrawingPainter(_strokes),
+                          size: Size.infinite,
+                        ),
+                        ..._textElements.map((text) {
+                          final isSelected = _selectedTextId == text.id;
+                          return Positioned(
+                            left: text.position.dx,
+                            top: text.position.dy,
+                            child: _buildEditableText(text, isSelected, colorScheme),
+                          );
+                        }).toList(),
+                        if (_isDrawingMode)
+                          GestureDetector(
+                            onPanDown: (details) {
+                              setState(() {
+                                _redoStack.clear();
+                                _strokes.add(
+                                  DrawingStroke(
+                                    points: [
+                                      (details.localPosition.dx - _panOffset.dx) / _zoomLevel,
+                                      (details.localPosition.dy - _panOffset.dy) / _zoomLevel,
+                                    ],
+                                    color: _isErasing
+                                        ? _currentNote.backgroundColor.value
+                                        : _selectedColor.value,
+                                    strokeWidth: _isErasing ? _eraserSize : _strokeWidth,
+                                    penType: _isErasing ? 0 : _brushShape.index,
+                                  ),
+                                );
+                              });
+                            },
+                            onPanUpdate: (details) {
+                              setState(() {
+                                if (_strokes.isNotEmpty) {
+                                  _strokes.last.points.addAll([
+                                    (details.localPosition.dx - _panOffset.dx) / _zoomLevel,
+                                    (details.localPosition.dy - _panOffset.dy) / _zoomLevel,
+                                  ]);
+                                }
+                              });
+                            },
+                            child: Container(color: Colors.transparent),
+                          ),
+                      ],
                     ),
-                    ..._textElements.map((text) {
-                      return Positioned(
-                        left: text.position.dx,
-                        top: text.position.dy,
-                        child: GestureDetector(
-                          onDoubleTap: () => _editText(text),
-                          onLongPress: () => _deleteText(text.id),
-                          onPanUpdate: (details) {
-                            setState(() {
-                              text.position += details.delta / _zoomLevel;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: colorScheme.outline.withOpacity(0.3),
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              text.text,
-                              style: TextStyle(
-                                color: text.color,
-                                fontSize: text.fontSize,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                    if (_isDrawingMode)
-                      GestureDetector(
-                        onPanDown: (details) {
-                          setState(() {
-                            _redoStack.clear();
-                            _strokes.add(
-                              DrawingStroke(
-                                points: [
-                                  (details.localPosition.dx - _panOffset.dx) / _zoomLevel,
-                                  (details.localPosition.dy - _panOffset.dy) / _zoomLevel,
-                                ],
-                                color: _isErasing
-                                    ? _currentNote.backgroundColor.value
-                                    : _selectedColor.value,
-                                strokeWidth: _isErasing ? _eraserSize : _strokeWidth,
-                                penType: _isErasing ? 0 : _brushShape.index,
-                              ),
-                            );
-                          });
-                        },
-                        onPanUpdate: (details) {
-                          setState(() {
-                            if (_strokes.isNotEmpty) {
-                              _strokes.last.points.addAll([
-                                (details.localPosition.dx - _panOffset.dx) / _zoomLevel,
-                                (details.localPosition.dy - _panOffset.dy) / _zoomLevel,
-                              ]);
-                            }
-                          });
-                        },
-                        child: Container(color: Colors.transparent),
-                      ),
-                    if (_showTextInput && _textPosition != null)
-                      Positioned(
-                        left: _textPosition!.dx,
-                        top: _textPosition!.dy,
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: theme.cardColor,
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 8,
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                width: 200,
-                                child: TextField(
-                                  controller: _textEditController,
-                                  autofocus: true,
-                                  maxLines: null,
-                                  decoration: InputDecoration(
-                                    hintText: 'Type text...',
-                                    border: InputBorder.none,
-                                    isDense: true,
-                                  ),
-                                  style: TextStyle(
-                                    color: _selectedColor,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 8),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _showTextInput = false;
-                                        _textPosition = null;
-                                        _textEditController.clear();
-                                      });
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                      minimumSize: Size(60, 32),
-                                    ),
-                                    child: Text('Cancel', style: TextStyle(fontSize: 12)),
-                                  ),
-                                  SizedBox(width: 8),
-                                  ElevatedButton(
-                                    onPressed: _confirmText,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: colorScheme.primary,
-                                      foregroundColor: colorScheme.onPrimary,
-                                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                      minimumSize: Size(60, 32),
-                                    ),
-                                    child: Text('Add', style: TextStyle(fontSize: 12)),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                  ],
+                  ),
+                ),
+              ),
+            ),
+            // Floating Add Text Button (only show in text mode when no text is selected)
+            if (_isTextMode && _selectedTextId == null)
+              Positioned(
+                bottom: 20,
+                right: 20,
+                child: FloatingActionButton(
+                  onPressed: _addNewText,
+                  backgroundColor: colorScheme.primary,
+                  child: Icon(Icons.add, color: colorScheme.onPrimary),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEditableText(CanvasText text, bool isSelected, ColorScheme colorScheme) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedTextId = isSelected ? null : text.id;
+        });
+      },
+      onPanUpdate: isSelected ? (details) {
+        setState(() {
+          text.position += details.delta / _zoomLevel;
+        });
+      } : null,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            constraints: BoxConstraints(
+              minWidth: text.containerWidth,
+              minHeight: text.containerHeight,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: isSelected
+                    ? colorScheme.primary.withOpacity(0.8)
+                    : Colors.transparent,
+                width: isSelected ? 2 : 1,
+              ),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: IntrinsicWidth(
+              child: IntrinsicHeight(
+                child: TextField(
+                  controller: TextEditingController(text: text.text)
+                    ..selection = TextSelection.collapsed(offset: text.text.length),
+                  enabled: isSelected,
+                  maxLines: null,
+                  style: TextStyle(
+                    color: text.color,
+                    fontSize: text.fontSize,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    isDense: true,
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                  onChanged: (value) {
+                    text.text = value;
+                  },
+                  onTap: () {
+                    setState(() {
+                      _selectedTextId = text.id;
+                    });
+                  },
                 ),
               ),
             ),
           ),
-        ),
+          // Delete button (top-right)
+          if (isSelected)
+            Positioned(
+              top: -10,
+              right: -10,
+              child: GestureDetector(
+                onTap: () => _deleteText(text.id),
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    Icons.close,
+                    size: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          // Resize handle (bottom-right)
+          if (isSelected)
+            Positioned(
+              bottom: -10,
+              right: -10,
+              child: GestureDetector(
+                onPanUpdate: (details) {
+                  setState(() {
+                    // Resize container
+                    text.containerWidth = (text.containerWidth + details.delta.dx / _zoomLevel)
+                        .clamp(50.0, 500.0);
+                    text.containerHeight = (text.containerHeight + details.delta.dy / _zoomLevel)
+                        .clamp(30.0, 500.0);
+
+                    // Also increase font size proportionally
+                    final sizeDelta = (details.delta.dx + details.delta.dy) / 2;
+                    text.fontSize = (text.fontSize + sizeDelta / (_zoomLevel * 10))
+                        .clamp(10.0, 100.0);
+                  });
+                },
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: colorScheme.primary,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    Icons.arrow_outward,
+                    size: 14,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          // Zoom in/out buttons (top-left and below it)
+          if (isSelected)
+            Positioned(
+              top: -10,
+              left: -10,
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        text.fontSize = (text.fontSize + 2).clamp(10.0, 100.0);
+                      });
+                    },
+                    child: Container(
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.add,
+                        size: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        text.fontSize = (text.fontSize - 2).clamp(10.0, 100.0);
+                      });
+                    },
+                    child: Container(
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.remove,
+                        size: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -504,7 +596,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                   _isTextMode = false;
                   _isShapeMode = false;
                   _isErasing = false;
-                  _showTextInput = false;
+                  _selectedTextId = null;
                 });
               }, colorScheme),
               _buildToolButton(Icons.cleaning_services, _isErasing, () {
@@ -513,7 +605,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                   _isErasing = true;
                   _isTextMode = false;
                   _isShapeMode = false;
-                  _showTextInput = false;
+                  _selectedTextId = null;
                 });
               }, colorScheme),
               _buildToolButton(Icons.text_fields, _isTextMode, () {
@@ -522,7 +614,6 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               SizedBox(width: 8),
               Container(width: 1, height: 24, color: colorScheme.outline.withOpacity(0.2)),
               SizedBox(width: 8),
-              // Brush Shape Selector (only show when not erasing)
               if (!_isErasing)
                 GestureDetector(
                   onTap: () => _showBrushGrid(context, colorScheme),
@@ -541,7 +632,6 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                   ),
                 ),
               if (!_isErasing) SizedBox(width: 4),
-              // Size Slider - works for both pencil and eraser
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -1122,20 +1212,10 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
     );
   }
 
-  void _editText(CanvasText text) {
-    _textEditController.text = text.text;
-    setState(() {
-      _textPosition = text.position;
-      _showTextInput = true;
-      _isTextMode = true;
-    });
-    // Remove the old text element, it will be re-added when confirmed
-    _textElements.removeWhere((t) => t.id == text.id);
-  }
-
   void _deleteText(String id) {
     setState(() {
       _textElements.removeWhere((t) => t.id == id);
+      _selectedTextId = null;
     });
   }
 
@@ -1212,12 +1292,9 @@ class DrawingPainter extends CustomPainter {
         ..strokeCap = StrokeCap.round
         ..strokeJoin = StrokeJoin.round;
 
-      // Use the brush shape that was saved with this stroke (penType)
       final brushShape = BrushShape.values[stroke.penType.clamp(0, BrushShape.values.length - 1)];
 
-      // Only apply brush shape for non-eraser strokes
-      // Eraser strokes always use round cap
-      if (stroke.strokeWidth < 20) { // Not an eraser stroke
+      if (stroke.strokeWidth < 20) {
         switch (brushShape) {
           case BrushShape.round:
             paint.strokeCap = StrokeCap.round;
@@ -1249,13 +1326,11 @@ class DrawingPainter extends CustomPainter {
             break;
         }
       } else {
-        // Eraser always uses round cap
         paint.strokeCap = StrokeCap.round;
       }
 
       for (int i = 0; i < stroke.points.length - 2; i += 2) {
         if (brushShape == BrushShape.calligraphy && stroke.strokeWidth < 20) {
-          // Calligraphy effect only for non-eraser strokes
           final dx = stroke.points[i + 2] - stroke.points[i];
           final dy = stroke.points[i + 3] - stroke.points[i + 1];
           final angle = atan2(dy, dx);
@@ -1284,7 +1359,6 @@ class DrawingPainter extends CustomPainter {
 
           canvas.drawPath(path, paint..style = PaintingStyle.fill);
         } else if (brushShape == BrushShape.spray && stroke.strokeWidth < 20) {
-          // Spray effect - draw multiple small dots
           final random = Random(i);
           for (int j = 0; j < 3; j++) {
             final offsetX = (random.nextDouble() - 0.5) * stroke.strokeWidth;
@@ -1296,7 +1370,6 @@ class DrawingPainter extends CustomPainter {
             );
           }
         } else {
-          // Regular drawing for all other modes including eraser
           canvas.drawLine(
             Offset(stroke.points[i], stroke.points[i + 1]),
             Offset(stroke.points[i + 2], stroke.points[i + 3]),
@@ -1311,13 +1384,15 @@ class DrawingPainter extends CustomPainter {
   bool shouldRepaint(DrawingPainter oldDelegate) => oldDelegate.strokes != strokes;
 }
 
-// Canvas Text Model
+// Canvas Text Model - Updated with container size properties
 class CanvasText {
   final String id;
   String text;
   Offset position;
   final Color color;
-  final double fontSize;
+  double fontSize;
+  double containerWidth;
+  double containerHeight;
 
   CanvasText({
     required this.id,
@@ -1325,5 +1400,7 @@ class CanvasText {
     required this.position,
     required this.color,
     required this.fontSize,
+    this.containerWidth = 150.0,
+    this.containerHeight = 50.0,
   });
 }
