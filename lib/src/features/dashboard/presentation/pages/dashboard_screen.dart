@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:home_widget/home_widget.dart';
 
-// --- Imports from your project structure ---
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
@@ -55,13 +56,18 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> with TickerProviderStateMixin {
   bool _boxesOpened = false;
   List<String> _order = [];
+
+  // Drag & Drop State
   String? _draggedId;
-  Offset? _dragPosition;
+  Offset? _dragPosition; // Local coordinates relative to the scrollable content
+  Offset? _lastGlobalPosition; // Global screen coordinates for auto-scroll check
   final GlobalKey _gridKey = GlobalKey();
 
-  late AnimationController _settingsAnimationController;
+  // Scrolling State
+  late ScrollController _scrollController;
+  Timer? _autoScrollTimer;
 
-  // 1. NEW: Entry Animation Controller
+  late AnimationController _settingsAnimationController;
   late AnimationController _entryAnimationController;
 
   final Map<String, FeatureItem> _features = {
@@ -87,32 +93,34 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
+
     _settingsAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
 
-    // 2. NEW: Initialize Entry Animation
     _entryAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500), // Total time for all items to pop in
+      duration: const Duration(milliseconds: 1500),
     );
 
-    // Start the animation
     _entryAnimationController.forward();
-
     _initHive();
   }
 
   @override
   void dispose() {
+    _scrollController.dispose();
+    _autoScrollTimer?.cancel();
     _settingsAnimationController.dispose();
-    _entryAnimationController.dispose(); // Dispose entry controller
+    _entryAnimationController.dispose();
     super.dispose();
   }
 
   Future<void> _initHive() async {
     if (!Hive.isBoxOpen('settings')) await Hive.openBox('settings');
+    // Ensure other boxes are open as needed...
     if (!Hive.isBoxOpen('notes_box')) await Hive.openBox<Note>('notes_box');
     if (!Hive.isBoxOpen('todos_box')) await Hive.openBox<Todo>('todos_box');
     if (!Hive.isBoxOpen('expenses_box')) await Hive.openBox<Expense>('expenses_box');
@@ -141,23 +149,94 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     Hive.box('settings').put('dashboard_order', _order);
   }
 
+  // --- Drag & Drop Logic ---
+
   void _onDragStart(String id, LongPressStartDetails details) {
-    setState(() {
-      _draggedId = id;
-      _dragPosition = details.globalPosition;
-    });
-    HapticFeedback.mediumImpact();
+    final RenderBox? box = _gridKey.currentContext?.findRenderObject() as RenderBox?;
+    if (box != null) {
+      final Offset localPos = box.globalToLocal(details.globalPosition);
+      setState(() {
+        _draggedId = id;
+        _dragPosition = localPos;
+        _lastGlobalPosition = details.globalPosition;
+      });
+      HapticFeedback.mediumImpact();
+
+      // Start auto-scroll check loop
+      _autoScrollTimer = Timer.periodic(const Duration(milliseconds: 16), _checkForAutoScroll);
+    }
   }
 
-  void _onDragUpdate(LongPressMoveUpdateDetails details, double itemWidth, double itemHeight) {
-    setState(() => _dragPosition = details.globalPosition);
-
+  void _onDragUpdate(LongPressMoveUpdateDetails details) {
     final RenderBox? box = _gridKey.currentContext?.findRenderObject() as RenderBox?;
     if (box == null) return;
 
     final Offset localPos = box.globalToLocal(details.globalPosition);
+    setState(() {
+      _dragPosition = localPos;
+      _lastGlobalPosition = details.globalPosition;
+    });
 
-    // Calculate total rows based on current item count (2 items per row)
+    _handleReorder(localPos);
+  }
+
+  void _onDragEnd() {
+    _autoScrollTimer?.cancel();
+    _autoScrollTimer = null;
+    setState(() {
+      _draggedId = null;
+      _dragPosition = null;
+      _lastGlobalPosition = null;
+    });
+    _saveOrder();
+  }
+
+  // --- Auto-Scroll & Reorder Logic ---
+
+  void _checkForAutoScroll(Timer timer) {
+    if (_lastGlobalPosition == null || _draggedId == null) return;
+
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double topThreshold = 150.0; // Distance from top to trigger scroll
+    final double bottomThreshold = screenHeight - 150.0; // Distance from bottom
+    final double scrollSpeed = 10.0; // Pixels per frame
+
+    double scrollDelta = 0;
+
+    if (_lastGlobalPosition!.dy < topThreshold) {
+      // Scroll Up
+      scrollDelta = -scrollSpeed;
+    } else if (_lastGlobalPosition!.dy > bottomThreshold) {
+      // Scroll Down
+      scrollDelta = scrollSpeed;
+    }
+
+    if (scrollDelta != 0) {
+      final double newOffset = (_scrollController.offset + scrollDelta)
+          .clamp(0.0, _scrollController.position.maxScrollExtent);
+
+      if (newOffset != _scrollController.offset) {
+        _scrollController.jumpTo(newOffset);
+
+        // Update local drag position because the content moved
+        final RenderBox? box = _gridKey.currentContext?.findRenderObject() as RenderBox?;
+        if (box != null) {
+          final Offset localPos = box.globalToLocal(_lastGlobalPosition!);
+          setState(() {
+            _dragPosition = localPos;
+          });
+          _handleReorder(localPos);
+        }
+      }
+    }
+  }
+
+  void _handleReorder(Offset localPos) {
+    // Calculate Grid Metrics dynamically
+    final double gridWidth = MediaQuery.of(context).size.width - 48; // Padding 24 * 2
+    final double itemWidth = (gridWidth - 16) / 2; // Spacing 16
+    final double itemHeight = itemWidth * 1.1;
+
     final int maxRows = (_order.length / 2).ceil();
 
     int col = (localPos.dx / (itemWidth + 16)).floor().clamp(0, 1);
@@ -175,13 +254,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     }
   }
 
-  void _onDragEnd() {
-    setState(() {
-      _draggedId = null;
-      _dragPosition = null;
-    });
-    _saveOrder();
-  }
+  // --- UI Components ---
 
   Future<void> _pinFeatureToHome(FeatureItem feature) async {
     final uri = Uri.parse('copyclip://${feature.id}');
@@ -192,19 +265,16 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     await HomeWidget.updateWidget(name: 'HomeWidgetProvider', androidName: 'HomeWidgetProvider');
   }
 
-  // 3. NEW: Animation Helper
-  // This calculates the stagger delay based on index
   Widget _buildBouncingItemWrapper(int index, Widget child) {
     return AnimatedBuilder(
       animation: _entryAnimationController,
       builder: (context, child) {
-        // Calculate interval for this specific item (Staggered effect)
         final double start = (index * 0.1).clamp(0.0, 0.8);
         final double end = (start + 0.5).clamp(0.0, 1.0);
 
         final animation = CurvedAnimation(
           parent: _entryAnimationController,
-          curve: Interval(start, end, curve: Curves.elasticOut), // The Bounce
+          curve: Interval(start, end, curve: Curves.elasticOut),
         );
 
         return Transform.scale(
@@ -336,13 +406,14 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   Widget _buildReorderableGrid(ThemeData theme) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final double itemWidth = (constraints.maxWidth - 64) / 2;
+        final double itemWidth = (constraints.maxWidth - 64) / 2; // 64 = 24 padding left + 24 right + 16 spacing
         final double itemHeight = itemWidth * 1.1;
 
         final int rowCount = (_order.length / 2).ceil();
-        final double totalHeight = (itemHeight + 16) * rowCount + 100;
+        final double totalHeight = (itemHeight + 16) * rowCount + 100; // Extra bottom padding
 
         return SingleChildScrollView(
+          controller: _scrollController,
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: SizedBox(
@@ -350,18 +421,23 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
             height: totalHeight,
             child: Stack(
               children: [
+                // Render items in order
                 for (int i = 0; i < _order.length; i++)
                   _buildAnimatedItem(i, _order[i], itemWidth, itemHeight, theme),
 
+                // Render the dragged item overlay
                 if (_draggedId != null && _dragPosition != null)
                   Positioned(
-                    left: _dragPosition!.dx - 24 - (itemWidth / 2),
-                    top: _dragPosition!.dy - 180 - (itemHeight / 2),
+                    left: _dragPosition!.dx - (itemWidth / 2),
+                    top: _dragPosition!.dy - (itemHeight / 2),
                     child: IgnorePointer(
                       child: SizedBox(
                         width: itemWidth,
                         height: itemHeight,
-                        child: _buildFeatureCard(theme, _features[_draggedId]!, isDragging: true),
+                        child: Transform.scale(
+                          scale: 1.1,
+                          child: _buildFeatureCard(theme, _features[_draggedId]!, isDragging: true),
+                        ),
                       ),
                     ),
                   ),
@@ -379,13 +455,14 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     final int row = index ~/ 2;
 
     return AnimatedPositioned(
-      duration: const Duration(milliseconds: 350),
-      curve: Curves.easeOutQuart,
+      // Animation when items switch places
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOutBack,
       left: col * (width + 16),
       top: row * (height + 16),
       child: GestureDetector(
         onLongPressStart: (d) => _onDragStart(id, d),
-        onLongPressMoveUpdate: (d) => _onDragUpdate(d, width, height),
+        onLongPressMoveUpdate: (d) => _onDragUpdate(d),
         onLongPressEnd: (_) => _onDragEnd(),
         onTap: () {
           final route = _features[id]?.route;
@@ -393,7 +470,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
             context.push(route);
           }
         },
-        // 4. UPDATED: Wrap content with Bouncing Wrapper
         child: _buildBouncingItemWrapper(
           index,
           SizedBox(
