@@ -1,15 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'dart:math';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:copyclip/src/core/widgets/glass_container.dart';
-import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:intl/intl.dart' show DateFormat;
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import '../../data/canvas_adapter.dart';
 import '../../data/canvas_model.dart';
+import 'dart:ui' as ui;
+import 'dart:typed_data';
 
-enum BrushShape { round, square, marker, calligraphy, pencil, pen, highlighter, spray }
+enum BrushShape {
+  round,
+  square,
+  marker,
+  calligraphy,
+  pencil,
+  pen,
+  highlighter,
+  spray,
+  technicalPen,
+  fountainPen,
+  ballpointPen,
+  calligraphyPen,
+  sketchBrush,
+  charcoal,
+  crayon,
+  inkBrush,
+  watercolorBrush,
+  airBrush,
+  sprayPaint,
+  oilBrush,
+  neonBrush,
+  glitchBrush,
+  pixelBrush,
+  glowPen,
+  shadingBrush,
+  blurBrush,
+  smudgeTool,
+  eraserHard,
+  eraserSoft,
+}
 
 class CanvasEditScreen extends StatefulWidget {
   final String? noteId;
@@ -29,6 +62,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   List<DrawingStroke> _redoStack = [];
   List<CanvasText> _textElements = [];
 
+  // Page management
+  int _currentPageIndex = 0;
+
   // Drawing state
   bool _isDrawingMode = true;
   bool _isTextMode = false;
@@ -38,6 +74,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   double _eraserSize = 20.0;
   bool _isErasing = false;
   BrushShape _brushShape = BrushShape.round;
+
+  // Hand mode (panning & zooming)
+  bool _isHandMode = false;
 
   // Canvas transformation
   double _zoomLevel = 1.0;
@@ -71,43 +110,173 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
       _currentNote = db.getNote(widget.noteId!)!;
       _titleController = TextEditingController(text: _currentNote.title);
 
-      // Use first page (create if missing)
-      final page = _currentNote.pages.isEmpty ? CanvasPage() : _currentNote.pages[0];
-      _strokes = List.from(page.strokes);
-      _textElements = List.from(page.textElements);
-
-      // Ensure at least one page
       if (_currentNote.pages.isEmpty) {
-        _currentNote.pages.add(page);
+        _currentNote.pages.add(CanvasPage());
       }
     } else {
       _currentNote = CanvasNote(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         title: 'Untitled Note',
         folderId: widget.folderId ?? 'default',
-        pages: [CanvasPage()], // Explicitly create first page
+        pages: [CanvasPage()],
       );
       _titleController = TextEditingController(text: 'Untitled Note');
-      _strokes = [];
-      _textElements = [];
+    }
+    _loadCurrentPage();
+  }
+
+  Future<void> _exportToPdf() async {
+    // 1. CRITICAL FIX: Save the current screen state to the note object before exporting
+    _saveCurrentPage();
+
+    // Show Loading Indicator
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    try {
+      final pdf = pw.Document();
+      final pdfPageFormat = PdfPageFormat.a4;
+
+      // Scaling for print quality
+      const double scale = 2.0;
+      final double width = pdfPageFormat.width * scale;
+      final double height = pdfPageFormat.height * scale;
+      final screenSize = MediaQuery.of(context).size;
+      final double contentScale = width / screenSize.width;
+
+      // 2. Iterate through all pages
+      for (var page in _currentNote.pages) {
+        // Optional: Skip completely empty pages to avoid "blank page" issues
+        // if (page.strokes.isEmpty && page.textElements.isEmpty && _currentNote.pages.length > 1) continue;
+
+        final recorder = ui.PictureRecorder();
+        final canvas = Canvas(recorder, Rect.fromLTWH(0, 0, width, height));
+
+        // A. Draw Background
+        final bgPaint = Paint()..color = _currentNote.backgroundColor;
+        canvas.drawRect(Rect.fromLTWH(0, 0, width, height), bgPaint);
+
+        // B. Scale and Draw Strokes
+        canvas.save();
+        canvas.scale(contentScale);
+
+        final painter = DrawingPainter(page.strokes, _currentNote.backgroundColor);
+        painter.paint(canvas, Size(screenSize.width, screenSize.height));
+
+        // C. Draw Text
+        for (var textElem in page.textElements) {
+          final textSpan = TextSpan(
+            text: textElem.text,
+            style: TextStyle(
+              color: Color(textElem.color),
+              fontSize: textElem.fontSize,
+              fontWeight: textElem.bold ? FontWeight.bold : FontWeight.w500,
+              fontStyle: textElem.italic ? FontStyle.italic : FontStyle.normal,
+              decoration: textElem.underline ? TextDecoration.underline : TextDecoration.none,
+            ),
+          );
+
+          final textPainter = TextPainter(
+            text: textSpan,
+            textDirection: TextDirection.ltr,
+            textAlign: TextAlign.left,
+          );
+
+          textPainter.layout(minWidth: 0, maxWidth: textElem.containerWidth);
+          textPainter.paint(canvas, textElem.position);
+        }
+
+        canvas.restore();
+
+        // 3. Convert to Image
+        final picture = recorder.endRecording();
+        final img = await picture.toImage(width.toInt(), height.toInt());
+        final byteData = await img.toByteData(format: ui.ImageByteFormat.png);
+        final buffer = byteData!.buffer.asUint8List();
+
+        // 4. Add Page to PDF
+        pdf.addPage(
+          pw.Page(
+            pageFormat: pdfPageFormat,
+            margin: pw.EdgeInsets.zero,
+            build: (pw.Context context) {
+              return pw.FullPage(
+                ignoreMargins: true,
+                child: pw.Image(
+                  pw.MemoryImage(buffer),
+                  fit: pw.BoxFit.fill,
+                ),
+              );
+            },
+          ),
+        );
+      }
+
+      if (mounted) Navigator.pop(context); // Hide Loading
+
+      await Printing.sharePdf(
+        bytes: await pdf.save(),
+        filename: '${_currentNote.title.replaceAll(' ', '_')}.pdf',
+      );
+
+    } catch (e) {
+      if (mounted) Navigator.pop(context);
+      debugPrint("Error exporting PDF: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to export PDF: $e')),
+      );
     }
   }
 
+  void _loadCurrentPage() {
+    final page = _currentNote.pages[_currentPageIndex];
+    _strokes = List.from(page.strokes);
+    _textElements = List.from(page.textElements);
+    _redoStack.clear();
+    setState(() {}); // Ensure UI rebuilds
+  }
+
+  void _saveCurrentPage() {
+    _currentNote.pages[_currentPageIndex] = CanvasPage(
+      strokes: List.from(_strokes),
+      textElements: List.from(_textElements),
+    );
+  }
+
+  void _switchToPage(int index) {
+    if (index == _currentPageIndex) return;
+    _saveCurrentPage();
+    setState(() {
+      _currentPageIndex = index;
+      _zoomLevel = 1.0;
+      _panOffset = Offset.zero;
+      _selectedTextId = null;
+    });
+    _loadCurrentPage();
+  }
+
+  void _addNewPage() {
+    _saveCurrentPage();
+    setState(() {
+      _currentNote.pages.add(CanvasPage());
+      _currentPageIndex = _currentNote.pages.length - 1;
+      _zoomLevel = 1.0;
+      _panOffset = Offset.zero;
+      _selectedTextId = null;
+    });
+    _loadCurrentPage();
+  }
+
   void _saveNote() async {
+    _saveCurrentPage();
     _currentNote.title = _titleController.text.isEmpty
         ? 'Untitled Note'
         : _titleController.text;
-
-    // Ensure we have at least one page
-    if (_currentNote.pages.isEmpty) {
-      _currentNote.pages.add(CanvasPage());
-    }
-
-    // Update the first page with current strokes and text
-    _currentNote.pages[0] = CanvasPage(
-      strokes: _strokes,
-      textElements: _textElements,
-    );
 
     _currentNote.lastModified = DateTime.now();
     await CanvasDatabase().saveNote(_currentNote);
@@ -134,13 +303,15 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
       _isTextMode = true;
       _isDrawingMode = false;
       _isErasing = false;
+      _isHandMode = false;
       _selectedTextId = null;
     });
   }
 
   void _addNewText() {
-    final centerX = (MediaQuery.of(context).size.width / 2 - _panOffset.dx) / _zoomLevel;
-    final centerY = (MediaQuery.of(context).size.height / 2 - _panOffset.dy) / _zoomLevel;
+    final size = MediaQuery.of(context).size;
+    final centerX = (size.width / 2 - _panOffset.dx) / _zoomLevel;
+    final centerY = (size.height / 2 - _panOffset.dy - 150) / _zoomLevel;
 
     setState(() {
       final newText = CanvasText(
@@ -184,6 +355,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             children: [
               _buildCompactHeader(theme, colorScheme),
               Expanded(child: _buildCanvas(theme, colorScheme)),
+              _buildPageTabs(theme, colorScheme),
               _buildMinimalToolbar(theme, colorScheme),
             ],
           ),
@@ -198,12 +370,12 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
       child: Row(
         children: [
           IconButton(
-            icon: Icon(Icons.arrow_back_ios_new, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, size: 20),
             onPressed: () {
               _saveNote();
               context.pop();
             },
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
           ),
           Expanded(
             child: Column(
@@ -219,7 +391,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     hintText: 'Note title',
                     border: InputBorder.none,
                     isDense: true,
-                    contentPadding: EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                       horizontal: 4,
                       vertical: 2,
                     ),
@@ -249,12 +421,12 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: Icon(Icons.zoom_out, size: 18),
+                  icon: const Icon(Icons.zoom_out, size: 18),
                   onPressed: () => setState(
                         () => _zoomLevel = (_zoomLevel - 0.2).clamp(0.5, 3.0),
                   ),
-                  padding: EdgeInsets.all(6),
-                  constraints: BoxConstraints(),
+                  padding: const EdgeInsets.all(6),
+                  constraints: const BoxConstraints(),
                 ),
                 Text(
                   '${(_zoomLevel * 100).toInt()}%',
@@ -263,20 +435,20 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.zoom_in, size: 18),
+                  icon: const Icon(Icons.zoom_in, size: 18),
                   onPressed: () => setState(
                         () => _zoomLevel = (_zoomLevel + 0.2).clamp(0.5, 3.0),
                   ),
-                  padding: EdgeInsets.all(6),
-                  constraints: BoxConstraints(),
+                  padding: const EdgeInsets.all(6),
+                  constraints: const BoxConstraints(),
                 ),
               ],
             ),
           ),
           IconButton(
-            icon: Icon(Icons.more_vert, size: 20),
+            icon: const Icon(Icons.more_vert, size: 20),
             onPressed: () => _showOptionsMenu(context, theme, colorScheme),
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
           ),
         ],
       ),
@@ -293,7 +465,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 8,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -302,14 +474,14 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
         child: Stack(
           children: [
             GestureDetector(
-              onPanUpdate: (details) {
-                if (!_isDrawingMode && !_isTextMode) {
-                  setState(() {
-                    _panOffset += details.delta;
-                    _panOffset = _clampOffset(_panOffset);
-                  });
-                }
-              },
+              onPanUpdate: _isHandMode
+                  ? (details) {
+                setState(() {
+                  _panOffset += details.delta;
+                  _panOffset = _clampOffset(_panOffset);
+                });
+              }
+                  : null,
               onDoubleTap: () {
                 setState(() {
                   _zoomLevel = 1.0;
@@ -328,7 +500,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     child: Stack(
                       children: [
                         CustomPaint(
-                          painter: DrawingPainter(_strokes),
+                          painter: DrawingPainter(_strokes, _currentNote.backgroundColor),
                           size: Size.infinite,
                         ),
                         ..._textElements.map((text) {
@@ -339,33 +511,38 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                             child: _buildEditableText(text, isSelected, colorScheme),
                           );
                         }).toList(),
-                        if (_isDrawingMode)
+                        if (_isDrawingMode && !_isHandMode)
                           GestureDetector(
-                            onPanDown: (details) {
+                            behavior: HitTestBehavior.opaque,
+                            onPanStart: (details) {
+                              final pos = details.localPosition;
+                              final adjusted = Offset(
+                                (pos.dx - _panOffset.dx) / _zoomLevel,
+                                (pos.dy - _panOffset.dy) / _zoomLevel,
+                              );
                               setState(() {
                                 _redoStack.clear();
                                 _strokes.add(
                                   DrawingStroke(
-                                    points: [
-                                      (details.localPosition.dx - _panOffset.dx) / _zoomLevel,
-                                      (details.localPosition.dy - _panOffset.dy) / _zoomLevel,
-                                    ],
+                                    points: [adjusted.dx, adjusted.dy],
                                     color: _isErasing
                                         ? _currentNote.backgroundColor.value
                                         : _selectedColor.value,
                                     strokeWidth: _isErasing ? _eraserSize : _strokeWidth,
-                                    penType: _isErasing ? 0 : _brushShape.index,
+                                    penType: _brushShape.index,
                                   ),
                                 );
                               });
                             },
                             onPanUpdate: (details) {
+                              final pos = details.localPosition;
+                              final adjusted = Offset(
+                                (pos.dx - _panOffset.dx) / _zoomLevel,
+                                (pos.dy - _panOffset.dy) / _zoomLevel,
+                              );
                               setState(() {
                                 if (_strokes.isNotEmpty) {
-                                  _strokes.last.points.addAll([
-                                    (details.localPosition.dx - _panOffset.dx) / _zoomLevel,
-                                    (details.localPosition.dy - _panOffset.dy) / _zoomLevel,
-                                  ]);
+                                  _strokes.last.points.addAll([adjusted.dx, adjusted.dy]);
                                 }
                               });
                             },
@@ -377,8 +554,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                 ),
               ),
             ),
-            // Floating Add Text Button (only show in text mode when no text is selected)
-            if (_isTextMode && _selectedTextId == null)
+            if (_isTextMode && _selectedTextId == null && !_isHandMode)
               Positioned(
                 bottom: 20,
                 right: 20,
@@ -396,13 +572,12 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
 
   Widget _buildEditableText(CanvasText text, bool isSelected, ColorScheme colorScheme) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final focusNode = FocusNode(); // For controlling keyboard
+    final focusNode = FocusNode();
 
-    // Auto-unfocus when tapping outside or on unfocus button
     void unfocus() {
       focusNode.unfocus();
       setState(() {
-        _selectedTextId = null; // Deselect after editing
+        _selectedTextId = null;
       });
     }
 
@@ -414,10 +589,10 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
           setState(() {
             _selectedTextId = text.id;
           });
-          focusNode.requestFocus(); // Focus text field when selected
+          focusNode.requestFocus();
         }
       },
-      onPanUpdate: isSelected
+      onPanUpdate: isSelected && !_isHandMode
           ? (details) {
         setState(() {
           text.position += details.delta / _zoomLevel;
@@ -427,7 +602,6 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          // Main text container
           Container(
             width: text.containerWidth,
             constraints: BoxConstraints(
@@ -437,9 +611,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               border: Border.all(
-                color: isSelected
-                    ? colorScheme.primary.withOpacity(0.8)
-                    : Colors.transparent,
+                color: isSelected ? colorScheme.primary.withOpacity(0.8) : Colors.transparent,
                 width: isSelected ? 2 : 1,
               ),
               borderRadius: BorderRadius.circular(8),
@@ -465,19 +637,17 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               ),
               onChanged: (value) {
                 text.text = value;
-                // No need for setState here — parent rebuilds via selection
               },
-              onSubmitted: (_) => unfocus(), // Enter key also unfocuses
+              onSubmitted: (_) => unfocus(),
             ),
           ),
 
-          // === DELETE BUTTON (top-right) ===
           if (isSelected)
             Positioned(
               top: -12,
               right: -12,
               child: GestureDetector(
-                onTapDown: (_) => _deleteText(text.id), // Instant response
+                onTapDown: (_) => _deleteText(text.id),
                 child: Container(
                   width: 30,
                   height: 30,
@@ -501,7 +671,6 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               ),
             ),
 
-          // === RESIZE HANDLE (bottom-right) ===
           if (isSelected)
             Positioned(
               bottom: -12,
@@ -541,14 +710,12 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               ),
             ),
 
-          // === FONT SIZE CONTROLS (top-left) ===
           if (isSelected)
             Positioned(
               top: -12,
               left: -12,
               child: Column(
                 children: [
-                  // Increase font
                   GestureDetector(
                     onTap: () {
                       setState(() {
@@ -573,7 +740,6 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     ),
                   ),
                   const SizedBox(height: 6),
-                  // Decrease font
                   GestureDetector(
                     onTap: () {
                       setState(() {
@@ -601,7 +767,6 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               ),
             ),
 
-          // === UNFOCUS / DONE BUTTON (top-center) ===
           if (isSelected)
             Positioned(
               top: -12,
@@ -640,10 +805,61 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
     );
   }
 
-  Offset _clampOffset(Offset offset) {
-    final maxX = ((_zoomLevel - 1.0) * 200).abs();
-    final maxY = ((_zoomLevel - 1.0) * 200).abs();
-    return Offset(offset.dx.clamp(-maxX, maxX), offset.dy.clamp(-maxY, maxY));
+  Widget _buildPageTabs(ThemeData theme, ColorScheme colorScheme) {
+    return Container(
+      height: 60,
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            ...List.generate(_currentNote.pages.length, (index) {
+              final isActive = index == _currentPageIndex;
+              return GestureDetector(
+                onTap: () => _switchToPage(index),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: isActive ? colorScheme.primary : colorScheme.surface,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: isActive
+                        ? [
+                      BoxShadow(
+                        color: colorScheme.primary.withOpacity(0.3),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      )
+                    ]
+                        : null,
+                  ),
+                  child: Text(
+                    'Page ${index + 1}',
+                    style: TextStyle(
+                      color: isActive ? colorScheme.onPrimary : colorScheme.onSurface,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              );
+            }),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: _addNewPage,
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: colorScheme.primary.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Icon(Icons.add, color: colorScheme.primary, size: 28),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildMinimalToolbar(ThemeData theme, ColorScheme colorScheme) {
@@ -659,40 +875,56 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             BoxShadow(
               color: Colors.black.withOpacity(0.05),
               blurRadius: 8,
-              offset: Offset(0, -2),
+              offset: const Offset(0, -2),
             ),
           ],
         ),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Row(
             children: [
-              _buildToolButton(Icons.edit, _isDrawingMode && !_isErasing, () {
+              _buildToolButton(Icons.pan_tool, _isHandMode, () {
+                setState(() {
+                  _isHandMode = !_isHandMode;
+                  if (_isHandMode) {
+                    _isTextMode = false;
+                    _selectedTextId = null;
+                  }
+                });
+              }, colorScheme),
+              SizedBox(width: 8),
+              _buildToolButton(Icons.edit, _isDrawingMode && !_isErasing && !_isHandMode, () {
                 setState(() {
                   _isDrawingMode = true;
                   _isTextMode = false;
                   _isShapeMode = false;
                   _isErasing = false;
+                  _isHandMode = false;
                   _selectedTextId = null;
+                  if (_brushShape == BrushShape.eraserHard || _brushShape == BrushShape.eraserSoft) {
+                    _brushShape = BrushShape.pen;
+                  }
                 });
               }, colorScheme),
-              _buildToolButton(Icons.cleaning_services, _isErasing, () {
+              _buildToolButton(Icons.cleaning_services, _isErasing && !_isHandMode, () {
                 setState(() {
                   _isDrawingMode = true;
                   _isErasing = true;
                   _isTextMode = false;
                   _isShapeMode = false;
+                  _isHandMode = false;
                   _selectedTextId = null;
+                  _brushShape = BrushShape.eraserHard;
                 });
               }, colorScheme),
-              _buildToolButton(Icons.text_fields, _isTextMode, () {
+              _buildToolButton(Icons.text_fields, _isTextMode && !_isHandMode, () {
                 _enableTextMode();
               }, colorScheme),
               SizedBox(width: 8),
               Container(width: 1, height: 24, color: colorScheme.outline.withOpacity(0.2)),
               SizedBox(width: 8),
-              if (!_isErasing)
+              if (!_isErasing && !_isHandMode)
                 GestureDetector(
                   onTap: () => _showBrushGrid(context, colorScheme),
                   child: Container(
@@ -709,7 +941,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     ),
                   ),
                 ),
-              if (!_isErasing) SizedBox(width: 4),
+              if (!_isErasing && !_isHandMode) SizedBox(width: 4),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -718,9 +950,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     size: 16,
                     color: colorScheme.onSurface.withOpacity(0.7),
                   ),
-
                   const SizedBox(width: 8),
-
                   SizedBox(
                     width: 110,
                     child: SliderTheme(
@@ -738,7 +968,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                         value: _isErasing ? _eraserSize : _strokeWidth,
                         min: _isErasing ? 5 : 1,
                         max: _isErasing ? 50 : 15,
-                        onChanged: (val) {
+                        onChanged: _isHandMode
+                            ? null
+                            : (val) {
                           setState(() {
                             if (_isErasing) {
                               _eraserSize = val;
@@ -750,9 +982,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       ),
                     ),
                   ),
-
                   const SizedBox(width: 6),
-
                   Container(
                     width: 28,
                     alignment: Alignment.center,
@@ -769,7 +999,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               ),
               SizedBox(width: 4),
               GestureDetector(
-                onTap: () => _showAdvancedColorPicker(isBackground: false),
+                onTap: (_isHandMode || _isErasing) ? null : () => _showAdvancedColorPicker(isBackground: false),
                 child: Container(
                   width: 32,
                   height: 32,
@@ -782,7 +1012,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               ),
               SizedBox(width: 4),
               GestureDetector(
-                onTap: () => _showAdvancedColorPicker(isBackground: true),
+                onTap: _isHandMode ? null : () => _showAdvancedColorPicker(isBackground: true),
                 child: Container(
                   width: 32,
                   height: 32,
@@ -791,37 +1021,37 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: colorScheme.outline.withOpacity(0.3), width: 1.5),
                   ),
-                  child: Icon(Icons.format_color_fill, size: 16, color: Colors.white),
+                  child: const Icon(Icons.format_color_fill, size: 16, color: Colors.white),
                 ),
               ),
               SizedBox(width: 8),
               _buildToolButton(
                 Icons.undo,
                 false,
-                _strokes.isEmpty ? () {} : _undo,
+                _strokes.isEmpty || _isHandMode ? () {} : _undo,
                 colorScheme,
-                enabled: _strokes.isNotEmpty,
+                enabled: _strokes.isNotEmpty && !_isHandMode,
               ),
               _buildToolButton(
                 Icons.redo,
                 false,
-                _redoStack.isEmpty ? () {} : _redo,
+                _redoStack.isEmpty || _isHandMode ? () {} : _redo,
                 colorScheme,
-                enabled: _redoStack.isNotEmpty,
+                enabled: _redoStack.isNotEmpty && !_isHandMode,
               ),
-              _buildToolButton(Icons.delete_outline, false, () {
+              _buildToolButton(Icons.delete_outline, false, _isHandMode ? () {} : () {
                 _showClearDialog(theme);
-              }, colorScheme),
+              }, colorScheme, enabled: !_isHandMode),
               SizedBox(width: 8),
               GestureDetector(
                 onTap: () {
                   _saveNote();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Saved'),
-                      duration: Duration(seconds: 1),
+                      content: const Text('Saved'),
+                      duration: const Duration(seconds: 1),
                       behavior: SnackBarBehavior.floating,
-                      margin: EdgeInsets.only(bottom: 80, left: 16, right: 16),
+                      margin: const EdgeInsets.only(bottom: 80, left: 16, right: 16),
                     ),
                   );
                 },
@@ -835,7 +1065,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.check, size: 16, color: colorScheme.onPrimary),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(
                         'Save',
                         style: TextStyle(
@@ -856,44 +1086,74 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   }
 
   IconData _getBrushIcon() {
-    switch (_brushShape) {
-      case BrushShape.round:
-        return Icons.circle_outlined;
-      case BrushShape.square:
-        return Icons.square_outlined;
-      case BrushShape.marker:
-        return Icons.brush;
-      case BrushShape.calligraphy:
-        return Icons.edit_outlined;
-      case BrushShape.pencil:
-        return Icons.create;
-      case BrushShape.pen:
-        return Icons.mode_edit_outline;
-      case BrushShape.highlighter:
-        return Icons.highlight;
-      case BrushShape.spray:
-        return Icons.water_drop_outlined;
+    return _getBrushIconForShape(_brushShape);
+  }
+
+  IconData _getBrushIconForShape(BrushShape shape) {
+    switch (shape) {
+      case BrushShape.round: return Icons.circle_outlined;
+      case BrushShape.square: return Icons.square_outlined;
+      case BrushShape.marker: return Icons.brush;
+      case BrushShape.calligraphy: return Icons.edit_outlined;
+      case BrushShape.pencil: return Icons.create;
+      case BrushShape.pen: return Icons.mode_edit_outline;
+      case BrushShape.highlighter: return Icons.highlight;
+      case BrushShape.spray: return Icons.water_drop_outlined;
+      case BrushShape.technicalPen: return Icons.edit;
+      case BrushShape.fountainPen: return Icons.edit_outlined;
+      case BrushShape.ballpointPen: return Icons.create;
+      case BrushShape.calligraphyPen: return Icons.edit_attributes;
+      case BrushShape.sketchBrush: return Icons.brush;
+      case BrushShape.charcoal: return Icons.grain;
+      case BrushShape.crayon: return Icons.color_lens;
+      case BrushShape.inkBrush: return Icons.brush;
+      case BrushShape.watercolorBrush: return Icons.format_paint;
+      case BrushShape.airBrush: return Icons.air;
+      case BrushShape.sprayPaint: return Icons.water_drop;
+      case BrushShape.oilBrush: return Icons.format_paint;
+      case BrushShape.neonBrush: return Icons.lightbulb_outline;
+      case BrushShape.glitchBrush: return Icons.bug_report;
+      case BrushShape.pixelBrush: return Icons.grid_on;
+      case BrushShape.glowPen: return Icons.light_mode;
+      case BrushShape.shadingBrush: return Icons.gradient;
+      case BrushShape.blurBrush: return Icons.blur_on;
+      case BrushShape.smudgeTool: return Icons.touch_app;
+      case BrushShape.eraserHard: return Icons.cleaning_services;
+      case BrushShape.eraserSoft: return Icons.cleaning_services;
     }
   }
 
   String _getBrushName(BrushShape shape) {
     switch (shape) {
-      case BrushShape.round:
-        return 'Round';
-      case BrushShape.square:
-        return 'Square';
-      case BrushShape.marker:
-        return 'Marker';
-      case BrushShape.calligraphy:
-        return 'Calligraphy';
-      case BrushShape.pencil:
-        return 'Pencil';
-      case BrushShape.pen:
-        return 'Pen';
-      case BrushShape.highlighter:
-        return 'Highlighter';
-      case BrushShape.spray:
-        return 'Spray';
+      case BrushShape.round: return 'Round';
+      case BrushShape.square: return 'Square';
+      case BrushShape.marker: return 'Marker';
+      case BrushShape.calligraphy: return 'Calligraphy';
+      case BrushShape.pencil: return 'Pencil';
+      case BrushShape.pen: return 'Pen';
+      case BrushShape.highlighter: return 'Highlighter';
+      case BrushShape.spray: return 'Spray';
+      case BrushShape.technicalPen: return 'Technical Pen';
+      case BrushShape.fountainPen: return 'Fountain Pen';
+      case BrushShape.ballpointPen: return 'Ballpoint Pen';
+      case BrushShape.calligraphyPen: return 'Calligraphy Pen';
+      case BrushShape.sketchBrush: return 'Sketch Brush';
+      case BrushShape.charcoal: return 'Charcoal';
+      case BrushShape.crayon: return 'Crayon';
+      case BrushShape.inkBrush: return 'Ink Brush';
+      case BrushShape.watercolorBrush: return 'Watercolor';
+      case BrushShape.airBrush: return 'Air Brush';
+      case BrushShape.sprayPaint: return 'Spray Paint';
+      case BrushShape.oilBrush: return 'Oil Brush';
+      case BrushShape.neonBrush: return 'Neon';
+      case BrushShape.glitchBrush: return 'Glitch';
+      case BrushShape.pixelBrush: return 'Pixel';
+      case BrushShape.glowPen: return 'Glow Pen';
+      case BrushShape.shadingBrush: return 'Shading';
+      case BrushShape.blurBrush: return 'Blur';
+      case BrushShape.smudgeTool: return 'Smudge';
+      case BrushShape.eraserHard: return 'Eraser (Hard)';
+      case BrushShape.eraserSoft: return 'Eraser (Soft)';
     }
   }
 
@@ -906,48 +1166,40 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
         return Dialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: height * 0.65,
-            ),
+            constraints: BoxConstraints(maxHeight: height * 0.7),
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  const Text(
-                    'Select Brush',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-
+                  const Text('Select Brush', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 16),
-
                   Expanded(
                     child: GridView.builder(
-                      itemCount: BrushShape.values.length,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
+                        crossAxisCount: 5,
                         crossAxisSpacing: 12,
                         mainAxisSpacing: 12,
                         childAspectRatio: 1,
                       ),
+                      itemCount: BrushShape.values.length,
                       itemBuilder: (context, index) {
                         final brush = BrushShape.values[index];
                         final isSelected = _brushShape == brush;
 
                         return GestureDetector(
                           onTap: () {
-                            setState(() => _brushShape = brush);
+                            setState(() {
+                              _brushShape = brush;
+                              _isErasing = (brush == BrushShape.eraserHard || brush == BrushShape.eraserSoft);
+                            });
                             Navigator.pop(context);
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                              color: isSelected
-                                  ? colorScheme.primary.withOpacity(0.15)
-                                  : colorScheme.surface,
+                              color: isSelected ? colorScheme.primary.withOpacity(0.15) : colorScheme.surface,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: isSelected
-                                    ? colorScheme.primary
-                                    : colorScheme.outline.withOpacity(0.3),
+                                color: isSelected ? colorScheme.primary : colorScheme.outline.withOpacity(0.3),
                                 width: isSelected ? 2 : 1,
                               ),
                             ),
@@ -957,23 +1209,18 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                                 Icon(
                                   _getBrushIconForShape(brush),
                                   size: 28,
-                                  color: isSelected
-                                      ? colorScheme.primary
-                                      : colorScheme.onSurface.withOpacity(0.7),
+                                  color: isSelected ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.7),
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
                                   _getBrushName(brush),
                                   style: TextStyle(
                                     fontSize: 10,
-                                    fontWeight:
-                                    isSelected ? FontWeight.w600 : FontWeight.normal,
-                                    color: isSelected
-                                        ? colorScheme.primary
-                                        : colorScheme.onSurface.withOpacity(0.7),
+                                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                                    color: isSelected ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.7),
                                   ),
                                   textAlign: TextAlign.center,
-                                  maxLines: 1,
+                                  maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ],
@@ -990,27 +1237,6 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
         );
       },
     );
-  }
-
-  IconData _getBrushIconForShape(BrushShape shape) {
-    switch (shape) {
-      case BrushShape.round:
-        return Icons.circle_outlined;
-      case BrushShape.square:
-        return Icons.square_outlined;
-      case BrushShape.marker:
-        return Icons.brush;
-      case BrushShape.calligraphy:
-        return Icons.edit_outlined;
-      case BrushShape.pencil:
-        return Icons.create;
-      case BrushShape.pen:
-        return Icons.mode_edit_outline;
-      case BrushShape.highlighter:
-        return Icons.highlight;
-      case BrushShape.spray:
-        return Icons.water_drop_outlined;
-    }
   }
 
   Widget _buildToolButton(
@@ -1050,12 +1276,12 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
           height: MediaQuery.of(context).size.height * 0.75,
           decoration: BoxDecoration(
             color: CupertinoColors.systemBackground.resolveFrom(context),
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
           ),
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
@@ -1069,19 +1295,19 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                   children: [
                     CupertinoButton(
                       padding: EdgeInsets.zero,
-                      child: Text('Cancel'),
+                      child: const Text('Cancel'),
                       onPressed: () => Navigator.pop(context),
                     ),
                     Text(
                       isBackground ? 'Background Color' : 'Brush Color',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     CupertinoButton(
                       padding: EdgeInsets.zero,
-                      child: Text('Done'),
+                      child: const Text('Done'),
                       onPressed: () {
                         setState(() {
                           if (isBackground) {
@@ -1097,7 +1323,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                 ),
               ),
               Container(
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 height: 80,
                 decoration: BoxDecoration(
                   color: pickerColor,
@@ -1117,7 +1343,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
                       ColorPicker(
@@ -1134,24 +1360,23 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                         labelTypes: const [],
                         pickerAreaBorderRadius: const BorderRadius.all(Radius.circular(12)),
                       ),
-                      SizedBox(height: 24),
+                      const SizedBox(height: 24),
                       Container(
                         height: 1,
                         color: CupertinoColors.separator.resolveFrom(context),
-                        margin: EdgeInsets.symmetric(vertical: 12),
+                        margin: const EdgeInsets.symmetric(vertical: 12),
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Quick Colors',
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
-                            color: CupertinoColors.label.resolveFrom(context),
                           ),
                         ),
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       BlockPicker(
                         pickerColor: pickerColor,
                         onColorChanged: (Color color) {
@@ -1184,7 +1409,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                         layoutBuilder: (context, colors, child) {
                           return GridView.count(
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             crossAxisCount: 7,
                             crossAxisSpacing: 8,
                             mainAxisSpacing: 8,
@@ -1218,7 +1443,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                           );
                         },
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
@@ -1246,11 +1471,11 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CupertinoButton(
-                    child: Text('Cancel'),
+                    child: const Text('Cancel'),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   CupertinoButton(
-                    child: Text('Done'),
+                    child: const Text('Done'),
                     onPressed: () {
                       setState(() {});
                       Navigator.of(context).pop();
@@ -1282,7 +1507,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
       builder: (BuildContext context) => CupertinoActionSheet(
         actions: <CupertinoActionSheetAction>[
           CupertinoActionSheetAction(
-            child: Text('Reset Zoom'),
+            child: const Text('Reset Zoom'),
             onPressed: () {
               Navigator.pop(context);
               setState(() {
@@ -1292,14 +1517,21 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('Note Info'),
+            child: const Text('Export as PDF'),
+            onPressed: () {
+              Navigator.pop(context);
+              _exportToPdf();
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: const Text('Note Info'),
             onPressed: () {
               Navigator.pop(context);
               _showNoteInfo(theme);
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('Clear All', style: TextStyle(color: CupertinoColors.destructiveRed)),
+            child: const Text('Clear All', style: TextStyle(color: CupertinoColors.destructiveRed)),
             onPressed: () {
               Navigator.pop(context);
               setState(() {
@@ -1311,7 +1543,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -1329,11 +1561,11 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
     showCupertinoDialog(
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
-        title: Text('Clear Canvas?'),
-        content: Text('All drawings and text will be erased.'),
+        title: const Text('Clear Canvas?'),
+        content: const Text('All drawings and text will be erased.'),
         actions: [
           CupertinoDialogAction(
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
             onPressed: () => Navigator.pop(ctx),
           ),
           CupertinoDialogAction(
@@ -1346,7 +1578,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               });
               Navigator.pop(ctx);
             },
-            child: Text('Clear'),
+            child: const Text('Clear'),
           ),
         ],
       ),
@@ -1357,37 +1589,43 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
     showCupertinoDialog(
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
-        title: Text('Note Information'),
+        title: const Text('Note Information'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text('Created: ${DateFormat('MMM d, y • h:mm a').format(_currentNote.createdAt)}'),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text('Strokes: ${_strokes.length}'),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text('Text Elements: ${_textElements.length}'),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text('Zoom: ${(_zoomLevel * 100).toStringAsFixed(0)}%'),
           ],
         ),
         actions: [
           CupertinoDialogAction(
-            child: Text('Close'),
+            child: const Text('Close'),
             onPressed: () => Navigator.pop(ctx),
           ),
         ],
       ),
     );
   }
+
+  Offset _clampOffset(Offset offset) {
+    final maxX = ((_zoomLevel - 1.0) * 300).abs();
+    final maxY = ((_zoomLevel - 1.0) * 300).abs();
+    return Offset(offset.dx.clamp(-maxX, maxX), offset.dy.clamp(-maxY, maxY));
+  }
 }
 
-// Drawing Painter with Brush Shapes
 class DrawingPainter extends CustomPainter {
   final List<DrawingStroke> strokes;
+  final Color backgroundColor;
 
-  DrawingPainter(this.strokes);
+  DrawingPainter(this.strokes, this.backgroundColor);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -1396,86 +1634,123 @@ class DrawingPainter extends CustomPainter {
         ..color = Color(stroke.color)
         ..strokeWidth = stroke.strokeWidth
         ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round;
+        ..strokeJoin = StrokeJoin.round
+        ..style = PaintingStyle.stroke;
 
       final brushShape = BrushShape.values[stroke.penType.clamp(0, BrushShape.values.length - 1)];
 
-      if (stroke.strokeWidth < 20) {
-        switch (brushShape) {
-          case BrushShape.round:
-            paint.strokeCap = StrokeCap.round;
-            break;
-          case BrushShape.square:
-            paint.strokeCap = StrokeCap.square;
-            break;
-          case BrushShape.marker:
-            paint.strokeCap = StrokeCap.round;
-            paint.color = paint.color.withOpacity(0.7);
-            break;
-          case BrushShape.calligraphy:
-            paint.strokeCap = StrokeCap.square;
-            break;
-          case BrushShape.pencil:
-            paint.strokeCap = StrokeCap.round;
-            paint.color = paint.color.withOpacity(0.8);
-            break;
-          case BrushShape.pen:
-            paint.strokeCap = StrokeCap.round;
-            break;
-          case BrushShape.highlighter:
-            paint.strokeCap = StrokeCap.square;
-            paint.color = paint.color.withOpacity(0.4);
-            break;
-          case BrushShape.spray:
-            paint.strokeCap = StrokeCap.round;
-            paint.color = paint.color.withOpacity(0.6);
-            break;
+      // Glow for neon/glow
+      if (brushShape == BrushShape.neonBrush || brushShape == BrushShape.glowPen) {
+        final glowPaint = Paint()
+          ..color = Color(stroke.color).withOpacity(0.5)
+          ..strokeWidth = stroke.strokeWidth * 3
+          ..strokeCap = StrokeCap.round
+          ..maskFilter = MaskFilter.blur(BlurStyle.normal, stroke.strokeWidth * 1.2);
+        for (int i = 0; i < stroke.points.length - 2; i += 2) {
+          canvas.drawLine(
+            Offset(stroke.points[i], stroke.points[i + 1]),
+            Offset(stroke.points[i + 2], stroke.points[i + 3]),
+            glowPaint,
+          );
         }
-      } else {
-        paint.strokeCap = StrokeCap.round;
       }
 
-      for (int i = 0; i < stroke.points.length - 2; i += 2) {
-        if (brushShape == BrushShape.calligraphy && stroke.strokeWidth < 20) {
+      // Texture noise for charcoal/crayon/sketch
+      if ([BrushShape.charcoal, BrushShape.crayon, BrushShape.sketchBrush].contains(brushShape)) {
+        final random = Random(stroke.points.hashCode);
+        final noise = brushShape == BrushShape.charcoal ? 5.0 : 2.5;
+        for (int i = 0; i < stroke.points.length - 2; i += 2) {
+          final offset1 = Offset((random.nextDouble() - 0.5) * noise, (random.nextDouble() - 0.5) * noise);
+          final offset2 = Offset((random.nextDouble() - 0.5) * noise, (random.nextDouble() - 0.5) * noise);
+          canvas.drawLine(
+            Offset(stroke.points[i], stroke.points[i + 1]) + offset1,
+            Offset(stroke.points[i + 2], stroke.points[i + 3]) + offset2,
+            paint..color = paint.color.withOpacity(0.8),
+          );
+        }
+        continue;
+      }
+
+      // Pixel brush
+      if (brushShape == BrushShape.pixelBrush) {
+        paint.style = PaintingStyle.fill;
+        for (int i = 0; i < stroke.points.length; i += 2) {
+          canvas.drawRect(
+            Rect.fromCenter(
+              center: Offset(stroke.points[i], stroke.points[i + 1]),
+              width: stroke.strokeWidth,
+              height: stroke.strokeWidth,
+            ),
+            paint,
+          );
+        }
+        continue;
+      }
+
+      // Eraser opacity
+      if (brushShape == BrushShape.eraserSoft) {
+        paint.color = paint.color.withOpacity(0.4);
+      } else if (brushShape == BrushShape.eraserHard) {
+        paint.color = paint.color.withOpacity(1.0);
+      }
+
+      // Style tweaks
+      switch (brushShape) {
+        case BrushShape.round:
+          paint.strokeCap = StrokeCap.round;
+          break;
+        case BrushShape.square:
+          paint.strokeCap = StrokeCap.square;
+          break;
+        case BrushShape.marker:
+        case BrushShape.highlighter:
+          paint.color = paint.color.withOpacity(brushShape == BrushShape.highlighter ? 0.4 : 0.7);
+          paint.strokeCap = brushShape == BrushShape.highlighter ? StrokeCap.square : StrokeCap.round;
+          break;
+        case BrushShape.watercolorBrush:
+        case BrushShape.blurBrush:
+          paint.color = paint.color.withOpacity(0.5);
+          paint.maskFilter = MaskFilter.blur(BlurStyle.normal, stroke.strokeWidth / 4);
+          break;
+        default:
+          break;
+      }
+
+      // Special drawing logic
+      if (brushShape == BrushShape.calligraphy) {
+        for (int i = 0; i < stroke.points.length - 2; i += 2) {
           final dx = stroke.points[i + 2] - stroke.points[i];
           final dy = stroke.points[i + 3] - stroke.points[i + 1];
           final angle = atan2(dy, dx);
 
           final path = Path();
-          final width = stroke.strokeWidth;
-          final halfWidth = width / 2;
+          final halfWidth = stroke.strokeWidth / 2;
 
-          path.moveTo(
-            stroke.points[i] - sin(angle) * halfWidth,
-            stroke.points[i + 1] + cos(angle) * halfWidth,
-          );
-          path.lineTo(
-            stroke.points[i + 2] - sin(angle) * halfWidth,
-            stroke.points[i + 3] + cos(angle) * halfWidth,
-          );
-          path.lineTo(
-            stroke.points[i + 2] + sin(angle) * halfWidth * 0.3,
-            stroke.points[i + 3] - cos(angle) * halfWidth * 0.3,
-          );
-          path.lineTo(
-            stroke.points[i] + sin(angle) * halfWidth * 0.3,
-            stroke.points[i + 1] - cos(angle) * halfWidth * 0.3,
-          );
+          path.moveTo(stroke.points[i] - sin(angle) * halfWidth, stroke.points[i + 1] + cos(angle) * halfWidth);
+          path.lineTo(stroke.points[i + 2] - sin(angle) * halfWidth, stroke.points[i + 3] + cos(angle) * halfWidth);
+          path.lineTo(stroke.points[i + 2] + sin(angle) * halfWidth * 0.3, stroke.points[i + 3] - cos(angle) * halfWidth * 0.3);
+          path.lineTo(stroke.points[i] + sin(angle) * halfWidth * 0.3, stroke.points[i + 1] - cos(angle) * halfWidth * 0.3);
           path.close();
 
           canvas.drawPath(path, paint..style = PaintingStyle.fill);
-        } else if (brushShape == BrushShape.spray && stroke.strokeWidth < 20) {
-          final random = Random(i);
-          for (int j = 0; j < 3; j++) {
-            final offsetX = (random.nextDouble() - 0.5) * stroke.strokeWidth;
-            final offsetY = (random.nextDouble() - 0.5) * stroke.strokeWidth;
+        }
+      } else if ([BrushShape.spray, BrushShape.sprayPaint, BrushShape.airBrush].contains(brushShape)) {
+        final random = Random(stroke.points.hashCode);
+        final density = brushShape == BrushShape.airBrush ? 10 : (brushShape == BrushShape.sprayPaint ? 6 : 3);
+        for (int i = 0; i < stroke.points.length; i += 2) {
+          for (int j = 0; j < density; j++) {
+            final offsetX = (random.nextDouble() - 0.5) * stroke.strokeWidth * 2;
+            final offsetY = (random.nextDouble() - 0.5) * stroke.strokeWidth * 2;
             canvas.drawCircle(
               Offset(stroke.points[i] + offsetX, stroke.points[i + 1] + offsetY),
-              stroke.strokeWidth * 0.15,
+              stroke.strokeWidth * 0.2,
               paint,
             );
           }
-        } else {
+        }
+      } else {
+        // Standard line drawing
+        for (int i = 0; i < stroke.points.length - 2; i += 2) {
           canvas.drawLine(
             Offset(stroke.points[i], stroke.points[i + 1]),
             Offset(stroke.points[i + 2], stroke.points[i + 3]),
@@ -1487,5 +1762,6 @@ class DrawingPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(DrawingPainter oldDelegate) => oldDelegate.strokes != strokes;
+  bool shouldRepaint(DrawingPainter oldDelegate) =>
+      oldDelegate.strokes != strokes || oldDelegate.backgroundColor != backgroundColor;
 }
