@@ -50,6 +50,89 @@ Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
   } catch (_) {}
 }
 
+// --- AUTO-SAVE SERVICE ---
+class ClipboardAutoSaveService {
+  static final ClipboardAutoSaveService _instance = ClipboardAutoSaveService._internal();
+  Timer? _clipboardCheckTimer;
+  String? _lastSavedContent;
+
+  factory ClipboardAutoSaveService() {
+    return _instance;
+  }
+
+  ClipboardAutoSaveService._internal();
+
+  void startAutoSave({Duration interval = const Duration(seconds: 2)}) {
+    // Check if already running
+    if (_clipboardCheckTimer != null && _clipboardCheckTimer!.isActive) {
+      return;
+    }
+
+    _clipboardCheckTimer = Timer.periodic(interval, (_) async {
+      await _checkAndSaveClipboard();
+    });
+    debugPrint("Auto-save service started");
+  }
+
+  void stopAutoSave() {
+    _clipboardCheckTimer?.cancel();
+    _clipboardCheckTimer = null;
+    debugPrint("Auto-save service stopped");
+  }
+
+  Future<void> _checkAndSaveClipboard() async {
+    try {
+      // Check if setting is enabled
+      final settingsBox = Hive.box('settings');
+      final isAutoSaveEnabled = settingsBox.get('clipboardAutoSave', defaultValue: false) as bool;
+
+      if (!isAutoSaveEnabled) return;
+
+      if (!Hive.isBoxOpen('clipboard_box')) return;
+
+      ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
+      String? content = data?.text;
+
+      if (content == null || content.trim().isEmpty) return;
+
+      // Skip if same as last saved
+      if (_lastSavedContent == content.trim()) return;
+
+      final box = Hive.box<ClipboardItem>('clipboard_box');
+
+      // Check if already exists
+      bool exists = box.values.any((item) =>
+      !item.isDeleted && item.content.trim() == content.trim()
+      );
+
+      if (!exists) {
+        final newItem = ClipboardItem(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          content: content.trim(),
+          createdAt: DateTime.now(),
+          type: _detectType(content),
+          sortIndex: -1,
+        );
+        await box.put(newItem.id, newItem);
+        _lastSavedContent = content.trim();
+        debugPrint("Auto-saved clipboard item");
+      }
+    } catch (e) {
+      debugPrint("Auto-save error: $e");
+    }
+  }
+
+  String _detectType(String text) {
+    if (text.startsWith('http')) return 'link';
+    if (RegExp(r'^\+?[0-9]{7,15}$').hasMatch(text)) return 'phone';
+    return 'text';
+  }
+
+  void resetLastSavedContent() {
+    _lastSavedContent = null;
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -87,10 +170,19 @@ void main() async {
 
   await _initializeWidgetData();
 
+  // 7. Start Auto-save Service
+  final autoSaveService = ClipboardAutoSaveService();
+  final settingsBox = Hive.box('settings');
+  final isAutoSaveEnabled = settingsBox.get('clipboardAutoSave', defaultValue: false) as bool;
+
+  if (isAutoSaveEnabled) {
+    autoSaveService.startAutoSave();
+  }
+
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeManager(),
-      child: const CopyClipApp(),
+      child: CopyClipApp(autoSaveService: autoSaveService),
     ),
   );
 }
@@ -105,7 +197,9 @@ Future<void> _initializeWidgetData() async {
 }
 
 class CopyClipApp extends StatefulWidget {
-  const CopyClipApp({super.key});
+  final ClipboardAutoSaveService autoSaveService;
+
+  const CopyClipApp({super.key, required this.autoSaveService});
 
   @override
   State<CopyClipApp> createState() => _CopyClipAppState();
@@ -128,6 +222,21 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
       _handleInitialNotification();
       _configureNotificationListener();
     });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // Resume auto-save when app comes to foreground
+      final settingsBox = Hive.box('settings');
+      final isAutoSaveEnabled = settingsBox.get('clipboardAutoSave', defaultValue: false) as bool;
+
+      if (isAutoSaveEnabled && (widget.autoSaveService._clipboardCheckTimer == null || !widget.autoSaveService._clipboardCheckTimer!.isActive)) {
+        widget.autoSaveService.startAutoSave();
+      }
+    } else if (state == AppLifecycleState.paused) {
+      // Keep auto-save running in background - no action needed
+    }
   }
 
   @override
@@ -183,9 +292,7 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final themeManager = Provider.of<ThemeManager>(context);
 
-    // --- INITIALIZE SCREEN UTIL HERE ---
     return ScreenUtilInit(
-      // Standard iPhone 13/14 size as base design (390 x 844)
       designSize: const Size(390, 844),
       minTextAdapt: true,
       splitScreenMode: true,

@@ -30,13 +30,11 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
 
   List<ClipboardItem> _reorderingList = [];
   bool _isReordering = false;
-  bool _isCheckingClipboard = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _fetchSystemClipboard();
   }
 
   @override
@@ -48,38 +46,6 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _fetchSystemClipboard();
-    }
-  }
-
-  Future<void> _fetchSystemClipboard() async {
-    if (_isCheckingClipboard) return;
-    _isCheckingClipboard = true;
-
-    try {
-      ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
-      String? content = data?.text;
-
-      if (content != null && content.trim().isNotEmpty) {
-        final box = Hive.box<ClipboardItem>('clipboard_box');
-        bool exists = box.values.any((item) => !item.isDeleted && item.content.trim() == content.trim());
-
-        if (!exists) {
-          final newItem = ClipboardItem(
-            id: DateTime.now().millisecondsSinceEpoch.toString(),
-            content: content.trim(),
-            createdAt: DateTime.now(),
-            type: _detectType(content),
-            sortIndex: -1,
-          );
-          await box.put(newItem.id, newItem);
-          if (mounted) setState(() {});
-        }
-      }
-    } finally {
-      _isCheckingClipboard = false;
-    }
   }
 
   String _detectType(String text) {

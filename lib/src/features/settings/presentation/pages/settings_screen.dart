@@ -32,6 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
 
   String _version = "1.0.0";
   String _buildNumber = "1";
+  bool _clipboardAutoSave = false;
 
   @override
   void initState() {
@@ -43,6 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     )..repeat();
     _runAutoCleanup();
     _initPackageInfo();
+    _loadAutoSaveSettings();
   }
 
   Future<void> _initPackageInfo() async {
@@ -51,6 +53,31 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
       _version = info.version;
       _buildNumber = info.buildNumber;
     });
+  }
+
+  Future<void> _loadAutoSaveSettings() async {
+    final settingsBox = Hive.box('settings');
+    setState(() {
+      _clipboardAutoSave = settingsBox.get('clipboardAutoSave', defaultValue: false) as bool;
+    });
+  }
+
+  Future<void> _toggleAutoSave(bool value) async {
+    final settingsBox = Hive.box('settings');
+    await settingsBox.put('clipboardAutoSave', value);
+
+    setState(() {
+      _clipboardAutoSave = value;
+    });
+
+    // Show confirmation message
+    _showGlassSnackBar(
+      value
+          ? "Auto-save enabled. Clipboard items will be saved automatically."
+          : "Auto-save disabled.",
+    );
+
+    debugPrint("Auto-save toggled to: $value");
   }
 
   @override
@@ -241,6 +268,32 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
               physics: const BouncingScrollPhysics(),
               children: [
+                // --- CLIPBOARD SETTINGS ---
+                _buildSectionHeader("Clipboard", primaryColor),
+                GlassContainer(
+                  color: glassTint,
+                  padding: const EdgeInsets.all(4),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(Icons.content_paste, color: primaryColor),
+                        title: Text("Auto-save Clipboard", style: textTheme.bodyLarge),
+                        subtitle: Text(
+                          "Automatically save copied items",
+                          style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.5)),
+                        ),
+                        trailing: Switch(
+                          value: _clipboardAutoSave,
+                          onChanged: _toggleAutoSave,
+                          activeColor: primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
                 // --- APPEARANCE ---
                 _buildSectionHeader("Appearance", primaryColor),
                 GlassContainer(
@@ -338,21 +391,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                         trailing: const Icon(Icons.arrow_forward_ios, size: 14),
                         onTap: () => context.push(AppRouter.feedback),
                       ),
-                      // const Divider(indent: 50),
-                      // ListTile(
-                      //   leading: Icon(Icons.star_outline, color: primaryColor),
-                      //   title: Text("Rate on Play Store", style: textTheme.bodyLarge),
-                      //   onTap: () => _launchURL("https://play.google.com/store/apps/details?id=com.technopradyumn.copyclip"),
-                      // ),
-                      // const Divider(indent: 50),
-                      // ListTile(
-                      //   leading: Icon(Icons.share_outlined, color: primaryColor),
-                      //   title: Text("Share App", style: textTheme.bodyLarge),
-                      //   onTap: () {
-                      //     // Implement share functionality
-                      //     _showGlassSnackBar("Share feature coming soon!");
-                      //   },
-                      // ),
                     ],
                   ),
                 ),
@@ -370,7 +408,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                         radius: 40,
                         backgroundColor: primaryColor.withOpacity(0.2),
                         child: Icon(Icons.person, size: 40, color: primaryColor),
-                        // backgroundImage: const AssetImage('assets/images/developer.png'),
                       ),
                       const SizedBox(height: 12),
                       Text(
@@ -453,7 +490,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                       ),
                       ListTile(
                         title: Text("Build Number", style: textTheme.bodyLarge),
-                        // Keep build number if you plan to release on App Store/Play Store
                         trailing: Text(_buildNumber, style: TextStyle(color: onSurfaceColor.withOpacity(0.4))),
                       ),
                       ListTile(
