@@ -11,6 +11,7 @@ import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../../core/services/backup_service.dart';
 import '../../../../core/theme/theme_manager.dart';
 import '../../../clipboard/data/clipboard_model.dart';
@@ -23,6 +24,7 @@ import 'recycle_bin_screen.dart';
 enum SettingsSectionType {
   clipboard,
   appearance,
+  notifications, // New Section
   recycleBin,
   dataBackup,
   feedback,
@@ -57,6 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   String _version = "1.0.0";
   String _buildNumber = "1";
   bool _clipboardAutoSave = false;
+  bool _notificationEnabled = false; // New state variable
 
   late final List<SettingsSection> _sections;
 
@@ -75,6 +78,22 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     _runAutoCleanup();
     _initPackageInfo();
     _loadAutoSaveSettings();
+    _checkNotificationPermission(); // Check permission on startup
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // Re-check permission when returning from system settings
+      _checkNotificationPermission();
+    }
+  }
+
+  @override
+  void dispose() {
+    _rotationController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   List<SettingsSection> _createSections() {
@@ -88,6 +107,11 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         type: SettingsSectionType.appearance,
         title: "Appearance",
         builder: _buildAppearanceSection,
+      ),
+      SettingsSection(
+        type: SettingsSectionType.notifications,
+        title: "Notifications", // New Section Title
+        builder: _buildNotificationSection,
       ),
       SettingsSection(
         type: SettingsSectionType.recycleBin,
@@ -126,6 +150,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     ];
   }
 
+  // --- Logic Methods ---
+
   Future<void> _initPackageInfo() async {
     final info = await PackageInfo.fromPlatform();
     if (mounted) {
@@ -160,11 +186,38 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     );
   }
 
-  @override
-  void dispose() {
-    _rotationController.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
+  // --- Notification Logic ---
+  Future<void> _checkNotificationPermission() async {
+    final status = await Permission.notification.status;
+    if (mounted) {
+      setState(() {
+        _notificationEnabled = status.isGranted;
+      });
+    }
+  }
+
+  Future<void> _toggleNotification(bool value) async {
+    if (value) {
+      // User wants to ENABLE
+      final status = await Permission.notification.request();
+      setState(() {
+        _notificationEnabled = status.isGranted;
+      });
+
+      if (status.isPermanentlyDenied) {
+        _showGlassSnackBar("Permission permanently denied. Please enable in Settings.", isError: true);
+        await openAppSettings();
+      } else if (!status.isGranted) {
+        _showGlassSnackBar("Notification permission denied.", isError: true);
+      } else {
+        _showGlassSnackBar("Notifications enabled!");
+      }
+    } else {
+      // User wants to DISABLE
+      // Android/iOS do not allow apps to revoke permissions programmatically.
+      _showGlassSnackBar("Redirecting to settings to disable notifications...");
+      await openAppSettings();
+    }
   }
 
   Future<void> _runAutoCleanup() async {
@@ -197,23 +250,11 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
 
   int _getTrashCount() {
     int total = 0;
-
-    if (Hive.isBoxOpen('notes_box')) {
-      total += Hive.box<Note>('notes_box').values.where((item) => item.isDeleted == true).length;
-    }
-    if (Hive.isBoxOpen('todos_box')) {
-      total += Hive.box<Todo>('todos_box').values.where((item) => item.isDeleted == true).length;
-    }
-    if (Hive.isBoxOpen('expenses_box')) {
-      total += Hive.box<Expense>('expenses_box').values.where((item) => item.isDeleted == true).length;
-    }
-    if (Hive.isBoxOpen('journal_box')) {
-      total += Hive.box<JournalEntry>('journal_box').values.where((item) => item.isDeleted == true).length;
-    }
-    if (Hive.isBoxOpen('clipboard_box')) {
-      total += Hive.box<ClipboardItem>('clipboard_box').values.where((item) => item.isDeleted == true).length;
-    }
-
+    if (Hive.isBoxOpen('notes_box')) total += Hive.box<Note>('notes_box').values.where((item) => item.isDeleted == true).length;
+    if (Hive.isBoxOpen('todos_box')) total += Hive.box<Todo>('todos_box').values.where((item) => item.isDeleted == true).length;
+    if (Hive.isBoxOpen('expenses_box')) total += Hive.box<Expense>('expenses_box').values.where((item) => item.isDeleted == true).length;
+    if (Hive.isBoxOpen('journal_box')) total += Hive.box<JournalEntry>('journal_box').values.where((item) => item.isDeleted == true).length;
+    if (Hive.isBoxOpen('clipboard_box')) total += Hive.box<ClipboardItem>('clipboard_box').values.where((item) => item.isDeleted == true).length;
     return total;
   }
 
@@ -294,7 +335,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     );
   }
 
-  // --- SECTION BUILDERS (static to avoid rebuilds) ---
+  // --- SECTION BUILDERS ---
 
   static Widget _buildClipboardSection(BuildContext context, _SettingsScreenState state) {
     final theme = Theme.of(context);
@@ -307,9 +348,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         title: Text("Auto-save Clipboard", style: theme.textTheme.bodyLarge),
         subtitle: Text(
           "Automatically save copied items",
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurface.withOpacity(0.5),
-          ),
+          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5)),
         ),
         trailing: Switch(
           value: state._clipboardAutoSave,
@@ -348,6 +387,31 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     );
   }
 
+  static Widget _buildNotificationSection(BuildContext context, _SettingsScreenState state) {
+    final theme = Theme.of(context);
+    final primaryColor = theme.colorScheme.primary;
+
+    return _SectionCard(
+      color: primaryColor,
+      child: ListTile(
+        leading: Icon(
+          state._notificationEnabled ? Icons.notifications_active : Icons.notifications_off,
+          color: primaryColor,
+        ),
+        title: Text("Push Notifications", style: theme.textTheme.bodyLarge),
+        subtitle: Text(
+          state._notificationEnabled ? "Enabled" : "Disabled",
+          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5)),
+        ),
+        trailing: Switch(
+          value: state._notificationEnabled,
+          onChanged: state._toggleNotification,
+          activeColor: primaryColor,
+        ),
+      ),
+    );
+  }
+
   static Widget _buildRecycleBinSection(BuildContext context, _SettingsScreenState state) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
@@ -359,16 +423,11 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         title: Text("Recycle Bin", style: theme.textTheme.bodyLarge),
         subtitle: Text(
           "${state._getTrashCount()} items • Auto-deletes in 30 days",
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurface.withOpacity(0.5),
-          ),
+          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5)),
         ),
         trailing: const Icon(Icons.arrow_forward_ios, size: 14),
         onTap: () async {
-          await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const RecycleBinScreen()),
-          );
+          await Navigator.push(context, MaterialPageRoute(builder: (_) => const RecycleBinScreen()));
           state.setState(() {});
         },
       ),
@@ -410,9 +469,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         title: Text("Send Feedback", style: theme.textTheme.bodyLarge),
         subtitle: Text(
           "Help us improve",
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurface.withOpacity(0.5),
-          ),
+          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5)),
         ),
         trailing: const Icon(Icons.arrow_forward_ios, size: 14),
         onTap: () => context.push(AppRouter.feedback),
@@ -557,7 +614,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   }
 }
 
-// Extracted widgets to avoid rebuilds
+// Extracted Widgets
 
 class _TopBar extends StatelessWidget {
   const _TopBar({
