@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
+import 'package:flutter/foundation.dart'; // Required for kDebugMode
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_quill/flutter_quill.dart' hide Text;
-import 'package:go_router/go_router.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +25,7 @@ import 'package:copyclip/src/features/notes/data/note_model.dart';
 import 'package:copyclip/src/features/todos/data/todo_adapter.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'src/l10n/app_localizations.dart';
+import 'package:upgrader/upgrader.dart'; // Import upgrader
 
 @pragma("vm:entry-point")
 Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
@@ -48,6 +48,11 @@ Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
   try {
     await channel.invokeMethod('navigateTo', {'route': route});
   } catch (_) {}
+}
+
+class RateUpgraderMessages extends UpgraderMessages {
+  @override
+  String get buttonTitleIgnore => 'Rate App'; // Visual change only
 }
 
 // --- AUTO-SAVE SERVICE ---
@@ -312,6 +317,37 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
             FlutterQuillLocalizations.delegate,
           ],
           supportedLocales: AppLocalizations.supportedLocales,
+
+          // --- UPDATED BUILDER ---
+          builder: (context, child) {
+            return UpgradeAlert(
+              // 1. Configure Logic
+              upgrader: Upgrader(
+                debugLogging: kDebugMode,
+                debugDisplayAlways: kDebugMode, // Uncomment to force show dialog
+                messages: RateUpgraderMessages(), // Use our custom class
+              ),
+
+              // 2. Configure UI Buttons
+              showIgnore: true, // Must be TRUE to show our "Rate App" button
+              showLater: true,
+              barrierDismissible: false, // User must click a button
+
+              // 3. Intercept "Ignore/Rate" Click
+              onIgnore: () {
+                // This runs when user clicks "Rate App"
+                debugPrint("User clicked Rate App");
+
+                // Add your In-App Review logic here!
+                // final InAppReview inAppReview = InAppReview.instance;
+                // inAppReview.openStoreListing();
+
+                return true; // Return true to close the dialog
+              },
+
+              child: child ?? const SizedBox(),
+            );
+          },
         );
       },
     );

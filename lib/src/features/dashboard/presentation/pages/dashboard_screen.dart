@@ -59,11 +59,9 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   // Drag & Drop State
   String? _draggedId;
-  Offset? _dragPosition; // Local coordinates relative to the scrollable content
-  Offset? _lastGlobalPosition; // Global screen coordinates for auto-scroll check
-  final GlobalKey _gridKey = GlobalKey();
+  int? _draggedIndex;
+  Offset? _dragOffset;
 
-  // Scrolling State
   late ScrollController _scrollController;
   Timer? _autoScrollTimer;
 
@@ -120,7 +118,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   Future<void> _initHive() async {
     if (!Hive.isBoxOpen('settings')) await Hive.openBox('settings');
-    // Ensure other boxes are open as needed...
     if (!Hive.isBoxOpen('notes_box')) await Hive.openBox<Note>('notes_box');
     if (!Hive.isBoxOpen('todos_box')) await Hive.openBox<Todo>('todos_box');
     if (!Hive.isBoxOpen('expenses_box')) await Hive.openBox<Expense>('expenses_box');
@@ -151,33 +148,25 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   // --- Drag & Drop Logic ---
 
-  void _onDragStart(String id, LongPressStartDetails details) {
-    final RenderBox? box = _gridKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box != null) {
-      final Offset localPos = box.globalToLocal(details.globalPosition);
-      setState(() {
-        _draggedId = id;
-        _dragPosition = localPos;
-        _lastGlobalPosition = details.globalPosition;
-      });
-      HapticFeedback.mediumImpact();
+  void _onDragStart(String id, int index, LongPressStartDetails details) {
+    setState(() {
+      _draggedId = id;
+      _draggedIndex = index;
+      _dragOffset = details.globalPosition;
+    });
+    HapticFeedback.mediumImpact();
 
-      // Start auto-scroll check loop
-      _autoScrollTimer = Timer.periodic(const Duration(milliseconds: 16), _checkForAutoScroll);
-    }
+    _autoScrollTimer = Timer.periodic(const Duration(milliseconds: 50), _checkForAutoScroll);
   }
 
   void _onDragUpdate(LongPressMoveUpdateDetails details) {
-    final RenderBox? box = _gridKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box == null) return;
+    if (_draggedId == null) return;
 
-    final Offset localPos = box.globalToLocal(details.globalPosition);
     setState(() {
-      _dragPosition = localPos;
-      _lastGlobalPosition = details.globalPosition;
+      _dragOffset = details.globalPosition;
     });
 
-    _handleReorder(localPos);
+    _handleReorder(details.globalPosition);
   }
 
   void _onDragEnd() {
@@ -185,8 +174,8 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     _autoScrollTimer = null;
     setState(() {
       _draggedId = null;
-      _dragPosition = null;
-      _lastGlobalPosition = null;
+      _draggedIndex = null;
+      _dragOffset = null;
     });
     _saveOrder();
   }
@@ -194,20 +183,18 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   // --- Auto-Scroll & Reorder Logic ---
 
   void _checkForAutoScroll(Timer timer) {
-    if (_lastGlobalPosition == null || _draggedId == null) return;
+    if (_dragOffset == null || _draggedId == null) return;
 
     final double screenHeight = MediaQuery.of(context).size.height;
-    final double topThreshold = 150.0; // Distance from top to trigger scroll
-    final double bottomThreshold = screenHeight - 150.0; // Distance from bottom
-    final double scrollSpeed = 10.0; // Pixels per frame
+    final double topThreshold = 150.0;
+    final double bottomThreshold = screenHeight - 150.0;
+    final double scrollSpeed = 8.0;
 
     double scrollDelta = 0;
 
-    if (_lastGlobalPosition!.dy < topThreshold) {
-      // Scroll Up
+    if (_dragOffset!.dy < topThreshold) {
       scrollDelta = -scrollSpeed;
-    } else if (_lastGlobalPosition!.dy > bottomThreshold) {
-      // Scroll Down
+    } else if (_dragOffset!.dy > bottomThreshold) {
       scrollDelta = scrollSpeed;
     }
 
@@ -217,38 +204,33 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
       if (newOffset != _scrollController.offset) {
         _scrollController.jumpTo(newOffset);
-
-        // Update local drag position because the content moved
-        final RenderBox? box = _gridKey.currentContext?.findRenderObject() as RenderBox?;
-        if (box != null) {
-          final Offset localPos = box.globalToLocal(_lastGlobalPosition!);
-          setState(() {
-            _dragPosition = localPos;
-          });
-          _handleReorder(localPos);
-        }
       }
     }
   }
 
-  void _handleReorder(Offset localPos) {
-    // Calculate Grid Metrics dynamically
-    final double gridWidth = MediaQuery.of(context).size.width - 48; // Padding 24 * 2
-    final double itemWidth = (gridWidth - 16) / 2; // Spacing 16
-    final double itemHeight = itemWidth * 1.1;
+  void _handleReorder(Offset globalPosition) {
+    if (_draggedIndex == null) return;
 
-    final int maxRows = (_order.length / 2).ceil();
+    final RenderBox? box = context.findRenderObject() as RenderBox?;
+    if (box == null) return;
 
-    int col = (localPos.dx / (itemWidth + 16)).floor().clamp(0, 1);
-    int row = (localPos.dy / (itemHeight + 16)).floor().clamp(0, maxRows - 1);
+    // Calculate approximate item position based on scroll and screen position
+    final double itemHeight = (MediaQuery.of(context).size.width - 64) / 2 * 1.1 + 16;
+    final double scrollOffset = _scrollController.offset;
+    final double relativeY = globalPosition.dy + scrollOffset - 120; // Adjust for header
 
-    int newIndex = (row * 2 + col).clamp(0, _order.length - 1);
-    int oldIndex = _order.indexOf(_draggedId!);
+    final int newRow = (relativeY / itemHeight).floor().clamp(0, (_order.length / 2).ceil() - 1);
+    final double relativeX = globalPosition.dx - 24;
+    final double itemWidth = (MediaQuery.of(context).size.width - 64) / 2 + 16;
+    final int newCol = (relativeX / itemWidth).floor().clamp(0, 1);
 
-    if (newIndex != oldIndex) {
+    int newIndex = (newRow * 2 + newCol).clamp(0, _order.length - 1);
+
+    if (newIndex != _draggedIndex) {
       setState(() {
-        final item = _order.removeAt(oldIndex);
+        final item = _order.removeAt(_draggedIndex!);
         _order.insert(newIndex, item);
+        _draggedIndex = newIndex;
       });
       HapticFeedback.lightImpact();
     }
@@ -292,59 +274,61 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   Widget _buildFeatureCard(ThemeData theme, FeatureItem item, {bool isDragging = false}) {
     final Color baseColor = featureColors[item.id] ?? item.color;
 
-    return GlassContainer(
-      color: baseColor.withOpacity(0.15),
-      opacity: isDragging ? 0.3 : 0.15,
-      blur: 20,
-      borderRadius: 32,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Hero(
-            tag: '${item.id}_icon',
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    baseColor.withOpacity(0.6),
-                    baseColor.withOpacity(0.9),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: baseColor.withOpacity(0.3),
-                    blurRadius: 12,
-                    offset: const Offset(0, 6),
+    return RepaintBoundary(
+      child: GlassContainer(
+        color: baseColor.withOpacity(0.15),
+        opacity: isDragging ? 0.3 : 0.15,
+        blur: 20,
+        borderRadius: 32,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Hero(
+              tag: '${item.id}_icon',
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      baseColor.withOpacity(0.6),
+                      baseColor.withOpacity(0.9),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                ],
-              ),
-              child: Icon(
-                item.icon,
-                size: 32,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          const SizedBox(height: 14),
-          Hero(
-            tag: '${item.id}_title',
-            child: Material(
-              type: MaterialType.transparency,
-              child: Text(
-                item.title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: theme.colorScheme.onSurface,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: baseColor.withOpacity(0.3),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  item.icon,
+                  size: 32,
+                  color: Colors.white,
                 ),
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 14),
+            Hero(
+              tag: '${item.id}_title',
+              child: Material(
+                type: MaterialType.transparency,
+                child: Text(
+                  item.title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -403,81 +387,67 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     );
   }
 
-  Widget _buildReorderableGrid(ThemeData theme) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final double itemWidth = (constraints.maxWidth - 64) / 2; // 64 = 24 padding left + 24 right + 16 spacing
-        final double itemHeight = itemWidth * 1.1;
+  Widget _buildGridItem(int index, ThemeData theme) {
+    final String id = _order[index];
+    final FeatureItem? item = _features[id];
+    if (item == null) return const SizedBox.shrink();
 
-        final int rowCount = (_order.length / 2).ceil();
-        final double totalHeight = (itemHeight + 16) * rowCount + 100; // Extra bottom padding
+    final bool isDragging = id == _draggedId;
 
-        return SingleChildScrollView(
-          controller: _scrollController,
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: SizedBox(
-            key: _gridKey,
-            height: totalHeight,
-            child: Stack(
-              children: [
-                // Render items in order
-                for (int i = 0; i < _order.length; i++)
-                  _buildAnimatedItem(i, _order[i], itemWidth, itemHeight, theme),
-
-                // Render the dragged item overlay
-                if (_draggedId != null && _dragPosition != null)
-                  Positioned(
-                    left: _dragPosition!.dx - (itemWidth / 2),
-                    top: _dragPosition!.dy - (itemHeight / 2),
-                    child: IgnorePointer(
-                      child: SizedBox(
-                        width: itemWidth,
-                        height: itemHeight,
-                        child: Transform.scale(
-                          scale: 1.1,
-                          child: _buildFeatureCard(theme, _features[_draggedId]!, isDragging: true),
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        );
+    return GestureDetector(
+      onLongPressStart: (d) => _onDragStart(id, index, d),
+      onLongPressMoveUpdate: (d) => _onDragUpdate(d),
+      onLongPressEnd: (_) => _onDragEnd(),
+      onTap: () {
+        final route = item.route;
+        context.push(route);
       },
+      child: _buildBouncingItemWrapper(
+        index,
+        AnimatedOpacity(
+          duration: const Duration(milliseconds: 200),
+          opacity: isDragging ? 0.3 : 1.0,
+          child: _buildFeatureCard(theme, item),
+        ),
+      ),
     );
   }
 
-  Widget _buildAnimatedItem(int index, String id, double width, double height, ThemeData theme) {
-    final isDragging = id == _draggedId;
-    final int col = index % 2;
-    final int row = index ~/ 2;
+  Widget _buildReorderableGrid(ThemeData theme) {
+    return GridView.builder(
+      controller: _scrollController,
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        childAspectRatio: 1 / 1.1,
+      ),
+      itemCount: _order.length,
+      itemBuilder: (context, index) => _buildGridItem(index, theme),
+    );
+  }
 
-    return AnimatedPositioned(
-      // Animation when items switch places
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOutBack,
-      left: col * (width + 16),
-      top: row * (height + 16),
-      child: GestureDetector(
-        onLongPressStart: (d) => _onDragStart(id, d),
-        onLongPressMoveUpdate: (d) => _onDragUpdate(d),
-        onLongPressEnd: (_) => _onDragEnd(),
-        onTap: () {
-          final route = _features[id]?.route;
-          if (route != null) {
-            context.push(route);
-          }
-        },
-        child: _buildBouncingItemWrapper(
-          index,
-          SizedBox(
-            width: width,
-            height: height,
-            child: isDragging
-                ? Opacity(opacity: 0.0, child: _buildFeatureCard(theme, _features[id]!))
-                : _buildFeatureCard(theme, _features[id]!),
+  Widget _buildDragOverlay() {
+    if (_draggedId == null || _dragOffset == null) return const SizedBox.shrink();
+
+    final FeatureItem? item = _features[_draggedId];
+    if (item == null) return const SizedBox.shrink();
+
+    final theme = Theme.of(context);
+    final double itemWidth = (MediaQuery.of(context).size.width - 64) / 2;
+
+    return Positioned(
+      left: _dragOffset!.dx - (itemWidth / 2),
+      top: _dragOffset!.dy - (itemWidth * 1.1 / 2),
+      child: IgnorePointer(
+        child: Transform.scale(
+          scale: 1.1,
+          child: SizedBox(
+            width: itemWidth,
+            height: itemWidth * 1.1,
+            child: _buildFeatureCard(theme, item, isDragging: true),
           ),
         ),
       ),
@@ -490,10 +460,15 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     if (!_boxesOpened) return const GlassScaffold(body: Center(child: CircularProgressIndicator()));
 
     return GlassScaffold(
-      body: Column(
+      body: Stack(
         children: [
-          _buildTopHeader(theme),
-          Expanded(child: _buildReorderableGrid(theme)),
+          Column(
+            children: [
+              _buildTopHeader(theme),
+              Expanded(child: _buildReorderableGrid(theme)),
+            ],
+          ),
+          _buildDragOverlay(),
         ],
       ),
     );

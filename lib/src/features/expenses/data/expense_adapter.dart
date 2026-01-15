@@ -1,9 +1,6 @@
 import 'package:hive/hive.dart';
 import 'expense_model.dart';
 
-import 'package:hive/hive.dart';
-import 'expense_model.dart';
-
 class ExpenseAdapter extends TypeAdapter<Expense> {
   @override
   final int typeId = 3;
@@ -23,7 +20,6 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
       category: fields[5] as String,
       isIncome: fields[6] as bool,
       sortIndex: fields[7] as int? ?? 0,
-      // FIX: Read the deletion fields from binary storage
       isDeleted: fields[10] as bool? ?? false,
       deletedAt: fields[11] as DateTime?,
     );
@@ -32,7 +28,7 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
   @override
   void write(BinaryWriter writer, Expense obj) {
     writer
-      ..writeByte(10) // Total count of fields being written (8 original + 2 new)
+      ..writeByte(12) // Updated total count (original 8 + 2 new + potential future fields)
       ..writeByte(0)..write(obj.id)
       ..writeByte(1)..write(obj.title)
       ..writeByte(2)..write(obj.amount)
@@ -41,7 +37,6 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
       ..writeByte(5)..write(obj.category)
       ..writeByte(6)..write(obj.isIncome)
       ..writeByte(7)..write(obj.sortIndex)
-    // FIX: Write the deletion fields to binary storage
       ..writeByte(10)..write(obj.isDeleted)
       ..writeByte(11)..write(obj.deletedAt);
   }

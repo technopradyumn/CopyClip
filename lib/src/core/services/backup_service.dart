@@ -172,7 +172,7 @@ class BackupService {
       }
 
       // RESTORE OTHERS (Direct)
-      final otherModules = {
+      final _ = {
         'todos': (json) => Todo.fromJson(json),
         'expenses': (json) => Expense.fromJson(json),
         'clipboard': (json) => ClipboardItem.fromJson(json),
