@@ -751,7 +751,10 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
         decoration: BoxDecoration(
           color: baseColor.withOpacity(0.5),
           borderRadius: BorderRadius.circular(32),
-          border: Border.all(color: Colors.white.withOpacity(0.2)),
+          border: Border.all(
+            color: baseColor,
+            width: 1.5,
+          ),
         ),
         child: content,
       );
@@ -760,6 +763,10 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
       decoration: BoxDecoration(
         color: baseColor.withOpacity(0.15),
         borderRadius: BorderRadius.circular(32),
+        border: Border.all(
+          color: baseColor,
+          width: 1,
+        ),
       ),
       child: content,
     );

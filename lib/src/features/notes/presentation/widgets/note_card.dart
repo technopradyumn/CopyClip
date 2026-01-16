@@ -71,7 +71,7 @@ class NoteCard extends StatelessWidget {
       color: noteThemeColor.withOpacity(isSelected ? 0.6 : 0.65), // Direct opacity
       borderRadius: BorderRadius.circular(24),
       border: Border.all(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.black.withOpacity(0.2),
           width: 1.5
       ),
       boxShadow: [

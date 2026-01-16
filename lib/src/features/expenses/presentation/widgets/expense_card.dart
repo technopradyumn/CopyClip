@@ -30,7 +30,7 @@ class ExpenseCard extends StatelessWidget {
       color: theme.colorScheme.surface.withOpacity(isSelected ? 0.3 : 0.15),
       borderRadius: BorderRadius.circular(24),
       border: Border.all(
-        color: isSelected ? theme.colorScheme.primary : Colors.white.withOpacity(0.1),
+        color: isSelected ? theme.colorScheme.primary : Colors.black.withOpacity(0.1),
         width: 1.5,
       ),
       boxShadow: [
