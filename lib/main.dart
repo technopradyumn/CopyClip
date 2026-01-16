@@ -27,7 +27,11 @@ import 'package:copyclip/src/features/notes/data/note_model.dart';
 import 'package:copyclip/src/features/todos/data/todo_adapter.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'src/l10n/app_localizations.dart';
-import 'package:upgrader/upgrader.dart'; // Import upgrader
+import 'package:upgrader/upgrader.dart';
+
+// ==========================================
+// BACKGROUND CALLBACKS & SERVICES
+// ==========================================
 
 @pragma("vm:entry-point")
 Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
@@ -54,26 +58,20 @@ Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
 
 class RateUpgraderMessages extends UpgraderMessages {
   @override
-  String get buttonTitleIgnore => 'Rate App'; // Visual change only
+  String get buttonTitleIgnore => 'Rate App';
 }
 
-// --- AUTO-SAVE SERVICE ---
 class ClipboardAutoSaveService {
   static final ClipboardAutoSaveService _instance = ClipboardAutoSaveService._internal();
   Timer? _clipboardCheckTimer;
   String? _lastSavedContent;
 
-  factory ClipboardAutoSaveService() {
-    return _instance;
-  }
+  factory ClipboardAutoSaveService() => _instance;
 
   ClipboardAutoSaveService._internal();
 
   void startAutoSave({Duration interval = const Duration(seconds: 2)}) {
-    // Check if already running
-    if (_clipboardCheckTimer != null && _clipboardCheckTimer!.isActive) {
-      return;
-    }
+    if (_clipboardCheckTimer != null && _clipboardCheckTimer!.isActive) return;
 
     _clipboardCheckTimer = Timer.periodic(interval, (_) async {
       await _checkAndSaveClipboard();
@@ -89,28 +87,21 @@ class ClipboardAutoSaveService {
 
   Future<void> _checkAndSaveClipboard() async {
     try {
-      // Check if setting is enabled
+      if (!Hive.isBoxOpen('settings') || !Hive.isBoxOpen('clipboard_box')) return;
+
       final settingsBox = Hive.box('settings');
       final isAutoSaveEnabled = settingsBox.get('clipboardAutoSave', defaultValue: false) as bool;
 
       if (!isAutoSaveEnabled) return;
 
-      if (!Hive.isBoxOpen('clipboard_box')) return;
-
       ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
       String? content = data?.text;
 
       if (content == null || content.trim().isEmpty) return;
-
-      // Skip if same as last saved
       if (_lastSavedContent == content.trim()) return;
 
       final box = Hive.box<ClipboardItem>('clipboard_box');
-
-      // Check if already exists
-      bool exists = box.values.any((item) =>
-      !item.isDeleted && item.content.trim() == content.trim()
-      );
+      bool exists = box.values.any((item) => !item.isDeleted && item.content.trim() == content.trim());
 
       if (!exists) {
         final newItem = ClipboardItem(
@@ -134,90 +125,207 @@ class ClipboardAutoSaveService {
     if (RegExp(r'^\+?[0-9]{7,15}$').hasMatch(text)) return 'phone';
     return 'text';
   }
-
-  void resetLastSavedContent() {
-    _lastSavedContent = null;
-  }
 }
 
 void main() async {
+  final startTime = DateTime.now();
   WidgetsFlutterBinding.ensureInitialized();
 
-  await MobileAds.instance.initialize();
+  // 1. Fire and Forget Ads (Do NOT await)
+  MobileAds.instance.initialize();
 
-  await dotenv.load(fileName: ".env");
-
-  // 1. Register Background Callback
+  // 2. Register Background Callback
   HomeWidget.registerBackgroundCallback(homeWidgetBackgroundCallback);
   HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
 
-  // 2. Enable Edge-to-Edge and Landscape for Tablets
+  // 3. System UI
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
-  // 3. Initialize Hive
+  // 4. Initialize Hive & Adapters
   await Hive.initFlutter();
-  await CanvasDatabase().init();
 
-  // 4. Register Adapters
   Hive.registerAdapter(NoteAdapter());
   Hive.registerAdapter(TodoAdapter());
   Hive.registerAdapter(ExpenseAdapter());
   Hive.registerAdapter(JournalEntryAdapter());
   Hive.registerAdapter(ClipboardItemAdapter());
 
-  // 5. Initialize Services
-  await NotificationService().init();
-
-  // 6. Open Boxes
+  // 5. CRITICAL: Open ONLY Settings/Theme boxes here for fast launch
+  // We leave the heavy boxes (Notes/Todos) for the Splash Screen
   await Future.wait([
-    Hive.openBox<Note>('notes_box'),
-    Hive.openBox<Todo>('todos_box'),
-    Hive.openBox<Expense>('expenses_box'),
-    Hive.openBox<JournalEntry>('journal_box'),
-    Hive.openBox<ClipboardItem>('clipboard_box'),
     Hive.openBox('settings'),
     Hive.openBox('theme_box'),
   ]);
 
-  await _initializeWidgetData();
-
-  // 7. Start Auto-save Service
-  final autoSaveService = ClipboardAutoSaveService();
-  final settingsBox = Hive.box('settings');
-  final isAutoSaveEnabled = settingsBox.get('clipboardAutoSave', defaultValue: false) as bool;
-
-  if (isAutoSaveEnabled) {
-    autoSaveService.startAutoSave();
-  }
-
+  // 6. Run App Immediately
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeManager(),
-      child: CopyClipApp(autoSaveService: autoSaveService),
+      child: const RootAppWrapper(),
     ),
   );
 }
 
-Future<void> _initializeWidgetData() async {
-  final String? title = await HomeWidget.getWidgetData<String>('title');
-  if (title != null) return;
+// ==========================================
+// ROOT WRAPPER (Handles Theme & ScreenUtil)
+// ==========================================
 
-  await HomeWidget.saveWidgetData<String>('title', 'Clipboard');
-  await HomeWidget.saveWidgetData<String>('description', 'Access your clipboard history');
-  await HomeWidget.saveWidgetData<String>('deeplink', 'copyclip://clipboard');
+class RootAppWrapper extends StatelessWidget {
+  const RootAppWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final themeManager = Provider.of<ThemeManager>(context);
+
+    return ScreenUtilInit(
+      designSize: const Size(390, 844),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        // We use a State wrapper to handle the Async Initialization
+        return InitializationWrapper(
+          themeMode: themeManager.themeMode,
+          lightTheme: AppTheme.lightTheme(themeManager.primaryColor),
+          darkTheme: AppTheme.darkTheme(themeManager.primaryColor),
+        );
+      },
+    );
+  }
+}
+
+class InitializationWrapper extends StatefulWidget {
+  final ThemeMode themeMode;
+  final ThemeData lightTheme;
+  final ThemeData darkTheme;
+
+  const InitializationWrapper({
+    super.key,
+    required this.themeMode,
+    required this.lightTheme,
+    required this.darkTheme,
+  });
+
+  @override
+  State<InitializationWrapper> createState() => _InitializationWrapperState();
+}
+
+class _InitializationWrapperState extends State<InitializationWrapper> {
+  bool _isReady = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadHeavyResources();
+  }
+
+  Future<void> _loadHeavyResources() async {
+    final start = DateTime.now();
+
+    try {
+      // 1. Load Environment & Databases Parallel
+      await Future.wait([
+        dotenv.load(fileName: ".env"),
+        CanvasDatabase().init(),
+        NotificationService().init(),
+        // Open heavy boxes
+        Hive.openBox<Note>('notes_box'),
+        Hive.openBox<Todo>('todos_box'),
+        Hive.openBox<Expense>('expenses_box'),
+        Hive.openBox<JournalEntry>('journal_box'),
+        Hive.openBox<ClipboardItem>('clipboard_box'),
+        _initializeWidgetData(),
+      ]);
+
+      // 2. Start Services
+      _startAutoSaveService();
+
+      // 3. Artificial Delay (Optional: Smoothness)
+      // Ensure splash shows for at least 1.5 seconds so it doesn't flicker
+      final elapsed = DateTime.now().difference(start);
+      if (elapsed.inMilliseconds < 10) {
+        await Future.delayed(Duration(milliseconds: 10 - elapsed.inMilliseconds));
+      }
+
+    } catch (e) {
+      debugPrint("Initialization Error: $e");
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isReady = true;
+        });
+      }
+    }
+  }
+
+  Future<void> _initializeWidgetData() async {
+    final String? title = await HomeWidget.getWidgetData<String>('title');
+    if (title != null) return;
+    await HomeWidget.saveWidgetData<String>('title', 'Clipboard');
+    await HomeWidget.saveWidgetData<String>('description', 'Access your clipboard history');
+    await HomeWidget.saveWidgetData<String>('deeplink', 'copyclip://clipboard');
+  }
+
+  void _startAutoSaveService() {
+    final autoSaveService = ClipboardAutoSaveService();
+    final settingsBox = Hive.box('settings');
+    final isAutoSaveEnabled = settingsBox.get('clipboardAutoSave', defaultValue: false) as bool;
+    if (isAutoSaveEnabled) {
+      autoSaveService.startAutoSave();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_isReady) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        themeMode: widget.themeMode,
+        theme: widget.lightTheme,
+        darkTheme: widget.darkTheme,
+        home: Scaffold(
+          backgroundColor: widget.themeMode == ThemeMode.dark ? Colors.black : Colors.white,
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/logo/copyclip_logo.png',
+                  width: 120,
+                  height: 120,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    // 2. If Ready, show the Real App with Router
+    return CopyClipApp(
+      themeMode: widget.themeMode,
+      lightTheme: widget.lightTheme,
+      darkTheme: widget.darkTheme,
+    );
+  }
 }
 
 class CopyClipApp extends StatefulWidget {
-  final ClipboardAutoSaveService autoSaveService;
+  final ThemeMode themeMode;
+  final ThemeData lightTheme;
+  final ThemeData darkTheme;
 
-  const CopyClipApp({super.key, required this.autoSaveService});
+  const CopyClipApp({
+    super.key,
+    required this.themeMode,
+    required this.lightTheme,
+    required this.darkTheme,
+  });
 
   @override
   State<CopyClipApp> createState() => _CopyClipAppState();
 }
 
 class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
-  // Method Channels
   static const widgetChannel = MethodChannel('com.technopradyumn.copyclip/widget_handler');
 
   @override
@@ -225,10 +333,8 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    // Channel Handlers
+    // Attach Listeners ONLY after app is ready
     widgetChannel.setMethodCallHandler(_handleNativeCalls);
-
-    // Initial Setup
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _handleInitialNotification();
       _configureNotificationListener();
@@ -237,16 +343,12 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    final service = ClipboardAutoSaveService();
     if (state == AppLifecycleState.resumed) {
-      // Resume auto-save when app comes to foreground
       final settingsBox = Hive.box('settings');
-      final isAutoSaveEnabled = settingsBox.get('clipboardAutoSave', defaultValue: false) as bool;
-
-      if (isAutoSaveEnabled && (widget.autoSaveService._clipboardCheckTimer == null || !widget.autoSaveService._clipboardCheckTimer!.isActive)) {
-        widget.autoSaveService.startAutoSave();
+      if (settingsBox.get('clipboardAutoSave', defaultValue: false) as bool) {
+        service.startAutoSave();
       }
-    } else if (state == AppLifecycleState.paused) {
-      // Keep auto-save running in background - no action needed
     }
   }
 
@@ -260,16 +362,10 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
     if (call.method == 'navigateTo') {
       final dynamic args = call.arguments;
       String? route;
+      if (args is String) route = args;
+      else if (args is Map) route = args['route'];
 
-      if (args is String) {
-        route = args;
-      } else if (args is Map) {
-        route = args['route'];
-      }
-
-      if (route != null) {
-        router.push(route);
-      }
+      if (route != null) router.push(route);
     }
   }
 
@@ -284,9 +380,7 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
 
   void _configureNotificationListener() {
     NotificationService().onNotifications.listen((String? payload) {
-      if (payload != null) {
-        _openTodo(payload);
-      }
+      if (payload != null) _openTodo(payload);
     });
   }
 
@@ -301,59 +395,35 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    final themeManager = Provider.of<ThemeManager>(context);
-
-    return ScreenUtilInit(
-      designSize: const Size(390, 844),
-      minTextAdapt: true,
-      splitScreenMode: true,
+    return MaterialApp.router(
+      title: 'CopyClip',
+      debugShowCheckedModeBanner: false,
+      themeMode: widget.themeMode,
+      theme: widget.lightTheme,
+      darkTheme: widget.darkTheme,
+      routerConfig: router,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        FlutterQuillLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
       builder: (context, child) {
-        return MaterialApp.router(
-          title: 'CopyClip',
-          debugShowCheckedModeBanner: false,
-          themeMode: themeManager.themeMode,
-          theme: AppTheme.lightTheme(themeManager.primaryColor),
-          darkTheme: AppTheme.darkTheme(themeManager.primaryColor),
-          routerConfig: router,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            FlutterQuillLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
-
-          // --- UPDATED BUILDER ---
-          builder: (context, child) {
-            return UpgradeAlert(
-              // 1. Configure Logic
-              upgrader: Upgrader(
-                debugLogging: kDebugMode,
-                debugDisplayAlways: kDebugMode, // Uncomment to force show dialog
-                messages: RateUpgraderMessages(), // Use our custom class
-              ),
-
-              // 2. Configure UI Buttons
-              showIgnore: true, // Must be TRUE to show our "Rate App" button
-              showLater: true,
-              barrierDismissible: false, // User must click a button
-
-              // 3. Intercept "Ignore/Rate" Click
-              onIgnore: () {
-                // This runs when user clicks "Rate App"
-                debugPrint("User clicked Rate App");
-
-                // Add your In-App Review logic here!
-                // final InAppReview inAppReview = InAppReview.instance;
-                // inAppReview.openStoreListing();
-
-                return true; // Return true to close the dialog
-              },
-
-              child: child ?? const SizedBox(),
-            );
+        return UpgradeAlert(
+          upgrader: Upgrader(
+            debugLogging: kDebugMode,
+            messages: RateUpgraderMessages(),
+          ),
+          showIgnore: true,
+          showLater: true,
+          barrierDismissible: false,
+          onIgnore: () {
+            debugPrint("User clicked Rate App");
+            return true;
           },
+          child: child ?? const SizedBox(),
         );
       },
     );

@@ -8,27 +8,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
-
 import 'package:copyclip/main.dart';
-import 'package:copyclip/src/core/theme/theme_manager.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:copyclip/src/core/theme/app_theme.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() async {
+    const channel = MethodChannel('plugins.flutter.io/path_provider');
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+      return '.';
+    });
+
     await Hive.initFlutter();
     await Hive.openBox('settings');
     await Hive.openBox('theme_box');
+
+    // Hive.registerAdapter(TodoAdapter());
+    // await Hive.openBox<Todo>('todos_box');
   });
 
   testWidgets('App launches without crashing', (WidgetTester tester) async {
-    final autoSaveService = ClipboardAutoSaveService();
-
     await tester.pumpWidget(
-      ChangeNotifierProvider(
-        create: (_) => ThemeManager(),
-        child: CopyClipApp(autoSaveService: autoSaveService),
+      ScreenUtilInit(
+        designSize: const Size(390, 844),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return CopyClipApp(
+            themeMode: ThemeMode.system,
+            lightTheme: AppTheme.lightTheme(Colors.blue),
+            darkTheme: AppTheme.darkTheme(Colors.blue),
+          );
+        },
       ),
     );
 
