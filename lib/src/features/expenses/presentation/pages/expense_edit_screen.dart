@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
-import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/features/expenses/data/expense_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,11 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-
-// Import your Glass Dialog
 import '../../../../core/widgets/glass_dialog.dart';
 
-// --- Form State & History ---
 class ExpenseFormState {
   final String title;
   final String amount;
@@ -66,12 +61,11 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
   final List<ExpenseFormState> _undoStack = [];
   final List<ExpenseFormState> _redoStack = [];
   Timer? _debounceTimer;
+  bool _isInitialized = false;
 
-  // Track initial state for "isDirty" check
   late ExpenseFormState _initialState;
 
   final List<String> _currencies = ['\$', '€', '£', '₹', '¥', 'A\$', 'C\$', 'kr', 'R\$', 'S\$'];
-
   List<String> _categorySuggestions = [
     'General', 'Food', 'Transport', 'Bills', 'Shopping',
     'Entertainment', 'Health', 'Salary', 'Freelance'
@@ -80,6 +74,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
   @override
   void initState() {
     super.initState();
+
     _titleController = TextEditingController(text: widget.expense?.title ?? '');
     _amountController = TextEditingController(text: widget.expense?.amount.toString().replaceAll('.0', '') ?? '');
     _categoryController = TextEditingController(text: widget.expense?.category ?? 'General');
@@ -88,13 +83,21 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
       _selectedDate = widget.expense!.date;
       _isIncome = widget.expense!.isIncome;
       _selectedCurrency = widget.expense!.currency;
-    } else {
-      _loadSettings();
     }
 
+    // Schedule initialization
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _completeInitialization();
+    });
+  }
+
+  void _completeInitialization() {
+    if (_isInitialized) return;
+    _isInitialized = true;
+
+    _loadSettings();
     _loadExistingCategories();
 
-    // Capture initial state
     _initialState = ExpenseFormState(
         _titleController.text,
         _amountController.text,
@@ -106,30 +109,53 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
     _undoStack.add(_initialState);
 
     _categoryFocusNode.addListener(() {
-      if (_categoryFocusNode.hasFocus) _showOverlay();
-      else _removeOverlay();
+      if (_categoryFocusNode.hasFocus) {
+        _showOverlay();
+      } else {
+        _removeOverlay();
+      }
     });
 
     _titleController.addListener(_onTextChanged);
     _amountController.addListener(_onTextChanged);
     _categoryController.addListener(_onTextChanged);
+
+    if (mounted) setState(() {});
   }
 
   void _loadSettings() {
-    if (Hive.isBoxOpen('settings')) {
-      final box = Hive.box('settings');
-      setState(() => _selectedCurrency = box.get('last_currency', defaultValue: '\$'));
+    try {
+      if (Hive.isBoxOpen('settings')) {
+        final box = Hive.box('settings');
+        final currency = box.get('last_currency', defaultValue: '\$');
+        if (widget.expense == null) {
+          if (mounted) setState(() => _selectedCurrency = currency);
+        }
+      }
+    } catch (e) {
+      debugPrint("Error loading settings: $e");
     }
   }
 
   void _loadExistingCategories() {
-    if (Hive.isBoxOpen('expenses_box')) {
-      final box = Hive.box<Expense>('expenses_box');
-      // ADDED FILTER: Only load categories from active expenses
-      final existing = box.values.where((e) => !e.isDeleted).map((e) => e.category).toSet().toList();
-      if (existing.isNotEmpty) {
-        setState(() => _categorySuggestions = {..._categorySuggestions, ...existing}.toList()..sort());
+    try {
+      if (Hive.isBoxOpen('expenses_box')) {
+        final box = Hive.box<Expense>('expenses_box');
+        final existing = box.values
+            .where((e) => !e.isDeleted)
+            .take(50)
+            .map((e) => e.category)
+            .toSet()
+            .toList();
+
+        if (existing.isNotEmpty) {
+          setState(() {
+            _categorySuggestions = {..._categorySuggestions, ...existing}.toList()..sort();
+          });
+        }
       }
+    } catch (e) {
+      debugPrint("Error loading categories: $e");
     }
   }
 
@@ -146,7 +172,6 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
     super.dispose();
   }
 
-  // --- Dirty Check for Back Press ---
   Future<bool> _onWillPop() async {
     final currentState = ExpenseFormState(
         _titleController.text,
@@ -157,7 +182,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
         _isIncome
     );
 
-    if (currentState == _initialState) return true; // No changes
+    if (currentState == _initialState) return true;
 
     final result = await showDialog<String>(
       context: context,
@@ -172,7 +197,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
     );
 
     if (result == 'save') {
-      _save();
+      await _save();
       return true;
     } else if (result == 'discard') {
       return true;
@@ -189,12 +214,12 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
       _selectedDate,
       _isIncome,
     );
+
     if (_undoStack.isNotEmpty && _undoStack.last == state) return;
 
     _undoStack.add(state);
     if (clearRedo) _redoStack.clear();
     if (_undoStack.length > 20) _undoStack.removeAt(0);
-    if (mounted) setState(() {});
   }
 
   void _undo() {
@@ -215,12 +240,24 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
 
   void _restoreState(ExpenseFormState state) {
     setState(() {
-      if (_titleController.text != state.title)
-        _titleController.value = TextEditingValue(text: state.title, selection: TextSelection.collapsed(offset: state.title.length));
-      if (_amountController.text != state.amount)
-        _amountController.value = TextEditingValue(text: state.amount, selection: TextSelection.collapsed(offset: state.amount.length));
-      if (_categoryController.text != state.category)
-        _categoryController.value = TextEditingValue(text: state.category, selection: TextSelection.collapsed(offset: state.category.length));
+      if (_titleController.text != state.title) {
+        _titleController.value = TextEditingValue(
+            text: state.title,
+            selection: TextSelection.collapsed(offset: state.title.length)
+        );
+      }
+      if (_amountController.text != state.amount) {
+        _amountController.value = TextEditingValue(
+            text: state.amount,
+            selection: TextSelection.collapsed(offset: state.amount.length)
+        );
+      }
+      if (_categoryController.text != state.category) {
+        _categoryController.value = TextEditingValue(
+            text: state.category,
+            selection: TextSelection.collapsed(offset: state.category.length)
+        );
+      }
       _selectedCurrency = state.currency;
       _selectedDate = state.date;
       _isIncome = state.isIncome;
@@ -228,8 +265,10 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
   }
 
   void _onTextChanged() {
-    if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
-    _debounceTimer = Timer(const Duration(milliseconds: 800), () => _saveSnapshot());
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(milliseconds: 800), () {
+      _saveSnapshot();
+    });
   }
 
   void _showOverlay() {
@@ -278,7 +317,6 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                   return ListTile(
                     title: Text(option, style: theme.textTheme.bodyLarge?.copyWith(color: onSurfaceColor)),
                     onTap: () {
-                      _saveSnapshot();
                       _categoryController.text = option;
                       _saveSnapshot();
                       _categoryFocusNode.unfocus();
@@ -297,7 +335,6 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
 
   void _pickDateTime() {
     _unfocusAll();
-    _saveSnapshot();
 
     final surfaceColor = Theme.of(context).colorScheme.surface;
     final primaryColor = Theme.of(context).colorScheme.primary;
@@ -350,44 +387,71 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
     );
   }
 
-  void _save() async {
-    if (_titleController.text.isEmpty || _amountController.text.isEmpty) return;
-    final amount = double.tryParse(_amountController.text.replaceAll(',', ''));
-    if (amount == null) return;
-
-    final box = Hive.box<Expense>('expenses_box');
-    final id = widget.expense?.id ?? DateTime.now().millisecondsSinceEpoch.toString();
-
-    final expense = Expense(
-      id: id,
-      title: _titleController.text,
-      amount: amount,
-      currency: _selectedCurrency,
-      date: _selectedDate,
-      category: _categoryController.text,
-      isIncome: _isIncome,
-      sortIndex: widget.expense?.sortIndex ?? 0,
-    );
-
-    await box.put(id, expense);
-    if (Hive.isBoxOpen('settings')) {
-      Hive.box('settings').put('last_currency', _selectedCurrency);
+  Future<void> _save() async {
+    if (_titleController.text.isEmpty || _amountController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in title and amount')),
+      );
+      return;
     }
 
-    // Update initial state so pop doesn't trigger dialog
-    _initialState = ExpenseFormState(
-        expense.title,
-        expense.amount.toString(),
-        expense.category,
-        expense.currency,
-        expense.date,
-        expense.isIncome
-    );
+    // Robust Double Parsing
+    final cleanAmount = _amountController.text.replaceAll(',', '').replaceAll(' ', '');
+    final amount = double.tryParse(cleanAmount);
+    if (amount == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid amount format')),
+      );
+      return;
+    }
 
-    if (mounted) context.pop();
+    try {
+      if (!Hive.isBoxOpen('expenses_box')) {
+        await Hive.openBox<Expense>('expenses_box');
+      }
+      final box = Hive.box<Expense>('expenses_box');
+
+      // Use existing ID or create new one
+      final id = widget.expense?.id ?? DateTime.now().millisecondsSinceEpoch.toString();
+
+      final expense = Expense(
+        id: id,
+        title: _titleController.text.trim(),
+        amount: amount,
+        currency: _selectedCurrency,
+        date: _selectedDate,
+        category: _categoryController.text.isEmpty ? 'General' : _categoryController.text.trim(),
+        isIncome: _isIncome,
+        sortIndex: widget.expense?.sortIndex ?? 0,
+      );
+
+      debugPrint("Saving expense: $id - ${expense.title} - ${expense.amount}");
+      await box.put(id, expense);
+
+      if (Hive.isBoxOpen('settings')) {
+        await Hive.box('settings').put('last_currency', _selectedCurrency);
+      }
+
+      _initialState = ExpenseFormState(
+          expense.title,
+          expense.amount.toString(),
+          expense.category,
+          expense.currency,
+          expense.date,
+          expense.isIncome
+      );
+
+      if (mounted) context.pop();
+    } catch (e) {
+      debugPrint("❌ Error saving expense: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error saving: $e')),
+        );
+      }
+    }
   }
 
-  // REFACTORED: Soft delete for single transaction
   void _confirmDelete() {
     if (widget.expense == null) return;
 
@@ -398,13 +462,22 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
         content: "You can restore this transaction later from settings.",
         confirmText: "Move",
         isDestructive: true,
-        onConfirm: () {
-          final expense = widget.expense!;
-          expense.isDeleted = true;
-          expense.deletedAt = DateTime.now();
-          expense.save();
-          Navigator.pop(ctx); // Close dialog
-          context.pop(); // Go back from edit screen
+        onConfirm: () async {
+          try {
+            if (!Hive.isBoxOpen('expenses_box')) {
+              await Hive.openBox<Expense>('expenses_box');
+            }
+            final expense = widget.expense!;
+            expense.isDeleted = true;
+            expense.deletedAt = DateTime.now();
+            await expense.save(); // Using HiveObject save method
+            if (mounted) {
+              Navigator.pop(ctx);
+              context.pop();
+            }
+          } catch (e) {
+            debugPrint("Error deleting: $e");
+          }
         },
       ),
     );
@@ -413,18 +486,17 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
   @override
   Widget build(BuildContext context) {
     final heroId = widget.expense?.id ?? 'new';
-
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
     final onSurfaceColor = colorScheme.onSurface;
     final primaryColor = colorScheme.primary;
     final dividerColor = theme.dividerColor;
-
     final expenseColor = Colors.redAccent;
+    final incomeColor = Colors.greenAccent;
     final fillColor = onSurfaceColor.withOpacity(0.12);
 
-    return WillPopScope( // Wrap Scaffold in WillPopScope
+    return WillPopScope(
       onWillPop: _onWillPop,
       child: GestureDetector(
         onTap: _unfocusAll,
@@ -434,18 +506,28 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
           actions: [
             IconButton(
               onPressed: _undoStack.length > 1 ? _undo : null,
-              icon: Icon(Icons.undo, color: _undoStack.length > 1 ? onSurfaceColor : onSurfaceColor.withOpacity(0.24)),
+              icon: Icon(
+                  Icons.undo,
+                  color: _undoStack.length > 1
+                      ? onSurfaceColor
+                      : onSurfaceColor.withOpacity(0.24)
+              ),
               tooltip: 'Undo',
             ),
             IconButton(
               onPressed: _redoStack.isNotEmpty ? _redo : null,
-              icon: Icon(Icons.redo, color: _redoStack.isNotEmpty ? onSurfaceColor : onSurfaceColor.withOpacity(0.24)),
+              icon: Icon(
+                  Icons.redo,
+                  color: _redoStack.isNotEmpty
+                      ? onSurfaceColor
+                      : onSurfaceColor.withOpacity(0.24)
+              ),
               tooltip: 'Redo',
             ),
             if (widget.expense != null)
               IconButton(
-                  icon: Icon(Icons.delete_outline, color: expenseColor),
-                  onPressed: _confirmDelete // Call confirm dialog
+                icon: Icon(Icons.delete_outline, color: expenseColor),
+                onPressed: _confirmDelete,
               ),
           ],
           body: SingleChildScrollView(
@@ -454,19 +536,37 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Income/Expense Toggle
                 Center(
                   child: CupertinoSlidingSegmentedControl<bool>(
                     groupValue: _isIncome,
-                    thumbColor: _isIncome ? Colors.greenAccent : expenseColor,
+                    thumbColor: _isIncome ? incomeColor : expenseColor,
                     backgroundColor: onSurfaceColor.withOpacity(0.12),
                     children: {
-                      false: Padding(padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), child: Text("Expense", style: TextStyle(color: !_isIncome ? Colors.white : onSurfaceColor.withOpacity(0.54)))),
-                      true: Padding(padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), child: Text("Income", style: TextStyle(color: _isIncome ? Colors.black : onSurfaceColor.withOpacity(0.54)))),
+                      false: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          child: Text(
+                              "Expense",
+                              style: TextStyle(
+                                  color: !_isIncome ? Colors.white : onSurfaceColor.withOpacity(0.54)
+                              )
+                          )
+                      ),
+                      true: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          child: Text(
+                              "Income",
+                              style: TextStyle(
+                                  color: _isIncome ? Colors.black : onSurfaceColor.withOpacity(0.54)
+                              )
+                          )
+                      ),
                     },
                     onValueChanged: (val) {
-                      _saveSnapshot();
-                      setState(() => _isIncome = val!);
-                      _saveSnapshot();
+                      if (val != null) {
+                        setState(() => _isIncome = val);
+                        _saveSnapshot();
+                      }
                     },
                   ),
                 ),
@@ -478,17 +578,26 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
-                      decoration: BoxDecoration(color: fillColor, borderRadius: BorderRadius.circular(12)),
+                      decoration: BoxDecoration(
+                          color: fillColor,
+                          borderRadius: BorderRadius.circular(12)
+                      ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
                           value: _selectedCurrency,
                           dropdownColor: theme.cardColor,
                           icon: Icon(Icons.arrow_drop_down, color: onSurfaceColor.withOpacity(0.6)),
-                          items: _currencies.map((c) => DropdownMenuItem(value: c, child: Text(c, style: textTheme.headlineSmall))).toList(),
+                          items: _currencies.map((c) {
+                            return DropdownMenuItem(
+                                value: c,
+                                child: Text(c, style: textTheme.headlineSmall)
+                            );
+                          }).toList(),
                           onChanged: (val) {
-                            _saveSnapshot();
-                            setState(() => _selectedCurrency = val!);
-                            _saveSnapshot();
+                            if (val != null) {
+                              setState(() => _selectedCurrency = val);
+                              _saveSnapshot();
+                            }
                           },
                         ),
                       ),
@@ -506,11 +615,13 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                             style: textTheme.headlineLarge?.copyWith(
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold,
-                                color: _isIncome ? Colors.greenAccent : expenseColor
+                                color: _isIncome ? incomeColor : expenseColor
                             ),
                             decoration: InputDecoration(
                                 hintText: '0.00',
-                                hintStyle: textTheme.headlineLarge?.copyWith(color: onSurfaceColor.withOpacity(0.12)),
+                                hintStyle: textTheme.headlineLarge?.copyWith(
+                                    color: onSurfaceColor.withOpacity(0.12)
+                                ),
                                 border: InputBorder.none
                             ),
                           ),
@@ -523,7 +634,12 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                 const SizedBox(height: 24),
 
                 // Description
-                Text("Description", style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.7))),
+                Text(
+                    "Description",
+                    style: textTheme.bodySmall?.copyWith(
+                        color: onSurfaceColor.withOpacity(0.7)
+                    )
+                ),
                 const SizedBox(height: 8),
                 Hero(
                   tag: 'expense_title_$heroId',
@@ -536,19 +652,27 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: fillColor,
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none
+                        ),
                         hintText: 'What is this for?',
-                        hintStyle: textTheme.bodyLarge?.copyWith(color: onSurfaceColor.withOpacity(0.38)),
+                        hintStyle: textTheme.bodyLarge?.copyWith(
+                            color: onSurfaceColor.withOpacity(0.38)
+                        ),
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 24),
 
-                // Category Input & Chips
-                Text("Category", style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.7))),
+                // Category
+                Text(
+                    "Category",
+                    style: textTheme.bodySmall?.copyWith(
+                        color: onSurfaceColor.withOpacity(0.7)
+                    )
+                ),
                 const SizedBox(height: 8),
                 CompositedTransformTarget(
                   link: _layerLink,
@@ -563,22 +687,30 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: fillColor,
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-                          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none
+                          ),
                           suffixIcon: IconButton(
-                            icon: Icon(_isDropdownOpen ? Icons.arrow_drop_up : Icons.arrow_drop_down, color: onSurfaceColor.withOpacity(0.6)),
-                            onPressed: _isDropdownOpen ? _unfocusAll : _categoryFocusNode.requestFocus,
+                            icon: Icon(
+                                _isDropdownOpen ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                                color: onSurfaceColor.withOpacity(0.6)
+                            ),
+                            onPressed: _isDropdownOpen
+                                ? _unfocusAll
+                                : () => _categoryFocusNode.requestFocus(),
                           ),
                           hintText: 'Select or type...',
-                          hintStyle: textTheme.bodyLarge?.copyWith(color: onSurfaceColor.withOpacity(0.38)),
+                          hintStyle: textTheme.bodyLarge?.copyWith(
+                              color: onSurfaceColor.withOpacity(0.38)
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
 
-                // --- QUICK SELECT CHIPS ---
+                // Category Chips
                 const SizedBox(height: 12),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -589,17 +721,22 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                       return Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: ChoiceChip(
-                          label: Text(cat, style: TextStyle(color: isSelected ? colorScheme.onPrimary : onSurfaceColor.withOpacity(0.8))),
+                          label: Text(
+                              cat,
+                              style: TextStyle(
+                                  color: isSelected
+                                      ? colorScheme.onPrimary
+                                      : onSurfaceColor.withOpacity(0.8)
+                              )
+                          ),
                           selected: isSelected,
                           selectedColor: primaryColor,
                           backgroundColor: fillColor,
-                          labelStyle: textTheme.bodyMedium,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                               side: BorderSide.none
                           ),
                           onSelected: (bool selected) {
-                            _saveSnapshot();
                             _categoryController.text = cat;
                             _saveSnapshot();
                           },
@@ -612,7 +749,12 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                 const SizedBox(height: 24),
 
                 // Date
-                Text("Date", style: textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.7))),
+                Text(
+                    "Date",
+                    style: textTheme.bodySmall?.copyWith(
+                        color: onSurfaceColor.withOpacity(0.7)
+                    )
+                ),
                 const SizedBox(height: 8),
                 Hero(
                   tag: 'expense_date_$heroId',
@@ -628,9 +770,15 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.calendar_today, color: onSurfaceColor.withOpacity(0.6)),
+                            Icon(
+                                Icons.calendar_today,
+                                color: onSurfaceColor.withOpacity(0.6)
+                            ),
                             const SizedBox(width: 16),
-                            Text(DateFormat('MMM dd, yyyy • h:mm a').format(_selectedDate), style: textTheme.bodyLarge?.copyWith(color: onSurfaceColor)),
+                            Text(
+                                DateFormat('MMM dd, yyyy • h:mm a').format(_selectedDate),
+                                style: textTheme.bodyLarge?.copyWith(color: onSurfaceColor)
+                            ),
                           ],
                         ),
                       ),
@@ -643,9 +791,15 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
           ),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: _save,
-            backgroundColor: _isIncome ? Colors.greenAccent : expenseColor,
-            label: Text('Save', style: textTheme.bodyLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
-            icon: Icon(Icons.check, color: Colors.white),
+            backgroundColor: _isIncome ? incomeColor : expenseColor,
+            label: Text(
+                'Save',
+                style: textTheme.bodyLarge?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold
+                )
+            ),
+            icon: const Icon(Icons.check, color: Colors.white),
           ),
         ),
       ),

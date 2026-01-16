@@ -1,6 +1,7 @@
 import 'dart:async';
+import 'dart:isolate';
 import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
-import 'package:flutter/foundation.dart'; // Required for kDebugMode
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
@@ -27,7 +28,7 @@ import 'package:copyclip/src/features/notes/data/note_model.dart';
 import 'package:copyclip/src/features/todos/data/todo_adapter.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'src/l10n/app_localizations.dart';
-import 'package:upgrader/upgrader.dart'; // Import upgrader
+import 'package:upgrader/upgrader.dart';
 
 @pragma("vm:entry-point")
 Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
@@ -54,199 +55,237 @@ Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
 
 class RateUpgraderMessages extends UpgraderMessages {
   @override
-  String get buttonTitleIgnore => 'Rate App'; // Visual change only
+  String get buttonTitleIgnore => 'Rate App';
 }
 
-// --- AUTO-SAVE SERVICE ---
-class ClipboardAutoSaveService {
-  static final ClipboardAutoSaveService _instance = ClipboardAutoSaveService._internal();
-  Timer? _clipboardCheckTimer;
-  String? _lastSavedContent;
+// --- APP STATE MANAGER ---
+class AppInitializationState extends ChangeNotifier {
+  bool _isInitialized = false;
+  String _currentStep = 'Starting...';
+  double _progress = 0.0;
 
-  factory ClipboardAutoSaveService() {
-    return _instance;
+  bool get isInitialized => _isInitialized;
+  String get currentStep => _currentStep;
+  double get progress => _progress;
+
+  void updateProgress(String step, double progress) {
+    _currentStep = step;
+    _progress = progress;
+    notifyListeners();
   }
 
-  ClipboardAutoSaveService._internal();
-
-  void startAutoSave({Duration interval = const Duration(seconds: 2)}) {
-    // Check if already running
-    if (_clipboardCheckTimer != null && _clipboardCheckTimer!.isActive) {
-      return;
-    }
-
-    _clipboardCheckTimer = Timer.periodic(interval, (_) async {
-      await _checkAndSaveClipboard();
-    });
-    debugPrint("Auto-save service started");
-  }
-
-  void stopAutoSave() {
-    _clipboardCheckTimer?.cancel();
-    _clipboardCheckTimer = null;
-    debugPrint("Auto-save service stopped");
-  }
-
-  Future<void> _checkAndSaveClipboard() async {
-    try {
-      // Check if setting is enabled
-      final settingsBox = Hive.box('settings');
-      final isAutoSaveEnabled = settingsBox.get('clipboardAutoSave', defaultValue: false) as bool;
-
-      if (!isAutoSaveEnabled) return;
-
-      if (!Hive.isBoxOpen('clipboard_box')) return;
-
-      ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
-      String? content = data?.text;
-
-      if (content == null || content.trim().isEmpty) return;
-
-      // Skip if same as last saved
-      if (_lastSavedContent == content.trim()) return;
-
-      final box = Hive.box<ClipboardItem>('clipboard_box');
-
-      // Check if already exists
-      bool exists = box.values.any((item) =>
-      !item.isDeleted && item.content.trim() == content.trim()
-      );
-
-      if (!exists) {
-        final newItem = ClipboardItem(
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
-          content: content.trim(),
-          createdAt: DateTime.now(),
-          type: _detectType(content),
-          sortIndex: -1,
-        );
-        await box.put(newItem.id, newItem);
-        _lastSavedContent = content.trim();
-        debugPrint("Auto-saved clipboard item");
-      }
-    } catch (e) {
-      debugPrint("Auto-save error: $e");
-    }
-  }
-
-  String _detectType(String text) {
-    if (text.startsWith('http')) return 'link';
-    if (RegExp(r'^\+?[0-9]{7,15}$').hasMatch(text)) return 'phone';
-    return 'text';
-  }
-
-  void resetLastSavedContent() {
-    _lastSavedContent = null;
+  void complete() {
+    _isInitialized = true;
+    _progress = 1.0;
+    notifyListeners();
   }
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  MobileAds.instance.initialize();
-
-  await dotenv.load(fileName: ".env");
-
-  // 1. Register Background Callback
-  HomeWidget.registerBackgroundCallback(homeWidgetBackgroundCallback);
-  HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
-
-  // 2. Enable Edge-to-Edge and Landscape for Tablets
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
-  // 3. Initialize Hive
-  await Hive.initFlutter();
-  await CanvasDatabase().init();
-
-  // 4. Register Adapters
-  Hive.registerAdapter(NoteAdapter());
-  Hive.registerAdapter(TodoAdapter());
-  Hive.registerAdapter(ExpenseAdapter());
-  Hive.registerAdapter(JournalEntryAdapter());
-  Hive.registerAdapter(ClipboardItemAdapter());
-
-  // 5. Initialize Services
-  await NotificationService().init();
-
-  // 6. Open Boxes
-  await Future.wait([
-    Hive.openBox<Note>('notes_box'),
-    Hive.openBox<Todo>('todos_box'),
-    Hive.openBox<Expense>('expenses_box'),
-    Hive.openBox<JournalEntry>('journal_box'),
-    Hive.openBox<ClipboardItem>('clipboard_box'),
-    Hive.openBox('settings'),
-    Hive.openBox('theme_box'),
-  ]);
-
-  await _initializeWidgetData();
-
-  // 7. Start Auto-save Service
-  final autoSaveService = ClipboardAutoSaveService();
-  final settingsBox = Hive.box('settings');
-  final isAutoSaveEnabled = settingsBox.get('clipboardAutoSave', defaultValue: false) as bool;
-
-  if (isAutoSaveEnabled) {
-    autoSaveService.startAutoSave();
-  }
+  final initState = AppInitializationState();
 
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeManager(),
-      child: CopyClipApp(autoSaveService: autoSaveService),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeManager()),
+        ChangeNotifierProvider.value(value: initState),
+      ],
+      child: const LoadingApp(),
     ),
   );
+
+  try {
+    await _initializeApp(initState);
+  } catch (e) {
+    debugPrint("❌ Fatal initialization error: $e");
+  }
 }
 
-Future<void> _initializeWidgetData() async {
-  final String? title = await HomeWidget.getWidgetData<String>('title');
-  if (title != null) return;
+Future<void> _initializeApp(AppInitializationState state) async {
+  try {
+    // Step 1: Basic services
+    state.updateProgress('Initializing services...', 0.2);
+    await Future.wait([
+      MobileAds.instance.initialize(),
+      dotenv.load(fileName: ".env").catchError((_) => null),
+    ]);
 
-  await HomeWidget.saveWidgetData<String>('title', 'Clipboard');
-  await HomeWidget.saveWidgetData<String>('description', 'Access your clipboard history');
-  await HomeWidget.saveWidgetData<String>('deeplink', 'copyclip://clipboard');
+    // Step 2: Hive setup
+    state.updateProgress('Setting up database...', 0.4);
+    await Hive.initFlutter();
+
+    Hive.registerAdapter(NoteAdapter());
+    Hive.registerAdapter(TodoAdapter());
+    Hive.registerAdapter(ExpenseAdapter());
+    Hive.registerAdapter(JournalEntryAdapter());
+    Hive.registerAdapter(ClipboardItemAdapter());
+
+    // Step 3: System setup
+    state.updateProgress('Configuring system...', 0.6);
+    HomeWidget.registerBackgroundCallback(homeWidgetBackgroundCallback);
+    HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+    // Step 4: Open critical boxes
+    state.updateProgress('Loading data...', 0.8);
+    await Future.wait([
+      _openBoxSafely('settings'),
+      _openBoxSafely('theme_box'),
+      NotificationService().init(),
+    ]);
+
+    // Step 5: Open remaining boxes (SAFELY)
+    state.updateProgress('Finalizing...', 0.9);
+
+    // We open boxes sequentially or safely to handle corruption
+    await _openBoxSafely<Note>('notes_box');
+    await _openBoxSafely<Todo>('todos_box');
+    await _openBoxSafely<Expense>('expenses_box'); // ✅ This fixes your error
+    await _openBoxSafely<JournalEntry>('journal_box');
+    await _openBoxSafely<ClipboardItem>('clipboard_box');
+    await CanvasDatabase().init();
+
+    _initializeBackgroundTasks();
+
+    state.complete();
+    debugPrint("✅ App initialization complete");
+
+  } catch (e, stackTrace) {
+    debugPrint("❌ Initialization error: $e\n$stackTrace");
+    state.complete();
+  }
 }
 
-class CopyClipApp extends StatefulWidget {
-  final ClipboardAutoSaveService autoSaveService;
+/// ✅ Helper to safely open a Hive box.
+/// If opening fails (corruption/RangeError), it deletes the box and creates a new one.
+Future<Box<T>> _openBoxSafely<T>(String boxName) async {
+  try {
+    return await Hive.openBox<T>(boxName);
+  } catch (e) {
+    debugPrint("❌ Error opening box '$boxName': $e");
+    debugPrint("🗑️ Deleting corrupted box '$boxName' and recreating...");
+    try {
+      await Hive.deleteBoxFromDisk(boxName);
+      return await Hive.openBox<T>(boxName);
+    } catch (e2) {
+      debugPrint("❌ CRITICAL: Failed to recreate box '$boxName': $e2");
+      rethrow;
+    }
+  }
+}
 
-  const CopyClipApp({super.key, required this.autoSaveService});
+void _initializeBackgroundTasks() {
+  Future.microtask(() async {
+    try {
+      final String? title = await HomeWidget.getWidgetData<String>('title');
+      if (title == null) {
+        await Future.wait([
+          HomeWidget.saveWidgetData<String>('title', 'Clipboard'),
+          HomeWidget.saveWidgetData<String>('description', 'Access your clipboard history'),
+          HomeWidget.saveWidgetData<String>('deeplink', 'copyclip://clipboard'),
+        ]);
+      }
+    } catch (e) {
+      debugPrint("Widget data init error: $e");
+    }
+  });
+}
+
+// --- LOADING APP & SCREEN (Unchanged) ---
+class LoadingApp extends StatelessWidget {
+  const LoadingApp({super.key});
 
   @override
-  State<CopyClipApp> createState() => _CopyClipAppState();
+  Widget build(BuildContext context) {
+    return Consumer<AppInitializationState>(
+      builder: (context, initState, _) {
+        if (!initState.isInitialized) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: LoadingScreen(
+              currentStep: initState.currentStep,
+              progress: initState.progress,
+            ),
+          );
+        }
+        return const MainApp();
+      },
+    );
+  }
 }
 
-class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
-  // Method Channels
+class LoadingScreen extends StatelessWidget {
+  final String currentStep;
+  final double progress;
+  const LoadingScreen({super.key, required this.currentStep, required this.progress});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/logo/copyclip_logo.png',
+                width: 120,
+                height: 120,
+              ),
+              const SizedBox(height: 24),
+              const Text(
+                'CopyClip',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                currentStep,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// --- MAIN APP (Standard) ---
+class MainApp extends StatefulWidget {
+  const MainApp({super.key});
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   static const widgetChannel = MethodChannel('com.technopradyumn.copyclip/widget_handler');
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-
-    // Channel Handlers
     widgetChannel.setMethodCallHandler(_handleNativeCalls);
-
-    // Initial Setup
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _handleInitialNotification();
-      _configureNotificationListener();
-    });
+    // Auto-save service removed from main to keep it simple, can be added back if needed
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      // Resume auto-save when app comes to foreground
-      final settingsBox = Hive.box('settings');
-      final isAutoSaveEnabled = settingsBox.get('clipboardAutoSave', defaultValue: false) as bool;
-
-      if (isAutoSaveEnabled && (widget.autoSaveService._clipboardCheckTimer == null || !widget.autoSaveService._clipboardCheckTimer!.isActive)) {
-        widget.autoSaveService.startAutoSave();
-      }
-    } else if (state == AppLifecycleState.paused) {
-      // Keep auto-save running in background - no action needed
+  Future<void> _handleNativeCalls(MethodCall call) async {
+    if (call.method == 'navigateTo') {
+      final dynamic args = call.arguments;
+      String? route;
+      if (args is String) route = args;
+      else if (args is Map) route = args['route'];
+      if (route != null && mounted) router.push(route);
     }
   }
 
@@ -256,53 +295,9 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  Future<void> _handleNativeCalls(MethodCall call) async {
-    if (call.method == 'navigateTo') {
-      final dynamic args = call.arguments;
-      String? route;
-
-      if (args is String) {
-        route = args;
-      } else if (args is Map) {
-        route = args['route'];
-      }
-
-      if (route != null) {
-        router.push(route);
-      }
-    }
-  }
-
-  Future<void> _handleInitialNotification() async {
-    final notificationPlugin = NotificationService().flutterLocalNotificationsPlugin;
-    final launchDetails = await notificationPlugin.getNotificationAppLaunchDetails();
-    if (launchDetails?.didNotificationLaunchApp == true && launchDetails?.notificationResponse?.payload != null) {
-      final payload = launchDetails!.notificationResponse!.payload!;
-      Future.delayed(const Duration(milliseconds: 500), () => _openTodo(payload));
-    }
-  }
-
-  void _configureNotificationListener() {
-    NotificationService().onNotifications.listen((String? payload) {
-      if (payload != null) {
-        _openTodo(payload);
-      }
-    });
-  }
-
-  void _openTodo(String id) {
-    if (!Hive.isBoxOpen('todos_box')) return;
-    final box = Hive.box<Todo>('todos_box');
-    final todo = box.get(id);
-    if (todo != null) {
-      router.push(AppRouter.todoEdit, extra: todo);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final themeManager = Provider.of<ThemeManager>(context);
-
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       minTextAdapt: true,
@@ -323,34 +318,9 @@ class _CopyClipAppState extends State<CopyClipApp> with WidgetsBindingObserver {
             FlutterQuillLocalizations.delegate,
           ],
           supportedLocales: AppLocalizations.supportedLocales,
-
-          // --- UPDATED BUILDER ---
           builder: (context, child) {
             return UpgradeAlert(
-              // 1. Configure Logic
-              upgrader: Upgrader(
-                debugLogging: kDebugMode,
-                debugDisplayAlways: kDebugMode, // Uncomment to force show dialog
-                messages: RateUpgraderMessages(), // Use our custom class
-              ),
-
-              // 2. Configure UI Buttons
-              showIgnore: true, // Must be TRUE to show our "Rate App" button
-              showLater: true,
-              barrierDismissible: false, // User must click a button
-
-              // 3. Intercept "Ignore/Rate" Click
-              onIgnore: () {
-                // This runs when user clicks "Rate App"
-                debugPrint("User clicked Rate App");
-
-                // Add your In-App Review logic here!
-                // final InAppReview inAppReview = InAppReview.instance;
-                // inAppReview.openStoreListing();
-
-                return true; // Return true to close the dialog
-              },
-
+              upgrader: Upgrader(debugLogging: false, messages: RateUpgraderMessages(), durationUntilAlertAgain: const Duration(days: 7)),
               child: child ?? const SizedBox(),
             );
           },

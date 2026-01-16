@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -8,12 +9,12 @@ import 'package:fl_chart/fl_chart.dart';
 
 // Core Widgets
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
-import '../../../../core/router/app_router.dart';
+import 'package:copyclip/src/core/router/app_router.dart';
 
 // Data
 import 'package:copyclip/src/features/expenses/data/expense_model.dart';
 
-// Widgets (Ensure you are using the optimized ExpenseCard provided earlier)
+// Widgets
 import '../widgets/expense_card.dart';
 
 // --- Enums ---
@@ -35,11 +36,8 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
 
-  // ✅ PERFORMANCE: Notifier for the filtered list (Isolates updates)
-  final ValueNotifier<List<Expense>> _filteredExpensesNotifier = ValueNotifier([]);
-
-  // Data Source
-  List<Expense> _rawExpenses = [];
+  // ✅ CRITICAL FIX: Future variable to prevent reloading/flickering
+  late Future<Box<Expense>> _boxFuture;
 
   // Selection
   bool _isSelectionMode = false;
@@ -69,82 +67,104 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    _loadSettings();
 
-    // Initial Load
-    _refreshData();
+    // ✅ Initialize the future ONCE here.
+    // This prevents the "loading" flicker when scrolling or tapping.
+    _boxFuture = _openBoxSafely();
+
+    // Safely load settings
+    if (Hive.isBoxOpen('settings')) {
+      _loadSettings();
+    } else {
+      Hive.openBox('settings').then((_) {
+        if(mounted) _loadSettings();
+      });
+    }
 
     // Listen to Search without setState on every char
     _searchController.addListener(() {
-      _searchQuery = _searchController.text.toLowerCase();
-      _applyFilters();
+      setState(() {
+        _searchQuery = _searchController.text.toLowerCase();
+      });
     });
+  }
 
-    // Listen to Hive changes globally
-    Hive.box<Expense>('expenses_box').listenable().addListener(_refreshData);
+  /// ✅ Robust Open Logic: Handles if main.dart failed or data is corrupted
+  Future<Box<Expense>> _openBoxSafely() async {
+    try {
+      if (Hive.isBoxOpen('expenses_box')) {
+        return Hive.box<Expense>('expenses_box');
+      } else {
+        return await Hive.openBox<Expense>('expenses_box');
+      }
+    } catch (e) {
+      debugPrint("❌ Database Corruption Detected: $e");
+      // If corrupted, delete and recreate
+      await Hive.deleteBoxFromDisk('expenses_box');
+      return await Hive.openBox<Expense>('expenses_box');
+    }
   }
 
   void _loadSettings() {
-    if (Hive.isBoxOpen('settings')) {
-      final box = Hive.box('settings');
-      if (mounted) setState(() => _selectedCurrency = box.get('last_currency', defaultValue: '\$'));
-    }
+    if (!Hive.isBoxOpen('settings')) return;
+    final box = Hive.box('settings');
+    if (mounted) setState(() => _selectedCurrency = box.get('last_currency', defaultValue: '\$'));
   }
 
   @override
   void dispose() {
-    Hive.box<Expense>('expenses_box').listenable().removeListener(_refreshData);
     _searchController.dispose();
     _tabController.dispose();
-    _filteredExpensesNotifier.dispose();
     super.dispose();
   }
 
-  // --- CORE DATA LOGIC ---
+  // --- FILTER LOGIC ---
+  List<Expense> _applyFilters(List<Expense> allExpenses) {
+    // 1. Basic cleaning
+    var expenses = allExpenses.where((e) => !e.isDeleted).toList();
 
-  void _refreshData() {
-    if (!Hive.isBoxOpen('expenses_box')) return;
-    final box = Hive.box<Expense>('expenses_box');
+    // 2. Update Currencies available
+    final currencies = expenses.map((e) => e.currency).toSet().toList();
+    if (currencies.isNotEmpty) {
+      currencies.sort();
 
-    // 1. Get raw data (excluding deleted)
-    _rawExpenses = box.values.where((e) => !e.isDeleted).toList();
-
-    // 2. Update Currencies
-    final currencies = _rawExpenses.map((e) => e.currency).toSet().toList();
-    _availableCurrencies = currencies.isEmpty ? ['\$'] : (currencies..sort());
-
-    if (!_availableCurrencies.contains(_selectedCurrency)) {
-      _selectedCurrency = _availableCurrencies.first;
+      if (!listEquals(_availableCurrencies, currencies)) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if(mounted && !listEquals(_availableCurrencies, currencies)) {
+            setState(() {
+              _availableCurrencies = currencies;
+              if (!currencies.contains(_selectedCurrency)) {
+                _selectedCurrency = currencies.first;
+              }
+            });
+          }
+        });
+      }
     }
 
-    // 3. Apply Filters
-    _applyFilters();
-  }
+    // 3. Filter by Currency
+    expenses = expenses.where((e) => e.currency == _selectedCurrency).toList();
 
-  void _applyFilters() {
-    // Start with raw data filtered by currency
-    var expenses = _rawExpenses.where((e) => e.currency == _selectedCurrency).toList();
-
-    // 1. Period Filter
+    // 4. Period Filter
     expenses = expenses.where((e) => _isDateInPeriod(e.date, _selectedDay, _currentPeriod)).toList();
 
-    // 2. Search Filter
+    // 5. Search Filter
     if (_searchQuery.isNotEmpty) {
       expenses = expenses.where((e) => e.title.toLowerCase().contains(_searchQuery)).toList();
     }
 
-    // 3. Type Filter
+    // 6. Type Filter
     if (_typeFilter != 'All') {
       bool isIncome = _typeFilter == 'Income';
       expenses = expenses.where((e) => e.isIncome == isIncome).toList();
     }
 
-    // 4. Category Filter
+    // 7. Category Filter
     if (_categoryFilter != 'All') {
       expenses = expenses.where((e) => e.category == _categoryFilter).toList();
     }
 
-    // 5. Sorting
+    // 8. Sorting
     switch (_currentSort) {
       case ExpenseSort.amountHigh: expenses.sort((a, b) => b.amount.compareTo(a.amount)); break;
       case ExpenseSort.amountLow: expenses.sort((a, b) => a.amount.compareTo(b.amount)); break;
@@ -153,8 +173,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
       case ExpenseSort.custom: expenses.sort((a, b) => a.sortIndex.compareTo(b.sortIndex)); break;
     }
 
-    // ✅ Update Notifier (Rebuilds only the list/chart)
-    _filteredExpensesNotifier.value = expenses;
+    return expenses;
   }
 
   bool _isDateInPeriod(DateTime date, DateTime target, AnalysisPeriod period) {
@@ -202,6 +221,10 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
   }
 
   void _deleteSelected() {
+    // Only proceed if the box is actually open.
+    // Since we are inside a FutureBuilder/ValueListenableBuilder, it likely is.
+    if (!Hive.isBoxOpen('expenses_box')) return;
+
     final box = Hive.box<Expense>('expenses_box');
     final now = DateTime.now();
     for (var id in _selectedIds) {
@@ -211,7 +234,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
       } catch (_) {}
     }
     setState(() { _selectedIds.clear(); _isSelectionMode = false; });
-    _refreshData();
   }
 
   // --- UI BUILDERS ---
@@ -222,38 +244,57 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
 
     return GlassScaffold(
       title: null,
-      body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverToBoxAdapter(child: _buildTopBar()),
-          SliverToBoxAdapter(child: _buildCurrencySelector()),
-          SliverToBoxAdapter(child: _buildCalendar()),
-          SliverToBoxAdapter(child: const SizedBox(height: 10)),
-          SliverToBoxAdapter(child: _buildPeriodSelector()),
-          SliverToBoxAdapter(child: const SizedBox(height: 10)),
-          SliverToBoxAdapter(child: _buildStyledTabBar()),
-          SliverToBoxAdapter(child: const SizedBox(height: 10)),
-        ],
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            // List Tab
-            ValueListenableBuilder<List<Expense>>(
-              valueListenable: _filteredExpensesNotifier,
-              builder: (context, expenses, _) => _buildListTab(expenses),
-            ),
-            // Analytics Tab
-            ValueListenableBuilder<List<Expense>>(
-              valueListenable: _filteredExpensesNotifier,
-              builder: (context, expenses, _) => _buildAnalyticsTab(expenses),
-            ),
-          ],
-        ),
+      // ✅ FutureBuilder uses the pre-calculated _boxFuture.
+      // It will NOT fire again on setStates, scrolling, or tab switching.
+      body: FutureBuilder<Box<Expense>>(
+        future: _boxFuture,
+        builder: (context, snapshot) {
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text("Error loading data.\nPlease restart the app.\n\n${snapshot.error}", textAlign: TextAlign.center),
+              ),
+            );
+          }
+
+          // Box is guaranteed open here.
+          return ValueListenableBuilder<Box<Expense>>(
+            valueListenable: snapshot.data!.listenable(),
+            builder: (context, box, _) {
+              final allExpenses = box.values.toList();
+              final expenses = _applyFilters(allExpenses);
+
+              return NestedScrollView(
+                headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                  SliverToBoxAdapter(child: _buildTopBar(expenses)),
+                  SliverToBoxAdapter(child: _buildCurrencySelector()),
+                  SliverToBoxAdapter(child: _buildCalendar(allExpenses)),
+                  SliverToBoxAdapter(child: const SizedBox(height: 10)),
+                  SliverToBoxAdapter(child: _buildPeriodSelector()),
+                  SliverToBoxAdapter(child: const SizedBox(height: 10)),
+                  SliverToBoxAdapter(child: _buildStyledTabBar()),
+                  SliverToBoxAdapter(child: const SizedBox(height: 10)),
+                ],
+                body: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    _buildListTab(expenses),
+                    _buildAnalyticsTab(expenses),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await context.push(AppRouter.expenseEdit);
-          _refreshData();
-        },
+        onPressed: () => context.push(AppRouter.expenseEdit),
         backgroundColor: theme.colorScheme.primary,
         elevation: 4,
         icon: Icon(Icons.add, color: theme.colorScheme.onPrimary),
@@ -262,7 +303,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
     );
   }
 
-  Widget _buildTopBar() {
+  Widget _buildTopBar(List<Expense> expenses) {
     final theme = Theme.of(context);
 
     if (_isSearching) {
@@ -285,7 +326,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                     icon: Icon(Icons.arrow_back, color: theme.colorScheme.onSurface),
                     onPressed: () {
                       setState(() { _isSearching = false; _searchQuery = ""; _searchController.clear(); });
-                      _applyFilters();
                     }
                 ),
                 hintText: "Search in $_selectedCurrency...",
@@ -342,7 +382,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                 if (_isSelectionMode)
                   IconButton(icon: const Icon(Icons.delete, color: Colors.redAccent), onPressed: _deleteSelected)
                 else
-                  IconButton(icon: Icon(Icons.filter_list, color: theme.colorScheme.onSurface), onPressed: _showFilterMenu),
+                  IconButton(icon: Icon(Icons.filter_list, color: theme.colorScheme.onSurface), onPressed: () => _showFilterMenu(expenses)),
               ],
             ),
           ],
@@ -351,16 +391,17 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
     );
   }
 
-  // ✅ IMPROVED BOTTOM SHEET: Uses StatefulBuilder for interaction
-  void _showFilterMenu() {
+  void _showFilterMenu(List<Expense> expenses) {
     final theme = Theme.of(context);
-    final categories = _rawExpenses.map((e) => e.category).toSet().toList()..sort();
+    // Box is safe to access here because showFilterMenu is called from UI that waited for box
+    final box = Hive.box<Expense>('expenses_box');
+    final categories = box.values.where((e) => !e.isDeleted).map((e) => e.category).toSet().toList()..sort();
 
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (_) => StatefulBuilder( // ✅ KEY FIX: Allows updating sheet UI on tap
+      builder: (_) => StatefulBuilder(
         builder: (context, setSheetState) {
           return Container(
             height: MediaQuery.of(context).size.height * 0.75,
@@ -390,7 +431,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                             });
                             // Update SHEET state
                             setSheetState(() {});
-                            _applyFilters();
                           },
                           child: const Text("Reset")
                       ),
@@ -404,7 +444,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                     children: [
                       Text("Sort By", style: theme.textTheme.titleSmall?.copyWith(color: Colors.grey, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 8),
-                      // Helper methods modified to accept setSheetState
                       _buildSortRadio(ExpenseSort.newest, "Newest Date", setSheetState),
                       _buildSortRadio(ExpenseSort.oldest, "Oldest Date", setSheetState),
                       _buildSortRadio(ExpenseSort.amountHigh, "Highest Amount", setSheetState),
@@ -419,7 +458,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                         children: ['All', 'Income', 'Expense'].map((t) => _buildChoiceChip(t, _typeFilter, (val) {
                           setState(() => _typeFilter = val);
                           setSheetState(() {});
-                          _applyFilters();
                         })).toList(),
                       ),
 
@@ -433,7 +471,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                         children: ['All', ...categories].map((c) => _buildChoiceChip(c, _categoryFilter, (val) {
                           setState(() => _categoryFilter = val);
                           setSheetState(() {});
-                          _applyFilters();
                         })).toList(),
                       ),
                       const SizedBox(height: 40),
@@ -472,7 +509,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
       onTap: () {
         setState(() => _currentSort = value);
         setSheetState(() {});
-        _applyFilters();
       },
       borderRadius: BorderRadius.circular(8),
       child: Padding(
@@ -532,7 +568,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
             child: GestureDetector(
               onTap: () {
                 setState(() => _selectedCurrency = curr);
-                _applyFilters();
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
@@ -570,7 +605,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
               child: GestureDetector(
                 onTap: () {
                   setState(() => _currentPeriod = period);
-                  _applyFilters();
                 },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
@@ -598,10 +632,9 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
     );
   }
 
-  // ✅ OPTIMIZATION: Replaced GlassContainer with fast Container
-  Widget _buildCalendar() {
+  Widget _buildCalendar(List<Expense> allEvents) {
     final theme = Theme.of(context);
-    final events = _rawExpenses.where((e) => e.currency == _selectedCurrency).toList();
+    final events = allEvents.where((e) => !e.isDeleted).toList();
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: _kPadding),
@@ -622,7 +655,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
               _selectedDay = selectedDay;
               _focusedDay = focusedDay;
             });
-            _applyFilters();
           }
         },
         onFormatChanged: (format) { if (_calendarFormat != format) setState(() => _calendarFormat = format); },
@@ -752,7 +784,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
         children: [
           _buildSectionHeader("$budgetTitle ($_selectedCurrency)"),
 
-          // Budget Card (Replaced GlassContainer)
+          // Budget Card
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -808,7 +840,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
 
           _buildSectionHeader("Category Breakdown"),
 
-          // Pie Chart Container (Replaced GlassContainer)
+          // Pie Chart Container
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -835,10 +867,10 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                           titleStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
                         );
                       }).toList(),
-                      pieTouchData: PieTouchData(touchCallback: (e, r) {
+                      pieTouchData: PieTouchData(touchCallback: (FlTouchEvent event, PieTouchResponse? response) {
                         setState(() {
-                          if (r != null && r.touchedSection != null) {
-                            _touchedIndexPie = r.touchedSection!.touchedSectionIndex;
+                          if (response != null && response.touchedSection != null) {
+                            _touchedIndexPie = response.touchedSection!.touchedSectionIndex;
                           } else {
                             _touchedIndexPie = -1;
                           }
@@ -887,7 +919,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                       ],
                     ),
                   );
-                }).toList(),
+                }),
               ],
             ),
           ),

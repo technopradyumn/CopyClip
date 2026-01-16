@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'expense_model.dart';
+import 'package:copyclip/src/features/expenses/data/expense_model.dart';
 
 class ExpenseAdapter extends TypeAdapter<Expense> {
   @override
@@ -28,7 +28,7 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
   @override
   void write(BinaryWriter writer, Expense obj) {
     writer
-      ..writeByte(12) // Updated total count (original 8 + 2 new + potential future fields)
+      ..writeByte(10) // Writing 10 fields total
       ..writeByte(0)..write(obj.id)
       ..writeByte(1)..write(obj.title)
       ..writeByte(2)..write(obj.amount)

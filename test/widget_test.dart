@@ -25,7 +25,6 @@ void main() {
   });
 
   testWidgets('App launches without crashing', (tester) async {
-    final autoSaveService = ClipboardAutoSaveService();
 
     await tester.pumpWidget(
       ChangeNotifierProvider(
@@ -35,7 +34,7 @@ void main() {
           minTextAdapt: true,
           splitScreenMode: true,
           builder: (_, __) {
-            return CopyClipApp(autoSaveService: autoSaveService);
+            return MainApp();
           },
         ),
       ),
