@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:ui'; // Added for ImageFilter
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -90,15 +90,15 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   // Ads
   BannerAd? _bannerAd;
-  InterstitialAd? _interstitialAd;
+  // InterstitialAd? _interstitialAd; // Commented out as requested to not show ads on click
   RewardedAd? _rewardedAd;
   bool _isBannerAdLoaded = false;
-  int _interstitialAdCounter = 0;
+  // int _interstitialAdCounter = 0; // Commented out
   int _rewardedAdCounter = 0;
   DateTime? _lastRewardedAdDate;
 
   static final String _bannerAdUnitId = dotenv.env['BANNER_AD_UNIT_ID'] ?? '';
-  static final String _interstitialAdUnitId = dotenv.env['INTERSTITIAL_AD_UNIT_ID'] ?? '';
+  // static final String _interstitialAdUnitId = dotenv.env['INTERSTITIAL_AD_UNIT_ID'] ?? '';
   static final String _rewardedAdUnitId = dotenv.env['REWARDED_AD_UNIT_ID'] ?? '';
 
   // Onboarding
@@ -200,7 +200,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
     _initHive();
     _loadBannerAd();
-    _loadInterstitialAd();
+    // _loadInterstitialAd(); // Disabled Interstitial Ad
     _checkRewardedAdEligibility();
   }
 
@@ -213,7 +213,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     _dragPositionNotifier.dispose();
     _onboardingController.dispose();
     _bannerAd?.dispose();
-    _interstitialAd?.dispose();
+    // _interstitialAd?.dispose();
     _rewardedAd?.dispose();
     super.dispose();
   }
@@ -497,7 +497,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     );
   }
 
-  // ============ ADS METHODS (Unchanged logic, kept for context) ============
+  // ============ ADS METHODS ============
   void _loadBannerAd() {
     _bannerAd = BannerAd(
       adUnitId: _bannerAdUnitId,
@@ -513,6 +513,8 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     )..load();
   }
 
+  // NOTE: Interstitial Ad Logic commented out as requested
+  /*
   void _loadInterstitialAd() {
     InterstitialAd.load(
       adUnitId: _interstitialAdUnitId,
@@ -546,6 +548,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
       _interstitialAdCounter = 0;
     }
   }
+  */
 
   void _checkRewardedAdEligibility() {
     final today = DateTime.now();
@@ -778,14 +781,14 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
           ),
           Row(
             children: [
-              IconButton(
-                icon: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(color: Colors.purple.withOpacity(0.1), shape: BoxShape.circle),
-                  child: const Icon(Icons.video_library, color: Colors.purple, size: 20),
-                ),
-                onPressed: _showRewardedAdDialog,
-              ),
+              // IconButton(
+              //   icon: Container(
+              //     padding: const EdgeInsets.all(8),
+              //     decoration: BoxDecoration(color: Colors.purple.withOpacity(0.1), shape: BoxShape.circle),
+              //     child: const Icon(Icons.video_library, color: Colors.purple, size: 20),
+              //   ),
+              //   onPressed: _showRewardedAdDialog,
+              // ),
               IconButton(
                 icon: Container(
                   padding: const EdgeInsets.all(12),
@@ -827,7 +830,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
         onLongPressMoveUpdate: (d) => _onDragUpdate(d),
         onLongPressEnd: (_) => _onDragEnd(),
         onTap: () {
-          _showInterstitialAd();
+          // REMOVED AD CALL HERE: _showInterstitialAd();
           context.push(item.route);
         },
         child: AnimatedOpacity(

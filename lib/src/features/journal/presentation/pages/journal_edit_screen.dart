@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -568,11 +569,13 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: CustomPaint(
-                      painter: CanvasGridPainter(
-                        color: contrastColor.withOpacity(0.08),
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: CustomPaint(
+                        painter: JournalPaperPainter(),
                       ),
-                    ),
+                    )
                   ),
                   RepaintBoundary(
                     key: _boundaryKey,
@@ -582,7 +585,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
+                              horizontal: 40,
                               vertical: 0,
                             ),
                             child: Row(
@@ -713,24 +716,110 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   }
 }
 
-class CanvasGridPainter extends CustomPainter {
-  final Color color;
+class JournalPaperPainter extends CustomPainter {
+  final Color lineColor;
+  final Color marginColor;
+  final double spacing;
 
-  CanvasGridPainter({required this.color});
+  static const double _topHeaderSpace = 60.0;
+  static const double _leftMarginPos = 50.0;
+  static const bool _showHoles = true;
+
+  JournalPaperPainter({
+    this.lineColor = const Color(0xFF6B6B6B),
+    this.marginColor = const Color(0xFFB85C5C),
+    this.spacing = 28.0,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 0.5;
-    for (double i = 0; i < size.width; i += 30) {
-      canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint);
+    final bgPaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Colors.transparent,
+          Colors.transparent,
+        ],
+      ).createShader(Offset.zero & size);
+
+    canvas.drawRect(Offset.zero & size, bgPaint);
+
+    final vignettePaint = Paint()
+      ..shader = RadialGradient(
+        center: Alignment.center,
+        radius: 1.1,
+        colors: [
+          Colors.transparent,
+          Colors.brown.withOpacity(0.18),
+        ],
+      ).createShader(Offset.zero & size);
+
+    canvas.drawRect(Offset.zero & size, vignettePaint);
+
+    final linePaint = Paint()
+      ..color = lineColor.withOpacity(0.25)
+      ..strokeWidth = 1.0;
+
+    final marginPaint = Paint()
+      ..color = marginColor.withOpacity(0.35)
+      ..strokeWidth = 1.4;
+
+    final holePaint = Paint()
+      ..color = Colors.black.withOpacity(0.08)
+      ..style = PaintingStyle.fill;
+
+    final rnd = Random(4);
+
+    for (double y = _topHeaderSpace; y < size.height; y += spacing) {
+      final wobble = rnd.nextDouble() * 1.2 - 0.6;
+      canvas.drawLine(
+        Offset(0, y + wobble),
+        Offset(size.width, y + wobble),
+        linePaint,
+      );
     }
-    for (double i = 0; i < size.height; i += 30) {
-      canvas.drawLine(Offset(0, i), Offset(size.width, i), paint);
+
+    canvas.drawLine(
+      const Offset(_leftMarginPos, 0),
+      Offset(_leftMarginPos, size.height),
+      marginPaint,
+    );
+
+    final stainPaint = Paint()
+      ..color = Colors.brown.withOpacity(0.06)
+      ..style = PaintingStyle.fill;
+
+    for (int i = 0; i < 6; i++) {
+      final dx = rnd.nextDouble() * size.width;
+      final dy = rnd.nextDouble() * size.height;
+      final r = 18 + rnd.nextDouble() * 30;
+      canvas.drawCircle(Offset(dx, dy), r, stainPaint);
+    }
+
+    if (_showHoles) {
+      final double holeX = _leftMarginPos / 2;
+      final List<double> holeYPositions = [
+        size.height * 0.18,
+        size.height * 0.50,
+        size.height * 0.82
+      ];
+
+      for (double y in holeYPositions) {
+        canvas.drawCircle(Offset(holeX, y), 10.5, holePaint);
+        canvas.drawCircle(
+          Offset(holeX - 1, y - 1),
+          10.5,
+          Paint()..color = Colors.white.withOpacity(0.25),
+        );
+      }
     }
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant JournalPaperPainter oldDelegate) {
+    return oldDelegate.lineColor != lineColor ||
+        oldDelegate.marginColor != marginColor ||
+        oldDelegate.spacing != spacing;
+  }
 }

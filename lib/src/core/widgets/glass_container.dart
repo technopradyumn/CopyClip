@@ -40,7 +40,7 @@ class GlassContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     // Determine base color (defaulting to white/black based on theme)
     final Color baseColor = color ?? Theme.of(context).colorScheme.surface;
-    final Color outlineColor = borderColor ?? Colors.white;
+    final Color outlineColor = borderColor ?? Colors.black;
 
     return Padding(
       padding: margin,

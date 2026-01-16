@@ -7,6 +7,12 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(FileInputStream(localPropertiesFile))
+}
+
 val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
@@ -39,14 +45,16 @@ android {
 
     signingConfigs {
         create("release") {
-            val keyAliasValue = keystoreProperties["keyAlias"] as String
-            val keyPasswordValue = keystoreProperties["keyPassword"] as String
-            val storeFileValue = keystoreProperties["storeFile"] as String
-            val storePasswordValue = keystoreProperties["storePassword"] as String
+            val keyAliasValue = keystoreProperties["keyAlias"] as String? ?: ""
+            val keyPasswordValue = keystoreProperties["keyPassword"] as String? ?: ""
+            val storeFileValue = keystoreProperties["storeFile"] as String? ?: ""
+            val storePasswordValue = keystoreProperties["storePassword"] as String? ?: ""
 
             keyAlias = keyAliasValue
             keyPassword = keyPasswordValue
-            storeFile = file(storeFileValue)
+            if (storeFileValue.isNotEmpty()) {
+                storeFile = file(storeFileValue)
+            }
             storePassword = storePasswordValue
         }
     }
@@ -58,14 +66,12 @@ android {
             isShrinkResources = true
 
             manifestPlaceholders["ADMOB_APP_ID"] =
-                project.findProperty("ADMOB_APP_ID") as String? ?: ""
-
+                localProperties.getProperty("ADMOB_APP_ID")
         }
 
         debug {
             signingConfig = signingConfigs.getByName("debug")
-            manifestPlaceholders["ADMOB_APP_ID"] =
-                "ca-app-pub-3940256099942544~1033173712"
+            manifestPlaceholders["ADMOB_APP_ID"] = "ca-app-pub-3940256099942544~3347511713"
         }
     }
 }

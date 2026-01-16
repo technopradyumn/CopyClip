@@ -112,6 +112,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
     // 2. Update Currencies
     final currencies = _rawExpenses.map((e) => e.currency).toSet().toList();
     _availableCurrencies = currencies.isEmpty ? ['\$'] : (currencies..sort());
+
     if (!_availableCurrencies.contains(_selectedCurrency)) {
       _selectedCurrency = _availableCurrencies.first;
     }
