@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -52,25 +52,38 @@ class GlobalSearchScreen extends StatefulWidget {
 class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-  // Logic State
+  // ✅ PERFORMANCE: Notifier for the list content
+  // Updates to this notifier only rebuild the ListView, not the whole screen.
+  final ValueNotifier<List<SearchResult>> _filteredListNotifier = ValueNotifier([]);
+
+  // Data Store
+  List<SearchResult> _allData = [];
+
+  // Filter State
   String _query = "";
   String _selectedType = "All";
   String _sortBy = "Newest";
   String _dateRange = "All Time";
   int? _filterColor;
 
-  List<SearchResult> _allData = [];
   final List<String> _filterTypes = ["All", "Note", "Todo", "Expense", "Journal", "Clipboard"];
 
   @override
   void initState() {
     super.initState();
     _loadAllData();
+
+    // ✅ Listen to text changes efficiently
+    _searchController.addListener(() {
+      _query = _searchController.text;
+      _applyFilters();
+    });
   }
 
   @override
   void dispose() {
     _searchController.dispose();
+    _filteredListNotifier.dispose();
     super.dispose();
   }
 
@@ -78,130 +91,113 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   void _loadAllData() {
     List<SearchResult> results = [];
 
-    // 1. Load Notes
-    if (Hive.isBoxOpen('notes_box')) {
-      final box = Hive.box<Note>('notes_box');
-      results.addAll(box.values.where((e) => !e.isDeleted).map((e) => SearchResult(
-        id: e.id,
-        title: e.title,
-        subtitle: e.content,
-        type: 'Note',
-        route: AppRouter.noteEdit,
-        argument: e,
-        dateTime: e.updatedAt,
-        colorValue: e.colorValue,
-      )));
+    // ✅ FIX: Change 'Function(T)' to 'SearchResult Function(T)' to prevent type errors
+    void safeAdd<T>(String boxName, SearchResult Function(T) mapper) {
+      if (Hive.isBoxOpen(boxName)) {
+        final box = Hive.box<T>(boxName);
+        results.addAll(box.values.where((e) {
+          try { return (e as dynamic).isDeleted == false; } catch (_) { return true; }
+        }).map(mapper));
+      }
     }
 
-    // 2. Load Journal
-    if (Hive.isBoxOpen('journal_box')) {
-      final box = Hive.box<JournalEntry>('journal_box');
-      results.addAll(box.values.where((e) => !e.isDeleted).map((e) => SearchResult(
-        id: e.id,
-        title: e.title,
-        subtitle: e.content,
-        type: 'Journal',
-        route: AppRouter.journalEdit,
-        argument: e,
-        dateTime: e.date,
-        colorValue: e.colorValue,
-      )));
-    }
+    safeAdd<Note>('notes_box', (e) => SearchResult(id: e.id, title: e.title, subtitle: e.content, type: 'Note', route: AppRouter.noteEdit, argument: e, dateTime: e.updatedAt, colorValue: e.colorValue));
+    safeAdd<JournalEntry>('journal_box', (e) => SearchResult(id: e.id, title: e.title, subtitle: e.content, type: 'Journal', route: AppRouter.journalEdit, argument: e, dateTime: e.date, colorValue: e.colorValue));
+    safeAdd<ClipboardItem>('clipboard_box', (e) => SearchResult(id: e.id, title: e.content, subtitle: "Clipboard", type: 'Clipboard', route: AppRouter.clipboardEdit, argument: e, dateTime: e.createdAt, colorValue: e.colorValue));
+    safeAdd<Todo>('todos_box', (e) => SearchResult(id: e.id, title: e.task, subtitle: e.isDone ? "Completed" : "Pending", type: 'Todo', route: AppRouter.todoEdit, argument: e, dateTime: e.dueDate ?? DateTime.now()));
+    safeAdd<Expense>('expenses_box', (e) => SearchResult(id: e.id, title: e.title, subtitle: "${e.currency}${e.amount}", type: 'Expense', route: AppRouter.expenseEdit, argument: e, dateTime: e.date));
 
-    // 3. Load Clipboard
-    if (Hive.isBoxOpen('clipboard_box')) {
-      final box = Hive.box<ClipboardItem>('clipboard_box');
-      results.addAll(box.values.where((e) => !e.isDeleted).map((e) => SearchResult(
-        id: e.id,
-        title: e.content,
-        subtitle: "Clipboard",
-        type: 'Clipboard',
-        route: AppRouter.clipboardEdit,
-        argument: e,
-        dateTime: e.createdAt,
-        colorValue: e.colorValue,
-      )));
-    }
-
-    // 4. Load Todos
-    if (Hive.isBoxOpen('todos_box')) {
-      final box = Hive.box<Todo>('todos_box');
-      results.addAll(box.values.where((e) => !e.isDeleted).map((e) => SearchResult(
-        id: e.id,
-        title: e.task,
-        subtitle: e.isDone ? "Completed" : "Pending",
-        type: 'Todo',
-        route: AppRouter.todoEdit,
-        argument: e,
-        dateTime: e.dueDate ?? DateTime.now(),
-      )));
-    }
-
-    // 5. Load Expenses
-    if (Hive.isBoxOpen('expenses_box')) {
-      final box = Hive.box<Expense>('expenses_box');
-      results.addAll(box.values.where((e) => !e.isDeleted).map((e) => SearchResult(
-        id: e.id,
-        title: e.title,
-        subtitle: "${e.currency}${e.amount}",
-        type: 'Expense',
-        route: AppRouter.expenseEdit,
-        argument: e,
-        dateTime: e.date,
-      )));
-    }
-
-    setState(() => _allData = results);
+    _allData = results;
+    _applyFilters();
   }
 
-  // --- FILTERING & SORTING ENGINE ---
-  List<SearchResult> _getFilteredItems() {
-    List<SearchResult> filtered = _allData.where((item) {
-      final matchesQuery = item.title.toLowerCase().contains(_query.toLowerCase()) ||
-          item.subtitle.toLowerCase().contains(_query.toLowerCase());
-      final matchesType = _selectedType == "All" || item.type == _selectedType;
-      final matchesColor = _filterColor == null || item.colorValue == _filterColor;
+  // --- FILTERING ENGINE (Optimized) ---
+  void _applyFilters() {
+    List<SearchResult> filtered = _allData;
+    final queryLower = _query.toLowerCase();
 
-      bool matchesDate = true;
+    // 1. Text Search (Fastest check first)
+    if (queryLower.isNotEmpty) {
+      filtered = filtered.where((item) =>
+      item.title.toLowerCase().contains(queryLower) ||
+          item.subtitle.toLowerCase().contains(queryLower)
+      ).toList();
+    }
+
+    // 2. Type Filter
+    if (_selectedType != "All") {
+      filtered = filtered.where((item) => item.type == _selectedType).toList();
+    }
+
+    // 3. Color Filter
+    if (_filterColor != null) {
+      filtered = filtered.where((item) => item.colorValue == _filterColor).toList();
+    }
+
+    // 4. Date Filter
+    if (_dateRange != "All Time") {
       final now = DateTime.now();
       if (_dateRange == "Today") {
-        matchesDate = item.dateTime.day == now.day && item.dateTime.month == now.month && item.dateTime.year == now.year;
+        filtered = filtered.where((item) => item.dateTime.day == now.day && item.dateTime.month == now.month && item.dateTime.year == now.year).toList();
       } else if (_dateRange == "This Week") {
-        matchesDate = item.dateTime.isAfter(now.subtract(const Duration(days: 7)));
+        final lastWeek = now.subtract(const Duration(days: 7));
+        filtered = filtered.where((item) => item.dateTime.isAfter(lastWeek)).toList();
       }
+    }
 
-      return matchesQuery && matchesType && matchesColor && matchesDate;
-    }).toList();
+    // 5. Sorting
+    if (_sortBy == "Newest") {
+      filtered.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+    } else if (_sortBy == "Oldest") {
+      filtered.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+    } else if (_sortBy == "A-Z") {
+      filtered.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+    }
 
-    if (_sortBy == "Newest") filtered.sort((a, b) => b.dateTime.compareTo(a.dateTime));
-    else if (_sortBy == "Oldest") filtered.sort((a, b) => a.dateTime.compareTo(b.dateTime));
-    else if (_sortBy == "A-Z") filtered.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
-
-    return filtered;
+    // ✅ UPDATE NOTIFIER: This only triggers the list to rebuild, nothing else
+    _filteredListNotifier.value = filtered;
   }
 
   // --- UI BUILDERS ---
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final filtered = _getFilteredItems();
 
     return GlassScaffold(
       showBackArrow: false,
       title: null,
       body: Column(
         children: [
+          const SizedBox(height: 8), // Top padding
           _buildIntegratedSearchBar(theme),
           const SizedBox(height: 12),
           _buildHorizontalFilterChips(theme),
+          const SizedBox(height: 8),
+
+          // ✅ LIST SECTION
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 100),
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              cacheExtent: 1000,
-              itemCount: filtered.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 12),
-              itemBuilder: (context, index) => _buildResultCard(filtered[index]),
+            child: ValueListenableBuilder<List<SearchResult>>(
+              valueListenable: _filteredListNotifier,
+              builder: (context, filteredItems, _) {
+                if (filteredItems.isEmpty) {
+                  return Center(child: Text("No results found", style: TextStyle(color: theme.hintColor)));
+                }
+
+                return ListView.separated(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                  physics: const BouncingScrollPhysics(),
+                  // ✅ IMPORTANT: Renders items ahead of scroll to prevent stutter
+                  cacheExtent: 2000,
+                  itemCount: filteredItems.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 12),
+                  itemBuilder: (context, index) {
+                    // ✅ IMPORTANT: Caches the card painting
+                    return RepaintBoundary(
+                      child: _buildResultCard(filteredItems[index]),
+                    );
+                  },
+                );
+              },
             ),
           ),
         ],
@@ -226,18 +222,23 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
               decoration: BoxDecoration(
                 color: theme.colorScheme.onSurface.withOpacity(0.08),
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
               ),
               child: TextField(
                 controller: _searchController,
                 autofocus: true,
                 style: theme.textTheme.bodyLarge,
-                onChanged: (val) => setState(() => _query = val),
+                // Removed onChanged setState; listener handles it
                 decoration: InputDecoration(
                   hintText: "Search workspace...",
                   prefixIcon: Icon(Icons.search_rounded, color: theme.colorScheme.primary, size: 20),
-                  suffixIcon: _query.isNotEmpty
-                      ? IconButton(icon: const Icon(Icons.cancel_rounded, size: 18), onPressed: () { _searchController.clear(); setState(() => _query = ""); })
-                      : null,
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.cancel_rounded, size: 18),
+                    onPressed: () {
+                      _searchController.clear();
+                      // Listener updates automatically
+                    },
+                  ),
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(vertical: 12),
                 ),
@@ -254,46 +255,39 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   }
 
   Widget _buildHorizontalFilterChips(ThemeData theme) {
-    return Container(
-      // Optional: add a background to the entire row area
-      color: theme.colorScheme.onSurface.withOpacity(0.02),
-      height: 50, // Increased slightly to prevent vertical clipping
-      child: ListView.builder(
+    return SizedBox(
+      height: 40,
+      child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: _filterTypes.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           final type = _filterTypes[index];
           final isSelected = _selectedType == type;
 
-          return Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: FilterChip(
-              label: Text(
-                type == "Todo" ? "To-Dos" : type == "Expense" ? "Finance" : type,
-                style: TextStyle(
-                  color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.7),
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          return GestureDetector(
+            onTap: () {
+              // We need setState here to update the CHIP color
+              setState(() => _selectedType = type);
+              // Logic update
+              _applyFilters();
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.1),
                 ),
               ),
-              selected: isSelected,
-              onSelected: (val) => setState(() => _selectedType = type),
-
-              // --- BACKGROUND COLORS ---
-              // Background color when NOT selected
-              backgroundColor: theme.colorScheme.onSurface.withOpacity(0.05),
-              // Background color when SELECTED
-              selectedColor: theme.colorScheme.primary.withOpacity(0.15),
-
-              // UI Refinements
-              checkmarkColor: theme.colorScheme.primary,
-              pressElevation: 0,
-              shape: StadiumBorder(
-                side: BorderSide(
-                  color: isSelected
-                      ? theme.colorScheme.primary
-                      : theme.colorScheme.onSurface.withOpacity(0.1),
-                  width: 1,
+              child: Text(
+                type == "Todo" ? "To-Dos" : type == "Expense" ? "Finance" : type,
+                style: TextStyle(
+                  color: isSelected ? Colors.white : theme.colorScheme.onSurface.withOpacity(0.7),
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                 ),
               ),
             ),
@@ -303,33 +297,69 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     );
   }
 
+  // ✅ IMPROVED VISIBILITY: Solid Background Bottom Sheet
   void _showSortFilterSheet() {
+    final theme = Theme.of(context);
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent, // Background transparent
+      isScrollControlled: true, // Allows sheet to expand properly
       builder: (context) => StatefulBuilder(
         builder: (context, setSheetState) {
-          final theme = Theme.of(context);
           return Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(color: theme.colorScheme.surface, borderRadius: const BorderRadius.vertical(top: Radius.circular(32))),
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 30),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface, // ✅ Solid color for visibility
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Handle
+                Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), borderRadius: BorderRadius.circular(2)))),
+                const SizedBox(height: 20),
+
+                // Header
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Sort & Filter", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
-                    TextButton(onPressed: () { setState(() { _sortBy = "Newest"; _dateRange = "All Time"; _filterColor = null; }); Navigator.pop(context); }, child: const Text("Reset")),
+                    TextButton(
+                        onPressed: () {
+                          setState(() { _sortBy = "Newest"; _dateRange = "All Time"; _filterColor = null; });
+                          _applyFilters();
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Reset")
+                    ),
                   ],
                 ),
+
                 const SizedBox(height: 16),
                 _sheetSectionTitle("Sort Order"),
-                Wrap(spacing: 8, children: ["Newest", "Oldest", "A-Z"].map((s) => ChoiceChip(label: Text(s), selected: _sortBy == s, onSelected: (v) { setSheetState(() => _sortBy = s); setState(() => _sortBy = s); })).toList()),
+                Wrap(spacing: 8, children: ["Newest", "Oldest", "A-Z"].map((s) => ChoiceChip(
+                    label: Text(s),
+                    selected: _sortBy == s,
+                    onSelected: (v) {
+                      setSheetState(() => _sortBy = s);
+                      setState(() => _sortBy = s);
+                      _applyFilters();
+                    }
+                )).toList()),
+
                 const SizedBox(height: 16),
                 _sheetSectionTitle("Timeframe"),
-                Wrap(spacing: 8, children: ["All Time", "Today", "This Week"].map((d) => ChoiceChip(label: Text(d), selected: _dateRange == d, onSelected: (v) { setSheetState(() => _dateRange = d); setState(() => _dateRange = d); })).toList()),
+                Wrap(spacing: 8, children: ["All Time", "Today", "This Week"].map((d) => ChoiceChip(
+                    label: Text(d),
+                    selected: _dateRange == d,
+                    onSelected: (v) {
+                      setSheetState(() => _dateRange = d);
+                      setState(() => _dateRange = d);
+                      _applyFilters();
+                    }
+                )).toList()),
+
                 const SizedBox(height: 16),
                 _sheetSectionTitle("Color Tag"),
                 _buildColorFilterRow(setSheetState),
@@ -348,8 +378,6 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
     final onSurface = theme.colorScheme.onSurface;
-
-    // 1. Use your common palette instead of hardcoded list
     final List<Color> myPalette = AppContentPalette.palette;
 
     return SizedBox(
@@ -359,11 +387,11 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
         itemCount: myPalette.length + 1,
         itemBuilder: (context, index) {
           if (index == 0) {
-            // --- Clear Filter Option ---
             return GestureDetector(
               onTap: () {
                 setSheetState(() => _filterColor = null);
                 setState(() => _filterColor = null);
+                _applyFilters();
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 12),
@@ -381,43 +409,24 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
 
           final color = myPalette[index - 1];
           final isSelected = _filterColor == color.value;
-
-          // 2. Determine high-contrast color for the check icon
           final contrastColor = AppContentPalette.getContrastColor(color);
 
           return GestureDetector(
             onTap: () {
               setSheetState(() => _filterColor = color.value);
               setState(() => _filterColor = color.value);
+              _applyFilters();
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 12),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                width: 38,
-                height: 38,
+                width: 38, height: 38,
                 decoration: BoxDecoration(
-                  color: color,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: isSelected ? primaryColor : onSurface.withOpacity(0.2),
-                    width: isSelected ? 2.5 : 1,
-                  ),
-                  boxShadow: isSelected ? [
-                    BoxShadow(
-                        color: primaryColor.withOpacity(0.3),
-                        blurRadius: 10,
-                        spreadRadius: 1
-                    )
-                  ] : null,
+                  color: color, shape: BoxShape.circle,
+                  border: Border.all(color: isSelected ? primaryColor : onSurface.withOpacity(0.2), width: isSelected ? 2.5 : 1),
                 ),
-                child: isSelected
-                    ? Icon(
-                    Icons.check,
-                    size: 18,
-                    color: contrastColor // Dynamic Black/White checkmark
-                )
-                    : null,
+                child: isSelected ? Icon(Icons.check, size: 18, color: contrastColor) : null,
               ),
             ),
           );
@@ -446,9 +455,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   void _share(SearchResult res) { Share.share(res.title); }
   void _delete(SearchResult res) {
     final item = res.argument;
-    item.isDeleted = true;
-    item.deletedAt = DateTime.now();
-    item.save();
+    try { item.isDeleted = true; item.deletedAt = DateTime.now(); item.save(); } catch(_) {}
     _loadAllData();
   }
 }

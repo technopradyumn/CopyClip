@@ -3,13 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
-class GlassScaffold extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+
+class GlassScaffold extends StatelessWidget {
   final Widget body;
   final Widget? floatingActionButton;
   final String? title;
   final List<Widget>? actions;
   final bool showBackArrow;
   final Color? backgroundColor;
+  // enableGlassEffect is now ignored for performance, or used to toggle gradients
   final bool enableGlassEffect;
 
   const GlassScaffold({
@@ -24,121 +29,78 @@ class GlassScaffold extends StatefulWidget {
   });
 
   @override
-  State<GlassScaffold> createState() => _GlassScaffoldState();
-}
-
-class _GlassScaffoldState extends State<GlassScaffold> {
-  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    final baseColor =
-        widget.backgroundColor ?? theme.scaffoldBackgroundColor;
-
-    final bool isBackgroundDark =
-        ThemeData.estimateBrightnessForColor(baseColor) ==
-            Brightness.dark;
-
-    final contentColor =
-    isBackgroundDark ? Colors.white : Colors.black87;
-
-    final overlayStyle = isBackgroundDark
-        ? SystemUiOverlayStyle.light
-        : SystemUiOverlayStyle.dark;
-
-    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    final baseColor = backgroundColor ?? theme.scaffoldBackgroundColor;
+    final bool isDark = ThemeData.estimateBrightnessForColor(baseColor) == Brightness.dark;
+    final contentColor = isDark ? Colors.white : Colors.black87;
+    final overlayStyle = isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: overlayStyle.copyWith(
-        statusBarColor: Colors.transparent,
-      ),
+      value: overlayStyle.copyWith(statusBarColor: Colors.transparent),
       child: Scaffold(
         backgroundColor: baseColor,
-
-        // ✅ CRITICAL: Let Scaffold handle keyboard padding automatically
         resizeToAvoidBottomInset: true,
-
         extendBodyBehindAppBar: true,
-
-        appBar: widget.title != null
+        appBar: title != null
             ? AppBar(
           backgroundColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
           systemOverlayStyle: overlayStyle,
-          leading: widget.showBackArrow
+          leading: showBackArrow
               ? IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new,
-              size: 20,
-              color: contentColor,
-            ),
+            icon: Icon(Icons.arrow_back_ios_new, size: 20, color: contentColor),
             onPressed: () => context.pop(),
           )
               : null,
           title: Text(
-            widget.title!,
+            title!,
             style: theme.textTheme.titleLarge?.copyWith(
               color: contentColor,
               fontWeight: FontWeight.bold,
             ),
           ),
-          actions: widget.actions,
+          actions: actions,
         )
             : null,
-
         body: Stack(
           children: [
-            // Background Color
+            // 1. Solid Background
             Positioned.fill(
-              child: DecoratedBox(
-                decoration: BoxDecoration(color: baseColor),
-              ),
+              child: ColoredBox(color: baseColor),
             ),
 
-            // Gradient Overlay
-            Positioned.fill(
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      isBackgroundDark
-                          ? Colors.white10
-                          : Colors.white.withOpacity(0.6),
-                      isBackgroundDark
-                          ? Colors.transparent
-                          : Colors.white.withOpacity(0.2),
-                    ],
+            // 2. High-Performance Gradient Overlay (Replaces Blur)
+            // This mimics the depth of glass without the expensive calculation
+            if (enableGlassEffect)
+              Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: isDark
+                          ? [Colors.white.withOpacity(0.05), Colors.transparent]
+                          : [Colors.white.withOpacity(0.4), Colors.white.withOpacity(0.1)],
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            // Glass Effect
-            if (widget.enableGlassEffect)
-              Positioned.fill(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: Container(color: Colors.transparent),
-                ),
-              ),
-
-            // ✅ Body Content - Wrap in SafeArea
+            // 3. Body Content (SafeArea applied here)
             Positioned.fill(
               child: SafeArea(
-                child: Material(
-                  color: Colors.transparent,
-                  child: widget.body,
-                ),
+                // Remove bottom SafeArea if you want content to go behind nav bar,
+                // but usually true is safer for lists
+                bottom: false,
+                child: body,
               ),
             ),
           ],
         ),
-
-        floatingActionButton: widget.floatingActionButton,
+        floatingActionButton: floatingActionButton,
       ),
     );
   }

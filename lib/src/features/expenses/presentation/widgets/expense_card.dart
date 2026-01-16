@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/features/expenses/data/expense_model.dart';
 
 class ExpenseCard extends StatelessWidget {
@@ -26,18 +25,37 @@ class ExpenseCard extends StatelessWidget {
     final expenseColor = Colors.redAccent;
     final sign = expense.isIncome ? '+' : '-';
 
+    // ✅ OPTIMIZATION: High-performance Decoration
+    final decoration = BoxDecoration(
+      color: theme.colorScheme.surface.withOpacity(isSelected ? 0.3 : 0.15),
+      borderRadius: BorderRadius.circular(24),
+      border: Border.all(
+        color: isSelected ? theme.colorScheme.primary : Colors.white.withOpacity(0.1),
+        width: 1.5,
+      ),
+      boxShadow: [
+        BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4)
+        )
+      ],
+    );
+
     return GestureDetector(
       onTap: onTap,
       onLongPress: onLongPress,
       child: Stack(
         children: [
-          GlassContainer(
+          // ✅ Replaced GlassContainer with fast AnimatedContainer
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
             margin: EdgeInsets.zero,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            opacity: isSelected ? 0.3 : 0.1,
+            decoration: decoration,
             child: Row(
               children: [
-                // 1. ICON SECTION (Fixed size)
+                // 1. ICON SECTION
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -52,7 +70,7 @@ class ExpenseCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
 
-                // 2. TITLE & CATEGORY SECTION (Takes remaining space)
+                // 2. TITLE & CATEGORY
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,8 +81,8 @@ class ExpenseCard extends StatelessWidget {
                           type: MaterialType.transparency,
                           child: Text(
                             expense.title,
-                            maxLines: 1, // Prevents title from pushing amount down
-                            overflow: TextOverflow.ellipsis, // Adds '...' if too long
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.bodyLarge?.copyWith(
                               color: onSurfaceColor,
                               fontWeight: FontWeight.bold,
@@ -73,7 +91,6 @@ class ExpenseCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      // Using a Wrap or a single Text line to avoid overflow here too
                       Text(
                         "${expense.category} • ${DateFormat('h:mm a').format(expense.date)}",
                         maxLines: 1,
@@ -87,8 +104,7 @@ class ExpenseCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
 
-                // 3. AMOUNT SECTION (Flexible but prioritized)
-                // Use ConstrainedBox to ensure it doesn't take more than 40% of the screen
+                // 3. AMOUNT SECTION
                 ConstrainedBox(
                   constraints: BoxConstraints(
                     maxWidth: MediaQuery.of(context).size.width * 0.4,
@@ -101,12 +117,10 @@ class ExpenseCard extends StatelessWidget {
                         "$sign ${expense.currency}${expense.amount.toStringAsFixed(2)}",
                         textAlign: TextAlign.right,
                         maxLines: 1,
-                        // This handles massive numbers by shrinking the text size automatically
                         softWrap: false,
                         style: theme.textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: expense.isIncome ? incomeColor : expenseColor,
-                          // Optional: define a specific font size for consistency
                         ),
                       ),
                     ),

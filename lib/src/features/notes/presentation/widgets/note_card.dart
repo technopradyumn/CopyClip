@@ -1,9 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/features/notes/data/note_model.dart';
-import 'dart:io';
 import '../../../../core/app_content_palette.dart';
 
 class NoteCard extends StatelessWidget {
@@ -31,6 +30,7 @@ class NoteCard extends StatelessWidget {
   Map<String, dynamic> _parseContent(String jsonSource) {
     if (jsonSource.isEmpty) return {"text": "No content", "imageUrl": null};
     try {
+      if (!jsonSource.startsWith('[')) return {"text": jsonSource, "imageUrl": null};
       final List<dynamic> delta = jsonDecode(jsonSource);
       String plainText = "";
       String? firstImageUrl;
@@ -60,14 +60,24 @@ class NoteCard extends StatelessWidget {
     final String previewText = parsed['text'];
     final String? imageUrl = parsed['imageUrl'];
 
-    // Use AppContentPalette helper to get the color
     final Color noteThemeColor = note.colorValue != null
         ? AppContentPalette.getColorFromValue(note.colorValue!)
         : AppContentPalette.palette[0];
 
-    // Use AppContentPalette helper for contrast color
     final Color contentColor = AppContentPalette.getContrastColor(noteThemeColor);
-    final bool isDarkColor = contentColor == Colors.white; // Simplified dark check
+
+    // ✅ OPTIMIZATION: High-performance Decoration (No Blur)
+    final decoration = BoxDecoration(
+      color: noteThemeColor.withOpacity(isSelected ? 0.6 : 0.65), // Direct opacity
+      borderRadius: BorderRadius.circular(24),
+      border: Border.all(
+          color: Colors.white.withOpacity(0.2),
+          width: 1.5
+      ),
+      boxShadow: [
+        BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))
+      ],
+    );
 
     return GestureDetector(
       onTap: onTap,
@@ -77,125 +87,108 @@ class NoteCard extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           transform: isSelected ? Matrix4.identity().scaled(0.98) : Matrix4.identity(),
-          child: GlassContainer(
-            margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(16),
-            color: noteThemeColor,
-            opacity: isSelected ? 0.9 : 0.8,
-            blur: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: Text(
-                          note.title.isNotEmpty ? note.title : "Untitled",
-                          maxLines: 1,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: contentColor,
-                          ),
+          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.all(16),
+          decoration: decoration, // Using the fast decoration
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: Text(
+                        note.title.isNotEmpty ? note.title : "Untitled",
+                        maxLines: 1,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: contentColor,
                         ),
                       ),
                     ),
-                    Icon(
-                      isSelected ? Icons.check_circle : Icons.radio_button_unchecked,
-                      size: 20,
-                      color: isSelected ? theme.colorScheme.primary : contentColor.withOpacity(0.3),
+                  ),
+                  Icon(
+                    isSelected ? Icons.check_circle : Icons.radio_button_unchecked,
+                    size: 20,
+                    color: isSelected ? theme.colorScheme.primary : contentColor.withOpacity(0.3),
+                  ),
+                ],
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(top: 4, bottom: 8),
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Row(
+                    children: [
+                      Icon(Icons.access_time, size: 12, color: contentColor.withOpacity(0.5)),
+                      const SizedBox(width: 4),
+                      Text(
+                        DateFormat('MMM dd, yyyy  •  hh:mm a').format(note.updatedAt),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: contentColor.withOpacity(0.6),
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              if (imageUrl != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.file(
+                      File(imageUrl),
+                      height: 120,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
                     ),
-                  ],
+                  ),
                 ),
 
-                // Date and Time Pill
-                Padding(
-                  padding: const EdgeInsets.only(top: 4, bottom: 8),
-                  child: Material(
-                    type: MaterialType.transparency,
+              Material(
+                type: MaterialType.transparency,
+                child: Text(
+                  previewText,
+                  maxLines: imageUrl != null ? 2 : 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: contentColor.withOpacity(0.8),
+                    height: 1.2,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  _QuickColorPicker(
+                    onColorSelected: onColorChanged,
+                    currentColor: noteThemeColor,
+                  ),
+                  const Spacer(),
+                  IgnorePointer(
+                    ignoring: isSelected,
                     child: Row(
                       children: [
-                        Icon(Icons.access_time, size: 12, color: contentColor.withOpacity(0.5)),
-                        const SizedBox(width: 4),
-                        Text(
-                          DateFormat('MMM dd, yyyy  •  hh:mm a').format(note.updatedAt),
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: contentColor.withOpacity(0.6),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        _smallActionBtn(Icons.copy_rounded, onCopy, contentColor),
+                        _smallActionBtn(Icons.share, onShare, contentColor),
+                        _smallActionBtn(Icons.delete_outline_rounded, onDelete, Colors.redAccent),
                       ],
                     ),
                   ),
-                ),
-
-                if (imageUrl != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: _buildImage(imageUrl),
-                    ),
-                  ),
-
-                Material(
-                  type: MaterialType.transparency,
-                  child: Text(
-                    previewText,
-                    maxLines: imageUrl != null ? 2 : 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: contentColor.withOpacity(0.8),
-                      height: 1.2, // Adjusted for compact look
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    _QuickColorPicker(
-                      onColorSelected: onColorChanged,
-                      currentColor: noteThemeColor,
-                    ),
-                    const Spacer(),
-                    IgnorePointer(
-                      ignoring: isSelected,
-                      child: Row(
-                        children: [
-                          _smallActionBtn(Icons.copy_rounded, onCopy, contentColor),
-                          _smallActionBtn(Icons.share, onShare, contentColor),
-                          _smallActionBtn(Icons.delete_outline_rounded, onDelete, Colors.redAccent),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildImage(String url) {
-    return Image.file(
-      File(url),
-      height: 120,
-      width: double.infinity,
-      fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) {
-        return Image.network(
-          url,
-          height: 120,
-          width: double.infinity,
-          fit: BoxFit.cover,
-          errorBuilder: (c, e, s) => const SizedBox.shrink(),
-        );
-      },
     );
   }
 
@@ -217,11 +210,8 @@ class _QuickColorPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Color> dotPalette = AppContentPalette.palette;
-
     final theme = Theme.of(context);
-    // Determine the contrast color for the selected dot's border
     final contrastColorForDot = theme.colorScheme.primary;
-
 
     return Row(
       children: dotPalette.map((color) {
@@ -239,7 +229,6 @@ class _QuickColorPicker extends StatelessWidget {
                 color: isSelected ? contrastColorForDot : color.withOpacity(0.5),
                 width: isSelected ? 2 : 1,
               ),
-              boxShadow: isSelected ? [BoxShadow(color: color.withOpacity(0.5), blurRadius: 4)] : null,
             ),
             child: isSelected ? Icon(Icons.check, size: 14, color: AppContentPalette.getContrastColor(color)) : null,
           ),

@@ -123,21 +123,36 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
   // --- Sorting Logic ---
 
   void _showSortMenu() {
+    final theme = Theme.of(context);
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (_) => Container(
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 30),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          color: theme.colorScheme.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         ),
-        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Sort By", style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 10),
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              "Sort Sketches",
+              style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
             _buildSortOption(FolderSortOption.dateNewest, "Newest First"),
             _buildSortOption(FolderSortOption.dateOldest, "Oldest First"),
             _buildSortOption(FolderSortOption.nameAZ, "Name (A-Z)"),
@@ -150,16 +165,34 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
 
   Widget _buildSortOption(FolderSortOption option, String label) {
     final selected = _currentSort == option;
-    return ListTile(
-      leading: Icon(
-        selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-        color: selected ? Theme.of(context).colorScheme.primary : null,
-      ),
-      title: Text(label),
+    final theme = Theme.of(context);
+
+    return InkWell(
       onTap: () {
         setState(() => _currentSort = option);
         Navigator.pop(context);
       },
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        child: Row(
+          children: [
+            Icon(
+              selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+              color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.5),
+            ),
+            const SizedBox(width: 16),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+                color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -271,8 +304,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
 
                     // 5. Grid View
                     return GridView.builder(
-                      // --- CHANGED HERE: Added BouncingScrollPhysics ---
-                      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                      physics: const AlwaysScrollableScrollPhysics(),
                       padding: const EdgeInsets.all(16),
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -535,34 +567,36 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
           color: theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('Choose Color', style: theme.textTheme.titleMedium),
-            const SizedBox(height: 16),
-            GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 5,
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 12,
-              children: colors.map((color) => GestureDetector(
-                onTap: () {
-                  setState(() => _folder.color = color);
-                  CanvasDatabase().saveFolder(_folder);
-                  Navigator.pop(ctx);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: color,
-                    shape: BoxShape.circle,
-                    border: _folder.color.value == color.value
-                        ? Border.all(width: 3, color: Colors.white)
-                        : null,
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Choose Color', style: theme.textTheme.titleMedium),
+              const SizedBox(height: 16),
+              GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 5,
+                mainAxisSpacing: 12,
+                crossAxisSpacing: 12,
+                children: colors.map((color) => GestureDetector(
+                  onTap: () {
+                    setState(() => _folder.color = color);
+                    CanvasDatabase().saveFolder(_folder);
+                    Navigator.pop(ctx);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: color,
+                      shape: BoxShape.circle,
+                      border: _folder.color.value == color.value
+                          ? Border.all(width: 3, color: Colors.white)
+                          : null,
+                    ),
                   ),
-                ),
-              )).toList(),
-            ),
-          ],
+                )).toList(),
+              ),
+            ],
+          ),
         ),
       ),
     );

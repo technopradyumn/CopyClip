@@ -1,7 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 
 class TodoCard extends StatelessWidget {
@@ -23,9 +21,7 @@ class TodoCard extends StatelessWidget {
   });
 
   bool get _isOverdue => todo.dueDate != null && todo.dueDate!.isBefore(DateTime.now()) && !todo.isDone;
-
   bool get _isDueToday => todo.dueDate != null && _isSameDay(todo.dueDate!, DateTime.now()) && !todo.isDone;
-
   bool _isSameDay(DateTime a, DateTime b) => a.year == b.year && a.month == b.month && a.day == b.day;
 
   @override
@@ -48,22 +44,23 @@ class TodoCard extends StatelessWidget {
             onLongPress: onLongPress,
             child: Stack(
               children: [
-                GlassContainer(
-                  margin: EdgeInsets.zero,
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  borderColor: _getBorderColor(colorScheme),
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  color: _getBackgroundColor(colorScheme),
-                  opacity: _getOpacity(),
+                // ✅ OPTIMIZATION: Replaced GlassContainer with fast container
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: _getBackgroundColor(colorScheme), // Original logic preserved
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        color: _getBorderColor(colorScheme), // Original logic preserved
+                        width: 1
+                    ),
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Main content row
                       Row(
                         children: [
-                          // Checkbox
                           if (!isSelected)
                             GestureDetector(
                               onTap: onToggleDone,
@@ -84,7 +81,6 @@ class TodoCard extends StatelessWidget {
                                     : null,
                               ),
                             ),
-                          // Task text
                           Expanded(
                             child: Hero(
                               tag: 'todo_task_${todo.id}',
@@ -108,7 +104,6 @@ class TodoCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // Due date and reminder row
                       if (todo.dueDate != null)
                         Padding(
                           padding: const EdgeInsets.only(top: 4, left: 20),
@@ -133,11 +128,7 @@ class TodoCard extends StatelessWidget {
                               if (todo.hasReminder)
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8),
-                                  child: Icon(
-                                    Icons.notifications_active,
-                                    size: 12,
-                                    color: colorScheme.primary,
-                                  ),
+                                  child: Icon(Icons.notifications_active, size: 12, color: colorScheme.primary),
                                 ),
                             ],
                           ),
@@ -145,16 +136,11 @@ class TodoCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Selection indicator
                 if (isSelected)
                   Positioned(
                     top: 8,
                     right: 8,
-                    child: Icon(
-                      Icons.check_circle,
-                      color: colorScheme.primary,
-                      size: 20,
-                    ),
+                    child: Icon(Icons.check_circle, color: colorScheme.primary, size: 20),
                   ),
               ],
             ),
@@ -164,19 +150,7 @@ class TodoCard extends StatelessWidget {
     );
   }
 
-  Color _getCategoryColor(String category, ColorScheme colorScheme) {
-    final hash = category.hashCode.abs();
-    final colors = [
-      colorScheme.primary,
-      colorScheme.secondary,
-      colorScheme.tertiary,
-      colorScheme.error,
-    ];
-    return colors[hash % colors.length];
-  }
-
-  double _getOpacity() => isSelected ? 0.4 : (todo.isDone ? 0.08 : 0.12);
-
+  // --- Retained User Logic Helpers ---
   Color _getBorderColor(ColorScheme colorScheme) {
     if (isSelected) return colorScheme.primary;
     if (todo.isDone) return colorScheme.outlineVariant.withOpacity(0.3);
@@ -200,9 +174,10 @@ class TodoCard extends StatelessWidget {
   }
 
   Color _getBackgroundColor(ColorScheme colorScheme) {
-    if (todo.isDone) return colorScheme.surfaceContainerLowest;
-    if (_isOverdue) return colorScheme.error.withOpacity(0.5);
-    if (_isDueToday) return colorScheme.tertiary.withOpacity(0.5);
-    return Colors.transparent;
+    // Opacity logic handled here instead of GlassContainer param
+    if (todo.isDone) return colorScheme.surfaceContainerLowest.withOpacity(0.6);
+    if (_isOverdue) return colorScheme.error.withOpacity(0.15);
+    if (_isDueToday) return colorScheme.tertiary.withOpacity(0.15);
+    return colorScheme.surface.withOpacity(isSelected ? 0.3 : 0.12);
   }
 }

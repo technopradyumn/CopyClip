@@ -6,10 +6,16 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
+
+// Core
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
-import '../../../../core/widgets/glass_dialog.dart';
+import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+
+// Data
 import '../../data/clipboard_model.dart';
+
+// Widgets (Ensure you use the Optimized ClipboardCard provided earlier)
 import '../widgets/clipboard_card.dart';
 
 enum ClipSortOption { custom, dateNewest, dateOldest, contentAZ, contentZA }
@@ -21,61 +27,124 @@ class ClipboardScreen extends StatefulWidget {
   State<ClipboardScreen> createState() => _ClipboardScreenState();
 }
 
-class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingObserver {
+class _ClipboardScreenState extends State<ClipboardScreen> {
+  // UI Controllers
+  final TextEditingController _searchController = TextEditingController();
+
+  // ✅ PERFORMANCE: Notifier for the filtered list (Isolates updates)
+  final ValueNotifier<List<ClipboardItem>> _filteredClipsNotifier = ValueNotifier([]);
+
+  // Data State
+  List<ClipboardItem> _rawClips = [];
   bool _isSelectionMode = false;
   final Set<String> _selectedIds = {};
-  final TextEditingController _searchController = TextEditingController();
+
+  // Filter State
   String _searchQuery = "";
   ClipSortOption _currentSort = ClipSortOption.custom;
-
-  List<ClipboardItem> _reorderingList = [];
-  bool _isReordering = false;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    _refreshClips();
+
+    // Listen for Search efficiently
+    _searchController.addListener(() {
+      _searchQuery = _searchController.text.toLowerCase();
+      _applyFilters();
+    });
+
+    // Listen to DB changes to keep list in sync
+    Hive.box<ClipboardItem>('clipboard_box').listenable().addListener(_refreshClips);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    Hive.box<ClipboardItem>('clipboard_box').listenable().removeListener(_refreshClips);
     _searchController.dispose();
+    _filteredClipsNotifier.dispose();
     super.dispose();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  // --- DATA LOGIC ---
+
+  void _refreshClips() {
+    if (!Hive.isBoxOpen('clipboard_box')) return;
+    final box = Hive.box<ClipboardItem>('clipboard_box');
+
+    // Get all non-deleted clips
+    _rawClips = box.values.where((e) => !e.isDeleted).toList();
+    _applyFilters();
   }
 
-  String _detectType(String text) {
-    if (text.startsWith('http')) return 'link';
-    if (RegExp(r'^\+?[0-9]{7,15}$').hasMatch(text)) return 'phone';
-    return 'text';
-  }
+  void _applyFilters() {
+    List<ClipboardItem> result = List.from(_rawClips);
 
-  void _onReorder(int oldIndex, int newIndex) async {
-    if (newIndex > oldIndex) newIndex -= 1;
-    setState(() {
-      _isReordering = true;
-      final item = _reorderingList.removeAt(oldIndex);
-      _reorderingList.insert(newIndex, item);
-    });
-
-    for (int i = 0; i < _reorderingList.length; i++) {
-      _reorderingList[i].sortIndex = i;
-      _reorderingList[i].save();
+    // 1. Search Filter
+    if (_searchQuery.isNotEmpty) {
+      result = result.where((i) => i.content.toLowerCase().contains(_searchQuery)).toList();
     }
 
-    if (mounted) setState(() => _isReordering = false);
+    // 2. Sort
+    switch (_currentSort) {
+      case ClipSortOption.dateNewest:
+        result.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+        break;
+      case ClipSortOption.dateOldest:
+        result.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+        break;
+      case ClipSortOption.contentAZ:
+        result.sort((a, b) => a.content.toLowerCase().compareTo(b.content.toLowerCase()));
+        break;
+      case ClipSortOption.contentZA:
+        result.sort((a, b) => b.content.toLowerCase().compareTo(a.content.toLowerCase()));
+        break;
+      case ClipSortOption.custom:
+        result.sort((a, b) => a.sortIndex.compareTo(b.sortIndex));
+        break;
+    }
+
+    // Update the UI
+    _filteredClipsNotifier.value = result;
+  }
+
+  // --- ACTIONS ---
+
+  void _onReorder(int oldIndex, int newIndex) {
+    if (newIndex > oldIndex) newIndex -= 1;
+
+    final currentList = List<ClipboardItem>.from(_filteredClipsNotifier.value);
+    final item = currentList.removeAt(oldIndex);
+    currentList.insert(newIndex, item);
+
+    // Update UI immediately
+    _filteredClipsNotifier.value = currentList;
+
+    // Update DB in background
+    for (int i = 0; i < currentList.length; i++) {
+      currentList[i].sortIndex = i;
+      currentList[i].save();
+    }
+  }
+
+  String _getCleanText(String content) {
+    if (!content.startsWith('[')) return content;
+    try {
+      final List<dynamic> delta = jsonDecode(content);
+      String plainText = "";
+      for (var op in delta) {
+        if (op is Map && op['insert'] is String) plainText += op['insert'];
+      }
+      return plainText.trim();
+    } catch (_) { return content; }
   }
 
   void _confirmDelete(ClipboardItem item) {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Move to Recycle Bin?",
-        content: "You can restore it later from settings.",
+        title: "Move to Bin?",
+        content: "You can restore it later.",
         confirmText: "Move",
         isDestructive: true,
         onConfirm: () {
@@ -89,76 +158,70 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
   }
 
   void _deleteSelected() {
-    if (_selectedIds.isEmpty) return;
-    showDialog(
-      context: context,
-      builder: (ctx) => GlassDialog(
-        title: "Move ${_selectedIds.length} Items to Bin?",
-        content: "You can restore them later from settings.",
-        confirmText: "Move",
-        isDestructive: true,
-        onConfirm: () {
-          Navigator.pop(ctx);
-          final box = Hive.box<ClipboardItem>('clipboard_box');
-          final now = DateTime.now();
-          for (var id in _selectedIds) {
-            final item = box.get(id);
-            if (item != null) {
-              item.isDeleted = true;
-              item.deletedAt = now;
-              item.save();
-            }
-          }
-          setState(() {
-            _selectedIds.clear();
-            _isSelectionMode = false;
-          });
-        },
-      ),
-    );
+    final now = DateTime.now();
+    for (var id in _selectedIds) {
+      try {
+        final item = _rawClips.firstWhere((e) => e.id == id);
+        item.isDeleted = true;
+        item.deletedAt = now;
+        item.save();
+      } catch (_) {}
+    }
+    setState(() { _selectedIds.clear(); _isSelectionMode = false; });
   }
 
   void _deleteAll() {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Move All to Bin?",
-        content: "This will move all active clips to the recycle bin.",
-        confirmText: "Move All",
+        title: "Delete All?",
+        content: "Move all clips to Recycle Bin?",
+        confirmText: "Delete All",
         isDestructive: true,
         onConfirm: () {
           Navigator.pop(ctx);
-          final box = Hive.box<ClipboardItem>('clipboard_box');
           final now = DateTime.now();
-          final activeItems = box.values.where((e) => !e.isDeleted).toList();
-          for (var item in activeItems) {
-            item.isDeleted = true;
-            item.deletedAt = now;
-            item.save();
+          for (var item in _rawClips) {
+            item.isDeleted = true; item.deletedAt = now; item.save();
           }
         },
       ),
     );
   }
 
-  String _getCleanText(String content) {
-    if (!content.startsWith('[')) return content;
-    try {
-      final List<dynamic> delta = jsonDecode(content);
-      String plainText = "";
-      for (var op in delta) {
-        if (op is Map && op.containsKey('insert') && op['insert'] is String) {
-          plainText += op['insert'];
-        }
-      }
-      return plainText.trim();
-    } catch (_) { return content; }
+  void _openEditor(ClipboardItem? item) {
+    if (_isSelectionMode) {
+      if (item != null) _toggleSelection(item.id);
+      return;
+    }
+    context.push(AppRouter.clipboardEdit, extra: item);
   }
+
+  void _toggleSelection(String id) {
+    setState(() {
+      if (_selectedIds.contains(id)) _selectedIds.remove(id);
+      else _selectedIds.add(id);
+      if (_selectedIds.isEmpty) _isSelectionMode = false;
+    });
+  }
+
+  void _selectAll() {
+    setState(() {
+      if (_selectedIds.length == _filteredClipsNotifier.value.length) {
+        _selectedIds.clear();
+        _isSelectionMode = false;
+      } else {
+        _selectedIds.addAll(_filteredClipsNotifier.value.map((e) => e.id));
+      }
+    });
+  }
+
+  // --- UI BUILDERS ---
 
   @override
   Widget build(BuildContext context) {
-    final onSurfaceColor = Theme.of(context).colorScheme.onSurface;
-    final primaryColor = Theme.of(context).colorScheme.primary;
+    final theme = Theme.of(context);
+    final onSurfaceColor = theme.colorScheme.onSurface;
 
     return WillPopScope(
       onWillPop: () async {
@@ -172,87 +235,110 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
         title: null,
         floatingActionButton: _isSelectionMode ? null : FloatingActionButton(
           onPressed: () => context.push(AppRouter.clipboardEdit),
-          backgroundColor: primaryColor,
-          child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
+          backgroundColor: theme.colorScheme.primary,
+          child: Icon(Icons.add, color: theme.colorScheme.onPrimary),
         ),
         body: Column(
           children: [
-            _buildTopBar(),
-            _buildSearchBar(onSurfaceColor),
+            _buildCustomTopBar(),
+
+            // Search Bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Container(
+                height: 44,
+                decoration: BoxDecoration(
+                  color: onSurfaceColor.withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+                ),
+                child: TextField(
+                  controller: _searchController,
+                  style: theme.textTheme.bodyMedium,
+                  decoration: InputDecoration(
+                    hintText: 'Search clips...',
+                    hintStyle: theme.textTheme.bodyMedium?.copyWith(color: onSurfaceColor.withOpacity(0.5)),
+                    prefixIcon: Icon(Icons.search, color: onSurfaceColor.withOpacity(0.5), size: 20),
+                    suffixIcon: _searchController.text.isNotEmpty
+                        ? GestureDetector(onTap: () { _searchController.clear(); }, child: Icon(Icons.close, color: onSurfaceColor.withOpacity(0.5), size: 18))
+                        : null,
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                  ),
+                ),
+              ),
+            ),
+
+            // List
             Expanded(
-              child: ValueListenableBuilder(
-                valueListenable: Hive.box<ClipboardItem>('clipboard_box').listenable(),
-                builder: (context, Box<ClipboardItem> box, _) {
-                  List<ClipboardItem> items;
-                  final activeItems = box.values.where((e) => !e.isDeleted).toList().cast<ClipboardItem>();
-
-                  if (_isReordering) {
-                    items = _reorderingList;
-                  } else {
-                    items = activeItems;
-                    if (_searchQuery.isNotEmpty) {
-                      items = items.where((i) => i.content.toLowerCase().contains(_searchQuery)).toList();
-                    }
-
-                    switch (_currentSort) {
-                      case ClipSortOption.dateNewest:
-                        items.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-                        break;
-                      case ClipSortOption.dateOldest:
-                        items.sort((a, b) => a.createdAt.compareTo(b.createdAt));
-                        break;
-                      case ClipSortOption.contentAZ:
-                        items.sort((a, b) => a.content.toLowerCase().compareTo(b.content.toLowerCase()));
-                        break;
-                      case ClipSortOption.custom:
-                        items.sort((a, b) => a.sortIndex.compareTo(b.sortIndex));
-                        break;
-                      default: break;
-                    }
-                    _reorderingList = List.from(items);
+              child: ValueListenableBuilder<List<ClipboardItem>>(
+                valueListenable: _filteredClipsNotifier,
+                builder: (context, items, _) {
+                  if (items.isEmpty) {
+                    return Center(child: Text("No items found.", style: theme.textTheme.bodyMedium?.copyWith(color: onSurfaceColor.withOpacity(0.4))));
                   }
 
-                  if (items.isEmpty) return Center(child: Text("No items found.", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: onSurfaceColor.withOpacity(0.3))));
+                  // ✅ LOGIC: Reorder only if Custom Sort + No Search + Not Selecting
+                  final canReorder = _currentSort == ClipSortOption.custom && _searchQuery.isEmpty && !_isSelectionMode;
 
-                  final canReorder = _currentSort == ClipSortOption.custom && _searchQuery.isEmpty;
-
-                  return ReorderableListView.builder(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-                    physics: const BouncingScrollPhysics(),
-                    cacheExtent: 1000,
-                    itemCount: items.length,
-                    onReorder: canReorder ? _onReorder : (a, b) {},
-                    buildDefaultDragHandles: false,
-                    proxyDecorator: (child, index, animation) => AnimatedBuilder(
-                        animation: animation,
-                        builder: (_, __) => Transform.scale(scale: 1.02, child: Material(color: Colors.transparent, child: child))
-                    ),
-                    itemBuilder: (context, index) {
-                      final item = items[index];
-                      return ReorderableDelayedDragStartListener(
-                        key: ValueKey(item.id),
-                        index: index,
-                        enabled: canReorder,
-                        child: ClipboardCard(
-                          item: item,
-                          isSelected: _selectedIds.contains(item.id),
-                          onTap: () => _isSelectionMode
-                              ? setState(() => _selectedIds.contains(item.id) ? _selectedIds.remove(item.id) : _selectedIds.add(item.id))
-                              : context.push(AppRouter.clipboardEdit, extra: item),
-                          onCopy: () {
-                            Clipboard.setData(ClipboardData(text: _getCleanText(item.content)));
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Copied!")));
-                          },
-                          onShare: () => Share.share(_getCleanText(item.content)),
-                          onDelete: () => _confirmDelete(item),
-                          onColorChanged: (newColor) {
-                            setState(() => item.colorValue = newColor.value);
-                            item.save();
-                          },
-                        ),
-                      );
-                    },
-                  );
+                  if (canReorder) {
+                    return ReorderableListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+                      itemCount: items.length,
+                      onReorder: _onReorder,
+                      proxyDecorator: (child, index, animation) =>
+                          AnimatedBuilder(animation: animation, builder: (_, __) => Transform.scale(scale: 1.05, child: Material(color: Colors.transparent, child: child))),
+                      itemBuilder: (context, index) {
+                        final item = items[index];
+                        return ReorderableDelayedDragStartListener(
+                          key: ValueKey(item.id),
+                          index: index,
+                          enabled: canReorder,
+                          child: ClipboardCard(
+                            item: item,
+                            isSelected: _selectedIds.contains(item.id),
+                            onTap: () => _openEditor(item),
+                            onLongPress: null, // Allow drag
+                            onCopy: () {
+                              Clipboard.setData(ClipboardData(text: _getCleanText(item.content)));
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Copied!"), behavior: SnackBarBehavior.floating));
+                            },
+                            onShare: () => Share.share(_getCleanText(item.content)),
+                            onDelete: () => _confirmDelete(item),
+                            onColorChanged: (newColor) { item.colorValue = newColor.value; item.save(); },
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    // ✅ PERFORMANCE: Standard ListView for Search/Other sorts
+                    return ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+                      itemCount: items.length,
+                      cacheExtent: 1000,
+                      itemBuilder: (context, index) {
+                        final item = items[index];
+                        return RepaintBoundary(
+                          child: ClipboardCard(
+                            key: ValueKey(item.id),
+                            item: item,
+                            isSelected: _selectedIds.contains(item.id),
+                            onTap: () => _openEditor(item),
+                            onLongPress: () => setState(() { _isSelectionMode = true; _selectedIds.add(item.id); }),
+                            onCopy: () {
+                              Clipboard.setData(ClipboardData(text: _getCleanText(item.content)));
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Copied!"), behavior: SnackBarBehavior.floating));
+                            },
+                            onShare: () => Share.share(_getCleanText(item.content)),
+                            onDelete: () => _confirmDelete(item),
+                            onColorChanged: (newColor) { item.colorValue = newColor.value; item.save(); },
+                          ),
+                        );
+                      },
+                    );
+                  }
                 },
               ),
             ),
@@ -262,38 +348,18 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
     );
   }
 
-  Widget _buildSearchBar(Color onSurface) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: SizedBox(
-        height: 44,
-        child: TextField(
-          controller: _searchController,
-          onChanged: (v) => setState(() => _searchQuery = v.toLowerCase()),
-          style: Theme.of(context).textTheme.bodyMedium,
-          decoration: InputDecoration(
-            hintText: 'Search clips...',
-            prefixIcon: Icon(Icons.search, color: onSurface.withOpacity(0.4), size: 20),
-            filled: true,
-            fillColor: onSurface.withOpacity(0.08),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTopBar() {
-    final primaryColor = Theme.of(context).colorScheme.primary;
-    final onSurfaceColor = Theme.of(context).colorScheme.onSurface;
-    final errorColor = Theme.of(context).colorScheme.error;
+  Widget _buildCustomTopBar() {
+    final theme = Theme.of(context);
+    final onSurfaceColor = theme.colorScheme.onSurface;
+    final primaryColor = theme.colorScheme.primary;
+    final errorColor = theme.colorScheme.error;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       child: Row(
         children: [
           IconButton(
-            icon: Icon(_isSelectionMode ? Icons.close : Icons.arrow_back_ios_new),
+            icon: Icon(_isSelectionMode ? Icons.close : Icons.arrow_back_ios_new, color: theme.iconTheme.color),
             onPressed: () {
               if (_isSelectionMode) {
                 setState(() { _isSelectionMode = false; _selectedIds.clear(); });
@@ -304,66 +370,101 @@ class _ClipboardScreenState extends State<ClipboardScreen> with WidgetsBindingOb
           ),
           Expanded(
             child: _isSelectionMode
-                ? Center(child: Text('${_selectedIds.length} Selected', style: Theme.of(context).textTheme.titleLarge))
+                ? Center(child: Text('${_selectedIds.length} Selected', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)))
                 : Row(
               children: [
-                Hero(tag: 'clipboard_icon', child: Icon(Icons.paste, color: primaryColor, size: 24)),
+                Hero(tag: 'clipboard_icon', child: Icon(Icons.paste, color: primaryColor, size: 28)),
                 const SizedBox(width: 10),
-                Hero(tag: 'clipboard_title', child: Material(type: MaterialType.transparency, child: Text("Clipboard", style: Theme.of(context).textTheme.titleLarge))),
+                Hero(tag: 'clipboard_title', child: Material(type: MaterialType.transparency, child: Text("Clipboard", style: theme.textTheme.titleLarge?.copyWith(fontSize: 24, fontWeight: FontWeight.bold)))),
               ],
             ),
           ),
           if (_isSelectionMode) ...[
-            IconButton(icon: const Icon(Icons.select_all), onPressed: () {
-              final box = Hive.box<ClipboardItem>('clipboard_box');
-              final activeIds = box.values.where((e) => !e.isDeleted).map((e) => e.id).toSet();
-              setState(() => _selectedIds.addAll(activeIds));
-            }),
+            IconButton(
+                icon: Icon(Icons.select_all, color: onSurfaceColor),
+                onPressed: _selectAll
+            ),
             IconButton(icon: Icon(Icons.delete, color: errorColor), onPressed: _deleteSelected),
           ] else ...[
-            IconButton(icon: Icon(Icons.check_circle_outline, color: onSurfaceColor.withOpacity(0.5)), onPressed: () => setState(() => _isSelectionMode = true)),
-            IconButton(icon: const Icon(Icons.filter_list), onPressed: _showFilterMenu),
-            IconButton(icon: Icon(Icons.delete_sweep_outlined, color: errorColor), onPressed: _deleteAll),
+            IconButton(
+                icon: Icon(Icons.check_circle_outline, color: onSurfaceColor.withOpacity(0.54)),
+                onPressed: () => setState(() => _isSelectionMode = true)
+            ),
+            IconButton(
+                icon: Icon(Icons.filter_list, color: onSurfaceColor),
+                onPressed: _showFilterMenu
+            ),
+            IconButton(
+                icon: const Icon(Icons.delete_sweep_outlined, color: Colors.redAccent),
+                onPressed: _deleteAll
+            ),
           ]
         ],
       ),
     );
   }
 
+  // ✅ IMPROVED BOTTOM SHEET: Solid Background & StatefulBuilder
   void _showFilterMenu() {
+    final theme = Theme.of(context);
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (_) => Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text("Sort By", style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 10),
-            _buildSortOption(ClipSortOption.custom, "Custom Order (Drag)"),
-            _buildSortOption(ClipSortOption.dateNewest, "Newest First"),
-            _buildSortOption(ClipSortOption.dateOldest, "Oldest First"),
-            _buildSortOption(ClipSortOption.contentAZ, "Content: A-Z"),
-          ],
-        ),
+      builder: (_) => StatefulBuilder(
+          builder: (context, setSheetState) {
+            return Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surface, // ✅ Solid Surface
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), borderRadius: BorderRadius.circular(2)))),
+                  const SizedBox(height: 20),
+                  Text("Sort By", style: theme.textTheme.titleLarge?.copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 16),
+                  _buildSortOption(ClipSortOption.custom, "Custom Order (Drag)", setSheetState),
+                  _buildSortOption(ClipSortOption.dateNewest, "Newest First", setSheetState),
+                  _buildSortOption(ClipSortOption.dateOldest, "Oldest First", setSheetState),
+                  _buildSortOption(ClipSortOption.contentAZ, "Content: A-Z", setSheetState),
+                ],
+              ),
+            );
+          }
       ),
     );
   }
 
-  Widget _buildSortOption(ClipSortOption option, String label) {
+  Widget _buildSortOption(ClipSortOption option, String label, StateSetter setSheetState) {
     final selected = _currentSort == option;
-    return ListTile(
-      leading: Icon(selected ? Icons.radio_button_checked : Icons.radio_button_unchecked, color: selected ? Theme.of(context).colorScheme.primary : null),
-      title: Text(label),
+    final theme = Theme.of(context);
+    return InkWell(
       onTap: () {
         setState(() => _currentSort = option);
+        setSheetState((){});
+        _applyFilters();
         Navigator.pop(context);
       },
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        child: Row(
+          children: [
+            Icon(
+              selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+              color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.5),
+            ),
+            const SizedBox(width: 12),
+            Text(label, style: theme.textTheme.bodyLarge?.copyWith(
+                color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+                fontWeight: selected ? FontWeight.bold : FontWeight.normal
+            )),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
-import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+// import 'package:copyclip/src/core/widgets/glass_container.dart'; // ❌ REMOVED to prevent lag
+
 import '../../../clipboard/data/clipboard_model.dart';
 import '../../../expenses/data/expense_model.dart';
 import '../../../journal/data/journal_model.dart';
@@ -241,8 +242,13 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
 
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 12),
-                  child: GlassContainer(
-                    borderRadius: 20,
+                  // ✅ Replaced GlassContainer with a simple Container
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surface.withOpacity(0.1), // Simple transparency
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.white.withOpacity(0.1)),
+                    ),
                     child: ListTile(
                       leading: CircleAvatar(
                         backgroundColor: data['color'].withOpacity(0.15),
@@ -284,12 +290,20 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
   }
 
   Widget _filterChip(String label, bool isSelected, VoidCallback onTap) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: onTap,
-      child: GlassContainer(
+      // ✅ Replaced GlassContainer with a simple Container
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        borderRadius: 20,
-        color: isSelected ? Theme.of(context).colorScheme.primary.withOpacity(0.2) : Colors.transparent,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: isSelected ? theme.colorScheme.primary.withOpacity(0.2) : Colors.transparent,
+          border: Border.all(
+            color: isSelected ? theme.colorScheme.primary.withOpacity(0.3) : theme.dividerColor.withOpacity(0.1),
+          ),
+        ),
         child: Text(label, style: TextStyle(fontSize: 12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
       ),
     );

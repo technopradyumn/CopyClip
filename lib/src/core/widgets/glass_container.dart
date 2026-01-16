@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-class GlassContainer extends StatefulWidget {
+import 'package:flutter/material.dart';
+
+class GlassContainer extends StatelessWidget {
   final Widget child;
   final double? width;
   final double? height;
@@ -9,11 +11,14 @@ class GlassContainer extends StatefulWidget {
   final EdgeInsetsGeometry margin;
   final VoidCallback? onTap;
   final double borderRadius;
-  final double blur;
   final double opacity;
   final Color? color;
   final Color? borderColor;
   final double borderWidth;
+
+  // NOTE: 'blur' is kept in the constructor so you don't have to delete it
+  // from all your other files, but it is ignored for performance.
+  final double blur;
 
   const GlassContainer({
     super.key,
@@ -24,60 +29,55 @@ class GlassContainer extends StatefulWidget {
     this.margin = EdgeInsets.zero,
     this.onTap,
     this.borderRadius = 24,
-    this.blur = 10, // Increased default blur for better glass effect
-    this.opacity = 0.2, // Increased default opacity so colors are visible
+    this.blur = 10,
+    this.opacity = 0.1, // Lower default for better look without blur
     this.color,
     this.borderColor,
-    this.borderWidth = 1.5,
+    this.borderWidth = 1.0,
   });
 
   @override
-  State<GlassContainer> createState() => _GlassContainerState();
-}
-
-class _GlassContainerState extends State<GlassContainer> {
-  @override
   Widget build(BuildContext context) {
-    // Determine base color
-    final Color baseColor = widget.color ?? Theme.of(context).colorScheme.surface;
-    final Color outlineColor = widget.borderColor ?? Theme.of(context).dividerColor;
-
-    // Helper to safely apply opacity (clamped between 0.0 and 1.0 to prevent crashes)
-    Color safeOpacity(Color c, double o) => c.withOpacity(o.clamp(0.0, 1.0));
+    // Determine base color (defaulting to white/black based on theme)
+    final Color baseColor = color ?? Theme.of(context).colorScheme.surface;
+    final Color outlineColor = borderColor ?? Colors.white;
 
     return Padding(
-      padding: widget.margin,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(widget.borderRadius),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: widget.blur, sigmaY: widget.blur),
-          child: GestureDetector(
-            onTap: widget.onTap,
-            child: Container(
-              width: widget.width,
-              height: widget.height,
-              padding: widget.padding,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-                border: Border.all(
-                  color: safeOpacity(outlineColor, 0.2),
-                  width: widget.borderWidth,
-                ),
-                // BUG FIX: Removed 'color' property because it cannot be used with 'gradient'
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    // Richer colors: Top left is slightly more opaque
-                    safeOpacity(baseColor, widget.opacity + 0.1),
-                    // Bottom right is slightly more transparent
-                    safeOpacity(baseColor, widget.opacity * 0.5),
-                  ],
-                ),
-              ),
-              child: widget.child,
+      padding: margin,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          width: width,
+          height: height,
+          padding: padding,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius),
+            // ✅ HIGH PERFORMANCE BORDER: Adds a subtle shine
+            border: Border.all(
+              color: outlineColor.withOpacity(0.15),
+              width: borderWidth,
             ),
+            // ✅ HIGH PERFORMANCE GLASS: Uses gradients instead of Blur
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                baseColor.withOpacity(opacity + 0.1), // Top-left shine
+                baseColor.withOpacity(opacity),       // Main body transparency
+                baseColor.withOpacity(opacity - 0.05 < 0 ? 0 : opacity - 0.05), // Bottom fade
+              ],
+              stops: const [0.0, 0.4, 1.0],
+            ),
+            boxShadow: [
+              // Subtle shadow to lift it off the background
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
+          child: child,
         ),
       ),
     );

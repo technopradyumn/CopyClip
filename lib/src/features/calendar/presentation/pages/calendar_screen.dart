@@ -4,9 +4,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:go_router/go_router.dart';
+
 import 'package:copyclip/src/core/router/app_router.dart';
-import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+
+// Models
 import '../../../clipboard/data/clipboard_model.dart';
 import '../../../dashboard/presentation/pages/dashboard_screen.dart';
 import '../../../expenses/data/expense_model.dart';
@@ -31,6 +33,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     _selectedDay = _focusedDay;
   }
 
+  // --- DATA FETCHING ---
   List<dynamic> _getEventsForDay(DateTime day) {
     List<dynamic> events = [];
     final dateKey = DateFormat('yyyy-MM-dd').format(day);
@@ -50,27 +53,31 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return events;
   }
 
+  // --- UI BUILDERS ---
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final onSurface = theme.colorScheme.onSurface;
+
+    // Get events for the currently selected day
     final selectedEvents = _getEventsForDay(_selectedDay ?? DateTime.now());
 
     return GlassScaffold(
       showBackArrow: false,
       title: null,
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.only(bottom: 100),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
+            const SizedBox(height: 10),
             _buildHeader(theme, onSurface),
             const SizedBox(height: 10),
             _buildCalendarCard(theme, onSurface),
 
             const SizedBox(height: 24),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
@@ -78,16 +85,19 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 children: [
                   _sectionLabel(theme, "DATA DISTRIBUTION"),
                   const SizedBox(height: 12),
-                  _buildAnimatedBarGraph(selectedEvents, onSurface),
+                  // ✅ Optimized Bar Graph
+                  _buildAnimatedBarGraph(selectedEvents, onSurface, theme),
 
                   const SizedBox(height: 24),
                   _sectionLabel(theme, "TASK PROGRESS"),
                   const SizedBox(height: 12),
+                  // ✅ Optimized Progress Section
                   _buildTodoProgressSection(selectedEvents, theme),
 
                   const SizedBox(height: 24),
                   _sectionLabel(theme, "QUICK STATS"),
                   const SizedBox(height: 12),
+                  // ✅ Optimized Stats Grid
                   _buildAnalyticsGrid(selectedEvents, onSurface, theme),
                 ],
               ),
@@ -98,7 +108,130 @@ class _CalendarScreenState extends State<CalendarScreen> {
     );
   }
 
-  Widget _buildAnimatedBarGraph(List<dynamic> events, Color onSurface) {
+  Widget _buildHeader(ThemeData theme, Color onSurface) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+        children: [
+          IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: onSurface, size: 20),
+            onPressed: () => context.pop(),
+          ),
+          const Hero(
+            tag: 'calendar_icon',
+            child: Icon(Icons.calendar_month_rounded, size: 26, color: Colors.orangeAccent),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            "Calendar",
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: onSurface,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCalendarCard(ThemeData theme, Color onSurface) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface.withOpacity(0.6), // Fast transparency
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            )
+          ],
+        ),
+        child: TableCalendar(
+          firstDay: DateTime.utc(2020, 1, 1),
+          lastDay: DateTime.utc(2030, 12, 31),
+          focusedDay: _focusedDay,
+          rowHeight: 48,
+          selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+          eventLoader: _getEventsForDay,
+          calendarFormat: CalendarFormat.month,
+          headerStyle: HeaderStyle(
+            formatButtonVisible: false,
+            titleCentered: true,
+            headerPadding: const EdgeInsets.symmetric(vertical: 8),
+            titleTextStyle: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: onSurface
+            ),
+            leftChevronIcon: Icon(Icons.chevron_left, color: onSurface),
+            rightChevronIcon: Icon(Icons.chevron_right, color: onSurface),
+          ),
+          calendarStyle: CalendarStyle(
+            // Selected Day
+            selectedDecoration: BoxDecoration(
+                color: theme.colorScheme.primary,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                      color: theme.colorScheme.primary.withOpacity(0.3),
+                      blurRadius: 8,
+                      spreadRadius: 1
+                  )
+                ]
+            ),
+            selectedTextStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+
+            // Today
+            todayDecoration: BoxDecoration(
+              color: theme.colorScheme.primary.withOpacity(0.15),
+              shape: BoxShape.circle,
+              border: Border.all(
+                  color: theme.colorScheme.primary.withOpacity(0.5),
+                  width: 1.5
+              ),
+            ),
+            todayTextStyle: TextStyle(
+                color: theme.colorScheme.primary,
+                fontWeight: FontWeight.bold
+            ),
+
+            defaultTextStyle: TextStyle(color: onSurface),
+            weekendTextStyle: TextStyle(color: onSurface.withOpacity(0.6)),
+            outsideDaysVisible: false,
+          ),
+          calendarBuilders: CalendarBuilders(
+            markerBuilder: (context, date, events) {
+              if (events.isEmpty) return const SizedBox();
+              return Positioned(
+                bottom: 6,
+                child: _buildAllFiveMarkers(events),
+              );
+            },
+          ),
+          onDaySelected: (selectedDay, focusedDay) {
+            setState(() {
+              _selectedDay = selectedDay;
+              _focusedDay = focusedDay;
+            });
+
+            // Navigate to details after a short delay for visual feedback
+            Future.delayed(const Duration(milliseconds: 250), () {
+              final results = _mapEventsToResults(_getEventsForDay(selectedDay));
+              context.push(AppRouter.dateDetail, extra: {'date': selectedDay, 'items': results});
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+  // ✅ High Performance Bar Graph Container
+  Widget _buildAnimatedBarGraph(List<dynamic> events, Color onSurface, ThemeData theme) {
     final Map<String, int> counts = {
       'Notes': events.whereType<Note>().length,
       'Finance': events.whereType<Expense>().length,
@@ -109,9 +242,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
     final int maxCount = counts.values.isEmpty ? 0 : counts.values.reduce((a, b) => a > b ? a : b);
     const double chartHeight = 100;
 
-    return GlassContainer(
-      borderRadius: 20,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withOpacity(0.1)),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -126,17 +263,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 curve: Curves.easeOutCubic,
                 builder: (context, value, child) {
                   return Container(
-                    width: 16,
+                    width: 18, // Slightly thicker bars
                     height: value.clamp(4.0, chartHeight),
                     decoration: BoxDecoration(
                       color: _getColorForType(entry.key),
                       borderRadius: BorderRadius.circular(6),
-                      boxShadow: [
-                        BoxShadow(
-                          color: _getColorForType(entry.key).withOpacity(0.3),
-                          blurRadius: 6,
-                        )
-                      ],
                     ),
                   );
                 },
@@ -144,7 +275,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
               const SizedBox(height: 10),
               Text(
                 entry.key,
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: onSurface.withOpacity(0.6)),
+                style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    color: onSurface.withOpacity(0.6)
+                ),
               ),
             ],
           );
@@ -153,14 +288,19 @@ class _CalendarScreenState extends State<CalendarScreen> {
     );
   }
 
+  // ✅ High Performance Progress Card
   Widget _buildTodoProgressSection(List<dynamic> events, ThemeData theme) {
     final todos = events.whereType<Todo>().toList();
     final completed = todos.where((t) => t.isDone).length;
     final double progress = todos.isEmpty ? 0 : completed / todos.length;
 
-    return GlassContainer(
-      borderRadius: 20,
+    return Container(
       padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withOpacity(0.1)),
+      ),
       child: Row(
         children: [
           SizedBox(
@@ -179,11 +319,21 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         strokeWidth: 6,
                         backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
                         valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.primary),
+                        strokeCap: StrokeCap.round,
                       );
                     },
                   ),
                 ),
-                Center(child: Text("${(progress * 100).toInt()}%", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface))),
+                Center(
+                    child: Text(
+                        "${(progress * 100).toInt()}%",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.onSurface
+                        )
+                    )
+                ),
               ],
             ),
           ),
@@ -192,90 +342,26 @@ class _CalendarScreenState extends State<CalendarScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Task Completion", style: TextStyle(fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface, fontSize: 14)),
-                Text("$completed of ${todos.length} items done", style: TextStyle(fontSize: 12, color: theme.colorScheme.onSurface.withOpacity(0.5))),
+                Text(
+                    "Task Completion",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.onSurface,
+                        fontSize: 15
+                    )
+                ),
+                const SizedBox(height: 2),
+                Text(
+                    "$completed of ${todos.length} items done",
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: theme.colorScheme.onSurface.withOpacity(0.5)
+                    )
+                ),
               ],
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Color _getColorForType(String type) {
-    switch (type) {
-      case 'Notes': return Colors.amberAccent;
-      case 'Finance': return Colors.redAccent;
-      case 'Journal': return Colors.blueAccent;
-      case 'Clips': return Colors.purpleAccent;
-      default: return Colors.greenAccent;
-    }
-  }
-
-  Widget _buildHeader(ThemeData theme, Color onSurface) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Row(
-        children: [
-          IconButton(icon: Icon(Icons.arrow_back_ios_new_rounded, color: onSurface, size: 20), onPressed: () => context.pop()),
-          const Hero(tag: 'calendar_icon', child: Icon(Icons.calendar_month_rounded, size: 26, color: Colors.orangeAccent)),
-          const SizedBox(width: 10),
-          Text("Calendar", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: onSurface)),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCalendarCard(ThemeData theme, Color onSurface) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: GlassContainer(
-        borderRadius: 24,
-        padding: const EdgeInsets.only(bottom: 12),
-        child: TableCalendar(
-          firstDay: DateTime.utc(2020, 1, 1),
-          lastDay: DateTime.utc(2030, 12, 31),
-          focusedDay: _focusedDay,
-          rowHeight: 48,
-          selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-          eventLoader: _getEventsForDay,
-          calendarFormat: CalendarFormat.month,
-          headerStyle: const HeaderStyle(formatButtonVisible: false, titleCentered: true, headerPadding: EdgeInsets.symmetric(vertical: 8)),
-          calendarStyle: CalendarStyle(
-            // Styles for the SELECTED day
-            selectedDecoration: BoxDecoration(
-                color: theme.colorScheme.primary,
-                shape: BoxShape.circle,
-                boxShadow: [BoxShadow(color: theme.colorScheme.primary.withOpacity(0.3), blurRadius: 8, spreadRadius: 1)]
-            ),
-            selectedTextStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-
-            // Styles for TODAY (Resolved visibility issue)
-            todayDecoration: BoxDecoration(
-              color: theme.colorScheme.primary.withOpacity(0.15), // Subtle fill
-              shape: BoxShape.circle,
-              border: Border.all(color: theme.colorScheme.primary.withOpacity(0.5), width: 1.5), // Clear primary border
-            ),
-            todayTextStyle: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.bold),
-
-            defaultTextStyle: TextStyle(color: onSurface),
-            weekendTextStyle: TextStyle(color: onSurface.withOpacity(0.6)),
-            outsideDaysVisible: false,
-          ),
-          calendarBuilders: CalendarBuilders(
-            markerBuilder: (context, date, events) {
-              if (events.isEmpty) return const SizedBox();
-              return Positioned(bottom: 4, child: _buildAllFiveMarkers(events));
-            },
-          ),
-          onDaySelected: (selectedDay, focusedDay) {
-            setState(() { _selectedDay = selectedDay; _focusedDay = focusedDay; });
-            Future.delayed(const Duration(milliseconds: 350), () {
-              final results = _mapEventsToResults(_getEventsForDay(selectedDay));
-              context.push(AppRouter.dateDetail, extra: {'date': selectedDay, 'items': results});
-            });
-          },
-        ),
       ),
     );
   }
@@ -291,7 +377,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: colors.map((c) => Container(
-          margin: const EdgeInsets.symmetric(horizontal: 1.0),
+          margin: const EdgeInsets.symmetric(horizontal: 1.5),
           width: 5, height: 5,
           decoration: BoxDecoration(color: c, shape: BoxShape.circle)
       )).toList(),
@@ -300,34 +386,73 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   Widget _buildAnalyticsGrid(List<dynamic> events, Color onSurface, ThemeData theme) {
     final expenses = events.whereType<Expense>().fold(0.0, (sum, e) => sum + (e.isIncome ? 0 : e.amount));
-    return Wrap(
-      spacing: 12, runSpacing: 12,
+
+    return Row(
       children: [
-        _statTile("Daily Activity", events.length.toString(), theme.colorScheme.primary, onSurface, 0.46),
-        _statTile("Expenses", "\$${expenses.toStringAsFixed(0)}", Colors.redAccent, onSurface, 0.46),
+        Expanded(
+          child: _statTile("Daily Activity", events.length.toString(), theme.colorScheme.primary, onSurface, theme),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _statTile("Expenses", "\$${expenses.toStringAsFixed(0)}", Colors.redAccent, onSurface, theme),
+        ),
       ],
     );
   }
 
-  Widget _statTile(String label, String value, Color color, Color onSurface, double widthFactor) {
-    final screenWidth = MediaQuery.of(context).size.width - 48;
-    return GlassContainer(
-      width: screenWidth * widthFactor,
-      borderRadius: 16,
+  // ✅ High Performance Stat Tile
+  Widget _statTile(String label, String value, Color color, Color onSurface, ThemeData theme) {
+    return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white.withOpacity(0.1)),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(value, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: onSurface)),
-          const SizedBox(height: 2),
-          Text(label, style: TextStyle(fontSize: 11, color: onSurface.withOpacity(0.5), letterSpacing: 0.5)),
+          Text(
+              value,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: onSurface
+              )
+          ),
+          const SizedBox(height: 4),
+          Text(
+              label,
+              style: TextStyle(
+                  fontSize: 12,
+                  color: onSurface.withOpacity(0.5),
+                  letterSpacing: 0.5
+              )
+          ),
         ],
       ),
     );
   }
 
   Widget _sectionLabel(ThemeData theme, String text) {
-    return Text(text, style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.bold, letterSpacing: 1.2));
+    return Text(
+        text,
+        style: theme.textTheme.labelSmall?.copyWith(
+            color: theme.colorScheme.primary,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.2
+        )
+    );
+  }
+
+  Color _getColorForType(String type) {
+    switch (type) {
+      case 'Notes': return Colors.amberAccent;
+      case 'Finance': return Colors.redAccent;
+      case 'Journal': return Colors.blueAccent;
+      case 'Clips': return Colors.purpleAccent;
+      default: return Colors.greenAccent;
+    }
   }
 
   List<GlobalSearchResult> _mapEventsToResults(List<dynamic> events) {

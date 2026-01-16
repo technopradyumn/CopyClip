@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:copyclip/src/core/services/notification_service.dart';
-import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'package:flutter/material.dart';
@@ -42,72 +41,237 @@ class TodosScreen extends StatefulWidget {
 }
 
 class _TodosScreenState extends State<TodosScreen> with SingleTickerProviderStateMixin {
+  final TextEditingController _searchController = TextEditingController();
+
+  // ✅ PERFORMANCE: Notifier for the list items
+  final ValueNotifier<List<ListItem>> _listItemsNotifier = ValueNotifier([]);
+
+  // Data State
+  List<Todo> _rawTodos = [];
   bool _isSelectionMode = false;
   final Set<String> _selectedTodoIds = {};
-  final TextEditingController _searchController = TextEditingController();
+
+  // Filter & UI State
   String _searchQuery = "";
   TodoSortOption _currentSort = TodoSortOption.custom;
   final Map<String, bool> _categoryExpansionState = {};
-  List<ListItem> _reorderingList = [];
-  bool _isReordering = false;
 
+  // Animation
   late AnimationController _entryAnimationController;
 
   @override
   void initState() {
     super.initState();
+    _refreshTodos();
+
+    // Listen for Search efficiently
+    _searchController.addListener(() {
+      _searchQuery = _searchController.text.toLowerCase();
+      _generateList();
+    });
+
+    // Listen to Hive changes
+    Hive.box<Todo>('todos_box').listenable().addListener(_refreshTodos);
+
     _entryAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 800), // Slightly faster
     );
     _entryAnimationController.forward();
   }
 
   @override
   void dispose() {
+    Hive.box<Todo>('todos_box').listenable().removeListener(_refreshTodos);
     _searchController.dispose();
+    _listItemsNotifier.dispose();
     _entryAnimationController.dispose();
     super.dispose();
   }
 
-  Widget _buildBouncingItem(int index, Widget child, Key key) {
-    return AnimatedBuilder(
-      key: key,
-      animation: _entryAnimationController,
-      builder: (context, child) {
-        final double start = (index * 0.05).clamp(0.0, 0.8);
-        final double end = (start + 0.4).clamp(0.0, 1.0);
+  // --- DATA LOGIC ---
 
-        if (_entryAnimationController.value >= end) {
-          return child!;
+  void _refreshTodos() {
+    if (!Hive.isBoxOpen('todos_box')) return;
+    final box = Hive.box<Todo>('todos_box');
+    _rawTodos = box.values.where((t) => !t.isDeleted).toList();
+    _generateList();
+  }
+
+  void _generateList() {
+    List<Todo> filteredTodos = List.from(_rawTodos);
+
+    // 1. Search Filter
+    if (_searchQuery.isNotEmpty) {
+      filteredTodos = filteredTodos.where((t) =>
+      t.task.toLowerCase().contains(_searchQuery) ||
+          t.category.toLowerCase().contains(_searchQuery)
+      ).toList();
+    }
+
+    // 2. Grouping & Sorting
+    Map<String, List<Todo>> grouped = {};
+    for (var todo in filteredTodos) {
+      if (!grouped.containsKey(todo.category)) grouped[todo.category] = [];
+      grouped[todo.category]!.add(todo);
+    }
+
+    var sortedCategories = grouped.keys.toList();
+
+    // Sort Categories
+    if (_currentSort == TodoSortOption.custom) {
+      sortedCategories.sort((a, b) {
+        int indexA = grouped[a]!.isEmpty ? 999999 : grouped[a]!.map((t) => t.sortIndex).reduce((val, el) => val < el ? val : el);
+        int indexB = grouped[b]!.isEmpty ? 999999 : grouped[b]!.map((t) => t.sortIndex).reduce((val, el) => val < el ? val : el);
+        return indexA.compareTo(indexB);
+      });
+    } else {
+      sortedCategories.sort();
+    }
+
+    List<ListItem> flatList = [];
+
+    for (var category in sortedCategories) {
+      final categoryTodos = grouped[category]!;
+
+      // Sort Items within Category
+      switch (_currentSort) {
+        case TodoSortOption.dateNewest:
+          categoryTodos.sort((a, b) => (b.dueDate ?? DateTime(0)).compareTo(a.dueDate ?? DateTime(0)));
+          break;
+        case TodoSortOption.dateOldest:
+          categoryTodos.sort((a, b) => (a.dueDate ?? DateTime(0)).compareTo(b.dueDate ?? DateTime(0)));
+          break;
+        case TodoSortOption.nameAZ:
+          categoryTodos.sort((a, b) => a.task.compareTo(b.task));
+          break;
+        case TodoSortOption.nameZA:
+          categoryTodos.sort((a, b) => b.task.compareTo(a.task));
+          break;
+        case TodoSortOption.custom:
+          categoryTodos.sort((a, b) => a.sortIndex.compareTo(b.sortIndex));
+          break;
+      }
+
+      final isExpanded = _categoryExpansionState[category] ?? true;
+      final completedCount = categoryTodos.where((t) => t.isDone).length;
+
+      flatList.add(HeaderItem(category, completedCount, categoryTodos.length, isExpanded));
+
+      if (isExpanded) {
+        // Active Todos
+        final activeTodos = categoryTodos.where((t) => !t.isDone).toList();
+        for (var todo in activeTodos) {
+          flatList.add(TodoItemWrapper(todo, isVisible: true));
         }
 
-        final animation = CurvedAnimation(
-          parent: _entryAnimationController,
-          curve: Interval(start, end, curve: Curves.elasticOut),
-        );
+        // Divider & Completed Todos
+        if (completedCount > 0) {
+          if (activeTodos.isNotEmpty) flatList.add(DividerItem());
+          final completedTodos = categoryTodos.where((t) => t.isDone).toList();
+          for (var todo in completedTodos) {
+            flatList.add(TodoItemWrapper(todo, isVisible: true));
+          }
+        }
+      }
+    }
 
-        return Transform.scale(
-          scale: animation.value,
-          child: Opacity(
-            opacity: animation.value.clamp(0.0, 1.0),
-            child: child,
-          ),
-        );
-      },
-      child: child,
+    // Update UI via Notifier
+    _listItemsNotifier.value = flatList;
+  }
+
+  // --- ACTIONS ---
+
+  void _onReorder(int oldIndex, int newIndex) {
+    if (newIndex > oldIndex) newIndex -= 1;
+
+    final currentList = List<ListItem>.from(_listItemsNotifier.value);
+    final movedItem = currentList[oldIndex];
+
+    // Only allow moving Todos
+    if (movedItem is! TodoItemWrapper) return;
+
+    currentList.removeAt(oldIndex);
+    currentList.insert(newIndex, movedItem);
+
+    // Optimistic UI Update
+    _listItemsNotifier.value = currentList;
+
+    // Logic to update DB (find new category and indexes)
+    String currentCategory = movedItem.todo.category;
+    // Walk backwards to find header
+    for (int i = newIndex; i >= 0; i--) {
+      if (currentList[i] is HeaderItem) {
+        currentCategory = (currentList[i] as HeaderItem).category;
+        break;
+      }
+    }
+
+    int globalSortIndex = 0;
+    for (var item in currentList) {
+      if (item is TodoItemWrapper) {
+        final todo = item.todo;
+        if (todo == movedItem.todo) {
+          todo.category = currentCategory;
+        }
+        todo.sortIndex = globalSortIndex++;
+        todo.save();
+      }
+    }
+
+    // Trigger full refresh to correct any headers
+    _refreshTodos();
+  }
+
+  void _toggleTodoDone(Todo todo) {
+    if (_isSelectionMode) return;
+    todo.isDone = !todo.isDone;
+    todo.save();
+    _refreshTodos();
+  }
+
+  void _deleteSelected() {
+    final now = DateTime.now();
+    for (var id in _selectedTodoIds) {
+      try {
+        final todo = _rawTodos.firstWhere((t) => t.id == id);
+        todo.isDeleted = true;
+        todo.deletedAt = now;
+        todo.save();
+        NotificationService().cancelNotification(id.hashCode);
+      } catch (_) {}
+    }
+    setState(() { _selectedTodoIds.clear(); _isSelectionMode = false; });
+    _refreshTodos();
+  }
+
+  void _deleteAll() {
+    showDialog(
+      context: context,
+      builder: (ctx) => GlassDialog(
+        title: "Delete All?",
+        content: "Move all active tasks to Recycle Bin?",
+        confirmText: "Delete All",
+        isDestructive: true,
+        onConfirm: () {
+          final now = DateTime.now();
+          for (var todo in _rawTodos) {
+            todo.isDeleted = true; todo.deletedAt = now; todo.save();
+            NotificationService().cancelNotification(todo.id.hashCode);
+          }
+          Navigator.pop(ctx);
+          _refreshTodos();
+        },
+      ),
     );
   }
 
-  Future<bool> _onWillPop() async {
+  void _openTodoEditor(Todo? todo) {
     if (_isSelectionMode) {
-      setState(() {
-        _isSelectionMode = false;
-        _selectedTodoIds.clear();
-      });
-      return false;
+      if (todo != null) _toggleSelection(todo.id);
+      return;
     }
-    return true;
+    context.push(AppRouter.todoEdit, extra: todo);
   }
 
   void _toggleSelection(String id) {
@@ -118,8 +282,8 @@ class _TodosScreenState extends State<TodosScreen> with SingleTickerProviderStat
     });
   }
 
-  void _toggleCategorySelection(String category, List<Todo> allTodos) {
-    final categoryTodos = allTodos.where((t) => t.category == category).toList();
+  void _toggleCategorySelection(String category) {
+    final categoryTodos = _rawTodos.where((t) => t.category == category).toList();
     final allSelected = categoryTodos.every((t) => _selectedTodoIds.contains(t.id));
 
     setState(() {
@@ -132,88 +296,276 @@ class _TodosScreenState extends State<TodosScreen> with SingleTickerProviderStat
     });
   }
 
-  void _selectAll(List<Todo> todos) {
+  void _selectAll() {
     setState(() {
-      final ids = todos.map((e) => e.id).toSet();
-      if (_selectedTodoIds.containsAll(ids)) {
+      if (_selectedTodoIds.length == _rawTodos.length) {
         _selectedTodoIds.clear();
         _isSelectionMode = false;
       } else {
-        _selectedTodoIds.addAll(ids);
+        _selectedTodoIds.addAll(_rawTodos.map((e) => e.id));
       }
     });
   }
 
-  void _deleteSelected() {
-    if (_selectedTodoIds.isEmpty) return;
-    showDialog(
-      context: context,
-      builder: (ctx) => GlassDialog(
-        title: "Move ${_selectedTodoIds.length} Tasks to Bin?",
-        content: "You can restore them later from settings.",
-        confirmText: "Move",
-        isDestructive: true,
-        onConfirm: () {
-          final box = Hive.box<Todo>('todos_box');
-          final now = DateTime.now();
-          for (var id in _selectedTodoIds) {
-            final item = box.get(id);
-            if (item != null) {
-              item.isDeleted = true;
-              item.deletedAt = now;
-              item.save();
-              NotificationService().cancelNotification(id.hashCode);
-            }
-          }
-          setState(() {
-            _selectedTodoIds.clear();
-            _isSelectionMode = false;
-          });
-          Navigator.pop(ctx);
-        },
+  // --- UI BUILDERS ---
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return WillPopScope(
+      onWillPop: () async {
+        if (_isSelectionMode) {
+          setState(() { _isSelectionMode = false; _selectedTodoIds.clear(); });
+          return false;
+        }
+        return true;
+      },
+      child: GlassScaffold(
+        title: null,
+        floatingActionButton: _isSelectionMode ? null : FloatingActionButton(
+          onPressed: () => _openTodoEditor(null),
+          backgroundColor: colorScheme.primary,
+          child: Icon(Icons.add, color: colorScheme.onPrimary),
+        ),
+        body: Column(
+          children: [
+            _buildCustomTopBar(),
+
+            // Search Bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Container(
+                height: 44,
+                decoration: BoxDecoration(
+                  color: colorScheme.onSurface.withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+                ),
+                child: TextField(
+                  controller: _searchController,
+                  style: theme.textTheme.bodyMedium,
+                  decoration: InputDecoration(
+                    hintText: 'Search tasks...',
+                    hintStyle: theme.textTheme.bodyMedium?.copyWith(color: colorScheme.onSurface.withOpacity(0.5)),
+                    prefixIcon: Icon(Icons.search, color: colorScheme.onSurface.withOpacity(0.5), size: 20),
+                    suffixIcon: _searchController.text.isNotEmpty
+                        ? GestureDetector(onTap: () { _searchController.clear(); }, child: Icon(Icons.close, color: colorScheme.onSurface.withOpacity(0.5), size: 18))
+                        : null,
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                  ),
+                ),
+              ),
+            ),
+
+            // Task List
+            Expanded(
+              child: ValueListenableBuilder<List<ListItem>>(
+                valueListenable: _listItemsNotifier,
+                builder: (context, items, _) {
+                  if (items.isEmpty) {
+                    return Center(child: Text("No tasks found.", style: theme.textTheme.bodyMedium?.copyWith(color: colorScheme.onSurface.withOpacity(0.4))));
+                  }
+
+                  // ✅ LOGIC: ReorderableListView only when Custom Sort + No Search + Not Selecting
+                  final canReorder = _currentSort == TodoSortOption.custom && _searchQuery.isEmpty && !_isSelectionMode;
+
+                  if (canReorder) {
+                    return ReorderableListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: items.length,
+                      onReorder: _onReorder,
+                      buildDefaultDragHandles: false, // We use ReorderableDelayedDragStartListener
+                      proxyDecorator: (child, index, animation) => AnimatedBuilder(
+                          animation: animation,
+                          builder: (_, __) => Transform.scale(scale: 1.05, child: Material(color: Colors.transparent, child: child))
+                      ),
+                      itemBuilder: (context, index) => _buildListItem(items[index], index, canReorder),
+                    );
+                  } else {
+                    // ✅ PERFORMANCE: Standard ListView for other modes
+                    return ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: items.length,
+                      cacheExtent: 1000,
+                      itemBuilder: (context, index) {
+                        // RepaintBoundary caches item painting
+                        return RepaintBoundary(
+                          child: _buildListItem(items[index], index, false),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  void _deleteAll() {
-    showDialog(
-      context: context,
-      builder: (ctx) => GlassDialog(
-        title: "Move All Tasks to Bin?",
-        content: "This will move all active tasks to the recycle bin.",
-        confirmText: "Move All",
-        isDestructive: true,
-        onConfirm: () {
-          final box = Hive.box<Todo>('todos_box');
-          final now = DateTime.now();
-          final activeTodos = box.values.where((t) => !t.isDeleted).toList();
+  Widget _buildListItem(ListItem item, int index, bool canReorder) {
+    if (item is HeaderItem) {
+      return Container(
+        key: ValueKey('header_${item.category}'),
+        child: _buildHeader(item),
+      );
+    } else if (item is DividerItem) {
+      return Container(
+        key: ValueKey('divider_$index'),
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          children: [
+            Expanded(child: Divider(color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.3), thickness: 1)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text('Completed', style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 12, fontWeight: FontWeight.w500)),
+            ),
+            Expanded(child: Divider(color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.3), thickness: 1)),
+          ],
+        ),
+      );
+    } else if (item is TodoItemWrapper) {
+      final widget = Container(
+        key: ValueKey(item.todo.id),
+        child: TodoCard(
+          todo: item.todo,
+          isSelected: _selectedTodoIds.contains(item.todo.id),
+          onTap: () => _isSelectionMode ? _toggleSelection(item.todo.id) : _openTodoEditor(item.todo),
+          onLongPress: !canReorder ? () => setState(() { _isSelectionMode = true; _selectedTodoIds.add(item.todo.id); }) : null,
+          onToggleDone: () => _toggleTodoDone(item.todo),
+        ),
+      );
 
-          for (var todo in activeTodos) {
-            todo.isDeleted = true;
-            todo.deletedAt = now;
-            todo.save();
-            NotificationService().cancelNotification(todo.id.hashCode);
-          }
-          Navigator.pop(ctx);
-        },
+      if (canReorder) {
+        return ReorderableDelayedDragStartListener(
+          key: ValueKey(item.todo.id),
+          index: index,
+          child: widget,
+        );
+      }
+      return widget;
+    }
+    return const SizedBox.shrink();
+  }
+
+  Widget _buildHeader(HeaderItem item) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    // Check selection state for header icon
+    final categoryTodos = _rawTodos.where((t) => t.category == item.category).toList();
+    final allSelected = categoryTodos.isNotEmpty && categoryTodos.every((t) => _selectedTodoIds.contains(t.id));
+    final someSelected = categoryTodos.any((t) => _selectedTodoIds.contains(t.id)) && !allSelected;
+
+    return GestureDetector(
+      onTap: () {
+        if (_isSelectionMode) _toggleCategorySelection(item.category);
+        else {
+          setState(() => _categoryExpansionState[item.category] = !item.isExpanded);
+          _generateList();
+        }
+      },
+      child: Container(
+        color: Colors.transparent,
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+        child: Row(
+          children: [
+            AnimatedRotation(
+                turns: item.isExpanded ? 0.25 : 0.0,
+                duration: const Duration(milliseconds: 200),
+                child: Icon(Icons.keyboard_arrow_right, color: colorScheme.onSurface.withOpacity(0.7), size: 20)
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+                child: Text(
+                    item.category.toUpperCase(),
+                    style: TextStyle(
+                        color: item.isExpanded ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.7),
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                        fontSize: 13
+                    )
+                )
+            ),
+            if (_isSelectionMode)
+              Icon(
+                  allSelected ? Icons.check_circle : (someSelected ? Icons.remove_circle_outline : Icons.circle_outlined),
+                  color: (allSelected || someSelected) ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.38),
+                  size: 20
+              )
+            else Container(
+              decoration: BoxDecoration(color: colorScheme.onSurface.withOpacity(0.05), borderRadius: BorderRadius.circular(12)),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
+              child: Text('${item.count}/${item.total}', style: TextStyle(color: colorScheme.onSurface.withOpacity(0.5), fontSize: 11)),
+            ),
+          ],
+        ),
       ),
     );
   }
 
+  Widget _buildCustomTopBar() {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+        child: Row(
+            children: [
+              IconButton(
+                  icon: Icon(_isSelectionMode ? Icons.close : Icons.arrow_back_ios_new, color: theme.iconTheme.color),
+                  onPressed: () => _isSelectionMode ? setState((){_isSelectionMode=false;_selectedTodoIds.clear();}) : context.pop()
+              ),
+              Expanded(
+                  child: _isSelectionMode
+                      ? Center(child: Text('${_selectedTodoIds.length} Selected', style: theme.textTheme.titleLarge))
+                      : Row(
+                      children: [
+                        Hero(tag:'todos', child: Icon(Icons.check_circle_outline, size: 32, color: colorScheme.primary)),
+                        const SizedBox(width: 10),
+                        Hero(tag:'todos_title', child: Material(type:MaterialType.transparency, child: Text("To-Dos", style: theme.textTheme.titleLarge?.copyWith(fontSize: 28))))
+                      ]
+                  )
+              ),
+              if(_isSelectionMode) ...[
+                IconButton(icon: Icon(Icons.select_all, color: theme.iconTheme.color), onPressed: _selectAll),
+                IconButton(icon: Icon(Icons.delete, color: colorScheme.error), onPressed: _deleteSelected)
+              ] else ...[
+                IconButton(icon: Icon(Icons.check_circle_outline, color: theme.iconTheme.color?.withOpacity(0.54)), onPressed: ()=>setState(()=>_isSelectionMode=true)),
+                IconButton(icon: Icon(Icons.filter_list, color: theme.iconTheme.color), onPressed: _showFilterMenu),
+                IconButton(icon: Icon(Icons.delete_sweep_outlined, color: colorScheme.error), onPressed: _deleteAll)
+              ]
+            ]
+        )
+    );
+  }
+
+  // ✅ IMPROVED VISIBILITY: Solid Surface Bottom Sheet
   void _showFilterMenu() {
     final theme = Theme.of(context);
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (_) => Container(
-        decoration: BoxDecoration(color: theme.scaffoldBackgroundColor, borderRadius: const BorderRadius.vertical(top: Radius.circular(20))),
-        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+            color: theme.colorScheme.surface, // ✅ Solid background
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24))
+        ),
+        padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), borderRadius: BorderRadius.circular(2)))),
+            const SizedBox(height: 20),
             Text("Sort By", style: theme.textTheme.titleLarge?.copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
+            const SizedBox(height: 16),
             _buildSortOption(TodoSortOption.custom, "Custom Order (Drag & Drop)"),
             _buildSortOption(TodoSortOption.dateNewest, "Date: Newest First"),
             _buildSortOption(TodoSortOption.dateOldest, "Date: Oldest First"),
@@ -227,291 +579,26 @@ class _TodosScreenState extends State<TodosScreen> with SingleTickerProviderStat
   Widget _buildSortOption(TodoSortOption option, String label) {
     final selected = _currentSort == option;
     final theme = Theme.of(context);
-    return ListTile(
-      leading: Icon(selected ? Icons.radio_button_checked : Icons.radio_button_unchecked, color: selected ? theme.colorScheme.primary : theme.iconTheme.color?.withOpacity(0.5)),
-      title: Text(label, style: theme.textTheme.bodyLarge?.copyWith(color: selected ? theme.colorScheme.onSurface : theme.colorScheme.onSurface.withOpacity(0.7))),
+    return InkWell(
       onTap: () {
         setState(() => _currentSort = option);
+        _generateList();
         Navigator.pop(context);
       },
-    );
-  }
-
-  void _openTodoEditor(Todo? todo) {
-    if (_isSelectionMode) {
-      if (todo != null) _toggleSelection(todo.id);
-      return;
-    }
-    context.push(AppRouter.todoEdit, extra: todo);
-  }
-
-  void _toggleTodoDone(Todo todo) {
-    if (_isSelectionMode) return;
-    todo.isDone = !todo.isDone;
-    todo.save();
-  }
-
-  List<ListItem> _generateFlatList(List<Todo> todos) {
-    Map<String, List<Todo>> grouped = {};
-    for (var todo in todos) {
-      if (!grouped.containsKey(todo.category)) grouped[todo.category] = [];
-      grouped[todo.category]!.add(todo);
-    }
-
-    var sortedCategories = grouped.keys.toList();
-    if (_currentSort == TodoSortOption.custom) {
-      sortedCategories.sort((a, b) {
-        int indexA = grouped[a]!.isEmpty ? 999999 : grouped[a]!.map((t) => t.sortIndex).reduce((val, el) => val < el ? val : el);
-        int indexB = grouped[b]!.isEmpty ? 999999 : grouped[b]!.map((t) => t.sortIndex).reduce((val, el) => val < el ? val : el);
-        return indexA.compareTo(indexB);
-      });
-    } else {
-      sortedCategories.sort();
-    }
-
-    List<ListItem> flatList = [];
-    for (var category in sortedCategories) {
-      final categoryTodos = grouped[category]!;
-      if (_currentSort == TodoSortOption.custom) categoryTodos.sort((a, b) => a.sortIndex.compareTo(b.sortIndex));
-      final isExpanded = _categoryExpansionState[category] ?? true;
-      final completedCount = categoryTodos.where((t) => t.isDone).length;
-      final activeCount = categoryTodos.length - completedCount;
-
-      flatList.add(HeaderItem(category, completedCount, categoryTodos.length, isExpanded));
-
-      if (isExpanded) {
-        // Add active todos
-        final activeTodos = categoryTodos.where((t) => !t.isDone).toList();
-        for (var todo in activeTodos) {
-          flatList.add(TodoItemWrapper(todo, isVisible: true));
-        }
-
-        // Add divider if there are completed todos
-        if (completedCount > 0) {
-          flatList.add(DividerItem());
-
-          // Add completed todos
-          final completedTodos = categoryTodos.where((t) => t.isDone).toList();
-          for (var todo in completedTodos) {
-            flatList.add(TodoItemWrapper(todo, isVisible: true));
-          }
-        }
-      }
-    }
-    return flatList;
-  }
-
-  void _onReorder(int oldIndex, int newIndex) {
-    if (newIndex > oldIndex) newIndex -= 1;
-    final movedItem = _reorderingList[oldIndex];
-    if (movedItem is HeaderItem || movedItem is DividerItem) return;
-
-    if (movedItem is TodoItemWrapper) {
-      setState(() {
-        _isReordering = true;
-        _reorderingList.removeAt(oldIndex);
-        _reorderingList.insert(newIndex, movedItem);
-      });
-
-      String currentCategory = movedItem.todo.category;
-      for (int i = newIndex; i >= 0; i--) {
-        if (_reorderingList[i] is HeaderItem) {
-          currentCategory = (_reorderingList[i] as HeaderItem).category;
-          break;
-        }
-      }
-      int globalSortIndex = 0;
-      for (var item in _reorderingList) {
-        if (item is TodoItemWrapper) {
-          final todo = item.todo;
-          if (todo == movedItem.todo) todo.category = currentCategory;
-          todo.sortIndex = globalSortIndex++;
-          todo.save();
-        }
-      }
-
-      Future.delayed(const Duration(milliseconds: 300), () {
-        if (mounted) setState(() => _isReordering = false);
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
-
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: GlassScaffold(
-        title: null,
-        floatingActionButton: _isSelectionMode ? null : FloatingActionButton(onPressed: () => _openTodoEditor(null), backgroundColor: colorScheme.primary, heroTag: 'fab_new_todo', child: Icon(Icons.add, color: colorScheme.onPrimary)),
-        body: Column(
-          children: [
-            _buildCustomTopBar(),
-            Padding(
-              padding: const EdgeInsets.only(right: 16, left: 16, top: 0, bottom: 0),
-              child: SizedBox(
-                height: 44,
-                child: TextField(
-                  controller: _searchController,
-                  style: textTheme.bodyMedium,
-                  decoration: InputDecoration(
-                    hintText: 'Search tasks...',
-                    hintStyle: textTheme.bodyMedium?.copyWith(color: colorScheme.onSurface.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.search, color: colorScheme.onSurface.withOpacity(0.5), size: 20),
-                    suffixIcon: _searchQuery.isNotEmpty ? GestureDetector(onTap: () { _searchController.clear(); setState(() => _searchQuery = ''); }, child: Icon(Icons.close, color: colorScheme.onSurface.withOpacity(0.5), size: 18)) : null,
-                    filled: true,
-                    fillColor: colorScheme.onSurface.withOpacity(0.08),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
-                  ),
-                  onChanged: (value) => setState(() => _searchQuery = value.trim().toLowerCase()),
-                ),
-              ),
-            ),
-            Expanded(
-              child: ValueListenableBuilder(
-                valueListenable: Hive.box<Todo>('todos_box').listenable(),
-                builder: (_, Box<Todo> box, __) {
-                  List<Todo> todos = box.values.where((t) => !t.isDeleted).toList();
-                  if (_searchQuery.isNotEmpty) {
-                    todos = todos.where((t) => t.task.toLowerCase().contains(_searchQuery) || t.category.toLowerCase().contains(_searchQuery)).toList();
-                  }
-
-                  final flatList = _generateFlatList(todos);
-                  if (!_isReordering) _reorderingList = List.from(flatList);
-
-                  if (todos.isEmpty) return Center(child: Text("No tasks found.", style: textTheme.bodyMedium?.copyWith(color: colorScheme.onSurface.withOpacity(0.4))));
-
-                  final canReorder = _currentSort == TodoSortOption.custom && _searchQuery.isEmpty && !_isSelectionMode;
-
-                  return ReorderableListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                    itemCount: _isReordering ? _reorderingList.length : flatList.length,
-                    buildDefaultDragHandles: false,
-                    onReorder: canReorder ? _onReorder : (a, b) {},
-                    proxyDecorator: (child, index, animation) => AnimatedBuilder(animation: animation, builder: (_, __) => Transform.scale(scale: 1.05, child: Material(color: Colors.transparent, child: child))),
-
-                    itemBuilder: (_, index) {
-                      final item = _isReordering ? _reorderingList[index] : flatList[index];
-
-                      Key itemKey;
-                      Widget childWidget;
-
-                      if (item is HeaderItem) {
-                        itemKey = ValueKey('header_${item.category}');
-                        childWidget = Container(
-                          margin: const EdgeInsets.only(top: 0, bottom: 0),
-                          child: _buildHeader(item, todos),
-                        );
-                      } else if (item is DividerItem) {
-                        itemKey = ValueKey('divider_$index');
-                        childWidget = Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Divider(
-                                  color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.3),
-                                  thickness: 1,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8),
-                                child: Text(
-                                  'Completed',
-                                  style: TextStyle(
-                                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Divider(
-                                  color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.3),
-                                  thickness: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      } else if (item is TodoItemWrapper) {
-                        itemKey = ValueKey(item.todo.id);
-                        childWidget = Container(
-                          margin: EdgeInsets.zero,
-                          child: item.isVisible ? TodoCard(
-                            todo: item.todo,
-                            isSelected: _selectedTodoIds.contains(item.todo.id),
-                            onTap: () => _isSelectionMode ? _toggleSelection(item.todo.id) : _openTodoEditor(item.todo),
-                            onLongPress: !canReorder ? () => _toggleSelection(item.todo.id) : null,
-                            onToggleDone: () => _toggleTodoDone(item.todo),
-                          ) : const SizedBox(),
-                        );
-
-                        if (canReorder) {
-                          childWidget = ReorderableDelayedDragStartListener(
-                            index: index,
-                            child: childWidget,
-                          );
-                        }
-                      } else {
-                        itemKey = ValueKey('empty_$index');
-                        childWidget = const SizedBox.shrink();
-                      }
-
-                      return _buildBouncingItem(index, childWidget, itemKey);
-                    },
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeader(HeaderItem item, List<Todo> allTodos) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final categoryTodos = allTodos.where((t) => t.category == item.category).toList();
-    final allSelected = categoryTodos.isNotEmpty && categoryTodos.every((t) => _selectedTodoIds.contains(t.id));
-    final someSelected = categoryTodos.any((t) => _selectedTodoIds.contains(t.id)) && !allSelected;
-
-    return GestureDetector(
-      onTap: () {
-        if (_isSelectionMode) _toggleCategorySelection(item.category, allTodos);
-        else setState(() => _categoryExpansionState[item.category] = !item.isExpanded);
-      },
+      borderRadius: BorderRadius.circular(12),
       child: Container(
-        color: Colors.transparent,
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         child: Row(
           children: [
-            AnimatedRotation(turns: item.isExpanded ? 0.25 : 0.0, duration: const Duration(milliseconds: 200), child: Icon(Icons.keyboard_arrow_right, color: colorScheme.onSurface.withOpacity(0.7), size: 20)),
-            const SizedBox(width: 8),
-            Expanded(child: Text(item.category.toUpperCase(), style: TextStyle(color: item.isExpanded ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.7), fontWeight: FontWeight.bold, letterSpacing: 1.2, fontSize: 13))),
-            if (_isSelectionMode) Icon(allSelected ? Icons.check_circle : (someSelected ? Icons.remove_circle_outline : Icons.circle_outlined), color: (allSelected || someSelected) ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.38), size: 20)
-            else Container(
-              decoration: BoxDecoration(
-                color: colorScheme.onPrimary.withOpacity(0.38)
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text('${item.count}/${item.total}', style: TextStyle(color: colorScheme.onSurface.withOpacity(0.38), fontSize: 12)),
-            ),
+            Icon(selected ? Icons.radio_button_checked : Icons.radio_button_unchecked, color: selected ? theme.colorScheme.primary : theme.iconTheme.color?.withOpacity(0.5)),
+            const SizedBox(width: 12),
+            Text(label, style: theme.textTheme.bodyLarge?.copyWith(
+                color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+                fontWeight: selected ? FontWeight.bold : FontWeight.normal
+            )),
           ],
         ),
       ),
     );
-  }
-
-  Widget _buildCustomTopBar() {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    return Padding(padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8), child: Row(children: [IconButton(icon: Icon(_isSelectionMode?Icons.close:Icons.arrow_back_ios_new, color: theme.iconTheme.color), onPressed: () => _isSelectionMode ? setState((){_isSelectionMode=false;_selectedTodoIds.clear();}) : context.pop()), Expanded(child: _isSelectionMode ? Center(child: Text('${_selectedTodoIds.length} Selected', style: theme.textTheme.titleLarge)) : Row(children: [Hero(tag:'todos', child: Icon(Icons.check_circle_outline, size: 32, color: colorScheme.primary)), const SizedBox(width: 10), Hero(tag:'todos_title', child: Material(type:MaterialType.transparency, child: Text("To-Dos", style: theme.textTheme.titleLarge?.copyWith(fontSize: 28))))])), if(_isSelectionMode) ...[IconButton(icon: Icon(Icons.select_all, color: theme.iconTheme.color), onPressed: () => _selectAll(Hive.box<Todo>('todos_box').values.where((t) => !t.isDeleted).toList())), IconButton(icon: Icon(Icons.delete, color: colorScheme.error), onPressed: _deleteSelected)] else ...[IconButton(icon: Icon(Icons.check_circle_outline, color: theme.iconTheme.color?.withOpacity(0.54)), onPressed: ()=>setState(()=>_isSelectionMode=true)), IconButton(icon: Icon(Icons.filter_list, color: theme.iconTheme.color), onPressed: _showFilterMenu), IconButton(icon: Icon(Icons.delete_sweep_outlined, color: colorScheme.error), onPressed: _deleteAll)]]));
   }
 }

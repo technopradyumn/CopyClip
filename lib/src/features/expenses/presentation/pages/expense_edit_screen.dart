@@ -429,7 +429,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
       child: GestureDetector(
         onTap: _unfocusAll,
         child: GlassScaffold(
-          showBackArrow: false,
+          showBackArrow: true,
           title: widget.expense == null ? 'New Transaction' : 'Edit',
           actions: [
             IconButton(

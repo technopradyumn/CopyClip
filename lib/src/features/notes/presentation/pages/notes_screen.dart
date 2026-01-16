@@ -1,15 +1,20 @@
 import 'dart:convert';
-import 'dart:ui';
-import 'package:copyclip/src/core/router/app_router.dart';
-import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
-import '../../../../core/widgets/glass_dialog.dart';
+
+// Core
+import 'package:copyclip/src/core/router/app_router.dart';
+import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+
+// Data
 import '../../data/note_model.dart';
+
+// Widgets
 import '../widgets/note_card.dart';
 
 enum NoteSortOption { custom, dateNewest, dateOldest, titleAZ, titleZA }
@@ -22,89 +27,141 @@ class NotesScreen extends StatefulWidget {
 }
 
 class _NotesScreenState extends State<NotesScreen> {
+  // UI Controllers
+  final TextEditingController _searchController = TextEditingController();
+
+  // ✅ PERFORMANCE: Notifier isolates list updates from the rest of the UI
+  final ValueNotifier<List<Note>> _filteredNotesNotifier = ValueNotifier([]);
+
+  // Data State
+  List<Note> _rawNotes = [];
   bool _isSelectionMode = false;
   final Set<String> _selectedNoteIds = {};
-  final TextEditingController _searchController = TextEditingController();
+
+  // Filter State
   String _searchQuery = "";
   NoteSortOption _currentSort = NoteSortOption.custom;
-  List<Note> _reorderingList = [];
-  bool _isReordering = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshNotes();
+
+    // Listen for Search efficiently
+    _searchController.addListener(() {
+      _searchQuery = _searchController.text.toLowerCase();
+      _applyFilters();
+    });
+
+    // Listen to DB changes to keep list in sync
+    Hive.box<Note>('notes_box').listenable().addListener(_refreshNotes);
+  }
 
   @override
   void dispose() {
+    Hive.box<Note>('notes_box').listenable().removeListener(_refreshNotes);
     _searchController.dispose();
+    _filteredNotesNotifier.dispose();
     super.dispose();
   }
 
+  // --- DATA LOGIC ---
+
+  void _refreshNotes() {
+    if (!Hive.isBoxOpen('notes_box')) return;
+    final box = Hive.box<Note>('notes_box');
+
+    // Get all non-deleted notes
+    _rawNotes = box.values.where((n) => !n.isDeleted).toList();
+    _applyFilters();
+  }
+
+  void _applyFilters() {
+    List<Note> result = List.from(_rawNotes);
+
+    // 1. Search Filter
+    if (_searchQuery.isNotEmpty) {
+      result = result.where((n) =>
+      n.title.toLowerCase().contains(_searchQuery) ||
+          n.content.toLowerCase().contains(_searchQuery)
+      ).toList();
+    }
+
+    // 2. Sort
+    switch (_currentSort) {
+      case NoteSortOption.dateNewest:
+        result.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+        break;
+      case NoteSortOption.dateOldest:
+        result.sort((a, b) => a.updatedAt.compareTo(b.updatedAt));
+        break;
+      case NoteSortOption.titleAZ:
+        result.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+        break;
+      case NoteSortOption.titleZA:
+        result.sort((a, b) => b.title.toLowerCase().compareTo(a.title.toLowerCase()));
+        break;
+      case NoteSortOption.custom:
+        result.sort((a, b) => a.sortIndex.compareTo(b.sortIndex));
+        break;
+    }
+
+    // Update the UI
+    _filteredNotesNotifier.value = result;
+  }
+
+  // --- ACTIONS ---
+
+  void _onReorder(int oldIndex, int newIndex) {
+    if (newIndex > oldIndex) newIndex -= 1;
+
+    final currentList = List<Note>.from(_filteredNotesNotifier.value);
+    final item = currentList.removeAt(oldIndex);
+    currentList.insert(newIndex, item);
+
+    // Update UI immediately for smoothness
+    _filteredNotesNotifier.value = currentList;
+
+    // Update Database in background
+    for (int i = 0; i < currentList.length; i++) {
+      currentList[i].sortIndex = i;
+      currentList[i].save();
+    }
+  }
+
   void _copyNote(Note note) {
-    // 1. Parse the Delta JSON
     try {
       final List<dynamic> delta = jsonDecode(note.content);
-      String cleanContent = "";
-
+      String clean = "";
       for (var op in delta) {
-        if (op is Map && op.containsKey('insert') && op['insert'] is String) {
-          cleanContent += op['insert'];
-        }
+        if (op is Map && op['insert'] is String) clean += op['insert'];
       }
-
-      final String textToCopy = cleanContent.trim();
-      if (textToCopy.isNotEmpty) {
-        Clipboard.setData(ClipboardData(text: textToCopy));
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Content copied"),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
-      }
+      Clipboard.setData(ClipboardData(text: clean.trim()));
     } catch (_) {
-      // Fallback for non-json content
-      if (note.content.isNotEmpty) {
-        Clipboard.setData(ClipboardData(text: note.content));
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Content copied"),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
-      }
+      Clipboard.setData(ClipboardData(text: note.content));
     }
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Content copied"), behavior: SnackBarBehavior.floating));
   }
 
   void _shareNote(Note note) {
-    // 1. Parse the Delta JSON
     try {
       final List<dynamic> delta = jsonDecode(note.content);
-      String cleanContent = "";
-
+      String clean = "";
       for (var op in delta) {
-        if (op is Map && op.containsKey('insert') && op['insert'] is String) {
-          cleanContent += op['insert'];
-        }
+        if (op is Map && op['insert'] is String) clean += op['insert'];
       }
-
-      // 2. Share only the editor content
-      final String textToShare = cleanContent.trim();
-
-      if (textToShare.isNotEmpty) {
-        Share.share(textToShare);
-      }
+      Share.share(clean.trim());
     } catch (_) {
-      // Fallback for non-json content
-      if (note.content.isNotEmpty) {
-        Share.share(note.content);
-      }
+      Share.share(note.content);
     }
   }
 
-  // REFACTORED: Soft delete for single note
   void _confirmDeleteNote(Note note) {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Move Note to Recycle Bin?",
-        content: "You can restore this note later from settings.",
+        title: "Move to Bin?",
+        content: "You can restore this note later.",
         confirmText: "Move",
         isDestructive: true,
         onConfirm: () {
@@ -117,99 +174,30 @@ class _NotesScreenState extends State<NotesScreen> {
     );
   }
 
-  Future<bool> _onWillPop() async {
-    if (_isSelectionMode) {
-      setState(() {
-        _isSelectionMode = false;
-        _selectedNoteIds.clear();
-      });
-      return false;
-    }
-    return true;
-  }
-
-  void _toggleSelection(String id) {
-    setState(() {
-      if (_selectedNoteIds.contains(id)) _selectedNoteIds.remove(id);
-      else _selectedNoteIds.add(id);
-      if (_selectedNoteIds.isEmpty) _isSelectionMode = false;
-    });
-  }
-
-  void _enterSelectionMode(String id) {
-    setState(() {
-      _isSelectionMode = true;
-      _selectedNoteIds.add(id);
-    });
-  }
-
-  void _selectAll(List<Note> notes) {
-    setState(() {
-      final ids = notes.where((n) => !n.isDeleted).map((e) => e.id).toSet();
-      if (_selectedNoteIds.containsAll(ids)) {
-        _selectedNoteIds.clear();
-        _isSelectionMode = false;
-      } else {
-        _selectedNoteIds.addAll(ids);
-      }
-    });
-  }
-
-  // REFACTORED: Soft delete for selected notes
   void _deleteSelected() {
-    if (_selectedNoteIds.isEmpty) return;
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (ctx) => GlassDialog(
-        title: "Move ${_selectedNoteIds.length} Notes to Bin?",
-        content: "You can restore them later from settings.",
-        confirmText: "Move",
-        isDestructive: true,
-        onConfirm: () {
-          Navigator.pop(ctx);
-          final box = Hive.box<Note>('notes_box');
-          final now = DateTime.now();
-          // Filter notes that are active AND currently selected
-          final notesToSoftDelete = box.values
-              .where((n) => !n.isDeleted && _selectedNoteIds.contains(n.id))
-              .toList();
-
-          for (var note in notesToSoftDelete) {
-            note.isDeleted = true;
-            note.deletedAt = now;
-            note.save();
-          }
-
-          setState(() {
-            _selectedNoteIds.clear();
-            _isSelectionMode = false;
-          });
-        },
-      ),
-    );
+    final now = DateTime.now();
+    for (var id in _selectedNoteIds) {
+      try {
+        final note = _rawNotes.firstWhere((n) => n.id == id);
+        note.isDeleted = true; note.deletedAt = now; note.save();
+      } catch (_) {}
+    }
+    setState(() { _selectedNoteIds.clear(); _isSelectionMode = false; });
   }
 
-  // REFACTORED: Soft delete for all notes
   void _deleteAll() {
     showDialog(
       context: context,
-      barrierDismissible: true,
       builder: (ctx) => GlassDialog(
-        title: "Move All Notes to Bin?",
-        content: "This will move all active notes to the recycle bin.",
-        confirmText: "Move All",
+        title: "Delete All?",
+        content: "Move all notes to Recycle Bin?",
+        confirmText: "Delete All",
         isDestructive: true,
         onConfirm: () {
           Navigator.pop(ctx);
-          final box = Hive.box<Note>('notes_box');
           final now = DateTime.now();
-          final activeNotes = box.values.where((n) => !n.isDeleted).toList();
-
-          for (var note in activeNotes) {
-            note.isDeleted = true;
-            note.deletedAt = now;
-            note.save();
+          for (var n in _rawNotes) {
+            n.isDeleted = true; n.deletedAt = now; n.save();
           }
         },
       ),
@@ -224,44 +212,227 @@ class _NotesScreenState extends State<NotesScreen> {
     context.push(AppRouter.noteEdit, extra: note);
   }
 
-  // REFACTORED: Use note.save() instead of box.clear() and box.addAll()
-  void _onReorder(int oldIndex, int newIndex) async {
-    if (newIndex > oldIndex) newIndex -= 1;
+  void _toggleSelection(String id) {
     setState(() {
-      _isReordering = true;
-      final item = _reorderingList.removeAt(oldIndex);
-      _reorderingList.insert(newIndex, item);
+      if (_selectedNoteIds.contains(id)) _selectedNoteIds.remove(id);
+      else _selectedNoteIds.add(id);
+      if (_selectedNoteIds.isEmpty) _isSelectionMode = false;
     });
-
-    // Update sortIndex for all reordered items and save
-    for (int i = 0; i < _reorderingList.length; i++) {
-      _reorderingList[i].sortIndex = i;
-      _reorderingList[i].save();
-    }
-
-    if (mounted) {
-      setState(() {
-        _isReordering = false;
-      });
-    }
   }
 
+  void _selectAll() {
+    setState(() {
+      if (_selectedNoteIds.length == _filteredNotesNotifier.value.length) {
+        _selectedNoteIds.clear();
+      } else {
+        _selectedNoteIds.addAll(_filteredNotesNotifier.value.map((e) => e.id));
+      }
+    });
+  }
+
+  // --- UI BUILDERS ---
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final onSurfaceColor = theme.colorScheme.onSurface;
+
+    return WillPopScope(
+      onWillPop: () async {
+        if (_isSelectionMode) {
+          setState(() { _isSelectionMode = false; _selectedNoteIds.clear(); });
+          return false;
+        }
+        return true;
+      },
+      child: GlassScaffold(
+        title: null,
+        floatingActionButton: _isSelectionMode ? null : FloatingActionButton(
+          onPressed: () => _openNoteEditor(null),
+          backgroundColor: theme.colorScheme.primary,
+          child: Icon(Icons.add, color: theme.colorScheme.onPrimary),
+        ),
+        body: Column(
+          children: [
+            _buildCustomTopBar(),
+
+            // Search Bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Container(
+                height: 48,
+                decoration: BoxDecoration(
+                  color: onSurfaceColor.withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+                ),
+                child: TextField(
+                  controller: _searchController,
+                  style: theme.textTheme.bodyMedium,
+                  decoration: InputDecoration(
+                    hintText: 'Search notes...',
+                    hintStyle: theme.textTheme.bodyMedium?.copyWith(color: onSurfaceColor.withOpacity(0.5)),
+                    prefixIcon: Icon(Icons.search, color: onSurfaceColor.withOpacity(0.5), size: 20),
+                    suffixIcon: _searchController.text.isNotEmpty
+                        ? GestureDetector(
+                      onTap: () { _searchController.clear(); },
+                      child: Icon(Icons.close, color: onSurfaceColor.withOpacity(0.5), size: 18),
+                    )
+                        : null,
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
+                ),
+              ),
+            ),
+
+            // Note List
+            Expanded(
+              child: ValueListenableBuilder<List<Note>>(
+                valueListenable: _filteredNotesNotifier,
+                builder: (context, notes, _) {
+                  if (notes.isEmpty) {
+                    return Center(child: Text("No notes found.", style: theme.textTheme.bodyMedium?.copyWith(color: onSurfaceColor.withOpacity(0.4))));
+                  }
+
+                  // ✅ LOGIC: Only allow dragging if Custom Sort + No Search
+                  final canReorder = _currentSort == NoteSortOption.custom && _searchQuery.isEmpty;
+
+                  if (canReorder) {
+                    // 1. REORDERABLE LIST (For Drag & Drop)
+                    // We use buildDefaultDragHandles: true so long-press works naturally
+                    return ReorderableListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+                      itemCount: notes.length,
+                      onReorder: _onReorder,
+                      proxyDecorator: (child, index, animation) =>
+                          AnimatedBuilder(animation: animation, builder: (_, __) => Transform.scale(scale: 1.05, child: Material(color: Colors.transparent, child: child))),
+                      itemBuilder: (context, index) {
+                        final note = notes[index];
+                        return NoteCard(
+                          key: ValueKey(note.id),
+                          note: note,
+                          isSelected: _selectedNoteIds.contains(note.id),
+                          onTap: () => _openNoteEditor(note),
+                          // ✅ IMPORTANT: Pass null to onLongPress so the List handles the Drag!
+                          onLongPress: null,
+                          onCopy: () => _copyNote(note),
+                          onShare: () => _shareNote(note),
+                          onDelete: () => _confirmDeleteNote(note),
+                          onColorChanged: (c) { note.colorValue = c.value; note.save(); },
+                        );
+                      },
+                    );
+                  } else {
+                    // 2. STANDARD LIST (High Performance for Search/Date Sort)
+                    return ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+                      itemCount: notes.length,
+                      cacheExtent: 1000,
+                      itemBuilder: (context, index) {
+                        final note = notes[index];
+                        return RepaintBoundary(
+                          child: NoteCard(
+                            key: ValueKey(note.id),
+                            note: note,
+                            isSelected: _selectedNoteIds.contains(note.id),
+                            onTap: () => _openNoteEditor(note),
+                            // ✅ Restore Selection Mode on long press when NOT reordering
+                            onLongPress: () => setState(() { _isSelectionMode = true; _selectedNoteIds.add(note.id); }),
+                            onCopy: () => _copyNote(note),
+                            onShare: () => _shareNote(note),
+                            onDelete: () => _confirmDeleteNote(note),
+                            onColorChanged: (c) { note.colorValue = c.value; note.save(); },
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCustomTopBar() {
+    final theme = Theme.of(context);
+    final onSurfaceColor = theme.colorScheme.onSurface;
+    final primaryColor = theme.colorScheme.primary;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+      child: Row(
+        children: [
+          IconButton(
+            icon: Icon(_isSelectionMode ? Icons.close : Icons.arrow_back_ios_new, color: theme.iconTheme.color),
+            onPressed: () {
+              if (_isSelectionMode) {
+                setState(() { _isSelectionMode = false; _selectedNoteIds.clear(); });
+              } else {
+                context.pop();
+              }
+            },
+          ),
+          Expanded(
+            child: _isSelectionMode
+                ? Center(child: Text('${_selectedNoteIds.length} Selected', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)))
+                : Row(
+              children: [
+                Hero(tag: 'notes_icon', child: Icon(Icons.note_alt_outlined, size: 28, color: primaryColor)),
+                const SizedBox(width: 10),
+                Hero(tag: 'notes_title', child: Material(type: MaterialType.transparency, child: Text("Notes", style: theme.textTheme.titleLarge?.copyWith(fontSize: 24, fontWeight: FontWeight.bold)))),
+              ],
+            ),
+          ),
+          if (_isSelectionMode) ...[
+            IconButton(icon: Icon(Icons.select_all, color: onSurfaceColor), onPressed: _selectAll),
+            IconButton(icon: const Icon(Icons.delete, color: Colors.redAccent), onPressed: _deleteSelected),
+          ] else ...[
+            IconButton(
+                icon: Icon(Icons.check_circle_outline, color: onSurfaceColor.withOpacity(0.6)),
+                onPressed: () => setState(() => _isSelectionMode = true)
+            ),
+            IconButton(
+                icon: Icon(Icons.filter_list, color: onSurfaceColor),
+                onPressed: _showFilterMenu
+            ),
+            IconButton(
+                icon: const Icon(Icons.delete_sweep_outlined, color: Colors.redAccent),
+                onPressed: _deleteAll
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  // ✅ IMPROVED BOTTOM SHEET: Solid Background for Visibility
   void _showFilterMenu() {
+    final theme = Theme.of(context);
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (_) => Container(
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 30),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          color: theme.colorScheme.surface, // ✅ Solid Surface Color (Not Glass)
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         ),
-        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Sort By", style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 10),
+            Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), borderRadius: BorderRadius.circular(2)))),
+            const SizedBox(height: 20),
+
+            Text("Sort Notes", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
+
             _buildSortOption(NoteSortOption.custom, "Custom Order (Drag & Drop)"),
             _buildSortOption(NoteSortOption.dateNewest, "Date: Newest First"),
             _buildSortOption(NoteSortOption.dateOldest, "Date: Oldest First"),
@@ -275,200 +446,34 @@ class _NotesScreenState extends State<NotesScreen> {
 
   Widget _buildSortOption(NoteSortOption option, String label) {
     final selected = _currentSort == option;
-    final onSurfaceColor = Theme.of(context).colorScheme.onSurface;
-    final primaryColor = Theme.of(context).colorScheme.primary;
+    final theme = Theme.of(context);
 
-    return ListTile(
-      leading: Icon(
-        selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-        color: selected ? primaryColor : onSurfaceColor.withOpacity(0.5),
-      ),
-      title: Text(label, style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: selected ? onSurfaceColor : onSurfaceColor.withOpacity(0.7))),
+    return InkWell(
       onTap: () {
         setState(() => _currentSort = option);
+        _applyFilters();
         Navigator.pop(context);
       },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final onSurfaceColor = Theme.of(context).colorScheme.onSurface;
-    final primaryColor = Theme.of(context).colorScheme.primary;
-
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: GlassScaffold(
-        title: null,
-        floatingActionButton: _isSelectionMode
-            ? null
-            : FloatingActionButton(
-          onPressed: () => _openNoteEditor(null),
-          backgroundColor: primaryColor,
-          child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
-        ),
-        body: Column(
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        child: Row(
           children: [
-            _buildCustomTopBar(),
-            Padding(
-              padding: const EdgeInsets.only(right: 16, left: 16, top: 0, bottom: 8),
-              child: SizedBox(
-                height: 44,
-                child: TextField(
-                  controller: _searchController,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  decoration: InputDecoration(
-                    hintText: 'Search notes...',
-                    hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(color: onSurfaceColor.withOpacity(0.54)),
-                    prefixIcon: Icon(Icons.search, color: onSurfaceColor.withOpacity(0.54), size: 20),
-                    suffixIcon: _searchQuery.isNotEmpty
-                        ? GestureDetector(
-                      onTap: () {
-                        _searchController.clear();
-                        setState(() => _searchQuery = '');
-                      },
-                      child: Icon(Icons.close, color: onSurfaceColor.withOpacity(0.54), size: 18),
-                    )
-                        : null,
-                    filled: true,
-                    fillColor: onSurfaceColor.withOpacity(0.08),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _searchQuery = value.trim().toLowerCase();
-                    });
-                  },
-                ),
-              ),
+            Icon(
+              selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+              color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.5),
             ),
-            Expanded(
-              child: ValueListenableBuilder(
-                valueListenable: Hive.box<Note>('notes_box').listenable(),
-                builder: (_, Box<Note> box, __) {
-                  List<Note> notes;
-
-                  // Filter out deleted items first
-                  final activeNotes = box.values.where((n) => !n.isDeleted).toList().cast<Note>();
-
-                  if (_isReordering) {
-                    notes = _reorderingList;
-                  } else {
-                    notes = activeNotes;
-                    if (_searchQuery.isNotEmpty) {
-                      notes = notes.where((n) => n.title.toLowerCase().contains(_searchQuery) || n.content.toLowerCase().contains(_searchQuery)).toList();
-                    }
-
-                    switch (_currentSort) {
-                      case NoteSortOption.dateNewest:
-                        notes.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
-                        break;
-                      case NoteSortOption.dateOldest:
-                        notes.sort((a, b) => a.updatedAt.compareTo(b.updatedAt));
-                        break;
-                      case NoteSortOption.titleAZ:
-                        notes.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
-                        break;
-                      case NoteSortOption.titleZA:
-                        notes.sort((a, b) => b.title.toLowerCase().compareTo(a.title.toLowerCase()));
-                        break;
-                      case NoteSortOption.custom:
-                        // For custom sort, we sort the active notes by sortIndex
-                        notes.sort((a, b) => a.sortIndex.compareTo(b.sortIndex));
-                        break;
-                    }
-                    _reorderingList = List.from(notes);
-                  }
-
-                  if (notes.isEmpty) {
-                    return Center(child: Text("No notes found.", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: onSurfaceColor.withOpacity(0.38))));
-                  }
-
-                  final canReorder = _currentSort == NoteSortOption.custom && _searchQuery.isEmpty;
-
-                  return ReorderableListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    itemCount: notes.length,
-                    onReorder: canReorder ? _onReorder : (a, b) {},
-                    buildDefaultDragHandles: canReorder,
-                    proxyDecorator: (child, index, animation) => AnimatedBuilder(animation: animation, builder: (_, __) => Transform.scale(scale: 1.05, child: Material(color: Colors.transparent, child: child))),
-
-                      // Inside your ReorderableListView.builder or ListView.builder
-                      itemBuilder: (_, index) {
-                        final note = notes[index];
-                        final selected = _selectedNoteIds.contains(note.id);
-
-                        return NoteCard(
-                          key: ValueKey(note.id),
-                          note: note,
-                          isSelected: selected,
-                          onTap: () => _isSelectionMode ? _toggleSelection(note.id) : _openNoteEditor(note),
-                          onCopy: () => _copyNote(note),
-                          onShare: () => _shareNote(note),
-                          onDelete: () => _confirmDeleteNote(note),
-                          // SAVE TO DATABASE ON CLICK
-                          onColorChanged: (newColor) {
-                            setState(() {
-                              note.colorValue = newColor.value; // Real-time UI update
-                            });
-                            note.save(); // Direct Hive save
-                          },
-                        );
-                      }
-                  );
-                },
+            const SizedBox(width: 16),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+                color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildCustomTopBar() {
-    final onSurfaceColor = Theme.of(context).colorScheme.onSurface;
-    final primaryColor = Theme.of(context).colorScheme.primary;
-    final errorColor = Theme.of(context).colorScheme.error;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-      child: Row(
-        children: [
-          IconButton(
-            icon: Icon(_isSelectionMode ? Icons.close : Icons.arrow_back_ios_new, color: Theme.of(context).iconTheme.color),
-            onPressed: () {
-              if (_isSelectionMode) {
-                setState(() {
-                  _isSelectionMode = false;
-                  _selectedNoteIds.clear();
-                });
-              } else {
-                context.pop();
-              }
-            },
-          ),
-          Expanded(
-            child: _isSelectionMode
-                ? Center(child: Text('${_selectedNoteIds.length} Selected', style: Theme.of(context).textTheme.titleLarge))
-                : Row(
-              children: [
-                Hero(tag: 'notes_icon', child: Icon(Icons.note_alt_outlined, size: 32, color: primaryColor)),
-                const SizedBox(width: 10),
-                Hero(tag: 'notes_title', child: Material(type: MaterialType.transparency, child: Text("Notes", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 28)))),
-              ],
-            ),
-          ),
-          if (_isSelectionMode) ...[
-            IconButton(icon: Icon(Icons.select_all, color: onSurfaceColor), onPressed: () => _selectAll(Hive.box<Note>('notes_box').values.where((n) => !n.isDeleted).toList().cast<Note>())),
-            IconButton(icon: Icon(Icons.delete, color: errorColor), onPressed: _deleteSelected),
-          ] else ...[
-            IconButton(icon: Icon(Icons.check_circle_outline, color: onSurfaceColor.withOpacity(0.54)), onPressed: () => setState(() => _isSelectionMode = true)),
-            IconButton(icon: Icon(Icons.filter_list, color: onSurfaceColor), onPressed: _showFilterMenu),
-            IconButton(icon: Icon(Icons.delete_sweep_outlined, color: errorColor), onPressed: _deleteAll),
-          ],
-        ],
       ),
     );
   }

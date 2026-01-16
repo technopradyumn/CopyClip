@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:copyclip/src/core/widgets/glass_container.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
-
 import '../../../../core/app_content_palette.dart';
 
 class ClipboardCard extends StatelessWidget {
@@ -29,11 +27,10 @@ class ClipboardCard extends StatelessWidget {
     required this.onColorChanged,
   });
 
-  /// Logic to extract clean text and the first image from Quill JSON
   Map<String, dynamic> _parseContent(String jsonSource) {
     if (jsonSource.isEmpty) return {"text": "No content", "imageUrl": null};
-    if (!jsonSource.startsWith('[')) return {"text": jsonSource, "imageUrl": null};
     try {
+      if (!jsonSource.startsWith('[')) return {"text": jsonSource, "imageUrl": null};
       final List<dynamic> delta = jsonDecode(jsonSource);
       String plainText = "";
       String? firstImageUrl;
@@ -75,8 +72,24 @@ class ClipboardCard extends StatelessWidget {
         ? Color(item.colorValue!)
         : theme.colorScheme.surface;
 
-    final bool isDarkColor = ThemeData.estimateBrightnessForColor(clipThemeColor) == Brightness.dark;
-    final Color contentColor = isDarkColor ? Colors.white : Colors.black87;
+    final Color contentColor = AppContentPalette.getContrastColor(clipThemeColor);
+
+    // ✅ OPTIMIZATION: High-performance Decoration (Replaces GlassContainer)
+    final decoration = BoxDecoration(
+      color: clipThemeColor.withOpacity(isSelected ? 0.6 : 0.65),
+      borderRadius: BorderRadius.circular(24),
+      border: Border.all(
+          color: Colors.white.withOpacity(0.2),
+          width: 1.5
+      ),
+      boxShadow: [
+        BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4)
+        )
+      ],
+    );
 
     return GestureDetector(
       onTap: onTap,
@@ -86,80 +99,80 @@ class ClipboardCard extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           transform: isSelected ? Matrix4.identity().scaled(0.98) : Matrix4.identity(),
-          child: GlassContainer(
-            margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(16),
-            color: clipThemeColor,
-            opacity: isSelected ? 0.9 : 0.8,
-            blur: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(_getTypeIconData(item.type), color: contentColor.withOpacity(0.5), size: 20),
-                        const SizedBox(width: 8),
-                        Material(
-                          type: MaterialType.transparency,
-                          child: Text(
-                            DateFormat('MMM dd, h:mm a').format(item.createdAt),
-                            style: theme.textTheme.bodySmall?.copyWith(color: contentColor.withOpacity(0.5)),
-                          ),
+          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.all(16),
+          decoration: decoration, // Using the fast decoration
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(_getTypeIconData(item.type), color: contentColor.withOpacity(0.5), size: 20),
+                      const SizedBox(width: 8),
+                      Material(
+                        type: MaterialType.transparency,
+                        child: Text(
+                          DateFormat('MMM dd, h:mm a').format(item.createdAt),
+                          style: theme.textTheme.bodySmall?.copyWith(color: contentColor.withOpacity(0.5)),
                         ),
+                      ),
+                    ],
+                  ),
+                  Icon(
+                    isSelected ? Icons.check_circle : Icons.radio_button_unchecked,
+                    size: 20,
+                    color: isSelected ? theme.colorScheme.primary : contentColor.withOpacity(0.2),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              if (imageUrl != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.file(
+                      File(imageUrl),
+                      height: 120,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                    ),
+                  ),
+                ),
+              Material(
+                type: MaterialType.transparency,
+                child: Text(
+                  previewText,
+                  maxLines: imageUrl != null ? 2 : 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.bodyMedium?.copyWith(color: contentColor, height: 1.3),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  _QuickColorPicker(
+                    onColorSelected: onColorChanged,
+                    currentColor: clipThemeColor,
+                  ),
+                  const Spacer(),
+                  IgnorePointer(
+                    ignoring: isSelected,
+                    child: Row(
+                      children: [
+                        _smallBtn(Icons.copy_rounded, onCopy, contentColor),
+                        _smallBtn(Icons.share_rounded, onShare, contentColor),
+                        _smallBtn(Icons.delete_outline_rounded, onDelete, Colors.redAccent),
                       ],
                     ),
-                    Icon(
-                      isSelected ? Icons.check_circle : Icons.radio_button_unchecked,
-                      size: 20,
-                      color: isSelected ? theme.colorScheme.primary : contentColor.withOpacity(0.2),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                if (imageUrl != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.file(File(imageUrl), height: 120, width: double.infinity, fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => Image.network(imageUrl, height: 120, width: double.infinity, fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => const SizedBox.shrink())),
-                    ),
                   ),
-                Material(
-                  type: MaterialType.transparency,
-                  child: Text(
-                    previewText,
-                    maxLines: imageUrl != null ? 2 : 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.bodyMedium?.copyWith(color: contentColor, height: 1.3),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    _QuickColorPicker(
-                      onColorSelected: onColorChanged,
-                      currentColor: clipThemeColor,
-                    ),
-                    const Spacer(),
-                    IgnorePointer(
-                      ignoring: isSelected,
-                      child: Row(
-                        children: [
-                          _smallBtn(Icons.copy_rounded, onCopy, contentColor),
-                          _smallBtn(Icons.share_rounded, onShare, contentColor),
-                          _smallBtn(Icons.delete_outline_rounded, onDelete, Colors.redAccent),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -207,13 +220,6 @@ class _QuickColorPicker extends StatelessWidget {
                     : contrastColor.withOpacity(0.2),
                 width: isSelected ? 2.5 : 1,
               ),
-              boxShadow: isSelected ? [
-                BoxShadow(
-                  color: primaryColor.withOpacity(0.3),
-                  blurRadius: 8,
-                  spreadRadius: 1,
-                )
-              ] : null,
             ),
             child: isSelected
                 ? Icon(

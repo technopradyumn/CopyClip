@@ -162,20 +162,36 @@ class _CanvasScreenState extends State<CanvasScreen> with SingleTickerProviderSt
   // --- Sorting Logic ---
 
   void _showSortMenu() {
+    final theme = Theme.of(context);
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (_) => Container(
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 30),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          color: theme.colorScheme.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         ),
-        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Sort By", style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 10),
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              "Sort Items",
+              style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
             _buildSortOption(CanvasSortOption.dateNewest, "Newest First"),
             _buildSortOption(CanvasSortOption.dateOldest, "Oldest First"),
             _buildSortOption(CanvasSortOption.nameAZ, "Name (A-Z)"),
@@ -188,16 +204,34 @@ class _CanvasScreenState extends State<CanvasScreen> with SingleTickerProviderSt
 
   Widget _buildSortOption(CanvasSortOption option, String label) {
     final selected = _currentSort == option;
-    return ListTile(
-      leading: Icon(
-        selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-        color: selected ? Theme.of(context).colorScheme.primary : null,
-      ),
-      title: Text(label),
+    final theme = Theme.of(context);
+
+    return InkWell(
       onTap: () {
         setState(() => _currentSort = option);
         Navigator.pop(context);
       },
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        child: Row(
+          children: [
+            Icon(
+              selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+              color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.5),
+            ),
+            const SizedBox(width: 16),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+                color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -314,7 +348,7 @@ class _CanvasScreenState extends State<CanvasScreen> with SingleTickerProviderSt
 
                           return GridView.builder(
                             padding: const EdgeInsets.only(left: 24, right: 24, bottom: 100, top: 10),
-                            physics: const BouncingScrollPhysics(),
+                            physics: const AlwaysScrollableScrollPhysics(),
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               childAspectRatio: 0.75,

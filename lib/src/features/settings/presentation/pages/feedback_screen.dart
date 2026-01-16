@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
-import 'package:copyclip/src/core/widgets/glass_container.dart';
+// import 'package:copyclip/src/core/widgets/glass_container.dart'; // ❌ REMOVED to prevent lag
 import 'package:url_launcher/url_launcher.dart';
 
 class FeedbackScreen extends StatefulWidget {
@@ -28,7 +28,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   @override
   void initState() {
     super.initState();
-    // Real-time character count update
     _feedbackController.addListener(() => setState(() {}));
   }
 
@@ -49,11 +48,17 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         behavior: SnackBarBehavior.floating,
-        content: GlassContainer(
+        // ✅ Lightweight Container (No Blur)
+        content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          borderRadius: 16,
-          color: theme.colorScheme.surface,
-          opacity: 0.9,
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface.withOpacity(0.95),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+            boxShadow: [
+              BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 4)),
+            ],
+          ),
           child: Row(
             children: [
               Icon(isError ? Icons.error_outline : Icons.check_circle_outline, color: color),
@@ -92,7 +97,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         '$feedbackText\n\n'
         'Sent via CopyClip App';
 
-    // Construct Uri properly
     final Uri emailUri = Uri(
       scheme: 'mailto',
       path: recipientEmail,
@@ -100,7 +104,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     );
 
     try {
-      // mode: LaunchMode.externalApplication is essential for mailto on many devices
       final bool launched = await launchUrl(
         emailUri,
         mode: LaunchMode.externalApplication,
@@ -124,7 +127,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     final textTheme = theme.textTheme;
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(), // Dismiss keyboard on background tap
+      onTap: () => FocusScope.of(context).unfocus(),
       child: GlassScaffold(
         title: "Send Feedback",
         body: SingleChildScrollView(
@@ -133,8 +136,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header Card
-              GlassContainer(
+              // Header Card - Replaced GlassContainer
+              _LightweightContainer(
                 color: primaryColor.withOpacity(0.1),
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -166,7 +169,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               // Category Section
               _buildLabel("Category", primaryColor),
               const SizedBox(height: 12),
-              GlassContainer(
+
+              // Dropdown - Replaced GlassContainer
+              _LightweightContainer(
                 color: primaryColor.withOpacity(0.05),
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 child: DropdownButtonHideUnderline(
@@ -200,7 +205,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               // Email Section
               _buildLabel("Your Email (Optional)", primaryColor),
               const SizedBox(height: 12),
-              GlassContainer(
+
+              // Email Input - Replaced GlassContainer
+              _LightweightContainer(
                 color: primaryColor.withOpacity(0.05),
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 child: TextField(
@@ -221,7 +228,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               // Feedback Text Section
               _buildLabel("Your Feedback", primaryColor),
               const SizedBox(height: 12),
-              GlassContainer(
+
+              // Text Area - Replaced GlassContainer
+              _LightweightContainer(
                 color: primaryColor.withOpacity(0.05),
                 padding: const EdgeInsets.all(16),
                 child: TextField(
@@ -230,7 +239,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   maxLength: 1000,
                   style: textTheme.bodyLarge,
                   decoration: InputDecoration(
-                    counterText: "", // Hidden because we use custom counter
+                    counterText: "",
                     hintText: "Tell us what you think...",
                     hintStyle: TextStyle(color: onSurfaceColor.withOpacity(0.4)),
                     border: InputBorder.none,
@@ -253,8 +262,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
               const SizedBox(height: 16),
 
-              // Info Help Card
-              GlassContainer(
+              // Info Help Card - Replaced GlassContainer
+              _LightweightContainer(
                 color: Colors.blue.withOpacity(0.1),
                 padding: const EdgeInsets.all(16),
                 child: Row(
@@ -289,8 +298,19 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     return InkWell(
       onTap: _sendFeedback,
       borderRadius: BorderRadius.circular(16),
-      child: GlassContainer(
-        color: primaryColor,
+      // ✅ Using Container instead of GlassContainer for smooth button press
+      child: Container(
+        decoration: BoxDecoration(
+          color: primaryColor,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: primaryColor.withOpacity(0.3),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
         padding: const EdgeInsets.symmetric(vertical: 18),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -319,5 +339,34 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       case 'Other': return Icons.more_horiz;
       default: return Icons.feedback_outlined;
     }
+  }
+}
+
+// ✅ NEW HELPER WIDGET: Mimics GlassContainer but runs at 60FPS (No Blur)
+class _LightweightContainer extends StatelessWidget {
+  final Widget child;
+  final Color color;
+  final EdgeInsetsGeometry padding;
+
+  const _LightweightContainer({
+    required this.child,
+    required this.color,
+    required this.padding,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: padding,
+      decoration: BoxDecoration(
+        color: color, // Uses simple transparency
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.1),
+          width: 0.5,
+        ),
+      ),
+      child: child,
+    );
   }
 }
