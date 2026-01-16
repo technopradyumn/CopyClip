@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:home_widget/home_widget.dart';
 
@@ -68,6 +70,29 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   late AnimationController _settingsAnimationController;
   late AnimationController _entryAnimationController;
 
+  // ============ ADS ============
+  BannerAd? _bannerAd;
+  InterstitialAd? _interstitialAd;
+  RewardedAd? _rewardedAd;
+  bool _isBannerAdLoaded = false;
+  int _interstitialAdCounter = 0;
+  int _rewardedAdCounter = 0;
+  DateTime? _lastRewardedAdDate;
+
+  static final String _bannerAdUnitId =
+      dotenv.env['BANNER_AD_UNIT_ID'] ?? '';
+
+  static final String _interstitialAdUnitId =
+      dotenv.env['INTERSTITIAL_AD_UNIT_ID'] ?? '';
+
+  static final String _rewardedAdUnitId =
+      dotenv.env['REWARDED_AD_UNIT_ID'] ?? '';
+
+  // ============ ONBOARDING ============
+  bool _showOnboarding = false;
+  int _onboardingStep = 0;
+  final PageController _onboardingController = PageController();
+
   final Map<String, FeatureItem> _features = {
     'notes': FeatureItem('notes', 'Notes', Icons.note_alt_outlined, Colors.amberAccent, AppRouter.notes, 'Create and manage your notes'),
     'todos': FeatureItem('todos', 'To-Dos', Icons.check_circle_outline, Colors.greenAccent, AppRouter.todos, 'Keep track of your tasks'),
@@ -105,6 +130,9 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
     _entryAnimationController.forward();
     _initHive();
+    _loadBannerAd();
+    _loadInterstitialAd();
+    _checkRewardedAdEligibility();
   }
 
   @override
@@ -114,14 +142,20 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     _settingsAnimationController.dispose();
     _entryAnimationController.dispose();
     _dragPositionNotifier.dispose();
+    _onboardingController.dispose();
+    _bannerAd?.dispose();
+    _interstitialAd?.dispose();
+    _rewardedAd?.dispose();
     super.dispose();
   }
 
+  // ============ HIVE INITIALIZATION ============
   Future<void> _initHive() async {
     if (!Hive.isBoxOpen('settings')) await Hive.openBox('settings');
 
     final settingsBox = Hive.box('settings');
     final savedOrder = settingsBox.get('dashboard_order', defaultValue: null);
+    final hasSeenOnboarding = settingsBox.get('has_seen_onboarding', defaultValue: false);
 
     if (mounted) {
       setState(() {
@@ -134,7 +168,14 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
           _order = _features.keys.toList();
         }
         _boxesOpened = true;
+        _showOnboarding = !hasSeenOnboarding;
       });
+
+      if (_showOnboarding) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) _startOnboarding();
+        });
+      }
     }
   }
 
@@ -142,46 +183,379 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     Hive.box('settings').put('dashboard_order', _order);
   }
 
+  // ============ ONBOARDING ============
+  void _startOnboarding() {
+    setState(() => _showOnboarding = true);
+  }
 
+  void _completeOnboarding() {
+    Hive.box('settings').put('has_seen_onboarding', true);
+    setState(() => _showOnboarding = false);
+  }
+
+  Widget _buildOnboardingScreen() {
+    final theme = Theme.of(context);
+
+    final onboardingPages = [
+      _buildOnboardingPage(
+        theme: theme,
+        icon: Icons.dashboard_rounded,
+        title: 'Welcome to CopyClip',
+        description: 'Your all-in-one productivity companion. Manage notes, tasks, expenses, and more!',
+        color: theme.colorScheme.primary,
+      ),
+      _buildOnboardingPage(
+        theme: theme,
+        icon: Icons.note_alt_outlined,
+        title: 'Notes',
+        description: 'Create rich text notes with formatting. Perfect for capturing ideas and information.',
+        color: const Color(0xFFFF9A85),
+      ),
+      _buildOnboardingPage(
+        theme: theme,
+        icon: Icons.check_circle_outline,
+        title: 'To-Dos',
+        description: 'Stay organized with tasks and checklists. Never miss a deadline again!',
+        color: const Color(0xFF82CFFD),
+      ),
+      _buildOnboardingPage(
+        theme: theme,
+        icon: Icons.attach_money,
+        title: 'Finance Tracker',
+        description: 'Track your expenses and income. Take control of your finances.',
+        color: const Color(0xFFFFB77B),
+      ),
+      _buildOnboardingPage(
+        theme: theme,
+        icon: Icons.gesture,
+        title: 'Canvas & More',
+        description: 'Draw sketches, write journals, manage clipboard, and organize with calendar.',
+        color: const Color(0xFF4DB6AC),
+      ),
+    ];
+
+    return Material(
+      color: theme.scaffoldBackgroundColor,
+      child: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView(
+                controller: _onboardingController,
+                onPageChanged: (index) => setState(() => _onboardingStep = index),
+                children: onboardingPages,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      onboardingPages.length,
+                          (index) => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: _onboardingStep == index ? 24 : 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: _onboardingStep == index
+                              ? theme.colorScheme.primary
+                              : theme.colorScheme.onSurface.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    children: [
+                      if (_onboardingStep > 0)
+                        TextButton(
+                          onPressed: () {
+                            _onboardingController.previousPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                          },
+                          child: const Text('Back'),
+                        ),
+                      const Spacer(),
+                      if (_onboardingStep < onboardingPages.length - 1)
+                        ElevatedButton(
+                          onPressed: () {
+                            _onboardingController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                          ),
+                          child: const Text('Next'),
+                        )
+                      else
+                        ElevatedButton(
+                          onPressed: _completeOnboarding,
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                            backgroundColor: theme.colorScheme.primary,
+                          ),
+                          child: const Text('Get Started'),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOnboardingPage({
+    required ThemeData theme,
+    required IconData icon,
+    required String title,
+    required String description,
+    required Color color,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.all(40),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(32),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [color.withOpacity(0.6), color.withOpacity(0.9)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: color.withOpacity(0.3),
+                  blurRadius: 30,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            child: Icon(icon, size: 80, color: Colors.white),
+          ),
+          const SizedBox(height: 48),
+          Text(
+            title,
+            style: theme.textTheme.headlineMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            description,
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.onSurface.withOpacity(0.7),
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ============ ADS METHODS ============
+  void _loadBannerAd() {
+    _bannerAd = BannerAd(
+      adUnitId: _bannerAdUnitId,
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) => setState(() => _isBannerAdLoaded = true),
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          debugPrint('Banner ad failed to load: $error');
+        },
+      ),
+    )..load();
+  }
+
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: _interstitialAdUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          _interstitialAd = ad;
+          _interstitialAd!.setImmersiveMode(true);
+        },
+        onAdFailedToLoad: (error) {
+          debugPrint('Interstitial ad failed to load: $error');
+        },
+      ),
+    );
+  }
+
+  void _showInterstitialAd() {
+    _interstitialAdCounter++;
+
+    // Show interstitial ad every 3 feature clicks
+    if (_interstitialAdCounter >= 3 && _interstitialAd != null) {
+      _interstitialAd!.show();
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          _loadInterstitialAd(); // Preload next ad
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          ad.dispose();
+          _loadInterstitialAd();
+        },
+      );
+      _interstitialAdCounter = 0;
+    }
+  }
+
+  void _checkRewardedAdEligibility() {
+    final today = DateTime.now();
+    final lastAdDate = _lastRewardedAdDate;
+
+    // Check if user can watch rewarded ad (2 per day max)
+    if (lastAdDate == null ||
+        !_isSameDay(lastAdDate, today) ||
+        _rewardedAdCounter < 2) {
+      _loadRewardedAd();
+    }
+  }
+
+  bool _isSameDay(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
+  }
+
+  void _loadRewardedAd() {
+    RewardedAd.load(
+      adUnitId: _rewardedAdUnitId,
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) => _rewardedAd = ad,
+        onAdFailedToLoad: (error) {
+          debugPrint('Rewarded ad failed to load: $error');
+        },
+      ),
+    );
+  }
+
+  void _showRewardedAdDialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Watch Video Ad'),
+        content: const Text('Watch a short video to unlock premium features for 24 hours!'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              _showRewardedAd();
+            },
+            child: const Text('Watch'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showRewardedAd() {
+    final today = DateTime.now();
+
+    if (_rewardedAdCounter >= 2 &&
+        _lastRewardedAdDate != null &&
+        _isSameDay(_lastRewardedAdDate!, today)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('You\'ve reached the daily limit of 2 video ads'),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
+
+    if (_rewardedAd == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Ad is still loading, please try again'),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      _loadRewardedAd();
+      return;
+    }
+
+    _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdDismissedFullScreenContent: (ad) {
+        ad.dispose();
+        _loadRewardedAd();
+      },
+      onAdFailedToShowFullScreenContent: (ad, error) {
+        ad.dispose();
+        _loadRewardedAd();
+      },
+    );
+
+    _rewardedAd!.show(
+      onUserEarnedReward: (ad, reward) {
+        setState(() {
+          _rewardedAdCounter++;
+          _lastRewardedAdDate = today;
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('🎉 Premium features unlocked for 24 hours!'),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.green,
+          ),
+        );
+      },
+    );
+  }
+
+  // ============ DRAG & DROP LOGIC ============
   void _onDragStart(String id, int index, LongPressStartDetails details) {
     setState(() {
       _draggedId = id;
       _draggedIndex = index;
     });
-    // ✅ Update notifier directly without rebuilding the screen
     _dragPositionNotifier.value = details.globalPosition;
-
     HapticFeedback.mediumImpact();
-
     _autoScrollTimer = Timer.periodic(const Duration(milliseconds: 50), _checkForAutoScroll);
   }
 
   void _onDragUpdate(LongPressMoveUpdateDetails details) {
     if (_draggedId == null) return;
-
-    // ✅ Update notifier directly (Zero Widget Rebuilds!)
     _dragPositionNotifier.value = details.globalPosition;
-
     _handleReorder(details.globalPosition);
   }
 
   void _onDragEnd() {
     _autoScrollTimer?.cancel();
     _autoScrollTimer = null;
-
     setState(() {
       _draggedId = null;
       _draggedIndex = null;
     });
-
-    _dragPositionNotifier.value = null; // Reset notifier
+    _dragPositionNotifier.value = null;
     _saveOrder();
   }
 
-  // --- Auto-Scroll & Reorder Logic ---
-
   void _checkForAutoScroll(Timer timer) {
-    // Read directly from notifier
     final currentOffset = _dragPositionNotifier.value;
     if (currentOffset == null || _draggedId == null) return;
 
@@ -204,7 +578,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
       if (newOffset != _scrollController.offset) {
         _scrollController.jumpTo(newOffset);
-        // Important: Update reorder logic as the list scrolls under the finger
         _handleReorder(currentOffset);
       }
     }
@@ -215,7 +588,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
     final double itemHeight = (MediaQuery.of(context).size.width - 64) / 2 * 1.1 + 16;
     final double scrollOffset = _scrollController.offset;
-    final double relativeY = globalPosition.dy + scrollOffset - 120; // Adjust for header height
+    final double relativeY = globalPosition.dy + scrollOffset - 120;
 
     final int newRow = (relativeY / itemHeight).floor().clamp(0, (_order.length / 2).ceil() - 1);
     final double relativeX = globalPosition.dx - 24;
@@ -225,7 +598,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     int newIndex = (newRow * 2 + newCol).clamp(0, _order.length - 1);
 
     if (newIndex != _draggedIndex) {
-      // ✅ Only call setState when the ORDER actually changes
       setState(() {
         final item = _order.removeAt(_draggedIndex!);
         _order.insert(newIndex, item);
@@ -235,13 +607,10 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     }
   }
 
-  // --- UI Components ---
-
+  // ============ UI COMPONENTS ============
   Widget _buildFeatureCard(ThemeData theme, FeatureItem item, {bool isDragging = false}) {
     final Color baseColor = featureColors[item.id] ?? item.color;
 
-    // ✅ OPTIMIZATION: If dragging, use a simple Container instead of Glass
-    // This removes the heavy blur calculation while moving the item
     Widget content = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -267,11 +636,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                 ),
               ],
             ),
-            child: Icon(
-              item.icon,
-              size: 32,
-              color: Colors.white,
-            ),
+            child: Icon(item.icon, size: 32, color: Colors.white),
           ),
         ),
         const SizedBox(height: 14),
@@ -293,10 +658,9 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     );
 
     if (isDragging) {
-      // Fast rendering for drag overlay
       return Container(
         decoration: BoxDecoration(
-          color: baseColor.withOpacity(0.5), // Simple transparency
+          color: baseColor.withOpacity(0.5),
           borderRadius: BorderRadius.circular(32),
           border: Border.all(color: Colors.white.withOpacity(0.2)),
         ),
@@ -304,15 +668,11 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
       );
     }
 
-    // Normal High-Quality Glass Rendering
-    // Replace 'GlassContainer' with your custom widget or this simple version:
     return Container(
       decoration: BoxDecoration(
         color: baseColor.withOpacity(0.15),
         borderRadius: BorderRadius.circular(32),
       ),
-      // Note: Add your BackdropFilter/Glass implementation here if you want it
-      // I kept it simple to ensure the snippet runs.
       child: content,
     );
   }
@@ -327,12 +687,23 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Dashboard", style: theme.textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold)),
+              Text("Dashboard", style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
               Text("Manage your day", style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5))),
             ],
           ),
           Row(
             children: [
+              IconButton(
+                icon: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.purple.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.video_library, color: Colors.purple, size: 20),
+                ),
+                onPressed: _showRewardedAdDialog,
+              ),
               IconButton(
                 icon: Container(
                   padding: const EdgeInsets.all(12),
@@ -342,11 +713,8 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                   ),
                   child: Icon(Icons.search_rounded, color: primaryColor),
                 ),
-                onPressed: () {
-                  context.push(AppRouter.globalSearch);
-                },
+                onPressed: () => context.push(AppRouter.globalSearch),
               ),
-              const SizedBox(width: 8),
               IconButton(
                 icon: Hero(
                   tag: 'settings_icon',
@@ -371,7 +739,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   }
 
   Widget _buildGridItem(int index, ThemeData theme) {
-    // Safety check for bounds
     if (index >= _order.length) return const SizedBox.shrink();
 
     final String id = _order[index];
@@ -385,26 +752,20 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
         onLongPressStart: (d) => _onDragStart(id, index, d),
         onLongPressMoveUpdate: (d) => _onDragUpdate(d),
         onLongPressEnd: (_) => _onDragEnd(),
-        // 👇 THIS WAS THE PROBLEM.
-        // I have uncommented the line below so it works now.
         onTap: () {
+          _showInterstitialAd();
           context.push(item.route);
         },
         child: AnimatedOpacity(
           duration: const Duration(milliseconds: 200),
           opacity: isDragging ? 0.0 : 1.0,
-          child: _buildBouncingItemWrapper(
-            index,
-            // 👇 Since you imported GlassContainer, you can use it here if you want
-            _buildFeatureCard(theme, item),
-          ),
+          child: _buildBouncingItemWrapper(index, _buildFeatureCard(theme, item)),
         ),
       ),
     );
   }
 
   Widget _buildBouncingItemWrapper(int index, Widget child) {
-    // Only run this animation once on entry
     return AnimatedBuilder(
       animation: _entryAnimationController,
       builder: (context, child) {
@@ -432,7 +793,10 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // Replace GlassScaffold with Scaffold if you don't have it
+    if (_showOnboarding) {
+      return _buildOnboardingScreen();
+    }
+
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: !_boxesOpened
@@ -441,7 +805,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
         children: [
           Column(
             children: [
-              const SizedBox(height: 50), // Safe area placeholder
+              const SizedBox(height: 50),
               _buildTopHeader(theme),
               Expanded(
                 child: GridView.builder(
@@ -458,10 +822,15 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                   itemBuilder: (context, index) => _buildGridItem(index, theme),
                 ),
               ),
+              if (_isBannerAdLoaded && _bannerAd != null)
+                Container(
+                  alignment: Alignment.center,
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  child: AdWidget(ad: _bannerAd!),
+                ),
             ],
           ),
-
-          // ✅ OPTIMIZED OVERLAY: Only this part rebuilds during drag!
           ValueListenableBuilder<Offset?>(
             valueListenable: _dragPositionNotifier,
             builder: (context, offset, child) {
@@ -481,7 +850,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                     child: SizedBox(
                       width: itemWidth,
                       height: itemWidth * 1.1,
-                      // Render a lighter version of the card for performance
                       child: _buildFeatureCard(theme, item, isDragging: true),
                     ),
                   ),

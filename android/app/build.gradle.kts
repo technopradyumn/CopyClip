@@ -56,10 +56,16 @@ android {
             signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
+
+            manifestPlaceholders["ADMOB_APP_ID"] =
+                project.findProperty("ADMOB_APP_ID") as String? ?: ""
+
         }
 
         debug {
             signingConfig = signingConfigs.getByName("debug")
+            manifestPlaceholders["ADMOB_APP_ID"] =
+                "ca-app-pub-3940256099942544~1033173712"
         }
     }
 }
