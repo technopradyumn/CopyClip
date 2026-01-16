@@ -3,7 +3,7 @@ import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
 import 'package:flutter/foundation.dart'; // Required for kDebugMode
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';

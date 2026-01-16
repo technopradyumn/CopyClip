@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui'; // Added for ImageFilter
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,8 +10,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:home_widget/home_widget.dart';
 
 import 'package:copyclip/src/core/router/app_router.dart';
+// Assuming these imports exist based on your provided code
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
+// Model imports...
 import '../../../clipboard/data/clipboard_model.dart';
 import '../../../expenses/data/expense_model.dart';
 import '../../../journal/data/journal_model.dart';
@@ -48,6 +51,22 @@ class GlobalSearchResult {
   });
 }
 
+class OnboardingContent {
+  final String title;
+  final String description;
+  final IconData icon;
+  final Color color;
+
+  OnboardingContent({
+    required this.title,
+    required this.description,
+    required this.icon,
+    required this.color,
+  });
+}
+
+// --- Screen ---
+
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -56,21 +75,20 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> with TickerProviderStateMixin {
+  // State
   bool _boxesOpened = false;
   List<String> _order = [];
-
   String? _draggedId;
   int? _draggedIndex;
-
   final ValueNotifier<Offset?> _dragPositionNotifier = ValueNotifier(null);
 
+  // Controllers
   late ScrollController _scrollController;
   Timer? _autoScrollTimer;
-
   late AnimationController _settingsAnimationController;
   late AnimationController _entryAnimationController;
 
-  // ============ ADS ============
+  // Ads
   BannerAd? _bannerAd;
   InterstitialAd? _interstitialAd;
   RewardedAd? _rewardedAd;
@@ -79,20 +97,16 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   int _rewardedAdCounter = 0;
   DateTime? _lastRewardedAdDate;
 
-  static final String _bannerAdUnitId =
-      dotenv.env['BANNER_AD_UNIT_ID'] ?? '';
+  static final String _bannerAdUnitId = dotenv.env['BANNER_AD_UNIT_ID'] ?? '';
+  static final String _interstitialAdUnitId = dotenv.env['INTERSTITIAL_AD_UNIT_ID'] ?? '';
+  static final String _rewardedAdUnitId = dotenv.env['REWARDED_AD_UNIT_ID'] ?? '';
 
-  static final String _interstitialAdUnitId =
-      dotenv.env['INTERSTITIAL_AD_UNIT_ID'] ?? '';
-
-  static final String _rewardedAdUnitId =
-      dotenv.env['REWARDED_AD_UNIT_ID'] ?? '';
-
-  // ============ ONBOARDING ============
+  // Onboarding
   bool _showOnboarding = false;
   int _onboardingStep = 0;
   final PageController _onboardingController = PageController();
 
+  // Features Data
   final Map<String, FeatureItem> _features = {
     'notes': FeatureItem('notes', 'Notes', Icons.note_alt_outlined, Colors.amberAccent, AppRouter.notes, 'Create and manage your notes'),
     'todos': FeatureItem('todos', 'To-Dos', Icons.check_circle_outline, Colors.greenAccent, AppRouter.todos, 'Keep track of your tasks'),
@@ -113,6 +127,8 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     'canvas': const Color(0xFF4DB6AC),
   };
 
+  late final List<OnboardingContent> _onboardingData;
+
   @override
   void initState() {
     super.initState();
@@ -129,6 +145,59 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     );
 
     _entryAnimationController.forward();
+
+    // Initialize Onboarding Data matching features
+    _onboardingData = [
+      OnboardingContent(
+        title: 'Welcome to CopyClip',
+        description: 'Your ultimate productivity companion. Let\'s get you set up with powerful tools to manage your day.',
+        icon: Icons.dashboard_rounded,
+        color: const Color(0xFF6C63FF),
+      ),
+      OnboardingContent(
+        title: 'Smart Notes',
+        description: 'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.',
+        icon: Icons.note_alt_outlined,
+        color: featureColors['notes']!,
+      ),
+      OnboardingContent(
+        title: 'Task Management',
+        description: 'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.',
+        icon: Icons.check_circle_outline,
+        color: featureColors['todos']!,
+      ),
+      OnboardingContent(
+        title: 'Expense Tracking',
+        description: 'Take control of your finances. Track income and expenses easily to understand your spending habits.',
+        icon: Icons.attach_money,
+        color: featureColors['expenses']!,
+      ),
+      OnboardingContent(
+        title: 'Personal Journal',
+        description: 'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.',
+        icon: Icons.book_outlined,
+        color: featureColors['journal']!,
+      ),
+      OnboardingContent(
+        title: 'Calendar & Events',
+        description: 'Never miss a moment. Organize your schedule and keep track of important upcoming events.',
+        icon: Icons.calendar_today_outlined,
+        color: featureColors['calendar']!,
+      ),
+      OnboardingContent(
+        title: 'Clipboard Manager',
+        description: 'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.',
+        icon: Icons.paste,
+        color: featureColors['clipboard']!,
+      ),
+      OnboardingContent(
+        title: 'Creative Canvas',
+        description: 'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.',
+        icon: Icons.gesture,
+        color: featureColors['canvas']!,
+      ),
+    ];
+
     _initHive();
     _loadBannerAd();
     _loadInterstitialAd();
@@ -149,7 +218,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     super.dispose();
   }
 
-  // ============ HIVE INITIALIZATION ============
+  // ============ HIVE ============
   Future<void> _initHive() async {
     if (!Hive.isBoxOpen('settings')) await Hive.openBox('settings');
 
@@ -170,12 +239,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
         _boxesOpened = true;
         _showOnboarding = !hasSeenOnboarding;
       });
-
-      if (_showOnboarding) {
-        Future.delayed(const Duration(milliseconds: 500), () {
-          if (mounted) _startOnboarding();
-        });
-      }
     }
   }
 
@@ -183,11 +246,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     Hive.box('settings').put('dashboard_order', _order);
   }
 
-  // ============ ONBOARDING ============
-  void _startOnboarding() {
-    setState(() => _showOnboarding = true);
-  }
-
+  // ============ ONBOARDING LOGIC & UI ============
   void _completeOnboarding() {
     Hive.box('settings').put('has_seen_onboarding', true);
     setState(() => _showOnboarding = false);
@@ -195,178 +254,250 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   Widget _buildOnboardingScreen() {
     final theme = Theme.of(context);
+    final currentData = _onboardingData[_onboardingStep];
 
-    final onboardingPages = [
-      _buildOnboardingPage(
-        theme: theme,
-        icon: Icons.dashboard_rounded,
-        title: 'Welcome to CopyClip',
-        description: 'Your all-in-one productivity companion. Manage notes, tasks, expenses, and more!',
-        color: theme.colorScheme.primary,
-      ),
-      _buildOnboardingPage(
-        theme: theme,
-        icon: Icons.note_alt_outlined,
-        title: 'Notes',
-        description: 'Create rich text notes with formatting. Perfect for capturing ideas and information.',
-        color: const Color(0xFFFF9A85),
-      ),
-      _buildOnboardingPage(
-        theme: theme,
-        icon: Icons.check_circle_outline,
-        title: 'To-Dos',
-        description: 'Stay organized with tasks and checklists. Never miss a deadline again!',
-        color: const Color(0xFF82CFFD),
-      ),
-      _buildOnboardingPage(
-        theme: theme,
-        icon: Icons.attach_money,
-        title: 'Finance Tracker',
-        description: 'Track your expenses and income. Take control of your finances.',
-        color: const Color(0xFFFFB77B),
-      ),
-      _buildOnboardingPage(
-        theme: theme,
-        icon: Icons.gesture,
-        title: 'Canvas & More',
-        description: 'Draw sketches, write journals, manage clipboard, and organize with calendar.',
-        color: const Color(0xFF4DB6AC),
-      ),
-    ];
-
-    return Material(
-      color: theme.scaffoldBackgroundColor,
-      child: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView(
-                controller: _onboardingController,
-                onPageChanged: (index) => setState(() => _onboardingStep = index),
-                children: onboardingPages,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      onboardingPages.length,
-                          (index) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        width: _onboardingStep == index ? 24 : 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: _onboardingStep == index
-                              ? theme.colorScheme.primary
-                              : theme.colorScheme.onSurface.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    children: [
-                      if (_onboardingStep > 0)
-                        TextButton(
-                          onPressed: () {
-                            _onboardingController.previousPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
-                          },
-                          child: const Text('Back'),
-                        ),
-                      const Spacer(),
-                      if (_onboardingStep < onboardingPages.length - 1)
-                        ElevatedButton(
-                          onPressed: () {
-                            _onboardingController.nextPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                          ),
-                          child: const Text('Next'),
-                        )
-                      else
-                        ElevatedButton(
-                          onPressed: _completeOnboarding,
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                            backgroundColor: theme.colorScheme.primary,
-                          ),
-                          child: const Text('Get Started'),
-                        ),
-                    ],
-                  ),
+    return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      body: Stack(
+        children: [
+          // Animated Background Gradient
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  currentData.color.withOpacity(0.15),
+                  theme.scaffoldBackgroundColor,
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
+          ),
+          SafeArea(
+            child: Column(
+              children: [
+                // Skip Button
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextButton(
+                      onPressed: _completeOnboarding,
+                      style: TextButton.styleFrom(
+                        foregroundColor: theme.colorScheme.onSurface.withOpacity(0.6),
+                      ),
+                      child: const Text('Skip'),
+                    ),
+                  ),
+                ),
 
-  Widget _buildOnboardingPage({
-    required ThemeData theme,
-    required IconData icon,
-    required String title,
-    required String description,
-    required Color color,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.all(40),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(32),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [color.withOpacity(0.6), color.withOpacity(0.9)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: color.withOpacity(0.3),
-                  blurRadius: 30,
-                  offset: const Offset(0, 10),
+                // Page View
+                Expanded(
+                  child: PageView.builder(
+                    controller: _onboardingController,
+                    onPageChanged: (index) => setState(() => _onboardingStep = index),
+                    itemCount: _onboardingData.length,
+                    itemBuilder: (context, index) {
+                      return _buildOnboardingPageItem(theme, _onboardingData[index], index == _onboardingStep);
+                    },
+                  ),
+                ),
+
+                // Bottom Controls
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    children: [
+                      // Indicators
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          _onboardingData.length,
+                              (index) => AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            width: _onboardingStep == index ? 24 : 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: _onboardingStep == index
+                                  ? currentData.color
+                                  : theme.colorScheme.onSurface.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+
+                      // Navigation Buttons
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Back Button
+                          if (_onboardingStep > 0)
+                            TextButton(
+                              onPressed: () {
+                                _onboardingController.previousPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
+                              style: TextButton.styleFrom(
+                                foregroundColor: theme.colorScheme.onSurface,
+                                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                              ),
+                              child: const Text('Back', style: TextStyle(fontWeight: FontWeight.w600)),
+                            )
+                          else
+                            const SizedBox(width: 80), // Spacer to keep layout balanced
+
+                          // Next / Get Started Button
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_onboardingStep < _onboardingData.length - 1) {
+                                  _onboardingController.nextPage(
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                  );
+                                } else {
+                                  _completeOnboarding();
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: currentData.color,
+                                foregroundColor: Colors.white,
+                                elevation: 8,
+                                shadowColor: currentData.color.withOpacity(0.4),
+                                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    _onboardingStep == _onboardingData.length - 1
+                                        ? 'Get Started'
+                                        : 'Next',
+                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                  ),
+                                  if (_onboardingStep != _onboardingData.length - 1) ...[
+                                    const SizedBox(width: 8),
+                                    const Icon(Icons.arrow_forward_rounded, size: 20),
+                                  ],
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            child: Icon(icon, size: 80, color: Colors.white),
-          ),
-          const SizedBox(height: 48),
-          Text(
-            title,
-            style: theme.textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            description,
-            style: theme.textTheme.bodyLarge?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.7),
-            ),
-            textAlign: TextAlign.center,
           ),
         ],
       ),
     );
   }
 
-  // ============ ADS METHODS ============
+  Widget _buildOnboardingPageItem(ThemeData theme, OnboardingContent content, bool isActive) {
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Animated Icon
+          TweenAnimationBuilder<double>(
+            tween: Tween(begin: 0.0, end: isActive ? 1.0 : 0.0),
+            duration: const Duration(milliseconds: 600),
+            curve: Curves.elasticOut,
+            builder: (context, value, child) {
+              return Transform.scale(
+                scale: value,
+                child: Container(
+                  padding: const EdgeInsets.all(40),
+                  decoration: BoxDecoration(
+                    color: content.color.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: content.color.withOpacity(0.2),
+                      width: 2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: content.color.withOpacity(0.2),
+                        blurRadius: 30,
+                        spreadRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: Icon(content.icon, size: 80, color: content.color),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 50),
+
+          // Animated Title
+          TweenAnimationBuilder<double>(
+            tween: Tween(begin: 20.0, end: isActive ? 0.0 : 20.0),
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeOut,
+            builder: (context, value, child) {
+              return Transform.translate(
+                offset: Offset(0, value),
+                child: Opacity(
+                  opacity: (1 - (value / 20)).clamp(0.0, 1.0),
+                  child: child,
+                ),
+              );
+            },
+            child: Text(
+              content.title,
+              style: theme.textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: theme.colorScheme.onSurface,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Animated Description
+          TweenAnimationBuilder<double>(
+            tween: Tween(begin: 20.0, end: isActive ? 0.0 : 20.0),
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeOut,
+            builder: (context, value, child) {
+              return Transform.translate(
+                offset: Offset(0, value),
+                child: Opacity(
+                  opacity: (1 - (value / 20)).clamp(0.0, 1.0),
+                  child: child,
+                ),
+              );
+            },
+            child: Text(
+              content.description,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                height: 1.5,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ============ ADS METHODS (Unchanged logic, kept for context) ============
   void _loadBannerAd() {
     _bannerAd = BannerAd(
       adUnitId: _bannerAdUnitId,
@@ -400,14 +531,12 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   void _showInterstitialAd() {
     _interstitialAdCounter++;
-
-    // Show interstitial ad every 3 feature clicks
     if (_interstitialAdCounter >= 3 && _interstitialAd != null) {
       _interstitialAd!.show();
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (ad) {
           ad.dispose();
-          _loadInterstitialAd(); // Preload next ad
+          _loadInterstitialAd();
         },
         onAdFailedToShowFullScreenContent: (ad, error) {
           ad.dispose();
@@ -421,19 +550,13 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   void _checkRewardedAdEligibility() {
     final today = DateTime.now();
     final lastAdDate = _lastRewardedAdDate;
-
-    // Check if user can watch rewarded ad (2 per day max)
-    if (lastAdDate == null ||
-        !_isSameDay(lastAdDate, today) ||
-        _rewardedAdCounter < 2) {
+    if (lastAdDate == null || !_isSameDay(lastAdDate, today) || _rewardedAdCounter < 2) {
       _loadRewardedAd();
     }
   }
 
   bool _isSameDay(DateTime date1, DateTime date2) {
-    return date1.year == date2.year &&
-        date1.month == date2.month &&
-        date1.day == date2.day;
+    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
   }
 
   void _loadRewardedAd() {
@@ -442,9 +565,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) => _rewardedAd = ad,
-        onAdFailedToLoad: (error) {
-          debugPrint('Rewarded ad failed to load: $error');
-        },
+        onAdFailedToLoad: (error) => debugPrint('Rewarded ad failed to load: $error'),
       ),
     );
   }
@@ -474,30 +595,19 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   void _showRewardedAd() {
     final today = DateTime.now();
-
-    if (_rewardedAdCounter >= 2 &&
-        _lastRewardedAdDate != null &&
-        _isSameDay(_lastRewardedAdDate!, today)) {
+    if (_rewardedAdCounter >= 2 && _lastRewardedAdDate != null && _isSameDay(_lastRewardedAdDate!, today)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('You\'ve reached the daily limit of 2 video ads'),
-          behavior: SnackBarBehavior.floating,
-        ),
+        const SnackBar(content: Text('You\'ve reached the daily limit of 2 video ads')),
       );
       return;
     }
-
     if (_rewardedAd == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Ad is still loading, please try again'),
-          behavior: SnackBarBehavior.floating,
-        ),
+        const SnackBar(content: Text('Ad is still loading, please try again')),
       );
       _loadRewardedAd();
       return;
     }
-
     _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdDismissedFullScreenContent: (ad) {
         ad.dispose();
@@ -508,20 +618,14 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
         _loadRewardedAd();
       },
     );
-
     _rewardedAd!.show(
       onUserEarnedReward: (ad, reward) {
         setState(() {
           _rewardedAdCounter++;
           _lastRewardedAdDate = today;
         });
-
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('🎉 Premium features unlocked for 24 hours!'),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.green,
-          ),
+          const SnackBar(content: Text('🎉 Premium features unlocked for 24 hours!'), backgroundColor: Colors.green),
         );
       },
     );
@@ -565,7 +669,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     final double scrollSpeed = 8.0;
 
     double scrollDelta = 0;
-
     if (currentOffset.dy < topThreshold) {
       scrollDelta = -scrollSpeed;
     } else if (currentOffset.dy > bottomThreshold) {
@@ -575,7 +678,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     if (scrollDelta != 0) {
       final double newOffset = (_scrollController.offset + scrollDelta)
           .clamp(0.0, _scrollController.position.maxScrollExtent);
-
       if (newOffset != _scrollController.offset) {
         _scrollController.jumpTo(newOffset);
         _handleReorder(currentOffset);
@@ -585,18 +687,14 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   void _handleReorder(Offset globalPosition) {
     if (_draggedIndex == null) return;
-
     final double itemHeight = (MediaQuery.of(context).size.width - 64) / 2 * 1.1 + 16;
     final double scrollOffset = _scrollController.offset;
     final double relativeY = globalPosition.dy + scrollOffset - 120;
-
     final int newRow = (relativeY / itemHeight).floor().clamp(0, (_order.length / 2).ceil() - 1);
     final double relativeX = globalPosition.dx - 24;
     final double itemWidth = (MediaQuery.of(context).size.width - 64) / 2 + 16;
     final int newCol = (relativeX / itemWidth).floor().clamp(0, 1);
-
     int newIndex = (newRow * 2 + newCol).clamp(0, _order.length - 1);
-
     if (newIndex != _draggedIndex) {
       setState(() {
         final item = _order.removeAt(_draggedIndex!);
@@ -607,10 +705,9 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     }
   }
 
-  // ============ UI COMPONENTS ============
+  // ============ HOME UI COMPONENTS ============
   Widget _buildFeatureCard(ThemeData theme, FeatureItem item, {bool isDragging = false}) {
     final Color baseColor = featureColors[item.id] ?? item.color;
-
     Widget content = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -620,20 +717,13 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  baseColor.withOpacity(0.6),
-                  baseColor.withOpacity(0.9),
-                ],
+                colors: [baseColor.withOpacity(0.6), baseColor.withOpacity(0.9)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               shape: BoxShape.circle,
               boxShadow: [
-                BoxShadow(
-                  color: baseColor.withOpacity(0.3),
-                  blurRadius: 12,
-                  offset: const Offset(0, 6),
-                ),
+                BoxShadow(color: baseColor.withOpacity(0.3), blurRadius: 12, offset: const Offset(0, 6)),
               ],
             ),
             child: Icon(item.icon, size: 32, color: Colors.white),
@@ -646,11 +736,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
             type: MaterialType.transparency,
             child: Text(
               item.title,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: theme.colorScheme.onSurface,
-              ),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: theme.colorScheme.onSurface),
             ),
           ),
         ),
@@ -667,7 +753,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
         child: content,
       );
     }
-
     return Container(
       decoration: BoxDecoration(
         color: baseColor.withOpacity(0.15),
@@ -696,10 +781,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
               IconButton(
                 icon: Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.purple.withOpacity(0.1),
-                    shape: BoxShape.circle,
-                  ),
+                  decoration: BoxDecoration(color: Colors.purple.withOpacity(0.1), shape: BoxShape.circle),
                   child: const Icon(Icons.video_library, color: Colors.purple, size: 20),
                 ),
                 onPressed: _showRewardedAdDialog,
@@ -707,10 +789,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
               IconButton(
                 icon: Container(
                   padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.primary.withOpacity(0.1),
-                    shape: BoxShape.circle,
-                  ),
+                  decoration: BoxDecoration(color: theme.colorScheme.primary.withOpacity(0.1), shape: BoxShape.circle),
                   child: Icon(Icons.search_rounded, color: primaryColor),
                 ),
                 onPressed: () => context.push(AppRouter.globalSearch),
@@ -720,10 +799,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                   tag: 'settings_icon',
                   child: RotationTransition(
                     turns: _settingsAnimationController,
-                    child: Icon(
-                      Icons.settings_outlined,
-                      color: theme.colorScheme.onSurface.withOpacity(0.7),
-                    ),
+                    child: Icon(Icons.settings_outlined, color: theme.colorScheme.onSurface.withOpacity(0.7)),
                   ),
                 ),
                 onPressed: () {
@@ -740,11 +816,9 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   Widget _buildGridItem(int index, ThemeData theme) {
     if (index >= _order.length) return const SizedBox.shrink();
-
     final String id = _order[index];
     final FeatureItem? item = _features[id];
     if (item == null) return const SizedBox.shrink();
-
     final bool isDragging = id == _draggedId;
 
     return RepaintBoundary(
@@ -771,19 +845,8 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
       builder: (context, child) {
         final double start = (index * 0.1).clamp(0.0, 0.8);
         final double end = (start + 0.5).clamp(0.0, 1.0);
-
-        final animation = CurvedAnimation(
-          parent: _entryAnimationController,
-          curve: Interval(start, end, curve: Curves.elasticOut),
-        );
-
-        return Transform.scale(
-          scale: animation.value,
-          child: Opacity(
-            opacity: animation.value.clamp(0.0, 1.0),
-            child: child,
-          ),
-        );
+        final animation = CurvedAnimation(parent: _entryAnimationController, curve: Interval(start, end, curve: Curves.elasticOut));
+        return Transform.scale(scale: animation.value, child: Opacity(opacity: animation.value.clamp(0.0, 1.0), child: child));
       },
       child: child,
     );
@@ -792,11 +855,9 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     if (_showOnboarding) {
       return _buildOnboardingScreen();
     }
-
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: !_boxesOpened
@@ -835,12 +896,9 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
             valueListenable: _dragPositionNotifier,
             builder: (context, offset, child) {
               if (offset == null || _draggedId == null) return const SizedBox.shrink();
-
               final FeatureItem? item = _features[_draggedId];
               if (item == null) return const SizedBox.shrink();
-
               final double itemWidth = (MediaQuery.of(context).size.width - 64) / 2;
-
               return Positioned(
                 left: offset.dx - (itemWidth / 2),
                 top: offset.dy - (itemWidth * 1.1 / 2),
