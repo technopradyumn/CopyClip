@@ -13,6 +13,7 @@ import 'package:home_widget/home_widget.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
+import '../../../../core/services/home_widget_service.dart';
 import '../../../../core/widgets/ad_widget/banner_ad_widget.dart';
 import '../../../clipboard/data/clipboard_model.dart';
 import '../../../expenses/data/expense_model.dart';
@@ -123,7 +124,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   final Map<String, FeatureItem> _features = {
     'notes': FeatureItem('notes', 'Notes', Icons.note_alt_outlined, Colors.amberAccent, AppRouter.notes, 'Create and manage your notes'),
     'todos': FeatureItem('todos', 'To-Dos', Icons.check_circle_outline, Colors.greenAccent, AppRouter.todos, 'Keep track of your tasks'),
-    'expenses': FeatureItem('expenses', 'Finance', Icons.attach_money, Colors.redAccent, AppRouter.expenses, 'Monitor your expenses'),
+    'expenses': FeatureItem('expenses', 'Expense', Icons.attach_money, Colors.redAccent, AppRouter.expenses, 'Monitor your expenses'),
     'journal': FeatureItem('journal', 'Journal', Icons.book_outlined, Colors.blueAccent, AppRouter.journal, 'Write down your thoughts'),
     'calendar': FeatureItem('calendar', 'Calendar', Icons.calendar_today_outlined, Colors.orangeAccent, AppRouter.calendar, 'Organize your schedule'),
     'clipboard': FeatureItem('clipboard', 'Clipboard', Icons.paste, Colors.purpleAccent, AppRouter.clipboard, 'Access your clipboard history'),
@@ -778,41 +779,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   // ============ UI COMPONENTS ============
 
-  Widget _buildFeatureCard(ThemeData theme, FeatureItem item, {bool isDragging = false}) {
-    final Color baseColor = featureColors[item.id] ?? item.color;
-    Widget content = Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Hero(
-          tag: '${item.id}_icon',
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [baseColor.withOpacity(0.6), baseColor.withOpacity(0.9)], begin: Alignment.topLeft, end: Alignment.bottomRight),
-              shape: BoxShape.circle,
-              boxShadow: [BoxShadow(color: baseColor.withOpacity(0.3), blurRadius: 12, offset: const Offset(0, 6))],
-            ),
-            child: Icon(item.icon, size: 32, color: Colors.white),
-          ),
-        ),
-        const SizedBox(height: 14),
-        Hero(
-          tag: '${item.id}_title',
-          child: Material(
-            type: MaterialType.transparency,
-            child: Text(item.title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: theme.colorScheme.onSurface)),
-          ),
-        ),
-      ],
-    );
-
-    if (isDragging) {
-      return Container(decoration: BoxDecoration(color: baseColor.withOpacity(0.5), borderRadius: BorderRadius.circular(32), border: Border.all(color: baseColor, width: 1.5)), child: content);
-    }
-
-    return Container(decoration: BoxDecoration(color: baseColor.withOpacity(0.15), borderRadius: BorderRadius.circular(32), border: Border.all(color: baseColor, width: 1)), child: content);
-  }
-
   Widget _buildTopHeader(ThemeData theme) {
     final primaryColor = theme.colorScheme.primary;
     return Container(
@@ -847,6 +813,22 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     );
   }
 
+  Widget _buildBouncingItemWrapper(int index, Widget child) {
+    return AnimatedBuilder(
+      animation: _entryAnimationController,
+      builder: (context, child) {
+        final double start = (index * 0.1).clamp(0.0, 0.8);
+        final double end = (start + 0.5).clamp(0.0, 1.0);
+        final animation = CurvedAnimation(parent: _entryAnimationController, curve: Interval(start, end, curve: Curves.elasticOut));
+        return Transform.scale(scale: animation.value, child: Opacity(opacity: animation.value.clamp(0.0, 1.0), child: child));
+      },
+      child: child,
+    );
+  }
+
+// ============================================
+// UPDATED _buildGridItem METHOD
+// ============================================
   Widget _buildGridItem(int index, ThemeData theme) {
     if (index >= _order.length) return const SizedBox.shrink();
     final String id = _order[index];
@@ -859,32 +841,405 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
         onLongPressStart: (d) => _onDragStart(id, index, d),
         onLongPressMoveUpdate: (d) => _onDragUpdate(d),
         onLongPressEnd: (_) => _onDragEnd(),
-        // ⚠️ CHANGED: Now triggering Interstitial Ad before Navigation
-        onTap: () {
-          _showInterstitialAd(() {
-            context.push(item.route);
-          });
-        },
         child: AnimatedOpacity(
           duration: const Duration(milliseconds: 200),
           opacity: isDragging ? 0.0 : 1.0,
-          child: _buildBouncingItemWrapper(index, _buildFeatureCard(theme, item)),
+          child: _buildBouncingItemWrapper(
+            index,
+            // ✅ OPTION 1: Use the enhanced widget card
+            _buildFeatureCardWithWidget(theme, item),
+            // OR
+            // ✅ OPTION 2: Keep simple card without widget button
+            // _buildFeatureCard(theme, item),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildBouncingItemWrapper(int index, Widget child) {
-    return AnimatedBuilder(
-      animation: _entryAnimationController,
-      builder: (context, child) {
-        final double start = (index * 0.1).clamp(0.0, 0.8);
-        final double end = (start + 0.5).clamp(0.0, 1.0);
-        final animation = CurvedAnimation(parent: _entryAnimationController, curve: Interval(start, end, curve: Curves.elasticOut));
-        return Transform.scale(scale: animation.value, child: Opacity(opacity: animation.value.clamp(0.0, 1.0), child: child));
+// ============================================
+// NEW METHOD: Feature Card WITH Widget Button
+// ============================================
+  Widget _buildFeatureCardWithWidget(ThemeData theme, FeatureItem item) {
+    final Color baseColor = featureColors[item.id] ?? item.color;
+
+    return GestureDetector(
+      onTap: () {
+        _showInterstitialAd(() {
+          context.push(item.route);
+        });
       },
-      child: child,
+      child: Container(
+        decoration: BoxDecoration(
+          color: baseColor.withOpacity(0.15),
+          borderRadius: BorderRadius.circular(32),
+          border: Border.all(color: baseColor, width: 1),
+        ),
+        child: Stack(
+          children: [
+            // Main content
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Hero(
+                  tag: '${item.id}_icon',
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          baseColor.withOpacity(0.6),
+                          baseColor.withOpacity(0.9)
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: baseColor.withOpacity(0.3),
+                          blurRadius: 12,
+                          offset: const Offset(0, 6),
+                        )
+                      ],
+                    ),
+                    child: Icon(item.icon, size: 32, color: Colors.white),
+                  ),
+                ),
+                const SizedBox(height: 14),
+                Hero(
+                  tag: '${item.id}_title',
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: Text(
+                      item.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: theme.colorScheme.onSurface,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            // ✅ Widget Add Button (Top Right)
+            Positioned(
+              top: 8,
+              right: 8,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () => _showWidgetBottomSheet(item),
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: baseColor.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Icon(
+                      Icons.add_to_home_screen,
+                      size: 18,
+                      color: baseColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+// ============================================
+// KEEP EXISTING _buildFeatureCard (for dragging preview)
+// ============================================
+  Widget _buildFeatureCard(ThemeData theme, FeatureItem item, {bool isDragging = false}) {
+    final Color baseColor = featureColors[item.id] ?? item.color;
+    Widget content = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Hero(
+          tag: '${item.id}_icon',
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  baseColor.withOpacity(0.6),
+                  baseColor.withOpacity(0.9)
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: baseColor.withOpacity(0.3),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
+                )
+              ],
+            ),
+            child: Icon(item.icon, size: 32, color: Colors.white),
+          ),
+        ),
+        const SizedBox(height: 14),
+        Hero(
+          tag: '${item.id}_title',
+          child: Material(
+            type: MaterialType.transparency,
+            child: Text(
+              item.title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: theme.colorScheme.onSurface,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+
+    if (isDragging) {
+      return Container(
+        decoration: BoxDecoration(
+          color: baseColor.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(32),
+          border: Border.all(color: baseColor, width: 1.5),
+        ),
+        child: content,
+      );
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        color: baseColor.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(32),
+        border: Border.all(color: baseColor, width: 1),
+      ),
+      child: content,
+    );
+  }
+
+// ============================================
+// NEW METHOD: Show Widget Bottom Sheet
+// ============================================
+  void _showWidgetBottomSheet(FeatureItem item) {
+    final theme = Theme.of(context);
+    final baseColor = featureColors[item.id] ?? item.color;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => _buildWidgetBottomSheet(item, baseColor, theme),
+    );
+  }
+
+// ============================================
+// NEW METHOD: Build Widget Bottom Sheet
+// ============================================
+  Widget _buildWidgetBottomSheet(FeatureItem item, Color color, ThemeData theme) {
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.scaffoldBackgroundColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 12),
+          Container(
+            width: 40,
+            height: 4,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.onSurface.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(height: 24),
+
+          // Icon
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: color.withOpacity(0.3),
+                width: 2,
+              ),
+            ),
+            child: Icon(
+              item.icon,
+              size: 48,
+              color: color,
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
+          // Title
+          Text(
+            'Add ${item.title} Widget',
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          const SizedBox(height: 8),
+
+          // Description
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Text(
+              'Access your ${item.title.toLowerCase()} directly from your home screen',
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurface.withOpacity(0.6),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 32),
+
+          // Preview
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: color.withOpacity(0.2),
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.widgets_outlined,
+                  color: color,
+                  size: 32,
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Widget Preview',
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Updates automatically with your latest data',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurface.withOpacity(0.5),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Buttons
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text('Cancel'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => _addWidgetToHomeScreen(item),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: color,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text('Add Widget'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 32),
+        ],
+      ),
+    );
+  }
+
+// ============================================
+// NEW METHOD: Add Widget to Home Screen
+// ============================================
+  Future<void> _addWidgetToHomeScreen(FeatureItem item) async {
+    Navigator.pop(context); // Close bottom sheet
+
+    try {
+      // Import the service at the top of the file:
+      // import 'package:copyclip/src/core/services/home_widget_service.dart';
+
+      final success = await HomeWidgetService.pinWidget(item.id);
+
+      if (success && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${item.title} widget added to home screen!'),
+            backgroundColor: featureColors[item.id] ?? item.color,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        );
+      } else if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to add widget. Please try again.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('Error adding widget: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('An error occurred. Please try again.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -936,7 +1291,14 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                 left: offset.dx - (itemWidth / 2),
                 top: offset.dy - (itemWidth * 1.1 / 2),
                 child: IgnorePointer(
-                  child: Transform.scale(scale: 1.1, child: SizedBox(width: itemWidth, height: itemWidth * 1.1, child: _buildFeatureCard(theme, item, isDragging: true))),
+                  child: Transform.scale(
+                    scale: 1.1,
+                    child: SizedBox(
+                      width: itemWidth,
+                      height: itemWidth * 1.1,
+                      child: _buildFeatureCard(theme, item, isDragging: true),
+                    ),
+                  ),
                 ),
               );
             },

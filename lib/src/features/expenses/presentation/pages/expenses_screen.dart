@@ -382,7 +382,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                       tag: 'expenses_title',
                       child: Material(
                         type: MaterialType.transparency,
-                        child: Text("Finance", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface)),
+                        child: Text("Expense", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface)),
                       ),
                     ),
                     Text(_getPeriodTitle(), style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),

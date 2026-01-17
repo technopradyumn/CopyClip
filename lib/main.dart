@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:isolate';
+import 'package:copyclip/src/core/services/home_widget_service.dart';
 import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +31,14 @@ import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'src/l10n/app_localizations.dart';
 import 'package:upgrader/upgrader.dart';
 
+// ============================================
+// ✅ ENHANCED BACKGROUND CALLBACK FOR WIDGETS
+// ============================================
 @pragma("vm:entry-point")
 Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
   if (uri == null || uri.scheme != 'copyclip') return;
+
+  debugPrint('🔔 Widget callback received: $uri');
 
   final featureId = uri.host;
   final routesMap = {
@@ -42,15 +48,23 @@ Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
     'journal': AppRouter.journal,
     'calendar': AppRouter.calendar,
     'clipboard': AppRouter.clipboard,
+    'canvas': AppRouter.canvas,
   };
 
   final route = routesMap[featureId];
-  if (route == null) return;
+  if (route == null) {
+    debugPrint('⚠️ Unknown widget route: $featureId');
+    return;
+  }
 
+  // Send to native handler
   const channel = MethodChannel('com.technopradyumn.copyclip/widget_handler');
   try {
     await channel.invokeMethod('navigateTo', {'route': route});
-  } catch (_) {}
+    debugPrint('✅ Widget navigation sent: $route');
+  } catch (e) {
+    debugPrint('❌ Widget navigation failed: $e');
+  }
 }
 
 class RateUpgraderMessages extends UpgraderMessages {
@@ -105,11 +119,17 @@ void main() async {
 Future<void> _initializeApp(AppInitializationState state) async {
   try {
     // Step 1: Basic services
-    state.updateProgress('Initializing services...', 0.2);
+    state.updateProgress('Initializing services...', 0.1);
     await Future.wait([
       dotenv.load(fileName: ".env").catchError((_) => null),
     ]);
 
+    // ✅ CHANGE 1: Initialize Home Widget Service FIRST
+    state.updateProgress('Setting up widgets...', 0.2);
+    await HomeWidgetService.initialize();
+    debugPrint('✅ Home Widget Service initialized');
+
+    state.updateProgress('Initializing ads...', 0.25);
     await MobileAds.instance.initialize();
 
     // Step 2: Hive setup
@@ -123,13 +143,17 @@ Future<void> _initializeApp(AppInitializationState state) async {
     Hive.registerAdapter(ClipboardItemAdapter());
 
     // Step 3: System setup
-    state.updateProgress('Configuring system...', 0.6);
+    state.updateProgress('Configuring system...', 0.55);
+
+    // ✅ CHANGE 2: Register background callback for widgets
     HomeWidget.registerBackgroundCallback(homeWidgetBackgroundCallback);
     HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
+    debugPrint('✅ Widget background callback registered');
+
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
     // Step 4: Open critical boxes
-    state.updateProgress('Loading data...', 0.8);
+    state.updateProgress('Loading data...', 0.7);
     await Future.wait([
       _openBoxSafely('settings'),
       _openBoxSafely('theme_box'),
@@ -137,17 +161,19 @@ Future<void> _initializeApp(AppInitializationState state) async {
     ]);
 
     // Step 5: Open remaining boxes (SAFELY)
-    state.updateProgress('Finalizing...', 0.9);
+    state.updateProgress('Loading features...', 0.85);
 
-    // We open boxes sequentially or safely to handle corruption
+    // Open boxes sequentially to handle corruption
     await _openBoxSafely<Note>('notes_box');
     await _openBoxSafely<Todo>('todos_box');
-    await _openBoxSafely<Expense>('expenses_box'); // ✅ This fixes your error
+    await _openBoxSafely<Expense>('expenses_box');
     await _openBoxSafely<JournalEntry>('journal_box');
     await _openBoxSafely<ClipboardItem>('clipboard_box');
     await CanvasDatabase().init();
 
-    _initializeBackgroundTasks();
+    // ✅ CHANGE 3: Initialize background tasks and update widgets
+    state.updateProgress('Finalizing...', 0.95);
+    await _initializeBackgroundTasks();
 
     state.complete();
     debugPrint("✅ App initialization complete");
@@ -158,8 +184,7 @@ Future<void> _initializeApp(AppInitializationState state) async {
   }
 }
 
-/// ✅ Helper to safely open a Hive box.
-/// If opening fails (corruption/RangeError), it deletes the box and creates a new one.
+/// Helper to safely open a Hive box.
 Future<Box<T>> _openBoxSafely<T>(String boxName) async {
   try {
     return await Hive.openBox<T>(boxName);
@@ -176,24 +201,76 @@ Future<Box<T>> _openBoxSafely<T>(String boxName) async {
   }
 }
 
-void _initializeBackgroundTasks() {
-  Future.microtask(() async {
-    try {
-      final String? title = await HomeWidget.getWidgetData<String>('title');
-      if (title == null) {
-        await Future.wait([
-          HomeWidget.saveWidgetData<String>('title', 'Clipboard'),
-          HomeWidget.saveWidgetData<String>('description', 'Access your clipboard history'),
-          HomeWidget.saveWidgetData<String>('deeplink', 'copyclip://clipboard'),
-        ]);
-      }
-    } catch (e) {
-      debugPrint("Widget data init error: $e");
+// ✅ CHANGE 4: Enhanced background tasks initialization
+Future<void> _initializeBackgroundTasks() async {
+  try {
+    // Initialize default widget data if not exists
+    final String? title = await HomeWidget.getWidgetData<String>('title');
+    if (title == null) {
+      await Future.wait([
+        HomeWidget.saveWidgetData<String>('title', 'CopyClip'),
+        HomeWidget.saveWidgetData<String>('description', 'Your productivity companion'),
+        HomeWidget.saveWidgetData<String>('deeplink', 'copyclip://dashboard'),
+      ]);
+      debugPrint('✅ Default widget data initialized');
     }
-  });
+
+    // ✅ NEW: Update all widgets with latest data on app start
+    await _updateAllWidgets();
+    debugPrint('✅ All widgets updated with latest data');
+
+  } catch (e) {
+    debugPrint("❌ Widget data init error: $e");
+  }
 }
 
-// --- LOADING APP & SCREEN (Unchanged) ---
+// ✅ CHANGE 5: NEW FUNCTION - Update all widgets with current data
+Future<void> _updateAllWidgets() async {
+  try {
+    // Update each widget type with latest data
+    await Future.wait([
+      _updateWidgetIfExists('notes'),
+      _updateWidgetIfExists('todos'),
+      _updateWidgetIfExists('expenses'),
+      _updateWidgetIfExists('journal'),
+      _updateWidgetIfExists('clipboard'),
+    ]);
+  } catch (e) {
+    debugPrint('❌ Error updating widgets: $e');
+  }
+}
+
+// Helper to update a widget if it exists
+Future<void> _updateWidgetIfExists(String widgetType) async {
+  try {
+    final activeWidget = await HomeWidget.getWidgetData<String>('widget_type');
+
+    // Only update if this widget type is active
+    if (activeWidget == widgetType) {
+      switch (widgetType) {
+        case 'notes':
+          await HomeWidgetService.updateNotesWidget();
+          break;
+        case 'todos':
+          await HomeWidgetService.updateTodosWidget();
+          break;
+        case 'expenses':
+          await HomeWidgetService.updateExpensesWidget();
+          break;
+        case 'journal':
+          await HomeWidgetService.updateJournalWidget();
+          break;
+        case 'clipboard':
+          await HomeWidgetService.updateClipboardWidget();
+          break;
+      }
+    }
+  } catch (e) {
+    debugPrint('Error updating $widgetType widget: $e');
+  }
+}
+
+// --- LOADING APP & SCREEN ---
 class LoadingApp extends StatelessWidget {
   const LoadingApp({super.key});
 
@@ -245,15 +322,25 @@ class LoadingScreen extends StatelessWidget {
                   color: Colors.black87,
                 ),
               ),
-              const SizedBox(height: 12),
-              Text(
-                currentStep,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
-                textAlign: TextAlign.center,
-              ),
+              // const SizedBox(height: 12),
+              // Text(
+              //   currentStep,
+              //   style: const TextStyle(
+              //     fontSize: 14,
+              //     color: Colors.grey,
+              //   ),
+              //   textAlign: TextAlign.center,
+              // ),
+              // const SizedBox(height: 24),
+              // // ✅ CHANGE 6: Added progress indicator
+              // SizedBox(
+              //   width: 200,
+              //   child: LinearProgressIndicator(
+              //     value: progress,
+              //     backgroundColor: Colors.grey[200],
+              //     valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -262,7 +349,7 @@ class LoadingScreen extends StatelessWidget {
   }
 }
 
-// --- MAIN APP (Standard) ---
+// --- MAIN APP ---
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
   @override
@@ -277,7 +364,38 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     widgetChannel.setMethodCallHandler(_handleNativeCalls);
-    // Auto-save service removed from main to keep it simple, can be added back if needed
+
+    // ✅ CHANGE 7: Listen to widget interactions
+    _setupWidgetInteractionListener();
+  }
+
+  // ✅ CHANGE 8: NEW - Setup widget interaction listener
+  void _setupWidgetInteractionListener() {
+    HomeWidget.widgetClicked.listen((Uri? uri) {
+      if (uri != null && mounted) {
+        debugPrint('📱 Widget clicked: $uri');
+        _handleWidgetNavigation(uri);
+      }
+    });
+  }
+
+  // ✅ CHANGE 9: NEW - Handle widget navigation
+  void _handleWidgetNavigation(Uri uri) {
+    final featureId = uri.host;
+    final routesMap = {
+      'notes': AppRouter.notes,
+      'todos': AppRouter.todos,
+      'expenses': AppRouter.expenses,
+      'journal': AppRouter.journal,
+      'calendar': AppRouter.calendar,
+      'clipboard': AppRouter.clipboard,
+      'canvas': AppRouter.canvas,
+    };
+
+    final route = routesMap[featureId];
+    if (route != null && mounted) {
+      router.push(route);
+    }
   }
 
   Future<void> _handleNativeCalls(MethodCall call) async {
@@ -286,7 +404,21 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       String? route;
       if (args is String) route = args;
       else if (args is Map) route = args['route'];
-      if (route != null && mounted) router.push(route);
+      if (route != null && mounted) {
+        router.push(route);
+        debugPrint('✅ Navigated to: $route');
+      }
+    }
+  }
+
+  // ✅ CHANGE 10: Update widgets when app resumes
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.resumed) {
+      debugPrint('📱 App resumed - updating widgets');
+      _updateAllWidgets();
     }
   }
 
@@ -321,7 +453,11 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
           supportedLocales: AppLocalizations.supportedLocales,
           builder: (context, child) {
             return UpgradeAlert(
-              upgrader: Upgrader(debugLogging: false, messages: RateUpgraderMessages(), durationUntilAlertAgain: const Duration(days: 7)),
+              upgrader: Upgrader(
+                debugLogging: false,
+                messages: RateUpgraderMessages(),
+                durationUntilAlertAgain: const Duration(days: 7),
+              ),
               child: child ?? const SizedBox(),
             );
           },

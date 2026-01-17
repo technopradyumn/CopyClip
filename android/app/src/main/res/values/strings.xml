@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="app_name">CopyClip</string>
+    <string name="notes_widget_description">Quick access to your Notes</string>
+    <string name="todos_widget_description">View your To-Dos</string>
+    <string name="expenses_widget_description">Track your Expenses</string>
+    <string name="journal_widget_description">Your personal Journal</string>
+    <string name="clipboard_widget_description">Clipboard history</string>
+    <string name="calendar_widget_description">View your Calendar</string>
+    <string name="canvas_widget_description">Digital Canvas</string>
+    <string name="widget_description">Quick access to your CopyClip features</string>
 </resources>

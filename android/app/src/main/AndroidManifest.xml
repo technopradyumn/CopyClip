@@ -54,8 +54,29 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="copyclip" />
+                <data
+                    android:scheme="copyclip"
+                    android:host="notes" />
+                <data
+                    android:scheme="copyclip"
+                    android:host="todos" />
+                <data
+                    android:scheme="copyclip"
+                    android:host="expenses" />
+                <data
+                    android:scheme="copyclip"
+                    android:host="journal" />
+                <data
+                    android:scheme="copyclip"
+                    android:host="calendar" />
+                <data
+                    android:scheme="copyclip"
+                    android:host="clipboard" />
+                <data
+                    android:scheme="copyclip"
+                    android:host="canvas" />
             </intent-filter>
+
         </activity>
 
         <meta-data
@@ -90,6 +111,84 @@
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
+
+        <receiver android:name=".NotesWidgetProvider" android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/notes_widget_info" />
+        </receiver>
+
+        <!-- Todos Widget -->
+        <receiver android:name=".TodosWidgetProvider" android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/todos_widget_info" />
+        </receiver>
+
+        <!-- Expenses Widget -->
+        <receiver android:name=".ExpensesWidgetProvider" android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/expenses_widget_info" />
+        </receiver>
+
+        <!-- Journal Widget -->
+        <receiver android:name=".JournalWidgetProvider" android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/journal_widget_info" />
+        </receiver>
+
+        <!-- Clipboard Widget -->
+        <receiver android:name=".ClipboardWidgetProvider" android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/clipboard_widget_info" />
+        </receiver>
+
+        <!-- Calendar Widget -->
+        <receiver android:name=".CalendarWidgetProvider" android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/calendar_widget_info" />
+        </receiver>
+
+        <!-- Canvas Widget -->
+        <receiver android:name=".CanvasWidgetProvider" android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android:appwidget.provider"
+                android:resource="@xml/canvas_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".CopyClipWidgetProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
+
+        <!-- Don't delete the meta-data below. This is used by the Flutter tool -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
