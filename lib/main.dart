@@ -107,9 +107,10 @@ Future<void> _initializeApp(AppInitializationState state) async {
     // Step 1: Basic services
     state.updateProgress('Initializing services...', 0.2);
     await Future.wait([
-      MobileAds.instance.initialize(),
       dotenv.load(fileName: ".env").catchError((_) => null),
     ]);
+
+    await MobileAds.instance.initialize();
 
     // Step 2: Hive setup
     state.updateProgress('Setting up database...', 0.4);
