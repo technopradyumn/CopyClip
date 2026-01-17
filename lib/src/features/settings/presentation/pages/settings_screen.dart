@@ -1,20 +1,21 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // ✅ Added for .env
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart'; // ✅ Added for Ads
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
-import 'package:copyclip/src/core/widgets/glass_dialog.dart'; // Keep for dialogs if needed
-// import 'package:copyclip/src/core/widgets/glass_container.dart'; // ❌ REMOVED to prevent lag
+import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-// --- Ensure these imports point to your actual file locations ---
 import '../../../../core/services/backup_service.dart';
 import '../../../../core/theme/theme_manager.dart';
 import '../../../clipboard/data/clipboard_model.dart';
@@ -63,11 +64,24 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   String _version = "1.0.0";
   String _buildNumber = "1";
 
-  // ✅ DASHBOARD-LIKE STATE ISOLATION (No setStates on screen)
   final ValueNotifier<bool> _clipboardAutoSaveNotifier = ValueNotifier(false);
   final ValueNotifier<bool> _notificationEnabledNotifier = ValueNotifier(false);
 
   late final List<SettingsSection> _sections;
+
+  // ✅ AD VARIABLES
+  InterstitialAd? _interstitialAd;
+  bool _isAdLoading = false;
+
+  // ✅ AD UNIT ID GETTER
+  String get _interstitialAdUnitId {
+    if (Platform.isAndroid) {
+      return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ?? 'ca-app-pub-3940256099942544/1033173712';
+    } else if (Platform.isIOS) {
+      return dotenv.env['IOS_INTERSTITIAL_AD_UNIT_ID'] ?? 'ca-app-pub-3940256099942544/4411468910';
+    }
+    return 'ca-app-pub-3940256099942544/1033173712';
+  }
 
   @override
   void initState() {
@@ -86,6 +100,9 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     _initPackageInfo();
     _loadAutoSaveSettings();
     _checkNotificationPermission();
+
+    // ✅ Load Ad on Init
+    _loadInterstitialAd();
   }
 
   @override
@@ -101,74 +118,87 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     _scrollController.dispose();
     _clipboardAutoSaveNotifier.dispose();
     _notificationEnabledNotifier.dispose();
+    _interstitialAd?.dispose(); // ✅ Dispose Ad
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
+  // --- AD LOGIC ---
+
+  void _loadInterstitialAd() {
+    if (_isAdLoading) return;
+    _isAdLoading = true;
+
+    InterstitialAd.load(
+      adUnitId: _interstitialAdUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          debugPrint('✅ Settings Interstitial Ad Loaded');
+          _interstitialAd = ad;
+          _isAdLoading = false;
+        },
+        onAdFailedToLoad: (error) {
+          debugPrint('❌ Settings Interstitial Ad Failed: $error');
+          _interstitialAd = null;
+          _isAdLoading = false;
+        },
+      ),
+    );
+  }
+
+  /// Shows the ad and executes the [onComplete] callback when the ad is closed.
+  void _showInterstitialAd(VoidCallback onComplete) {
+    if (_interstitialAd == null) {
+      debugPrint('⚠️ Ad not ready, proceeding with action...');
+      onComplete(); // Proceed if ad failed to load
+      _loadInterstitialAd(); // Try loading for next time
+      return;
+    }
+
+    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdDismissedFullScreenContent: (ad) {
+        debugPrint('👋 Ad Dismissed - Executing Action');
+        ad.dispose();
+        _interstitialAd = null;
+        _loadInterstitialAd(); // Preload next one
+        onComplete(); // ✅ Execute Import/Export logic HERE
+      },
+      onAdFailedToShowFullScreenContent: (ad, error) {
+        debugPrint('❌ Ad Failed to Show - Executing Action');
+        ad.dispose();
+        _interstitialAd = null;
+        _loadInterstitialAd();
+        onComplete(); // Ensure action happens even if ad fails
+      },
+    );
+
+    // ✅ IMMERSIVE MODE: Helps prevent accidental back press, though standard interstitials
+    // are strictly controlled by Google SDK and usually allow closing.
+    _interstitialAd!.setImmersiveMode(true);
+    _interstitialAd!.show();
+  }
+
+  // --- EXISTING LOGIC ---
+
   List<SettingsSection> _createSections() {
     return const [
-      SettingsSection(
-        type: SettingsSectionType.clipboard,
-        title: "Clipboard",
-        builder: _buildClipboardSection,
-      ),
-      SettingsSection(
-        type: SettingsSectionType.appearance,
-        title: "Appearance",
-        builder: _buildAppearanceSection,
-      ),
-      SettingsSection(
-        type: SettingsSectionType.notifications,
-        title: "Notifications",
-        builder: _buildNotificationSection,
-      ),
-      SettingsSection(
-        type: SettingsSectionType.recycleBin,
-        title: "Recycle Bin",
-        builder: _buildRecycleBinSection,
-      ),
-      SettingsSection(
-        type: SettingsSectionType.dataBackup,
-        title: "Data & Backup",
-        builder: _buildDataBackupSection,
-      ),
-      SettingsSection(
-        type: SettingsSectionType.feedback,
-        title: "Feedback & Support",
-        builder: _buildFeedbackSection,
-      ),
-      SettingsSection(
-        type: SettingsSectionType.credits,
-        title: "Credits",
-        builder: _buildCreditsSection,
-      ),
-      SettingsSection(
-        type: SettingsSectionType.privacy,
-        title: "Privacy & Maintenance",
-        builder: _buildPrivacySection,
-      ),
-      SettingsSection(
-        type: SettingsSectionType.about,
-        title: "About",
-        builder: _buildAboutSection,
-      ),
-      SettingsSection(
-        type: SettingsSectionType.footer,
-        builder: _buildFooter,
-      ),
+      SettingsSection(type: SettingsSectionType.clipboard, title: "Clipboard", builder: _buildClipboardSection),
+      SettingsSection(type: SettingsSectionType.appearance, title: "Appearance", builder: _buildAppearanceSection),
+      SettingsSection(type: SettingsSectionType.notifications, title: "Notifications", builder: _buildNotificationSection),
+      SettingsSection(type: SettingsSectionType.recycleBin, title: "Recycle Bin", builder: _buildRecycleBinSection),
+      SettingsSection(type: SettingsSectionType.dataBackup, title: "Data & Backup", builder: _buildDataBackupSection),
+      SettingsSection(type: SettingsSectionType.feedback, title: "Feedback & Support", builder: _buildFeedbackSection),
+      SettingsSection(type: SettingsSectionType.credits, title: "Credits", builder: _buildCreditsSection),
+      SettingsSection(type: SettingsSectionType.privacy, title: "Privacy & Maintenance", builder: _buildPrivacySection),
+      SettingsSection(type: SettingsSectionType.about, title: "About", builder: _buildAboutSection),
+      SettingsSection(type: SettingsSectionType.footer, builder: _buildFooter),
     ];
   }
 
-  // --- Logic Methods ---
-
   Future<void> _initPackageInfo() async {
     final info = await PackageInfo.fromPlatform();
-    if (mounted) {
-      setState(() {
-        _version = info.version;
-        _buildNumber = info.buildNumber;
-      });
-    }
+    if (mounted) setState(() { _version = info.version; _buildNumber = info.buildNumber; });
   }
 
   Future<void> _loadAutoSaveSettings() async {
@@ -192,7 +222,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     if (value) {
       final status = await Permission.notification.request();
       _notificationEnabledNotifier.value = status.isGranted;
-
       if (status.isPermanentlyDenied) {
         _showSnackBar("Permission permanently denied. Please enable in Settings.", isError: true);
         await openAppSettings();
@@ -210,8 +239,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   Future<void> _runAutoCleanup() async {
     const boxes = ['notes_box', 'todos_box', 'expenses_box', 'journal_box', 'clipboard_box'];
     final now = DateTime.now();
-    int cleanedCount = 0;
-
     for (final boxName in boxes) {
       if (Hive.isBoxOpen(boxName)) {
         final box = Hive.box(boxName);
@@ -224,22 +251,14 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
           } catch (e) { }
           return false;
         }).toList();
-
-        for (final item in toDelete) {
-          await (item as HiveObject).delete();
-          cleanedCount++;
-        }
+        for (final item in toDelete) await (item as HiveObject).delete();
       }
     }
-    if (cleanedCount > 0) debugPrint("Auto-Cleanup: Removed $cleanedCount expired items.");
   }
 
   int _getTrashCount() {
     int total = 0;
-    int countDeleted(Box box) => box.values.where((item) {
-      try { return (item as dynamic).isDeleted == true; } catch (_) { return false; }
-    }).length;
-
+    int countDeleted(Box box) => box.values.where((item) { try { return (item as dynamic).isDeleted == true; } catch (_) { return false; } }).length;
     if (Hive.isBoxOpen('notes_box')) total += countDeleted(Hive.box<Note>('notes_box'));
     if (Hive.isBoxOpen('todos_box')) total += countDeleted(Hive.box<Todo>('todos_box'));
     if (Hive.isBoxOpen('expenses_box')) total += countDeleted(Hive.box<Expense>('expenses_box'));
@@ -252,54 +271,50 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     if (!mounted) return;
     final theme = Theme.of(context);
     final color = isError ? theme.colorScheme.error : Colors.greenAccent;
-
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         behavior: SnackBarBehavior.floating,
-        content: Container( // ✅ Replaced GlassContainer with simple Container
+        content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
             color: theme.colorScheme.surface.withOpacity(0.95),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
-            boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 4)),
-            ],
+            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 4))],
           ),
-          child: Row(
-            children: [
-              Icon(isError ? Icons.error_outline : Icons.check_circle_outline, color: color),
-              const SizedBox(width: 12),
-              Expanded(child: Text(message, style: TextStyle(color: theme.colorScheme.onSurface, fontWeight: FontWeight.w600))),
-            ],
-          ),
+          child: Row(children: [Icon(isError ? Icons.error_outline : Icons.check_circle_outline, color: color), const SizedBox(width: 12), Expanded(child: Text(message, style: TextStyle(color: theme.colorScheme.onSurface, fontWeight: FontWeight.w600)))]),
         ),
       ),
     );
   }
 
+  // ✅ MODIFIED: Shows Ad before Export
   void _showExportDialog() {
     showDialog(
       context: context,
-      builder: (ctx) => GlassDialog( // Dialogs usually don't lag scrolling, so this is okay
+      builder: (ctx) => GlassDialog(
         title: "Backup Data",
         content: "Save a JSON file containing all your data?",
         confirmText: "Export Now",
-        onConfirm: () async {
+        onConfirm: () {
           Navigator.pop(ctx);
-          try {
-            await BackupService.createBackup(context);
-            _showSnackBar("Backup saved successfully!");
-          } catch (e) {
-            _showSnackBar("Export failed", isError: true);
-          }
+          // ✅ TRIGGER AD HERE
+          _showInterstitialAd(() async {
+            try {
+              await BackupService.createBackup(context);
+              _showSnackBar("Backup saved successfully!");
+            } catch (e) {
+              _showSnackBar("Export failed", isError: true);
+            }
+          });
         },
       ),
     );
   }
 
+  // ✅ MODIFIED: Shows Ad before Import
   void _showImportDialog() {
     showDialog(
       context: context,
@@ -307,44 +322,37 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         title: "Import Data",
         content: "Merge a backup file with your current items?",
         confirmText: "Select File",
-        onConfirm: () async {
+        onConfirm: () {
           Navigator.pop(ctx);
-          try {
-            final count = await BackupService.restoreBackup(context);
-            _showSnackBar("Imported $count new items.");
-            setState(() {});
-          } catch (e) {
-            _showSnackBar("Import failed", isError: true);
-          }
+          // ✅ TRIGGER AD HERE
+          _showInterstitialAd(() async {
+            try {
+              final count = await BackupService.restoreBackup(context);
+              _showSnackBar("Imported $count new items.");
+              setState(() {});
+            } catch (e) {
+              _showSnackBar("Import failed", isError: true);
+            }
+          });
         },
       ),
     );
   }
 
-  // --- SECTION BUILDERS ---
+  // --- SECTION BUILDERS (UNCHANGED) ---
 
   static Widget _buildClipboardSection(BuildContext context, _SettingsScreenState state) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-
     return _SectionCard(
       color: primaryColor,
       child: ListTile(
         leading: Icon(Icons.content_paste, color: primaryColor),
         title: Text("Auto-save Clipboard", style: theme.textTheme.bodyLarge),
-        subtitle: Text(
-          "Automatically save copied items",
-          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5)),
-        ),
+        subtitle: Text("Automatically save copied items", style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5))),
         trailing: ValueListenableBuilder<bool>(
           valueListenable: state._clipboardAutoSaveNotifier,
-          builder: (context, value, child) {
-            return Switch(
-              value: value,
-              onChanged: state._toggleAutoSave,
-              activeColor: primaryColor,
-            );
-          },
+          builder: (context, value, child) => Switch(value: value, onChanged: state._toggleAutoSave, activeColor: primaryColor),
         ),
       ),
     );
@@ -354,25 +362,14 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
     final themeManager = Provider.of<ThemeManager>(context);
-
     return _SectionCard(
       color: primaryColor,
       child: Column(
         children: [
-          ListTile(
-            leading: Icon(Icons.brightness_6, color: primaryColor),
-            title: Text("Theme Mode", style: theme.textTheme.bodyLarge),
-            trailing: _ThemeDropdown(manager: themeManager),
-          ),
+          ListTile(leading: Icon(Icons.brightness_6, color: primaryColor), title: Text("Theme Mode", style: theme.textTheme.bodyLarge), trailing: _ThemeDropdown(manager: themeManager)),
           const Divider(indent: 50),
-          ListTile(
-            leading: Icon(Icons.palette, color: primaryColor),
-            title: Text("Accent Color", style: theme.textTheme.bodyLarge),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: _ColorPicker(manager: themeManager),
-          ),
+          ListTile(leading: Icon(Icons.palette, color: primaryColor), title: Text("Accent Color", style: theme.textTheme.bodyLarge)),
+          Padding(padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), child: _ColorPicker(manager: themeManager)),
         ],
       ),
     );
@@ -381,29 +378,16 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   static Widget _buildNotificationSection(BuildContext context, _SettingsScreenState state) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-
     return _SectionCard(
       color: primaryColor,
       child: ValueListenableBuilder<bool>(
         valueListenable: state._notificationEnabledNotifier,
-        builder: (context, isEnabled, _) {
-          return ListTile(
-            leading: Icon(
-              isEnabled ? Icons.notifications_active : Icons.notifications_off,
-              color: primaryColor,
-            ),
-            title: Text("Push Notifications", style: theme.textTheme.bodyLarge),
-            subtitle: Text(
-              isEnabled ? "Enabled" : "Disabled",
-              style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5)),
-            ),
-            trailing: Switch(
-              value: isEnabled,
-              onChanged: state._toggleNotification,
-              activeColor: primaryColor,
-            ),
-          );
-        },
+        builder: (context, isEnabled, _) => ListTile(
+          leading: Icon(isEnabled ? Icons.notifications_active : Icons.notifications_off, color: primaryColor),
+          title: Text("Push Notifications", style: theme.textTheme.bodyLarge),
+          subtitle: Text(isEnabled ? "Enabled" : "Disabled", style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5))),
+          trailing: Switch(value: isEnabled, onChanged: state._toggleNotification, activeColor: primaryColor),
+        ),
       ),
     );
   }
@@ -411,21 +395,14 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   static Widget _buildRecycleBinSection(BuildContext context, _SettingsScreenState state) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-
     return _SectionCard(
       color: primaryColor,
       child: ListTile(
         leading: Icon(Icons.delete_sweep_outlined, color: primaryColor),
         title: Text("Recycle Bin", style: theme.textTheme.bodyLarge),
-        subtitle: Text(
-          "${state._getTrashCount()} items • Auto-deletes in 30 days",
-          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5)),
-        ),
+        subtitle: Text("${state._getTrashCount()} items • Auto-deletes in 30 days", style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5))),
         trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-        onTap: () async {
-          await Navigator.push(context, MaterialPageRoute(builder: (_) => const RecycleBinScreen()));
-          state.setState(() {});
-        },
+        onTap: () async { await Navigator.push(context, MaterialPageRoute(builder: (_) => const RecycleBinScreen())); state.setState(() {}); },
       ),
     );
   }
@@ -433,22 +410,13 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   static Widget _buildDataBackupSection(BuildContext context, _SettingsScreenState state) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-
     return _SectionCard(
       color: primaryColor,
       child: Column(
         children: [
-          ListTile(
-            leading: Icon(Icons.upload_file, color: primaryColor),
-            title: Text("Export Data", style: theme.textTheme.bodyLarge),
-            onTap: state._showExportDialog,
-          ),
+          ListTile(leading: Icon(Icons.upload_file, color: primaryColor), title: Text("Export Data", style: theme.textTheme.bodyLarge), onTap: state._showExportDialog),
           const Divider(indent: 50),
-          ListTile(
-            leading: Icon(Icons.download, color: primaryColor),
-            title: Text("Import Data", style: theme.textTheme.bodyLarge),
-            onTap: state._showImportDialog,
-          ),
+          ListTile(leading: Icon(Icons.download, color: primaryColor), title: Text("Import Data", style: theme.textTheme.bodyLarge), onTap: state._showImportDialog),
         ],
       ),
     );
@@ -457,16 +425,12 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   static Widget _buildFeedbackSection(BuildContext context, _SettingsScreenState state) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-
     return _SectionCard(
       color: primaryColor,
       child: ListTile(
         leading: Icon(Icons.feedback_outlined, color: primaryColor),
         title: Text("Send Feedback", style: theme.textTheme.bodyLarge),
-        subtitle: Text(
-          "Help us improve",
-          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5)),
-        ),
+        subtitle: Text("Help us improve", style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5))),
         trailing: const Icon(Icons.arrow_forward_ios, size: 14),
         onTap: () => context.push(AppRouter.feedback),
       ),
@@ -474,16 +438,12 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   }
 
   static Widget _buildCreditsSection(BuildContext context, _SettingsScreenState state) {
-    return _SectionCard(
-      color: Theme.of(context).colorScheme.primary,
-      child: const _CreditsContent(),
-    );
+    return _SectionCard(color: Theme.of(context).colorScheme.primary, child: const _CreditsContent());
   }
 
   static Widget _buildPrivacySection(BuildContext context, _SettingsScreenState state) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-
     return _SectionCard(
       color: primaryColor,
       child: ListTile(
@@ -498,36 +458,13 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   static Widget _buildAboutSection(BuildContext context, _SettingsScreenState state) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-
     return _SectionCard(
       color: primaryColor,
       child: Column(
         children: [
-          ListTile(
-            title: Text("Version", style: theme.textTheme.bodyLarge),
-            trailing: Text(
-              state._version,
-              style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4)),
-            ),
-          ),
-          ListTile(
-            title: Text("Build Number", style: theme.textTheme.bodyLarge),
-            trailing: Text(
-              state._buildNumber,
-              style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4)),
-            ),
-          ),
-          ListTile(
-            title: Text("Open Source Licenses", style: theme.textTheme.bodyLarge),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-            onTap: () {
-              showLicensePage(
-                context: context,
-                applicationName: "CopyClip",
-                applicationVersion: state._version,
-              );
-            },
-          ),
+          ListTile(title: Text("Version", style: theme.textTheme.bodyLarge), trailing: Text(state._version, style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4)))),
+          ListTile(title: Text("Build Number", style: theme.textTheme.bodyLarge), trailing: Text(state._buildNumber, style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4)))),
+          ListTile(title: Text("Open Source Licenses", style: theme.textTheme.bodyLarge), trailing: const Icon(Icons.arrow_forward_ios, size: 14), onTap: () { showLicensePage(context: context, applicationName: "CopyClip", applicationVersion: state._version); }),
         ],
       ),
     );
@@ -537,30 +474,11 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
     final onSurfaceColor = theme.colorScheme.onSurface;
-
     return Center(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: onSurfaceColor.withOpacity(0.03),
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: onSurfaceColor.withOpacity(0.05)),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.auto_awesome, size: 12, color: primaryColor.withOpacity(0.6)),
-            const SizedBox(width: 8),
-            Text(
-              "CRAFTED WITH EXCELLENCE",
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: onSurfaceColor.withOpacity(0.5),
-                fontWeight: FontWeight.w800,
-                letterSpacing: 1.2,
-              ),
-            ),
-          ],
-        ),
+        decoration: BoxDecoration(color: onSurfaceColor.withOpacity(0.03), borderRadius: BorderRadius.circular(30), border: Border.all(color: onSurfaceColor.withOpacity(0.05))),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(Icons.auto_awesome, size: 12, color: primaryColor.withOpacity(0.6)), const SizedBox(width: 8), Text("CRAFTED WITH EXCELLENCE", style: theme.textTheme.labelSmall?.copyWith(color: onSurfaceColor.withOpacity(0.5), fontWeight: FontWeight.w800, letterSpacing: 1.2))]),
       ),
     );
   }
@@ -569,20 +487,16 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-
     return GlassScaffold(
       title: null,
       showBackArrow: false,
       body: Column(
         children: [
-          _TopBar(
-            rotationController: _rotationController,
-            onBackPressed: () => context.pop(),
-          ),
+          _TopBar(rotationController: _rotationController, onBackPressed: () => context.pop()),
           Expanded(
             child: CustomScrollView(
               controller: _scrollController,
-              cacheExtent: 2000, // Reduced slightly since we aren't using heavy glass
+              cacheExtent: 2000,
               physics: const BouncingScrollPhysics(),
               slivers: [
                 SliverPadding(
@@ -591,14 +505,12 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                     delegate: SliverChildBuilderDelegate(
                           (context, index) {
                         final section = _sections[index];
-                        // ✅ RepaintBoundary is still good for simple containers too
                         return RepaintBoundary(
                           key: ValueKey(section.type),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (section.title != null)
-                                _SectionHeader(title: section.title!, color: primaryColor),
+                              if (section.title != null) _SectionHeader(title: section.title!, color: primaryColor),
                               section.builder(context, this),
                               const SizedBox(height: 24),
                             ],
@@ -621,37 +533,22 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
 // --- Extracted Widgets ---
 
 class _TopBar extends StatelessWidget {
-  const _TopBar({
-    required this.rotationController,
-    required this.onBackPressed,
-  });
-
+  const _TopBar({required this.rotationController, required this.onBackPressed});
   final AnimationController rotationController;
   final VoidCallback onBackPressed;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-
     return Padding(
       padding: const EdgeInsets.only(left: 24, right: 24, bottom: 10),
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back_ios_new, color: theme.iconTheme.color),
-            onPressed: onBackPressed,
-          ),
+          IconButton(icon: Icon(Icons.arrow_back_ios_new, color: theme.iconTheme.color), onPressed: onBackPressed),
           const SizedBox(width: 8),
-          Hero(
-            tag: 'settings_icon',
-            child: Icon(Icons.settings_outlined, size: 32, color: primaryColor),
-          ),
+          Hero(tag: 'settings_icon', child: Icon(Icons.settings_outlined, size: 32, color: primaryColor)),
           const SizedBox(width: 12),
-          Text(
-            "Settings",
-            style: theme.textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
-          ),
+          Text("Settings", style: theme.textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -659,46 +556,23 @@ class _TopBar extends StatelessWidget {
 }
 
 class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({
-    required this.title,
-    required this.color,
-  });
-
+  const _SectionHeader({required this.title, required this.color});
   final String title;
   final Color color;
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 4, bottom: 8),
-      child: Text(
-        title,
-        style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 14),
-      ),
-    );
+    return Padding(padding: const EdgeInsets.only(left: 4, bottom: 8), child: Text(title, style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 14)));
   }
 }
 
-// ✅ CRITICAL CHANGE: Replaced GlassContainer with a high-performance simple container
 class _SectionCard extends StatelessWidget {
-  const _SectionCard({
-    required this.color,
-    required this.child,
-  });
-
+  const _SectionCard({required this.color, required this.child});
   final Color color;
   final Widget child;
-
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    // This container mimics the look but is 10x faster because it has NO BLUR
     return Container(
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.08), // Simple transparency
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.1), width: 0.5),
-      ),
+      decoration: BoxDecoration(color: color.withOpacity(0.08), borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.white.withOpacity(0.1), width: 0.5)),
       padding: const EdgeInsets.all(4),
       child: child,
     );
@@ -707,9 +581,7 @@ class _SectionCard extends StatelessWidget {
 
 class _ThemeDropdown extends StatelessWidget {
   const _ThemeDropdown({required this.manager});
-
   final ThemeManager manager;
-
   @override
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(
@@ -717,11 +589,7 @@ class _ThemeDropdown extends StatelessWidget {
         value: manager.themeMode,
         icon: const Icon(Icons.arrow_drop_down),
         onChanged: (mode) => mode != null ? manager.setThemeMode(mode) : null,
-        items: const [
-          DropdownMenuItem(value: ThemeMode.system, child: Text("System")),
-          DropdownMenuItem(value: ThemeMode.light, child: Text("Light")),
-          DropdownMenuItem(value: ThemeMode.dark, child: Text("Dark")),
-        ],
+        items: const [DropdownMenuItem(value: ThemeMode.system, child: Text("System")), DropdownMenuItem(value: ThemeMode.light, child: Text("Light")), DropdownMenuItem(value: ThemeMode.dark, child: Text("Dark"))],
       ),
     );
   }
@@ -729,51 +597,28 @@ class _ThemeDropdown extends StatelessWidget {
 
 class _ColorPicker extends StatelessWidget {
   const _ColorPicker({required this.manager});
-
   final ThemeManager manager;
-
-  static const _colors = [
-    Colors.lightBlue,
-    Colors.blueAccent,
-    Colors.teal,
-    Colors.purpleAccent,
-    Colors.redAccent,
-  ];
-
+  static const _colors = [Colors.lightBlue, Colors.blueAccent, Colors.teal, Colors.purpleAccent, Colors.redAccent];
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: _colors.map((color) => _ColorDot(color: color, manager: manager)).toList(),
-    );
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: _colors.map((color) => _ColorDot(color: color, manager: manager)).toList());
   }
 }
 
 class _ColorDot extends StatelessWidget {
-  const _ColorDot({
-    required this.color,
-    required this.manager,
-  });
-
+  const _ColorDot({required this.color, required this.manager});
   final Color color;
   final ThemeManager manager;
-
   @override
   Widget build(BuildContext context) {
     final isSelected = manager.primaryColor.value == color.value;
-
     return GestureDetector(
       onTap: () => manager.setPrimaryColor(color),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         width: 34,
         height: 34,
-        decoration: BoxDecoration(
-          color: color,
-          shape: BoxShape.circle,
-          border: isSelected ? Border.all(color: Colors.white, width: 2.5) : null,
-          boxShadow: isSelected ? [BoxShadow(color: color.withOpacity(0.4), blurRadius: 10)] : null,
-        ),
+        decoration: BoxDecoration(color: color, shape: BoxShape.circle, border: isSelected ? Border.all(color: Colors.white, width: 2.5) : null, boxShadow: isSelected ? [BoxShadow(color: color.withOpacity(0.4), blurRadius: 10)] : null),
         child: isSelected ? const Icon(Icons.check, size: 18, color: Colors.black) : null,
       ),
     );
@@ -782,67 +627,31 @@ class _ColorDot extends StatelessWidget {
 
 class _CreditsContent extends StatelessWidget {
   const _CreditsContent();
-
   Future<void> _launchURL(BuildContext context, String url) async {
     final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
+    if (await canLaunchUrl(uri)) await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
     final onSurfaceColor = theme.colorScheme.onSurface;
-
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          CircleAvatar(
-            radius: 40,
-            backgroundColor: primaryColor.withOpacity(0.2),
-            child: Icon(Icons.person, size: 40, color: primaryColor),
-          ),
+          CircleAvatar(radius: 40, backgroundColor: primaryColor.withOpacity(0.2), child: Icon(Icons.person, size: 40, color: primaryColor)),
           const SizedBox(height: 12),
           Text("Pradyumn", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          Text(
-            "Mobile App Developer",
-            style: theme.textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.6)),
-          ),
+          Text("Mobile App Developer", style: theme.textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.6))),
           const SizedBox(height: 6),
           const Divider(indent: 40, endIndent: 40),
           const SizedBox(height: 3),
           Text("Brangunandan", style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
-          Text(
-            "UI/UX Designer",
-            style: theme.textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.6)),
-          ),
+          Text("UI/UX Designer", style: theme.textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.6))),
           const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: _SocialButton(
-                  icon: Icons.work_outline,
-                  label: "LinkedIn",
-                  color: const Color(0xFF0077B5),
-                  onTap: () => _launchURL(context, "https://www.linkedin.com/in/technopradyumn"),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Flexible(
-                child: _SocialButton(
-                  icon: Icons.camera_alt_outlined,
-                  label: "Instagram",
-                  color: const Color(0xFFE4405F),
-                  onTap: () => _launchURL(context, "https://www.instagram.com/pradyumnx"),
-                ),
-              ),
-            ],
-          ),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [Flexible(child: _SocialButton(icon: Icons.work_outline, label: "LinkedIn", color: const Color(0xFF0077B5), onTap: () => _launchURL(context, "https://www.linkedin.com/in/technopradyumn"))), const SizedBox(width: 12), Flexible(child: _SocialButton(icon: Icons.camera_alt_outlined, label: "Instagram", color: const Color(0xFFE4405F), onTap: () => _launchURL(context, "https://www.instagram.com/pradyumnx")))]),
         ],
       ),
     );
@@ -850,38 +659,19 @@ class _CreditsContent extends StatelessWidget {
 }
 
 class _SocialButton extends StatelessWidget {
-  const _SocialButton({
-    required this.icon,
-    required this.label,
-    required this.color,
-    required this.onTap,
-  });
-
+  const _SocialButton({required this.icon, required this.label, required this.color, required this.onTap});
   final IconData icon;
   final String label;
   final Color color;
   final VoidCallback onTap;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withOpacity(0.3)),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: color, size: 20),
-            const SizedBox(width: 8),
-            Text(label, style: TextStyle(color: color, fontWeight: FontWeight.w600)),
-          ],
-        ),
+        decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(12), border: Border.all(color: color.withOpacity(0.3))),
+        child: Row(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, children: [Icon(icon, color: color, size: 20), const SizedBox(width: 8), Text(label, style: TextStyle(color: color, fontWeight: FontWeight.w600))]),
       ),
     );
   }

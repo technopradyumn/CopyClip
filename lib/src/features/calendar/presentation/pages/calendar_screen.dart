@@ -122,11 +122,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
             child: Icon(Icons.calendar_month_rounded, size: 26, color: Colors.orangeAccent),
           ),
           const SizedBox(width: 10),
-          Text(
-            "Calendar",
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: onSurface,
+          // ✅ ADDED: Hero animation for the title
+          Hero(
+            tag: 'calendar_title',
+            child: Material(
+              type: MaterialType.transparency, // Prevents visual glitches during animation
+              child: Text(
+                "Calendar",
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: onSurface,
+                ),
+              ),
             ),
           ),
         ],

@@ -13,6 +13,7 @@ import 'package:home_widget/home_widget.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
+import '../../../../core/widgets/ad_widget/banner_ad_widget.dart';
 import '../../../clipboard/data/clipboard_model.dart';
 import '../../../expenses/data/expense_model.dart';
 import '../../../journal/data/journal_model.dart';
@@ -84,31 +85,33 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   Timer? _autoScrollTimer;
   late AnimationController _settingsAnimationController;
   late AnimationController _entryAnimationController;
-
-  // Ads
-  BannerAd? _bannerAd;
-
-  // ⚠️ CHANGED: Switched from RewardedAd to RewardedInterstitialAd
+  // App Open / Resume Ad
   RewardedInterstitialAd? _rewardedInterstitialAd;
 
-  bool _isBannerAdLoaded = false;
+  // ⚠️ NEW: Standard Interstitial Ad (for navigation)
+  InterstitialAd? _interstitialAd;
+
   bool _isRewardedAdLoading = false;
+  bool _isInterstitialAdLoading = false;
   DateTime? _lastRewardedAdTime;
 
-  // ============ AD UNIT IDS ============
+  DateTime? _lastInterstitialTime;
 
-  String get _bannerAdUnitId {
-    if (Platform.isAndroid) {
-      return dotenv.env['ANDROID_BANNER_AD_UNIT_ID'] ?? '';
-    }
-    return dotenv.env['ANDROID_BANNER_AD_UNIT_ID'] ?? '';
-  }
+  // ============ AD UNIT IDS ============
 
   String get _rewardedAdUnitId {
     if (Platform.isAndroid) {
       return dotenv.env['ANDROID_REWARDED_AD_UNIT_ID'] ?? '';
     }
     return dotenv.env['ANDROID_REWARDED_AD_UNIT_ID'] ?? '' ;
+  }
+
+  String get _interstitialAdUnitId {
+    // ⚠️ NEW: Interstitial Ad ID (Test ID)
+    if (Platform.isAndroid) {
+      return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ?? '';
+    }
+    return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ?? '';
   }
 
   // Onboarding
@@ -221,8 +224,8 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     _entryAnimationController.dispose();
     _dragPositionNotifier.dispose();
     _onboardingController.dispose();
-    _bannerAd?.dispose();
     _rewardedInterstitialAd?.dispose();
+    _interstitialAd?.dispose();
     super.dispose();
   }
 
@@ -242,6 +245,15 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     final savedOrder = settingsBox.get('dashboard_order', defaultValue: null);
     final hasSeenOnboarding = settingsBox.get('has_seen_onboarding', defaultValue: false);
     final lastAdTimeStr = settingsBox.get('last_rewarded_ad_time', defaultValue: null);
+
+    final lastInterstitialTimeStr = settingsBox.get('last_interstitial_time', defaultValue: null);
+    if (lastInterstitialTimeStr != null) {
+      try {
+        _lastInterstitialTime = DateTime.parse(lastInterstitialTimeStr);
+      } catch (e) {
+        debugPrint('Error parsing last interstitial time: $e');
+      }
+    }
 
     if (lastAdTimeStr != null) {
       try {
@@ -281,27 +293,85 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   void _initializeAds() {
     debugPrint('🎯 Initializing ads...');
-    _loadBannerAd();
-    _checkAndShowRewardedAd();
+    _loadInterstitialAd(); // Load standard Interstitial
+    _checkAndShowRewardedAd(); // Check timer for Rewarded Interstitial
   }
 
-  void _loadBannerAd() {
-    _bannerAd = BannerAd(
-      adUnitId: _bannerAdUnitId,
-      size: AdSize.banner,
+  // 2. STANDARD INTERSTITIAL AD (Triggers on Navigation)
+  void _loadInterstitialAd() {
+    if (_isInterstitialAdLoading) return;
+    _isInterstitialAdLoading = true;
+
+    InterstitialAd.load(
+      adUnitId: _interstitialAdUnitId,
       request: const AdRequest(),
-      listener: BannerAdListener(
+      adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
-          if (mounted) setState(() => _isBannerAdLoaded = true);
+          debugPrint('✅ Interstitial Ad Loaded');
+          _interstitialAd = ad;
+          _isInterstitialAdLoading = false;
         },
-        onAdFailedToLoad: (ad, error) {
-          debugPrint('❌ Banner Ad Failed: $error');
-          ad.dispose();
+        onAdFailedToLoad: (error) {
+          debugPrint('❌ Interstitial Ad Failed: $error');
+          _interstitialAd = null;
+          _isInterstitialAdLoading = false;
         },
       ),
-    )..load();
+    );
   }
 
+  /// Shows the interstitial ad with a 1-hour cooldown check.
+  void _showInterstitialAd(VoidCallback onComplete) {
+    // 1. Check if Ad is loaded
+    if (_interstitialAd == null) {
+      onComplete();
+      _loadInterstitialAd();
+      return;
+    }
+
+    // 2. Check 1-Hour Timer
+    final now = DateTime.now();
+    if (_lastInterstitialTime != null) {
+      final difference = now.difference(_lastInterstitialTime!);
+
+      // If user changed clock backwards (Time Travel protection) OR < 1 hour passed
+      if (!now.isBefore(_lastInterstitialTime!) && difference.inMinutes < 60) {
+        debugPrint('⏳ Interstitial Cooldown: ${60 - difference.inMinutes} mins remaining. Skipping Ad.');
+        onComplete(); // Navigate immediately without showing ad
+        return;
+      }
+    }
+
+    // 3. Show Ad
+    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (ad) {
+        // ⚠️ Save time ONLY when ad is actually shown
+        final timeNow = DateTime.now();
+        setState(() => _lastInterstitialTime = timeNow);
+        Hive.box('settings').put('last_interstitial_time', timeNow.toIso8601String());
+      },
+      onAdDismissedFullScreenContent: (ad) {
+        // User closed ad (via X or Back Button) -> Navigate
+        debugPrint('👋 Interstitial dismissed');
+        ad.dispose();
+        _interstitialAd = null;
+        _loadInterstitialAd(); // Preload next
+        onComplete();
+      },
+      onAdFailedToShowFullScreenContent: (ad, error) {
+        // Error -> Navigate
+        debugPrint('❌ Interstitial failed to show: $error');
+        ad.dispose();
+        _interstitialAd = null;
+        _loadInterstitialAd();
+        onComplete();
+      },
+    );
+
+    _interstitialAd!.show();
+  }
+
+  // 3. REWARDED INTERSTITIAL (Triggers on App Resume / Time Check)
   void _checkAndShowRewardedAd() {
     if (_isRewardedAdLoading || _showOnboarding) return;
 
@@ -312,13 +382,29 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
       debugPrint('⏰ First time opening app: Preparing to show Ad.');
       shouldShow = true;
     } else {
-      final difference = now.difference(_lastRewardedAdTime!);
-      if (difference.inHours >= 2) {
-        debugPrint('⏰ > 2 Hours passed (${difference.inHours} hrs). Showing Ad.');
+      // ⚠️ FIX: Check if the user changed their clock backwards (Time Travel)
+      if (now.isBefore(_lastRewardedAdTime!)) {
+        debugPrint('⚠️ Detected Time Change (Clock moved backwards). Resetting timer.');
+        // Option 1: Punish them (Reset timer to now)
+        // _lastRewardedAdTime = now;
+        // _saveLastRewardedAdTime(now);
+        // shouldShow = false;
+
+        // Option 2: Allow the ad (Better user experience to fix the "700 min" bug)
         shouldShow = true;
       } else {
-        debugPrint('⏳ Ad cooldown active. Next ad in ${120 - difference.inMinutes} minutes.');
-        shouldShow = false;
+        final difference = now.difference(_lastRewardedAdTime!);
+
+        // Normal 1 Hour Check
+        if (difference.inHours >= 1) {
+          debugPrint('⏰ > 1 Hour passed (${difference.inHours} hrs). Showing Ad.');
+          shouldShow = true;
+        } else {
+          // Calculate remaining minutes correctly
+          final remainingMinutes = 60 - difference.inMinutes;
+          debugPrint('⏳ Ad cooldown active. Next ad in $remainingMinutes minutes.');
+          shouldShow = false;
+        }
       }
     }
 
@@ -327,14 +413,12 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     }
   }
 
-  // ⚠️ CHANGED: Loading Logic for Rewarded Interstitial
   void _loadAndShowRewardedInterstitialAd() {
     if (_isRewardedAdLoading) return;
     setState(() => _isRewardedAdLoading = true);
 
-    debugPrint('🎁 Loading Rewarded Interstitial Ad from ENV ID');
+    debugPrint('🎁 Loading Rewarded Interstitial Ad...');
 
-    // Uses RewardedInterstitialAd.load instead of RewardedAd.load
     RewardedInterstitialAd.load(
       adUnitId: _rewardedAdUnitId,
       request: const AdRequest(),
@@ -344,9 +428,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
           _rewardedInterstitialAd = ad;
 
           _rewardedInterstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-            onAdShowedFullScreenContent: (ad) {
-              debugPrint('🎬 Ad showing fullscreen');
-            },
             onAdDismissedFullScreenContent: (ad) {
               debugPrint('👋 Ad dismissed');
               ad.dispose();
@@ -365,7 +446,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
           }
         },
         onAdFailedToLoad: (error) {
-          debugPrint('❌ Failed to load Rewarded Interstitial ad: ${error.message} (Code: ${error.code})');
+          debugPrint('❌ Failed to load Rewarded Interstitial ad: ${error.message}');
           setState(() => _isRewardedAdLoading = false);
           _rewardedInterstitialAd = null;
         },
@@ -376,7 +457,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   void _showRewardedAd() {
     if (_rewardedInterstitialAd == null) return;
 
-    // ⚠️ CHANGED: Show logic is slightly different for RewardedInterstitial
     _rewardedInterstitialAd!.show(
       onUserEarnedReward: (ad, reward) {
         debugPrint('🎉 User Earned Reward');
@@ -779,7 +859,12 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
         onLongPressStart: (d) => _onDragStart(id, index, d),
         onLongPressMoveUpdate: (d) => _onDragUpdate(d),
         onLongPressEnd: (_) => _onDragEnd(),
-        onTap: () => context.push(item.route),
+        // ⚠️ CHANGED: Now triggering Interstitial Ad before Navigation
+        onTap: () {
+          _showInterstitialAd(() {
+            context.push(item.route);
+          });
+        },
         child: AnimatedOpacity(
           duration: const Duration(milliseconds: 200),
           opacity: isDragging ? 0.0 : 1.0,
@@ -835,20 +920,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                   itemBuilder: (context, index) => _buildGridItem(index, theme),
                 ),
               ),
-              // Banner Ad at bottom
-              if (_isBannerAdLoaded && _bannerAd != null)
-                Container(
-                  alignment: Alignment.center,
-                  width: _bannerAd!.size.width.toDouble(),
-                  height: _bannerAd!.size.height.toDouble(),
-                  decoration: BoxDecoration(
-                    color: theme.scaffoldBackgroundColor,
-                    boxShadow: [
-                      BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 8, offset: const Offset(0, -2)),
-                    ],
-                  ),
-                  child: AdWidget(ad: _bannerAd!),
-                ),
+              const BannerAdWidget(),
             ],
           ),
           // Dragging overlay

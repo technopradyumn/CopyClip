@@ -244,54 +244,65 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
 
     return GlassScaffold(
       title: null,
-      // ✅ FutureBuilder uses the pre-calculated _boxFuture.
-      // It will NOT fire again on setStates, scrolling, or tab switching.
-      body: FutureBuilder<Box<Expense>>(
-        future: _boxFuture,
-        builder: (context, snapshot) {
+      // ✅ STRUCTURAL FIX: Use a Column like NotesScreen
+      // This keeps the Header static and allows Hero animation to play instantly.
+      body: Column(
+        children: [
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+          // 1. Static Header (Rendered immediately)
+          _buildTopBar(),
 
-          if (snapshot.hasError) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text("Error loading data.\nPlease restart the app.\n\n${snapshot.error}", textAlign: TextAlign.center),
-              ),
-            );
-          }
+          // 2. Scrollable Content (Loads asynchronously)
+          Expanded(
+            child: FutureBuilder<Box<Expense>>(
+              future: _boxFuture,
+              builder: (context, snapshot) {
 
-          // Box is guaranteed open here.
-          return ValueListenableBuilder<Box<Expense>>(
-            valueListenable: snapshot.data!.listenable(),
-            builder: (context, box, _) {
-              final allExpenses = box.values.toList();
-              final expenses = _applyFilters(allExpenses);
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-              return NestedScrollView(
-                headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                  SliverToBoxAdapter(child: _buildTopBar(expenses)),
-                  SliverToBoxAdapter(child: _buildCurrencySelector()),
-                  SliverToBoxAdapter(child: _buildCalendar(allExpenses)),
-                  SliverToBoxAdapter(child: const SizedBox(height: 10)),
-                  SliverToBoxAdapter(child: _buildPeriodSelector()),
-                  SliverToBoxAdapter(child: const SizedBox(height: 10)),
-                  SliverToBoxAdapter(child: _buildStyledTabBar()),
-                  SliverToBoxAdapter(child: const SizedBox(height: 10)),
-                ],
-                body: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    _buildListTab(expenses),
-                    _buildAnalyticsTab(expenses),
-                  ],
-                ),
-              );
-            },
-          );
-        },
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text("Error loading data.\n\n${snapshot.error}", textAlign: TextAlign.center),
+                    ),
+                  );
+                }
+
+                return ValueListenableBuilder<Box<Expense>>(
+                  valueListenable: snapshot.data!.listenable(),
+                  builder: (context, box, _) {
+                    final allExpenses = box.values.toList();
+                    final expenses = _applyFilters(allExpenses);
+
+                    return NestedScrollView(
+                      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                        // ⚠️ NOTE: _buildTopBar removed from here
+
+                        SliverToBoxAdapter(child: _buildCurrencySelector()),
+                        SliverToBoxAdapter(child: _buildCalendar(allExpenses)),
+                        SliverToBoxAdapter(child: const SizedBox(height: 10)),
+                        SliverToBoxAdapter(child: _buildPeriodSelector()),
+                        SliverToBoxAdapter(child: const SizedBox(height: 10)),
+                        SliverToBoxAdapter(child: _buildStyledTabBar()),
+                        SliverToBoxAdapter(child: const SizedBox(height: 10)),
+                      ],
+                      body: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          _buildListTab(expenses),
+                          _buildAnalyticsTab(expenses),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push(AppRouter.expenseEdit),
@@ -303,7 +314,8 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
     );
   }
 
-  Widget _buildTopBar(List<Expense> expenses) {
+  // ✅ UPDATED: No longer requires list argument
+  Widget _buildTopBar() {
     final theme = Theme.of(context);
 
     if (_isSearching) {
@@ -352,6 +364,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                   icon: Icon(Icons.arrow_back_ios_new_rounded, color: theme.colorScheme.onSurface),
                   onPressed: () => context.pop(),
                 ),
+                // ✅ HERO TAG 1
                 Hero(
                   tag: 'expenses_icon',
                   child: Container(
@@ -364,6 +377,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // ✅ HERO TAG 2
                     Hero(
                       tag: 'expenses_title',
                       child: Material(
@@ -382,7 +396,16 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                 if (_isSelectionMode)
                   IconButton(icon: const Icon(Icons.delete, color: Colors.redAccent), onPressed: _deleteSelected)
                 else
-                  IconButton(icon: Icon(Icons.filter_list, color: theme.colorScheme.onSurface), onPressed: () => _showFilterMenu(expenses)),
+                  IconButton(
+                      icon: Icon(Icons.filter_list, color: theme.colorScheme.onSurface),
+                      onPressed: () {
+                        // ✅ LAZY LOAD DATA: Only fetch list when filter is clicked
+                        if (Hive.isBoxOpen('expenses_box')) {
+                          final list = Hive.box<Expense>('expenses_box').values.toList();
+                          _showFilterMenu(list);
+                        }
+                      }
+                  ),
               ],
             ),
           ],

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
+import 'ad_widget/banner_ad_widget.dart';
+
 class GlassScaffold extends StatelessWidget {
   final Widget body;
   final Widget? floatingActionButton;
@@ -95,7 +97,12 @@ class GlassScaffold extends StatelessWidget {
                 // Remove bottom SafeArea if you want content to go behind nav bar,
                 // but usually true is safer for lists
                 bottom: false,
-                child: body,
+                child: Column(
+                  children: [
+                    Expanded(child: body),
+                    const BannerAdWidget(hideOnKeyboard: true),
+                  ],
+                ),
               ),
             ),
           ],

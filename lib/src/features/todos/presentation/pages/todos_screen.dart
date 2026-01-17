@@ -331,7 +331,7 @@ class _TodosScreenState extends State<TodosScreen> with SingleTickerProviderStat
         ),
         body: Column(
           children: [
-            _buildCustomTopBar(),
+            _buildTopBar(),
 
             // Search Bar
             Padding(
@@ -510,39 +510,67 @@ class _TodosScreenState extends State<TodosScreen> with SingleTickerProviderStat
     );
   }
 
-  Widget _buildCustomTopBar() {
+// ✅ FIXED: Matches Notes/Expenses screen style & Hero Tags
+  Widget _buildTopBar() {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final primaryColor = Colors.greenAccent; // Matches Dashboard 'todos' color
 
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-        child: Row(
-            children: [
-              IconButton(
-                  icon: Icon(_isSelectionMode ? Icons.close : Icons.arrow_back_ios_new, color: theme.iconTheme.color),
-                  onPressed: () => _isSelectionMode ? setState((){_isSelectionMode=false;_selectedTodoIds.clear();}) : context.pop()
-              ),
-              Expanded(
-                  child: _isSelectionMode
-                      ? Center(child: Text('${_selectedTodoIds.length} Selected', style: theme.textTheme.titleLarge))
-                      : Row(
-                      children: [
-                        Hero(tag:'todos', child: Icon(Icons.check_circle_outline, size: 32, color: colorScheme.primary)),
-                        const SizedBox(width: 10),
-                        Hero(tag:'todos_title', child: Material(type:MaterialType.transparency, child: Text("To-Dos", style: theme.textTheme.titleLarge?.copyWith(fontSize: 28))))
-                      ]
-                  )
-              ),
-              if(_isSelectionMode) ...[
-                IconButton(icon: Icon(Icons.select_all, color: theme.iconTheme.color), onPressed: _selectAll),
-                IconButton(icon: Icon(Icons.delete, color: colorScheme.error), onPressed: _deleteSelected)
-              ] else ...[
-                IconButton(icon: Icon(Icons.check_circle_outline, color: theme.iconTheme.color?.withOpacity(0.54)), onPressed: ()=>setState(()=>_isSelectionMode=true)),
-                IconButton(icon: Icon(Icons.filter_list, color: theme.iconTheme.color), onPressed: _showFilterMenu),
-                IconButton(icon: Icon(Icons.delete_sweep_outlined, color: colorScheme.error), onPressed: _deleteAll)
-              ]
-            ]
-        )
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+      child: Row(
+        children: [
+          IconButton(
+            icon: Icon(_isSelectionMode ? Icons.close : Icons.arrow_back_ios_new, color: theme.iconTheme.color),
+            onPressed: () {
+              if (_isSelectionMode) {
+                setState(() { _isSelectionMode = false; _selectedTodoIds.clear(); });
+              } else {
+                context.pop();
+              }
+            },
+          ),
+          Expanded(
+            child: _isSelectionMode
+                ? Center(child: Text('${_selectedTodoIds.length} Selected', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)))
+                : Row(
+              children: [
+                // ✅ HERO TAG 1: 'todos_icon' (was 'todos')
+                Hero(
+                  tag: 'todos_icon',
+                  child: Icon(Icons.check_circle_outline, size: 28, color: primaryColor),
+                ),
+                const SizedBox(width: 10),
+                // ✅ HERO TAG 2: 'todos_title'
+                Hero(
+                  tag: 'todos_title',
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: Text("To-Dos", style: theme.textTheme.titleLarge?.copyWith(fontSize: 24, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (_isSelectionMode) ...[
+            IconButton(icon: Icon(Icons.select_all, color: theme.iconTheme.color), onPressed: _selectAll),
+            IconButton(icon: const Icon(Icons.delete, color: Colors.redAccent), onPressed: _deleteSelected),
+          ] else ...[
+            IconButton(
+              icon: Icon(Icons.check_circle_outline, color: theme.iconTheme.color?.withOpacity(0.54)),
+              onPressed: () => setState(() => _isSelectionMode = true),
+            ),
+            IconButton(
+              icon: Icon(Icons.filter_list, color: theme.iconTheme.color),
+              onPressed: _showFilterMenu,
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete_sweep_outlined, color: Colors.redAccent),
+              onPressed: _deleteAll,
+            ),
+          ],
+        ],
+      ),
     );
   }
 
