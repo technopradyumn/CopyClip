@@ -17,8 +17,6 @@ import '../../../expenses/data/expense_model.dart';
 import '../../../journal/data/journal_model.dart';
 import '../../../notes/data/note_model.dart';
 import '../../../todos/data/todo_model.dart';
-import '../../../canvas/data/canvas_model.dart';
-import '../../../canvas/data/canvas_adapter.dart';
 
 // Cards
 import '../../../clipboard/presentation/widgets/clipboard_card.dart';
@@ -26,7 +24,7 @@ import '../../../expenses/presentation/widgets/expense_card.dart';
 import '../../../journal/presentation/widgets/journal_card.dart';
 import '../../../notes/presentation/widgets/note_card.dart';
 import '../../../todos/presentation/widgets/todo_card.dart';
-import '../../../canvas/presentation/widgets/canvas_sketch_card.dart';
+
 import 'dashboard_screen.dart';
 
 class SearchResult extends GlobalSearchResult {
@@ -55,11 +53,17 @@ class GlobalSearchScreen extends StatefulWidget {
 class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-  // ✅ PERFORMANCE: Notifier for the list content
-  // Updates to this notifier only rebuild the ListView, not the whole screen.
+  // ✅ PERFORMANCE: Debounce timer to prevent freezing on rapid typing
+  Timer? _debounce;
+
+  // ✅ STATE MANAGEMENT
   final ValueNotifier<List<SearchResult>> _filteredListNotifier = ValueNotifier(
     [],
   );
+  final ValueNotifier<bool> _isLoadingNotifier = ValueNotifier(
+    true,
+  ); // Start loading
+  String? _errorMessage;
 
   // Data Store
   List<SearchResult> _allData = [];
@@ -78,191 +82,247 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     "Expense",
     "Journal",
     "Clipboard",
-    "Canvas",
   ];
 
   @override
   void initState() {
     super.initState();
-    _loadAllData();
+    // ✅ Async initialization to not block the first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadAllData();
+    });
 
-    // ✅ Listen to text changes efficiently
-    _searchController.addListener(() {
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    _filteredListNotifier.dispose();
+    _isLoadingNotifier.dispose();
+    super.dispose();
+  }
+
+  // ✅ OPTIMIZED: Debounced Search Listener
+  void _onSearchChanged() {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 300), () {
+      if (!mounted) return;
       _query = _searchController.text;
       _applyFilters();
     });
   }
 
-  @override
-  void dispose() {
-    _searchController.dispose();
-    _filteredListNotifier.dispose();
-    super.dispose();
-  }
-
-  // --- DATA LOADING ---
-  void _loadAllData() {
+  // --- DATA LOADING (ASYNC & SAFE) ---
+  Future<void> _loadAllData() async {
+    _setLoading(true);
+    _errorMessage = null;
     List<SearchResult> results = [];
 
-    // ✅ FIX: Change 'Function(T)' to 'SearchResult Function(T)' to prevent type errors
-    void safeAdd<T>(String boxName, SearchResult Function(T) mapper) {
-      if (Hive.isBoxOpen(boxName)) {
-        final box = Hive.box<T>(boxName);
-        results.addAll(
-          box.values
+    try {
+      // ✅ Helper to safely add data with error isolation
+      Future<void> safeAdd<T>(
+        String boxName,
+        SearchResult Function(T) mapper,
+      ) async {
+        try {
+          if (!Hive.isBoxOpen(boxName)) return; // Skip if box not ready
+          final box = Hive.box<T>(boxName);
+
+          // Yield to UI thread to prevent freezing if box is huge
+          if (box.length > 500) await Future.delayed(Duration.zero);
+
+          final items = box.values
               .where((e) {
                 try {
+                  // ✅ Deep Safe Check for corrupted objects
+                  if (e == null) return false;
                   return (e as dynamic).isDeleted == false;
                 } catch (_) {
-                  return true;
+                  return true; // Assume not deleted if field missing (backward compat)
                 }
               })
-              .map(mapper),
-        );
+              .map((e) {
+                try {
+                  return mapper(e);
+                } catch (e) {
+                  return null; // Skip invalid items
+                }
+              })
+              .whereType<SearchResult>()
+              .toList();
+
+          results.addAll(items);
+        } catch (e) {
+          debugPrint("⚠️ Partial Load Error in $boxName: $e");
+          // Do not crash app, just log and continue
+        }
       }
+
+      // Load all sources
+      await safeAdd<Note>(
+        'notes_box',
+        (e) => SearchResult(
+          id: e.id,
+          title: e.title,
+          subtitle: e.content,
+          type: 'Note',
+          route: AppRouter.noteEdit,
+          argument: e,
+          dateTime: e.updatedAt,
+          colorValue: e.colorValue,
+        ),
+      );
+
+      await safeAdd<JournalEntry>(
+        'journal_box',
+        (e) => SearchResult(
+          id: e.id,
+          title: e.title,
+          subtitle: e.content,
+          type: 'Journal',
+          route: AppRouter.journalEdit,
+          argument: e,
+          dateTime: e.date,
+          colorValue: e.colorValue,
+        ),
+      );
+
+      await safeAdd<ClipboardItem>(
+        'clipboard_box',
+        (e) => SearchResult(
+          id: e.id,
+          title: e.content,
+          subtitle: "Clipboard",
+          type: 'Clipboard',
+          route: AppRouter.clipboardEdit,
+          argument: e,
+          dateTime: e.createdAt,
+          colorValue: e.colorValue,
+        ),
+      );
+
+      await safeAdd<Todo>(
+        'todos_box',
+        (e) => SearchResult(
+          id: e.id,
+          title: e.task,
+          subtitle: e.isDone ? "Completed" : "Pending",
+          type: 'Todo',
+          route: AppRouter.todoEdit,
+          argument: e,
+          dateTime: e.dueDate ?? DateTime.now(),
+        ),
+      );
+
+      await safeAdd<Expense>(
+        'expenses_box',
+        (e) => SearchResult(
+          id: e.id,
+          title: e.title,
+          subtitle: "${e.currency}${e.amount}",
+          type: 'Expense',
+          route: AppRouter.expenseEdit,
+          argument: e,
+          dateTime: e.date,
+        ),
+      );
+
+      _allData = results;
+      _applyFilters();
+    } catch (e) {
+      debugPrint("❌ Critical Global Search Error: $e");
+      setState(
+        () => _errorMessage =
+            "Unable to load data. Please try restarting the app.",
+      );
+    } finally {
+      if (mounted) _setLoading(false);
     }
+  }
 
-    safeAdd<Note>(
-      'notes_box',
-      (e) => SearchResult(
-        id: e.id,
-        title: e.title,
-        subtitle: e.content,
-        type: 'Note',
-        route: AppRouter.noteEdit,
-        argument: e,
-        dateTime: e.updatedAt,
-        colorValue: e.colorValue,
-      ),
-    );
-    safeAdd<JournalEntry>(
-      'journal_box',
-      (e) => SearchResult(
-        id: e.id,
-        title: e.title,
-        subtitle: e.content,
-        type: 'Journal',
-        route: AppRouter.journalEdit,
-        argument: e,
-        dateTime: e.date,
-        colorValue: e.colorValue,
-      ),
-    );
-    safeAdd<ClipboardItem>(
-      'clipboard_box',
-      (e) => SearchResult(
-        id: e.id,
-        title: e.content,
-        subtitle: "Clipboard",
-        type: 'Clipboard',
-        route: AppRouter.clipboardEdit,
-        argument: e,
-        dateTime: e.createdAt,
-        colorValue: e.colorValue,
-      ),
-    );
-    safeAdd<Todo>(
-      'todos_box',
-      (e) => SearchResult(
-        id: e.id,
-        title: e.task,
-        subtitle: e.isDone ? "Completed" : "Pending",
-        type: 'Todo',
-        route: AppRouter.todoEdit,
-        argument: e,
-        dateTime: e.dueDate ?? DateTime.now(),
-      ),
-    );
-    safeAdd<Expense>(
-      'expenses_box',
-      (e) => SearchResult(
-        id: e.id,
-        title: e.title,
-        subtitle: "${e.currency}${e.amount}",
-        type: 'Expense',
-        route: AppRouter.expenseEdit,
-        argument: e,
-        dateTime: e.date,
-      ),
-    );
-    safeAdd<CanvasNote>(
-      'canvas_notes',
-      (e) => SearchResult(
-        id: e.id,
-        title: e.title,
-        subtitle: e.description ?? 'Canvas sketch',
-        type: 'Canvas',
-        route: AppRouter.canvasEdit,
-        argument: {'noteId': e.id},
-        dateTime: e.lastModified,
-      ),
-    );
-
-    _allData = results;
-    _applyFilters();
+  void _setLoading(bool loading) {
+    if (mounted) _isLoadingNotifier.value = loading;
   }
 
   // --- FILTERING ENGINE (Optimized) ---
-  void _applyFilters() {
-    List<SearchResult> filtered = _allData;
-    final queryLower = _query.toLowerCase();
+  Future<void> _applyFilters() async {
+    // ✅ Run filtering asynchronously to unblock UI
+    // For very large lists, we could perform this in a compute() isolate,
+    // but simple async yielding is usually enough for <10k items.
 
-    // 1. Text Search (Fastest check first)
-    if (queryLower.isNotEmpty) {
-      filtered = filtered
-          .where(
-            (item) =>
-                item.title.toLowerCase().contains(queryLower) ||
-                item.subtitle.toLowerCase().contains(queryLower),
-          )
-          .toList();
-    }
+    _setLoading(true); // Show spinner if filtering takes time
 
-    // 2. Type Filter
-    if (_selectedType != "All") {
-      filtered = filtered.where((item) => item.type == _selectedType).toList();
-    }
+    // Simulate slight delay to let UI breathe
+    await Future.delayed(Duration.zero);
 
-    // 3. Color Filter
-    if (_filterColor != null) {
-      filtered = filtered
-          .where((item) => item.colorValue == _filterColor)
-          .toList();
-    }
+    List<SearchResult> filtered = List.of(_allData);
+    final queryLower = _query.toLowerCase().trim();
 
-    // 4. Date Filter
-    if (_dateRange != "All Time") {
-      final now = DateTime.now();
-      if (_dateRange == "Today") {
+    try {
+      // 1. Text Search
+      if (queryLower.isNotEmpty) {
+        filtered = filtered.where((item) {
+          final t = item.title.toLowerCase();
+          final s = item.subtitle.toLowerCase();
+          return t.contains(queryLower) || s.contains(queryLower);
+        }).toList();
+      }
+
+      // 2. Type Filter
+      if (_selectedType != "All") {
         filtered = filtered
-            .where(
-              (item) =>
-                  item.dateTime.day == now.day &&
-                  item.dateTime.month == now.month &&
-                  item.dateTime.year == now.year,
-            )
-            .toList();
-      } else if (_dateRange == "This Week") {
-        final lastWeek = now.subtract(const Duration(days: 7));
-        filtered = filtered
-            .where((item) => item.dateTime.isAfter(lastWeek))
+            .where((item) => item.type == _selectedType)
             .toList();
       }
-    }
 
-    // 5. Sorting
-    if (_sortBy == "Newest") {
-      filtered.sort((a, b) => b.dateTime.compareTo(a.dateTime));
-    } else if (_sortBy == "Oldest") {
-      filtered.sort((a, b) => a.dateTime.compareTo(b.dateTime));
-    } else if (_sortBy == "A-Z") {
-      filtered.sort(
-        (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()),
-      );
-    }
+      // 3. Color Filter
+      if (_filterColor != null) {
+        filtered = filtered
+            .where((item) => item.colorValue == _filterColor)
+            .toList();
+      }
 
-    // ✅ UPDATE NOTIFIER: This only triggers the list to rebuild, nothing else
-    _filteredListNotifier.value = filtered;
+      // 4. Date Filter
+      if (_dateRange != "All Time") {
+        final now = DateTime.now();
+        if (_dateRange == "Today") {
+          filtered = filtered
+              .where(
+                (item) =>
+                    item.dateTime.year == now.year &&
+                    item.dateTime.month == now.month &&
+                    item.dateTime.day == now.day,
+              )
+              .toList();
+        } else if (_dateRange == "This Week") {
+          final lastWeek = now.subtract(const Duration(days: 7));
+          filtered = filtered
+              .where((item) => item.dateTime.isAfter(lastWeek))
+              .toList();
+        }
+      }
+
+      // 5. Sorting
+      if (_sortBy == "Newest") {
+        filtered.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+      } else if (_sortBy == "Oldest") {
+        filtered.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+      } else if (_sortBy == "A-Z") {
+        filtered.sort(
+          (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()),
+        );
+      }
+
+      // ✅ Update UI
+      if (mounted) _filteredListNotifier.value = filtered;
+    } catch (e) {
+      debugPrint("⚠️ Filtering Error: $e");
+    } finally {
+      _setLoading(false);
+    }
   }
 
   // --- UI BUILDERS ---
@@ -275,37 +335,80 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
       title: null,
       body: Column(
         children: [
-          const SizedBox(height: 8), // Top padding
+          const SizedBox(height: 8),
           _buildIntegratedSearchBar(theme),
           const SizedBox(height: 12),
           _buildHorizontalFilterChips(theme),
           const SizedBox(height: 8),
 
-          // ✅ LIST SECTION
+          // ✅ LIST SECTION WITH LOADING STATE
           Expanded(
-            child: ValueListenableBuilder<List<SearchResult>>(
-              valueListenable: _filteredListNotifier,
-              builder: (context, filteredItems, _) {
-                if (filteredItems.isEmpty) {
+            child: ValueListenableBuilder<bool>(
+              valueListenable: _isLoadingNotifier,
+              builder: (context, isLoading, _) {
+                if (isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (_errorMessage != null) {
                   return Center(
-                    child: Text(
-                      "No results found",
-                      style: TextStyle(color: theme.hintColor),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.error_outline,
+                          size: 48,
+                          color: Colors.redAccent,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          _errorMessage!,
+                          style: TextStyle(color: theme.hintColor),
+                        ),
+                        TextButton(
+                          onPressed: _loadAllData,
+                          child: const Text("Retry"),
+                        ),
+                      ],
                     ),
                   );
                 }
 
-                return ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
-                  physics: const BouncingScrollPhysics(),
-                  // ✅ IMPORTANT: Renders items ahead of scroll to prevent stutter
-                  cacheExtent: 2000,
-                  itemCount: filteredItems.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
-                  itemBuilder: (context, index) {
-                    // ✅ IMPORTANT: Caches the card painting
-                    return RepaintBoundary(
-                      child: _buildResultCard(filteredItems[index]),
+                return ValueListenableBuilder<List<SearchResult>>(
+                  valueListenable: _filteredListNotifier,
+                  builder: (context, filteredItems, _) {
+                    if (filteredItems.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.search_off_rounded,
+                              size: 64,
+                              color: theme.dividerColor,
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              "No results found",
+                              style: TextStyle(color: theme.hintColor),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    return ListView.separated(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                      physics: const BouncingScrollPhysics(),
+                      // ✅ PERFORMANCE: Reasonable cache extent
+                      cacheExtent: 500,
+                      itemCount: filteredItems.length,
+                      separatorBuilder: (_, __) => const SizedBox(height: 12),
+                      itemBuilder: (context, index) {
+                        return RepaintBoundary(
+                          child: _buildResultCard(filteredItems[index]),
+                        );
+                      },
                     );
                   },
                 );
@@ -341,7 +444,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                 controller: _searchController,
                 autofocus: true,
                 style: theme.textTheme.bodyLarge,
-                // Removed onChanged setState; listener handles it
+                // Listener handles updates via debouncer now
                 decoration: InputDecoration(
                   hintText: "Search workspace...",
                   prefixIcon: Icon(
@@ -353,7 +456,6 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                     icon: const Icon(Icons.cancel_rounded, size: 18),
                     onPressed: () {
                       _searchController.clear();
-                      // Listener updates automatically
                     },
                   ),
                   border: InputBorder.none,
@@ -388,9 +490,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
 
           return GestureDetector(
             onTap: () {
-              // We need setState here to update the CHIP color
               setState(() => _selectedType = type);
-              // Logic update
               _applyFilters();
             },
             child: AnimatedContainer(
@@ -432,14 +532,14 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     final theme = Theme.of(context);
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.transparent, // Background transparent
-      isScrollControlled: true, // Allows sheet to expand properly
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
       builder: (context) => StatefulBuilder(
         builder: (context, setSheetState) {
           return Container(
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 30),
             decoration: BoxDecoration(
-              color: theme.colorScheme.surface, // ✅ Solid color for visibility
+              color: theme.colorScheme.surface,
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(24),
               ),
@@ -448,7 +548,6 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Handle
                 Center(
                   child: Container(
                     width: 40,
@@ -461,7 +560,6 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                 ),
                 const SizedBox(height: 20),
 
-                // Header
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -696,23 +794,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             setState(() {});
           },
         );
-      case 'Canvas':
-        // Get the actual note from the box
-        final note = Hive.isBoxOpen('canvas_notes')
-            ? Hive.box<CanvasNote>(
-                'canvas_notes',
-              ).get((res.argument as Map)['noteId'])
-            : null;
-        if (note == null) return const SizedBox.shrink();
-        return CanvasSketchCard(
-          note: note,
-          isSelected: false,
-          onTap: () async {
-            await context.push(res.route, extra: res.argument);
-            _loadAllData();
-          },
-          onLongPress: () {},
-        );
+
       default:
         return const SizedBox.shrink();
     }
@@ -727,8 +809,8 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   }
 
   void _delete(SearchResult res) {
-    final item = res.argument;
     try {
+      final item = res.argument;
       item.isDeleted = true;
       item.deletedAt = DateTime.now();
       item.save();
