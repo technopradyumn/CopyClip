@@ -24,6 +24,14 @@
 -keep class com.google.android.gms.maps.** { *; }
 -keep interface com.google.android.gms.maps.** { *; }
 
+# ✅ FIX: Play Core & Feature Delivery (R8 Issues)
+-keep class com.google.android.play.core.** { *; }
+-keep class com.google.android.play.core.splitcompat.** { *; }
+-keep class com.google.android.play.core.splitinstall.** { *; }
+-keep class com.google.android.play.core.appupdate.** { *; }
+-keep class com.google.android.play.core.tasks.** { *; }
+-dontwarn com.google.android.play.core.**
+
 # ✅ OPTIMIZATION: Remove debug logging in release
 -assumenosideeffects class android.util.Log {
     public static *** d(...);
