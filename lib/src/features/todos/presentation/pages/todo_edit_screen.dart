@@ -424,19 +424,32 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
       repeatDays: _repeatDays,
     );
 
-    box.put(id, newTodo);
+    // ✅ FIX: Use the existing Hive Key if available to prevent duplicates/ghost updates
+    if (widget.todo != null && widget.todo!.isInBox) {
+      box.put(widget.todo!.key, newTodo);
+    } else {
+      box.put(id, newTodo);
+    }
 
-    if (_hasReminder &&
-        finalDate != null &&
-        finalDate.isAfter(DateTime.now()) &&
-        !_isDone) {
-      NotificationService().scheduleNotification(
-        id: notifId,
-        title: 'Task Due Now',
-        body: newTodo.task,
-        scheduledDate: finalDate,
-        payload: newTodo.id,
-      );
+    // ✅ FIX: Allow scheduling even if date is slightly in the past (e.g. "Just Now")
+    // by adding a small buffer or checking if it's clearly in the future.
+    // We'll trust the user's intent if it's within the last 5 minutes, treating it as "due now".
+    if (_hasReminder && finalDate != null && !_isDone) {
+      if (finalDate.isAfter(
+        DateTime.now().subtract(const Duration(minutes: 5)),
+      )) {
+        NotificationService().scheduleNotification(
+          id: notifId,
+          title: 'Task Due Now',
+          body: newTodo.task,
+          scheduledDate: finalDate.isBefore(DateTime.now())
+              ? DateTime.now().add(
+                  const Duration(seconds: 5),
+                ) // Fire immediately if "now"
+              : finalDate,
+          payload: newTodo.id,
+        );
+      }
     } else {
       NotificationService().cancelNotification(notifId);
     }

@@ -340,6 +340,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     // ✅ Listen to widget interactions
     _setupWidgetInteractionListener();
 
+    // ✅ Listen to notification taps
+    _setupNotificationListener();
+
     // ✅ Initialize heavy services after first frame
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _postFrameInitialization();
@@ -379,6 +382,45 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       if (uri != null && mounted) {
         debugPrint('📱 Widget clicked: $uri');
         _handleWidgetNavigation(uri);
+      }
+    });
+  }
+
+  // ✅ CHANGE 9: Configure Notification Listener
+  void _setupNotificationListener() {
+    NotificationService().onNotifications.stream.listen((
+      String? payload,
+    ) async {
+      if (payload == null || !mounted) return;
+      debugPrint('🔔 Notification Tapped with Payload: $payload');
+
+      // Assume payload is Todo ID (since that's what we send)
+      // We need to wait for Hive to be ready if it's a cold start
+      if (!Hive.isBoxOpen('todos_box')) {
+        await Future.delayed(const Duration(milliseconds: 500)); // Slight delay
+        if (!Hive.isBoxOpen('todos_box')) {
+          await LazyBoxLoader.getBox<Todo>('todos_box');
+        }
+      }
+
+      final box = Hive.box<Todo>('todos_box');
+      // Find Todo by ID or Key
+      Todo? todo;
+      try {
+        // Try getting directly if the key is the string ID
+        todo = box.get(payload);
+
+        // If not found, search by ID field (if keys are integers)
+        if (todo == null) {
+          todo = box.values.firstWhere((t) => t.id == payload);
+        }
+      } catch (e) {
+        debugPrint('⚠️ Could not find todo with ID: $payload');
+      }
+
+      if (todo != null && mounted) {
+        debugPrint('🚀 Navigating to Todo Edit: ${todo.task}');
+        router.push(AppRouter.todoEdit, extra: todo);
       }
     });
   }

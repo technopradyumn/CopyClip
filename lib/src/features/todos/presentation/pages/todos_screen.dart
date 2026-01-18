@@ -244,18 +244,12 @@ class _TodosScreenState extends State<TodosScreen>
     // User Request: "Share only today's task in the todo screen"
     final now = DateTime.now();
     final todayStart = DateTime(now.year, now.month, now.day);
-    final tomorrowStart = todayStart.add(const Duration(days: 1));
 
     Map<String, List<Todo>> grouped = {};
     for (var todo in filteredTodos) {
-      // FILTER: Only show tasks that are due today, overdue, or have no date (backlog)
-      // Future tasks are hidden from the main list view.
+      // FILTER: Show ALL tasks (Past, Today, Future) as per user request.
       bool isRelevant = true;
-      if (todo.dueDate != null) {
-        if (todo.dueDate!.isAfter(tomorrowStart)) {
-          isRelevant = false; // It's future
-        }
-      }
+      // Previous logic to hide future tasks removed.
 
       // If searching, show all matches regardless of date
       if (_searchQuery.isNotEmpty) isRelevant = true;

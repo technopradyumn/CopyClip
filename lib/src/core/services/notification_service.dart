@@ -29,6 +29,7 @@ class NotificationService {
 
       if (androidImplementation != null) {
         await androidImplementation.requestNotificationsPermission();
+        // ✅ REQUIRED for Android 12+ (API 31+) to trigger when app is killed
         await androidImplementation.requestExactAlarmsPermission();
       }
     }
