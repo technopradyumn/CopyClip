@@ -1,7 +1,10 @@
 package com.technopradyumn.copyclip
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -13,18 +16,19 @@ class MainActivity: FlutterActivity() {
 
     companion object {
         private const val TAG = "MainActivity"
-        private const val WIDGET_CHANNEL = "com.technopradyumn.copyclip/widget_handler"
+        private const val WIDGET_HANDLER_CHANNEL = "com.technopradyumn.copyclip/widget_handler"
+        private const val WIDGET_PIN_CHANNEL = "com.technopradyumn.copyclip/widget"
     }
 
-    private var widgetChannel: MethodChannel? = null
+    private var widgetHandlerChannel: MethodChannel? = null
+    private var widgetPinChannel: MethodChannel? = null
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
         // Setup widget navigation channel
-        widgetChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, WIDGET_CHANNEL)
-
-        widgetChannel?.setMethodCallHandler { call, result ->
+        widgetHandlerChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, WIDGET_HANDLER_CHANNEL)
+        widgetHandlerChannel?.setMethodCallHandler { call, result ->
             if (call.method == "navigateTo") {
                 val route = call.argument<String>("route")
                 if (route != null) {
@@ -36,6 +40,86 @@ class MainActivity: FlutterActivity() {
             } else {
                 result.notImplemented()
             }
+        }
+
+        // Setup widget pin channel
+        widgetPinChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, WIDGET_PIN_CHANNEL)
+        widgetPinChannel?.setMethodCallHandler { call, result ->
+            when (call.method) {
+                "requestPinWidget" -> {
+                    val widgetType = call.argument<String>("widgetType")
+                    if (widgetType != null) {
+                        val success = requestPinWidget(widgetType)
+                        result.success(success)
+                    } else {
+                        result.error("INVALID_ARGUMENT", "Widget type argument missing", null)
+                    }
+                }
+                else -> {
+                    result.notImplemented()
+                }
+            }
+        }
+    }
+
+    /**
+     * Request to pin a widget to the home screen (Android 8.0+)
+     */
+    private fun requestPinWidget(widgetType: String): Boolean {
+        try {
+            // Only available on Android O (API 26) and above
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                Log.w(TAG, "Widget pinning requires Android 8.0+")
+                return false
+            }
+
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+            
+            // Check if the launcher supports pinning widgets
+            if (!appWidgetManager.isRequestPinAppWidgetSupported) {
+                Log.w(TAG, "Launcher does not support widget pinning")
+                return false
+            }
+
+            // Get the widget provider class name based on feature type
+            val providerClassName = getWidgetProviderClassName(widgetType)
+            if (providerClassName == null) {
+                Log.e(TAG, "Unknown widget type: $widgetType")
+                return false
+            }
+
+            val myProvider = ComponentName(context, providerClassName)
+            
+            // Create the PendingIntent object only if your app needs to be notified
+            // when the user adds the widget.
+            // This is optional - we can pass null if we don't need the callback
+            val successCallback: android.app.PendingIntent? = null
+
+            // Request to pin the widget
+            val pinnedResult = appWidgetManager.requestPinAppWidget(myProvider, null, successCallback)
+            
+            Log.d(TAG, "Widget pin request result: $pinnedResult for type: $widgetType")
+            return pinnedResult
+            
+        } catch (e: Exception) {
+            Log.e(TAG, "Error requesting widget pin: ${e.message}", e)
+            return false
+        }
+    }
+
+    /**
+     * Map feature IDs to widget provider class names
+     */
+    private fun getWidgetProviderClassName(widgetType: String): String? {
+        return when (widgetType) {
+            "notes" -> "com.technopradyumn.copyclip.NotesWidgetProvider"
+            "todos" -> "com.technopradyumn.copyclip.TodosWidgetProvider"
+            "expenses" -> "com.technopradyumn.copyclip.ExpensesWidgetProvider"
+            "journal" -> "com.technopradyumn.copyclip.JournalWidgetProvider"
+            "clipboard" -> "com.technopradyumn.copyclip.ClipboardWidgetProvider"
+            "calendar" -> "com.technopradyumn.copyclip.CalendarWidgetProvider"
+            "canvas" -> "com.technopradyumn.copyclip.CanvasWidgetProvider"
+            else -> null
         }
     }
 
@@ -81,7 +165,7 @@ class MainActivity: FlutterActivity() {
                     // Send navigation command to Flutter
                     // Wait a bit to ensure Flutter engine is ready
                     android.os.Handler(mainLooper).postDelayed({
-                        widgetChannel?.invokeMethod("navigateTo", mapOf("route" to route))
+                        widgetHandlerChannel?.invokeMethod("navigateTo", mapOf("route" to route))
                     }, 100)
                 }
             } else {
@@ -111,8 +195,10 @@ class MainActivity: FlutterActivity() {
 
     override fun cleanUpFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         Log.d(TAG, "Cleaning up Flutter engine")
-        widgetChannel?.setMethodCallHandler(null)
-        widgetChannel = null
+        widgetHandlerChannel?.setMethodCallHandler(null)
+        widgetHandlerChannel = null
+        widgetPinChannel?.setMethodCallHandler(null)
+        widgetPinChannel = null
         super.cleanUpFlutterEngine(flutterEngine)
     }
 }

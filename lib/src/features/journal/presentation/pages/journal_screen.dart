@@ -10,6 +10,7 @@ import 'package:share_plus/share_plus.dart';
 // Core Widgets
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import '../../../../core/router/app_router.dart';
 
 // Data
@@ -32,7 +33,8 @@ class _JournalScreenState extends State<JournalScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   // ✅ PERFORMANCE: This is the ONLY thing that triggers list rebuilds now
-  final ValueNotifier<List<JournalEntry>> _filteredEntriesNotifier = ValueNotifier([]);
+  final ValueNotifier<List<JournalEntry>> _filteredEntriesNotifier =
+      ValueNotifier([]);
 
   // Data State
   List<JournalEntry> _rawEntries = [];
@@ -50,7 +52,7 @@ class _JournalScreenState extends State<JournalScreen> {
     "Time is the ultimate currency.",
     "Success is not final, failure is not fatal.",
     "Focus on the solution, not the problem.",
-    "Your network is your net worth."
+    "Your network is your net worth.",
   ];
   late String _dailyQuote;
 
@@ -59,23 +61,33 @@ class _JournalScreenState extends State<JournalScreen> {
     super.initState();
     _dailyQuote = _quotes[Random().nextInt(_quotes.length)];
 
-    // 1. Initial Load
-    _refreshEntries();
+    // Ensure box is loaded before use
+    _ensureBoxLoaded();
 
-    // 2. Efficient Search Listener (No setState)
+    // Efficient Search Listener (No setState)
     _searchController.addListener(() {
       _searchQuery = _searchController.text.toLowerCase();
       _applyFilters();
     });
+  }
 
-    // 3. Database Listener (Background update)
-    // We listen to the box, but we DO NOT wrap the UI in a ValueListenableBuilder
-    Hive.box<JournalEntry>('journal_box').listenable().addListener(_refreshEntries);
+  /// ✅ OPTIMIZATION: Ensure box is loaded before use
+  Future<void> _ensureBoxLoaded() async {
+    await LazyBoxLoader.getBox<JournalEntry>('journal_box');
+    if (mounted) {
+      _refreshEntries();
+      // Database Listener (Background update)
+      Hive.box<JournalEntry>(
+        'journal_box',
+      ).listenable().addListener(_refreshEntries);
+    }
   }
 
   @override
   void dispose() {
-    Hive.box<JournalEntry>('journal_box').listenable().removeListener(_refreshEntries);
+    Hive.box<JournalEntry>(
+      'journal_box',
+    ).listenable().removeListener(_refreshEntries);
     _searchController.dispose();
     _filteredEntriesNotifier.dispose();
     super.dispose();
@@ -98,11 +110,17 @@ class _JournalScreenState extends State<JournalScreen> {
 
     // 1. Search Filter
     if (_searchQuery.isNotEmpty) {
-      result = result.where((e) =>
-      e.title.toLowerCase().contains(_searchQuery) ||
-          e.content.toLowerCase().contains(_searchQuery) ||
-          (e.tags != null && e.tags!.any((tag) => tag.toLowerCase().contains(_searchQuery)))
-      ).toList();
+      result = result
+          .where(
+            (e) =>
+                e.title.toLowerCase().contains(_searchQuery) ||
+                e.content.toLowerCase().contains(_searchQuery) ||
+                (e.tags != null &&
+                    e.tags!.any(
+                      (tag) => tag.toLowerCase().contains(_searchQuery),
+                    )),
+          )
+          .toList();
     }
 
     // 2. Sort
@@ -156,25 +174,38 @@ class _JournalScreenState extends State<JournalScreen> {
     }
 
     final dateStr = DateFormat('EEEE, MMM dd, yyyy').format(entry.date);
-    final tagsStr = (entry.tags != null && entry.tags!.isNotEmpty) ? "\nTags: #${entry.tags!.join(' #')}" : "";
+    final tagsStr = (entry.tags != null && entry.tags!.isNotEmpty)
+        ? "\nTags: #${entry.tags!.join(' #')}"
+        : "";
 
     return "📅 $dateStr\nMood: ${_getMoodEmoji(entry.mood)} ${entry.mood}\n\nTITLE: ${entry.title}\n--------------------------\n${body.trim()}\n$tagsStr";
   }
 
   String _getMoodEmoji(String mood) {
     switch (mood) {
-      case 'Happy': return '😊';
-      case 'Excited': return '🤩';
-      case 'Neutral': return '😐';
-      case 'Sad': return '😔';
-      case 'Stressed': return '😫';
-      default: return '😐';
+      case 'Happy':
+        return '😊';
+      case 'Excited':
+        return '🤩';
+      case 'Neutral':
+        return '😐';
+      case 'Sad':
+        return '😔';
+      case 'Stressed':
+        return '😫';
+      default:
+        return '😐';
     }
   }
 
   void _copyEntry(JournalEntry entry) {
     Clipboard.setData(ClipboardData(text: _formatJournalForExport(entry)));
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Entry copied"), behavior: SnackBarBehavior.floating));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Entry copied"),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
   }
 
   void _shareEntry(JournalEntry entry) {
@@ -209,7 +240,10 @@ class _JournalScreenState extends State<JournalScreen> {
         entry.save();
       } catch (_) {}
     }
-    setState(() { _selectedIds.clear(); _isSelectionMode = false; });
+    setState(() {
+      _selectedIds.clear();
+      _isSelectionMode = false;
+    });
   }
 
   void _deleteAll() {
@@ -223,7 +257,9 @@ class _JournalScreenState extends State<JournalScreen> {
         onConfirm: () {
           final now = DateTime.now();
           for (var entry in _rawEntries) {
-            entry.isDeleted = true; entry.deletedAt = now; entry.save();
+            entry.isDeleted = true;
+            entry.deletedAt = now;
+            entry.save();
           }
           Navigator.pop(ctx);
         },
@@ -241,8 +277,10 @@ class _JournalScreenState extends State<JournalScreen> {
 
   void _toggleSelection(String id) {
     setState(() {
-      if (_selectedIds.contains(id)) _selectedIds.remove(id);
-      else _selectedIds.add(id);
+      if (_selectedIds.contains(id))
+        _selectedIds.remove(id);
+      else
+        _selectedIds.add(id);
       if (_selectedIds.isEmpty) _isSelectionMode = false;
     });
   }
@@ -268,18 +306,23 @@ class _JournalScreenState extends State<JournalScreen> {
     return WillPopScope(
       onWillPop: () async {
         if (_isSelectionMode) {
-          setState(() { _isSelectionMode = false; _selectedIds.clear(); });
+          setState(() {
+            _isSelectionMode = false;
+            _selectedIds.clear();
+          });
           return false;
         }
         return true;
       },
       child: GlassScaffold(
         title: null,
-        floatingActionButton: _isSelectionMode ? null : FloatingActionButton(
-          onPressed: () => _openEditor(null),
-          backgroundColor: theme.colorScheme.primary,
-          child: Icon(Icons.add, color: theme.colorScheme.onPrimary),
-        ),
+        floatingActionButton: _isSelectionMode
+            ? null
+            : FloatingActionButton(
+                onPressed: () => _openEditor(null),
+                backgroundColor: theme.colorScheme.primary,
+                child: Icon(Icons.add, color: theme.colorScheme.onPrimary),
+              ),
         body: Column(
           children: [
             _buildCustomTopBar(),
@@ -289,20 +332,32 @@ class _JournalScreenState extends State<JournalScreen> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   decoration: BoxDecoration(
                     color: onSurfaceColor.withOpacity(0.05),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+                    border: Border.all(
+                      color: theme.dividerColor.withOpacity(0.1),
+                    ),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.lightbulb_outline, color: Colors.amberAccent, size: 20),
+                      const Icon(
+                        Icons.lightbulb_outline,
+                        color: Colors.amberAccent,
+                        size: 20,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           _dailyQuote,
-                          style: theme.textTheme.bodySmall?.copyWith(color: onSurfaceColor.withOpacity(0.7), fontStyle: FontStyle.italic),
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: onSurfaceColor.withOpacity(0.7),
+                            fontStyle: FontStyle.italic,
+                          ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -314,23 +369,39 @@ class _JournalScreenState extends State<JournalScreen> {
 
             // Search Bar (Static container)
             Padding(
-              padding: const EdgeInsets.only(right: 16, left: 16, top: 0, bottom: 8),
+              padding: const EdgeInsets.only(
+                right: 16,
+                left: 16,
+                top: 0,
+                bottom: 8,
+              ),
               child: Container(
                 height: 44,
                 decoration: BoxDecoration(
                   color: onSurfaceColor.withOpacity(0.08),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+                  border: Border.all(
+                    color: theme.dividerColor.withOpacity(0.1),
+                  ),
                 ),
                 child: TextField(
                   controller: _searchController,
                   style: theme.textTheme.bodyMedium,
                   decoration: InputDecoration(
                     hintText: 'Search memories...',
-                    hintStyle: theme.textTheme.bodyMedium?.copyWith(color: onSurfaceColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.search, color: onSurfaceColor.withOpacity(0.5), size: 20),
+                    hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                      color: onSurfaceColor.withOpacity(0.5),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: onSurfaceColor.withOpacity(0.5),
+                      size: 20,
+                    ),
                     suffixIcon: _searchController.text.isNotEmpty
-                        ? IconButton(icon: const Icon(Icons.close, size: 18), onPressed: _searchController.clear)
+                        ? IconButton(
+                            icon: const Icon(Icons.close, size: 18),
+                            onPressed: _searchController.clear,
+                          )
                         : null,
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(vertical: 10),
@@ -346,10 +417,20 @@ class _JournalScreenState extends State<JournalScreen> {
                 valueListenable: _filteredEntriesNotifier,
                 builder: (context, entries, _) {
                   if (entries.isEmpty) {
-                    return Center(child: Text("Start writing your story.", style: theme.textTheme.bodyMedium?.copyWith(color: onSurfaceColor.withOpacity(0.4))));
+                    return Center(
+                      child: Text(
+                        "Start writing your story.",
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: onSurfaceColor.withOpacity(0.4),
+                        ),
+                      ),
+                    );
                   }
 
-                  final canReorder = _currentSort == JournalSortOption.custom && _searchQuery.isEmpty && !_isSelectionMode;
+                  final canReorder =
+                      _currentSort == JournalSortOption.custom &&
+                      _searchQuery.isEmpty &&
+                      !_isSelectionMode;
 
                   if (canReorder) {
                     return ReorderableListView.builder(
@@ -359,7 +440,16 @@ class _JournalScreenState extends State<JournalScreen> {
                       onReorder: _onReorder,
                       // Lightweight proxy decoration
                       proxyDecorator: (child, index, animation) =>
-                          AnimatedBuilder(animation: animation, builder: (_, __) => Transform.scale(scale: 1.05, child: Material(color: Colors.transparent, child: child))),
+                          AnimatedBuilder(
+                            animation: animation,
+                            builder: (_, __) => Transform.scale(
+                              scale: 1.05,
+                              child: Material(
+                                color: Colors.transparent,
+                                child: child,
+                              ),
+                            ),
+                          ),
                       itemBuilder: (context, index) {
                         final entry = entries[index];
                         return Container(
@@ -372,7 +462,10 @@ class _JournalScreenState extends State<JournalScreen> {
                             onCopy: () => _copyEntry(entry),
                             onShare: () => _shareEntry(entry),
                             onDelete: () => _confirmDeleteEntry(entry),
-                            onColorChanged: (c) { entry.colorValue = c.value; entry.save(); },
+                            onColorChanged: (c) {
+                              entry.colorValue = c.value;
+                              entry.save();
+                            },
                           ),
                         );
                       },
@@ -392,11 +485,17 @@ class _JournalScreenState extends State<JournalScreen> {
                             entry: entry,
                             isSelected: _selectedIds.contains(entry.id),
                             onTap: () => _openEditor(entry),
-                            onLongPress: () => setState(() { _isSelectionMode = true; _selectedIds.add(entry.id); }),
+                            onLongPress: () => setState(() {
+                              _isSelectionMode = true;
+                              _selectedIds.add(entry.id);
+                            }),
                             onCopy: () => _copyEntry(entry),
                             onShare: () => _shareEntry(entry),
                             onDelete: () => _confirmDeleteEntry(entry),
-                            onColorChanged: (c) { entry.colorValue = c.value; entry.save(); },
+                            onColorChanged: (c) {
+                              entry.colorValue = c.value;
+                              entry.save();
+                            },
                           ),
                         );
                       },
@@ -422,10 +521,16 @@ class _JournalScreenState extends State<JournalScreen> {
       child: Row(
         children: [
           IconButton(
-            icon: Icon(_isSelectionMode ? Icons.close : Icons.arrow_back_ios_new, color: theme.iconTheme.color),
+            icon: Icon(
+              _isSelectionMode ? Icons.close : Icons.arrow_back_ios_new,
+              color: theme.iconTheme.color,
+            ),
             onPressed: () {
-              if(_isSelectionMode) {
-                setState(() { _isSelectionMode = false; _selectedIds.clear(); });
+              if (_isSelectionMode) {
+                setState(() {
+                  _isSelectionMode = false;
+                  _selectedIds.clear();
+                });
               } else {
                 context.pop();
               }
@@ -433,35 +538,70 @@ class _JournalScreenState extends State<JournalScreen> {
           ),
           Expanded(
             child: _isSelectionMode
-                ? Center(child: Text('${_selectedIds.length} Selected', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)))
+                ? Center(
+                    child: Text(
+                      '${_selectedIds.length} Selected',
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
                 : Row(
-              children: [
-                const Hero(tag: 'journal_icon', child: Icon(Icons.book_outlined, size: 28, color: Colors.blueAccent)),
-                const SizedBox(width: 10),
-                Hero(tag: 'journal_title', child: Material(type: MaterialType.transparency, child: Text("Journal", style: theme.textTheme.titleLarge?.copyWith(fontSize: 24, fontWeight: FontWeight.bold)))),
-              ],
-            ),
+                    children: [
+                      const Hero(
+                        tag: 'journal_icon',
+                        child: Icon(
+                          Icons.book_outlined,
+                          size: 28,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Hero(
+                        tag: 'journal_title',
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: Text(
+                            "Journal",
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
           ),
           if (_isSelectionMode) ...[
             IconButton(
-                icon: Icon(Icons.select_all, color: onSurfaceColor),
-                onPressed: _selectAll
+              icon: Icon(Icons.select_all, color: onSurfaceColor),
+              onPressed: _selectAll,
             ),
-            IconButton(icon: Icon(Icons.delete, color: errorColor), onPressed: _deleteSelected),
+            IconButton(
+              icon: Icon(Icons.delete, color: errorColor),
+              onPressed: _deleteSelected,
+            ),
           ] else ...[
             IconButton(
-                icon: Icon(Icons.check_circle_outline, color: onSurfaceColor.withOpacity(0.54)),
-                onPressed: () => setState(() => _isSelectionMode = true)
+              icon: Icon(
+                Icons.check_circle_outline,
+                color: onSurfaceColor.withOpacity(0.54),
+              ),
+              onPressed: () => setState(() => _isSelectionMode = true),
             ),
             IconButton(
-                icon: Icon(Icons.filter_list, color: onSurfaceColor),
-                onPressed: _showFilterMenu
+              icon: Icon(Icons.filter_list, color: onSurfaceColor),
+              onPressed: _showFilterMenu,
             ),
             IconButton(
-                icon: const Icon(Icons.delete_sweep_outlined, color: Colors.redAccent),
-                onPressed: _deleteAll
+              icon: const Icon(
+                Icons.delete_sweep_outlined,
+                color: Colors.redAccent,
+              ),
+              onPressed: _deleteAll,
             ),
-          ]
+          ],
         ],
       ),
     );
@@ -473,32 +613,52 @@ class _JournalScreenState extends State<JournalScreen> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (context) => StatefulBuilder( // Enables instant UI updates in sheet
-          builder: (context, setSheetState) {
-            return Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surface, // Solid color
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      builder: (context) => StatefulBuilder(
+        // Enables instant UI updates in sheet
+        builder: (context, setSheetState) {
+          return Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface, // Solid color
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(20),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), borderRadius: BorderRadius.circular(2)))),
-                  const SizedBox(height: 20),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
 
-                  Text("Sort By", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 16),
+                Text(
+                  "Sort By",
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
 
-                  _buildSortOption(JournalSortOption.custom, "Custom Order (Drag & Drop)"),
-                  _buildSortOption(JournalSortOption.dateNewest, "Newest First"),
-                  _buildSortOption(JournalSortOption.dateOldest, "Oldest First"),
-                  _buildSortOption(JournalSortOption.mood, "Group by Mood"),
-                ],
-              ),
-            );
-          }
+                _buildSortOption(
+                  JournalSortOption.custom,
+                  "Custom Order (Drag & Drop)",
+                ),
+                _buildSortOption(JournalSortOption.dateNewest, "Newest First"),
+                _buildSortOption(JournalSortOption.dateOldest, "Oldest First"),
+                _buildSortOption(JournalSortOption.mood, "Group by Mood"),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -519,8 +679,12 @@ class _JournalScreenState extends State<JournalScreen> {
         child: Row(
           children: [
             Icon(
-              selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-              color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.5),
+              selected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_unchecked,
+              color: selected
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.onSurface.withOpacity(0.5),
             ),
             const SizedBox(width: 16),
             Text(
@@ -528,7 +692,9 @@ class _JournalScreenState extends State<JournalScreen> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-                color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+                color: selected
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.onSurface,
               ),
             ),
           ],

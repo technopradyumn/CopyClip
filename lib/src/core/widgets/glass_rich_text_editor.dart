@@ -230,6 +230,66 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     );
   }
 
+  Future<void> _copy() async {
+    final selection = widget.controller.selection;
+    if (selection.isCollapsed) {
+      // No text selected
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No text selected to copy'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+      return;
+    }
+
+    final selectedText = widget.controller.document.getPlainText(
+      selection.start,
+      selection.end - selection.start,
+    );
+
+    await Clipboard.setData(ClipboardData(text: selectedText));
+
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Text copied to clipboard'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+    }
+  }
+
+  Future<void> _paste() async {
+    final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
+
+    if (clipboardData == null ||
+        clipboardData.text == null ||
+        clipboardData.text!.isEmpty) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Clipboard is empty'),
+            duration: Duration(seconds: 1),
+          ),
+        );
+      }
+      return;
+    }
+
+    final index = widget.controller.selection.baseOffset;
+    widget.controller.replaceText(index, 0, clipboardData.text!, null);
+
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Text pasted from clipboard'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+    }
+  }
+
   void _toggleReadOnly() {
     setState(() => widget.controller.readOnly = !widget.controller.readOnly);
     ScaffoldMessenger.of(context).showSnackBar(
@@ -976,6 +1036,13 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                 scrollPhysics: const BouncingScrollPhysics(),
                 enableInteractiveSelection: true,
                 showCursor: true,
+                // Enable context menu for copy, paste, select all on long press
+                contextMenuBuilder: (context, rawEditorState) {
+                  return AdaptiveTextSelectionToolbar.buttonItems(
+                    anchors: rawEditorState.contextMenuAnchors,
+                    buttonItems: rawEditorState.contextMenuButtonItems,
+                  );
+                },
                 embedBuilders: [
                   ...FlutterQuillEmbeds.editorBuilders(),
                   TimeStampEmbedBuilder(),
@@ -1046,6 +1113,16 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                       tooltip: 'Redo',
                       isDisabled: !canRedo,
                       onPressed: canRedo ? widget.controller.redo : null,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.copy,
+                      tooltip: 'Copy',
+                      onPressed: _copy,
+                    ),
+                    _buildIconButton(
+                      icon: Icons.paste,
+                      tooltip: 'Paste',
+                      onPressed: _paste,
                     ),
                     const SizedBox(width: 4),
                     _buildIconButton(

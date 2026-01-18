@@ -7,10 +7,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 class BannerAdWidget extends StatefulWidget {
   final bool hideOnKeyboard;
 
-  const BannerAdWidget({
-    super.key,
-    this.hideOnKeyboard = true,
-  });
+  const BannerAdWidget({super.key, this.hideOnKeyboard = true});
 
   @override
   State<BannerAdWidget> createState() => _BannerAdWidgetState();
@@ -20,29 +17,41 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   BannerAd? _bannerAd;
   bool _isAdLoaded = false;
 
-  // ✅ TEST ID FALLBACK
+  // ✅ TEST ID FALLBACK (Standard Google Test Banner ID)
+  // This ensures ads show up even if .env is missing or invalid
   String get _adUnitId {
     if (Platform.isAndroid) {
-      // Use your .env variable, or fall back to test ID
-      return dotenv.env['ANDROID_BANNER_AD_UNIT_ID'] ?? '';
+      final key = dotenv.env['ANDROID_BANNER_AD_UNIT_ID'];
+      if (key != null && key.isNotEmpty) return key;
     }
-    return dotenv.env['ANDROID_BANNER_AD_UNIT_ID'] ?? '';
+    return 'ca-app-pub-3940256099942544/6300978111';
   }
 
   @override
-  void initState() {
-    super.initState();
-    _loadAd();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Load ad here to have valid MediaQuery context for Adaptive Size
+    if (_bannerAd == null) {
+      _loadAd();
+    }
   }
 
-  void _loadAd() {
+  Future<void> _loadAd() async {
+    // 🏷️ ADAPTIVE SIZE: Fills width properly
+    final width = MediaQuery.of(context).size.width.truncate();
+    final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+      width,
+    );
+
+    if (!mounted) return;
+
     _bannerAd = BannerAd(
       adUnitId: _adUnitId,
-      size: AdSize.banner,
+      size: size ?? AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
-          debugPrint('✅ Banner Ad Loaded');
+          debugPrint('✅ Banner Ad Loaded (${ad.responseInfo?.responseId})');
           if (mounted) setState(() => _isAdLoaded = true);
         },
         onAdFailedToLoad: (ad, error) {

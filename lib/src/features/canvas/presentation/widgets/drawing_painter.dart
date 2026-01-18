@@ -15,7 +15,8 @@ class DrawingPainter extends CustomPainter {
     for (var stroke in strokes) {
       if (stroke.points.length < 2) continue;
 
-      final brushShape = BrushShape.values[stroke.penType.clamp(0, BrushShape.values.length - 1)];
+      final brushShape = BrushShape
+          .values[stroke.penType.clamp(0, BrushShape.values.length - 1)];
 
       final paint = Paint()
         ..color = Color(stroke.color)
@@ -49,7 +50,12 @@ class DrawingPainter extends CustomPainter {
     ].contains(shape);
   }
 
-  void _drawBristles(Canvas canvas, DrawingStroke stroke, Paint paint, BrushShape shape) {
+  void _drawBristles(
+    Canvas canvas,
+    DrawingStroke stroke,
+    Paint paint,
+    BrushShape shape,
+  ) {
     final random = Random(stroke.points.hashCode);
 
     // Config based on brush type
@@ -79,7 +85,9 @@ class DrawingPainter extends CustomPainter {
         opacityMultiplier = 0.8;
     }
 
-    paint.color = paint.color.withOpacity(paint.color.opacity * opacityMultiplier);
+    paint.color = paint.color.withOpacity(
+      paint.color.opacity * opacityMultiplier,
+    );
     // Bristles are thinner than the main stroke width
     paint.strokeWidth = max(1.0, stroke.strokeWidth / (hairs / 2));
 
@@ -90,8 +98,10 @@ class DrawingPainter extends CustomPainter {
       // Draw multiple parallel lines with jitter to simulate hairs
       for (int h = 0; h < hairs; h++) {
         // Calculate a random offset for each hair
-        final offsetX = (random.nextDouble() - 0.5) * stroke.strokeWidth * spread;
-        final offsetY = (random.nextDouble() - 0.5) * stroke.strokeWidth * spread;
+        final offsetX =
+            (random.nextDouble() - 0.5) * stroke.strokeWidth * spread;
+        final offsetY =
+            (random.nextDouble() - 0.5) * stroke.strokeWidth * spread;
 
         canvas.drawLine(
           p1.translate(offsetX, offsetY),
@@ -114,15 +124,24 @@ class DrawingPainter extends CustomPainter {
     ].contains(shape);
   }
 
-  void _drawParticles(Canvas canvas, DrawingStroke stroke, Paint paint, BrushShape shape) {
+  void _drawParticles(
+    Canvas canvas,
+    DrawingStroke stroke,
+    Paint paint,
+    BrushShape shape,
+  ) {
     final random = Random(stroke.points.hashCode);
 
     if (shape == BrushShape.pixelBrush) {
       paint.style = PaintingStyle.fill;
       for (int i = 0; i < stroke.points.length; i += 2) {
         // Snap to grid logic
-        final x = (stroke.points[i] / stroke.strokeWidth).floor() * stroke.strokeWidth;
-        final y = (stroke.points[i + 1] / stroke.strokeWidth).floor() * stroke.strokeWidth;
+        final x =
+            (stroke.points[i] / stroke.strokeWidth).floor() *
+            stroke.strokeWidth;
+        final y =
+            (stroke.points[i + 1] / stroke.strokeWidth).floor() *
+            stroke.strokeWidth;
         canvas.drawRect(
           Rect.fromLTWH(x, y, stroke.strokeWidth, stroke.strokeWidth),
           paint,
@@ -171,7 +190,8 @@ class DrawingPainter extends CustomPainter {
         // Spray/Airbrush logic
         for (int d = 0; d < density; d++) {
           final angle = random.nextDouble() * 2 * pi;
-          final radius = sqrt(random.nextDouble()) * stroke.strokeWidth * scatterRadius;
+          final radius =
+              sqrt(random.nextDouble()) * stroke.strokeWidth * scatterRadius;
           final offset = Offset(cos(angle) * radius, sin(angle) * radius);
 
           canvas.drawCircle(center + offset, random.nextDouble() * 1.5, paint);
@@ -182,12 +202,12 @@ class DrawingPainter extends CustomPainter {
           final next = Offset(stroke.points[i + 2], stroke.points[i + 3]);
           for (int d = 0; d < density; d++) {
             final jitter1 = Offset(
-                (random.nextDouble() - 0.5) * stroke.strokeWidth * scatterRadius,
-                (random.nextDouble() - 0.5) * stroke.strokeWidth * scatterRadius
+              (random.nextDouble() - 0.5) * stroke.strokeWidth * scatterRadius,
+              (random.nextDouble() - 0.5) * stroke.strokeWidth * scatterRadius,
             );
             final jitter2 = Offset(
-                (random.nextDouble() - 0.5) * stroke.strokeWidth * scatterRadius,
-                (random.nextDouble() - 0.5) * stroke.strokeWidth * scatterRadius
+              (random.nextDouble() - 0.5) * stroke.strokeWidth * scatterRadius,
+              (random.nextDouble() - 0.5) * stroke.strokeWidth * scatterRadius,
             );
             canvas.drawLine(center + jitter1, next + jitter2, paint);
           }
@@ -207,7 +227,12 @@ class DrawingPainter extends CustomPainter {
     ].contains(shape);
   }
 
-  void _drawCalligraphic(Canvas canvas, DrawingStroke stroke, Paint paint, BrushShape shape) {
+  void _drawCalligraphic(
+    Canvas canvas,
+    DrawingStroke stroke,
+    Paint paint,
+    BrushShape shape,
+  ) {
     paint.style = PaintingStyle.fill;
 
     double angleOffset = 0; // The angle of the flat tip
@@ -272,7 +297,12 @@ class DrawingPainter extends CustomPainter {
     ].contains(shape);
   }
 
-  void _drawEffects(Canvas canvas, DrawingStroke stroke, Paint paint, BrushShape shape) {
+  void _drawEffects(
+    Canvas canvas,
+    DrawingStroke stroke,
+    Paint paint,
+    BrushShape shape,
+  ) {
     final path = Path();
     if (stroke.points.length > 1) {
       path.moveTo(stroke.points[0], stroke.points[1]);
@@ -293,21 +323,22 @@ class DrawingPainter extends CustomPainter {
       paint.color = Colors.white.withOpacity(0.9);
       paint.strokeWidth = stroke.strokeWidth / 1.5;
       canvas.drawPath(path, paint);
-    }
-    else if (shape == BrushShape.watercolorBrush) {
+    } else if (shape == BrushShape.watercolorBrush) {
       // Low opacity, high blur, overlapping strokes
       paint.color = paint.color.withOpacity(0.3);
-      paint.maskFilter = MaskFilter.blur(BlurStyle.normal, stroke.strokeWidth / 2);
+      paint.maskFilter = MaskFilter.blur(
+        BlurStyle.normal,
+        stroke.strokeWidth / 2,
+      );
       // Watercolor looks better if we draw segment by segment to get buildup
       for (int i = 0; i < stroke.points.length - 2; i += 2) {
         canvas.drawLine(
-            Offset(stroke.points[i], stroke.points[i+1]),
-            Offset(stroke.points[i+2], stroke.points[i+3]),
-            paint
+          Offset(stroke.points[i], stroke.points[i + 1]),
+          Offset(stroke.points[i + 2], stroke.points[i + 3]),
+          paint,
         );
       }
-    }
-    else if (shape == BrushShape.glitchBrush) {
+    } else if (shape == BrushShape.glitchBrush) {
       final random = Random(stroke.points.hashCode);
       paint.color = paint.color.withOpacity(0.8);
 
@@ -316,20 +347,24 @@ class DrawingPainter extends CustomPainter {
           // Horizontal offset glitch
           final shift = (random.nextDouble() - 0.5) * 20;
           canvas.drawLine(
-              Offset(stroke.points[i] + shift, stroke.points[i+1]),
-              Offset(stroke.points[i+2] + shift, stroke.points[i+3]),
-              paint..color = [Colors.red, Colors.blue, Colors.green][random.nextInt(3)].withOpacity(0.6)
+            Offset(stroke.points[i] + shift, stroke.points[i + 1]),
+            Offset(stroke.points[i + 2] + shift, stroke.points[i + 3]),
+            paint
+              ..color = [
+                Colors.red,
+                Colors.blue,
+                Colors.green,
+              ][random.nextInt(3)].withOpacity(0.6),
           );
         } else {
           canvas.drawLine(
-              Offset(stroke.points[i], stroke.points[i+1]),
-              Offset(stroke.points[i+2], stroke.points[i+3]),
-              paint..color = Color(stroke.color)
+            Offset(stroke.points[i], stroke.points[i + 1]),
+            Offset(stroke.points[i + 2], stroke.points[i + 3]),
+            paint..color = Color(stroke.color),
           );
         }
       }
-    }
-    else if (shape == BrushShape.blurBrush) {
+    } else if (shape == BrushShape.blurBrush) {
       paint.maskFilter = MaskFilter.blur(BlurStyle.normal, stroke.strokeWidth);
       paint.color = paint.color.withOpacity(0.5);
       canvas.drawPath(path, paint);
@@ -337,13 +372,21 @@ class DrawingPainter extends CustomPainter {
   }
 
   // --- 5. STANDARD BRUSHES & ERASERS ---
-  void _drawStandard(Canvas canvas, DrawingStroke stroke, Paint paint, BrushShape shape) {
+  void _drawStandard(
+    Canvas canvas,
+    DrawingStroke stroke,
+    Paint paint,
+    BrushShape shape,
+  ) {
     if (shape == BrushShape.eraserHard) {
       paint.color = backgroundColor; // Or transparent if using layers
       paint.blendMode = BlendMode.src; // Basic erasing
     } else if (shape == BrushShape.eraserSoft) {
       paint.color = backgroundColor;
-      paint.maskFilter = MaskFilter.blur(BlurStyle.normal, stroke.strokeWidth / 2);
+      paint.maskFilter = MaskFilter.blur(
+        BlurStyle.normal,
+        stroke.strokeWidth / 2,
+      );
     } else if (shape == BrushShape.square) {
       paint.strokeCap = StrokeCap.square;
     } else {
@@ -374,7 +417,7 @@ class DrawingPainter extends CustomPainter {
       // Finish the path
       if (stroke.points.length > 2 && shape != BrushShape.technicalPen) {
         final lastIndex = stroke.points.length - 2;
-        path.lineTo(stroke.points[lastIndex], stroke.points[lastIndex+1]);
+        path.lineTo(stroke.points[lastIndex], stroke.points[lastIndex + 1]);
       }
     }
 
@@ -384,6 +427,5 @@ class DrawingPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(DrawingPainter oldDelegate) =>
-      oldDelegate.strokes != strokes || oldDelegate.backgroundColor != backgroundColor;
+  bool shouldRepaint(DrawingPainter oldDelegate) => true;
 }

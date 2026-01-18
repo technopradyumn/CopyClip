@@ -56,6 +56,8 @@ class Note extends HiveObject {
     colorValue: json['colorValue'],
     sortIndex: json['sortIndex'] ?? 0,
     isDeleted: json['isDeleted'] ?? false,
-    deletedAt: json['deletedAt'] != null ? DateTime.parse(json['deletedAt']) : null,
+    deletedAt: json['deletedAt'] != null
+        ? DateTime.parse(json['deletedAt'])
+        : null,
   );
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="widget_background">#F5F5F7</color> <!-- iOS Light BG -->
+    <color name="widget_surface">#FFFFFF</color> <!-- Card BG -->
+    <color name="text_primary">#000000</color>
+    <color name="text_secondary">#8E8E93</color>
+    <color name="text_tertiary">#C7C7CC</color>
+    <color name="accent_primary">#007AFF</color> <!-- iOS Blue -->
+    <color name="header_bg">#FFFFFF</color>
+    <color name="divider_line">#00000000</color>
+    <color name="todo_done">#34C759</color>
+    <color name="todo_pending">#FF3B30</color>
+    <color name="widget_shadow">#1A000000</color>
+</resources>

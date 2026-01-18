@@ -27,13 +27,15 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
 
     void addFromBox<T>(String boxName) {
       if (Hive.isBoxOpen(boxName)) {
-        allDeleted.addAll(Hive.box<T>(boxName).values.where((e) {
-          try {
-            return (e as dynamic).isDeleted == true;
-          } catch (_) {
-            return false;
-          }
-        }));
+        allDeleted.addAll(
+          Hive.box<T>(boxName).values.where((e) {
+            try {
+              return (e as dynamic).isDeleted == true;
+            } catch (_) {
+              return false;
+            }
+          }),
+        );
       }
     }
 
@@ -44,10 +46,15 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
     addFromBox<ClipboardItem>('clipboard_box');
 
     if (_sortBy == 'date') {
-      allDeleted.sort((a, b) => ((b as dynamic).deletedAt ?? DateTime.now())
-          .compareTo((a as dynamic).deletedAt ?? DateTime.now()));
+      allDeleted.sort(
+        (a, b) => ((b as dynamic).deletedAt ?? DateTime.now()).compareTo(
+          (a as dynamic).deletedAt ?? DateTime.now(),
+        ),
+      );
     } else {
-      allDeleted.sort((a, b) => a.runtimeType.toString().compareTo(b.runtimeType.toString()));
+      allDeleted.sort(
+        (a, b) => a.runtimeType.toString().compareTo(b.runtimeType.toString()),
+      );
     }
     return allDeleted;
   }
@@ -76,42 +83,53 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
       final cleanContent = _parsePlainContent(item.content);
       return {
         'title': item.title.isEmpty ? "Untitled Note" : item.title,
-        'subtitle': cleanContent.length > 40 ? "${cleanContent.substring(0, 40)}..." : cleanContent,
+        'subtitle': cleanContent.length > 40
+            ? "${cleanContent.substring(0, 40)}..."
+            : cleanContent,
         'icon': Icons.note_alt_rounded,
-        'color': Colors.amberAccent
+        'color': Colors.amberAccent,
       };
     } else if (item is Todo) {
       return {
         'title': item.task,
         'subtitle': "Category: ${item.category}",
         'icon': Icons.check_circle_rounded,
-        'color': Colors.greenAccent
+        'color': Colors.greenAccent,
       };
     } else if (item is Expense) {
       return {
         'title': item.title,
         'subtitle': "${item.currency}${item.amount.toStringAsFixed(2)}",
         'icon': Icons.account_balance_wallet_rounded,
-        'color': Colors.redAccent
+        'color': Colors.redAccent,
       };
     } else if (item is JournalEntry) {
       final cleanContent = _parsePlainContent(item.content);
       return {
         'title': item.title.isEmpty ? "Daily Entry" : item.title,
-        'subtitle': cleanContent.length > 40 ? "${cleanContent.substring(0, 40)}..." : "Mood: ${item.mood}",
+        'subtitle': cleanContent.length > 40
+            ? "${cleanContent.substring(0, 40)}..."
+            : "Mood: ${item.mood}",
         'icon': Icons.book_rounded,
-        'color': Colors.blueAccent
+        'color': Colors.blueAccent,
       };
     } else if (item is ClipboardItem) {
       final cleanClip = item.content.trim().replaceAll(RegExp(r'\s+'), ' ');
       return {
-        'title': cleanClip.length > 35 ? "${cleanClip.substring(0, 35)}..." : cleanClip,
+        'title': cleanClip.length > 35
+            ? "${cleanClip.substring(0, 35)}..."
+            : cleanClip,
         'subtitle': "Clipboard History",
         'icon': Icons.copy_rounded,
-        'color': Colors.purpleAccent
+        'color': Colors.purpleAccent,
       };
     }
-    return {'title': "Unknown", 'subtitle': "", 'icon': Icons.help_outline, 'color': Colors.grey};
+    return {
+      'title': "Unknown",
+      'subtitle': "",
+      'icon': Icons.help_outline,
+      'color': Colors.grey,
+    };
   }
 
   String _getBoxName(dynamic item) {
@@ -133,7 +151,10 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
     await item.save();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Item restored"), behavior: SnackBarBehavior.floating)
+        const SnackBar(
+          content: Text("Item restored"),
+          behavior: SnackBarBehavior.floating,
+        ),
       );
     }
   }
@@ -156,33 +177,52 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
   }
 
   void _emptyTrash() {
+    final itemsToDelete =
+        _getAllDeleted(); // Get currently visible deleted items
+    if (itemsToDelete.isEmpty) return;
+
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
         title: "Empty Recycle Bin?",
-        content: "All items across all categories will be permanently deleted.",
+        content:
+            "All ${itemsToDelete.length} items will be permanently deleted.",
         confirmText: "Empty Bin",
         isDestructive: true,
         onConfirm: () async {
+          // Close dialog first to avoid UI freeze perception
           Navigator.pop(ctx);
-          final boxes = ['notes_box', 'todos_box', 'expenses_box', 'journal_box', 'clipboard_box'];
-          for (var boxName in boxes) {
-            if (Hive.isBoxOpen(boxName)) {
-              final box = Hive.box(boxName);
-              final keysToDelete = box.keys.where((key) {
-                final val = box.get(key);
-                return val != null && (val as dynamic).isDeleted == true;
-              }).toList();
-              for (var key in keysToDelete) {
-                await box.delete(key);
+
+          try {
+            // Delete all items directly
+            for (var item in itemsToDelete) {
+              if (item is HiveObject) {
+                await item.delete();
               }
             }
-          }
-          setState(() {});
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Recycle Bin cleared"), behavior: SnackBarBehavior.floating)
-            );
+
+            // Wait a tick for Hive to sync
+            await Future.delayed(const Duration(milliseconds: 100));
+
+            if (mounted) {
+              setState(() {}); // Refresh UI
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Recycle Bin cleared successfully"),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            }
+          } catch (e) {
+            debugPrint("Error emptying trash: $e");
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Error: $e"),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
           }
         },
       ),
@@ -201,9 +241,12 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
       actions: [
         if (items.isNotEmpty)
           IconButton(
-            icon: const Icon(Icons.delete_sweep_rounded, color: Colors.redAccent),
+            icon: const Icon(
+              Icons.delete_sweep_rounded,
+              color: Colors.redAccent,
+            ),
             onPressed: _emptyTrash,
-          )
+          ),
       ],
       body: Column(
         children: [
@@ -211,78 +254,131 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               children: [
-                _filterChip("Recent", _sortBy == 'date', () => setState(() => _sortBy = 'date')),
+                _filterChip(
+                  "Recent",
+                  _sortBy == 'date',
+                  () => setState(() => _sortBy = 'date'),
+                ),
                 const SizedBox(width: 8),
-                _filterChip("Category", _sortBy == 'type', () => setState(() => _sortBy = 'type')),
+                _filterChip(
+                  "Category",
+                  _sortBy == 'type',
+                  () => setState(() => _sortBy = 'type'),
+                ),
               ],
             ),
           ),
           Expanded(
             child: items.isEmpty
                 ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.delete_outline_rounded, size: 80, color: onSurface.withOpacity(0.1)),
-                  const SizedBox(height: 16),
-                  Text("Recycle Bin is empty", style: TextStyle(color: onSurface.withOpacity(0.4), fontWeight: FontWeight.w500)),
-                ],
-              ),
-            )
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.delete_outline_rounded,
+                          size: 80,
+                          color: onSurface.withOpacity(0.1),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          "Recycle Bin is empty",
+                          style: TextStyle(
+                            color: onSurface.withOpacity(0.4),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 : ListView.builder(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
-              physics: const BouncingScrollPhysics(),
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                final item = items[index];
-                final data = _getItemDisplayData(item);
-                final deleteDate = item.deletedAt != null
-                    ? DateFormat('MMM dd, hh:mm a').format(item.deletedAt!)
-                    : "Unknown date";
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final item = items[index];
+                      final data = _getItemDisplayData(item);
+                      final deleteDate = item.deletedAt != null
+                          ? DateFormat(
+                              'MMM dd, hh:mm a',
+                            ).format(item.deletedAt!)
+                          : "Unknown date";
 
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  // ✅ Replaced GlassContainer with a simple Container
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.surface.withOpacity(0.1), // Simple transparency
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.white.withOpacity(0.1)),
-                    ),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: data['color'].withOpacity(0.15),
-                        child: Icon(data['icon'], color: data['color'], size: 20),
-                      ),
-                      title: Text(data['title'],
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(data['subtitle'], maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: onSurface.withOpacity(0.7))),
-                          Text("Deleted $deleteDate", style: TextStyle(fontSize: 10, color: onSurface.withOpacity(0.4))),
-                        ],
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.restore_rounded, color: Colors.greenAccent),
-                            onPressed: () => _restoreItem(item),
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        // ✅ Replaced GlassContainer with a simple Container
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.surface.withOpacity(
+                              0.1,
+                            ), // Simple transparency
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.1),
+                            ),
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.delete_forever_rounded, color: Colors.redAccent),
-                            onPressed: () => _permanentlyDeleteItem(item),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor: data['color'].withOpacity(0.15),
+                              child: Icon(
+                                data['icon'],
+                                color: data['color'],
+                                size: 20,
+                              ),
+                            ),
+                            title: Text(
+                              data['title'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data['subtitle'],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: onSurface.withOpacity(0.7),
+                                  ),
+                                ),
+                                Text(
+                                  "Deleted $deleteDate",
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: onSurface.withOpacity(0.4),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.restore_rounded,
+                                    color: Colors.greenAccent,
+                                  ),
+                                  onPressed: () => _restoreItem(item),
+                                ),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.delete_forever_rounded,
+                                    color: Colors.redAccent,
+                                  ),
+                                  onPressed: () => _permanentlyDeleteItem(item),
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),
@@ -299,12 +395,22 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: isSelected ? theme.colorScheme.primary.withOpacity(0.2) : Colors.transparent,
+          color: isSelected
+              ? theme.colorScheme.primary.withOpacity(0.2)
+              : Colors.transparent,
           border: Border.all(
-            color: isSelected ? theme.colorScheme.primary.withOpacity(0.3) : theme.dividerColor.withOpacity(0.1),
+            color: isSelected
+                ? theme.colorScheme.primary.withOpacity(0.3)
+                : theme.dividerColor.withOpacity(0.1),
           ),
         ),
-        child: Text(label, style: TextStyle(fontSize: 12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          ),
+        ),
       ),
     );
   }

@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:isolate';
 import 'package:copyclip/src/core/services/home_widget_service.dart';
+import 'package:copyclip/src/core/services/lazy_box_loader.dart';
+import 'package:copyclip/src/core/utils/widget_sync_service.dart';
 import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -119,18 +122,14 @@ void main() async {
 Future<void> _initializeApp(AppInitializationState state) async {
   try {
     // Step 1: Basic services
-    state.updateProgress('Initializing services...', 0.1);
-    await Future.wait([
-      dotenv.load(fileName: ".env").catchError((_) => null),
-    ]);
+    state.updateProgress('Loading...', 0.2);
+    await dotenv.load(fileName: ".env").catchError((_) => null);
 
-    // ✅ CHANGE 1: Initialize Home Widget Service FIRST
-    state.updateProgress('Setting up widgets...', 0.2);
+    // ✅ OPTIMIZATION: Initialize Home Widget Service
     await HomeWidgetService.initialize();
-    debugPrint('✅ Home Widget Service initialized');
 
-    state.updateProgress('Initializing ads...', 0.25);
-    await MobileAds.instance.initialize();
+    // ✅ OPTIMIZATION: Defer ad initialization to improve startup time
+    // Ads will be initialized after the first frame is rendered
 
     // Step 2: Hive setup
     state.updateProgress('Setting up database...', 0.4);
@@ -141,6 +140,7 @@ Future<void> _initializeApp(AppInitializationState state) async {
     Hive.registerAdapter(ExpenseAdapter());
     Hive.registerAdapter(JournalEntryAdapter());
     Hive.registerAdapter(ClipboardItemAdapter());
+    await CanvasDatabase().init();
 
     // Step 3: System setup
     state.updateProgress('Configuring system...', 0.55);
@@ -152,32 +152,29 @@ Future<void> _initializeApp(AppInitializationState state) async {
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
-    // Step 4: Open critical boxes
-    state.updateProgress('Loading data...', 0.7);
+    // Step 4: Open only critical boxes for faster startup
+    state.updateProgress('Loading...', 0.6);
     await Future.wait([
       _openBoxSafely('settings'),
       _openBoxSafely('theme_box'),
-      NotificationService().init(),
     ]);
 
-    // Step 5: Open remaining boxes (SAFELY)
-    state.updateProgress('Loading features...', 0.85);
+    // ✅ OPTIMIZATION: Defer notification service init
+    NotificationService().init().catchError(
+      (e) => debugPrint('Notification init error: $e'),
+    );
 
-    // Open boxes sequentially to handle corruption
-    await _openBoxSafely<Note>('notes_box');
-    await _openBoxSafely<Todo>('todos_box');
-    await _openBoxSafely<Expense>('expenses_box');
-    await _openBoxSafely<JournalEntry>('journal_box');
-    await _openBoxSafely<ClipboardItem>('clipboard_box');
-    await CanvasDatabase().init();
+    // ✅ OPTIMIZATION: Lazy load feature boxes - they'll open when needed
+    // This significantly improves startup time
 
-    // ✅ CHANGE 3: Initialize background tasks and update widgets
-    state.updateProgress('Finalizing...', 0.95);
-    await _initializeBackgroundTasks();
+    // ✅ OPTIMIZATION: Defer background tasks to post-init
+    state.updateProgress('Ready', 0.9);
+    _initializeBackgroundTasks().catchError(
+      (e) => debugPrint('Background task error: $e'),
+    );
 
     state.complete();
     debugPrint("✅ App initialization complete");
-
   } catch (e, stackTrace) {
     debugPrint("❌ Initialization error: $e\n$stackTrace");
     state.complete();
@@ -209,7 +206,10 @@ Future<void> _initializeBackgroundTasks() async {
     if (title == null) {
       await Future.wait([
         HomeWidget.saveWidgetData<String>('title', 'CopyClip'),
-        HomeWidget.saveWidgetData<String>('description', 'Your productivity companion'),
+        HomeWidget.saveWidgetData<String>(
+          'description',
+          'Your productivity companion',
+        ),
         HomeWidget.saveWidgetData<String>('deeplink', 'copyclip://dashboard'),
       ]);
       debugPrint('✅ Default widget data initialized');
@@ -218,7 +218,6 @@ Future<void> _initializeBackgroundTasks() async {
     // ✅ NEW: Update all widgets with latest data on app start
     await _updateAllWidgets();
     debugPrint('✅ All widgets updated with latest data');
-
   } catch (e) {
     debugPrint("❌ Widget data init error: $e");
   }
@@ -228,45 +227,10 @@ Future<void> _initializeBackgroundTasks() async {
 Future<void> _updateAllWidgets() async {
   try {
     // Update each widget type with latest data
-    await Future.wait([
-      _updateWidgetIfExists('notes'),
-      _updateWidgetIfExists('todos'),
-      _updateWidgetIfExists('expenses'),
-      _updateWidgetIfExists('journal'),
-      _updateWidgetIfExists('clipboard'),
-    ]);
+    // Update each widget type with latest data using Centralized Service
+    await WidgetSyncService.syncAll();
   } catch (e) {
     debugPrint('❌ Error updating widgets: $e');
-  }
-}
-
-// Helper to update a widget if it exists
-Future<void> _updateWidgetIfExists(String widgetType) async {
-  try {
-    final activeWidget = await HomeWidget.getWidgetData<String>('widget_type');
-
-    // Only update if this widget type is active
-    if (activeWidget == widgetType) {
-      switch (widgetType) {
-        case 'notes':
-          await HomeWidgetService.updateNotesWidget();
-          break;
-        case 'todos':
-          await HomeWidgetService.updateTodosWidget();
-          break;
-        case 'expenses':
-          await HomeWidgetService.updateExpensesWidget();
-          break;
-        case 'journal':
-          await HomeWidgetService.updateJournalWidget();
-          break;
-        case 'clipboard':
-          await HomeWidgetService.updateClipboardWidget();
-          break;
-      }
-    }
-  } catch (e) {
-    debugPrint('Error updating $widgetType widget: $e');
   }
 }
 
@@ -296,7 +260,11 @@ class LoadingApp extends StatelessWidget {
 class LoadingScreen extends StatelessWidget {
   final String currentStep;
   final double progress;
-  const LoadingScreen({super.key, required this.currentStep, required this.progress});
+  const LoadingScreen({
+    super.key,
+    required this.currentStep,
+    required this.progress,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -357,7 +325,11 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
-  static const widgetChannel = MethodChannel('com.technopradyumn.copyclip/widget_handler');
+  static const widgetChannel = MethodChannel(
+    'com.technopradyumn.copyclip/widget_handler',
+  );
+
+  Timer? _clipboardTimer;
 
   @override
   void initState() {
@@ -365,12 +337,44 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     widgetChannel.setMethodCallHandler(_handleNativeCalls);
 
-    // ✅ CHANGE 7: Listen to widget interactions
+    // ✅ Listen to widget interactions
     _setupWidgetInteractionListener();
+
+    // ✅ Initialize heavy services after first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _postFrameInitialization();
+      _startClipboardTimer(); // ✅ Restore Real-Time Monitoring
+    });
+  }
+
+  /// ✅ OPTIMIZATION: Initialize ads and preload boxes after first frame
+  Future<void> _postFrameInitialization() async {
+    debugPrint('🚀 Post-frame initialization...');
+
+    // Initialize ads (deferred from startup)
+    MobileAds.instance.initialize().catchError((e) {
+      debugPrint('❌ Ad initialization error: $e');
+    });
+
+    // Preload common boxes in background
+    LazyBoxLoader.preloadCommonBoxes().catchError((e) {
+      debugPrint('⚠️ Box preload error: $e');
+    });
+
+    debugPrint('✅ Post-frame initialization complete');
   }
 
   // ✅ CHANGE 8: NEW - Setup widget interaction listener
   void _setupWidgetInteractionListener() {
+    // 1. Check if app was launched via widget (Cold Start)
+    HomeWidget.initiallyLaunchedFromHomeWidget().then((Uri? uri) {
+      if (uri != null && mounted) {
+        debugPrint('🚀 Launched from widget (Cold Start): $uri');
+        _handleWidgetNavigation(uri);
+      }
+    });
+
+    // 2. Listen for widget clicks while running (Background/Foreground)
     HomeWidget.widgetClicked.listen((Uri? uri) {
       if (uri != null && mounted) {
         debugPrint('📱 Widget clicked: $uri');
@@ -379,7 +383,21 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     });
   }
 
-  // ✅ CHANGE 9: NEW - Handle widget navigation
+  void _startClipboardTimer() {
+    _clipboardTimer?.cancel();
+    _clipboardTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
+      if (mounted) _checkClipboard();
+    });
+    debugPrint('📋 Clipboard Check Timer Started');
+  }
+
+  void _stopClipboardTimer() {
+    _clipboardTimer?.cancel();
+    _clipboardTimer = null;
+    debugPrint('🛑 Clipboard Check Timer Stopped');
+  }
+
+  // Handle widget navigation
   void _handleWidgetNavigation(Uri uri) {
     final featureId = uri.host;
     final routesMap = {
@@ -398,12 +416,15 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     }
   }
 
+  // Native calls handler
   Future<void> _handleNativeCalls(MethodCall call) async {
     if (call.method == 'navigateTo') {
       final dynamic args = call.arguments;
       String? route;
-      if (args is String) route = args;
-      else if (args is Map) route = args['route'];
+      if (args is String)
+        route = args;
+      else if (args is Map)
+        route = args['route'];
       if (route != null && mounted) {
         router.push(route);
         debugPrint('✅ Navigated to: $route');
@@ -411,19 +432,125 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     }
   }
 
-  // ✅ CHANGE 10: Update widgets when app resumes
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.resumed) {
-      debugPrint('📱 App resumed - updating widgets');
+      debugPrint('📱 App resumed');
       _updateAllWidgets();
+      _checkClipboard(); // Instant check
+      _startClipboardTimer(); // Resume monitoring
+    } else if (state == AppLifecycleState.paused) {
+      debugPrint('📱 App paused');
+      _stopClipboardTimer(); // Save battery
+    }
+  }
+
+  Future<void> _checkClipboard() async {
+    try {
+      if (!mounted) return;
+      // ... same logic ...
+      final settingsBox = Hive.box('settings');
+      final bool autoSave = settingsBox.get(
+        'clipboardAutoSave',
+        defaultValue: false,
+      );
+
+      if (!autoSave) return;
+
+      final ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
+      if (data == null || data.text == null || data.text!.trim().isEmpty)
+        return;
+
+      final String newContent = data.text!.trim();
+      // Ensure box is open
+      if (!Hive.isBoxOpen('clipboard_box')) {
+        await Hive.openBox<ClipboardItem>('clipboard_box');
+      }
+      final clipboardBox = Hive.box<ClipboardItem>('clipboard_box');
+
+      // ✅ DEDUPLICATION Logic (Smart Bump):
+      // 1. Check if content exists (ignoring formatting).
+      // 2. If it exists, UPDATE its timestamp to now(). This "bumps" it to the top.
+      // 3. This preserves custom colors/properties but marks it as "fresh".
+      final existingItems = clipboardBox.values
+          .where((item) => _getPlainText(item.content) == newContent)
+          .toList();
+
+      if (existingItems.isNotEmpty) {
+        for (var item in existingItems) {
+          item.createdAt = DateTime.now(); // Bump to top
+          await item.save();
+        }
+        debugPrint('⬆️ Bumped ${existingItems.length} existing item(s) to top');
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Clipboard updated!"),
+              behavior: SnackBarBehavior.floating,
+              duration: Duration(seconds: 1),
+            ),
+          );
+        }
+        await WidgetSyncService.syncClipboard();
+        return; // ✅ Stop here, don't add a duplicate
+      }
+
+      // Add to Hive
+      final newItem = ClipboardItem(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        content: newContent,
+        createdAt: DateTime.now(),
+        type: 'text',
+      );
+
+      await clipboardBox.add(newItem);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).clearSnackBars(); // Prevent stacking
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Clipboard saved: ${newContent.length > 20 ? '${newContent.substring(0, 20)}...' : newContent}",
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.green,
+            duration: const Duration(seconds: 2),
+            margin: const EdgeInsets.all(16),
+          ),
+        );
+      }
+
+      debugPrint('✅ Auto-saved clipboard item: ${newItem.id}');
+
+      // Sync Widgets
+      await WidgetSyncService.syncClipboard();
+    } catch (e) {
+      // debugPrint('❌ Clipboard check failed: $e'); // Reduce noise
+    }
+  }
+
+  // ✅ Helper to extract plain text from content (handling rich text JSON)
+  String _getPlainText(String content) {
+    if (!content.startsWith('[')) return content.trim();
+    try {
+      final List<dynamic> delta = jsonDecode(content);
+      String plainText = "";
+      for (var op in delta) {
+        if (op is Map && op['insert'] is String) plainText += op['insert'];
+      }
+      return plainText.trim();
+    } catch (_) {
+      return content.trim(); // Fallback if not valid JSON
     }
   }
 
   @override
   void dispose() {
+    _stopClipboardTimer();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -456,7 +583,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
               upgrader: Upgrader(
                 debugLogging: false,
                 messages: RateUpgraderMessages(),
-                durationUntilAlertAgain: const Duration(days: 7),
+                durationUntilAlertAgain: const Duration(
+                  days: 0,
+                ), // Alert every time
               ),
               child: child ?? const SizedBox(),
             );

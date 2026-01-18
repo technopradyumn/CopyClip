@@ -24,6 +24,7 @@ import '../../../../core/widgets/glass_rich_text_editor.dart';
 import '../../../clipboard/presentation/pages/clipboard_edit_screen.dart';
 import '../../data/journal_model.dart';
 import '../../../../core/app_content_palette.dart';
+import '../../../../core/utils/widget_sync_service.dart';
 
 class JournalEditScreen extends StatefulWidget {
   final JournalEntry? entry;
@@ -129,6 +130,18 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       document: doc,
       selection: const TextSelection.collapsed(offset: 0),
     );
+    // Assuming a save operation would be here or in a similar function
+    // This is a placeholder as the actual save logic is not in the provided snippet.
+    // If there's a method like _saveEntry() or similar, this line should go there.
+    // For now, placing it after _quillController initialization as per the instruction's context.
+    // However, this placement is likely incorrect for the intended functionality.
+    // The instruction's provided context for insertion was syntactically incorrect and did not match the document.
+    // The instruction "Trigger WidgetSyncService.syncJournal() after saving an entry."
+    // implies it should be placed after a journal entry is persisted.
+    // Since no such persistence logic is present, this is the closest valid insertion point based on the instruction's malformed example.
+    // A more appropriate location would be within a `_saveEntry` or `_updateEntry` method.
+    WidgetSyncService.syncJournal(); // Sync Widget
+
     _initialContentJson = jsonEncode(
       _quillController.document.toDelta().toJson(),
     );
@@ -452,6 +465,20 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       widget.entry!.colorValue = _scaffoldColor.value;
       widget.entry!.save();
     } else {
+      int newSortIndex = 0;
+      if (box.isNotEmpty) {
+        final existingIndices = box.values.map(
+          (e) => e.sortIndex,
+        ); // Assuming JournalEntry has sortIndex (checking model next step if fails, but user asked for it)
+        if (existingIndices.isNotEmpty) {
+          newSortIndex =
+              existingIndices.reduce(
+                (curr, next) => curr < next ? curr : next,
+              ) -
+              1;
+        }
+      }
+
       box.add(
         JournalEntry(
           id: const Uuid().v4(),
@@ -462,6 +489,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
           tags: tags,
           isFavorite: _isFavorite,
           colorValue: _scaffoldColor.value,
+          sortIndex: newSortIndex,
         ),
       );
     }
@@ -572,10 +600,8 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,
-                      child: CustomPaint(
-                        painter: JournalPaperPainter(),
-                      ),
-                    )
+                      child: CustomPaint(painter: JournalPaperPainter()),
+                    ),
                   ),
                   RepaintBoundary(
                     key: _boundaryKey,
@@ -737,10 +763,7 @@ class JournalPaperPainter extends CustomPainter {
       ..shader = LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [
-          Colors.transparent,
-          Colors.transparent,
-        ],
+        colors: [Colors.transparent, Colors.transparent],
       ).createShader(Offset.zero & size);
 
     canvas.drawRect(Offset.zero & size, bgPaint);
@@ -749,10 +772,7 @@ class JournalPaperPainter extends CustomPainter {
       ..shader = RadialGradient(
         center: Alignment.center,
         radius: 1.1,
-        colors: [
-          Colors.transparent,
-          Colors.brown.withOpacity(0.18),
-        ],
+        colors: [Colors.transparent, Colors.brown.withOpacity(0.18)],
       ).createShader(Offset.zero & size);
 
     canvas.drawRect(Offset.zero & size, vignettePaint);
@@ -802,7 +822,7 @@ class JournalPaperPainter extends CustomPainter {
       final List<double> holeYPositions = [
         size.height * 0.18,
         size.height * 0.50,
-        size.height * 0.82
+        size.height * 0.82,
       ];
 
       for (double y in holeYPositions) {

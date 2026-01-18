@@ -1,25 +1,13 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:home_widget/home_widget.dart';
 
 import 'package:copyclip/src/core/router/app_router.dart';
-import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
-import 'package:copyclip/src/core/widgets/glass_container.dart';
-import '../../../../core/services/home_widget_service.dart';
 import '../../../../core/widgets/ad_widget/banner_ad_widget.dart';
-import '../../../clipboard/data/clipboard_model.dart';
-import '../../../expenses/data/expense_model.dart';
-import '../../../journal/data/journal_model.dart';
-import '../../../notes/data/note_model.dart';
-import '../../../todos/data/todo_model.dart';
 
 class FeatureItem {
   final String id;
@@ -29,7 +17,14 @@ class FeatureItem {
   final String route;
   final String description;
 
-  FeatureItem(this.id, this.title, this.icon, this.color, this.route, this.description);
+  FeatureItem(
+    this.id,
+    this.title,
+    this.icon,
+    this.color,
+    this.route,
+    this.description,
+  );
 }
 
 class GlobalSearchResult {
@@ -73,7 +68,9 @@ class DashboardScreen extends StatefulWidget {
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> with TickerProviderStateMixin, WidgetsBindingObserver {
+class _DashboardScreenState extends State<DashboardScreen>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
+  // 1. Remove Fields
   // State
   bool _boxesOpened = false;
   List<String> _order = [];
@@ -86,34 +83,8 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   Timer? _autoScrollTimer;
   late AnimationController _settingsAnimationController;
   late AnimationController _entryAnimationController;
-  // App Open / Resume Ad
-  RewardedInterstitialAd? _rewardedInterstitialAd;
 
-  // ⚠️ NEW: Standard Interstitial Ad (for navigation)
-  InterstitialAd? _interstitialAd;
-
-  bool _isRewardedAdLoading = false;
-  bool _isInterstitialAdLoading = false;
-  DateTime? _lastRewardedAdTime;
-
-  DateTime? _lastInterstitialTime;
-
-  // ============ AD UNIT IDS ============
-
-  String get _rewardedAdUnitId {
-    if (Platform.isAndroid) {
-      return dotenv.env['ANDROID_REWARDED_AD_UNIT_ID'] ?? '';
-    }
-    return dotenv.env['ANDROID_REWARDED_AD_UNIT_ID'] ?? '' ;
-  }
-
-  String get _interstitialAdUnitId {
-    // ⚠️ NEW: Interstitial Ad ID (Test ID)
-    if (Platform.isAndroid) {
-      return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ?? '';
-    }
-    return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ?? '';
-  }
+  // Ads removed from dashboard navigation
 
   // Onboarding
   bool _showOnboarding = false;
@@ -122,13 +93,62 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   // Features Data
   final Map<String, FeatureItem> _features = {
-    'notes': FeatureItem('notes', 'Notes', Icons.note_alt_outlined, Colors.amberAccent, AppRouter.notes, 'Create and manage your notes'),
-    'todos': FeatureItem('todos', 'To-Dos', Icons.check_circle_outline, Colors.greenAccent, AppRouter.todos, 'Keep track of your tasks'),
-    'expenses': FeatureItem('expenses', 'Expense', Icons.attach_money, Colors.redAccent, AppRouter.expenses, 'Monitor your expenses'),
-    'journal': FeatureItem('journal', 'Journal', Icons.book_outlined, Colors.blueAccent, AppRouter.journal, 'Write down your thoughts'),
-    'calendar': FeatureItem('calendar', 'Calendar', Icons.calendar_today_outlined, Colors.orangeAccent, AppRouter.calendar, 'Organize your schedule'),
-    'clipboard': FeatureItem('clipboard', 'Clipboard', Icons.paste, Colors.purpleAccent, AppRouter.clipboard, 'Access your clipboard history'),
-    'canvas': FeatureItem('canvas', 'Canvas', Icons.gesture, Colors.tealAccent, AppRouter.canvas, 'Draw and sketch freely'),
+    'notes': FeatureItem(
+      'notes',
+      'Notes',
+      Icons.note_alt_outlined,
+      Colors.amberAccent,
+      AppRouter.notes,
+      'Create and manage your notes',
+    ),
+    'todos': FeatureItem(
+      'todos',
+      'To-Dos',
+      Icons.check_circle_outline,
+      Colors.greenAccent,
+      AppRouter.todos,
+      'Keep track of your tasks',
+    ),
+    'expenses': FeatureItem(
+      'expenses',
+      'Expense',
+      Icons.attach_money,
+      Colors.redAccent,
+      AppRouter.expenses,
+      'Monitor your expenses',
+    ),
+    'journal': FeatureItem(
+      'journal',
+      'Journal',
+      Icons.book_outlined,
+      Colors.blueAccent,
+      AppRouter.journal,
+      'Write down your thoughts',
+    ),
+    'calendar': FeatureItem(
+      'calendar',
+      'Calendar',
+      Icons.calendar_today_outlined,
+      Colors.orangeAccent,
+      AppRouter.calendar,
+      'Organize your schedule',
+    ),
+    'clipboard': FeatureItem(
+      'clipboard',
+      'Clipboard',
+      Icons.paste,
+      Colors.purpleAccent,
+      AppRouter.clipboard,
+      'Access your clipboard history',
+    ),
+    'canvas': FeatureItem(
+      'canvas',
+      'Canvas',
+      Icons.gesture,
+      Colors.tealAccent,
+      AppRouter.canvas,
+      'Draw and sketch freely',
+    ),
   };
 
   final Map<String, Color> featureColors = {
@@ -165,49 +185,57 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     _onboardingData = [
       OnboardingContent(
         title: 'Welcome to CopyClip',
-        description: 'Your ultimate productivity companion. Let\'s get you set up with powerful tools to manage your day.',
+        description:
+            'Your ultimate productivity companion. Let\'s get you set up with powerful tools to manage your day.',
         icon: Icons.dashboard_rounded,
         color: const Color(0xFF6C63FF),
       ),
       OnboardingContent(
         title: 'Smart Notes',
-        description: 'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.',
+        description:
+            'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.',
         icon: Icons.note_alt_outlined,
         color: featureColors['notes']!,
       ),
       OnboardingContent(
         title: 'Task Management',
-        description: 'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.',
+        description:
+            'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.',
         icon: Icons.check_circle_outline,
         color: featureColors['todos']!,
       ),
       OnboardingContent(
         title: 'Expense Tracking',
-        description: 'Take control of your finances. Track income and expenses easily to understand your spending habits.',
+        description:
+            'Take control of your finances. Track income and expenses easily to understand your spending habits.',
         icon: Icons.attach_money,
         color: featureColors['expenses']!,
       ),
       OnboardingContent(
         title: 'Personal Journal',
-        description: 'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.',
+        description:
+            'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.',
         icon: Icons.book_outlined,
         color: featureColors['journal']!,
       ),
       OnboardingContent(
         title: 'Calendar & Events',
-        description: 'Never miss a moment. Organize your schedule and keep track of important upcoming events.',
+        description:
+            'Never miss a moment. Organize your schedule and keep track of important upcoming events.',
         icon: Icons.calendar_today_outlined,
         color: featureColors['calendar']!,
       ),
       OnboardingContent(
         title: 'Clipboard Manager',
-        description: 'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.',
+        description:
+            'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.',
         icon: Icons.paste,
         color: featureColors['clipboard']!,
       ),
       OnboardingContent(
         title: 'Creative Canvas',
-        description: 'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.',
+        description:
+            'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.',
         icon: Icons.gesture,
         color: featureColors['canvas']!,
       ),
@@ -225,17 +253,13 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     _entryAnimationController.dispose();
     _dragPositionNotifier.dispose();
     _onboardingController.dispose();
-    _rewardedInterstitialAd?.dispose();
-    _interstitialAd?.dispose();
+    // Ads disposed
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      debugPrint("📱 App Resumed: Checking for Rewarded Interstitial Ad trigger...");
-      _checkAndShowRewardedAd();
-    }
+    // No ads on resume
   }
 
   // ============ HIVE ============
@@ -244,25 +268,16 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
     final settingsBox = Hive.box('settings');
     final savedOrder = settingsBox.get('dashboard_order', defaultValue: null);
-    final hasSeenOnboarding = settingsBox.get('has_seen_onboarding', defaultValue: false);
-    final lastAdTimeStr = settingsBox.get('last_rewarded_ad_time', defaultValue: null);
+    final hasSeenOnboarding = settingsBox.get(
+      'has_seen_onboarding',
+      defaultValue: false,
+    );
+    final lastAdTimeStr = settingsBox.get(
+      'last_rewarded_ad_time',
+      defaultValue: null,
+    );
 
-    final lastInterstitialTimeStr = settingsBox.get('last_interstitial_time', defaultValue: null);
-    if (lastInterstitialTimeStr != null) {
-      try {
-        _lastInterstitialTime = DateTime.parse(lastInterstitialTimeStr);
-      } catch (e) {
-        debugPrint('Error parsing last interstitial time: $e');
-      }
-    }
-
-    if (lastAdTimeStr != null) {
-      try {
-        _lastRewardedAdTime = DateTime.parse(lastAdTimeStr);
-      } catch (e) {
-        debugPrint('Error parsing last ad time: $e');
-      }
-    }
+    // Removed interstitial ad time tracking
 
     if (mounted) {
       setState(() {
@@ -278,7 +293,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
         _showOnboarding = !hasSeenOnboarding;
       });
 
-      _initializeAds();
+      // Ads initialization removed
     }
   }
 
@@ -286,194 +301,14 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     Hive.box('settings').put('dashboard_order', _order);
   }
 
-  void _saveLastRewardedAdTime(DateTime time) {
-    Hive.box('settings').put('last_rewarded_ad_time', time.toIso8601String());
-  }
-
-  // ============ ADS IMPLEMENTATION ============
-
-  void _initializeAds() {
-    debugPrint('🎯 Initializing ads...');
-    _loadInterstitialAd(); // Load standard Interstitial
-    _checkAndShowRewardedAd(); // Check timer for Rewarded Interstitial
-  }
-
-  // 2. STANDARD INTERSTITIAL AD (Triggers on Navigation)
-  void _loadInterstitialAd() {
-    if (_isInterstitialAdLoading) return;
-    _isInterstitialAdLoading = true;
-
-    InterstitialAd.load(
-      adUnitId: _interstitialAdUnitId,
-      request: const AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) {
-          debugPrint('✅ Interstitial Ad Loaded');
-          _interstitialAd = ad;
-          _isInterstitialAdLoading = false;
-        },
-        onAdFailedToLoad: (error) {
-          debugPrint('❌ Interstitial Ad Failed: $error');
-          _interstitialAd = null;
-          _isInterstitialAdLoading = false;
-        },
-      ),
-    );
-  }
-
-  /// Shows the interstitial ad with a 1-hour cooldown check.
-  void _showInterstitialAd(VoidCallback onComplete) {
-    // 1. Check if Ad is loaded
-    if (_interstitialAd == null) {
-      onComplete();
-      _loadInterstitialAd();
-      return;
-    }
-
-    // 2. Check 1-Hour Timer
-    final now = DateTime.now();
-    if (_lastInterstitialTime != null) {
-      final difference = now.difference(_lastInterstitialTime!);
-
-      // If user changed clock backwards (Time Travel protection) OR < 1 hour passed
-      if (!now.isBefore(_lastInterstitialTime!) && difference.inMinutes < 60) {
-        debugPrint('⏳ Interstitial Cooldown: ${60 - difference.inMinutes} mins remaining. Skipping Ad.');
-        onComplete(); // Navigate immediately without showing ad
-        return;
-      }
-    }
-
-    // 3. Show Ad
-    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (ad) {
-        // ⚠️ Save time ONLY when ad is actually shown
-        final timeNow = DateTime.now();
-        setState(() => _lastInterstitialTime = timeNow);
-        Hive.box('settings').put('last_interstitial_time', timeNow.toIso8601String());
-      },
-      onAdDismissedFullScreenContent: (ad) {
-        // User closed ad (via X or Back Button) -> Navigate
-        debugPrint('👋 Interstitial dismissed');
-        ad.dispose();
-        _interstitialAd = null;
-        _loadInterstitialAd(); // Preload next
-        onComplete();
-      },
-      onAdFailedToShowFullScreenContent: (ad, error) {
-        // Error -> Navigate
-        debugPrint('❌ Interstitial failed to show: $error');
-        ad.dispose();
-        _interstitialAd = null;
-        _loadInterstitialAd();
-        onComplete();
-      },
-    );
-
-    _interstitialAd!.show();
-  }
-
-  // 3. REWARDED INTERSTITIAL (Triggers on App Resume / Time Check)
-  void _checkAndShowRewardedAd() {
-    if (_isRewardedAdLoading || _showOnboarding) return;
-
-    final now = DateTime.now();
-    bool shouldShow = false;
-
-    if (_lastRewardedAdTime == null) {
-      debugPrint('⏰ First time opening app: Preparing to show Ad.');
-      shouldShow = true;
-    } else {
-      // ⚠️ FIX: Check if the user changed their clock backwards (Time Travel)
-      if (now.isBefore(_lastRewardedAdTime!)) {
-        debugPrint('⚠️ Detected Time Change (Clock moved backwards). Resetting timer.');
-        // Option 1: Punish them (Reset timer to now)
-        // _lastRewardedAdTime = now;
-        // _saveLastRewardedAdTime(now);
-        // shouldShow = false;
-
-        // Option 2: Allow the ad (Better user experience to fix the "700 min" bug)
-        shouldShow = true;
-      } else {
-        final difference = now.difference(_lastRewardedAdTime!);
-
-        // Normal 1 Hour Check
-        if (difference.inHours >= 1) {
-          debugPrint('⏰ > 1 Hour passed (${difference.inHours} hrs). Showing Ad.');
-          shouldShow = true;
-        } else {
-          // Calculate remaining minutes correctly
-          final remainingMinutes = 60 - difference.inMinutes;
-          debugPrint('⏳ Ad cooldown active. Next ad in $remainingMinutes minutes.');
-          shouldShow = false;
-        }
-      }
-    }
-
-    if (shouldShow) {
-      _loadAndShowRewardedInterstitialAd();
-    }
-  }
-
-  void _loadAndShowRewardedInterstitialAd() {
-    if (_isRewardedAdLoading) return;
-    setState(() => _isRewardedAdLoading = true);
-
-    debugPrint('🎁 Loading Rewarded Interstitial Ad...');
-
-    RewardedInterstitialAd.load(
-      adUnitId: _rewardedAdUnitId,
-      request: const AdRequest(),
-      rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
-        onAdLoaded: (ad) {
-          debugPrint('✅ Rewarded Interstitial ad loaded.');
-          _rewardedInterstitialAd = ad;
-
-          _rewardedInterstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {
-              debugPrint('👋 Ad dismissed');
-              ad.dispose();
-              _rewardedInterstitialAd = null;
-            },
-            onAdFailedToShowFullScreenContent: (ad, error) {
-              debugPrint('❌ Ad failed to show: $error');
-              ad.dispose();
-              _rewardedInterstitialAd = null;
-            },
-          );
-
-          if (mounted) {
-            _showRewardedAd();
-            setState(() => _isRewardedAdLoading = false);
-          }
-        },
-        onAdFailedToLoad: (error) {
-          debugPrint('❌ Failed to load Rewarded Interstitial ad: ${error.message}');
-          setState(() => _isRewardedAdLoading = false);
-          _rewardedInterstitialAd = null;
-        },
-      ),
-    );
-  }
-
-  void _showRewardedAd() {
-    if (_rewardedInterstitialAd == null) return;
-
-    _rewardedInterstitialAd!.show(
-      onUserEarnedReward: (ad, reward) {
-        debugPrint('🎉 User Earned Reward');
-        final now = DateTime.now();
-        setState(() => _lastRewardedAdTime = now);
-        _saveLastRewardedAdTime(now);
-      },
-    );
-  }
-
+  // ============ ADS REMOVED ============
+  // All interstitial ad functionality removed from dashboard
 
   // ============ ONBOARDING UI ============
   void _completeOnboarding() {
     Hive.box('settings').put('has_seen_onboarding', true);
     setState(() => _showOnboarding = false);
-    _checkAndShowRewardedAd();
+    // _checkAndShowRewardedAd(); // Removed
   }
 
   Widget _buildOnboardingScreen() {
@@ -507,7 +342,8 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                     child: TextButton(
                       onPressed: _completeOnboarding,
                       style: TextButton.styleFrom(
-                        foregroundColor: theme.colorScheme.onSurface.withOpacity(0.6),
+                        foregroundColor: theme.colorScheme.onSurface
+                            .withOpacity(0.6),
                       ),
                       child: const Text('Skip'),
                     ),
@@ -516,10 +352,15 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                 Expanded(
                   child: PageView.builder(
                     controller: _onboardingController,
-                    onPageChanged: (index) => setState(() => _onboardingStep = index),
+                    onPageChanged: (index) =>
+                        setState(() => _onboardingStep = index),
                     itemCount: _onboardingData.length,
                     itemBuilder: (context, index) {
-                      return _buildOnboardingPageItem(theme, _onboardingData[index], index == _onboardingStep);
+                      return _buildOnboardingPageItem(
+                        theme,
+                        _onboardingData[index],
+                        index == _onboardingStep,
+                      );
                     },
                   ),
                 ),
@@ -531,7 +372,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
                           _onboardingData.length,
-                              (index) => AnimatedContainer(
+                          (index) => AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
                             margin: const EdgeInsets.symmetric(horizontal: 4),
                             width: _onboardingStep == index ? 24 : 8,
@@ -539,7 +380,9 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                             decoration: BoxDecoration(
                               color: _onboardingStep == index
                                   ? currentData.color
-                                  : theme.colorScheme.onSurface.withOpacity(0.1),
+                                  : theme.colorScheme.onSurface.withOpacity(
+                                      0.1,
+                                    ),
                               borderRadius: BorderRadius.circular(4),
                             ),
                           ),
@@ -559,9 +402,15 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                               },
                               style: TextButton.styleFrom(
                                 foregroundColor: theme.colorScheme.onSurface,
-                                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24,
+                                  vertical: 16,
+                                ),
                               ),
-                              child: const Text('Back', style: TextStyle(fontWeight: FontWeight.w600)),
+                              child: const Text(
+                                'Back',
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
                             )
                           else
                             const SizedBox(width: 80),
@@ -569,7 +418,8 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                             duration: const Duration(milliseconds: 300),
                             child: ElevatedButton(
                               onPressed: () {
-                                if (_onboardingStep < _onboardingData.length - 1) {
+                                if (_onboardingStep <
+                                    _onboardingData.length - 1) {
                                   _onboardingController.nextPage(
                                     duration: const Duration(milliseconds: 300),
                                     curve: Curves.easeInOut,
@@ -583,7 +433,10 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                                 foregroundColor: Colors.white,
                                 elevation: 8,
                                 shadowColor: currentData.color.withOpacity(0.4),
-                                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 32,
+                                  vertical: 16,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
@@ -592,14 +445,22 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    _onboardingStep == _onboardingData.length - 1
+                                    _onboardingStep ==
+                                            _onboardingData.length - 1
                                         ? 'Get Started'
                                         : 'Next',
-                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                  if (_onboardingStep != _onboardingData.length - 1) ...[
+                                  if (_onboardingStep !=
+                                      _onboardingData.length - 1) ...[
                                     const SizedBox(width: 8),
-                                    const Icon(Icons.arrow_forward_rounded, size: 20),
+                                    const Icon(
+                                      Icons.arrow_forward_rounded,
+                                      size: 20,
+                                    ),
                                   ],
                                 ],
                               ),
@@ -618,7 +479,11 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     );
   }
 
-  Widget _buildOnboardingPageItem(ThemeData theme, OnboardingContent content, bool isActive) {
+  Widget _buildOnboardingPageItem(
+    ThemeData theme,
+    OnboardingContent content,
+    bool isActive,
+  ) {
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -712,7 +577,10 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     });
     _dragPositionNotifier.value = details.globalPosition;
     HapticFeedback.mediumImpact();
-    _autoScrollTimer = Timer.periodic(const Duration(milliseconds: 50), _checkForAutoScroll);
+    _autoScrollTimer = Timer.periodic(
+      const Duration(milliseconds: 50),
+      _checkForAutoScroll,
+    );
   }
 
   void _onDragUpdate(LongPressMoveUpdateDetails details) {
@@ -748,7 +616,10 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     }
 
     if (scrollDelta != 0) {
-      final double newOffset = (_scrollController.offset + scrollDelta).clamp(0.0, _scrollController.position.maxScrollExtent);
+      final double newOffset = (_scrollController.offset + scrollDelta).clamp(
+        0.0,
+        _scrollController.position.maxScrollExtent,
+      );
       if (newOffset != _scrollController.offset) {
         _scrollController.jumpTo(newOffset);
         _handleReorder(currentOffset);
@@ -758,10 +629,14 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
   void _handleReorder(Offset globalPosition) {
     if (_draggedIndex == null) return;
-    final double itemHeight = (MediaQuery.of(context).size.width - 64) / 2 * 1.1 + 16;
+    final double itemHeight =
+        (MediaQuery.of(context).size.width - 64) / 2 * 1.1 + 16;
     final double scrollOffset = _scrollController.offset;
     final double relativeY = globalPosition.dy + scrollOffset - 120;
-    final int newRow = (relativeY / itemHeight).floor().clamp(0, (_order.length / 2).ceil() - 1);
+    final int newRow = (relativeY / itemHeight).floor().clamp(
+      0,
+      (_order.length / 2).ceil() - 1,
+    );
     final double relativeX = globalPosition.dx - 24;
     final double itemWidth = (MediaQuery.of(context).size.width - 64) / 2 + 16;
     final int newCol = (relativeX / itemWidth).floor().clamp(0, 1);
@@ -789,18 +664,44 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Dashboard", style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
-              Text("Manage your day", style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5))),
+              Text(
+                "Dashboard",
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "Manage your day",
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                ),
+              ),
             ],
           ),
           Row(
             children: [
               IconButton(
-                icon: Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: primaryColor.withOpacity(0.1), shape: BoxShape.circle), child: Icon(Icons.search_rounded, color: primaryColor)),
+                icon: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: primaryColor.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(Icons.search_rounded, color: primaryColor),
+                ),
                 onPressed: () => context.push(AppRouter.globalSearch),
               ),
               IconButton(
-                icon: Hero(tag: 'settings_icon', child: RotationTransition(turns: _settingsAnimationController, child: Icon(Icons.settings_outlined, color: theme.colorScheme.onSurface.withOpacity(0.7)))),
+                icon: Hero(
+                  tag: 'settings_icon',
+                  child: RotationTransition(
+                    turns: _settingsAnimationController,
+                    child: Icon(
+                      Icons.settings_outlined,
+                      color: theme.colorScheme.onSurface.withOpacity(0.7),
+                    ),
+                  ),
+                ),
                 onPressed: () {
                   _settingsAnimationController.forward(from: 0.0);
                   context.push(AppRouter.settings);
@@ -819,16 +720,25 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
       builder: (context, child) {
         final double start = (index * 0.1).clamp(0.0, 0.8);
         final double end = (start + 0.5).clamp(0.0, 1.0);
-        final animation = CurvedAnimation(parent: _entryAnimationController, curve: Interval(start, end, curve: Curves.elasticOut));
-        return Transform.scale(scale: animation.value, child: Opacity(opacity: animation.value.clamp(0.0, 1.0), child: child));
+        final animation = CurvedAnimation(
+          parent: _entryAnimationController,
+          curve: Interval(start, end, curve: Curves.elasticOut),
+        );
+        return Transform.scale(
+          scale: animation.value,
+          child: Opacity(
+            opacity: animation.value.clamp(0.0, 1.0),
+            child: child,
+          ),
+        );
       },
       child: child,
     );
   }
 
-// ============================================
-// UPDATED _buildGridItem METHOD
-// ============================================
+  // ============================================
+  // UPDATED _buildGridItem METHOD
+  // ============================================
   Widget _buildGridItem(int index, ThemeData theme) {
     if (index >= _order.length) return const SizedBox.shrink();
     final String id = _order[index];
@@ -838,6 +748,10 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
     return RepaintBoundary(
       child: GestureDetector(
+        onTap: () {
+          // Direct navigation without ads
+          context.push(item.route);
+        },
         onLongPressStart: (d) => _onDragStart(id, index, d),
         onLongPressMoveUpdate: (d) => _onDragUpdate(d),
         onLongPressEnd: (_) => _onDragEnd(),
@@ -846,118 +760,91 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
           opacity: isDragging ? 0.0 : 1.0,
           child: _buildBouncingItemWrapper(
             index,
-            // ✅ OPTION 1: Use the enhanced widget card
+            // Use the enhanced widget card
             _buildFeatureCardWithWidget(theme, item),
-            // OR
-            // ✅ OPTION 2: Keep simple card without widget button
-            // _buildFeatureCard(theme, item),
           ),
         ),
       ),
     );
   }
 
-// ============================================
-// NEW METHOD: Feature Card WITH Widget Button
-// ============================================
+  // ============================================
+  // NEW METHOD: Feature Card WITH Widget Button
+  // ============================================
   Widget _buildFeatureCardWithWidget(ThemeData theme, FeatureItem item) {
     final Color baseColor = featureColors[item.id] ?? item.color;
 
-    return GestureDetector(
-      onTap: () {
-        _showInterstitialAd(() {
-          context.push(item.route);
-        });
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: baseColor.withOpacity(0.15),
-          borderRadius: BorderRadius.circular(32),
-          border: Border.all(color: baseColor, width: 1),
-        ),
-        child: Stack(
-          children: [
-            // Main content
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Hero(
-                  tag: '${item.id}_icon',
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          baseColor.withOpacity(0.6),
-                          baseColor.withOpacity(0.9)
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: baseColor.withOpacity(0.3),
-                          blurRadius: 12,
-                          offset: const Offset(0, 6),
-                        )
+    // ✅ Removed inner GestureDetector - tap is handled by outer GestureDetector
+    return Container(
+      decoration: BoxDecoration(
+        color: baseColor.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(32),
+        border: Border.all(color: baseColor, width: 1),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Main content
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Hero(
+                tag: '${item.id}_icon',
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        baseColor.withOpacity(0.6),
+                        baseColor.withOpacity(0.9),
                       ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    child: Icon(item.icon, size: 32, color: Colors.white),
-                  ),
-                ),
-                const SizedBox(height: 14),
-                Hero(
-                  tag: '${item.id}_title',
-                  child: Material(
-                    type: MaterialType.transparency,
-                    child: Text(
-                      item.title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: theme.colorScheme.onSurface,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: baseColor.withOpacity(0.3),
+                        blurRadius: 12,
+                        offset: const Offset(0, 6),
                       ),
-                    ),
+                    ],
                   ),
+                  child: Icon(item.icon, size: 32, color: Colors.white),
                 ),
-              ],
-            ),
-
-            // ✅ Widget Add Button (Top Right)
-            Positioned(
-              top: 8,
-              right: 8,
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () => _showWidgetBottomSheet(item),
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: baseColor.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Icon(
-                      Icons.add_to_home_screen,
-                      size: 18,
-                      color: baseColor,
+              ),
+              const SizedBox(height: 14),
+              Hero(
+                tag: '${item.id}_title',
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Text(
+                    item.title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: theme.colorScheme.onSurface,
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+
+          // Widget Button moved to Settings Screen
+        ],
       ),
     );
   }
 
-// ============================================
-// KEEP EXISTING _buildFeatureCard (for dragging preview)
-// ============================================
-  Widget _buildFeatureCard(ThemeData theme, FeatureItem item, {bool isDragging = false}) {
+  // ============================================
+  // KEEP EXISTING _buildFeatureCard (for dragging preview)
+  // ============================================
+  Widget _buildFeatureCard(
+    ThemeData theme,
+    FeatureItem item, {
+    bool isDragging = false,
+  }) {
     final Color baseColor = featureColors[item.id] ?? item.color;
     Widget content = Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -970,7 +857,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
               gradient: LinearGradient(
                 colors: [
                   baseColor.withOpacity(0.6),
-                  baseColor.withOpacity(0.9)
+                  baseColor.withOpacity(0.9),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -981,7 +868,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                   color: baseColor.withOpacity(0.3),
                   blurRadius: 12,
                   offset: const Offset(0, 6),
-                )
+                ),
               ],
             ),
             child: Icon(item.icon, size: 32, color: Colors.white),
@@ -1026,222 +913,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
     );
   }
 
-// ============================================
-// NEW METHOD: Show Widget Bottom Sheet
-// ============================================
-  void _showWidgetBottomSheet(FeatureItem item) {
-    final theme = Theme.of(context);
-    final baseColor = featureColors[item.id] ?? item.color;
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => _buildWidgetBottomSheet(item, baseColor, theme),
-    );
-  }
-
-// ============================================
-// NEW METHOD: Build Widget Bottom Sheet
-// ============================================
-  Widget _buildWidgetBottomSheet(FeatureItem item, Color color, ThemeData theme) {
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.scaffoldBackgroundColor,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 12),
-          Container(
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(
-              color: theme.colorScheme.onSurface.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-          const SizedBox(height: 24),
-
-          // Icon
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: color.withOpacity(0.3),
-                width: 2,
-              ),
-            ),
-            child: Icon(
-              item.icon,
-              size: 48,
-              color: color,
-            ),
-          ),
-
-          const SizedBox(height: 20),
-
-          // Title
-          Text(
-            'Add ${item.title} Widget',
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-
-          const SizedBox(height: 8),
-
-          // Description
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Text(
-              'Access your ${item.title.toLowerCase()} directly from your home screen',
-              textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.6),
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 32),
-
-          // Preview
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: color.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: color.withOpacity(0.2),
-              ),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.widgets_outlined,
-                  color: color,
-                  size: 32,
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Widget Preview',
-                        style: theme.textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Updates automatically with your latest data',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurface.withOpacity(0.5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 24),
-
-          // Buttons
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text('Cancel'),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () => _addWidgetToHomeScreen(item),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: color,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text('Add Widget'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 32),
-        ],
-      ),
-    );
-  }
-
-// ============================================
-// NEW METHOD: Add Widget to Home Screen
-// ============================================
-  Future<void> _addWidgetToHomeScreen(FeatureItem item) async {
-    Navigator.pop(context); // Close bottom sheet
-
-    try {
-      // Import the service at the top of the file:
-      // import 'package:copyclip/src/core/services/home_widget_service.dart';
-
-      final success = await HomeWidgetService.pinWidget(item.id);
-
-      if (success && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${item.title} widget added to home screen!'),
-            backgroundColor: featureColors[item.id] ?? item.color,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        );
-      } else if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to add widget. Please try again.'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } catch (e) {
-      debugPrint('Error adding widget: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('An error occurred. Please try again.'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -1255,56 +926,67 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
       body: !_boxesOpened
           ? const Center(child: CircularProgressIndicator())
           : Stack(
-        children: [
-          Column(
-            children: [
-              const SizedBox(height: 50),
-              _buildTopHeader(theme),
-              Expanded(
-                child: GridView.builder(
-                  controller: _scrollController,
-                  physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 1 / 1.1,
-                  ),
-                  itemCount: _order.length,
-                  itemBuilder: (context, index) => _buildGridItem(index, theme),
-                ),
-              ),
-              const BannerAdWidget(),
-            ],
-          ),
-          // Dragging overlay
-          ValueListenableBuilder<Offset?>(
-            valueListenable: _dragPositionNotifier,
-            builder: (context, offset, child) {
-              if (offset == null || _draggedId == null) return const SizedBox.shrink();
-              final FeatureItem? item = _features[_draggedId];
-              if (item == null) return const SizedBox.shrink();
-
-              final double itemWidth = (MediaQuery.of(context).size.width - 64) / 2;
-              return Positioned(
-                left: offset.dx - (itemWidth / 2),
-                top: offset.dy - (itemWidth * 1.1 / 2),
-                child: IgnorePointer(
-                  child: Transform.scale(
-                    scale: 1.1,
-                    child: SizedBox(
-                      width: itemWidth,
-                      height: itemWidth * 1.1,
-                      child: _buildFeatureCard(theme, item, isDragging: true),
+              children: [
+                Column(
+                  children: [
+                    const SizedBox(height: 50),
+                    _buildTopHeader(theme),
+                    Expanded(
+                      child: GridView.builder(
+                        controller: _scrollController,
+                        physics: const BouncingScrollPhysics(),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 8,
+                        ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                              childAspectRatio: 1 / 1.1,
+                            ),
+                        itemCount: _order.length,
+                        itemBuilder: (context, index) =>
+                            _buildGridItem(index, theme),
+                      ),
                     ),
-                  ),
+                    const BannerAdWidget(),
+                  ],
                 ),
-              );
-            },
-          ),
-        ],
-      ),
+                // Dragging overlay
+                ValueListenableBuilder<Offset?>(
+                  valueListenable: _dragPositionNotifier,
+                  builder: (context, offset, child) {
+                    if (offset == null || _draggedId == null)
+                      return const SizedBox.shrink();
+                    final FeatureItem? item = _features[_draggedId];
+                    if (item == null) return const SizedBox.shrink();
+
+                    final double itemWidth =
+                        (MediaQuery.of(context).size.width - 64) / 2;
+                    return Positioned(
+                      left: offset.dx - (itemWidth / 2),
+                      top: offset.dy - (itemWidth * 1.1 / 2),
+                      child: IgnorePointer(
+                        child: Transform.scale(
+                          scale: 1.1,
+                          child: SizedBox(
+                            width: itemWidth,
+                            height: itemWidth * 1.1,
+                            child: _buildFeatureCard(
+                              theme,
+                              item,
+                              isDragging: true,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
     );
   }
 }

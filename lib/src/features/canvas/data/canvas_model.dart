@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
 
 @HiveType(typeId: 10)
 class DrawingStroke extends HiveObject {
@@ -81,9 +82,13 @@ class CanvasPage extends HiveObject {
   @HiveField(1)
   List<CanvasText> textElements;
 
+  @HiveField(2)
+  Uint8List? backgroundImageBytes;
+
   CanvasPage({
     this.strokes = const [],
     this.textElements = const [],
+    this.backgroundImageBytes,
   });
 }
 
@@ -142,10 +147,10 @@ class CanvasNote extends HiveObject {
     this.thumbnailPath,
     Color? backgroundColor,
     this.horizontalScroll = false,
-  })  : pages = pages ?? [CanvasPage()],
-        createdAt = createdAt ?? DateTime.now(),
-        lastModified = lastModified ?? DateTime.now(),
-        backgroundColor = backgroundColor ?? Colors.white;
+  }) : pages = pages ?? [CanvasPage()],
+       createdAt = createdAt ?? DateTime.now(),
+       lastModified = lastModified ?? DateTime.now(),
+       backgroundColor = backgroundColor ?? Colors.white;
 }
 
 @HiveType(typeId: 12)
@@ -187,7 +192,7 @@ class CanvasFolder extends HiveObject {
     this.isDeleted = false,
     this.deletedAt,
     this.sortIndex = 0,
-  })  : color = color ?? const Color(0xFF64B5F6),
-        createdAt = createdAt ?? DateTime.now(),
-        lastModified = lastModified ?? DateTime.now();
+  }) : color = color ?? const Color(0xFF64B5F6),
+       createdAt = createdAt ?? DateTime.now(),
+       lastModified = lastModified ?? DateTime.now();
 }

@@ -23,6 +23,7 @@ import '../../../../core/widgets/glass_dialog.dart';
 import '../../../../core/widgets/glass_rich_text_editor.dart';
 import '../../data/clipboard_model.dart';
 import '../../../../core/app_content_palette.dart';
+import '../../../../core/utils/widget_sync_service.dart';
 
 class ClipboardEditScreen extends StatefulWidget {
   final ClipboardItem? item;
@@ -252,16 +253,28 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
 
     final id = widget.item?.id ?? const Uuid().v4();
 
+    int newSortIndex = widget.item?.sortIndex ?? 0;
+
+    if (widget.item == null && _clipboardBox.isNotEmpty) {
+      final existingIndices = _clipboardBox.values.map((e) => e.sortIndex);
+      if (existingIndices.isNotEmpty) {
+        newSortIndex =
+            existingIndices.reduce((curr, next) => curr < next ? curr : next) -
+            1;
+      }
+    }
+
     final newItem = ClipboardItem(
       id: id,
       content: contentJson,
       createdAt: _selectedDate,
       type: 'rich_text',
-      sortIndex: widget.item?.sortIndex ?? 0,
+      sortIndex: newSortIndex,
       colorValue: _scaffoldColor.value,
     );
 
     _clipboardBox.put(id, newItem);
+    WidgetSyncService.syncClipboard(); // Sync Widget
     _initialContentJson = contentJson;
     _initialDate = _selectedDate;
     _initialColor = _scaffoldColor;

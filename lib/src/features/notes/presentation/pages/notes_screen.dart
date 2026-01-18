@@ -10,6 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 
 // Data
 import '../../data/note_model.dart';
@@ -45,16 +46,23 @@ class _NotesScreenState extends State<NotesScreen> {
   @override
   void initState() {
     super.initState();
-    _refreshNotes();
+    _ensureBoxLoaded();
 
     // Listen for Search efficiently
     _searchController.addListener(() {
       _searchQuery = _searchController.text.toLowerCase();
       _applyFilters();
     });
+  }
 
-    // Listen to DB changes to keep list in sync
-    Hive.box<Note>('notes_box').listenable().addListener(_refreshNotes);
+  /// ✅ OPTIMIZATION: Ensure box is loaded before use
+  Future<void> _ensureBoxLoaded() async {
+    await LazyBoxLoader.getBox<Note>('notes_box');
+    if (mounted) {
+      _refreshNotes();
+      // Listen to DB changes to keep list in sync
+      Hive.box<Note>('notes_box').listenable().addListener(_refreshNotes);
+    }
   }
 
   @override

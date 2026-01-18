@@ -405,6 +405,18 @@ class HomeWidgetService {
         // Don't fail - widget might still work with default data
       }
 
+      // Try to request widget pinning on Android 8.0+
+      if (Platform.isAndroid) {
+        final pinResult = await requestPinWidget(widgetType);
+        if (pinResult) {
+          debugPrint('✅ Widget pin request sent successfully');
+          return true;
+        } else {
+          debugPrint('ℹ️ Widget pin request not supported or cancelled. User can add manually.');
+        }
+      }
+
+      // If pin request fails or is not supported, user can still add widget manually
       debugPrint('✅ Widget data updated. User can now add widget from launcher.');
       return true;
 
@@ -416,7 +428,7 @@ class HomeWidgetService {
   }
 
   /// Request to add widget (Android 8.0+)
-  static Future<bool> requestPinWidget() async {
+  static Future<bool> requestPinWidget(String widgetType) async {
     if (!Platform.isAndroid) {
       debugPrint('⚠️ Widget pinning only available on Android');
       return false;
@@ -424,11 +436,13 @@ class HomeWidgetService {
 
     try {
       const platform = MethodChannel('com.technopradyumn.copyclip/widget');
-      final result = await platform.invokeMethod('requestPinWidget');
+      final result = await platform.invokeMethod('requestPinWidget', {
+        'widgetType': widgetType,
+      });
       return result ?? false;
     } catch (e) {
       debugPrint('❌ Error requesting widget pin: $e');
-      return true;
+      return false;
     }
   }
 }
@@ -482,15 +496,15 @@ class _HomeWidgetBottomSheetState extends State<HomeWidgetBottomSheet> {
                 const SizedBox(height: 4),
                 Text(
                   Platform.isAndroid
-                      ? 'Long press your home screen → Widgets → CopyClip → ${widget.featureTitle}'
-                      : 'Long press your home screen → + button → Search CopyClip',
+                      ? 'If the widget picker didn\'t appear:\nLong press home screen → Widgets → CopyClip → ${widget.featureTitle}'
+                      : 'Long press home screen → + button → Search CopyClip',
                   style: const TextStyle(fontSize: 12),
                 ),
               ],
             ),
             backgroundColor: widget.featureColor,
             behavior: SnackBarBehavior.floating,
-            duration: const Duration(seconds: 5),
+            duration: const Duration(seconds: 6),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),

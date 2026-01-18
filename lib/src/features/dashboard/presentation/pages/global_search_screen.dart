@@ -17,6 +17,8 @@ import '../../../expenses/data/expense_model.dart';
 import '../../../journal/data/journal_model.dart';
 import '../../../notes/data/note_model.dart';
 import '../../../todos/data/todo_model.dart';
+import '../../../canvas/data/canvas_model.dart';
+import '../../../canvas/data/canvas_adapter.dart';
 
 // Cards
 import '../../../clipboard/presentation/widgets/clipboard_card.dart';
@@ -24,6 +26,7 @@ import '../../../expenses/presentation/widgets/expense_card.dart';
 import '../../../journal/presentation/widgets/journal_card.dart';
 import '../../../notes/presentation/widgets/note_card.dart';
 import '../../../todos/presentation/widgets/todo_card.dart';
+import '../../../canvas/presentation/widgets/canvas_sketch_card.dart';
 import 'dashboard_screen.dart';
 
 class SearchResult extends GlobalSearchResult {
@@ -54,7 +57,9 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
 
   // ✅ PERFORMANCE: Notifier for the list content
   // Updates to this notifier only rebuild the ListView, not the whole screen.
-  final ValueNotifier<List<SearchResult>> _filteredListNotifier = ValueNotifier([]);
+  final ValueNotifier<List<SearchResult>> _filteredListNotifier = ValueNotifier(
+    [],
+  );
 
   // Data Store
   List<SearchResult> _allData = [];
@@ -66,7 +71,15 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   String _dateRange = "All Time";
   int? _filterColor;
 
-  final List<String> _filterTypes = ["All", "Note", "Todo", "Expense", "Journal", "Clipboard"];
+  final List<String> _filterTypes = [
+    "All",
+    "Note",
+    "Todo",
+    "Expense",
+    "Journal",
+    "Clipboard",
+    "Canvas",
+  ];
 
   @override
   void initState() {
@@ -95,17 +108,95 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     void safeAdd<T>(String boxName, SearchResult Function(T) mapper) {
       if (Hive.isBoxOpen(boxName)) {
         final box = Hive.box<T>(boxName);
-        results.addAll(box.values.where((e) {
-          try { return (e as dynamic).isDeleted == false; } catch (_) { return true; }
-        }).map(mapper));
+        results.addAll(
+          box.values
+              .where((e) {
+                try {
+                  return (e as dynamic).isDeleted == false;
+                } catch (_) {
+                  return true;
+                }
+              })
+              .map(mapper),
+        );
       }
     }
 
-    safeAdd<Note>('notes_box', (e) => SearchResult(id: e.id, title: e.title, subtitle: e.content, type: 'Note', route: AppRouter.noteEdit, argument: e, dateTime: e.updatedAt, colorValue: e.colorValue));
-    safeAdd<JournalEntry>('journal_box', (e) => SearchResult(id: e.id, title: e.title, subtitle: e.content, type: 'Journal', route: AppRouter.journalEdit, argument: e, dateTime: e.date, colorValue: e.colorValue));
-    safeAdd<ClipboardItem>('clipboard_box', (e) => SearchResult(id: e.id, title: e.content, subtitle: "Clipboard", type: 'Clipboard', route: AppRouter.clipboardEdit, argument: e, dateTime: e.createdAt, colorValue: e.colorValue));
-    safeAdd<Todo>('todos_box', (e) => SearchResult(id: e.id, title: e.task, subtitle: e.isDone ? "Completed" : "Pending", type: 'Todo', route: AppRouter.todoEdit, argument: e, dateTime: e.dueDate ?? DateTime.now()));
-    safeAdd<Expense>('expenses_box', (e) => SearchResult(id: e.id, title: e.title, subtitle: "${e.currency}${e.amount}", type: 'Expense', route: AppRouter.expenseEdit, argument: e, dateTime: e.date));
+    safeAdd<Note>(
+      'notes_box',
+      (e) => SearchResult(
+        id: e.id,
+        title: e.title,
+        subtitle: e.content,
+        type: 'Note',
+        route: AppRouter.noteEdit,
+        argument: e,
+        dateTime: e.updatedAt,
+        colorValue: e.colorValue,
+      ),
+    );
+    safeAdd<JournalEntry>(
+      'journal_box',
+      (e) => SearchResult(
+        id: e.id,
+        title: e.title,
+        subtitle: e.content,
+        type: 'Journal',
+        route: AppRouter.journalEdit,
+        argument: e,
+        dateTime: e.date,
+        colorValue: e.colorValue,
+      ),
+    );
+    safeAdd<ClipboardItem>(
+      'clipboard_box',
+      (e) => SearchResult(
+        id: e.id,
+        title: e.content,
+        subtitle: "Clipboard",
+        type: 'Clipboard',
+        route: AppRouter.clipboardEdit,
+        argument: e,
+        dateTime: e.createdAt,
+        colorValue: e.colorValue,
+      ),
+    );
+    safeAdd<Todo>(
+      'todos_box',
+      (e) => SearchResult(
+        id: e.id,
+        title: e.task,
+        subtitle: e.isDone ? "Completed" : "Pending",
+        type: 'Todo',
+        route: AppRouter.todoEdit,
+        argument: e,
+        dateTime: e.dueDate ?? DateTime.now(),
+      ),
+    );
+    safeAdd<Expense>(
+      'expenses_box',
+      (e) => SearchResult(
+        id: e.id,
+        title: e.title,
+        subtitle: "${e.currency}${e.amount}",
+        type: 'Expense',
+        route: AppRouter.expenseEdit,
+        argument: e,
+        dateTime: e.date,
+      ),
+    );
+    safeAdd<CanvasNote>(
+      'canvas_notes',
+      (e) => SearchResult(
+        id: e.id,
+        title: e.title,
+        subtitle: e.description ?? 'Canvas sketch',
+        type: 'Canvas',
+        route: AppRouter.canvasEdit,
+        argument: {'noteId': e.id},
+        dateTime: e.lastModified,
+      ),
+    );
 
     _allData = results;
     _applyFilters();
@@ -118,10 +209,13 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
 
     // 1. Text Search (Fastest check first)
     if (queryLower.isNotEmpty) {
-      filtered = filtered.where((item) =>
-      item.title.toLowerCase().contains(queryLower) ||
-          item.subtitle.toLowerCase().contains(queryLower)
-      ).toList();
+      filtered = filtered
+          .where(
+            (item) =>
+                item.title.toLowerCase().contains(queryLower) ||
+                item.subtitle.toLowerCase().contains(queryLower),
+          )
+          .toList();
     }
 
     // 2. Type Filter
@@ -131,17 +225,28 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
 
     // 3. Color Filter
     if (_filterColor != null) {
-      filtered = filtered.where((item) => item.colorValue == _filterColor).toList();
+      filtered = filtered
+          .where((item) => item.colorValue == _filterColor)
+          .toList();
     }
 
     // 4. Date Filter
     if (_dateRange != "All Time") {
       final now = DateTime.now();
       if (_dateRange == "Today") {
-        filtered = filtered.where((item) => item.dateTime.day == now.day && item.dateTime.month == now.month && item.dateTime.year == now.year).toList();
+        filtered = filtered
+            .where(
+              (item) =>
+                  item.dateTime.day == now.day &&
+                  item.dateTime.month == now.month &&
+                  item.dateTime.year == now.year,
+            )
+            .toList();
       } else if (_dateRange == "This Week") {
         final lastWeek = now.subtract(const Duration(days: 7));
-        filtered = filtered.where((item) => item.dateTime.isAfter(lastWeek)).toList();
+        filtered = filtered
+            .where((item) => item.dateTime.isAfter(lastWeek))
+            .toList();
       }
     }
 
@@ -151,7 +256,9 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     } else if (_sortBy == "Oldest") {
       filtered.sort((a, b) => a.dateTime.compareTo(b.dateTime));
     } else if (_sortBy == "A-Z") {
-      filtered.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+      filtered.sort(
+        (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()),
+      );
     }
 
     // ✅ UPDATE NOTIFIER: This only triggers the list to rebuild, nothing else
@@ -180,7 +287,12 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
               valueListenable: _filteredListNotifier,
               builder: (context, filteredItems, _) {
                 if (filteredItems.isEmpty) {
-                  return Center(child: Text("No results found", style: TextStyle(color: theme.hintColor)));
+                  return Center(
+                    child: Text(
+                      "No results found",
+                      style: TextStyle(color: theme.hintColor),
+                    ),
+                  );
                 }
 
                 return ListView.separated(
@@ -206,7 +318,8 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   }
 
   Widget _buildIntegratedSearchBar(ThemeData theme) {
-    bool hasActiveFilters = _filterColor != null || _dateRange != "All Time" || _sortBy != "Newest";
+    bool hasActiveFilters =
+        _filterColor != null || _dateRange != "All Time" || _sortBy != "Newest";
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -231,7 +344,11 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                 // Removed onChanged setState; listener handles it
                 decoration: InputDecoration(
                   hintText: "Search workspace...",
-                  prefixIcon: Icon(Icons.search_rounded, color: theme.colorScheme.primary, size: 20),
+                  prefixIcon: Icon(
+                    Icons.search_rounded,
+                    color: theme.colorScheme.primary,
+                    size: 20,
+                  ),
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.cancel_rounded, size: 18),
                     onPressed: () {
@@ -246,7 +363,10 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.tune_rounded, color: hasActiveFilters ? theme.colorScheme.primary : null),
+            icon: Icon(
+              Icons.tune_rounded,
+              color: hasActiveFilters ? theme.colorScheme.primary : null,
+            ),
             onPressed: _showSortFilterSheet,
           ),
         ],
@@ -277,16 +397,26 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
               duration: const Duration(milliseconds: 200),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.05),
+                color: isSelected
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.onSurface.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.1),
+                  color: isSelected
+                      ? theme.colorScheme.primary
+                      : theme.colorScheme.onSurface.withOpacity(0.1),
                 ),
               ),
               child: Text(
-                type == "Todo" ? "To-Dos" : type == "Expense" ? "Finance" : type,
+                type == "Todo"
+                    ? "To-Dos"
+                    : type == "Expense"
+                    ? "Finance"
+                    : type,
                 style: TextStyle(
-                  color: isSelected ? Colors.white : theme.colorScheme.onSurface.withOpacity(0.7),
+                  color: isSelected
+                      ? Colors.white
+                      : theme.colorScheme.onSurface.withOpacity(0.7),
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                 ),
               ),
@@ -310,55 +440,89 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 30),
             decoration: BoxDecoration(
               color: theme.colorScheme.surface, // ✅ Solid color for visibility
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(24),
+              ),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Handle
-                Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), borderRadius: BorderRadius.circular(2)))),
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 20),
 
                 // Header
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Sort & Filter", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+                    Text(
+                      "Sort & Filter",
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     TextButton(
-                        onPressed: () {
-                          setState(() { _sortBy = "Newest"; _dateRange = "All Time"; _filterColor = null; });
-                          _applyFilters();
-                          Navigator.pop(context);
-                        },
-                        child: const Text("Reset")
+                      onPressed: () {
+                        setState(() {
+                          _sortBy = "Newest";
+                          _dateRange = "All Time";
+                          _filterColor = null;
+                        });
+                        _applyFilters();
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Reset"),
                     ),
                   ],
                 ),
 
                 const SizedBox(height: 16),
                 _sheetSectionTitle("Sort Order"),
-                Wrap(spacing: 8, children: ["Newest", "Oldest", "A-Z"].map((s) => ChoiceChip(
-                    label: Text(s),
-                    selected: _sortBy == s,
-                    onSelected: (v) {
-                      setSheetState(() => _sortBy = s);
-                      setState(() => _sortBy = s);
-                      _applyFilters();
-                    }
-                )).toList()),
+                Wrap(
+                  spacing: 8,
+                  children: ["Newest", "Oldest", "A-Z"]
+                      .map(
+                        (s) => ChoiceChip(
+                          label: Text(s),
+                          selected: _sortBy == s,
+                          onSelected: (v) {
+                            setSheetState(() => _sortBy = s);
+                            setState(() => _sortBy = s);
+                            _applyFilters();
+                          },
+                        ),
+                      )
+                      .toList(),
+                ),
 
                 const SizedBox(height: 16),
                 _sheetSectionTitle("Timeframe"),
-                Wrap(spacing: 8, children: ["All Time", "Today", "This Week"].map((d) => ChoiceChip(
-                    label: Text(d),
-                    selected: _dateRange == d,
-                    onSelected: (v) {
-                      setSheetState(() => _dateRange = d);
-                      setState(() => _dateRange = d);
-                      _applyFilters();
-                    }
-                )).toList()),
+                Wrap(
+                  spacing: 8,
+                  children: ["All Time", "Today", "This Week"]
+                      .map(
+                        (d) => ChoiceChip(
+                          label: Text(d),
+                          selected: _dateRange == d,
+                          onSelected: (v) {
+                            setSheetState(() => _dateRange = d);
+                            setState(() => _dateRange = d);
+                            _applyFilters();
+                          },
+                        ),
+                      )
+                      .toList(),
+                ),
 
                 const SizedBox(height: 16),
                 _sheetSectionTitle("Color Tag"),
@@ -372,7 +536,17 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     );
   }
 
-  Widget _sheetSectionTitle(String title) => Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: Text(title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: Colors.grey)));
+  Widget _sheetSectionTitle(String title) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8),
+    child: Text(
+      title,
+      style: const TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+        color: Colors.grey,
+      ),
+    ),
+  );
 
   Widget _buildColorFilterRow(Function setSheetState) {
     final theme = Theme.of(context);
@@ -398,9 +572,11 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                 child: CircleAvatar(
                   backgroundColor: onSurface.withOpacity(0.1),
                   child: Icon(
-                      Icons.close,
-                      size: 16,
-                      color: _filterColor == null ? primaryColor : onSurface.withOpacity(0.5)
+                    Icons.close,
+                    size: 16,
+                    color: _filterColor == null
+                        ? primaryColor
+                        : onSurface.withOpacity(0.5),
                   ),
                 ),
               ),
@@ -421,12 +597,21 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
               padding: const EdgeInsets.only(right: 12),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                width: 38, height: 38,
+                width: 38,
+                height: 38,
                 decoration: BoxDecoration(
-                  color: color, shape: BoxShape.circle,
-                  border: Border.all(color: isSelected ? primaryColor : onSurface.withOpacity(0.2), width: isSelected ? 2.5 : 1),
+                  color: color,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isSelected
+                        ? primaryColor
+                        : onSurface.withOpacity(0.2),
+                    width: isSelected ? 2.5 : 1,
+                  ),
                 ),
-                child: isSelected ? Icon(Icons.check, size: 18, color: contrastColor) : null,
+                child: isSelected
+                    ? Icon(Icons.check, size: 18, color: contrastColor)
+                    : null,
               ),
             ),
           );
@@ -438,24 +623,116 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   Widget _buildResultCard(SearchResult res) {
     switch (res.type) {
       case 'Note':
-        return NoteCard(note: res.argument, isSelected: false, onTap: () async { await context.push(res.route, extra: res.argument); _loadAllData(); }, onCopy: () => _copy(res), onShare: () => _share(res), onDelete: () => _delete(res), onColorChanged: (c) { (res.argument as Note).colorValue = c.value; (res.argument as Note).save(); setState(() {}); });
+        return NoteCard(
+          note: res.argument,
+          isSelected: false,
+          onTap: () async {
+            await context.push(res.route, extra: res.argument);
+            _loadAllData();
+          },
+          onCopy: () => _copy(res),
+          onShare: () => _share(res),
+          onDelete: () => _delete(res),
+          onColorChanged: (c) {
+            (res.argument as Note).colorValue = c.value;
+            (res.argument as Note).save();
+            setState(() {});
+          },
+        );
       case 'Todo':
-        return TodoCard(todo: res.argument, isSelected: false, onTap: () async { await context.push(res.route, extra: res.argument); _loadAllData(); }, onToggleDone: () { (res.argument as Todo).isDone = !(res.argument as Todo).isDone; (res.argument as Todo).save(); _loadAllData(); });
+        return TodoCard(
+          todo: res.argument,
+          isSelected: false,
+          onTap: () async {
+            await context.push(res.route, extra: res.argument);
+            _loadAllData();
+          },
+          onToggleDone: () {
+            (res.argument as Todo).isDone = !(res.argument as Todo).isDone;
+            (res.argument as Todo).save();
+            _loadAllData();
+          },
+        );
       case 'Expense':
-        return ExpenseCard(expense: res.argument, isSelected: false, onTap: () async { await context.push(res.route, extra: res.argument); _loadAllData(); });
+        return ExpenseCard(
+          expense: res.argument,
+          isSelected: false,
+          onTap: () async {
+            await context.push(res.route, extra: res.argument);
+            _loadAllData();
+          },
+        );
       case 'Journal':
-        return JournalCard(entry: res.argument, isSelected: false, onTap: () async { await context.push(res.route, extra: res.argument); _loadAllData(); }, onCopy: () => _copy(res), onShare: () => _share(res), onDelete: () => _delete(res), onColorChanged: (c) { (res.argument as JournalEntry).colorValue = c.value; (res.argument as JournalEntry).save(); setState(() {}); });
+        return JournalCard(
+          entry: res.argument,
+          isSelected: false,
+          onTap: () async {
+            await context.push(res.route, extra: res.argument);
+            _loadAllData();
+          },
+          onCopy: () => _copy(res),
+          onShare: () => _share(res),
+          onDelete: () => _delete(res),
+          onColorChanged: (c) {
+            (res.argument as JournalEntry).colorValue = c.value;
+            (res.argument as JournalEntry).save();
+            setState(() {});
+          },
+        );
       case 'Clipboard':
-        return ClipboardCard(item: res.argument, isSelected: false, onTap: () async { await context.push(res.route, extra: res.argument); _loadAllData(); }, onCopy: () => _copy(res), onShare: () => _share(res), onDelete: () => _delete(res), onColorChanged: (c) { (res.argument as ClipboardItem).colorValue = c.value; (res.argument as ClipboardItem).save(); setState(() {}); });
-      default: return const SizedBox.shrink();
+        return ClipboardCard(
+          item: res.argument,
+          isSelected: false,
+          onTap: () async {
+            await context.push(res.route, extra: res.argument);
+            _loadAllData();
+          },
+          onCopy: () => _copy(res),
+          onShare: () => _share(res),
+          onDelete: () => _delete(res),
+          onColorChanged: (c) {
+            (res.argument as ClipboardItem).colorValue = c.value;
+            (res.argument as ClipboardItem).save();
+            setState(() {});
+          },
+        );
+      case 'Canvas':
+        // Get the actual note from the box
+        final note = Hive.isBoxOpen('canvas_notes')
+            ? Hive.box<CanvasNote>(
+                'canvas_notes',
+              ).get((res.argument as Map)['noteId'])
+            : null;
+        if (note == null) return const SizedBox.shrink();
+        return CanvasSketchCard(
+          note: note,
+          isSelected: false,
+          onTap: () async {
+            await context.push(res.route, extra: res.argument);
+            _loadAllData();
+          },
+          onLongPress: () {},
+        );
+      default:
+        return const SizedBox.shrink();
     }
   }
 
-  void _copy(SearchResult res) { Clipboard.setData(ClipboardData(text: res.title)); }
-  void _share(SearchResult res) { Share.share(res.title); }
+  void _copy(SearchResult res) {
+    Clipboard.setData(ClipboardData(text: res.title));
+  }
+
+  void _share(SearchResult res) {
+    Share.share(res.title);
+  }
+
   void _delete(SearchResult res) {
     final item = res.argument;
-    try { item.isDeleted = true; item.deletedAt = DateTime.now(); item.save(); } catch(_) {}
+    try {
+      item.isDeleted = true;
+      item.deletedAt = DateTime.now();
+      item.save();
+    } catch (_) {}
     _loadAllData();
   }
 }

@@ -22,6 +22,7 @@ import '../../../../core/widgets/glass_scaffold.dart';
 import '../../../../core/widgets/glass_rich_text_editor.dart';
 import '../../data/note_model.dart';
 import '../../../../core/app_content_palette.dart';
+import '../../../../core/utils/widget_sync_service.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final Note? note;
@@ -192,15 +193,32 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       widget.note!.colorValue = _scaffoldColor.value;
       widget.note!.save();
     } else {
+      int newSortIndex = 0;
+      if (_notesBox.isNotEmpty) {
+        final existingIndices = _notesBox.values.map((e) => e.sortIndex);
+        if (existingIndices.isNotEmpty) {
+          // Find min index and subtract 1 to put at top
+          newSortIndex =
+              existingIndices.reduce(
+                (curr, next) => curr < next ? curr : next,
+              ) -
+              1;
+        }
+      }
+
       final newNote = Note(
         id: const Uuid().v4(),
         title: title,
         content: contentJson,
         updatedAt: _selectedDate,
         colorValue: _scaffoldColor.value,
+        sortIndex: newSortIndex,
       );
       _notesBox.put(newNote.id, newNote);
     }
+    // Sync Widget
+    WidgetSyncService.syncNotes();
+
     _initialTitle = title;
     _initialContentJson = contentJson;
     _initialColor = _scaffoldColor;

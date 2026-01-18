@@ -19,6 +19,7 @@ import '../widgets/expense_card.dart';
 
 // --- Enums ---
 enum ExpenseSort { custom, amountHigh, amountLow, newest, oldest }
+
 enum AnalysisPeriod { daily, weekly, monthly, yearly }
 
 class ExpensesScreen extends StatefulWidget {
@@ -28,7 +29,8 @@ class ExpensesScreen extends StatefulWidget {
   State<ExpensesScreen> createState() => _ExpensesScreenState();
 }
 
-class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStateMixin {
+class _ExpensesScreenState extends State<ExpensesScreen>
+    with TickerProviderStateMixin {
   // --- UI Constants ---
   final double _kPadding = 16.0;
 
@@ -77,7 +79,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
       _loadSettings();
     } else {
       Hive.openBox('settings').then((_) {
-        if(mounted) _loadSettings();
+        if (mounted) _loadSettings();
       });
     }
 
@@ -108,7 +110,10 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
   void _loadSettings() {
     if (!Hive.isBoxOpen('settings')) return;
     final box = Hive.box('settings');
-    if (mounted) setState(() => _selectedCurrency = box.get('last_currency', defaultValue: '\$'));
+    if (mounted)
+      setState(
+        () => _selectedCurrency = box.get('last_currency', defaultValue: '\$'),
+      );
   }
 
   @override
@@ -130,7 +135,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
 
       if (!listEquals(_availableCurrencies, currencies)) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          if(mounted && !listEquals(_availableCurrencies, currencies)) {
+          if (mounted && !listEquals(_availableCurrencies, currencies)) {
             setState(() {
               _availableCurrencies = currencies;
               if (!currencies.contains(_selectedCurrency)) {
@@ -146,11 +151,15 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
     expenses = expenses.where((e) => e.currency == _selectedCurrency).toList();
 
     // 4. Period Filter
-    expenses = expenses.where((e) => _isDateInPeriod(e.date, _selectedDay, _currentPeriod)).toList();
+    expenses = expenses
+        .where((e) => _isDateInPeriod(e.date, _selectedDay, _currentPeriod))
+        .toList();
 
     // 5. Search Filter
     if (_searchQuery.isNotEmpty) {
-      expenses = expenses.where((e) => e.title.toLowerCase().contains(_searchQuery)).toList();
+      expenses = expenses
+          .where((e) => e.title.toLowerCase().contains(_searchQuery))
+          .toList();
     }
 
     // 6. Type Filter
@@ -166,11 +175,21 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
 
     // 8. Sorting
     switch (_currentSort) {
-      case ExpenseSort.amountHigh: expenses.sort((a, b) => b.amount.compareTo(a.amount)); break;
-      case ExpenseSort.amountLow: expenses.sort((a, b) => a.amount.compareTo(b.amount)); break;
-      case ExpenseSort.newest: expenses.sort((a, b) => b.date.compareTo(a.date)); break;
-      case ExpenseSort.oldest: expenses.sort((a, b) => a.date.compareTo(b.date)); break;
-      case ExpenseSort.custom: expenses.sort((a, b) => a.sortIndex.compareTo(b.sortIndex)); break;
+      case ExpenseSort.amountHigh:
+        expenses.sort((a, b) => b.amount.compareTo(a.amount));
+        break;
+      case ExpenseSort.amountLow:
+        expenses.sort((a, b) => a.amount.compareTo(b.amount));
+        break;
+      case ExpenseSort.newest:
+        expenses.sort((a, b) => b.date.compareTo(a.date));
+        break;
+      case ExpenseSort.oldest:
+        expenses.sort((a, b) => a.date.compareTo(b.date));
+        break;
+      case ExpenseSort.custom:
+        expenses.sort((a, b) => a.sortIndex.compareTo(b.sortIndex));
+        break;
     }
 
     return expenses;
@@ -184,7 +203,11 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
         final startOfWeek = target.subtract(Duration(days: target.weekday - 1));
         final endOfWeek = startOfWeek.add(const Duration(days: 6));
         final d = DateTime(date.year, date.month, date.day);
-        final s = DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day);
+        final s = DateTime(
+          startOfWeek.year,
+          startOfWeek.month,
+          startOfWeek.day,
+        );
         final e = DateTime(endOfWeek.year, endOfWeek.month, endOfWeek.day);
         return d.compareTo(s) >= 0 && d.compareTo(e) <= 0;
       case AnalysisPeriod.monthly:
@@ -196,13 +219,18 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
 
   String _getPeriodTitle() {
     switch (_currentPeriod) {
-      case AnalysisPeriod.daily: return DateFormat.yMMMMd().format(_selectedDay);
+      case AnalysisPeriod.daily:
+        return DateFormat.yMMMMd().format(_selectedDay);
       case AnalysisPeriod.weekly:
-        final start = _selectedDay.subtract(Duration(days: _selectedDay.weekday - 1));
+        final start = _selectedDay.subtract(
+          Duration(days: _selectedDay.weekday - 1),
+        );
         final end = start.add(const Duration(days: 6));
         return "${DateFormat.MMMd().format(start)} - ${DateFormat.MMMd().format(end)}";
-      case AnalysisPeriod.monthly: return DateFormat.yMMMM().format(_selectedDay);
-      case AnalysisPeriod.yearly: return DateFormat.y().format(_selectedDay);
+      case AnalysisPeriod.monthly:
+        return DateFormat.yMMMM().format(_selectedDay);
+      case AnalysisPeriod.yearly:
+        return DateFormat.y().format(_selectedDay);
     }
   }
 
@@ -215,7 +243,10 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
   // --- SELECTION LOGIC ---
   void _toggleSelection(String id) {
     setState(() {
-      if (_selectedIds.contains(id)) _selectedIds.remove(id); else _selectedIds.add(id);
+      if (_selectedIds.contains(id))
+        _selectedIds.remove(id);
+      else
+        _selectedIds.add(id);
       if (_selectedIds.isEmpty) _isSelectionMode = false;
     });
   }
@@ -230,10 +261,15 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
     for (var id in _selectedIds) {
       try {
         final e = box.values.firstWhere((element) => element.id == id);
-        e.isDeleted = true; e.deletedAt = now; e.save();
+        e.isDeleted = true;
+        e.deletedAt = now;
+        e.save();
       } catch (_) {}
     }
-    setState(() { _selectedIds.clear(); _isSelectionMode = false; });
+    setState(() {
+      _selectedIds.clear();
+      _isSelectionMode = false;
+    });
   }
 
   // --- UI BUILDERS ---
@@ -248,7 +284,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
       // This keeps the Header static and allows Hero animation to play instantly.
       body: Column(
         children: [
-
           // 1. Static Header (Rendered immediately)
           _buildTopBar(),
 
@@ -257,7 +292,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
             child: FutureBuilder<Box<Expense>>(
               future: _boxFuture,
               builder: (context, snapshot) {
-
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
@@ -266,7 +300,10 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                   return Center(
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: Text("Error loading data.\n\n${snapshot.error}", textAlign: TextAlign.center),
+                      child: Text(
+                        "Error loading data.\n\n${snapshot.error}",
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   );
                 }
@@ -280,7 +317,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                     return NestedScrollView(
                       headerSliverBuilder: (context, innerBoxIsScrolled) => [
                         // ⚠️ NOTE: _buildTopBar removed from here
-
                         SliverToBoxAdapter(child: _buildCurrencySelector()),
                         SliverToBoxAdapter(child: _buildCalendar(allExpenses)),
                         SliverToBoxAdapter(child: const SizedBox(height: 10)),
@@ -309,7 +345,13 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
         backgroundColor: theme.colorScheme.primary,
         elevation: 4,
         icon: Icon(Icons.add, color: theme.colorScheme.onPrimary),
-        label: Text("New $_selectedCurrency", style: TextStyle(color: theme.colorScheme.onPrimary, fontWeight: FontWeight.bold)),
+        label: Text(
+          "New $_selectedCurrency",
+          style: TextStyle(
+            color: theme.colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
     );
   }
@@ -335,13 +377,22 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
               style: theme.textTheme.bodyLarge,
               decoration: InputDecoration(
                 prefixIcon: IconButton(
-                    icon: Icon(Icons.arrow_back, color: theme.colorScheme.onSurface),
-                    onPressed: () {
-                      setState(() { _isSearching = false; _searchQuery = ""; _searchController.clear(); });
-                    }
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isSearching = false;
+                      _searchQuery = "";
+                      _searchController.clear();
+                    });
+                  },
                 ),
                 hintText: "Search in $_selectedCurrency...",
-                hintStyle: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.5)),
+                hintStyle: TextStyle(
+                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                ),
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(vertical: 14),
               ),
@@ -361,7 +412,10 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
             Row(
               children: [
                 IconButton(
-                  icon: Icon(Icons.arrow_back_ios_new_rounded, color: theme.colorScheme.onSurface),
+                  icon: Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: theme.colorScheme.onSurface,
+                  ),
                   onPressed: () => context.pop(),
                 ),
                 // ✅ HERO TAG 1
@@ -369,8 +423,15 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                   tag: 'expenses_icon',
                   child: Container(
                     padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(color: Colors.redAccent.withOpacity(0.2), shape: BoxShape.circle),
-                    child: const Icon(Icons.attach_money, color: Colors.redAccent, size: 24),
+                    decoration: BoxDecoration(
+                      color: Colors.redAccent.withOpacity(0.2),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.attach_money,
+                      color: Colors.redAccent,
+                      size: 24,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -382,29 +443,51 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                       tag: 'expenses_title',
                       child: Material(
                         type: MaterialType.transparency,
-                        child: Text("Expense", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface)),
+                        child: Text(
+                          "Expense",
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.onSurface,
+                          ),
+                        ),
                       ),
                     ),
-                    Text(_getPeriodTitle(), style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+                    Text(
+                      _getPeriodTitle(),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
                   ],
                 ),
               ],
             ),
             Row(
               children: [
-                IconButton(icon: Icon(Icons.search, color: theme.colorScheme.onSurface), onPressed: () => setState(() => _isSearching = true)),
+                IconButton(
+                  icon: Icon(Icons.search, color: theme.colorScheme.onSurface),
+                  onPressed: () => setState(() => _isSearching = true),
+                ),
                 if (_isSelectionMode)
-                  IconButton(icon: const Icon(Icons.delete, color: Colors.redAccent), onPressed: _deleteSelected)
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.redAccent),
+                    onPressed: _deleteSelected,
+                  )
                 else
                   IconButton(
-                      icon: Icon(Icons.filter_list, color: theme.colorScheme.onSurface),
-                      onPressed: () {
-                        // ✅ LAZY LOAD DATA: Only fetch list when filter is clicked
-                        if (Hive.isBoxOpen('expenses_box')) {
-                          final list = Hive.box<Expense>('expenses_box').values.toList();
-                          _showFilterMenu(list);
-                        }
+                    icon: Icon(
+                      Icons.filter_list,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                    onPressed: () {
+                      // ✅ LAZY LOAD DATA: Only fetch list when filter is clicked
+                      if (Hive.isBoxOpen('expenses_box')) {
+                        final list = Hive.box<Expense>(
+                          'expenses_box',
+                        ).values.toList();
+                        _showFilterMenu(list);
                       }
+                    },
                   ),
               ],
             ),
@@ -418,7 +501,13 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
     final theme = Theme.of(context);
     // Box is safe to access here because showFilterMenu is called from UI that waited for box
     final box = Hive.box<Expense>('expenses_box');
-    final categories = box.values.where((e) => !e.isDeleted).map((e) => e.category).toSet().toList()..sort();
+    final categories =
+        box.values
+            .where((e) => !e.isDeleted)
+            .map((e) => e.category)
+            .toSet()
+            .toList()
+          ..sort();
 
     showModalBottomSheet(
       context: context,
@@ -430,12 +519,21 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
             height: MediaQuery.of(context).size.height * 0.75,
             decoration: BoxDecoration(
               color: theme.colorScheme.surface,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
             ),
             child: Column(
               children: [
                 const SizedBox(height: 12),
-                Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), borderRadius: BorderRadius.circular(2))),
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
 
                 // Header
                 Padding(
@@ -443,19 +541,24 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Sort & Filter", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+                      Text(
+                        "Sort & Filter",
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       TextButton(
-                          onPressed: () {
-                            // Update MAIN state
-                            setState(() {
-                              _currentSort = ExpenseSort.newest;
-                              _typeFilter = 'All';
-                              _categoryFilter = 'All';
-                            });
-                            // Update SHEET state
-                            setSheetState(() {});
-                          },
-                          child: const Text("Reset")
+                        onPressed: () {
+                          // Update MAIN state
+                          setState(() {
+                            _currentSort = ExpenseSort.newest;
+                            _typeFilter = 'All';
+                            _categoryFilter = 'All';
+                          });
+                          // Update SHEET state
+                          setSheetState(() {});
+                        },
+                        child: const Text("Reset"),
                       ),
                     ],
                   ),
@@ -465,36 +568,79 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                   child: ListView(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     children: [
-                      Text("Sort By", style: theme.textTheme.titleSmall?.copyWith(color: Colors.grey, fontWeight: FontWeight.bold)),
+                      Text(
+                        "Sort By",
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       const SizedBox(height: 8),
-                      _buildSortRadio(ExpenseSort.newest, "Newest Date", setSheetState),
-                      _buildSortRadio(ExpenseSort.oldest, "Oldest Date", setSheetState),
-                      _buildSortRadio(ExpenseSort.amountHigh, "Highest Amount", setSheetState),
-                      _buildSortRadio(ExpenseSort.amountLow, "Lowest Amount", setSheetState),
-
-                      const Divider(height: 32),
-
-                      Text("Transaction Type", style: theme.textTheme.titleSmall?.copyWith(color: Colors.grey, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 12),
-                      Wrap(
-                        spacing: 10,
-                        children: ['All', 'Income', 'Expense'].map((t) => _buildChoiceChip(t, _typeFilter, (val) {
-                          setState(() => _typeFilter = val);
-                          setSheetState(() {});
-                        })).toList(),
+                      _buildSortRadio(
+                        ExpenseSort.newest,
+                        "Newest Date",
+                        setSheetState,
+                      ),
+                      _buildSortRadio(
+                        ExpenseSort.oldest,
+                        "Oldest Date",
+                        setSheetState,
+                      ),
+                      _buildSortRadio(
+                        ExpenseSort.amountHigh,
+                        "Highest Amount",
+                        setSheetState,
+                      ),
+                      _buildSortRadio(
+                        ExpenseSort.amountLow,
+                        "Lowest Amount",
+                        setSheetState,
                       ),
 
                       const Divider(height: 32),
 
-                      Text("Categories", style: theme.textTheme.titleSmall?.copyWith(color: Colors.grey, fontWeight: FontWeight.bold)),
+                      Text(
+                        "Transaction Type",
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Wrap(
+                        spacing: 10,
+                        children: ['All', 'Income', 'Expense']
+                            .map(
+                              (t) => _buildChoiceChip(t, _typeFilter, (val) {
+                                setState(() => _typeFilter = val);
+                                setSheetState(() {});
+                              }),
+                            )
+                            .toList(),
+                      ),
+
+                      const Divider(height: 32),
+
+                      Text(
+                        "Categories",
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       const SizedBox(height: 12),
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
-                        children: ['All', ...categories].map((c) => _buildChoiceChip(c, _categoryFilter, (val) {
-                          setState(() => _categoryFilter = val);
-                          setSheetState(() {});
-                        })).toList(),
+                        children: ['All', ...categories]
+                            .map(
+                              (c) =>
+                                  _buildChoiceChip(c, _categoryFilter, (val) {
+                                    setState(() => _categoryFilter = val);
+                                    setSheetState(() {});
+                                  }),
+                            )
+                            .toList(),
                       ),
                       const SizedBox(height: 40),
                     ],
@@ -511,9 +657,17 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                         backgroundColor: theme.colorScheme.primary,
                         foregroundColor: theme.colorScheme.onPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
-                      child: const Text("Done", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      child: const Text(
+                        "Done",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -525,7 +679,11 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
     );
   }
 
-  Widget _buildSortRadio(ExpenseSort value, String label, StateSetter setSheetState) {
+  Widget _buildSortRadio(
+    ExpenseSort value,
+    String label,
+    StateSetter setSheetState,
+  ) {
     final isSelected = _currentSort == value;
     final theme = Theme.of(context);
     return InkWell(
@@ -539,22 +697,31 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
         child: Row(
           children: [
             Icon(
-              isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+              isSelected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_unchecked,
               color: isSelected ? theme.colorScheme.primary : Colors.grey,
               size: 20,
             ),
             const SizedBox(width: 12),
-            Text(label, style: TextStyle(
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              color: theme.colorScheme.onSurface,
-            )),
+            Text(
+              label,
+              style: TextStyle(
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                color: theme.colorScheme.onSurface,
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildChoiceChip(String label, String groupValue, Function(String) onSelect) {
+  Widget _buildChoiceChip(
+    String label,
+    String groupValue,
+    Function(String) onSelect,
+  ) {
     final isSelected = label == groupValue;
     final theme = Theme.of(context);
     return ChoiceChip(
@@ -562,9 +729,13 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
       selected: isSelected,
       onSelected: (_) => onSelect(label),
       selectedColor: theme.colorScheme.primary,
-      backgroundColor: theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
+      backgroundColor: theme.colorScheme.surfaceContainerHighest.withOpacity(
+        0.5,
+      ),
       labelStyle: TextStyle(
-        color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
+        color: isSelected
+            ? theme.colorScheme.onPrimary
+            : theme.colorScheme.onSurface,
         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
       ),
       side: BorderSide.none,
@@ -594,12 +765,29 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
-                  color: isSelected ? theme.colorScheme.primary : theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
+                  color: isSelected
+                      ? theme.colorScheme.primary
+                      : theme.colorScheme.surfaceContainerHighest.withOpacity(
+                          0.5,
+                        ),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Center(child: Text(curr, style: TextStyle(color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface, fontWeight: FontWeight.bold))),
+                child: Center(
+                  child: Text(
+                    curr,
+                    style: TextStyle(
+                      color: isSelected
+                          ? theme.colorScheme.onPrimary
+                          : theme.colorScheme.onSurface,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
             ),
           );
@@ -623,7 +811,9 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: AnalysisPeriod.values.map((period) {
             final isSelected = _currentPeriod == period;
-            String label = period.name.substring(0, 1).toUpperCase() + period.name.substring(1);
+            String label =
+                period.name.substring(0, 1).toUpperCase() +
+                period.name.substring(1);
             return Expanded(
               child: GestureDetector(
                 onTap: () {
@@ -633,14 +823,18 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                   duration: const Duration(milliseconds: 200),
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
-                    color: isSelected ? theme.colorScheme.primary : Colors.transparent,
+                    color: isSelected
+                        ? theme.colorScheme.primary
+                        : Colors.transparent,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
                     child: Text(
                       label,
                       style: TextStyle(
-                        color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
+                        color: isSelected
+                            ? theme.colorScheme.onPrimary
+                            : theme.colorScheme.onSurface,
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
                       ),
@@ -680,23 +874,50 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
             });
           }
         },
-        onFormatChanged: (format) { if (_calendarFormat != format) setState(() => _calendarFormat = format); },
+        onFormatChanged: (format) {
+          if (_calendarFormat != format)
+            setState(() => _calendarFormat = format);
+        },
         onPageChanged: (focusedDay) => _focusedDay = focusedDay,
-        eventLoader: (day) => events.where((e) => isSameDay(e.date, day)).toList(),
+        eventLoader: (day) =>
+            events.where((e) => isSameDay(e.date, day)).toList(),
         calendarStyle: CalendarStyle(
-          markerDecoration: const BoxDecoration(color: Colors.pinkAccent, shape: BoxShape.circle),
-          todayDecoration: const BoxDecoration(color: Colors.blueAccent, shape: BoxShape.circle),
-          selectedDecoration: const BoxDecoration(color: Colors.deepPurple, shape: BoxShape.circle),
+          markerDecoration: const BoxDecoration(
+            color: Colors.pinkAccent,
+            shape: BoxShape.circle,
+          ),
+          todayDecoration: const BoxDecoration(
+            color: Colors.blueAccent,
+            shape: BoxShape.circle,
+          ),
+          selectedDecoration: const BoxDecoration(
+            color: Colors.deepPurple,
+            shape: BoxShape.circle,
+          ),
           defaultTextStyle: TextStyle(color: theme.colorScheme.onSurface),
-          weekendTextStyle: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.7)),
-          outsideTextStyle: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.3)),
+          weekendTextStyle: TextStyle(
+            color: theme.colorScheme.onSurface.withOpacity(0.7),
+          ),
+          outsideTextStyle: TextStyle(
+            color: theme.colorScheme.onSurface.withOpacity(0.3),
+          ),
         ),
         headerStyle: HeaderStyle(
           formatButtonVisible: true,
           titleCentered: true,
-          titleTextStyle: TextStyle(color: theme.colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
-          leftChevronIcon: Icon(Icons.chevron_left, color: theme.colorScheme.onSurface),
-          rightChevronIcon: Icon(Icons.chevron_right, color: theme.colorScheme.onSurface),
+          titleTextStyle: TextStyle(
+            color: theme.colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+          leftChevronIcon: Icon(
+            Icons.chevron_left,
+            color: theme.colorScheme.onSurface,
+          ),
+          rightChevronIcon: Icon(
+            Icons.chevron_right,
+            color: theme.colorScheme.onSurface,
+          ),
         ),
       ),
     );
@@ -714,9 +935,15 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
       child: TabBar(
         controller: _tabController,
         indicator: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: theme.colorScheme.primary,
-            boxShadow: [BoxShadow(color: theme.colorScheme.primary.withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 2))]
+          borderRadius: BorderRadius.circular(16),
+          color: theme.colorScheme.primary,
+          boxShadow: [
+            BoxShadow(
+              color: theme.colorScheme.primary.withOpacity(0.3),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         labelColor: theme.colorScheme.onPrimary,
         unselectedLabelColor: theme.colorScheme.onSurface,
@@ -737,11 +964,28 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.money_off, size: 64, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3)),
+            Icon(
+              Icons.money_off,
+              size: 64,
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+            ),
             const SizedBox(height: 16),
-            Text("No transactions for $_selectedCurrency", style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+            Text(
+              "No transactions for $_selectedCurrency",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              ),
+            ),
             if (_currentPeriod != AnalysisPeriod.daily)
-              Text("in this ${_currentPeriod.name}", style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 12)),
+              Text(
+                "in this ${_currentPeriod.name}",
+                style: TextStyle(
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withOpacity(0.5),
+                  fontSize: 12,
+                ),
+              ),
           ],
         ),
       );
@@ -760,8 +1004,13 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
             child: ExpenseCard(
               expense: expense,
               isSelected: _selectedIds.contains(expense.id),
-              onTap: () => _isSelectionMode ? _toggleSelection(expense.id) : context.push(AppRouter.expenseEdit, extra: expense),
-              onLongPress: () => setState(() { _isSelectionMode = true; _selectedIds.add(expense.id); }),
+              onTap: () => _isSelectionMode
+                  ? _toggleSelection(expense.id)
+                  : context.push(AppRouter.expenseEdit, extra: expense),
+              onLongPress: () => setState(() {
+                _isSelectionMode = true;
+                _selectedIds.add(expense.id);
+              }),
             ),
           ),
         );
@@ -770,7 +1019,8 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
   }
 
   Widget _buildAnalyticsTab(List<Expense> expenses) {
-    if (expenses.isEmpty) return const Center(child: Text("No data for this period"));
+    if (expenses.isEmpty)
+      return const Center(child: Text("No data for this period"));
 
     double totalIncome = 0;
     double totalExpense = 0;
@@ -784,20 +1034,25 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
       } else {
         totalExpense += e.amount;
         if (e.amount > maxTx) maxTx = e.amount;
-        categoryTotals[e.category] = (categoryTotals[e.category] ?? 0) + e.amount;
+        categoryTotals[e.category] =
+            (categoryTotals[e.category] ?? 0) + e.amount;
       }
     }
 
     double netBalance = totalIncome - totalExpense;
-    double savingsRate = totalIncome > 0 ? ((totalIncome - totalExpense) / totalIncome) * 100 : 0;
+    double savingsRate = totalIncome > 0
+        ? ((totalIncome - totalExpense) / totalIncome) * 100
+        : 0;
     double healthScore = (50 + (savingsRate / 2)).clamp(0, 100);
     if (totalExpense > totalIncome) healthScore = 20;
 
-    String budgetTitle = "${_currentPeriod.name[0].toUpperCase()}${_currentPeriod.name.substring(1)} Budget";
+    String budgetTitle =
+        "${_currentPeriod.name[0].toUpperCase()}${_currentPeriod.name.substring(1)} Budget";
     double budgetLimit = totalIncome > 0 ? totalIncome * 0.8 : 5000;
     double budgetProgress = (totalExpense / budgetLimit).clamp(0.0, 1.0);
 
-    var sortedCategories = categoryTotals.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
+    var sortedCategories = categoryTotals.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
     final theme = Theme.of(context);
 
     return SingleChildScrollView(
@@ -820,8 +1075,19 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Spent: $_selectedCurrency${totalExpense.toStringAsFixed(0)}", style: TextStyle(fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface)),
-                    Text("Limit: $_selectedCurrency${budgetLimit.toStringAsFixed(0)}", style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.6))),
+                    Text(
+                      "Spent: $_selectedCurrency${totalExpense.toStringAsFixed(0)}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      "Limit: $_selectedCurrency${budgetLimit.toStringAsFixed(0)}",
+                      style: TextStyle(
+                        color: theme.colorScheme.onSurface.withOpacity(0.6),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -830,14 +1096,24 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                   child: LinearProgressIndicator(
                     value: budgetProgress,
                     minHeight: 12,
-                    backgroundColor: theme.colorScheme.onSurface.withOpacity(0.1),
-                    color: budgetProgress > 0.9 ? Colors.red : (budgetProgress > 0.7 ? Colors.orange : Colors.green),
+                    backgroundColor: theme.colorScheme.onSurface.withOpacity(
+                      0.1,
+                    ),
+                    color: budgetProgress > 0.9
+                        ? Colors.red
+                        : (budgetProgress > 0.7 ? Colors.orange : Colors.green),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  budgetProgress >= 1.0 ? "Over Budget!" : "${((1-budgetProgress)*100).toStringAsFixed(0)}% remaining",
-                  style: TextStyle(color: budgetProgress >= 1.0 ? Colors.red : Colors.green, fontSize: 12, fontWeight: FontWeight.bold),
+                  budgetProgress >= 1.0
+                      ? "Over Budget!"
+                      : "${((1 - budgetProgress) * 100).toStringAsFixed(0)}% remaining",
+                  style: TextStyle(
+                    color: budgetProgress >= 1.0 ? Colors.red : Colors.green,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -852,10 +1128,34 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
             crossAxisSpacing: 10,
             childAspectRatio: 1.5,
             children: [
-              _buildStatCard("Net Balance", netBalance, Icons.account_balance_wallet, Colors.blue),
-              _buildStatCard("Savings Rate", savingsRate, Icons.savings, savingsRate > 0 ? Colors.green : Colors.orange, isPercent: true),
-              _buildStatCard("Health Score", healthScore, Icons.health_and_safety, healthScore > 70 ? Colors.green : Colors.amber, isPercent: false, suffix: "/100"),
-              _buildStatCard("Transactions", txCount.toDouble(), Icons.receipt_long, Colors.purpleAccent, isPercent: false, suffix: ""),
+              _buildStatCard(
+                "Net Balance",
+                netBalance,
+                Icons.account_balance_wallet,
+                Colors.blue,
+              ),
+              _buildStatCard(
+                "Savings Rate",
+                savingsRate,
+                Icons.savings,
+                savingsRate > 0 ? Colors.green : Colors.orange,
+                isPercent: true,
+              ),
+              _buildStatCard(
+                "Health Score",
+                healthScore,
+                Icons.health_and_safety,
+                healthScore > 70 ? Colors.green : Colors.amber,
+                isPercent: false,
+                suffix: "/100",
+              ),
+              _buildStatCard(
+                "Transactions",
+                txCount.toDouble(),
+                Icons.receipt_long,
+                Colors.purpleAccent,
+                customValue: "$txCount",
+              ),
             ],
           ),
 
@@ -881,24 +1181,36 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                       sectionsSpace: 4,
                       centerSpaceRadius: 40,
                       sections: sortedCategories.map((e) {
-                        final isTouched = sortedCategories.indexOf(e) == _touchedIndexPie;
+                        final isTouched =
+                            sortedCategories.indexOf(e) == _touchedIndexPie;
                         return PieChartSectionData(
                           color: _getColorForCategory(e.key),
                           value: e.value,
-                          title: "${((e.value/totalExpense)*100).toStringAsFixed(0)}%",
+                          title:
+                              "${((e.value / totalExpense) * 100).toStringAsFixed(0)}%",
                           radius: isTouched ? 60 : 50,
-                          titleStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+                          titleStyle: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         );
                       }).toList(),
-                      pieTouchData: PieTouchData(touchCallback: (FlTouchEvent event, PieTouchResponse? response) {
-                        setState(() {
-                          if (response != null && response.touchedSection != null) {
-                            _touchedIndexPie = response.touchedSection!.touchedSectionIndex;
-                          } else {
-                            _touchedIndexPie = -1;
-                          }
-                        });
-                      }),
+                      pieTouchData: PieTouchData(
+                        touchCallback:
+                            (FlTouchEvent event, PieTouchResponse? response) {
+                              setState(() {
+                                if (response != null &&
+                                    response.touchedSection != null) {
+                                  _touchedIndexPie = response
+                                      .touchedSection!
+                                      .touchedSectionIndex;
+                                } else {
+                                  _touchedIndexPie = -1;
+                                }
+                              });
+                            },
+                      ),
                     ),
                   ),
                 ),
@@ -910,9 +1222,17 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                     child: Row(
                       children: [
                         Container(
-                          width: 40, height: 40,
-                          decoration: BoxDecoration(color: _getColorForCategory(e.key).withOpacity(0.2), borderRadius: BorderRadius.circular(12)),
-                          child: Icon(Icons.category, color: _getColorForCategory(e.key), size: 20),
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: _getColorForCategory(e.key).withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(
+                            Icons.category,
+                            color: _getColorForCategory(e.key),
+                            size: 20,
+                          ),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -920,10 +1240,23 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(e.key, style: TextStyle(fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface)),
-                                  Text("$_selectedCurrency${e.value.toStringAsFixed(0)}", style: TextStyle(fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface)),
+                                  Text(
+                                    e.key,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: theme.colorScheme.onSurface,
+                                    ),
+                                  ),
+                                  Text(
+                                    "$_selectedCurrency${e.value.toStringAsFixed(0)}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: theme.colorScheme.onSurface,
+                                    ),
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 6),
@@ -931,7 +1264,8 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
                                 borderRadius: BorderRadius.circular(4),
                                 child: LinearProgressIndicator(
                                   value: pct,
-                                  backgroundColor: theme.colorScheme.onSurface.withOpacity(0.05),
+                                  backgroundColor: theme.colorScheme.onSurface
+                                      .withOpacity(0.05),
                                   color: _getColorForCategory(e.key),
                                   minHeight: 6,
                                 ),
@@ -955,11 +1289,25 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
   Widget _buildSectionHeader(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12, left: 4),
-      child: Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+      ),
     );
   }
 
-  Widget _buildStatCard(String title, double value, IconData icon, Color color, {bool isPercent = false, String suffix = "", String? customValue}) {
+  Widget _buildStatCard(
+    String title,
+    double value,
+    IconData icon,
+    Color color, {
+    bool isPercent = false,
+    String suffix = "",
+    String? customValue,
+  }) {
     final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(12),
@@ -974,11 +1322,24 @@ class _ExpensesScreenState extends State<ExpensesScreen> with TickerProviderStat
         children: [
           Icon(icon, size: 20, color: color),
           const Spacer(),
-          Text(title, style: TextStyle(fontSize: 12, color: theme.colorScheme.onSurface.withOpacity(0.7))),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 12,
+              color: theme.colorScheme.onSurface.withOpacity(0.7),
+            ),
+          ),
           const SizedBox(height: 4),
           Text(
-            customValue ?? (isPercent ? "${value.toStringAsFixed(1)}%" : "$_selectedCurrency${value.toStringAsFixed(0)}$suffix"),
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface),
+            customValue ??
+                (isPercent
+                    ? "${value.toStringAsFixed(1)}%"
+                    : "$_selectedCurrency${value.toStringAsFixed(0)}$suffix"),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.onSurface,
+            ),
           ),
         ],
       ),

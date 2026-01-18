@@ -20,9 +20,16 @@ class TodoCard extends StatelessWidget {
     required this.onToggleDone,
   });
 
-  bool get _isOverdue => todo.dueDate != null && todo.dueDate!.isBefore(DateTime.now()) && !todo.isDone;
-  bool get _isDueToday => todo.dueDate != null && _isSameDay(todo.dueDate!, DateTime.now()) && !todo.isDone;
-  bool _isSameDay(DateTime a, DateTime b) => a.year == b.year && a.month == b.month && a.day == b.day;
+  bool get _isOverdue =>
+      todo.dueDate != null &&
+      todo.dueDate!.isBefore(DateTime.now()) &&
+      !todo.isDone;
+  bool get _isDueToday =>
+      todo.dueDate != null &&
+      _isSameDay(todo.dueDate!, DateTime.now()) &&
+      !todo.isDone;
+  bool _isSameDay(DateTime a, DateTime b) =>
+      a.year == b.year && a.month == b.month && a.day == b.day;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +45,9 @@ class TodoCard extends StatelessWidget {
         opacity: isVisible ? 1.0 : 0.4,
         child: Container(
           height: isVisible ? null : 0,
-          margin: isVisible ? const EdgeInsets.only(bottom: 8) : EdgeInsets.zero,
+          margin: isVisible
+              ? const EdgeInsets.only(bottom: 8)
+              : EdgeInsets.zero,
           child: GestureDetector(
             onTap: onTap,
             onLongPress: onLongPress,
@@ -46,13 +55,20 @@ class TodoCard extends StatelessWidget {
               children: [
                 // ✅ OPTIMIZATION: Replaced GlassContainer with fast container
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
-                    color: _getBackgroundColor(colorScheme), // Original logic preserved
+                    color: _getBackgroundColor(
+                      colorScheme,
+                    ), // Original logic preserved
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                        color: _getBorderColor(colorScheme), // Original logic preserved
-                        width: 1
+                      color: _getBorderColor(
+                        colorScheme,
+                      ), // Original logic preserved
+                      width: 1,
                     ),
                   ),
                   child: Column(
@@ -74,10 +90,16 @@ class TodoCard extends StatelessWidget {
                                     color: _getCheckboxBorderColor(colorScheme),
                                     width: 2,
                                   ),
-                                  color: todo.isDone ? colorScheme.primary : Colors.transparent,
+                                  color: todo.isDone
+                                      ? colorScheme.primary
+                                      : Colors.transparent,
                                 ),
                                 child: todo.isDone
-                                    ? Icon(Icons.check, size: 14, color: colorScheme.onPrimary)
+                                    ? Icon(
+                                        Icons.check,
+                                        size: 14,
+                                        color: colorScheme.onPrimary,
+                                      )
                                     : null,
                               ),
                             ),
@@ -92,10 +114,15 @@ class TodoCard extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: textTheme.bodyMedium?.copyWith(
                                     fontSize: 14,
-                                    fontWeight: todo.isDone ? FontWeight.w400 : FontWeight.w500,
+                                    fontWeight: todo.isDone
+                                        ? FontWeight.w400
+                                        : FontWeight.w500,
                                     color: _getTaskTextColor(colorScheme),
-                                    decoration: todo.isDone ? TextDecoration.lineThrough : TextDecoration.none,
-                                    decorationColor: colorScheme.onSurface.withOpacity(0.38),
+                                    decoration: todo.isDone
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                                    decorationColor: colorScheme.onSurface
+                                        .withOpacity(0.38),
                                     decorationThickness: 1.5,
                                   ),
                                 ),
@@ -112,23 +139,64 @@ class TodoCard extends StatelessWidget {
                               Icon(
                                 Icons.access_time,
                                 size: 12,
-                                color: _isOverdue ? colorScheme.error : (_isDueToday ? colorScheme.tertiary : colorScheme.outline),
+                                color: _isOverdue
+                                    ? colorScheme.error
+                                    : (_isDueToday
+                                          ? colorScheme.tertiary
+                                          : colorScheme.outline),
                               ),
                               const SizedBox(width: 4),
                               Expanded(
                                 child: Text(
-                                  DateFormat('MMM d, h:mm a').format(todo.dueDate!),
+                                  DateFormat(
+                                    'MMM d, h:mm a',
+                                  ).format(todo.dueDate!),
                                   style: TextStyle(
-                                    color: _isOverdue ? colorScheme.error : (_isDueToday ? colorScheme.tertiary : colorScheme.onSurfaceVariant),
+                                    color: _isOverdue
+                                        ? colorScheme.error
+                                        : (_isDueToday
+                                              ? colorScheme.tertiary
+                                              : colorScheme.onSurfaceVariant),
                                     fontSize: 11,
-                                    fontWeight: _isOverdue ? FontWeight.w600 : (_isDueToday ? FontWeight.w600 : FontWeight.w500),
+                                    fontWeight: _isOverdue
+                                        ? FontWeight.w600
+                                        : (_isDueToday
+                                              ? FontWeight.w600
+                                              : FontWeight.w500),
                                   ),
                                 ),
                               ),
                               if (todo.hasReminder)
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8),
-                                  child: Icon(Icons.notifications_active, size: 12, color: colorScheme.primary),
+                                  child: Icon(
+                                    Icons.notifications_active,
+                                    size: 12,
+                                    color: colorScheme.primary,
+                                  ),
+                                ),
+                              if (todo.repeatInterval != null)
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.repeat,
+                                        size: 12,
+                                        color: colorScheme.tertiary,
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        todo.repeatInterval![0].toUpperCase() +
+                                            todo.repeatInterval!.substring(1),
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w500,
+                                          color: colorScheme.tertiary,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                             ],
                           ),
@@ -140,7 +208,11 @@ class TodoCard extends StatelessWidget {
                   Positioned(
                     top: 8,
                     right: 8,
-                    child: Icon(Icons.check_circle, color: colorScheme.primary, size: 20),
+                    child: Icon(
+                      Icons.check_circle,
+                      color: colorScheme.primary,
+                      size: 20,
+                    ),
                   ),
               ],
             ),

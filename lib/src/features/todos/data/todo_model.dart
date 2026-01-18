@@ -29,6 +29,15 @@ class Todo extends HiveObject {
   @HiveField(11)
   DateTime? deletedAt;
 
+  @HiveField(12)
+  String? repeatInterval; // daily, weekly, monthly, yearly, custom
+
+  @HiveField(13)
+  List<int>? repeatDays; // 1=Mon, 7=Sun
+
+  @HiveField(14)
+  String? nextInstanceId; // Tracks the ID of the task created by recurrence
+
   Todo({
     required this.id,
     required this.task,
@@ -39,6 +48,9 @@ class Todo extends HiveObject {
     this.sortIndex = 0,
     this.isDeleted = false,
     this.deletedAt,
+    this.repeatInterval,
+    this.repeatDays,
+    this.nextInstanceId,
   });
 
   // --- Backup Support ---
@@ -52,6 +64,9 @@ class Todo extends HiveObject {
     'sortIndex': sortIndex,
     'isDeleted': isDeleted,
     'deletedAt': deletedAt?.toIso8601String(),
+    'repeatInterval': repeatInterval,
+    'repeatDays': repeatDays,
+    'nextInstanceId': nextInstanceId,
   };
 
   factory Todo.fromJson(Map<String, dynamic> json) => Todo(
@@ -63,6 +78,13 @@ class Todo extends HiveObject {
     hasReminder: json['hasReminder'] ?? false,
     sortIndex: json['sortIndex'] ?? 0,
     isDeleted: json['isDeleted'] ?? false,
-    deletedAt: json['deletedAt'] != null ? DateTime.parse(json['deletedAt']) : null,
+    deletedAt: json['deletedAt'] != null
+        ? DateTime.parse(json['deletedAt'])
+        : null,
+    repeatInterval: json['repeatInterval'],
+    repeatDays: json['repeatDays'] != null
+        ? List<int>.from(json['repeatDays'])
+        : null,
+    nextInstanceId: json['nextInstanceId'],
   );
 }
