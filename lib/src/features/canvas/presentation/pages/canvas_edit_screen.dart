@@ -1354,7 +1354,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                 enabled: canEdit,
               ),
               _buildToolButton(
-                Icons.cleaning_services,
+                Icons.check_box_outline_blank, // Fallback icon
                 _isErasing && canEdit,
                 () {
                   setState(() {
@@ -1368,6 +1368,14 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                 },
                 colorScheme,
                 enabled: canEdit,
+                customIcon: _Eraser3DIcon(
+                  size: 20,
+                  color: (_isErasing && canEdit)
+                      ? colorScheme.primary
+                      : (canEdit
+                            ? colorScheme.onSurface.withOpacity(0.7)
+                            : colorScheme.onSurface.withOpacity(0.3)),
+                ),
               ),
               _buildToolButton(
                 Icons.text_fields,
@@ -1426,11 +1434,22 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                             : Colors.grey.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Icon(
-                        _getBrushIcon(),
-                        size: 20,
-                        color: canEdit ? colorScheme.primary : Colors.grey,
-                      ),
+                      child:
+                          (_brushShape == BrushShape.eraserHard ||
+                              _brushShape == BrushShape.eraserSoft)
+                          ? _Eraser3DIcon(
+                              size: 20,
+                              color: canEdit
+                                  ? colorScheme.primary
+                                  : Colors.grey,
+                            )
+                          : Icon(
+                              _getBrushIcon(),
+                              size: 20,
+                              color: canEdit
+                                  ? colorScheme.primary
+                                  : Colors.grey,
+                            ),
                     ),
                   ),
                 ),
@@ -1456,7 +1475,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(
-                      _isErasing ? Icons.cleaning_services : Icons.line_weight,
+                      Icons.line_weight,
                       size: 20,
                       color: _showPenSizeSlider
                           ? colorScheme.primary
@@ -1919,6 +1938,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
     VoidCallback onTap,
     ColorScheme colorScheme, {
     bool enabled = true,
+    Widget? customIcon,
   }) {
     return GestureDetector(
       onTap: enabled ? onTap : null,
@@ -1931,15 +1951,17 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(
-          icon,
-          size: 20,
-          color: enabled
-              ? (isActive
-                    ? colorScheme.primary
-                    : colorScheme.onSurface.withOpacity(0.7))
-              : colorScheme.onSurface.withOpacity(0.3),
-        ),
+        child:
+            customIcon ??
+            Icon(
+              icon,
+              size: 20,
+              color: enabled
+                  ? (isActive
+                        ? colorScheme.primary
+                        : colorScheme.onSurface.withOpacity(0.7))
+                  : colorScheme.onSurface.withOpacity(0.3),
+            ),
       ),
     );
   }
@@ -2337,5 +2359,152 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
         ],
       ),
     );
+  }
+}
+
+// --- Custom 3D Eraser Icon ---
+class _Eraser3DIcon extends StatelessWidget {
+  final double size;
+  final Color color;
+
+  const _Eraser3DIcon({required this.size, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      size: Size(size, size),
+      painter: _Eraser3DPainter(color),
+    );
+  }
+}
+
+class _Eraser3DPainter extends CustomPainter {
+  final Color color;
+
+  _Eraser3DPainter(this.color);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cx = size.width / 2;
+    final cy = size.height / 2;
+
+    // Scale controls overall size
+    final scale = size.width * 0.45;
+
+    // Basis Vectors for Isometric-style Projection
+    // x-axis: longer to create rectangular shape
+    final vx = Offset(1.0 * scale, 0.5 * scale); // Right-down (Length)
+    final vy = Offset(-0.6 * scale, 0.3 * scale); // Left-down (Width)
+    final vz = Offset(0, size.height * 0.35); // Vertical (Height/Depth)
+
+    // Center point calculation
+    final center = Offset(cx, cy - vz.dy * 0.4);
+
+    // Main Vertices
+    final pTop = center - vx - vy; // Top-most
+    final pRight = center + vx - vy; // Right-most
+    final pBottom = center + vx + vy; // Bottom-most
+    final pLeft = center - vx + vy; // Left-most
+
+    // Define Paints
+    final paintMain = Paint()
+      ..color = color.withOpacity(0.9)
+      ..style = PaintingStyle.fill;
+
+    final paintDark = Paint()
+      ..color = color
+          .withOpacity(0.5) // Shadow side
+      ..style = PaintingStyle.fill;
+
+    final paintLight = Paint()
+      ..color = color
+          .withOpacity(0.7) // Light side
+      ..style = PaintingStyle.fill;
+
+    // Radius for rounded corners
+    final double r = 0.25;
+
+    // Calculate Inset Points for Bezier Curves
+    // Top-Right Edge
+    final tr_start = pTop + vx * r;
+    final tr_end = pRight - vx * r;
+    // Right-Bottom Edge
+    final rb_start = pRight + vy * r;
+    final rb_end = pBottom - vy * r;
+    // Bottom-Left Edge
+    final bl_start = pBottom - vx * r;
+    final bl_end = pLeft + vx * r;
+    // Left-Top Edge
+    final lt_start = pLeft - vy * r;
+    final lt_end = pTop + vy * r;
+
+    // Top Face Path (Rounded)
+    final pathTop = Path()
+      ..moveTo(tr_start.dx, tr_start.dy)
+      ..lineTo(tr_end.dx, tr_end.dy)
+      ..quadraticBezierTo(pRight.dx, pRight.dy, rb_start.dx, rb_start.dy)
+      ..lineTo(rb_end.dx, rb_end.dy)
+      ..quadraticBezierTo(pBottom.dx, pBottom.dy, bl_start.dx, bl_start.dy)
+      ..lineTo(bl_end.dx, bl_end.dy)
+      ..quadraticBezierTo(pLeft.dx, pLeft.dy, lt_start.dx, lt_start.dy)
+      ..lineTo(lt_end.dx, lt_end.dy)
+      ..quadraticBezierTo(pTop.dx, pTop.dy, tr_start.dx, tr_start.dy)
+      ..close();
+
+    // Right Face Path
+    // Connects Top-Right edge area downwards
+    // We treat pRight corner as part of the Right Face, and pBottom corner as part of Right Face too?
+    // Let's split pBottom: Right Face takes the right half of the curve.
+
+    final pathRight = Path()
+      ..moveTo(tr_end.dx, tr_end.dy)
+      ..quadraticBezierTo(pRight.dx, pRight.dy, rb_start.dx, rb_start.dy)
+      ..lineTo(rb_end.dx, rb_end.dy)
+      ..quadraticBezierTo(pBottom.dx, pBottom.dy, bl_start.dx, bl_start.dy)
+      // Drop Down
+      ..lineTo(bl_start.dx, bl_start.dy + vz.dy)
+      ..quadraticBezierTo(
+        pBottom.dx,
+        pBottom.dy + vz.dy,
+        rb_end.dx,
+        rb_end.dy + vz.dy,
+      )
+      ..lineTo(rb_start.dx, rb_start.dy + vz.dy)
+      ..quadraticBezierTo(
+        pRight.dx,
+        pRight.dy + vz.dy,
+        tr_end.dx,
+        tr_end.dy + vz.dy,
+      )
+      ..close();
+
+    // Left Face Path
+    // This connects from the Bottom Corner (bl_start) to the Left Corner area.
+    final pathLeft = Path()
+      ..moveTo(bl_start.dx, bl_start.dy)
+      ..lineTo(bl_end.dx, bl_end.dy)
+      ..quadraticBezierTo(pLeft.dx, pLeft.dy, lt_start.dx, lt_start.dy)
+      // Drop Down
+      ..lineTo(lt_start.dx, lt_start.dy + vz.dy)
+      ..quadraticBezierTo(
+        pLeft.dx,
+        pLeft.dy + vz.dy,
+        bl_end.dx,
+        bl_end.dy + vz.dy,
+      )
+      ..lineTo(bl_start.dx, bl_start.dy + vz.dy)
+      ..close();
+
+    // Draw faces
+    // Order matters: Top is drawn last usually? No, Top is on top.
+    // Back faces not drawn.
+    canvas.drawPath(pathRight, paintDark);
+    canvas.drawPath(pathLeft, paintLight);
+    canvas.drawPath(pathTop, paintMain);
+  }
+
+  @override
+  bool shouldRepaint(covariant _Eraser3DPainter oldDelegate) {
+    return oldDelegate.color != color;
   }
 }
