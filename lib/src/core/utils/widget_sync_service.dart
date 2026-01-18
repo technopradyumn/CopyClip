@@ -47,10 +47,10 @@ class WidgetSyncService {
       final box = Hive.isBoxOpen('notes_box')
           ? Hive.box<Note>('notes_box')
           : await Hive.openBox<Note>('notes_box');
-      final count = box.length;
+      final count = box.values.where((n) => !n.isDeleted).length;
 
       // Save list data (Top 5)
-      final notesList = box.values.toList()
+      final notesList = box.values.where((n) => !n.isDeleted).toList()
         ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
       final topNotes = notesList.take(5).map((e) {
@@ -83,10 +83,9 @@ class WidgetSyncService {
           : await Hive.openBox<Todo>(
               'todos_box',
             ); // Note: Box name 'todos_box' per edit screen
-      final total = box.length;
-      final completed = box.values
-          .where((t) => t.isDone)
-          .length; // Note: isDone, not isCompleted
+      final activeTodos = box.values.where((t) => !t.isDeleted);
+      final total = activeTodos.length;
+      final completed = activeTodos.where((t) => t.isDone).length;
 
       await HomeWidget.saveWidgetData<String>(
         'todos_progress',
@@ -94,7 +93,7 @@ class WidgetSyncService {
       );
 
       // Save list data (Top 20 items, Pending first)
-      final todoList = box.values.toList();
+      final todoList = box.values.where((t) => !t.isDeleted).toList();
       todoList.sort((a, b) {
         if (a.isDone == b.isDone) return a.sortIndex.compareTo(b.sortIndex);
         return a.isDone ? 1 : -1; // Pending first
@@ -132,6 +131,7 @@ class WidgetSyncService {
       double expense = 0;
 
       for (var e in box.values) {
+        if (e.isDeleted) continue; // Filter Deleted
         if (e.isIncome) {
           income += e.amount;
         } else {
@@ -162,7 +162,7 @@ class WidgetSyncService {
       );
 
       // Save Transaction List (Top 5)
-      final allTx = box.values.toList()
+      final allTx = box.values.where((e) => !e.isDeleted).toList()
         ..sort((a, b) => b.date.compareTo(a.date));
 
       final recentTx = allTx.take(5).map((e) {
@@ -195,10 +195,15 @@ class WidgetSyncService {
           ? Hive.box<JournalEntry>('journal_box')
           : await Hive.openBox<JournalEntry>('journal_box');
 
+      final activeEntries = box.values.where((e) => !e.isDeleted).toList();
       String lastEntry = '';
-      if (box.isNotEmpty) {
+      if (activeEntries.isNotEmpty) {
         try {
-          final lastJournal = box.values.last;
+          // Assuming activeEntries is already sorted by insertion order or we sort it
+          // Hive values iteration order is usually insertion order.
+          // But safest is to sort by date if relying on date.
+          activeEntries.sort((a, b) => a.date.compareTo(b.date));
+          final lastJournal = activeEntries.last;
           lastEntry = lastJournal.date.toIso8601String();
         } catch (e) {
           print('Error getting last entry: $e');
@@ -206,14 +211,17 @@ class WidgetSyncService {
       }
 
       await HomeWidget.saveWidgetData<String>('journal_last_entry', lastEntry);
-      await HomeWidget.saveWidgetData<int>('journal_total_entries', box.length);
+      await HomeWidget.saveWidgetData<int>(
+        'journal_total_entries',
+        activeEntries.length,
+      );
       await HomeWidget.saveWidgetData<int>(
         'journal_streak',
-        _calculateJournalStreak(box),
+        _calculateJournalStreak(activeEntries),
       );
 
       // Save List Data (Top 5)
-      final entries = box.values.toList()
+      final entries = box.values.where((e) => !e.isDeleted).toList()
         ..sort((a, b) => b.date.compareTo(a.date));
 
       final topEntries = entries.take(5).map((e) {
@@ -236,23 +244,29 @@ class WidgetSyncService {
     }
   }
 
-  static int _calculateJournalStreak(Box box) {
+  static int _calculateJournalStreak(List<dynamic> entries) {
     try {
-      if (box.isEmpty) return 0;
+      if (entries.isEmpty) return 0;
+
+      // Ensure sorted by date ascending
+      entries.sort((a, b) => a.date.compareTo(b.date));
 
       int streak = 1;
-      final lastEntry = box.values.last;
+      final lastEntry = entries.last;
       DateTime lastDate = lastEntry.date;
 
-      for (int i = box.length - 2; i >= 0; i--) {
+      for (int i = entries.length - 2; i >= 0; i--) {
         try {
-          final entry = box.values.elementAt(i);
+          final entry = entries[i];
           final entryDate = entry.date;
           final diff = lastDate.difference(entryDate).inDays;
 
           if (diff == 1) {
             streak++;
             lastDate = entryDate;
+          } else if (diff == 0) {
+            // Same day, continue
+            continue;
           } else {
             break;
           }
@@ -365,7 +379,7 @@ class WidgetSyncService {
       );
 
       // Save List Data (Top 5)
-      final sketches = box.values.toList()
+      final sketches = box.values.where((e) => !e.isDeleted).toList()
         ..sort((a, b) => b.lastModified.compareTo(a.lastModified));
 
       final topSketches = sketches.take(5).map((e) {
