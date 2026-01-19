@@ -637,7 +637,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
 
         if (addedCount > 0) {
           _saveCurrentPage(); // Save state of current page before switching
-          _currentNote.save(); // Persist changes (new pages)
+          await CanvasDatabase().saveNote(
+            _currentNote,
+          ); // Persist changes (new pages)
           setState(() {
             _isImportingPdf = false;
             _currentPageIndex =
@@ -684,7 +686,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(ctx);
               _saveCurrentPage(); // Save current work before modifying structure which invalidates strokes
 
@@ -713,7 +715,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               // If we deleted another page, our current strokes are still valid for the current index (which might have shifted, but logic above handles index)
               _loadCurrentPage(); // Always safe to reload to be sure
 
-              _currentNote.save(); // Persist deletion
+              await CanvasDatabase().saveNote(_currentNote); // Persist deletion
             },
             child: const Text('Delete', style: TextStyle(color: Colors.red)),
           ),

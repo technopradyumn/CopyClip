@@ -2,6 +2,7 @@
 
 import 'package:hive/hive.dart';
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
 import 'canvas_model.dart';
 
 class DrawingStrokeAdapter extends TypeAdapter<DrawingStroke> {
@@ -114,17 +115,20 @@ class CanvasPageAdapter extends TypeAdapter<CanvasPage> {
     return CanvasPage(
       strokes: (fields[0] as List?)?.cast<DrawingStroke>() ?? [],
       textElements: (fields[1] as List?)?.cast<CanvasText>() ?? [],
+      backgroundImageBytes: fields[2] as Uint8List?,
     );
   }
 
   @override
   void write(BinaryWriter writer, CanvasPage obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.strokes)
       ..writeByte(1)
-      ..write(obj.textElements);
+      ..write(obj.textElements)
+      ..writeByte(2)
+      ..write(obj.backgroundImageBytes);
   }
 }
 
@@ -256,11 +260,16 @@ class CanvasDatabase {
 
   Future<void> init() async {
     // Register all adapters
-    if (!Hive.isAdapterRegistered(10)) Hive.registerAdapter(DrawingStrokeAdapter());
-    if (!Hive.isAdapterRegistered(11)) Hive.registerAdapter(CanvasTextAdapter());
-    if (!Hive.isAdapterRegistered(12)) Hive.registerAdapter(CanvasFolderAdapter());
-    if (!Hive.isAdapterRegistered(14)) Hive.registerAdapter(CanvasPageAdapter());
-    if (!Hive.isAdapterRegistered(15)) Hive.registerAdapter(CanvasNoteAdapter());
+    if (!Hive.isAdapterRegistered(10))
+      Hive.registerAdapter(DrawingStrokeAdapter());
+    if (!Hive.isAdapterRegistered(11))
+      Hive.registerAdapter(CanvasTextAdapter());
+    if (!Hive.isAdapterRegistered(12))
+      Hive.registerAdapter(CanvasFolderAdapter());
+    if (!Hive.isAdapterRegistered(14))
+      Hive.registerAdapter(CanvasPageAdapter());
+    if (!Hive.isAdapterRegistered(15))
+      Hive.registerAdapter(CanvasNoteAdapter());
 
     _notesBox = await Hive.openBox<CanvasNote>(notesBoxName);
     _foldersBox = await Hive.openBox<CanvasFolder>(foldersBoxName);
