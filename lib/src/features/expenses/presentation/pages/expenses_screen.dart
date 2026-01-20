@@ -9,6 +9,7 @@ import 'package:fl_chart/fl_chart.dart';
 
 // Core Widgets
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 
 // Data
@@ -1048,8 +1049,13 @@ class _ExpensesScreenState extends State<ExpensesScreen>
 
     String budgetTitle =
         "${_currentPeriod.name[0].toUpperCase()}${_currentPeriod.name.substring(1)} Budget";
-    double budgetLimit = totalIncome > 0 ? totalIncome * 0.8 : 5000;
-    double budgetProgress = (totalExpense / budgetLimit).clamp(0.0, 1.0);
+
+    // ✅ DYNAMIC LIMIT: User requested actual total income as the limit
+    double budgetLimit = totalIncome;
+
+    double budgetProgress = budgetLimit > 0
+        ? (totalExpense / budgetLimit).clamp(0.0, 1.0)
+        : (totalExpense > 0 ? 1.0 : 0.0);
 
     var sortedCategories = categoryTotals.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
@@ -1148,6 +1154,22 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 healthScore > 70 ? Colors.green : Colors.amber,
                 isPercent: false,
                 suffix: "/100",
+                customValue: "${healthScore.toInt()}/100",
+                onInfoTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => GlassDialog(
+                      title: "Health Score",
+                      content:
+                          "This score is based on your Savings Rate.\n\n"
+                          "• > 50% saved = Excellent (100)\n"
+                          "• 0% saved = Average (50)\n"
+                          "• Spending > Income = Poor (<50)",
+                      confirmText: "OK",
+                      onConfirm: () => Navigator.pop(ctx),
+                    ),
+                  );
+                },
               ),
               _buildStatCard(
                 "Transactions",
@@ -1158,6 +1180,13 @@ class _ExpensesScreenState extends State<ExpensesScreen>
               ),
             ],
           ),
+
+          const SizedBox(height: 24),
+
+          // ✅ NEW: Bar Chart for Trends
+          _buildSectionHeader("Financial Activity"),
+          const SizedBox(height: 8),
+          _buildBarChart(expenses),
 
           const SizedBox(height: 24),
 
@@ -1307,6 +1336,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
     bool isPercent = false,
     String suffix = "",
     String? customValue,
+    VoidCallback? onInfoTap,
   }) {
     final theme = Theme.of(context);
     return Container(
@@ -1316,33 +1346,241 @@ class _ExpensesScreenState extends State<ExpensesScreen>
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.white.withOpacity(0.1)),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
         children: [
-          Icon(icon, size: 20, color: color),
-          const Spacer(),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 12,
-              color: theme.colorScheme.onSurface.withOpacity(0.7),
+          if (onInfoTap != null)
+            Positioned(
+              top: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: onInfoTap,
+                child: Icon(
+                  Icons.info_outline,
+                  size: 16,
+                  color: theme.colorScheme.onSurface.withOpacity(0.4),
+                ),
+              ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            customValue ??
-                (isPercent
-                    ? "${value.toStringAsFixed(1)}%"
-                    : "$_selectedCurrency${value.toStringAsFixed(0)}$suffix"),
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: theme.colorScheme.onSurface,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 20, color: color),
+              const Spacer(),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: theme.colorScheme.onSurface.withOpacity(0.7),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                customValue ??
+                    (isPercent
+                        ? "${value.toStringAsFixed(1)}%"
+                        : "$_selectedCurrency${value.toStringAsFixed(0)}$suffix"),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.onSurface,
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
+
+  Widget _buildBarChart(List<Expense> expenses) {
+    if (expenses.isEmpty) return const SizedBox.shrink();
+
+    // 1. DATA AGGREGATION
+    // Structure: Map<int, _BarData> where int is day/month index
+    Map<int, _BarData> data = {};
+
+    // Initialize based on period
+    int maxX = 7;
+
+    if (_currentPeriod == AnalysisPeriod.daily ||
+        _currentPeriod == AnalysisPeriod.weekly) {
+      maxX = 7; // Mon-Sun
+      // Default 0s
+      for (int i = 1; i <= 7; i++) data[i] = _BarData(0, 0);
+    } else if (_currentPeriod == AnalysisPeriod.monthly) {
+      maxX = 31;
+      // We won't pre-fill 31 days to avoid clutter, only days with data or key intervals
+    } else {
+      maxX = 12; // Jan-Dec
+      for (int i = 1; i <= 12; i++) data[i] = _BarData(0, 0);
+    }
+
+    for (var e in expenses) {
+      int key;
+      if (_currentPeriod == AnalysisPeriod.yearly) {
+        key = e.date.month;
+      } else if (_currentPeriod == AnalysisPeriod.monthly) {
+        key = e.date.day;
+      } else {
+        key = e.date.weekday; // 1=Mon, 7=Sun
+      }
+
+      final current = data[key] ?? _BarData(0, 0);
+      if (e.isIncome) {
+        data[key] = _BarData(current.income + e.amount, current.expense);
+      } else {
+        data[key] = _BarData(current.income, current.expense + e.amount);
+      }
+    }
+
+    // Sort entries
+    var sortedEntries = data.entries.toList()
+      ..sort((a, b) => a.key.compareTo(b.key));
+
+    final theme = Theme.of(context);
+
+    return Container(
+      height: 220,
+      margin: EdgeInsets.symmetric(horizontal: 4),
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white.withOpacity(0.1)),
+      ),
+      child: BarChart(
+        BarChartData(
+          alignment: BarChartAlignment.spaceAround,
+          maxY: _calculateMaxY(data.values),
+          barTouchData: BarTouchData(
+            touchTooltipData: BarTouchTooltipData(
+              tooltipRoundedRadius: 8,
+              getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                final type = rodIndex == 0 ? "Income" : "Expense";
+                return BarTooltipItem(
+                  "$type\n$_selectedCurrency${rod.toY.toStringAsFixed(0)}",
+                  const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                );
+              },
+            ),
+          ),
+          titlesData: FlTitlesData(
+            show: true,
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 30,
+                getTitlesWidget: (value, meta) {
+                  final style = TextStyle(
+                    color: theme.colorScheme.onSurface.withOpacity(0.6),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
+                  );
+                  String text = "";
+                  int val = value.toInt();
+
+                  if (_currentPeriod == AnalysisPeriod.yearly) {
+                    const months = [
+                      "",
+                      "J",
+                      "F",
+                      "M",
+                      "A",
+                      "M",
+                      "J",
+                      "J",
+                      "A",
+                      "S",
+                      "O",
+                      "N",
+                      "D",
+                    ];
+                    if (val >= 1 && val <= 12) text = months[val];
+                  } else if (_currentPeriod == AnalysisPeriod.monthly) {
+                    if (val % 5 == 0) text = "$val"; // Show 5, 10, 15...
+                  } else {
+                    const days = ["", "M", "T", "W", "T", "F", "S", "S"];
+                    if (val >= 1 && val <= 7) text = days[val];
+                  }
+
+                  return SideTitleWidget(
+                    axisSide: meta.axisSide,
+                    child: Text(text, style: style),
+                  );
+                },
+              ),
+            ),
+            leftTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            topTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            rightTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+          ),
+          gridData: FlGridData(
+            show: true,
+            drawVerticalLine: false,
+            horizontalInterval: _calculateInterval(_calculateMaxY(data.values)),
+            getDrawingHorizontalLine: (value) => FlLine(
+              color: theme.colorScheme.onSurface.withOpacity(0.05),
+              strokeWidth: 1,
+            ),
+          ),
+          borderData: FlBorderData(show: false),
+          barGroups: sortedEntries.map((e) {
+            return BarChartGroupData(
+              x: e.key,
+              barRods: [
+                BarChartRodData(
+                  toY: e.value.income,
+                  color: Colors.greenAccent.withOpacity(0.8),
+                  width: 8,
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(4),
+                  ),
+                ),
+                BarChartRodData(
+                  toY: e.value.expense,
+                  color: Colors.redAccent.withOpacity(0.8),
+                  width: 8,
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(4),
+                  ),
+                ),
+              ],
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+
+  double _calculateMaxY(Iterable<_BarData> values) {
+    if (values.isEmpty) return 100;
+    double maxVal = 0;
+    for (var v in values) {
+      if (v.income > maxVal) maxVal = v.income;
+      if (v.expense > maxVal) maxVal = v.expense;
+    }
+    return maxVal == 0 ? 100 : maxVal * 1.2; // Add padding
+  }
+
+  double _calculateInterval(double maxY) {
+    if (maxY <= 100) return 20;
+    if (maxY <= 1000) return 200;
+    return maxY / 5;
+  }
+}
+
+class _BarData {
+  final double income;
+  final double expense;
+  _BarData(this.income, this.expense);
 }
