@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
-import 'package:copyclip/src/core/const/constant.dart';
+
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +25,8 @@ import '../../../journal/data/journal_model.dart';
 import '../../../notes/data/note_model.dart';
 import '../../../todos/data/todo_model.dart';
 import 'recycle_bin_screen.dart';
+import '../../../../features/premium/presentation/widgets/premium_lock_dialog.dart';
+import '../../../../features/premium/presentation/provider/premium_provider.dart';
 
 enum SettingsSectionType {
   clipboard,
@@ -37,6 +39,7 @@ enum SettingsSectionType {
   credits,
   privacy,
   about,
+  premium,
   footer,
 }
 
@@ -188,6 +191,11 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   List<SettingsSection> _createSections() {
     return const [
+      SettingsSection(
+        type: SettingsSectionType.premium,
+        title: "Premium",
+        builder: _buildPremiumSection,
+      ),
       SettingsSection(
         type: SettingsSectionType.widgets,
         title: "Home Screen Widgets",
@@ -558,31 +566,77 @@ class _SettingsScreenState extends State<SettingsScreen>
     );
   }
 
+  static Widget _buildPremiumSection(
+    BuildContext context,
+    _SettingsScreenState state,
+  ) {
+    return _SectionCard(
+      color: Colors.amber,
+      child: ListTile(
+        leading: const Icon(Icons.workspace_premium, color: Colors.amber),
+        title: const Text("Premium Features"),
+        subtitle: const Text("Manage coins, ads, and premium status"),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+        onTap: () => context.push(AppRouter.premium),
+      ),
+    );
+  }
+
   static Widget _buildClipboardSection(
     BuildContext context,
     _SettingsScreenState state,
   ) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
+    final isPremium = Provider.of<PremiumProvider>(context).isPremium;
     return _SectionCard(
       color: primaryColor,
-      child: ListTile(
-        leading: Icon(Icons.content_paste, color: primaryColor),
-        title: Text("Auto-save Clipboard", style: theme.textTheme.bodyLarge),
-        subtitle: Text(
-          "Automatically save copied items",
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurface.withOpacity(0.5),
+      child: Stack(
+        children: [
+          ListTile(
+            leading: Icon(Icons.content_paste, color: primaryColor),
+            title: Text(
+              "Auto-save Clipboard",
+              style: theme.textTheme.bodyLarge,
+            ),
+            subtitle: Text(
+              "Automatically save copied items",
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurface.withOpacity(0.5),
+              ),
+            ),
+            trailing: ValueListenableBuilder<bool>(
+              valueListenable: state._clipboardAutoSaveNotifier,
+              builder: (context, value, child) => Switch(
+                value: value,
+                onChanged: (newValue) {
+                  if (isPremium) {
+                    state._toggleAutoSave(newValue);
+                  } else {
+                    if (newValue) {
+                      // Trying to enable
+                      PremiumLockDialog.show(
+                        context,
+                        featureName: 'Auto-save Clipboard',
+                        onUnlockOnce: () => state._toggleAutoSave(true),
+                      );
+                    } else {
+                      // Allowing disable without ad? Yes, usually safe.
+                      state._toggleAutoSave(false);
+                    }
+                  }
+                },
+                activeColor: primaryColor,
+              ),
+            ),
           ),
-        ),
-        trailing: ValueListenableBuilder<bool>(
-          valueListenable: state._clipboardAutoSaveNotifier,
-          builder: (context, value, child) => Switch(
-            value: value,
-            onChanged: state._toggleAutoSave,
-            activeColor: primaryColor,
-          ),
-        ),
+          if (!isPremium)
+            const Positioned(
+              top: 0,
+              right: 0,
+              child: Icon(Icons.lock, size: 14, color: Colors.amber),
+            ),
+        ],
       ),
     );
   }

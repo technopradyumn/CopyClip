@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:isolate';
+
 import 'package:copyclip/src/core/services/home_widget_service.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:copyclip/src/core/utils/widget_sync_service.dart';
 import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
 import 'package:flutter_quill/flutter_quill.dart';
@@ -24,11 +25,11 @@ import 'package:copyclip/src/core/theme/theme_manager.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_adapter.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
 import 'package:copyclip/src/features/expenses/data/expense_adapter.dart';
-import 'package:copyclip/src/features/expenses/data/expense_model.dart';
+
 import 'package:copyclip/src/features/journal/data/journal_adapter.dart';
-import 'package:copyclip/src/features/journal/data/journal_model.dart';
+
 import 'package:copyclip/src/features/notes/data/note_adapter.dart';
-import 'package:copyclip/src/features/notes/data/note_model.dart';
+
 import 'package:copyclip/src/features/todos/data/todo_adapter.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'src/l10n/app_localizations.dart';
@@ -106,6 +107,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeManager()),
+        ChangeNotifierProvider(create: (_) => PremiumProvider()),
         ChangeNotifierProvider.value(value: initState),
       ],
       child: const LoadingApp(),

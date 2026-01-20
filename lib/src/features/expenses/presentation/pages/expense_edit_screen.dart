@@ -65,7 +65,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
 
   DateTime _selectedDate = DateTime.now();
   String _selectedCurrency = '\$';
-  bool _isIncome = false;
+  bool _isIncome = true;
 
   final List<ExpenseFormState> _undoStack = [];
   final List<ExpenseFormState> _redoStack = [];

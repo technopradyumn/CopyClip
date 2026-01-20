@@ -17,6 +17,10 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:copyclip/src/features/premium/presentation/widgets/premium_lock_dialog.dart';
+import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart';
+import 'package:provider/provider.dart';
+
 import 'timestamp_embed.dart'; // Full color picker
 
 class GlassRichTextEditor extends StatefulWidget {
@@ -1093,6 +1097,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildIconButton(
                       icon: Icons.picture_as_pdf,
                       tooltip: 'Export to PDF',
+                      isPremiumFeature: true,
                       onPressed: _exportToPdf,
                     ),
                     _buildIconButton(
@@ -1164,6 +1169,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                         }
                       }(),
                       onPressed: () => _pickColor(false),
+                      isPremiumFeature: true,
                     ),
                     _buildIconButton(
                       icon: Icons.format_color_fill,
@@ -1180,6 +1186,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                         }
                       }(),
                       onPressed: () => _pickColor(true),
+                      isPremiumFeature: true,
                     ),
                     const SizedBox(width: 4),
 
@@ -1327,16 +1334,19 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildIconButton(
                       icon: Icons.link,
                       tooltip: 'Insert Link',
+                      isPremiumFeature: true,
                       onPressed: _insertLink,
                     ),
                     _buildIconButton(
                       icon: Icons.image,
                       tooltip: 'Insert Image',
+                      isPremiumFeature: true,
                       onPressed: _insertImage,
                     ),
                     _buildIconButton(
                       icon: Icons.videocam,
                       tooltip: 'Insert Video',
+                      isPremiumFeature: true,
                       onPressed: _insertVideo,
                     ),
 
@@ -1361,6 +1371,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildIconButton(
                       icon: Icons.analytics,
                       tooltip: 'Word Count',
+                      isPremiumFeature: true,
                       onPressed: _showWordCount,
                     ),
                     _buildIconButton(
@@ -1371,16 +1382,19 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildIconButton(
                       icon: Icons.search,
                       tooltip: 'Search & Replace',
+                      isPremiumFeature: true,
                       onPressed: _toggleSearchReplace,
                     ),
                     _buildIconButton(
                       icon: Icons.emoji_emotions,
                       tooltip: 'Emoji Picker',
+                      isPremiumFeature: true,
                       onPressed: _toggleEmojiPicker,
                     ),
                     _buildIconButton(
                       icon: Icons.arrow_upward,
                       tooltip: 'Uppercase Selection',
+                      isPremiumFeature: true,
                       isSelected: () {
                         final sel = widget.controller.selection;
                         if (sel.isCollapsed || sel.start >= sel.end)
@@ -1400,6 +1414,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildIconButton(
                       icon: Icons.arrow_downward,
                       tooltip: 'Lowercase Selection',
+                      isPremiumFeature: true,
                       isSelected: () {
                         final sel = widget.controller.selection;
                         if (sel.isCollapsed || sel.start >= sel.end)
@@ -1419,16 +1434,19 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildIconButton(
                       icon: Icons.control_point_duplicate_rounded,
                       tooltip: 'Duplicate Line',
+                      isPremiumFeature: true,
                       onPressed: _duplicateLine,
                     ),
                     _buildIconButton(
                       icon: Icons.format_quote,
                       tooltip: 'Insert Random Quote',
+                      isPremiumFeature: true,
                       onPressed: _insertRandomQuote,
                     ),
                     _buildIconButton(
                       icon: Icons.print,
                       tooltip: 'Print Document',
+                      isPremiumFeature: true,
                       onPressed: _printDocument,
                     ),
                   ],
@@ -1845,40 +1863,79 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     bool isSelected = false,
     bool isDisabled = false,
     Color? iconColor, // Optional custom icon color
+    bool isPremiumFeature = false, // ✅ NEW: Lock support
   }) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    // Determine final icon color
-    final Color effectiveIconColor = isDisabled
-        ? colorScheme.onSurface.withOpacity(0.3)
-        : (iconColor ?? // Use custom color if provided
-              (isSelected
-                  ? colorScheme.primary
-                  : colorScheme.onSurface.withOpacity(0.7)));
+    return Consumer<PremiumProvider>(
+      builder: (context, premiumProvider, _) {
+        final isLocked = isPremiumFeature && !premiumProvider.isPremium;
 
-    return Tooltip(
-      message: tooltip,
-      child: InkWell(
-        onTap: isDisabled ? null : onPressed,
-        borderRadius: BorderRadius.circular(6),
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          margin: const EdgeInsets.symmetric(horizontal: 2),
-          decoration: BoxDecoration(
-            color: isSelected
-                ? colorScheme.primary.withOpacity(0.15)
-                : Colors.transparent,
+        // Determine final icon color
+        final Color effectiveIconColor = isDisabled
+            ? colorScheme.onSurface.withOpacity(0.3)
+            : (iconColor ?? // Use custom color if provided
+                  (isSelected
+                      ? colorScheme.primary
+                      : isLocked
+                      ? colorScheme.onSurface.withOpacity(0.4)
+                      : colorScheme.onSurface.withOpacity(0.7)));
+
+        return Tooltip(
+          message: isLocked ? "$tooltip (Premium)" : tooltip,
+          child: InkWell(
+            onTap: isDisabled
+                ? null
+                : () {
+                    if (isLocked) {
+                      PremiumLockDialog.show(
+                        context,
+                        featureName: tooltip,
+                        onUnlockOnce: onPressed,
+                      );
+                    } else {
+                      onPressed?.call();
+                    }
+                  },
             borderRadius: BorderRadius.circular(6),
-            border: Border.all(
-              color: isSelected
-                  ? colorScheme.primary.withOpacity(0.4)
-                  : Colors.transparent,
-              width: 1,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.symmetric(horizontal: 2),
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? colorScheme.primary.withOpacity(0.15)
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                      color: isSelected
+                          ? colorScheme.primary.withOpacity(0.4)
+                          : Colors.transparent,
+                      width: 1,
+                    ),
+                  ),
+                  child: Icon(icon, size: 18, color: effectiveIconColor),
+                ),
+                // ✅ Show Tiny Lock Badget
+                if (isLocked)
+                  Positioned(
+                    top: -2,
+                    right: -2,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: colorScheme.surface,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(Icons.lock, size: 10, color: Colors.amber),
+                    ),
+                  ),
+              ],
             ),
           ),
-          child: Icon(icon, size: 18, color: effectiveIconColor),
-        ),
-      ),
+        );
+      },
     );
   }
 }

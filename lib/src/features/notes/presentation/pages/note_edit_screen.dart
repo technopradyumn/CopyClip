@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+
 import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +10,11 @@ import 'package:flutter_quill/quill_delta.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
-import 'package:path_provider/path_provider.dart';
+
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:share_plus/share_plus.dart';
+
 import 'package:uuid/uuid.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import '../../../../core/widgets/glass_dialog.dart';
@@ -23,6 +23,9 @@ import '../../../../core/widgets/glass_rich_text_editor.dart';
 import '../../data/note_model.dart';
 import '../../../../core/app_content_palette.dart';
 import '../../../../core/utils/widget_sync_service.dart';
+import '../../../../features/premium/presentation/widgets/premium_lock_dialog.dart';
+import '../../../../features/premium/presentation/provider/premium_provider.dart';
+import 'package:provider/provider.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final Note? note;
@@ -369,13 +372,10 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
     );
 
     final bytes = await pdf.save();
-    final dir = await getTemporaryDirectory();
-    final file = File(
-      '${dir.path}/content_${DateTime.now().millisecondsSinceEpoch}.pdf',
+    await Printing.sharePdf(
+      bytes: bytes,
+      filename: 'note_export_${DateTime.now().millisecondsSinceEpoch}.pdf',
     );
-    await file.writeAsBytes(bytes);
-
-    await Share.shareXFiles([XFile(file.path)], subject: 'Exported Content');
   }
 
   @override
@@ -467,10 +467,37 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
           PopupMenuButton<String>(
             icon: Icon(Icons.ios_share, size: 20, color: contrastColor),
             onSelected: (val) {
-              if (val == 'pdf') _exportToPdf();
+              if (val == 'pdf') {
+                final provider = Provider.of<PremiumProvider>(
+                  context,
+                  listen: false,
+                );
+                if (provider.isPremium) {
+                  _exportToPdf();
+                } else {
+                  PremiumLockDialog.show(
+                    context,
+                    featureName: 'PDF Export',
+                    onUnlockOnce: _exportToPdf,
+                  );
+                }
+              }
             },
             itemBuilder: (ctx) => [
-              const PopupMenuItem(value: 'pdf', child: Text("Export as PDF")),
+              PopupMenuItem(
+                value: 'pdf',
+                child: Row(
+                  children: [
+                    Text("Export as PDF"),
+                    const SizedBox(width: 8),
+                    if (!Provider.of<PremiumProvider>(
+                      context,
+                      listen: false,
+                    ).isPremium)
+                      const Icon(Icons.lock, size: 14, color: Colors.amber),
+                  ],
+                ),
+              ),
             ],
           ),
 

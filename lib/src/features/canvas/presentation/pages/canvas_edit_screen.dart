@@ -16,6 +16,9 @@ import '../../data/canvas_adapter.dart';
 import '../../data/canvas_model.dart';
 import '../widgets/drawing_painter.dart';
 import '../../../../core/utils/widget_sync_service.dart';
+import '../../../../features/premium/presentation/widgets/premium_lock_dialog.dart';
+import '../../../../features/premium/presentation/provider/premium_provider.dart';
+import 'package:provider/provider.dart';
 
 enum BrushShape {
   round,
@@ -2340,62 +2343,85 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   ) {
     showCupertinoModalPopup(
       context: context,
-      builder: (BuildContext context) => CupertinoActionSheet(
-        title: const Text("Options"),
-        actions: <CupertinoActionSheetAction>[
-          CupertinoActionSheetAction(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Hand Scroll: ',
-                  style: TextStyle(color: theme.textTheme.bodyMedium?.color),
-                ),
-                Text(
-                  _pageScrollAxis == PageScrollAxis.horizontal
-                      ? 'Left/Right'
-                      : (_pageScrollAxis == PageScrollAxis.vertical
-                            ? 'Top/Bottom'
-                            : 'Off'),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
+      builder: (BuildContext context) {
+        // Get provider inside the builder or capture it before
+        final provider = Provider.of<PremiumProvider>(context, listen: false);
+        final isPremium = provider.isPremium;
+
+        return CupertinoActionSheet(
+          title: const Text("Options"),
+          actions: <CupertinoActionSheetAction>[
+            CupertinoActionSheetAction(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Hand Scroll: ',
+                    style: TextStyle(color: theme.textTheme.bodyMedium?.color),
+                  ),
+                  Text(
+                    _pageScrollAxis == PageScrollAxis.horizontal
+                        ? 'Left/Right'
+                        : (_pageScrollAxis == PageScrollAxis.vertical
+                              ? 'Top/Bottom'
+                              : 'Off'),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                _showScrollDirectionPicker(context);
+              },
             ),
-            onPressed: () {
-              Navigator.pop(context);
-              _showScrollDirectionPicker(context);
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: const Text('Export as PDF'),
-            onPressed: () {
-              Navigator.pop(context);
-              _exportToPdf();
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: const Text('Note Info'),
-            onPressed: () {
-              Navigator.pop(context);
-              _showNoteInfo(theme);
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: const Text(
-              'Clear All',
-              style: TextStyle(color: CupertinoColors.destructiveRed),
+            CupertinoActionSheetAction(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Export as PDF'),
+                  if (!isPremium) ...[
+                    const SizedBox(width: 8),
+                    const Icon(Icons.lock, size: 16, color: Colors.amber),
+                  ],
+                ],
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                if (isPremium) {
+                  _exportToPdf();
+                } else {
+                  PremiumLockDialog.show(
+                    context,
+                    featureName: 'PDF Export',
+                    onUnlockOnce: _exportToPdf,
+                  );
+                }
+              },
             ),
-            onPressed: () {
-              Navigator.pop(context);
-              _showClearDialog(theme);
-            },
+            CupertinoActionSheetAction(
+              child: const Text('Note Info'),
+              onPressed: () {
+                Navigator.pop(context);
+                _showNoteInfo(theme);
+              },
+            ),
+            CupertinoActionSheetAction(
+              child: const Text(
+                'Clear All',
+                style: TextStyle(color: CupertinoColors.destructiveRed),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                _showClearDialog(theme);
+              },
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            child: const Text('Cancel'),
+            onPressed: () => Navigator.pop(context),
           ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          child: const Text('Cancel'),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
+        );
+      },
     );
   }
 

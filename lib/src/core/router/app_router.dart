@@ -25,6 +25,7 @@ import '../../features/todos/presentation/pages/todos_screen.dart';
 import '../../features/expenses/presentation/pages/expenses_screen.dart';
 import '../../features/journal/presentation/pages/journal_screen.dart';
 import '../../features/clipboard/presentation/pages/clipboard_screen.dart';
+import '../../features/premium/presentation/pages/premium_screen.dart';
 
 class AppRouter {
   static const String root = '/';
@@ -58,6 +59,7 @@ class AppRouter {
 
   static const String globalSearch = "/global-search";
 
+  static const String premium = "/premium";
 }
 
 List<GoRoute> getAuthRoutes() {
@@ -65,6 +67,10 @@ List<GoRoute> getAuthRoutes() {
     GoRoute(
       path: AppRouter.root,
       builder: (context, state) => const DashboardScreen(),
+    ),
+    GoRoute(
+      path: AppRouter.premium,
+      builder: (context, state) => const PremiumScreen(),
     ),
     GoRoute(
       path: AppRouter.notes,
@@ -195,6 +201,5 @@ List<GoRoute> getAuthRoutes() {
       path: AppRouter.globalSearch,
       builder: (context, state) => const GlobalSearchScreen(),
     ),
-
   ];
 }
