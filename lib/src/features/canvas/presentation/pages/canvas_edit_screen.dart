@@ -104,10 +104,14 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   // PDF Import Loading State
   bool _isImportingPdf = false;
 
+  // Zoom/Pan state
+  late TransformationController _transformationController;
+
   @override
   void initState() {
     super.initState();
     _initializeNote();
+    _transformationController = TransformationController();
     _toolbarAnimController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
@@ -152,8 +156,27 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
       for (var page in _currentNote.pages) {
         final recorder = ui.PictureRecorder();
         final canvas = Canvas(recorder, Rect.fromLTWH(0, 0, width, height));
-        final bgPaint = Paint()..color = _currentNote.backgroundColor;
-        canvas.drawRect(Rect.fromLTWH(0, 0, width, height), bgPaint);
+
+        // Draw background
+        if (page.backgroundImageBytes != null) {
+          // Render background image
+          final codec = await ui.instantiateImageCodec(
+            page.backgroundImageBytes!,
+          );
+          final frame = await codec.getNextFrame();
+          final bgImage = frame.image;
+          paintImage(
+            canvas: canvas,
+            rect: Rect.fromLTWH(0, 0, width, height),
+            image: bgImage,
+            fit: BoxFit.contain,
+          );
+        } else {
+          // Draw solid background color
+          final bgPaint = Paint()..color = _currentNote.backgroundColor;
+          canvas.drawRect(Rect.fromLTWH(0, 0, width, height), bgPaint);
+        }
+
         canvas.save();
         canvas.scale(contentScale);
         final painter = DrawingPainter(
@@ -306,6 +329,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   @override
   void dispose() {
     _titleController.dispose();
+    _transformationController.dispose();
     _toolbarAnimController.dispose();
     _pageIndicatorTimer?.cancel();
     super.dispose();
@@ -322,6 +346,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
         return true;
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: theme.scaffoldBackgroundColor,
         body: SafeArea(
           child: Stack(
@@ -331,14 +356,29 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                 children: [
                   _buildCompactHeader(theme, colorScheme),
                   Expanded(child: _buildCanvasArea(theme, colorScheme)),
-                  if (_showPageScroller) _buildPageScroller(theme, colorScheme),
-                  if (_showPenSizeSlider)
-                    _buildPenSizeSlider(theme, colorScheme),
                   _buildMinimalToolbar(theme, colorScheme),
                 ],
               ),
 
-              // 2. Page Number Indicator (Centered)
+              // 2. Page Scroller Overlay (Above Toolbar)
+              if (_showPageScroller)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 50,
+                  child: _buildPageScroller(theme, colorScheme),
+                ),
+
+              // 3. Pen Size Slider Overlay (Above Toolbar)
+              if (_showPenSizeSlider)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 60,
+                  child: _buildPenSizeSlider(theme, colorScheme),
+                ),
+
+              // 4. Page Number Indicator (Centered)
               Positioned(
                 bottom: 80,
                 left: 0,
@@ -487,122 +527,131 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   // --- THE CANVAS STACK WITH BOOK EFFECT ---
   // --- THE CANVAS STACK (Simplified) ---
   Widget _buildCanvasArea(ThemeData theme, ColorScheme colorScheme) {
-    return GestureDetector(
-      onPanStart: (details) {
-        if (_isDrawingMode && !_isHandMode) {
-          // Get correct local position using RenderBox
-          final RenderBox? renderBox =
-              _canvasKey.currentContext?.findRenderObject() as RenderBox?;
-          if (renderBox != null) {
-            final localPos = renderBox.globalToLocal(details.globalPosition);
-            setState(() {
-              _redoStack.clear();
-              _strokes.add(
-                DrawingStroke(
-                  points: [localPos.dx, localPos.dy],
-                  color: _isErasing
-                      ? _currentNote.backgroundColor.value
-                      : _selectedColor.value,
-                  strokeWidth: _isErasing ? _eraserSize : _strokeWidth,
-                  penType: _brushShape.index,
-                ),
-              );
-            });
-          }
-        }
-      },
-      onPanUpdate: (details) {
-        if (_isDrawingMode && !_isHandMode) {
-          // Get correct local position using RenderBox
-          final RenderBox? renderBox =
-              _canvasKey.currentContext?.findRenderObject() as RenderBox?;
-          if (renderBox != null) {
-            final localPos = renderBox.globalToLocal(details.globalPosition);
-            setState(() {
-              if (_strokes.isNotEmpty)
-                _strokes.last.points.addAll([localPos.dx, localPos.dy]);
-            });
-          }
-        }
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            // --- FAKE STACK PAGES (DEPTH VISUALS) ---
-            _buildStackLayer(theme, 3, 10, 0.85),
-            _buildStackLayer(theme, 2, 6, 0.90),
-            _buildStackLayer(theme, 1, 3, 0.95),
-
-            // --- CURRENT PAGE (No 3D Animation to prevent bugs) ---
-            Container(
-              key: ValueKey<int>(_currentPageIndex),
-              decoration: BoxDecoration(
-                color: _currentNote.backgroundColor,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
+    return InteractiveViewer(
+      transformationController: _transformationController,
+      boundaryMargin: const EdgeInsets.all(0),
+      minScale: 0.5,
+      maxScale: 5.0,
+      panEnabled: !_isDrawingMode || _isHandMode,
+      scaleEnabled: !_isDrawingMode || _isHandMode,
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onPanStart: (details) {
+          if (_isDrawingMode && !_isHandMode) {
+            // Get correct local position using RenderBox
+            final RenderBox? renderBox =
+                _canvasKey.currentContext?.findRenderObject() as RenderBox?;
+            if (renderBox != null) {
+              final localPos = renderBox.globalToLocal(details.globalPosition);
+              setState(() {
+                _redoStack.clear();
+                _strokes.add(
+                  DrawingStroke(
+                    points: [localPos.dx, localPos.dy],
+                    color: _isErasing
+                        ? _currentNote.backgroundColor.value
+                        : _selectedColor.value,
+                    strokeWidth: _isErasing ? _eraserSize : _strokeWidth,
+                    penType: _brushShape.index,
                   ),
-                ],
-              ),
-              width: double.infinity,
-              height: double.infinity,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Stack(
-                  children: [
-                    // BACKGROUND IMAGE (PDF Page)
-                    if (_currentNote
-                            .pages[_currentPageIndex]
-                            .backgroundImageBytes !=
-                        null)
-                      Positioned.fill(
-                        child: Image.memory(
-                          _currentNote
-                              .pages[_currentPageIndex]
-                              .backgroundImageBytes!,
-                          fit: BoxFit.contain, // Maintain aspect ratio
-                        ),
-                      ),
+                );
+              });
+            }
+          }
+        },
+        onPanUpdate: (details) {
+          if (_isDrawingMode && !_isHandMode) {
+            // Get correct local position using RenderBox
+            final RenderBox? renderBox =
+                _canvasKey.currentContext?.findRenderObject() as RenderBox?;
+            if (renderBox != null) {
+              final localPos = renderBox.globalToLocal(details.globalPosition);
+              setState(() {
+                if (_strokes.isNotEmpty)
+                  _strokes.last.points.addAll([localPos.dx, localPos.dy]);
+              });
+            }
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              // --- FAKE STACK PAGES (DEPTH VISUALS) ---
+              _buildStackLayer(theme, 3, 10, 0.85),
+              _buildStackLayer(theme, 2, 6, 0.90),
+              _buildStackLayer(theme, 1, 3, 0.95),
 
-                    RepaintBoundary(
-                      child: CustomPaint(
-                        key: _canvasKey,
-                        painter: DrawingPainter(
-                          _strokes,
-                          _currentNote
-                              .backgroundColor, // Passing background color to painter (might be redundant if image covers it, but good for erasing)
-                        ),
-                        size: Size.infinite,
-                      ),
+              // --- CURRENT PAGE (No 3D Animation to prevent bugs) ---
+              Container(
+                key: ValueKey<int>(_currentPageIndex),
+                decoration: BoxDecoration(
+                  color: _currentNote.backgroundColor,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 5,
+                      offset: const Offset(0, 2),
                     ),
-                    ..._textElements
-                        .map(
-                          (text) => Positioned(
-                            left: text.position.dx,
-                            top: text.position.dy,
-                            child: _buildEditableText(
-                              text,
-                              _selectedTextId == text.id,
-                              colorScheme,
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    if (_isDrawingMode && !_isHandMode)
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        child: Container(color: Colors.transparent),
-                      ),
                   ],
                 ),
+                width: double.infinity,
+                height: double.infinity,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Stack(
+                    children: [
+                      // BACKGROUND IMAGE (PDF Page)
+                      if (_currentNote
+                              .pages[_currentPageIndex]
+                              .backgroundImageBytes !=
+                          null)
+                        Positioned.fill(
+                          child: Image.memory(
+                            _currentNote
+                                .pages[_currentPageIndex]
+                                .backgroundImageBytes!,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+
+                      RepaintBoundary(
+                        child: CustomPaint(
+                          key: _canvasKey,
+                          painter: DrawingPainter(
+                            _strokes,
+                            _currentNote
+                                .backgroundColor, // Passing background color to painter (might be redundant if image covers it, but good for erasing)
+                          ),
+                          size: Size.infinite,
+                        ),
+                      ),
+                      ..._textElements
+                          .map(
+                            (text) => Positioned(
+                              left: text.position.dx,
+                              top: text.position.dy,
+                              child: _buildEditableText(
+                                text,
+                                _selectedTextId == text.id,
+                                colorScheme,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      if (_isDrawingMode && !_isHandMode)
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          child: Container(color: Colors.transparent),
+                        ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -734,6 +783,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
     final strokesToShow = (isSelected && index == _currentPageIndex)
         ? _strokes
         : page.strokes;
+    final textElementsToShow = (isSelected && index == _currentPageIndex)
+        ? _textElements
+        : page.textElements;
     final bgBytesToShow = (isSelected && index == _currentPageIndex)
         ? _currentNote
               .pages[_currentPageIndex]
@@ -742,10 +794,11 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
 
     final screenSize = MediaQuery.of(context).size;
 
-    return Container(
+    final containerContent = Container(
       key: ObjectKey(page), // Important for ReorderableListView
       width: 100,
-      margin: const EdgeInsets.symmetric(horizontal: 6),
+      margin: const EdgeInsets.only(left: 6), // Removed right margin for button
+
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
@@ -773,18 +826,17 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             borderRadius: BorderRadius.circular(6),
             child: FittedBox(
               fit: BoxFit.contain,
-              child: SizedBox(
+              child: Container(
+                color: _currentNote.backgroundColor,
                 width: screenSize.width,
-                height: screenSize.height,
+                height: screenSize.height - 120, // Match Editor Canvas Height
                 child: Stack(
+                  alignment: Alignment.center,
                   children: [
                     // Background Image
                     if (bgBytesToShow != null)
                       Positioned.fill(
-                        child: Image.memory(
-                          bgBytesToShow,
-                          fit: BoxFit.contain, // Match main view
-                        ),
+                        child: Image.memory(bgBytesToShow, fit: BoxFit.contain),
                       ),
 
                     // Strokes
@@ -792,9 +844,39 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       size: Size.infinite,
                       painter: DrawingPainter(
                         strokesToShow,
-                        Colors.transparent,
+                        _currentNote.backgroundColor,
                       ),
                     ),
+
+                    // Text Elements
+                    ...textElementsToShow
+                        .map(
+                          (text) => Positioned(
+                            left: text.position.dx,
+                            top: text.position.dy,
+                            child: Container(
+                              width: text.containerWidth,
+                              height: text.containerHeight,
+                              child: Text(
+                                text.text,
+                                style: TextStyle(
+                                  color: Color(text.color),
+                                  fontSize: text.fontSize,
+                                  fontWeight: text.bold
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                  fontStyle: text.italic
+                                      ? FontStyle.italic
+                                      : FontStyle.normal,
+                                  decoration: text.underline
+                                      ? TextDecoration.underline
+                                      : null,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
                   ],
                 ),
               ),
@@ -841,6 +923,49 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             ),
         ],
       ),
+    );
+
+    // Return Row with Side Insert Button
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // The Page Preview
+        containerContent,
+
+        // Small Insert Button (Between Pages)
+        GestureDetector(
+          onTap: () {
+            _saveCurrentPage();
+            setState(() {
+              _currentNote.pages.insert(index + 1, CanvasPage());
+              // Switch to the new page
+              _currentPageIndex = index + 1;
+              _selectedTextId = null;
+            });
+            _loadCurrentPage();
+          },
+          behavior: HitTestBehavior.translucent, // Ensure tap area is good
+          child: Container(
+            width: 24,
+            height: double.infinity,
+            alignment: Alignment.center,
+            child: Container(
+              width: 20,
+              height: 20,
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceVariant,
+                shape: BoxShape.circle,
+                border: Border.all(color: colorScheme.outline.withOpacity(0.2)),
+              ),
+              child: Icon(
+                Icons.add,
+                size: 14,
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -921,72 +1046,62 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       ],
                     ),
                   )
-                : Row(
-                    children: [
-                      // Add Button Start
-                      _buildAddPageButton(
-                        isStart: true,
-                        colorScheme: colorScheme,
-                      ),
+                : ReorderableListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    header: _buildAddPageButton(
+                      isStart: true,
+                      colorScheme: colorScheme,
+                    ),
+                    footer: _buildAddPageButton(
+                      isStart: false,
+                      colorScheme: colorScheme,
+                    ),
+                    itemCount: _currentNote.pages.length,
+                    onReorder: (int oldIndex, int newIndex) {
+                      setState(() {
+                        if (oldIndex < newIndex) {
+                          newIndex -= 1;
+                        }
+                        final CanvasPage item = _currentNote.pages.removeAt(
+                          oldIndex,
+                        );
+                        _currentNote.pages.insert(newIndex, item);
 
-                      // Reorderable List
-                      Expanded(
-                        child: ReorderableListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          itemCount: _currentNote.pages.length,
-                          onReorder: (int oldIndex, int newIndex) {
-                            setState(() {
-                              if (oldIndex < newIndex) {
-                                newIndex -= 1;
-                              }
-                              final CanvasPage item = _currentNote.pages
-                                  .removeAt(oldIndex);
-                              _currentNote.pages.insert(newIndex, item);
-
-                              // Adjust current page index
-                              if (_currentPageIndex == oldIndex) {
-                                _currentPageIndex = newIndex;
-                              } else if (oldIndex < _currentPageIndex &&
-                                  newIndex >= _currentPageIndex) {
-                                _currentPageIndex -= 1;
-                              } else if (oldIndex > _currentPageIndex &&
-                                  newIndex <= _currentPageIndex) {
-                                _currentPageIndex += 1;
-                              }
-                            });
-                            _saveCurrentPage();
-                          },
-                          itemBuilder: (context, index) {
-                            final isSelected = index == _currentPageIndex;
-                            return GestureDetector(
-                              key: ObjectKey(_currentNote.pages[index]),
-                              onTap: () => _switchToPage(index),
-                              child: _buildPagePreviewItem(
-                                index,
-                                isSelected,
-                                colorScheme,
-                              ),
-                            );
-                          },
-                          proxyDecorator: (child, index, animation) {
-                            return Material(
-                              elevation: 5,
-                              color: Colors.transparent,
-                              shadowColor: Colors.black26,
-                              borderRadius: BorderRadius.circular(8),
-                              child: child,
-                            );
-                          },
+                        // Adjust current page index
+                        if (_currentPageIndex == oldIndex) {
+                          _currentPageIndex = newIndex;
+                        } else if (oldIndex < _currentPageIndex &&
+                            newIndex >= _currentPageIndex) {
+                          _currentPageIndex -= 1;
+                        } else if (oldIndex > _currentPageIndex &&
+                            newIndex <= _currentPageIndex) {
+                          _currentPageIndex += 1;
+                        }
+                      });
+                      _saveCurrentPage();
+                    },
+                    itemBuilder: (context, index) {
+                      final isSelected = index == _currentPageIndex;
+                      return GestureDetector(
+                        key: ObjectKey(_currentNote.pages[index]),
+                        onTap: () => _switchToPage(index),
+                        child: _buildPagePreviewItem(
+                          index,
+                          isSelected,
+                          colorScheme,
                         ),
-                      ),
-
-                      // Add Button End
-                      _buildAddPageButton(
-                        isStart: false,
-                        colorScheme: colorScheme,
-                      ),
-                    ],
+                      );
+                    },
+                    proxyDecorator: (child, index, animation) {
+                      return Material(
+                        elevation: 5,
+                        color: Colors.transparent,
+                        shadowColor: Colors.black26,
+                        borderRadius: BorderRadius.circular(8),
+                        child: child,
+                      );
+                    },
                   ),
           ),
         ],
@@ -1014,17 +1129,38 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
         _loadCurrentPage();
       },
       child: Container(
-        width: 50,
+        width: 100, // Match page preview width
         margin: const EdgeInsets.symmetric(horizontal: 6),
         decoration: BoxDecoration(
-          color: colorScheme.primary.withOpacity(0.1),
+          color: colorScheme.surfaceVariant.withOpacity(0.3),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: colorScheme.primary.withOpacity(0.3),
-            style: BorderStyle.none,
+            color: colorScheme.outline.withOpacity(0.5),
+            style: BorderStyle.solid,
+            width: 1,
           ),
         ),
-        child: Icon(Icons.add, color: colorScheme.primary),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.note_add_outlined,
+                color: colorScheme.primary,
+                size: 28,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                "New Page",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: colorScheme.primary,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
