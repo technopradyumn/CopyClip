@@ -38,6 +38,8 @@ class Todo extends HiveObject {
   @HiveField(14)
   String? nextInstanceId; // Tracks the ID of the task created by recurrence
 
+  DateTime? get date => dueDate;
+
   Todo({
     required this.id,
     required this.task,

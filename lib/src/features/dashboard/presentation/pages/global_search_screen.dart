@@ -21,7 +21,7 @@ import '../../../todos/data/todo_model.dart';
 // Cards
 import '../../../clipboard/presentation/widgets/clipboard_card.dart';
 import '../../../expenses/presentation/widgets/expense_card.dart';
-import '../../../journal/presentation/widgets/journal_card.dart';
+import '../../../journal/presentation/widgets/journal_list_card.dart';
 import '../../../notes/presentation/widgets/note_card.dart';
 import '../../../todos/presentation/widgets/todo_card.dart';
 
@@ -761,7 +761,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           },
         );
       case 'Journal':
-        return JournalCard(
+        return JournalListCard(
           entry: res.argument,
           isSelected: false,
           onTap: () async {
@@ -771,8 +771,8 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           onCopy: () => _copy(res),
           onShare: () => _share(res),
           onDelete: () => _delete(res),
-          onColorChanged: (c) {
-            (res.argument as JournalEntry).colorValue = c.value;
+          onDesignChanged: (id) {
+            (res.argument as JournalEntry).designId = id;
             (res.argument as JournalEntry).save();
             setState(() {});
           },

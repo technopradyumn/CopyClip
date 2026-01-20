@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:reorderable_grid_view/reorderable_grid_view.dart';
 import 'package:share_plus/share_plus.dart';
 
 // Core Widgets
@@ -427,80 +428,49 @@ class _JournalScreenState extends State<JournalScreen> {
                     );
                   }
 
-                  final canReorder =
-                      _currentSort == JournalSortOption.custom &&
-                      _searchQuery.isEmpty &&
-                      !_isSelectionMode;
-
-                  if (canReorder) {
-                    return ReorderableListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-                      itemCount: entries.length,
-                      onReorder: _onReorder,
-                      // Lightweight proxy decoration
-                      proxyDecorator: (child, index, animation) =>
-                          AnimatedBuilder(
-                            animation: animation,
-                            builder: (_, __) => Transform.scale(
-                              scale: 1.05,
-                              child: Material(
-                                color: Colors.transparent,
-                                child: child,
-                              ),
-                            ),
-                          ),
-                      itemBuilder: (context, index) {
-                        final entry = entries[index];
-                        return Container(
-                          key: ValueKey(entry.id),
-                          child: JournalCard(
-                            entry: entry,
-                            isSelected: _selectedIds.contains(entry.id),
-                            onTap: () => _openEditor(entry),
-                            onLongPress: null, // Allow drag
-                            onCopy: () => _copyEntry(entry),
-                            onShare: () => _shareEntry(entry),
-                            onDelete: () => _confirmDeleteEntry(entry),
-                            onColorChanged: (c) {
-                              entry.colorValue = c.value;
-                              entry.save();
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    // ✅ OPTIMIZATION: Standard ListView with Cache Extent & RepaintBoundary
-                    return ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-                      itemCount: entries.length,
-                      cacheExtent: 1500, // Pre-render more items
-                      itemBuilder: (context, index) {
-                        final entry = entries[index];
-                        return RepaintBoundary(
-                          child: JournalCard(
-                            key: ValueKey(entry.id), // Important for diffing
-                            entry: entry,
-                            isSelected: _selectedIds.contains(entry.id),
-                            onTap: () => _openEditor(entry),
-                            onLongPress: () => setState(() {
-                              _isSelectionMode = true;
-                              _selectedIds.add(entry.id);
-                            }),
-                            onCopy: () => _copyEntry(entry),
-                            onShare: () => _shareEntry(entry),
-                            onDelete: () => _confirmDeleteEntry(entry),
-                            onColorChanged: (c) {
-                              entry.colorValue = c.value;
-                              entry.save();
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  }
+                  // ✅ OPTIMIZATION: Grid View with Reorder support
+                  return ReorderableGridView.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
+                    childAspectRatio: 0.70, // Book-like aspect ratio
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+                    physics: const BouncingScrollPhysics(),
+                    // Custom Drag Feedback: Transparent bg + Scale up
+                    dragWidgetBuilder: (index, child) {
+                      return Material(
+                        color: Colors
+                            .transparent, // Remove default elevation color
+                        child: Transform.scale(
+                          scale: 1.08, // Increase size to indicate drag
+                          child: child,
+                        ),
+                      );
+                    },
+                    onReorder: _onReorder,
+                    children: entries.map((entry) {
+                      return Container(
+                        key: ValueKey(entry.id),
+                        child: JournalCard(
+                          entry: entry,
+                          isSelected: _selectedIds.contains(entry.id),
+                          onTap: () => _openEditor(entry),
+                          onLongPress: null, // Allow GridView drag
+                          onCopy: () => _copyEntry(entry),
+                          onShare: () => _shareEntry(entry),
+                          onDelete: () => _confirmDeleteEntry(entry),
+                          onColorChanged: (c) {
+                            entry.colorValue = c.value;
+                            entry.save();
+                          },
+                          onDesignChanged: (designId) {
+                            entry.designId = designId;
+                            entry.save();
+                          },
+                        ),
+                      );
+                    }).toList(),
+                  );
                 },
               ),
             ),

@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:copyclip/src/features/journal/presentation/designs/journal_design_registry.dart'; // Registry
+import 'package:copyclip/src/features/journal/presentation/widgets/design_picker_sheet.dart'; // Picker
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:copyclip/src/features/journal/data/journal_model.dart';
-import '../../../../core/app_content_palette.dart';
 
 class JournalCard extends StatelessWidget {
   final JournalEntry entry;
@@ -14,6 +15,7 @@ class JournalCard extends StatelessWidget {
   final VoidCallback onShare;
   final VoidCallback onDelete;
   final Function(Color) onColorChanged;
+  final Function(String) onDesignChanged; // New callback
 
   const JournalCard({
     super.key,
@@ -25,12 +27,14 @@ class JournalCard extends StatelessWidget {
     required this.onShare,
     required this.onDelete,
     required this.onColorChanged,
+    required this.onDesignChanged,
   });
 
   Map<String, dynamic> _parseContent(String jsonSource) {
     if (jsonSource.isEmpty) return {"text": "No content", "imageUrl": null};
     try {
-      if (!jsonSource.startsWith('[')) return {"text": jsonSource, "imageUrl": null};
+      if (!jsonSource.startsWith('['))
+        return {"text": jsonSource, "imageUrl": null};
       final List<dynamic> delta = jsonDecode(jsonSource);
       String plainText = "";
       String? firstImageUrl;
@@ -55,13 +59,31 @@ class JournalCard extends StatelessWidget {
 
   String _getMoodEmoji(String mood) {
     switch (mood) {
-      case 'Happy': return '😊';
-      case 'Excited': return '🤩';
-      case 'Neutral': return '😐';
-      case 'Sad': return '😔';
-      case 'Stressed': return '😫';
-      default: return '😐';
+      case 'Happy':
+        return '😊';
+      case 'Excited':
+        return '🤩';
+      case 'Neutral':
+        return '😐';
+      case 'Sad':
+        return '😔';
+      case 'Stressed':
+        return '😫';
+      default:
+        return '😐';
     }
+  }
+
+  void _showDesignPicker(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (ctx) => DesignPickerSheet(
+        currentDesignId: entry.designId,
+        onDesignSelected: onDesignChanged,
+      ),
+    );
   }
 
   @override
@@ -71,231 +93,254 @@ class JournalCard extends StatelessWidget {
     final String previewText = parsed['text'];
     final String? imageUrl = parsed['imageUrl'];
 
-    final Color cardBaseColor = entry.colorValue != null
-        ? Color(entry.colorValue!)
-        : theme.colorScheme.surface;
+    // 1. Get Design
+    final design = JournalDesignRegistry.getDesign(entry.designId);
 
-    final Color contentColor = AppContentPalette.getContrastColor(cardBaseColor);
+    // 2. Base Color: Design Default > Entry override > Surface
+    // Fix: Prioritize Design's intended color (e.g. Blueprint Blue) over manual color to ensure "pure" look.
+    final Color cardBaseColor =
+        design.defaultColor ??
+        (entry.colorValue != null
+            ? Color(entry.colorValue!)
+            : theme.colorScheme.surface);
+
+    final Color contentColor = design.isDark ? Colors.white : Colors.black87;
     final primaryColor = theme.colorScheme.primary;
 
-    // ✅ OPTIMIZATION: High-performance Decoration (Replaces GlassContainer)
-    final decoration = BoxDecoration(
-      color: cardBaseColor.withOpacity(isSelected ? 0.6 : 0.65),
-      borderRadius: BorderRadius.circular(24),
-      border: Border.all(
-          color: Colors.black.withOpacity(0.2),
-          width: 1.5
-      ),
-      boxShadow: [
-        BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4)
-        )
-      ],
+    // Asymmetric Radius: Spine (Left) small, Open (Right) large
+    final borderRadius = const BorderRadius.only(
+      topLeft: Radius.circular(4),
+      bottomLeft: Radius.circular(4),
+      topRight: Radius.circular(16),
+      bottomRight: Radius.circular(16),
     );
 
     return GestureDetector(
       onTap: onTap,
-      onLongPress: onLongPress,
+      // onLongPress removed to allow GridView to handle drag
       child: Hero(
         tag: 'journal_bg_${entry.id}',
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          transform: isSelected ? Matrix4.identity().scaled(0.98) : Matrix4.identity(),
-          margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(16),
-          decoration: decoration, // Using the fast decoration
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // DATE & MOOD COLUMN
-                  Column(
-                    children: [
-                      Text(DateFormat('MMM').format(entry.date).toUpperCase(),
-                          style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, fontWeight: FontWeight.bold, color: theme.colorScheme.primary)),
-                      Text(DateFormat('dd').format(entry.date),
-                          style: theme.textTheme.headlineSmall?.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: contentColor)),
-                      const SizedBox(height: 8),
-                      Material(
-                        type: MaterialType.transparency,
-                        child: Text(
-                          _getMoodEmoji(entry.mood),
-                          style: const TextStyle(fontSize: 24),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 8),
-
-                  // MAIN CONTENT COLUMN
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Material(
-                                type: MaterialType.transparency,
-                                child: Text(
-                                  entry.title.isNotEmpty ? entry.title : "Untitled",
-                                  maxLines: 1,
-                                  style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: contentColor),
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              isSelected ? Icons.check_circle : Icons.radio_button_unchecked,
-                              size: 18,
-                              color: isSelected ? theme.colorScheme.primary : contentColor.withOpacity(0.2),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 6),
-
-                        // IMAGE PREVIEW
-                        if (imageUrl != null)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.file(
-                                File(imageUrl),
-                                height: 100,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
-                              ),
-                            ),
-                          ),
-
-                        if (entry.tags != null && entry.tags!.isNotEmpty)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 12.0),
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              child: Row(
-                                children: entry.tags!.map((tag) => Container(
-                                  margin: const EdgeInsets.only(right: 6),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: primaryColor.withOpacity(0.1),
-                                    borderRadius: BorderRadius.circular(6),
-                                    border: Border.all(
-                                      color: primaryColor.withOpacity(0.05),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    '#$tag',
-                                    style: theme.textTheme.bodySmall?.copyWith(
-                                      color: primaryColor,
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                )).toList(),
-                              ),
-                            ),
-                          ),
-
-                        Material(
-                          type: MaterialType.transparency,
-                          child: Text(
-                            previewText,
-                            maxLines: imageUrl != null ? 2 : 4,
-                            overflow: TextOverflow.ellipsis,
-                            style: theme.textTheme.bodyMedium?.copyWith(color: contentColor.withOpacity(0.8), height: 1.4),
-                          ),
-                        ),
-
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  _QuickColorPicker(
-                    onColorSelected: onColorChanged,
-                    currentColor: cardBaseColor,
-                  ),
-                  const Spacer(),
-                  IgnorePointer(
-                    ignoring: isSelected,
-                    child: Row(
-                      children: [
-                        _actionBtn(Icons.copy_rounded, onCopy, contentColor),
-                        _actionBtn(Icons.share, onShare, contentColor),
-                        _actionBtn(Icons.delete_outline_rounded, onDelete, Colors.redAccent),
-                      ],
-                    ),
-                  ),
-                ],
+          transform: isSelected
+              ? Matrix4.identity().scaled(0.95)
+              : Matrix4.identity(),
+          decoration: BoxDecoration(
+            color: cardBaseColor,
+            borderRadius: borderRadius,
+            border: Border.all(
+              color: isSelected
+                  ? primaryColor
+                  : Colors.black.withOpacity(0.06), // Minimal border
+              width: isSelected ? 3.0 : 0.5,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 6,
+                offset: const Offset(2, 4), // Slight offset
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
+          child: ClipRRect(
+            borderRadius: borderRadius,
+            child: CustomPaint(
+              painter: design.painterBuilder(cardBaseColor),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // HEADER: Date & Options
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              DateFormat(
+                                'MMM dd',
+                              ).format(entry.date).toUpperCase(),
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: contentColor.withOpacity(0.7),
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              _getMoodEmoji(entry.mood),
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                        // Three Dots Menu
+                        Material(
+                          color: Colors.transparent,
+                          child: PopupMenuButton<String>(
+                            icon: Icon(
+                              Icons.more_vert,
+                              color: contentColor.withOpacity(0.6),
+                              size: 20,
+                            ),
+                            onSelected: (value) {
+                              switch (value) {
+                                case 'design':
+                                  _showDesignPicker(context);
+                                  break;
+                                case 'copy':
+                                  onCopy();
+                                  break;
+                                case 'share':
+                                  onShare();
+                                  break;
+                                case 'delete':
+                                  onDelete();
+                                  break;
+                              }
+                            },
+                            itemBuilder: (context) => [
+                              const PopupMenuItem(
+                                value: 'design',
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.palette_outlined),
+                                    SizedBox(width: 8),
+                                    Text("Change Design"),
+                                  ],
+                                ),
+                              ),
+                              const PopupMenuItem(
+                                value: 'copy',
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.copy),
+                                    SizedBox(width: 8),
+                                    Text("Copy"),
+                                  ],
+                                ),
+                              ),
+                              const PopupMenuItem(
+                                value: 'share',
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.share),
+                                    SizedBox(width: 8),
+                                    Text("Share"),
+                                  ],
+                                ),
+                              ),
+                              const PopupMenuItem(
+                                value: 'delete',
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.delete, color: Colors.red),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      "Delete",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
 
-  Widget _actionBtn(IconData icon, VoidCallback onPressed, Color color) {
-    return IconButton(
-      visualDensity: VisualDensity.compact,
-      icon: Icon(icon, size: 18, color: color.withOpacity(0.6)),
-      onPressed: onPressed,
-    );
-  }
-}
+                    // TITLE
+                    Text(
+                      entry.title.isNotEmpty ? entry.title : "Untitled",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: contentColor,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
 
-class _QuickColorPicker extends StatelessWidget {
-  final Function(Color) onColorSelected;
-  final Color currentColor;
-  const _QuickColorPicker({required this.onColorSelected, required this.currentColor});
+                    // IMAGE
+                    if (imageUrl != null)
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 6),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            image: DecorationImage(
+                              image: FileImage(File(imageUrl)),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
 
-  @override
-  Widget build(BuildContext context) {
-    final List<Color> palette = AppContentPalette.palette;
-    final theme = Theme.of(context);
+                    // PREVIEW TEXT
+                    Expanded(
+                      flex: imageUrl != null ? 1 : 3,
+                      child: Text(
+                        previewText,
+                        maxLines: 8,
+                        overflow: TextOverflow.fade,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: contentColor.withOpacity(0.85),
+                          height: 1.3,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: palette.map((color) {
-        final isSelected = currentColor.value == color.value;
-        final contrastColor = AppContentPalette.getContrastColor(color);
-        final appPrimary = theme.colorScheme.primary;
+                    // TAGS (If space permits, or mini version)
+                    if (entry.tags != null && entry.tags!.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 6),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.tag,
+                              size: 12,
+                              color: contentColor.withOpacity(0.5),
+                            ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Text(
+                                entry.tags!.join(", "),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  fontSize: 10,
+                                  color: contentColor.withOpacity(0.6),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
 
-        return GestureDetector(
-          onTap: () => onColorSelected(color),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            margin: const EdgeInsets.only(right: 6),
-            width: 24,
-            height: 24,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: isSelected
-                    ? appPrimary
-                    : contrastColor.withOpacity(0.2),
-                width: isSelected ? 2.5 : 1,
+                    if (isSelected)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Icon(
+                            Icons.check_circle,
+                            color: theme.colorScheme.primary,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
-            child: isSelected
-                ? Icon(Icons.check, size: 16, color: contrastColor)
-                : null,
           ),
-        );
-      }).toList(),
+        ),
+      ),
     );
   }
 }

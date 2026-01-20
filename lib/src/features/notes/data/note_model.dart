@@ -26,6 +26,8 @@ class Note extends HiveObject {
   @HiveField(7)
   DateTime? deletedAt;
 
+  DateTime get date => updatedAt;
+
   Note({
     required this.id,
     required this.title,

@@ -35,6 +35,12 @@ class JournalEntry extends HiveObject {
   @HiveField(11)
   DateTime? deletedAt;
 
+  @HiveField(12)
+  String? designId;
+
+  @HiveField(13)
+  String? pageDesignId;
+
   JournalEntry({
     required this.id,
     required this.title,
@@ -47,6 +53,8 @@ class JournalEntry extends HiveObject {
     this.colorValue,
     this.isDeleted = false,
     this.deletedAt,
+    this.designId,
+    this.pageDesignId,
   });
 
   Map<String, dynamic> toJson() => {
@@ -61,6 +69,8 @@ class JournalEntry extends HiveObject {
     'colorValue': colorValue,
     'isDeleted': isDeleted,
     'deletedAt': deletedAt?.toIso8601String(),
+    'designId': designId,
+    'pageDesignId': pageDesignId,
   };
 
   factory JournalEntry.fromJson(Map<String, dynamic> json) => JournalEntry(
@@ -77,5 +87,7 @@ class JournalEntry extends HiveObject {
     deletedAt: json['deletedAt'] != null
         ? DateTime.parse(json['deletedAt'])
         : null,
+    designId: json['designId'],
+    pageDesignId: json['pageDesignId'],
   );
 }

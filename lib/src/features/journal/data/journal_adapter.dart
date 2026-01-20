@@ -24,25 +24,42 @@ class JournalEntryAdapter extends TypeAdapter<JournalEntry> {
       // FIX: Ensure the deletion fields are retrieved from storage
       isDeleted: fields[10] as bool? ?? false,
       deletedAt: fields[11] as DateTime?,
+      designId: fields[12] as String?,
+      pageDesignId: fields[13] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, JournalEntry obj) {
     writer
-      ..writeByte(11) // Total count updated to 11 (9 original + 2 new)
-      ..writeByte(0)..write(obj.id)
-      ..writeByte(1)..write(obj.title)
-      ..writeByte(2)..write(obj.content)
-      ..writeByte(3)..write(obj.date)
-      ..writeByte(4)..write(obj.mood)
-      ..writeByte(5)..write(obj.sortIndex)
-      ..writeByte(6)..write(obj.tags)
-      ..writeByte(7)..write(obj.isFavorite)
-      ..writeByte(8)..write(obj.colorValue)
-    // FIX: Explicitly write the deletion fields to disk
-      ..writeByte(10)..write(obj.isDeleted)
-      ..writeByte(11)..write(obj.deletedAt);
+      ..writeByte(13) // Total count updated to 13 (11 + 2 new)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.title)
+      ..writeByte(2)
+      ..write(obj.content)
+      ..writeByte(3)
+      ..write(obj.date)
+      ..writeByte(4)
+      ..write(obj.mood)
+      ..writeByte(5)
+      ..write(obj.sortIndex)
+      ..writeByte(6)
+      ..write(obj.tags)
+      ..writeByte(7)
+      ..write(obj.isFavorite)
+      ..writeByte(8)
+      ..write(obj.colorValue)
+      // FIX: Explicitly write the deletion fields to disk
+      ..writeByte(10)
+      ..write(obj.isDeleted)
+      ..writeByte(11)
+      ..write(obj.deletedAt)
+      ..writeByte(12)
+      ..write(obj.designId)
+      ..writeByte(13)
+      ..write(obj.pageDesignId);
   }
 
   @override
@@ -51,7 +68,7 @@ class JournalEntryAdapter extends TypeAdapter<JournalEntry> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is JournalEntryAdapter &&
-              runtimeType == other.runtimeType &&
-              typeId == other.typeId;
+      other is JournalEntryAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

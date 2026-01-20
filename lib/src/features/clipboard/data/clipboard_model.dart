@@ -19,6 +19,8 @@ class ClipboardItem extends HiveObject {
   @HiveField(11)
   DateTime? deletedAt;
 
+  DateTime get date => createdAt;
+
   ClipboardItem({
     required this.id,
     required this.content,

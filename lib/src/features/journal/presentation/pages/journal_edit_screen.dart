@@ -29,6 +29,9 @@ import '../../../../features/premium/presentation/widgets/premium_lock_dialog.da
 import '../../../../features/premium/presentation/provider/premium_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../designs/journal_page_registry.dart';
+import '../widgets/page_design_picker.dart';
+
 class JournalEditScreen extends StatefulWidget {
   final JournalEntry? entry;
 
@@ -57,6 +60,10 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   String _initialContentJson = "";
   String _initialMood = "";
 
+  // Page Design
+  String _selectedPageDesignId = 'default';
+  String _initialPageDesignId = 'default';
+
   final Map<String, String> _moodMap = {
     'Happy': '😊',
     'Excited': '🤩',
@@ -80,12 +87,15 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       _scaffoldColor = widget.entry!.colorValue != null
           ? Color(widget.entry!.colorValue!)
           : AppContentPalette.palette.first;
+      // Load page design
+      _selectedPageDesignId = widget.entry!.pageDesignId ?? 'default';
     }
 
     _initialTitle = _titleController.text;
     _initialDate = _selectedDate;
     _initialColor = _scaffoldColor;
     _initialMood = _selectedMood;
+    _initialPageDesignId = _selectedPageDesignId;
     _initQuill();
 
     // ✅ Add focus listener for keyboard handling
@@ -133,16 +143,6 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       document: doc,
       selection: const TextSelection.collapsed(offset: 0),
     );
-    // Assuming a save operation would be here or in a similar function
-    // This is a placeholder as the actual save logic is not in the provided snippet.
-    // If there's a method like _saveEntry() or similar, this line should go there.
-    // For now, placing it after _quillController initialization as per the instruction's context.
-    // However, this placement is likely incorrect for the intended functionality.
-    // The instruction's provided context for insertion was syntactically incorrect and did not match the document.
-    // The instruction "Trigger WidgetSyncService.syncJournal() after saving an entry."
-    // implies it should be placed after a journal entry is persisted.
-    // Since no such persistence logic is present, this is the closest valid insertion point based on the instruction's malformed example.
-    // A more appropriate location would be within a `_saveEntry` or `_updateEntry` method.
     WidgetSyncService.syncJournal(); // Sync Widget
 
     _initialContentJson = jsonEncode(
@@ -306,6 +306,20 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
     );
   }
 
+  void _showPageDesignPicker() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => PageDesignPickerSheet(
+        selectedDesignId: _selectedPageDesignId,
+        onDesignSelected: (id) {
+          setState(() => _selectedPageDesignId = id);
+        },
+      ),
+    );
+  }
+
   Future<List<pw.Widget>> _buildPdfWidgetsFromDelta(Delta delta) async {
     final List<pw.Widget> widgets = [];
     List<pw.InlineSpan> currentLineSpans = [];
@@ -463,13 +477,12 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       widget.entry!.tags = tags;
       widget.entry!.isFavorite = _isFavorite;
       widget.entry!.colorValue = _scaffoldColor.value;
+      widget.entry!.pageDesignId = _selectedPageDesignId; // Save new field
       widget.entry!.save();
     } else {
       int newSortIndex = 0;
       if (box.isNotEmpty) {
-        final existingIndices = box.values.map(
-          (e) => e.sortIndex,
-        ); // Assuming JournalEntry has sortIndex (checking model next step if fails, but user asked for it)
+        final existingIndices = box.values.map((e) => e.sortIndex);
         if (existingIndices.isNotEmpty) {
           newSortIndex =
               existingIndices.reduce(
@@ -490,6 +503,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
           isFavorite: _isFavorite,
           colorValue: _scaffoldColor.value,
           sortIndex: newSortIndex,
+          pageDesignId: _selectedPageDesignId, // Save new field
         ),
       );
     }
@@ -507,6 +521,9 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
         ? 'journal_bg_${widget.entry!.id}'
         : 'journal_new_hero';
 
+    // Page Design Plugin
+    final pageDesign = JournalPageRegistry.getDesign(_selectedPageDesignId);
+
     return WillPopScope(
       onWillPop: () async {
         final currentJson = jsonEncode(
@@ -517,7 +534,8 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
             currentJson != _initialContentJson ||
             _selectedDate != _initialDate ||
             _selectedMood != _initialMood ||
-            _scaffoldColor.value != _initialColor.value;
+            _scaffoldColor.value != _initialColor.value ||
+            _selectedPageDesignId != _initialPageDesignId;
 
         if (!hasChanges) return true;
         final result = await showDialog<String>(
@@ -540,8 +558,15 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       child: GlassScaffold(
         showBackArrow: true,
         backgroundColor: _scaffoldColor,
+        resizeToAvoidBottomInset: false, // Fix: Prevent background squashing
         title: widget.entry == null ? 'New Entry' : 'Edit Entry',
         actions: [
+          // New Page Design Picker Button
+          IconButton(
+            icon: Icon(Icons.note_alt_outlined, color: contrastColor),
+            onPressed: _showPageDesignPicker,
+            tooltip: 'Page Style',
+          ),
           GestureDetector(
             onTap: _showColorPicker,
             child: Container(
@@ -623,17 +648,28 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
               type: MaterialType.transparency,
               child: Stack(
                 children: [
+                  // BACKGROUND LAYER - Stays Full Screen
+                  // Because Scaffold is resizeToAvoidBottomInset: false
                   Positioned.fill(
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,
-                      child: CustomPaint(painter: JournalPaperPainter()),
+                      // Apply the selected page design painter
+                      child: CustomPaint(
+                        painter: pageDesign.painterBuilder(_scaffoldColor),
+                      ),
                     ),
                   ),
+
+                  // CONTENT LAYER - Handles Insets Manually
                   RepaintBoundary(
                     key: _boundaryKey,
                     child: Container(
                       color: Colors.transparent,
+                      // Add bottom padding matching keyboard inset since we disabled resize
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom,
+                      ),
                       child: Column(
                         children: [
                           Padding(
