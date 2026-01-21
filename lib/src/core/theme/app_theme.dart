@@ -9,7 +9,7 @@ class AppTheme {
       colorScheme: ColorScheme.light(
         primary: primaryColor, // Dynamic
         secondary: primaryColor,
-        surface: Colors.white,
+        surface: const Color(0xFFFAFAFA),
         onSurface: Colors.black87,
       ),
       scaffoldBackgroundColor: const Color(0xFFF2F2F7),
@@ -32,7 +32,7 @@ class AppTheme {
         surface: const Color(0xFF1C1C1E),
         onSurface: Colors.white,
       ),
-      scaffoldBackgroundColor: Colors.black,
+      scaffoldBackgroundColor: const Color(0xFF121212),
       useMaterial3: true,
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: primaryColor,

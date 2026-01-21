@@ -30,7 +30,8 @@ class ClipboardCard extends StatelessWidget {
   Map<String, dynamic> _parseContent(String jsonSource) {
     if (jsonSource.isEmpty) return {"text": "No content", "imageUrl": null};
     try {
-      if (!jsonSource.startsWith('[')) return {"text": jsonSource, "imageUrl": null};
+      if (!jsonSource.startsWith('['))
+        return {"text": jsonSource, "imageUrl": null};
       final List<dynamic> delta = jsonDecode(jsonSource);
       String plainText = "";
       String? firstImageUrl;
@@ -55,9 +56,12 @@ class ClipboardCard extends StatelessWidget {
 
   IconData _getTypeIconData(String type) {
     switch (type) {
-      case 'link': return Icons.link;
-      case 'phone': return Icons.phone;
-      default: return Icons.notes;
+      case 'link':
+        return Icons.link;
+      case 'phone':
+        return Icons.phone;
+      default:
+        return Icons.notes;
     }
   }
 
@@ -72,22 +76,21 @@ class ClipboardCard extends StatelessWidget {
         ? Color(item.colorValue!)
         : theme.colorScheme.surface;
 
-    final Color contentColor = AppContentPalette.getContrastColor(clipThemeColor);
+    final Color contentColor = AppContentPalette.getContrastColor(
+      clipThemeColor,
+    );
 
     // ✅ OPTIMIZATION: High-performance Decoration (Replaces GlassContainer)
     final decoration = BoxDecoration(
       color: clipThemeColor.withOpacity(isSelected ? 0.6 : 0.65),
       borderRadius: BorderRadius.circular(24),
-      border: Border.all(
-          color: Colors.black.withOpacity(0.2),
-          width: 1.5
-      ),
+      border: Border.all(color: Colors.black.withOpacity(0.2), width: 1.5),
       boxShadow: [
         BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4)
-        )
+          color: Colors.black.withOpacity(0.05),
+          blurRadius: 10,
+          offset: const Offset(0, 4),
+        ),
       ],
     );
 
@@ -98,7 +101,9 @@ class ClipboardCard extends StatelessWidget {
         tag: 'clip_bg_${item.id}',
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          transform: isSelected ? Matrix4.identity().scaled(0.98) : Matrix4.identity(),
+          transform: isSelected
+              ? Matrix4.identity().scaled(0.98)
+              : Matrix4.identity(),
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.all(16),
           decoration: decoration, // Using the fast decoration
@@ -110,21 +115,31 @@ class ClipboardCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(_getTypeIconData(item.type), color: contentColor.withOpacity(0.5), size: 20),
+                      Icon(
+                        _getTypeIconData(item.type),
+                        color: contentColor.withOpacity(0.5),
+                        size: 20,
+                      ),
                       const SizedBox(width: 8),
                       Material(
                         type: MaterialType.transparency,
                         child: Text(
                           DateFormat('MMM dd, h:mm a').format(item.createdAt),
-                          style: theme.textTheme.bodySmall?.copyWith(color: contentColor.withOpacity(0.5)),
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: contentColor.withOpacity(0.5),
+                          ),
                         ),
                       ),
                     ],
                   ),
                   Icon(
-                    isSelected ? Icons.check_circle : Icons.radio_button_unchecked,
+                    isSelected
+                        ? Icons.check_circle
+                        : Icons.radio_button_unchecked,
                     size: 20,
-                    color: isSelected ? theme.colorScheme.primary : contentColor.withOpacity(0.2),
+                    color: isSelected
+                        ? theme.colorScheme.primary
+                        : contentColor.withOpacity(0.2),
                   ),
                 ],
               ),
@@ -149,7 +164,10 @@ class ClipboardCard extends StatelessWidget {
                   previewText,
                   maxLines: imageUrl != null ? 2 : 4,
                   overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.bodyMedium?.copyWith(color: contentColor, height: 1.3),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: contentColor,
+                    height: 1.3,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -166,7 +184,11 @@ class ClipboardCard extends StatelessWidget {
                       children: [
                         _smallBtn(Icons.copy_rounded, onCopy, contentColor),
                         _smallBtn(Icons.share_rounded, onShare, contentColor),
-                        _smallBtn(Icons.delete_outline_rounded, onDelete, Colors.redAccent),
+                        _smallBtn(
+                          Icons.delete_outline_rounded,
+                          onDelete,
+                          Colors.redAccent,
+                        ),
                       ],
                     ),
                   ),
@@ -191,7 +213,10 @@ class ClipboardCard extends StatelessWidget {
 class _QuickColorPicker extends StatelessWidget {
   final Function(Color) onColorSelected;
   final Color currentColor;
-  const _QuickColorPicker({required this.onColorSelected, required this.currentColor});
+  const _QuickColorPicker({
+    required this.onColorSelected,
+    required this.currentColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -222,11 +247,7 @@ class _QuickColorPicker extends StatelessWidget {
               ),
             ),
             child: isSelected
-                ? Icon(
-              Icons.check,
-              size: 14,
-              color: contrastColor,
-            )
+                ? Icon(Icons.check, size: 14, color: contrastColor)
                 : null,
           ),
         );

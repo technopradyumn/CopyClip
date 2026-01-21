@@ -20,22 +20,38 @@ class TodoCard extends StatelessWidget {
     required this.onToggleDone,
   });
 
-  bool get _isOverdue =>
-      todo.dueDate != null &&
-      todo.dueDate!.isBefore(DateTime.now()) &&
-      !todo.isDone;
+  bool get _isOverdue {
+    if (todo.dueDate == null) return false;
+    final now = DateTime.now();
+    final todayStart = DateTime(now.year, now.month, now.day);
+    // User Request: "past day without time" -> Only highlight if STRICTLY before today
+    return todo.dueDate!.isBefore(todayStart) && !todo.isDone;
+  }
+
   bool get _isDueToday =>
       todo.dueDate != null &&
       _isSameDay(todo.dueDate!, DateTime.now()) &&
       !todo.isDone;
+
   bool _isSameDay(DateTime a, DateTime b) =>
       a.year == b.year && a.month == b.month && a.day == b.day;
+
+  bool get _isFuture {
+    if (todo.dueDate == null) return false;
+    final now = DateTime.now();
+    final todayStart = DateTime(now.year, now.month, now.day);
+    // Future means strictly AFTER today (tomorrow onwards)
+    return todo.dueDate!.isAfter(todayStart) && !_isDueToday;
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
+
+    // Adaptive color based on state
+    final stateColor = _getTaskTextColor(colorScheme);
 
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
@@ -117,7 +133,7 @@ class TodoCard extends StatelessWidget {
                                     fontWeight: todo.isDone
                                         ? FontWeight.w400
                                         : FontWeight.w500,
-                                    color: _getTaskTextColor(colorScheme),
+                                    color: stateColor,
                                     decoration: todo.isDone
                                         ? TextDecoration.lineThrough
                                         : TextDecoration.none,
@@ -139,11 +155,7 @@ class TodoCard extends StatelessWidget {
                               Icon(
                                 Icons.access_time,
                                 size: 12,
-                                color: _isOverdue
-                                    ? colorScheme.error
-                                    : (_isDueToday
-                                          ? colorScheme.tertiary
-                                          : colorScheme.outline),
+                                color: stateColor,
                               ),
                               const SizedBox(width: 4),
                               Expanded(
@@ -152,17 +164,9 @@ class TodoCard extends StatelessWidget {
                                     'MMM d, h:mm a',
                                   ).format(todo.dueDate!),
                                   style: TextStyle(
-                                    color: _isOverdue
-                                        ? colorScheme.error
-                                        : (_isDueToday
-                                              ? colorScheme.tertiary
-                                              : colorScheme.onSurfaceVariant),
+                                    color: stateColor,
                                     fontSize: 11,
-                                    fontWeight: _isOverdue
-                                        ? FontWeight.w600
-                                        : (_isDueToday
-                                              ? FontWeight.w600
-                                              : FontWeight.w500),
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
@@ -172,7 +176,8 @@ class TodoCard extends StatelessWidget {
                                   child: Icon(
                                     Icons.notifications_active,
                                     size: 12,
-                                    color: colorScheme.primary,
+                                    // ✅ Fix: Blue only if Future
+                                    color: stateColor,
                                   ),
                                 ),
                               if (todo.repeatInterval != null)
@@ -183,7 +188,7 @@ class TodoCard extends StatelessWidget {
                                       Icon(
                                         Icons.repeat,
                                         size: 12,
-                                        color: colorScheme.tertiary,
+                                        color: stateColor,
                                       ),
                                       const SizedBox(width: 4),
                                       Text(
@@ -192,7 +197,7 @@ class TodoCard extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w500,
-                                          color: colorScheme.tertiary,
+                                          color: stateColor,
                                         ),
                                       ),
                                     ],
@@ -228,6 +233,8 @@ class TodoCard extends StatelessWidget {
     if (todo.isDone) return colorScheme.outlineVariant.withOpacity(0.3);
     if (_isOverdue) return colorScheme.error.withOpacity(0.4);
     if (_isDueToday) return colorScheme.tertiary.withOpacity(0.4);
+    if (_isFuture)
+      return colorScheme.primary.withOpacity(0.4); // Blue for Future
     return colorScheme.outlineVariant.withOpacity(0.5);
   }
 
@@ -235,6 +242,7 @@ class TodoCard extends StatelessWidget {
     if (todo.isDone) return colorScheme.primary;
     if (_isOverdue) return colorScheme.error;
     if (_isDueToday) return colorScheme.tertiary;
+    if (_isFuture) return colorScheme.primary; // Blue for Future
     return colorScheme.onSurface.withOpacity(0.54);
   }
 
@@ -242,6 +250,7 @@ class TodoCard extends StatelessWidget {
     if (todo.isDone) return colorScheme.onSurface.withOpacity(0.5);
     if (_isOverdue) return colorScheme.error;
     if (_isDueToday) return colorScheme.tertiary;
+    if (_isFuture) return colorScheme.primary; // Blue for Future
     return colorScheme.onSurface;
   }
 
@@ -250,6 +259,8 @@ class TodoCard extends StatelessWidget {
     if (todo.isDone) return colorScheme.surfaceContainerLowest.withOpacity(0.6);
     if (_isOverdue) return colorScheme.error.withOpacity(0.15);
     if (_isDueToday) return colorScheme.tertiary.withOpacity(0.15);
+    if (_isFuture)
+      return colorScheme.primary.withOpacity(0.15); // Blue for Future
     return colorScheme.surface.withOpacity(isSelected ? 0.3 : 0.12);
   }
 }

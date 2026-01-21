@@ -131,8 +131,10 @@ class JournalCard extends StatelessWidget {
             border: Border.all(
               color: isSelected
                   ? primaryColor
-                  : Colors.black.withOpacity(0.06), // Minimal border
-              width: isSelected ? 3.0 : 0.5,
+                  : (theme.brightness == Brightness.dark
+                        ? Colors.white.withOpacity(0.1)
+                        : Colors.black.withOpacity(0.1)),
+              width: isSelected ? 3.0 : 0.8,
             ),
             boxShadow: [
               BoxShadow(

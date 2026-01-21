@@ -39,9 +39,9 @@ class NotificationService {
 
     const DarwinInitializationSettings initializationSettingsIOS =
         DarwinInitializationSettings(
-          requestSoundPermission: true,
-          requestBadgePermission: true,
-          requestAlertPermission: true,
+          requestSoundPermission: false, // Request later
+          requestBadgePermission: false,
+          requestAlertPermission: false,
         );
 
     const InitializationSettings initializationSettings =
@@ -51,30 +51,81 @@ class NotificationService {
         );
 
     await flutterLocalNotificationsPlugin.initialize(
-      // Fixed name
       initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) async {
-        if (response.payload != null) {
+        if (response.actionId == 'mark_done' && response.payload != null) {
+          onNotifications.add("ACTION:mark_done:${response.payload}");
+        } else if (response.payload != null) {
           onNotifications.add(response.payload);
         }
       },
     );
   }
 
-  NotificationDetails _notificationDetails() {
-    return const NotificationDetails(
+  Future<bool> checkPermissions() async {
+    if (Platform.isIOS) {
+      final bool? result = await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >()
+          ?.requestPermissions(alert: true, badge: true, sound: true);
+      return result ?? false;
+    } else if (Platform.isAndroid) {
+      final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+          flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin
+              >();
+
+      final bool? result = await androidImplementation
+          ?.requestNotificationsPermission();
+      return result ?? false;
+    }
+    return true;
+  }
+
+  NotificationDetails _notificationDetails(String channelId) {
+    String channelName = 'General';
+    String channelDesc = 'General notifications';
+    Importance importance = Importance.max;
+    Priority priority = Priority.high;
+
+    switch (channelId) {
+      case 'todos':
+        channelName = 'Tasks & Todos';
+        channelDesc = 'Reminders for your tasks';
+        break;
+      case 'journal':
+        channelName = 'Journaling';
+        channelDesc = 'Daily journaling reminders';
+        importance = Importance.defaultImportance;
+        priority = Priority.defaultPriority;
+        break;
+      case 'expenses':
+        channelName = 'Finance';
+        channelDesc = 'Expense and salary reminders';
+        break;
+      case 'clipboard':
+        channelName = 'Clipboard';
+        channelDesc = 'Clipboard background updates';
+        importance = Importance.low;
+        priority = Priority.low;
+        break;
+    }
+
+    return NotificationDetails(
       android: AndroidNotificationDetails(
+        channelId,
+        channelName,
+        channelDescription: channelDesc,
         icon: '@drawable/copyclip_logo',
-        'copyclip_main_channel',
-        'CopyClip Reminders',
-        channelDescription: 'Main channel for task and expense alerts',
-        importance: Importance.max,
-        priority: Priority.high,
+        importance: importance,
+        priority: priority,
         ticker: 'ticker',
         playSound: true,
-        fullScreenIntent: true,
+        styleInformation: const BigTextStyleInformation(''),
       ),
-      iOS: DarwinNotificationDetails(
+      iOS: const DarwinNotificationDetails(
         presentAlert: true,
         presentBadge: true,
         presentSound: true,
@@ -86,14 +137,14 @@ class NotificationService {
     required int id,
     required String title,
     required String body,
+    String channelId = 'todos', // Default to todos for backward compat
     String? payload,
   }) async {
     await flutterLocalNotificationsPlugin.show(
-      // Fixed name
       id,
       title,
       body,
-      _notificationDetails(),
+      _notificationDetails(channelId),
       payload: payload,
     );
   }
@@ -103,6 +154,7 @@ class NotificationService {
     required String title,
     required String body,
     required DateTime scheduledDate,
+    String channelId = 'todos',
     String? payload,
   }) async {
     if (scheduledDate.isBefore(DateTime.now())) return;
@@ -112,7 +164,7 @@ class NotificationService {
       title,
       body,
       tz.TZDateTime.from(scheduledDate, tz.local),
-      _notificationDetails(),
+      _notificationDetails(channelId),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,

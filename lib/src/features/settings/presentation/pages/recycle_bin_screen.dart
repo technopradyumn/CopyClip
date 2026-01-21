@@ -313,7 +313,7 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
                             ), // Simple transparency
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: Colors.white.withOpacity(0.1),
+                              color: theme.colorScheme.outline.withOpacity(0.2),
                             ),
                           ),
                           child: ListTile(
@@ -401,7 +401,7 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
           border: Border.all(
             color: isSelected
                 ? theme.colorScheme.primary.withOpacity(0.3)
-                : theme.dividerColor.withOpacity(0.1),
+                : theme.colorScheme.outline.withOpacity(0.2),
           ),
         ),
         child: Text(

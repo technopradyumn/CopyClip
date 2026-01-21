@@ -1006,11 +1006,18 @@ class _SectionCard extends StatelessWidget {
   final Widget child;
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-        color: color.withOpacity(0.08),
+        color: color.withOpacity(0.12),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.1), width: 0.5),
+        border: Border.all(
+          // ✅ FIX: Use dynamic border color based on theme/color
+          color: isDark
+              ? Colors.white.withOpacity(0.1)
+              : color.withOpacity(0.3),
+          width: 1,
+        ),
       ),
       padding: const EdgeInsets.all(4),
       child: child,

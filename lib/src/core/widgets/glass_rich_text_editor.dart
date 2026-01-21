@@ -906,12 +906,23 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     final defaultTextStyle = DefaultTextStyle.of(context);
 
+    // ✅ FIX: Calculate text color based on the ACTUAL background color of the card/note
+    // This ensures text is visible even if System is Dark but Note is Light (and vice versa)
+    final isBackgroundDark =
+        ThemeData.estimateBrightnessForColor(widget.editorBackgroundColor) ==
+        Brightness.dark;
+
+    final Color contrastColor = isBackgroundDark
+        ? Colors.white
+        : Colors.black87;
+
     final customStyles = DefaultStyles(
       h1: DefaultTextBlockStyle(
         defaultTextStyle.style.copyWith(
           fontSize: 34,
           height: 1.083,
           fontWeight: FontWeight.bold,
+          color: contrastColor, // ✅ Explicit Color
         ),
         const HorizontalSpacing(0, 0),
         const VerticalSpacing(16, 0),
@@ -923,6 +934,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
           fontSize: 30,
           height: 1.067,
           fontWeight: FontWeight.bold,
+          color: contrastColor, // ✅ Explicit Color
         ),
         const HorizontalSpacing(0, 0),
         const VerticalSpacing(12, 0),
@@ -934,6 +946,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
           fontSize: 24,
           height: 1.083,
           fontWeight: FontWeight.bold,
+          color: contrastColor, // ✅ Explicit Color
         ),
         const HorizontalSpacing(0, 0),
         const VerticalSpacing(10, 0),
@@ -941,35 +954,49 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
         null,
       ),
       paragraph: DefaultTextBlockStyle(
-        defaultTextStyle.style.copyWith(fontSize: 16, height: 1.5),
+        defaultTextStyle.style.copyWith(
+          fontSize: 16,
+          height: 1.5,
+          color: contrastColor, // ✅ Explicit Color
+        ),
         const HorizontalSpacing(0, 0),
         VerticalSpacing.zero,
         VerticalSpacing.zero,
         null,
       ),
-      bold: const TextStyle(fontWeight: FontWeight.bold),
-      italic: const TextStyle(fontStyle: FontStyle.italic),
-      small: const TextStyle(fontSize: 12),
-      underline: const TextStyle(decoration: TextDecoration.underline),
-      strikeThrough: const TextStyle(decoration: TextDecoration.lineThrough),
+      bold: TextStyle(fontWeight: FontWeight.bold, color: contrastColor),
+      italic: TextStyle(fontStyle: FontStyle.italic, color: contrastColor),
+      small: TextStyle(fontSize: 12, color: contrastColor),
+      underline: TextStyle(
+        decoration: TextDecoration.underline,
+        color: contrastColor,
+      ),
+      strikeThrough: TextStyle(
+        decoration: TextDecoration.lineThrough,
+        color: contrastColor,
+      ),
       inlineCode: InlineCodeStyle(
-        backgroundColor: colorScheme.surfaceContainerHighest,
+        backgroundColor: isBackgroundDark
+            ? Colors.white24
+            : Colors.grey.shade200,
         radius: const Radius.circular(4),
         style: TextStyle(
           fontSize: 14,
-          color: colorScheme.primary,
+          color: contrastColor, // ✅ Explicit Color
           fontFamily: 'monospace',
         ),
       ),
       link: TextStyle(
-        color: colorScheme.primary,
+        color: isBackgroundDark
+            ? Color(0xFF5AB0FF)
+            : Color(0xFF007AFF), // Adaptive Blue
         decoration: TextDecoration.underline,
       ),
       placeHolder: DefaultTextBlockStyle(
         defaultTextStyle.style.copyWith(
           fontSize: 18,
           height: 1.5,
-          color: colorScheme.onSurface.withOpacity(0.4),
+          color: contrastColor.withOpacity(0.4), // ✅ Adaptive Placeholder
         ),
         const HorizontalSpacing(0, 0),
         VerticalSpacing.zero,
@@ -977,7 +1004,11 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
         null,
       ),
       lists: DefaultListBlockStyle(
-        defaultTextStyle.style.copyWith(fontSize: 16, height: 1.5),
+        defaultTextStyle.style.copyWith(
+          fontSize: 16,
+          height: 1.5,
+          color: contrastColor, // ✅ Explicit Color
+        ),
         const HorizontalSpacing(0, 0),
         const VerticalSpacing(6, 0),
         const VerticalSpacing(0, 6),
@@ -986,7 +1017,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
       ),
       quote: DefaultTextBlockStyle(
         TextStyle(
-          color: colorScheme.onSurface.withOpacity(0.7),
+          color: contrastColor.withOpacity(0.7), // ✅ Adaptive Quote
           fontSize: 16,
           fontStyle: FontStyle.italic,
         ),
@@ -997,14 +1028,14 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
           border: Border(
             left: BorderSide(
               width: 4,
-              color: colorScheme.primary.withOpacity(0.3),
+              color: contrastColor.withOpacity(0.3), // ✅ Adaptive
             ),
           ),
         ),
       ),
       code: DefaultTextBlockStyle(
         TextStyle(
-          color: colorScheme.onSurface,
+          color: contrastColor, // ✅ Adaptive Code
           fontFamily: 'monospace',
           fontSize: 14,
           height: 1.4,
@@ -1013,7 +1044,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
         const VerticalSpacing(8, 8),
         VerticalSpacing.zero,
         BoxDecoration(
-          color: colorScheme.surfaceContainerHighest,
+          color: isBackgroundDark ? Colors.white10 : Colors.grey.shade100,
           borderRadius: BorderRadius.circular(8),
         ),
       ),

@@ -30,15 +30,17 @@ class ExpenseCard extends StatelessWidget {
       color: theme.colorScheme.surface.withOpacity(isSelected ? 0.3 : 0.15),
       borderRadius: BorderRadius.circular(24),
       border: Border.all(
-        color: isSelected ? theme.colorScheme.primary : Colors.black.withOpacity(0.1),
+        color: isSelected
+            ? theme.colorScheme.primary
+            : theme.colorScheme.outline.withOpacity(0.2), // Adaptive
         width: 1.5,
       ),
       boxShadow: [
         BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4)
-        )
+          color: Colors.black.withOpacity(0.05),
+          blurRadius: 10,
+          offset: const Offset(0, 4),
+        ),
       ],
     );
 
@@ -59,11 +61,14 @@ class ExpenseCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: (expense.isIncome ? incomeColor : expenseColor).withOpacity(0.15),
+                    color: (expense.isIncome ? incomeColor : expenseColor)
+                        .withOpacity(0.15),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    expense.isIncome ? Icons.arrow_downward : Icons.arrow_upward,
+                    expense.isIncome
+                        ? Icons.arrow_downward
+                        : Icons.arrow_upward,
                     color: expense.isIncome ? incomeColor : expenseColor,
                     size: 20,
                   ),
@@ -133,7 +138,11 @@ class ExpenseCard extends StatelessWidget {
             Positioned(
               top: 10,
               right: 10,
-              child: Icon(Icons.check_circle, size: 16, color: theme.colorScheme.primary),
+              child: Icon(
+                Icons.check_circle,
+                size: 16,
+                color: theme.colorScheme.primary,
+              ),
             ),
         ],
       ),

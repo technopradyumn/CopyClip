@@ -108,8 +108,14 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
     _categoryController = TextEditingController(
       text: widget.todo?.category ?? 'General',
     );
-    _selectedDate = widget.todo?.dueDate;
-    _hasReminder = widget.todo?.hasReminder ?? false;
+    // ✅ DEFAULT: Notifications ON for new tasks
+    if (widget.todo == null) {
+      _selectedDate = DateTime.now();
+      _hasReminder = true;
+    } else {
+      _selectedDate = widget.todo?.dueDate;
+      _hasReminder = widget.todo?.hasReminder ?? false;
+    }
     _isDone = widget.todo?.isDone ?? false;
     _repeatInterval = widget.todo?.repeatInterval;
     _repeatDays = widget.todo?.repeatDays != null
@@ -677,7 +683,10 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                               _selectedDate = DateTime.now();
                             }
                           } else {
-                            // If turning OFF, explicitly clear the date
+                            // If turning OFF, strictly clear date? Or just keep it but disable flag?
+                            // User request: "Default ON". So we keep date references mostly valid.
+                            // But for UI consistency, if OFF, we can keep date null or just hide it.
+                            // keeping standard behavior:
                             _selectedDate = null;
                           }
                         });

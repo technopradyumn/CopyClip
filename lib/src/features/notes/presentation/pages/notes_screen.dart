@@ -89,10 +89,13 @@ class _NotesScreenState extends State<NotesScreen> {
 
     // 1. Search Filter
     if (_searchQuery.isNotEmpty) {
-      result = result.where((n) =>
-      n.title.toLowerCase().contains(_searchQuery) ||
-          n.content.toLowerCase().contains(_searchQuery)
-      ).toList();
+      result = result
+          .where(
+            (n) =>
+                n.title.toLowerCase().contains(_searchQuery) ||
+                n.content.toLowerCase().contains(_searchQuery),
+          )
+          .toList();
     }
 
     // 2. Sort
@@ -104,10 +107,14 @@ class _NotesScreenState extends State<NotesScreen> {
         result.sort((a, b) => a.updatedAt.compareTo(b.updatedAt));
         break;
       case NoteSortOption.titleAZ:
-        result.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+        result.sort(
+          (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()),
+        );
         break;
       case NoteSortOption.titleZA:
-        result.sort((a, b) => b.title.toLowerCase().compareTo(a.title.toLowerCase()));
+        result.sort(
+          (a, b) => b.title.toLowerCase().compareTo(a.title.toLowerCase()),
+        );
         break;
       case NoteSortOption.custom:
         result.sort((a, b) => a.sortIndex.compareTo(b.sortIndex));
@@ -148,7 +155,12 @@ class _NotesScreenState extends State<NotesScreen> {
     } catch (_) {
       Clipboard.setData(ClipboardData(text: note.content));
     }
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Content copied"), behavior: SnackBarBehavior.floating));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Content copied"),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
   }
 
   void _shareNote(Note note) {
@@ -187,10 +199,15 @@ class _NotesScreenState extends State<NotesScreen> {
     for (var id in _selectedNoteIds) {
       try {
         final note = _rawNotes.firstWhere((n) => n.id == id);
-        note.isDeleted = true; note.deletedAt = now; note.save();
+        note.isDeleted = true;
+        note.deletedAt = now;
+        note.save();
       } catch (_) {}
     }
-    setState(() { _selectedNoteIds.clear(); _isSelectionMode = false; });
+    setState(() {
+      _selectedNoteIds.clear();
+      _isSelectionMode = false;
+    });
   }
 
   void _deleteAll() {
@@ -205,7 +222,9 @@ class _NotesScreenState extends State<NotesScreen> {
           Navigator.pop(ctx);
           final now = DateTime.now();
           for (var n in _rawNotes) {
-            n.isDeleted = true; n.deletedAt = now; n.save();
+            n.isDeleted = true;
+            n.deletedAt = now;
+            n.save();
           }
         },
       ),
@@ -222,8 +241,10 @@ class _NotesScreenState extends State<NotesScreen> {
 
   void _toggleSelection(String id) {
     setState(() {
-      if (_selectedNoteIds.contains(id)) _selectedNoteIds.remove(id);
-      else _selectedNoteIds.add(id);
+      if (_selectedNoteIds.contains(id))
+        _selectedNoteIds.remove(id);
+      else
+        _selectedNoteIds.add(id);
       if (_selectedNoteIds.isEmpty) _isSelectionMode = false;
     });
   }
@@ -248,18 +269,23 @@ class _NotesScreenState extends State<NotesScreen> {
     return WillPopScope(
       onWillPop: () async {
         if (_isSelectionMode) {
-          setState(() { _isSelectionMode = false; _selectedNoteIds.clear(); });
+          setState(() {
+            _isSelectionMode = false;
+            _selectedNoteIds.clear();
+          });
           return false;
         }
         return true;
       },
       child: GlassScaffold(
         title: null,
-        floatingActionButton: _isSelectionMode ? null : FloatingActionButton(
-          onPressed: () => _openNoteEditor(null),
-          backgroundColor: theme.colorScheme.primary,
-          child: Icon(Icons.add, color: theme.colorScheme.onPrimary),
-        ),
+        floatingActionButton: _isSelectionMode
+            ? null
+            : FloatingActionButton(
+                onPressed: () => _openNoteEditor(null),
+                backgroundColor: theme.colorScheme.primary,
+                child: Icon(Icons.add, color: theme.colorScheme.onPrimary),
+              ),
         body: Column(
           children: [
             _buildCustomTopBar(),
@@ -272,20 +298,34 @@ class _NotesScreenState extends State<NotesScreen> {
                 decoration: BoxDecoration(
                   color: onSurfaceColor.withOpacity(0.08),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+                  border: Border.all(
+                    color: theme.dividerColor.withOpacity(0.1),
+                  ),
                 ),
                 child: TextField(
                   controller: _searchController,
                   style: theme.textTheme.bodyMedium,
                   decoration: InputDecoration(
                     hintText: 'Search notes...',
-                    hintStyle: theme.textTheme.bodyMedium?.copyWith(color: onSurfaceColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.search, color: onSurfaceColor.withOpacity(0.5), size: 20),
+                    hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                      color: onSurfaceColor.withOpacity(0.5),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: onSurfaceColor.withOpacity(0.5),
+                      size: 20,
+                    ),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? GestureDetector(
-                      onTap: () { _searchController.clear(); },
-                      child: Icon(Icons.close, color: onSurfaceColor.withOpacity(0.5), size: 18),
-                    )
+                            onTap: () {
+                              _searchController.clear();
+                            },
+                            child: Icon(
+                              Icons.close,
+                              color: onSurfaceColor.withOpacity(0.5),
+                              size: 18,
+                            ),
+                          )
                         : null,
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -300,11 +340,20 @@ class _NotesScreenState extends State<NotesScreen> {
                 valueListenable: _filteredNotesNotifier,
                 builder: (context, notes, _) {
                   if (notes.isEmpty) {
-                    return Center(child: Text("No notes found.", style: theme.textTheme.bodyMedium?.copyWith(color: onSurfaceColor.withOpacity(0.4))));
+                    return Center(
+                      child: Text(
+                        "No notes found.",
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: onSurfaceColor.withOpacity(0.4),
+                        ),
+                      ),
+                    );
                   }
 
                   // ✅ LOGIC: Only allow dragging if Custom Sort + No Search
-                  final canReorder = _currentSort == NoteSortOption.custom && _searchQuery.isEmpty;
+                  final canReorder =
+                      _currentSort == NoteSortOption.custom &&
+                      _searchQuery.isEmpty;
 
                   if (canReorder) {
                     // 1. REORDERABLE LIST (For Drag & Drop)
@@ -315,7 +364,16 @@ class _NotesScreenState extends State<NotesScreen> {
                       itemCount: notes.length,
                       onReorder: _onReorder,
                       proxyDecorator: (child, index, animation) =>
-                          AnimatedBuilder(animation: animation, builder: (_, __) => Transform.scale(scale: 1.05, child: Material(color: Colors.transparent, child: child))),
+                          AnimatedBuilder(
+                            animation: animation,
+                            builder: (_, __) => Transform.scale(
+                              scale: 1.05,
+                              child: Material(
+                                color: Colors.transparent,
+                                child: child,
+                              ),
+                            ),
+                          ),
                       itemBuilder: (context, index) {
                         final note = notes[index];
                         return NoteCard(
@@ -328,7 +386,10 @@ class _NotesScreenState extends State<NotesScreen> {
                           onCopy: () => _copyNote(note),
                           onShare: () => _shareNote(note),
                           onDelete: () => _confirmDeleteNote(note),
-                          onColorChanged: (c) { note.colorValue = c.value; note.save(); },
+                          onColorChanged: (c) {
+                            note.colorValue = c.value;
+                            note.save();
+                          },
                         );
                       },
                     );
@@ -348,11 +409,17 @@ class _NotesScreenState extends State<NotesScreen> {
                             isSelected: _selectedNoteIds.contains(note.id),
                             onTap: () => _openNoteEditor(note),
                             // ✅ Restore Selection Mode on long press when NOT reordering
-                            onLongPress: () => setState(() { _isSelectionMode = true; _selectedNoteIds.add(note.id); }),
+                            onLongPress: () => setState(() {
+                              _isSelectionMode = true;
+                              _selectedNoteIds.add(note.id);
+                            }),
                             onCopy: () => _copyNote(note),
                             onShare: () => _shareNote(note),
                             onDelete: () => _confirmDeleteNote(note),
-                            onColorChanged: (c) { note.colorValue = c.value; note.save(); },
+                            onColorChanged: (c) {
+                              note.colorValue = c.value;
+                              note.save();
+                            },
                           ),
                         );
                       },
@@ -377,10 +444,16 @@ class _NotesScreenState extends State<NotesScreen> {
       child: Row(
         children: [
           IconButton(
-            icon: Icon(_isSelectionMode ? Icons.close : Icons.arrow_back_ios_new, color: theme.iconTheme.color),
+            icon: Icon(
+              _isSelectionMode ? Icons.close : Icons.arrow_back_ios_new,
+              color: theme.iconTheme.color,
+            ),
             onPressed: () {
               if (_isSelectionMode) {
-                setState(() { _isSelectionMode = false; _selectedNoteIds.clear(); });
+                setState(() {
+                  _isSelectionMode = false;
+                  _selectedNoteIds.clear();
+                });
               } else {
                 context.pop();
               }
@@ -388,30 +461,68 @@ class _NotesScreenState extends State<NotesScreen> {
           ),
           Expanded(
             child: _isSelectionMode
-                ? Center(child: Text('${_selectedNoteIds.length} Selected', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)))
+                ? Center(
+                    child: Text(
+                      '${_selectedNoteIds.length} Selected',
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
                 : Row(
-              children: [
-                Hero(tag: 'notes_icon', child: Icon(Icons.note_alt_outlined, size: 28, color: primaryColor)),
-                const SizedBox(width: 10),
-                Hero(tag: 'notes_title', child: Material(type: MaterialType.transparency, child: Text("Notes", style: theme.textTheme.titleLarge?.copyWith(fontSize: 24, fontWeight: FontWeight.bold)))),
-              ],
-            ),
+                    children: [
+                      Hero(
+                        tag: 'notes_icon',
+                        child: Icon(
+                          Icons.note_alt_outlined,
+                          size: 28,
+                          color: primaryColor,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Hero(
+                        tag: 'notes_title',
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: Text(
+                            "Notes",
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
           ),
           if (_isSelectionMode) ...[
-            IconButton(icon: Icon(Icons.select_all, color: onSurfaceColor), onPressed: _selectAll),
-            IconButton(icon: const Icon(Icons.delete, color: Colors.redAccent), onPressed: _deleteSelected),
+            IconButton(
+              icon: Icon(Icons.select_all, color: onSurfaceColor),
+              onPressed: _selectAll,
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete, color: Colors.redAccent),
+              onPressed: _deleteSelected,
+            ),
           ] else ...[
             IconButton(
-                icon: Icon(Icons.check_circle_outline, color: onSurfaceColor.withOpacity(0.6)),
-                onPressed: () => setState(() => _isSelectionMode = true)
+              icon: Icon(
+                Icons.check_circle_outline,
+                color: onSurfaceColor.withOpacity(0.6),
+              ),
+              onPressed: () => setState(() => _isSelectionMode = true),
             ),
             IconButton(
-                icon: Icon(Icons.filter_list, color: onSurfaceColor),
-                onPressed: _showFilterMenu
+              icon: Icon(Icons.filter_list, color: onSurfaceColor),
+              onPressed: _showFilterMenu,
             ),
             IconButton(
-                icon: const Icon(Icons.delete_sweep_outlined, color: Colors.redAccent),
-                onPressed: _deleteAll
+              icon: const Icon(
+                Icons.delete_sweep_outlined,
+                color: Colors.redAccent,
+              ),
+              onPressed: _deleteAll,
             ),
           ],
         ],
@@ -435,13 +546,30 @@ class _NotesScreenState extends State<NotesScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), borderRadius: BorderRadius.circular(2)))),
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
             const SizedBox(height: 20),
 
-            Text("Sort Notes", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+            Text(
+              "Sort Notes",
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 16),
 
-            _buildSortOption(NoteSortOption.custom, "Custom Order (Drag & Drop)"),
+            _buildSortOption(
+              NoteSortOption.custom,
+              "Custom Order (Drag & Drop)",
+            ),
             _buildSortOption(NoteSortOption.dateNewest, "Date: Newest First"),
             _buildSortOption(NoteSortOption.dateOldest, "Date: Oldest First"),
             _buildSortOption(NoteSortOption.titleAZ, "Title: A-Z"),
@@ -468,8 +596,12 @@ class _NotesScreenState extends State<NotesScreen> {
         child: Row(
           children: [
             Icon(
-              selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-              color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.5),
+              selected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_unchecked,
+              color: selected
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.onSurface.withOpacity(0.5),
             ),
             const SizedBox(width: 16),
             Text(
@@ -477,7 +609,9 @@ class _NotesScreenState extends State<NotesScreen> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-                color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+                color: selected
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.onSurface,
               ),
             ),
           ],

@@ -51,7 +51,11 @@ class CanvasFolderCard extends StatelessWidget {
                             bottomLeft: Radius.circular(32),
                           ),
                         ),
-                        child: Icon(Icons.folder_open_rounded, size: 22, color: folder.color),
+                        child: Icon(
+                          Icons.folder_open_rounded,
+                          size: 22,
+                          color: folder.color,
+                        ),
                       ),
                     ),
                   ),

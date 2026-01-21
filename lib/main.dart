@@ -4,6 +4,9 @@ import 'dart:convert';
 import 'package:copyclip/src/core/services/home_widget_service.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:copyclip/src/core/utils/widget_sync_service.dart';
+import 'package:copyclip/src/core/services/bg_worker.dart'; // ✅ NEW IMPORT
+import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart'; // ✅ NEW IMPORT
+import 'package:copyclip/src/core/services/notification_engine.dart'; // ✅ NEW IMPORT
 import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +102,9 @@ class AppInitializationState extends ChangeNotifier {
   }
 }
 
+// ✅ TEST HELPER
+bool isIntegrationTesting = false;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final initState = AppInitializationState();
@@ -175,6 +181,17 @@ Future<void> _initializeApp(AppInitializationState state) async {
       (e) => debugPrint('Background task error: $e'),
     );
 
+    // ✅ NEW: Initialize Background Worker for Todos
+    // We do this here (after Hive) so it can register tasks safely
+    await BackgroundWorker.initialize();
+    await BackgroundWorker.registerPeriodicTask();
+
+    // ✅ NEW: Healing check on startup
+    // Run once immediately to fix any missed schedules while app was dead
+    TodoSchedulerService().handleMissedRecurrences().catchError(
+      (e) => debugPrint("Healing error: $e"),
+    );
+
     state.complete();
     debugPrint("✅ App initialization complete");
   } catch (e, stackTrace) {
@@ -220,6 +237,15 @@ Future<void> _initializeBackgroundTasks() async {
     // ✅ NEW: Update all widgets with latest data on app start
     await _updateAllWidgets();
     debugPrint('✅ All widgets updated with latest data');
+
+    // ✅ NEW: Reschedule daily briefing to ensure it's set
+    await BackgroundWorker.rescheduleDailyBriefing();
+
+    // ✅ NEW: Welcome Notification for first-time users
+    // This is fired slightly after startup
+    Future.delayed(const Duration(seconds: 2), () {
+      NotificationEngine().checkAndTriggerWelcome();
+    });
   } catch (e) {
     debugPrint("❌ Widget data init error: $e");
   }
@@ -396,33 +422,68 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       if (payload == null || !mounted) return;
       debugPrint('🔔 Notification Tapped with Payload: $payload');
 
-      // Assume payload is Todo ID (since that's what we send)
-      // We need to wait for Hive to be ready if it's a cold start
+      // 1. Static Routes
+      if (payload == 'dashboard') {
+        router.go(AppRouter.root);
+        return;
+      } else if (payload == 'todos') {
+        router.push(AppRouter.todos);
+        return;
+      } else if (payload == 'journal') {
+        router.push(AppRouter.journal);
+        return;
+      } else if (payload == 'expenses') {
+        router.push(AppRouter.expenses);
+        return;
+      } else if (payload == 'clipboard') {
+        router.push(AppRouter.clipboard);
+        return;
+      }
+
+      // 2. Action Actions
+      if (payload.startsWith("ACTION:mark_done:")) {
+        final todoId = payload.replaceAll("ACTION:mark_done:", "");
+        if (!Hive.isBoxOpen('todos_box')) {
+          await LazyBoxLoader.getBox<Todo>('todos_box');
+        }
+        final box = Hive.box<Todo>('todos_box');
+        try {
+          Todo? todo = box.get(todoId);
+          if (todo == null) todo = box.values.firstWhere((t) => t.id == todoId);
+          if (todo != null) {
+            await TodoSchedulerService().completeTodo(todo);
+            debugPrint("✅ Todo marked done from notification: ${todo.task}");
+          }
+        } catch (e) {
+          debugPrint("❌ Failed to process action: $e");
+        }
+        return;
+      }
+
+      // 3. Dynamic Routes (IDs)
       if (!Hive.isBoxOpen('todos_box')) {
-        await Future.delayed(const Duration(milliseconds: 500)); // Slight delay
+        await Future.delayed(const Duration(milliseconds: 500));
         if (!Hive.isBoxOpen('todos_box')) {
           await LazyBoxLoader.getBox<Todo>('todos_box');
         }
       }
 
       final box = Hive.box<Todo>('todos_box');
-      // Find Todo by ID or Key
       Todo? todo;
       try {
-        // Try getting directly if the key is the string ID
         todo = box.get(payload);
-
-        // If not found, search by ID field (if keys are integers)
         if (todo == null) {
           todo = box.values.firstWhere((t) => t.id == payload);
         }
       } catch (e) {
-        debugPrint('⚠️ Could not find todo with ID: $payload');
+        // Payload might not be a Todo ID
       }
 
       if (todo != null && mounted) {
         debugPrint('🚀 Navigating to Todo Edit: ${todo.task}');
         router.push(AppRouter.todoEdit, extra: todo);
+      } else {
+        debugPrint('⚠️ Unknown payload or Todo not found: $payload');
       }
     });
   }
@@ -430,7 +491,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   void _startClipboardTimer() {
     _clipboardTimer?.cancel();
     _clipboardTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
-      if (mounted) _checkClipboard();
+      if (mounted && !isIntegrationTesting) _checkClipboard();
     });
     debugPrint('📋 Clipboard Check Timer Started');
   }

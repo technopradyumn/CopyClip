@@ -102,6 +102,24 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
     _editorFocusNode.addListener(_onFocusChanged);
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // ✅ Apply dynamic default color for new entries
+    if (widget.entry == null) {
+      // Use a simpler check: if _scaffoldColor is the static default, update it to dynamic default
+      if (_scaffoldColor == AppContentPalette.palette.first) {
+        final defaultColor = AppContentPalette.getDefaultColor(context);
+        if (_scaffoldColor != defaultColor) {
+          setState(() {
+            _scaffoldColor = defaultColor;
+            _initialColor = defaultColor;
+          });
+        }
+      }
+    }
+  }
+
   // ✅ Handle focus changes and ensure cursor visibility
   void _onFocusChanged() {
     if (_editorFocusNode.hasFocus) {

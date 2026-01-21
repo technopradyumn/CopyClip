@@ -64,6 +64,12 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       _scaffoldColor = widget.note!.colorValue != null
           ? Color(widget.note!.colorValue!)
           : AppContentPalette.palette.first;
+    } else {
+      // ✅ Dynamic Default Color for New Notes
+      // We must defer this slightly to access context, or use a post-frame callback
+      // However, since we need it in initState variables, we'll initialize with a safe default
+      // and update it in didChangeDependencies if it matches the fallback.
+      // Better approach: Use a flag to check if color was customized.
     }
 
     _initialTitle = _titleController.text;
@@ -74,6 +80,29 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
 
     // ✅ Add focus listener for keyboard handling
     _editorFocusNode.addListener(_onFocusChanged);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // ✅ Apply dynamic default color if creating a new note
+    if (widget.note == null &&
+        _scaffoldColor == AppContentPalette.palette.first) {
+      // Check if we haven't manually changed it yet (we use the palette first color as a "sentinel" for default)
+      // Actually, easier way: just set it here once.
+      // But didChangeDependencies runs multiple times.
+      // Let's just set it if it matches the hardcoded default we initialized with.
+      // A cleaner way for "New Note" logic:
+      if (_initialColor == AppContentPalette.palette.first) {
+        final defaultColor = AppContentPalette.getDefaultColor(context);
+        if (_scaffoldColor != defaultColor) {
+          setState(() {
+            _scaffoldColor = defaultColor;
+            _initialColor = defaultColor;
+          });
+        }
+      }
+    }
   }
 
   // ✅ Handle focus changes and ensure cursor visibility

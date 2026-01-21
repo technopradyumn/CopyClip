@@ -30,7 +30,8 @@ class NoteCard extends StatelessWidget {
   Map<String, dynamic> _parseContent(String jsonSource) {
     if (jsonSource.isEmpty) return {"text": "No content", "imageUrl": null};
     try {
-      if (!jsonSource.startsWith('[')) return {"text": jsonSource, "imageUrl": null};
+      if (!jsonSource.startsWith('['))
+        return {"text": jsonSource, "imageUrl": null};
       final List<dynamic> delta = jsonDecode(jsonSource);
       String plainText = "";
       String? firstImageUrl;
@@ -64,18 +65,23 @@ class NoteCard extends StatelessWidget {
         ? AppContentPalette.getColorFromValue(note.colorValue!)
         : AppContentPalette.palette[0];
 
-    final Color contentColor = AppContentPalette.getContrastColor(noteThemeColor);
+    final Color contentColor = AppContentPalette.getContrastColor(
+      noteThemeColor,
+    );
 
     // ✅ OPTIMIZATION: High-performance Decoration (No Blur)
     final decoration = BoxDecoration(
-      color: noteThemeColor.withOpacity(isSelected ? 0.6 : 0.65), // Direct opacity
+      color: noteThemeColor.withOpacity(
+        isSelected ? 0.6 : 0.65,
+      ), // Direct opacity
       borderRadius: BorderRadius.circular(24),
-      border: Border.all(
-          color: Colors.black.withOpacity(0.2),
-          width: 1.5
-      ),
+      border: Border.all(color: Colors.black.withOpacity(0.2), width: 1.5),
       boxShadow: [
-        BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))
+        BoxShadow(
+          color: Colors.black.withOpacity(0.05),
+          blurRadius: 10,
+          offset: const Offset(0, 4),
+        ),
       ],
     );
 
@@ -86,7 +92,9 @@ class NoteCard extends StatelessWidget {
         tag: 'note_background_${note.id}',
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          transform: isSelected ? Matrix4.identity().scaled(0.98) : Matrix4.identity(),
+          transform: isSelected
+              ? Matrix4.identity().scaled(0.98)
+              : Matrix4.identity(),
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.all(16),
           decoration: decoration, // Using the fast decoration
@@ -110,9 +118,13 @@ class NoteCard extends StatelessWidget {
                     ),
                   ),
                   Icon(
-                    isSelected ? Icons.check_circle : Icons.radio_button_unchecked,
+                    isSelected
+                        ? Icons.check_circle
+                        : Icons.radio_button_unchecked,
                     size: 20,
-                    color: isSelected ? theme.colorScheme.primary : contentColor.withOpacity(0.3),
+                    color: isSelected
+                        ? theme.colorScheme.primary
+                        : contentColor.withOpacity(0.3),
                   ),
                 ],
               ),
@@ -123,10 +135,16 @@ class NoteCard extends StatelessWidget {
                   type: MaterialType.transparency,
                   child: Row(
                     children: [
-                      Icon(Icons.access_time, size: 12, color: contentColor.withOpacity(0.5)),
+                      Icon(
+                        Icons.access_time,
+                        size: 12,
+                        color: contentColor.withOpacity(0.5),
+                      ),
                       const SizedBox(width: 4),
                       Text(
-                        DateFormat('MMM dd, yyyy  •  hh:mm a').format(note.updatedAt),
+                        DateFormat(
+                          'MMM dd, yyyy  •  hh:mm a',
+                        ).format(note.updatedAt),
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: contentColor.withOpacity(0.6),
                           fontSize: 10,
@@ -177,9 +195,17 @@ class NoteCard extends StatelessWidget {
                     ignoring: isSelected,
                     child: Row(
                       children: [
-                        _smallActionBtn(Icons.copy_rounded, onCopy, contentColor),
+                        _smallActionBtn(
+                          Icons.copy_rounded,
+                          onCopy,
+                          contentColor,
+                        ),
                         _smallActionBtn(Icons.share, onShare, contentColor),
-                        _smallActionBtn(Icons.delete_outline_rounded, onDelete, Colors.redAccent),
+                        _smallActionBtn(
+                          Icons.delete_outline_rounded,
+                          onDelete,
+                          Colors.redAccent,
+                        ),
                       ],
                     ),
                   ),
@@ -205,7 +231,10 @@ class _QuickColorPicker extends StatelessWidget {
   final Function(Color) onColorSelected;
   final Color currentColor;
 
-  const _QuickColorPicker({required this.onColorSelected, required this.currentColor});
+  const _QuickColorPicker({
+    required this.onColorSelected,
+    required this.currentColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -226,11 +255,19 @@ class _QuickColorPicker extends StatelessWidget {
               color: color,
               shape: BoxShape.circle,
               border: Border.all(
-                color: isSelected ? contrastColorForDot : color.withOpacity(0.5),
+                color: isSelected
+                    ? contrastColorForDot
+                    : color.withOpacity(0.5),
                 width: isSelected ? 2 : 1,
               ),
             ),
-            child: isSelected ? Icon(Icons.check, size: 14, color: AppContentPalette.getContrastColor(color)) : null,
+            child: isSelected
+                ? Icon(
+                    Icons.check,
+                    size: 14,
+                    color: AppContentPalette.getContrastColor(color),
+                  )
+                : null,
           ),
         );
       }).toList(),

@@ -268,7 +268,11 @@ class _GlassContainer extends StatelessWidget {
             gradient: gradient,
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
-              color: borderColor ?? Colors.white.withOpacity(0.1),
+              color:
+                  borderColor ??
+                  Theme.of(
+                    context,
+                  ).colorScheme.outline.withOpacity(0.2), // Minimal & Visible
               width: 1,
             ),
           ),

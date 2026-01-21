@@ -40,10 +40,14 @@ class CanvasSketchCard extends StatelessWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: note.backgroundColor,
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(24),
+                      ),
                     ),
                     child: ClipRRect(
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(24),
+                      ),
                       child: CustomPaint(
                         painter: DrawingPreviewPainter(firstPage.strokes),
                       ),
@@ -54,7 +58,10 @@ class CanvasSketchCard extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -73,11 +80,17 @@ class CanvasSketchCard extends StatelessWidget {
                             Text(
                               DateFormat('MMM d').format(note.lastModified),
                               style: theme.textTheme.labelSmall?.copyWith(
-                                color: theme.colorScheme.onSurface.withOpacity(0.4),
+                                color: theme.colorScheme.onSurface.withOpacity(
+                                  0.4,
+                                ),
                               ),
                             ),
                             if (note.isFavorite)
-                              const Icon(Icons.star_rounded, size: 14, color: Colors.amberAccent),
+                              const Icon(
+                                Icons.star_rounded,
+                                size: 14,
+                                color: Colors.amberAccent,
+                              ),
                           ],
                         ),
                       ],
@@ -114,9 +127,13 @@ class DrawingPreviewPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (strokes.isEmpty) return;
-    final paint = Paint()..strokeCap = StrokeCap.round..strokeJoin = StrokeJoin.round;
+    final paint = Paint()
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
     for (var stroke in strokes.take(15)) {
-      paint..color = Color(stroke.color)..strokeWidth = stroke.strokeWidth * 0.6;
+      paint
+        ..color = Color(stroke.color)
+        ..strokeWidth = stroke.strokeWidth * 0.6;
       final path = Path();
       for (int i = 0; i < stroke.points.length - 2; i += 2) {
         if (i == 0) path.moveTo(stroke.points[i], stroke.points[i + 1]);
@@ -125,6 +142,7 @@ class DrawingPreviewPainter extends CustomPainter {
       canvas.drawPath(path, paint);
     }
   }
+
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }

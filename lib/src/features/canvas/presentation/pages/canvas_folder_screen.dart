@@ -19,7 +19,8 @@ class CanvasFolderScreen extends StatefulWidget {
   State<CanvasFolderScreen> createState() => _CanvasFolderScreenState();
 }
 
-class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTickerProviderStateMixin {
+class _CanvasFolderScreenState extends State<CanvasFolderScreen>
+    with SingleTickerProviderStateMixin {
   late CanvasFolder _folder;
   late AnimationController _animationController;
 
@@ -39,7 +40,8 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
   void initState() {
     super.initState();
     // Safely get folder, fallback if deleted
-    _folder = CanvasDatabase().getFolder(widget.folderId) ??
+    _folder =
+        CanvasDatabase().getFolder(widget.folderId) ??
         CanvasFolder(id: 'temp', name: 'Unknown', color: Colors.grey);
 
     _animationController = AnimationController(
@@ -95,9 +97,14 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text("Delete Sketches?"),
-        content: Text("Delete ${_selectedNoteIds.length} sketches? This cannot be undone."),
+        content: Text(
+          "Delete ${_selectedNoteIds.length} sketches? This cannot be undone.",
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("Cancel")),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text("Cancel"),
+          ),
           TextButton(
             onPressed: () {
               for (var id in _selectedNoteIds) {
@@ -150,7 +157,9 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
             const SizedBox(height: 20),
             Text(
               "Sort Sketches",
-              style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 16),
             _buildSortOption(FolderSortOption.dateNewest, "Newest First"),
@@ -178,8 +187,12 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
         child: Row(
           children: [
             Icon(
-              selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-              color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.5),
+              selected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_unchecked,
+              color: selected
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.onSurface.withOpacity(0.5),
             ),
             const SizedBox(width: 16),
             Text(
@@ -187,7 +200,9 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-                color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+                color: selected
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.onSurface,
               ),
             ),
           ],
@@ -233,23 +248,23 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
         floatingActionButton: (_isSearching || _isSelectionMode)
             ? null
             : ScaleTransition(
-          scale: CurvedAnimation(
-            parent: _animationController,
-            curve: const Interval(0.6, 1.0, curve: Curves.elasticOut),
-          ),
-          child: FloatingActionButton.extended(
-            onPressed: () {
-              context.push(
-                AppRouter.canvasEdit,
-                extra: {'noteId': null, 'folderId': widget.folderId},
-              );
-            },
-            icon: const Icon(Icons.add),
-            label: const Text('New Sketch'),
-            backgroundColor: _folder.color,
-            foregroundColor: Colors.white,
-          ),
-        ),
+                scale: CurvedAnimation(
+                  parent: _animationController,
+                  curve: const Interval(0.6, 1.0, curve: Curves.elasticOut),
+                ),
+                child: FloatingActionButton.extended(
+                  onPressed: () {
+                    context.push(
+                      AppRouter.canvasEdit,
+                      extra: {'noteId': null, 'folderId': widget.folderId},
+                    );
+                  },
+                  icon: const Icon(Icons.add),
+                  label: const Text('New Sketch'),
+                  backgroundColor: _folder.color,
+                  foregroundColor: Colors.white,
+                ),
+              ),
         body: SafeArea(
           child: Column(
             children: [
@@ -257,26 +272,44 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
 
               Expanded(
                 child: ValueListenableBuilder<Box<CanvasNote>>(
-                  valueListenable: Hive.box<CanvasNote>(CanvasDatabase.notesBoxName).listenable(),
+                  valueListenable: Hive.box<CanvasNote>(
+                    CanvasDatabase.notesBoxName,
+                  ).listenable(),
                   builder: (context, box, _) {
                     // 1. Get Data
-                    List<CanvasNote> notes = CanvasDatabase().getNotesByFolder(widget.folderId);
+                    List<CanvasNote> notes = CanvasDatabase().getNotesByFolder(
+                      widget.folderId,
+                    );
 
                     // 2. Filter (Search)
                     if (_isSearching && _searchController.text.isNotEmpty) {
                       final query = _searchController.text.toLowerCase();
-                      notes = notes.where((n) => n.title.toLowerCase().contains(query)).toList();
+                      notes = notes
+                          .where((n) => n.title.toLowerCase().contains(query))
+                          .toList();
                     }
 
                     // 3. Sort
                     if (_currentSort == FolderSortOption.dateNewest) {
-                      notes.sort((a, b) => b.lastModified.compareTo(a.lastModified));
+                      notes.sort(
+                        (a, b) => b.lastModified.compareTo(a.lastModified),
+                      );
                     } else if (_currentSort == FolderSortOption.dateOldest) {
-                      notes.sort((a, b) => a.lastModified.compareTo(b.lastModified));
+                      notes.sort(
+                        (a, b) => a.lastModified.compareTo(b.lastModified),
+                      );
                     } else if (_currentSort == FolderSortOption.nameAZ) {
-                      notes.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+                      notes.sort(
+                        (a, b) => a.title.toLowerCase().compareTo(
+                          b.title.toLowerCase(),
+                        ),
+                      );
                     } else if (_currentSort == FolderSortOption.nameZA) {
-                      notes.sort((a, b) => b.title.toLowerCase().compareTo(a.title.toLowerCase()));
+                      notes.sort(
+                        (a, b) => b.title.toLowerCase().compareTo(
+                          a.title.toLowerCase(),
+                        ),
+                      );
                     }
 
                     // 4. Empty State
@@ -286,13 +319,17 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              _isSearching ? Icons.search_off : Icons.note_outlined,
+                              _isSearching
+                                  ? Icons.search_off
+                                  : Icons.note_outlined,
                               size: 64,
                               color: colorScheme.onSurface.withOpacity(0.2),
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              _isSearching ? 'No sketches found' : 'No sketches yet',
+                              _isSearching
+                                  ? 'No sketches found'
+                                  : 'No sketches yet',
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 color: colorScheme.onSurface.withOpacity(0.5),
                               ),
@@ -306,12 +343,13 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
                     return GridView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),
                       padding: const EdgeInsets.all(16),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.75,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.75,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                          ),
                       itemCount: notes.length,
                       itemBuilder: (context, index) {
                         final note = notes[index];
@@ -328,7 +366,10 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
                             if (_isSelectionMode) {
                               _toggleSelection(note.id);
                             } else {
-                              context.push(AppRouter.canvasEdit, extra: {'noteId': note.id});
+                              context.push(
+                                AppRouter.canvasEdit,
+                                extra: {'noteId': note.id},
+                              );
                             }
                           },
                         );
@@ -359,7 +400,9 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
               child: Center(
                 child: Text(
                   "${_selectedNoteIds.length} Selected",
-                  style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -382,10 +425,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
       child: Row(
         children: [
           IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new,
-              color: theme.iconTheme.color,
-            ),
+            icon: Icon(Icons.arrow_back_ios_new, color: theme.iconTheme.color),
             onPressed: () {
               if (_isSearching) {
                 _toggleSearch();
@@ -399,86 +439,96 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
           Expanded(
             child: _isSearching
                 ? Hero(
-              tag: 'search_bar_folder',
-              child: Material(
-                color: Colors.transparent,
-                child: Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.surface.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: theme.colorScheme.outline.withOpacity(0.1),
-                    ),
-                  ),
-                  child: TextField(
-                    controller: _searchController,
-                    focusNode: _searchFocusNode,
-                    decoration: InputDecoration(
-                      hintText: "Search in ${_folder.name}...",
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.clear, size: 20),
-                        onPressed: () => _searchController.clear(),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            )
-                : Row(
-              children: [
-                Hero(
-                  tag: 'folder_${widget.folderId}',
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: _folder.color.withOpacity(0.2),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.folder_rounded,
-                      color: _folder.color,
-                      size: 24,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Hero(
-                        tag: 'folder_name_${widget.folderId}',
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: Text(
-                            _folder.name,
-                            style: theme.textTheme.bodyLarge
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                    tag: 'search_bar_folder',
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Container(
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.surface.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: theme.colorScheme.outline.withOpacity(0.1),
+                          ),
+                        ),
+                        child: TextField(
+                          controller: _searchController,
+                          focusNode: _searchFocusNode,
+                          decoration: InputDecoration(
+                            hintText: "Search in ${_folder.name}...",
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 10,
+                            ),
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.clear, size: 20),
+                              onPressed: () => _searchController.clear(),
+                            ),
                           ),
                         ),
                       ),
-                      ValueListenableBuilder(
-                        valueListenable: Hive.box<CanvasNote>(CanvasDatabase.notesBoxName).listenable(),
-                        builder: (context, _, __) {
-                          final count = CanvasDatabase().getNoteCount(widget.folderId);
-                          return Text(
-                            '$count sketches',
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: colorScheme.onSurface.withOpacity(0.5),
+                    ),
+                  )
+                : Row(
+                    children: [
+                      Hero(
+                        tag: 'folder_${widget.folderId}',
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: _folder.color.withOpacity(0.2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.folder_rounded,
+                            color: _folder.color,
+                            size: 24,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Hero(
+                              tag: 'folder_name_${widget.folderId}',
+                              child: Material(
+                                type: MaterialType.transparency,
+                                child: Text(
+                                  _folder.name,
+                                  style: theme.textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
                             ),
-                          );
-                        },
+                            ValueListenableBuilder(
+                              valueListenable: Hive.box<CanvasNote>(
+                                CanvasDatabase.notesBoxName,
+                              ).listenable(),
+                              builder: (context, _, __) {
+                                final count = CanvasDatabase().getNoteCount(
+                                  widget.folderId,
+                                );
+                                return Text(
+                                  '$count sketches',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: colorScheme.onSurface.withOpacity(
+                                      0.5,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
           ),
 
           if (!_isSearching)
@@ -495,8 +545,14 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
                 PopupMenuButton(
                   itemBuilder: (context) => [
                     const PopupMenuItem(value: 'rename', child: Text('Rename')),
-                    const PopupMenuItem(value: 'color', child: Text('Change Color')),
-                    const PopupMenuItem(value: 'delete', child: Text('Delete Folder')),
+                    const PopupMenuItem(
+                      value: 'color',
+                      child: Text('Change Color'),
+                    ),
+                    const PopupMenuItem(
+                      value: 'delete',
+                      child: Text('Delete Folder'),
+                    ),
                   ],
                   onSelected: (value) {
                     switch (value) {
@@ -533,7 +589,10 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
           autofocus: true,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
           TextButton(
             onPressed: () {
               if (controller.text.isNotEmpty) {
@@ -551,9 +610,15 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
 
   void _showColorPicker(ThemeData theme) {
     final colors = [
-      const Color(0xFF64B5F6), const Color(0xFF81C784), const Color(0xFFFFD54F),
-      const Color(0xFFFF8A65), const Color(0xFFBA68C8), const Color(0xFF4DB6AC),
-      const Color(0xFFFFB300), const Color(0xFFEF5350), const Color(0xFF9575CD),
+      const Color(0xFF64B5F6),
+      const Color(0xFF81C784),
+      const Color(0xFFFFD54F),
+      const Color(0xFFFF8A65),
+      const Color(0xFFBA68C8),
+      const Color(0xFF4DB6AC),
+      const Color(0xFFFFB300),
+      const Color(0xFFEF5350),
+      const Color(0xFF9575CD),
       const Color(0xFF4FC3F7),
     ];
 
@@ -578,22 +643,26 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
                 crossAxisCount: 5,
                 mainAxisSpacing: 12,
                 crossAxisSpacing: 12,
-                children: colors.map((color) => GestureDetector(
-                  onTap: () {
-                    setState(() => _folder.color = color);
-                    CanvasDatabase().saveFolder(_folder);
-                    Navigator.pop(ctx);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: color,
-                      shape: BoxShape.circle,
-                      border: _folder.color.value == color.value
-                          ? Border.all(width: 3, color: Colors.white)
-                          : null,
-                    ),
-                  ),
-                )).toList(),
+                children: colors
+                    .map(
+                      (color) => GestureDetector(
+                        onTap: () {
+                          setState(() => _folder.color = color);
+                          CanvasDatabase().saveFolder(_folder);
+                          Navigator.pop(ctx);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: color,
+                            shape: BoxShape.circle,
+                            border: _folder.color.value == color.value
+                                ? Border.all(width: 3, color: Colors.white)
+                                : null,
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
             ],
           ),
@@ -607,9 +676,14 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen> with SingleTick
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Delete Folder?'),
-        content: const Text('All sketches in this folder will be deleted permanently.'),
+        content: const Text(
+          'All sketches in this folder will be deleted permanently.',
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
           TextButton(
             onPressed: () {
               CanvasDatabase().deleteFolder(widget.folderId);

@@ -1138,7 +1138,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                   decoration: BoxDecoration(
                     color: theme.colorScheme.surface.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.white.withOpacity(0.1)),
+                    border: Border.all(
+                      color: theme.colorScheme.outline.withOpacity(0.2),
+                    ),
                   ),
                   child: Column(
                     children: [
@@ -1297,7 +1299,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                           color: theme.colorScheme.surface.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.1),
+                            color: theme.colorScheme.outline.withOpacity(0.2),
                           ),
                         ),
                         child: Column(
@@ -1470,7 +1472,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       decoration: BoxDecoration(
         color: theme.colorScheme.surface.withOpacity(0.5),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
+        border: Border.all(color: theme.colorScheme.outline.withOpacity(0.2)),
       ),
       child: Stack(
         children: [
@@ -1571,7 +1573,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       decoration: BoxDecoration(
         color: theme.colorScheme.surface.withOpacity(0.5),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
+        border: Border.all(color: theme.colorScheme.outline.withOpacity(0.2)),
       ),
       child: BarChart(
         BarChartData(
@@ -1601,6 +1603,15 @@ class _ExpensesScreenState extends State<ExpensesScreen>
           titlesData: FlTitlesData(
             show: true,
             bottomTitles: AxisTitles(
+              axisNameWidget: Text(
+                "Time Frame",
+                style: TextStyle(
+                  fontSize: 10,
+                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              axisNameSize: 20,
               sideTitles: SideTitles(
                 showTitles: true,
                 reservedSize: 30,
@@ -1645,6 +1656,15 @@ class _ExpensesScreenState extends State<ExpensesScreen>
               ),
             ),
             leftTitles: AxisTitles(
+              axisNameWidget: Text(
+                "Amount ($_selectedCurrency)",
+                style: TextStyle(
+                  fontSize: 10,
+                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              axisNameSize: 20,
               sideTitles: SideTitles(
                 showTitles: true,
                 reservedSize: 40,
@@ -1804,7 +1824,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       decoration: BoxDecoration(
         color: theme.colorScheme.surface.withOpacity(0.5),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
+        border: Border.all(color: theme.colorScheme.outline.withOpacity(0.2)),
       ),
       child: LineChart(
         LineChartData(
@@ -1825,6 +1845,15 @@ class _ExpensesScreenState extends State<ExpensesScreen>
           titlesData: FlTitlesData(
             show: true,
             bottomTitles: AxisTitles(
+              axisNameWidget: Text(
+                "Time",
+                style: TextStyle(
+                  fontSize: 10,
+                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              axisNameSize: 20,
               sideTitles: SideTitles(
                 showTitles: true,
                 reservedSize: 30,
@@ -1843,6 +1872,15 @@ class _ExpensesScreenState extends State<ExpensesScreen>
               ),
             ),
             leftTitles: AxisTitles(
+              axisNameWidget: Text(
+                "Balance ($_selectedCurrency)",
+                style: TextStyle(
+                  fontSize: 10,
+                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              axisNameSize: 20,
               sideTitles: SideTitles(
                 showTitles: true,
                 reservedSize: 40,

@@ -9,6 +9,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:copyclip/src/core/utils/widget_sync_service.dart';
 
+import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart'; // ✅ NEW
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart'; // ✅ NEW
+
 import '../../../../core/router/app_router.dart';
 import '../../../../core/widgets/glass_dialog.dart';
 import '../widgets/todo_card.dart';
@@ -77,6 +80,7 @@ class _TodosScreenState extends State<TodosScreen>
 
   // Animation
   late AnimationController _entryAnimationController;
+  bool _enableAnimations = true; // ✅ Control list entry animations
 
   // ...
 
@@ -113,17 +117,38 @@ class _TodosScreenState extends State<TodosScreen>
                 .map((t) => t.sortIndex)
                 .reduce((curr, next) => curr > next ? curr : next);
 
+      // ✅ DEFAULT: Notifications ON for Quick Add
+      // Set to Today at 9 PM (or next hour if late)
+      DateTime defaultDate = DateTime(now.year, now.month, now.day, 21, 0);
+      if (now.hour >= 21) {
+        defaultDate = now.add(const Duration(hours: 1));
+      } else if (defaultDate.isBefore(now)) {
+        defaultDate = now.add(const Duration(minutes: 30));
+      }
+
       final newTodo = Todo(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         task: trimmedText,
         category: category,
         sortIndex: maxIndex + 1,
         repeatInterval: 'daily',
+        // ✅ Default Params
+        hasReminder: true,
+        dueDate: defaultDate,
       );
 
       if (Hive.isBoxOpen('todos_box')) {
         await Hive.box<Todo>('todos_box').add(newTodo);
       }
+
+      // ✅ SCHEDULE NOTIFICATION
+      NotificationService().scheduleNotification(
+        id: newTodo.id.hashCode,
+        title: 'Task Reminder',
+        body: newTodo.task,
+        scheduledDate: defaultDate,
+        payload: newTodo.id,
+      );
 
       // Hive listener will trigger _refreshTodos(), so we don't need to call it manually
       // except maybe to request focus if lost?
@@ -156,6 +181,15 @@ class _TodosScreenState extends State<TodosScreen>
 
     // REMOVED: Focus listener was causing "Double Save" / "Ghost Task" race conditions.
     // We now rely on 'onSubmitted' (Enter key) which is cleaner for rapid entry.
+
+    // ✅ Disable animations after initial load to prevent re-animation on updates
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      if (mounted) {
+        setState(() {
+          _enableAnimations = false;
+        });
+      }
+    });
   }
 
   Future<void> _initData() async {
@@ -405,150 +439,33 @@ class _TodosScreenState extends State<TodosScreen>
     _refreshTodos();
   }
 
-  void _toggleTodoDone(Todo todo) {
+  Future<void> _toggleTodoDone(Todo todo) async {
     if (_isSelectionMode) return;
 
-    // --- REPEAT LOGIC: RESCHEDULE INSTEAD OF CLONE ---
-    // User Request: "do not delete the repeat task only auto update that tasks date"
-    // --- REPEAT LOGIC: OLD RESCHEDULE BLOCK REMOVED ---
-    // User Request: "show repeat task in complete also in todo screen" -> This means CLONE strategy.
-    // We fall through to the clone logic below.
+    // ✅ REFACTORED: Use Central Scheduler Service
+    final result = await TodoSchedulerService().completeTodo(todo);
 
-    final box = Hive.box<Todo>('todos_box');
-
-    // --- REPEAT LOGIC ---
-    if (!todo.isDone) {
-      // MARKING AS DONE
-      if (todo.repeatInterval != null) {
-        final DateTime baseDate = todo.dueDate ?? DateTime.now();
-        DateTime? nextDate;
-
-        switch (todo.repeatInterval) {
-          case 'daily':
-            nextDate = baseDate.add(const Duration(days: 1));
-            break;
-          case 'weekly':
-            nextDate = baseDate.add(const Duration(days: 7));
-            break;
-          case 'monthly':
-            nextDate = DateTime(
-              baseDate.year,
-              baseDate.month + 1,
-              baseDate.day,
-              baseDate.hour,
-              baseDate.minute,
-            );
-            break;
-          case 'yearly':
-            nextDate = DateTime(
-              baseDate.year + 1,
-              baseDate.month,
-              baseDate.day,
-              baseDate.hour,
-              baseDate.minute,
-            );
-            break;
-          case 'custom':
-            if (todo.repeatDays != null && todo.repeatDays!.isNotEmpty) {
-              DateTime current = baseDate;
-              for (int i = 1; i <= 7; i++) {
-                current = current.add(const Duration(days: 1));
-                if (todo.repeatDays!.contains(current.weekday)) {
-                  nextDate = current;
-                  break;
-                }
-              }
-            }
-            break;
-        }
-
-        if (nextDate != null) {
-          // Generate a fresh unique ID for the new task
-          final newId = DateTime.now().millisecondsSinceEpoch.toString();
-          final newTodo = Todo(
-            id: newId,
-            task: todo.task,
-            category: todo.category,
-            dueDate: nextDate,
-            hasReminder: todo.hasReminder,
-            isDone: false,
-            repeatInterval: todo.repeatInterval,
-            repeatDays: todo.repeatDays,
-            sortIndex: todo.sortIndex,
-          );
-
-          box.put(newId, newTodo);
-
-          // LINK: Store this new ID in the completed task to handle Undo
-          todo.nextInstanceId = newId;
-
-          if (newTodo.hasReminder && nextDate.isAfter(DateTime.now())) {
-            NotificationService().scheduleNotification(
-              id: newId.hashCode,
-              title: 'Task Due',
-              body: newTodo.task,
-              scheduledDate: nextDate,
-              payload: newTodo.id,
-            );
-          }
-
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  "Next task created for ${DateFormat('MMM d').format(nextDate)}",
-                ),
-                duration: const Duration(seconds: 2),
-                action: SnackBarAction(
-                  label: "UNDO",
-                  onPressed: () {
-                    // Quick Undo UI Action
-                    _toggleTodoDone(todo);
-                  },
-                ),
-              ),
-            );
-          }
-        }
-      }
-    } else {
-      // MARKING AS NOT DONE (UNDOING)
-      // Check if we spawned a future task and delete it
-      if (todo.nextInstanceId != null) {
-        if (box.containsKey(todo.nextInstanceId)) {
-          final futureTask = box.get(todo.nextInstanceId);
-          if (futureTask != null && !futureTask.isDone) {
-            // Safe to delete because it's the auto-generated one and unused
-            futureTask.delete();
-            NotificationService().cancelNotification(futureTask.id.hashCode);
-          }
-        }
-        todo.nextInstanceId = null; // Clear link
-      }
-    }
-
-    todo.isDone = !todo.isDone;
-    todo.save();
-
-    // Manage notification for THIS task
-    if (todo.hasReminder) {
-      if (todo.isDone) {
-        NotificationService().cancelNotification(todo.id.hashCode);
-      } else if (todo.dueDate != null &&
-          todo.dueDate!.isAfter(DateTime.now())) {
-        // Re-schedule if unchecked
-        NotificationService().scheduleNotification(
-          id: todo.id.hashCode,
-          title: 'Task Due',
-          body: todo.task,
-          scheduledDate: todo.dueDate!,
-          payload: todo.id,
-        );
-      }
+    // Feedback for Next Instance
+    if (result != null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Next task scheduled for ${DateFormat('MMM d').format(result.dueDate!)}",
+          ),
+          duration: const Duration(seconds: 2),
+          action: SnackBarAction(
+            label: "VIEW",
+            onPressed: () {
+              // Optional: Scroll to it or highlight it?
+              // For now just close snackbar
+            },
+          ),
+        ),
+      );
     }
 
     _refreshTodos();
-    WidgetSyncService.syncTodos(); // Sync Widget
+    WidgetSyncService.syncTodos();
   }
 
   void _cancelQuickAdd() {
@@ -786,23 +703,84 @@ class _TodosScreenState extends State<TodosScreen>
                                 ),
                               ),
                             ),
-                        itemBuilder: (context, index) =>
-                            _buildListItem(items[index], index, canReorder),
-                      );
-                    } else {
-                      // ✅ PERFORMANCE: Standard ListView for other modes
-                      return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-                        itemCount: items.length,
-                        cacheExtent: 1000,
                         itemBuilder: (context, index) {
-                          // RepaintBoundary caches item painting
-                          return RepaintBoundary(
-                            child: _buildListItem(items[index], index, false),
+                          final item = items[index];
+                          final Key key;
+                          if (item is HeaderItem) {
+                            key = ValueKey('header_${item.category}');
+                          } else if (item is QuickInputItem) {
+                            key = ValueKey('quick_input_${item.category}');
+                          } else if (item is QuickAddItem) {
+                            key = ValueKey('quick_add_${item.category}');
+                          } else if (item is DividerItem) {
+                            key = ValueKey('divider_$index');
+                          } else if (item is TodoItemWrapper) {
+                            key = ValueKey(item.todo.id);
+                          } else {
+                            key = ValueKey('unknown_$index');
+                          }
+
+                          // No animations in ReorderableListView to prevent issues
+                          return Container(
+                            key: key,
+                            child: _buildListItem(item, index, canReorder),
                           );
                         },
                       );
+                    } else {
+                      // ✅ PERFORMANCE: Standard ListView for other modes
+                      return _enableAnimations
+                          ? AnimationLimiter(
+                              child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                padding: const EdgeInsets.fromLTRB(
+                                  16,
+                                  8,
+                                  16,
+                                  100,
+                                ),
+                                itemCount: items.length,
+                                cacheExtent: 1000,
+                                itemBuilder: (context, index) {
+                                  return AnimationConfiguration.staggeredList(
+                                    position: index,
+                                    duration: const Duration(milliseconds: 375),
+                                    child: SlideAnimation(
+                                      verticalOffset: 50.0,
+                                      child: FadeInAnimation(
+                                        child: RepaintBoundary(
+                                          child: _buildListItem(
+                                            items[index],
+                                            index,
+                                            canReorder,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          : ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              padding: const EdgeInsets.fromLTRB(
+                                16,
+                                8,
+                                16,
+                                100,
+                              ),
+                              itemCount: items.length,
+                              cacheExtent: 1000,
+                              itemBuilder: (context, index) {
+                                return RepaintBoundary(
+                                  child: _buildListItem(
+                                    items[index],
+                                    index,
+                                    canReorder,
+                                  ),
+                                );
+                              },
+                            );
                     }
                   },
                 ),
