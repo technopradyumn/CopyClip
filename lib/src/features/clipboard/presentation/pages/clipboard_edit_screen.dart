@@ -18,11 +18,13 @@ import 'package:printing/printing.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
+import '../../../../core/const/constant.dart';
 import '../../../../core/widgets/glass_scaffold.dart';
 import '../../../../core/widgets/glass_dialog.dart';
 import '../../../../core/widgets/glass_rich_text_editor.dart';
 import '../../data/clipboard_model.dart';
 import '../../../../core/app_content_palette.dart';
+import '../../../../core/widgets/animated_top_bar_title.dart';
 import '../../../../core/utils/widget_sync_service.dart';
 import '../../../../features/premium/presentation/widgets/premium_lock_dialog.dart';
 import '../../../../features/premium/presentation/provider/premium_provider.dart';
@@ -44,12 +46,9 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
   final ScrollController _scrollController = ScrollController();
 
   DateTime _selectedDate = DateTime.now();
-  late DateTime _initialDate;
   late Box<ClipboardItem> _clipboardBox;
 
   Color _scaffoldColor = AppContentPalette.palette.first;
-  late Color _initialColor;
-  String _initialContentJson = "";
 
   @override
   void initState() {
@@ -63,8 +62,6 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
           : AppContentPalette.palette.first;
     }
 
-    _initialDate = _selectedDate;
-    _initialColor = _scaffoldColor;
     _initQuill();
 
     // ✅ Add listener to handle keyboard appearance
@@ -169,9 +166,6 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
     _quillController = QuillController(
       document: doc,
       selection: const TextSelection.collapsed(offset: 0),
-    );
-    _initialContentJson = jsonEncode(
-      _quillController.document.toDelta().toJson(),
     );
   }
 
@@ -278,9 +272,6 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
 
     _clipboardBox.put(id, newItem);
     WidgetSyncService.syncClipboard(); // Sync Widget
-    _initialContentJson = contentJson;
-    _initialDate = _selectedDate;
-    _initialColor = _scaffoldColor;
   }
 
   Future<List<pw.Widget>> _buildPdfWidgetsFromDelta(Delta delta) async {
@@ -396,61 +387,31 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        final currentJson = jsonEncode(
-          _quillController.document.toDelta().toJson(),
-        );
-        bool hasChanges =
-            currentJson != _initialContentJson ||
-            _selectedDate != _initialDate ||
-            _scaffoldColor.value != _initialColor.value;
-
-        if (!hasChanges) return true;
-
-        final result = await showDialog<String>(
-          context: context,
-          builder: (ctx) => GlassDialog(
-            title: "Unsaved Changes",
-            content: "Save your clip before leaving?",
-            confirmText: "Save",
-            cancelText: "Discard",
-            onConfirm: () => Navigator.pop(ctx, 'save'),
-            onCancel: () => Navigator.pop(ctx, 'discard'),
-          ),
-        );
-        if (result == 'save') {
-          _save();
-          return true;
-        }
-        return result == 'discard';
+        // Auto-save on back
+        _save();
+        return true;
       },
       child: GlassScaffold(
         showBackArrow: true,
         backgroundColor: _scaffoldColor,
-        title: widget.item == null ? 'New Clip' : 'Edit Clip',
+        centerTitle: false,
+        titleSpacing: 0,
+        title: AnimatedTopBarTitle(
+          title: widget.item == null ? 'New Clip' : 'Edit Clip',
+          icon: CupertinoIcons.doc_on_clipboard,
+          iconHeroTag: 'clipboard_icon',
+          titleHeroTag: 'clipboard_title',
+          color: contrastColor,
+        ),
         actions: [
-          GestureDetector(
-            onTap: _showColorPicker,
-            child: Container(
-              margin: const EdgeInsets.only(right: 8),
-              width: 26,
-              height: 26,
-              decoration: BoxDecoration(
-                color: _scaffoldColor,
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: contrastColor.withOpacity(0.4),
-                  width: 1.5,
-                ),
-              ),
-              child: Icon(
-                Icons.palette_outlined,
-                size: 14,
-                color: contrastColor.withOpacity(0.6),
-              ),
-            ),
+          IconButton(
+            icon: Icon(CupertinoIcons.paintbrush, color: contrastColor),
+            tooltip: 'Clip Color',
+            onPressed: _showColorPicker,
           ),
           IconButton(
-            icon: Icon(Icons.copy, size: 18, color: contrastColor),
+            icon: Icon(CupertinoIcons.doc_on_doc, color: contrastColor),
+            tooltip: 'Copy Content',
             onPressed: () {
               Clipboard.setData(
                 ClipboardData(text: _quillController.document.toPlainText()),
@@ -465,22 +426,66 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
             },
           ),
           PopupMenuButton<String>(
-            icon: Icon(Icons.ios_share, size: 20, color: contrastColor),
+            icon: Icon(CupertinoIcons.ellipsis_vertical, color: contrastColor),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+            ),
             onSelected: (val) {
-              if (val == 'pdf') {
-                final provider = Provider.of<PremiumProvider>(
-                  context,
-                  listen: false,
-                );
-                if (provider.isPremium) {
-                  _exportToPdf();
-                } else {
-                  PremiumLockDialog.show(
-                    context,
-                    featureName: 'PDF Export',
-                    onUnlockOnce: _exportToPdf,
+              switch (val) {
+                case 'copy':
+                  Clipboard.setData(
+                    ClipboardData(
+                      text: _quillController.document.toPlainText(),
+                    ),
                   );
-                }
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text("Copied plain text"),
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: contrastColor,
+                    ),
+                  );
+                  break;
+                case 'color':
+                  _showColorPicker();
+                  break;
+                case 'pdf':
+                  final provider = Provider.of<PremiumProvider>(
+                    context,
+                    listen: false,
+                  );
+                  if (provider.isPremium) {
+                    _exportToPdf();
+                  } else {
+                    PremiumLockDialog.show(
+                      context,
+                      featureName: 'PDF Export',
+                      onUnlockOnce: _exportToPdf,
+                    );
+                  }
+                  break;
+                case 'delete':
+                  if (widget.item != null) {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => GlassDialog(
+                        title: "Move to Bin?",
+                        content: "You can restore this clip later.",
+                        confirmText: "Move",
+                        isDestructive: true,
+                        onConfirm: () {
+                          Navigator.pop(ctx);
+                          widget.item!.isDeleted = true;
+                          widget.item!.deletedAt = DateTime.now();
+                          widget.item!.save();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    );
+                  } else {
+                    Navigator.pop(context);
+                  }
+                  break;
               }
             },
             itemBuilder: (ctx) {
@@ -489,29 +494,59 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                 listen: false,
               ).isPremium;
               return [
+                const PopupMenuItem(
+                  value: 'copy',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.doc_on_doc, size: 18),
+                      SizedBox(width: 12),
+                      Text("Copy Content"),
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'color',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.paintbrush, size: 18),
+                      SizedBox(width: 12),
+                      Text("Clip Color"),
+                    ],
+                  ),
+                ),
                 PopupMenuItem(
                   value: 'pdf',
                   child: Row(
                     children: [
+                      const Icon(CupertinoIcons.share, size: 18),
+                      const SizedBox(width: 12),
                       const Text("Export as PDF"),
                       if (!isPremium) ...[
-                        const SizedBox(width: 8),
-                        const Icon(Icons.lock, size: 14, color: Colors.amber),
+                        const Spacer(),
+                        const Icon(
+                          CupertinoIcons.lock_fill,
+                          size: 14,
+                          color: Colors.amber,
+                        ),
                       ],
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'delete',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.trash, size: 18, color: Colors.red),
+                      SizedBox(width: 12),
+                      Text("Delete", style: TextStyle(color: Colors.red)),
                     ],
                   ),
                 ),
               ];
             },
           ),
-          IconButton(
-            icon: Icon(Icons.check, color: contrastColor),
-            onPressed: () {
-              _save();
-              context.pop();
-            },
-          ),
         ],
+
         body: SafeArea(
           child: Hero(
             tag: heroTag,

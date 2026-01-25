@@ -143,6 +143,78 @@ class JournalPageRegistry {
       painterBuilder: (c) => BlueprintPagePainter(color: c),
       icon: Icons.architecture,
     ),
+    JournalPageDesign(
+      id: 'cornell',
+      name: 'Cornell',
+      painterBuilder: (c) => CornellPagePainter(color: c),
+      icon: Icons.note_alt_outlined,
+    ),
+    JournalPageDesign(
+      id: 'storyboard',
+      name: 'Storyboard',
+      painterBuilder: (c) => StoryboardPagePainter(color: c),
+      icon: Icons.crop_landscape,
+    ),
+    JournalPageDesign(
+      id: 'handwriting',
+      name: 'Handwriting',
+      painterBuilder: (c) => HandwritingPagePainter(color: c),
+      icon: Icons.text_fields,
+    ),
+    JournalPageDesign(
+      id: 'engineering',
+      name: 'Engineering',
+      painterBuilder: (c) => EngineeringGridPainter(color: c),
+      icon: Icons.grid_on,
+    ),
+    JournalPageDesign(
+      id: 'code_editor',
+      name: 'Code Editor',
+      painterBuilder: (c) => CodeEditorPainter(color: c),
+      icon: Icons.code,
+    ),
+    JournalPageDesign(
+      id: 'diamond',
+      name: 'Diamond',
+      painterBuilder: (c) => DiamondGridPainter(color: c),
+      icon: Icons.diamond_outlined,
+    ),
+    JournalPageDesign(
+      id: 'confetti',
+      name: 'Confetti',
+      painterBuilder: (c) => ConfettiPainter(color: c),
+      icon: Icons.celebration,
+    ),
+    JournalPageDesign(
+      id: 'bamboo',
+      name: 'Bamboo',
+      painterBuilder: (c) => BambooPainter(color: c),
+      icon: Icons.grass,
+    ),
+    JournalPageDesign(
+      id: 'cross_grid',
+      name: 'Cross Grid',
+      painterBuilder: (c) => CrossGridPainter(color: c),
+      icon: Icons.add,
+    ),
+    JournalPageDesign(
+      id: 'rainy_day',
+      name: 'Rainy Day',
+      painterBuilder: (c) => RainyDayPainter(color: c),
+      icon: Icons.umbrella,
+    ),
+    JournalPageDesign(
+      id: 'grand_staff',
+      name: 'Grand Staff',
+      painterBuilder: (c) => GrandStaffPainter(color: c),
+      icon: Icons.music_note_outlined,
+    ),
+    JournalPageDesign(
+      id: 'dotted_line',
+      name: 'Dotted Line',
+      painterBuilder: (c) => DottedLinePainter(color: c),
+      icon: Icons.more_horiz,
+    ),
   ];
 
   static JournalPageDesign getDesign(String? id) {

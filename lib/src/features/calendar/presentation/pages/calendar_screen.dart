@@ -7,6 +7,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/seamless_header.dart';
+import 'package:copyclip/src/core/const/constant.dart';
+import 'package:flutter/cupertino.dart';
 
 // Models
 import '../../../clipboard/data/clipboard_model.dart';
@@ -131,44 +134,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   Widget _buildHeader(ThemeData theme, Color onSurface) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Row(
-        children: [
-          IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: onSurface,
-              size: 20,
-            ),
-            onPressed: () => context.pop(),
-          ),
-          const Hero(
-            tag: 'calendar_icon',
-            child: Icon(
-              Icons.calendar_month_rounded,
-              size: 26,
-              color: Colors.orangeAccent,
-            ),
-          ),
-          const SizedBox(width: 10),
-          // ✅ ADDED: Hero animation for the title
-          Hero(
-            tag: 'calendar_title',
-            child: Material(
-              type: MaterialType
-                  .transparency, // Prevents visual glitches during animation
-              child: Text(
-                "Calendar",
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: onSurface,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+    return const SeamlessHeader(
+      title: "Calendar",
+      subtitle: "Upcoming Events",
+      icon: CupertinoIcons.calendar,
+      iconColor: Colors.orangeAccent,
+      heroTagPrefix: 'calendar',
     );
   }
 
@@ -181,8 +152,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
           color: theme.colorScheme.surface.withOpacity(
             0.6,
           ), // Fast transparency
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+          borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+          border: Border.all(
+            color: theme.dividerColor.withOpacity(0.1),
+            width: AppConstants.borderWidth,
+          ),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.05),
@@ -208,8 +182,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
               fontWeight: FontWeight.bold,
               color: onSurface,
             ),
-            leftChevronIcon: Icon(Icons.chevron_left, color: onSurface),
-            rightChevronIcon: Icon(Icons.chevron_right, color: onSurface),
+            leftChevronIcon: Icon(
+              CupertinoIcons.left_chevron,
+              color: onSurface,
+              size: 20,
+            ),
+            rightChevronIcon: Icon(
+              CupertinoIcons.right_chevron,
+              color: onSurface,
+              size: 20,
+            ),
           ),
           calendarStyle: CalendarStyle(
             // Selected Day
@@ -297,7 +279,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface.withOpacity(0.4),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
         border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
       ),
       child: Row(
@@ -349,7 +331,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface.withOpacity(0.4),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
         border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
       ),
       child: Row(
@@ -491,8 +473,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface.withOpacity(0.4),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+        borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+        border: Border.all(
+          color: theme.dividerColor.withOpacity(0.1),
+          width: AppConstants.borderWidth,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

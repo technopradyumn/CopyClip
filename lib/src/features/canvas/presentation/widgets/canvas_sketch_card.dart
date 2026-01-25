@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../../core/widgets/glass_container.dart';
+import 'package:flutter/cupertino.dart';
+import '../../../../core/const/constant.dart';
 import '../../data/canvas_model.dart';
 
 class CanvasSketchCard extends StatelessWidget {
@@ -27,10 +28,15 @@ class CanvasSketchCard extends StatelessWidget {
       onLongPress: onLongPress,
       child: Stack(
         children: [
-          GlassContainer(
-            color: theme.colorScheme.surface.withOpacity(0.1),
-            borderRadius: 24,
-            blur: 10,
+          Container(
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+              border: Border.all(
+                color: theme.colorScheme.onSurface.withOpacity(0.12),
+                width: AppConstants.borderWidth,
+              ),
+            ),
             child: Column(
               children: [
                 // Preview Area
@@ -40,13 +46,13 @@ class CanvasSketchCard extends StatelessWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: note.backgroundColor,
-                      borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(24),
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(AppConstants.cornerRadius - 1),
                       ),
                     ),
                     child: ClipRRect(
-                      borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(24),
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(AppConstants.cornerRadius - 1),
                       ),
                       child: CustomPaint(
                         painter: DrawingPreviewPainter(firstPage.strokes),
@@ -87,7 +93,7 @@ class CanvasSketchCard extends StatelessWidget {
                             ),
                             if (note.isFavorite)
                               const Icon(
-                                Icons.star_rounded,
+                                CupertinoIcons.star_fill,
                                 size: 14,
                                 color: Colors.amberAccent,
                               ),
@@ -112,7 +118,11 @@ class CanvasSketchCard extends StatelessWidget {
                   color: theme.colorScheme.primary,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.check, size: 16, color: Colors.white),
+                child: const Icon(
+                  CupertinoIcons.checkmark_alt,
+                  size: 16,
+                  color: Colors.white,
+                ),
               ),
             ),
         ],
@@ -124,23 +134,84 @@ class CanvasSketchCard extends StatelessWidget {
 class DrawingPreviewPainter extends CustomPainter {
   final List<DrawingStroke> strokes;
   DrawingPreviewPainter(this.strokes);
+
   @override
   void paint(Canvas canvas, Size size) {
     if (strokes.isEmpty) return;
+
+    // 1. Calculate Bounds
+    double minX = double.infinity;
+    double minY = double.infinity;
+    double maxX = double.negativeInfinity;
+    double maxY = double.negativeInfinity;
+
+    bool hasPoints = false;
+
+    for (var stroke in strokes) {
+      for (int i = 0; i < stroke.points.length; i += 2) {
+        final x = stroke.points[i];
+        final y = stroke.points[i + 1];
+        if (x < minX) minX = x;
+        if (y < minY) minY = y;
+        if (x > maxX) maxX = x;
+        if (y > maxY) maxY = y;
+        hasPoints = true;
+      }
+    }
+
+    if (!hasPoints) return;
+
+    // Add some padding to bounds
+    const padding = 20.0;
+    minX -= padding;
+    minY -= padding;
+    maxX += padding;
+    maxY += padding;
+
+    final drawingWidth = maxX - minX;
+    final drawingHeight = maxY - minY;
+
+    // 2. Calculate Scale to Fit
+    // Ensure we don't divide by zero
+    if (drawingWidth <= 0 || drawingHeight <= 0) return;
+
+    final scaleX = size.width / drawingWidth;
+    final scaleY = size.height / drawingHeight;
+    final scale = scaleX < scaleY ? scaleX : scaleY;
+
+    // 3. Center the drawing
+    final dx = (size.width - (drawingWidth * scale)) / 2;
+    final dy = (size.height - (drawingHeight * scale)) / 2;
+
+    canvas.save();
+    canvas.translate(dx, dy);
+    canvas.scale(scale);
+    canvas.translate(-minX, -minY);
+
     final paint = Paint()
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
-    for (var stroke in strokes.take(15)) {
+
+    // Draw ALL strokes, not just 15
+    for (var stroke in strokes) {
       paint
         ..color = Color(stroke.color)
-        ..strokeWidth = stroke.strokeWidth * 0.6;
+        ..strokeWidth = stroke.strokeWidth;
+
+      // Optimization: If stroke width is very small after scaling, ensure visibility?
+      // Actually standard painting is fine.
+
       final path = Path();
-      for (int i = 0; i < stroke.points.length - 2; i += 2) {
-        if (i == 0) path.moveTo(stroke.points[i], stroke.points[i + 1]);
-        path.lineTo(stroke.points[i + 2], stroke.points[i + 3]);
+      if (stroke.points.length >= 2) {
+        path.moveTo(stroke.points[0], stroke.points[1]);
+        for (int i = 2; i < stroke.points.length - 1; i += 2) {
+          path.lineTo(stroke.points[i], stroke.points[i + 1]);
+        }
       }
       canvas.drawPath(path, paint);
     }
+
+    canvas.restore();
   }
 
   @override

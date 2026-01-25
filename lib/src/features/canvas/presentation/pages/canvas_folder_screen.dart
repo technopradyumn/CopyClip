@@ -3,9 +3,13 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/widgets/glass_scaffold.dart';
+import '../../../../core/widgets/glass_dialog.dart';
+import '../../../../core/const/constant.dart';
+import 'package:flutter/cupertino.dart';
 import '../../data/canvas_adapter.dart';
 import '../../data/canvas_model.dart';
 import '../widgets/canvas_sketch_card.dart';
+import 'package:copyclip/src/core/widgets/seamless_header.dart';
 
 // Sorting options for the folder view
 enum FolderSortOption { dateNewest, dateOldest, nameAZ, nameZA }
@@ -95,27 +99,19 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
 
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text("Delete Sketches?"),
-        content: Text(
-          "Delete ${_selectedNoteIds.length} sketches? This cannot be undone.",
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text("Cancel"),
-          ),
-          TextButton(
-            onPressed: () {
-              for (var id in _selectedNoteIds) {
-                CanvasDatabase().deleteNote(id);
-              }
-              Navigator.pop(ctx);
-              _exitSelectionMode();
-            },
-            child: const Text("Delete", style: TextStyle(color: Colors.red)),
-          ),
-        ],
+      builder: (ctx) => GlassDialog(
+        title: "Delete Sketches?",
+        content:
+            "Delete ${_selectedNoteIds.length} sketches? This cannot be undone.",
+        confirmText: "Delete",
+        isDestructive: true,
+        onConfirm: () {
+          for (var id in _selectedNoteIds) {
+            CanvasDatabase().deleteNote(id);
+          }
+          Navigator.pop(ctx);
+          _exitSelectionMode();
+        },
       ),
     );
   }
@@ -128,88 +124,6 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
   }
 
   // --- Sorting Logic ---
-
-  void _showSortMenu() {
-    final theme = Theme.of(context);
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (_) => Container(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 30),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              "Sort Sketches",
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            _buildSortOption(FolderSortOption.dateNewest, "Newest First"),
-            _buildSortOption(FolderSortOption.dateOldest, "Oldest First"),
-            _buildSortOption(FolderSortOption.nameAZ, "Name (A-Z)"),
-            _buildSortOption(FolderSortOption.nameZA, "Name (Z-A)"),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSortOption(FolderSortOption option, String label) {
-    final selected = _currentSort == option;
-    final theme = Theme.of(context);
-
-    return InkWell(
-      onTap: () {
-        setState(() => _currentSort = option);
-        Navigator.pop(context);
-      },
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        child: Row(
-          children: [
-            Icon(
-              selected
-                  ? Icons.radio_button_checked
-                  : Icons.radio_button_unchecked,
-              color: selected
-                  ? theme.colorScheme.primary
-                  : theme.colorScheme.onSurface.withOpacity(0.5),
-            ),
-            const SizedBox(width: 16),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-                color: selected
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.onSurface,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   // --- Search Logic ---
 
@@ -259,7 +173,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
                       extra: {'noteId': null, 'folderId': widget.folderId},
                     );
                   },
-                  icon: const Icon(Icons.add),
+                  icon: const Icon(CupertinoIcons.add),
                   label: const Text('New Sketch'),
                   backgroundColor: _folder.color,
                   foregroundColor: Colors.white,
@@ -386,192 +300,227 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
   }
 
   Widget _buildHeader(ThemeData theme, ColorScheme colorScheme) {
-    // SELECTION MODE HEADER
     if (_isSelectionMode) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
-        child: Row(
-          children: [
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: _exitSelectionMode,
-            ),
-            Expanded(
-              child: Center(
-                child: Text(
-                  "${_selectedNoteIds.length} Selected",
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
+      return SeamlessHeader(
+        title: "${_selectedNoteIds.length} Selected",
+        iconHeroTag: 'folder_${widget.folderId}',
+        titleHeroTag: 'folder_name_${widget.folderId}',
+        showBackButton: true,
+        onBackTap: _exitSelectionMode,
+        actions: [
+          IconButton(
+            icon: const Icon(CupertinoIcons.checkmark_square),
+            onPressed: _selectAll,
+          ),
+          IconButton(
+            icon: Icon(CupertinoIcons.delete, color: theme.colorScheme.error),
+            onPressed: _selectedNoteIds.isNotEmpty ? _deleteSelected : null,
+          ),
+        ],
+      );
+    }
+
+    if (_isSearching) {
+      return SeamlessHeader(
+        title: "",
+        iconHeroTag: 'folder_${widget.folderId}',
+        titleHeroTag: 'folder_name_${widget.folderId}',
+        showBackButton: true,
+        onBackTap: _toggleSearch,
+        actions: [
+          Expanded(
+            child: Hero(
+              tag: 'search_bar_folder',
+              child: Material(
+                color: Colors.transparent,
+                child: TextField(
+                  controller: _searchController,
+                  focusNode: _searchFocusNode,
+                  decoration: InputDecoration(
+                    hintText: "Search in ${_folder.name}...",
+                    border: InputBorder.none,
+                    suffixIcon: IconButton(
+                      icon: const Icon(CupertinoIcons.xmark, size: 20),
+                      onPressed: () => _searchController.clear(),
+                    ),
                   ),
                 ),
               ),
             ),
-            IconButton(
-              icon: const Icon(Icons.select_all),
-              onPressed: _selectAll,
-            ),
-            IconButton(
-              icon: Icon(Icons.delete_outline, color: theme.colorScheme.error),
-              onPressed: _selectedNoteIds.isNotEmpty ? _deleteSelected : null,
-            ),
-          ],
-        ),
+          ),
+        ],
       );
     }
 
-    // STANDARD HEADER
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
-      child: Row(
-        children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back_ios_new, color: theme.iconTheme.color),
-            onPressed: () {
-              if (_isSearching) {
-                _toggleSearch();
-              } else {
-                context.pop();
-              }
-            },
-          ),
-          const SizedBox(width: 8),
-
-          Expanded(
-            child: _isSearching
-                ? Hero(
-                    tag: 'search_bar_folder',
-                    child: Material(
-                      color: Colors.transparent,
-                      child: Container(
-                        height: 45,
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.surface.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: theme.colorScheme.outline.withOpacity(0.1),
+    return ValueListenableBuilder(
+      valueListenable: Hive.box<CanvasNote>(
+        CanvasDatabase.notesBoxName,
+      ).listenable(),
+      builder: (context, _, __) {
+        final count = CanvasDatabase().getNoteCount(widget.folderId);
+        return SeamlessHeader(
+          title: _folder.name,
+          subtitle: '$count sketches',
+          icon: CupertinoIcons.folder_fill,
+          iconColor: _folder.color,
+          iconHeroTag: 'folder_${widget.folderId}',
+          titleHeroTag: 'folder_name_${widget.folderId}',
+          actions: [
+            PopupMenuButton<FolderSortOption>(
+              icon: const Icon(CupertinoIcons.slider_horizontal_3),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              tooltip: 'Sort Sketches',
+              onSelected: (FolderSortOption result) {
+                setState(() => _currentSort = result);
+              },
+              itemBuilder: (BuildContext context) =>
+                  <PopupMenuEntry<FolderSortOption>>[
+                    PopupMenuItem<FolderSortOption>(
+                      value: FolderSortOption.dateNewest,
+                      child: Row(
+                        children: [
+                          Icon(
+                            CupertinoIcons.calendar_today,
+                            size: 18,
+                            color: _currentSort == FolderSortOption.dateNewest
+                                ? theme.colorScheme.primary
+                                : null,
                           ),
-                        ),
-                        child: TextField(
-                          controller: _searchController,
-                          focusNode: _searchFocusNode,
-                          decoration: InputDecoration(
-                            hintText: "Search in ${_folder.name}...",
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 10,
-                            ),
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.clear, size: 20),
-                              onPressed: () => _searchController.clear(),
+                          const SizedBox(width: 12),
+                          Text(
+                            "Newest First",
+                            style: TextStyle(
+                              color: _currentSort == FolderSortOption.dateNewest
+                                  ? theme.colorScheme.primary
+                                  : null,
+                              fontWeight:
+                                  _currentSort == FolderSortOption.dateNewest
+                                  ? FontWeight.bold
+                                  : null,
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                  )
-                : Row(
-                    children: [
-                      Hero(
-                        tag: 'folder_${widget.folderId}',
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: _folder.color.withOpacity(0.2),
-                            shape: BoxShape.circle,
+                    PopupMenuItem<FolderSortOption>(
+                      value: FolderSortOption.dateOldest,
+                      child: Row(
+                        children: [
+                          Icon(
+                            CupertinoIcons.time,
+                            size: 18,
+                            color: _currentSort == FolderSortOption.dateOldest
+                                ? theme.colorScheme.primary
+                                : null,
                           ),
-                          child: Icon(
-                            Icons.folder_rounded,
-                            color: _folder.color,
-                            size: 24,
+                          const SizedBox(width: 12),
+                          Text(
+                            "Oldest First",
+                            style: TextStyle(
+                              color: _currentSort == FolderSortOption.dateOldest
+                                  ? theme.colorScheme.primary
+                                  : null,
+                              fontWeight:
+                                  _currentSort == FolderSortOption.dateOldest
+                                  ? FontWeight.bold
+                                  : null,
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Hero(
-                              tag: 'folder_name_${widget.folderId}',
-                              child: Material(
-                                type: MaterialType.transparency,
-                                child: Text(
-                                  _folder.name,
-                                  style: theme.textTheme.bodyLarge?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                            ValueListenableBuilder(
-                              valueListenable: Hive.box<CanvasNote>(
-                                CanvasDatabase.notesBoxName,
-                              ).listenable(),
-                              builder: (context, _, __) {
-                                final count = CanvasDatabase().getNoteCount(
-                                  widget.folderId,
-                                );
-                                return Text(
-                                  '$count sketches',
-                                  style: theme.textTheme.bodySmall?.copyWith(
-                                    color: colorScheme.onSurface.withOpacity(
-                                      0.5,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-          ),
-
-          if (!_isSearching)
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.filter_list),
-                  onPressed: _showSortMenu,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.search_rounded),
-                  onPressed: _toggleSearch,
-                ),
-                PopupMenuButton(
-                  itemBuilder: (context) => [
-                    const PopupMenuItem(value: 'rename', child: Text('Rename')),
-                    const PopupMenuItem(
-                      value: 'color',
-                      child: Text('Change Color'),
                     ),
-                    const PopupMenuItem(
-                      value: 'delete',
-                      child: Text('Delete Folder'),
+                    PopupMenuItem<FolderSortOption>(
+                      value: FolderSortOption.nameAZ,
+                      child: Row(
+                        children: [
+                          Icon(
+                            CupertinoIcons.textformat,
+                            size: 18,
+                            color: _currentSort == FolderSortOption.nameAZ
+                                ? theme.colorScheme.primary
+                                : null,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            "Name (A-Z)",
+                            style: TextStyle(
+                              color: _currentSort == FolderSortOption.nameAZ
+                                  ? theme.colorScheme.primary
+                                  : null,
+                              fontWeight:
+                                  _currentSort == FolderSortOption.nameAZ
+                                  ? FontWeight.bold
+                                  : null,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem<FolderSortOption>(
+                      value: FolderSortOption.nameZA,
+                      child: Row(
+                        children: [
+                          Icon(
+                            CupertinoIcons.textformat,
+                            size: 18,
+                            color: _currentSort == FolderSortOption.nameZA
+                                ? theme.colorScheme.primary
+                                : null,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            "Name (Z-A)",
+                            style: TextStyle(
+                              color: _currentSort == FolderSortOption.nameZA
+                                  ? theme.colorScheme.primary
+                                  : null,
+                              fontWeight:
+                                  _currentSort == FolderSortOption.nameZA
+                                  ? FontWeight.bold
+                                  : null,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
-                  onSelected: (value) {
-                    switch (value) {
-                      case 'rename':
-                        _showRenameDialog(theme);
-                        break;
-                      case 'color':
-                        _showColorPicker(theme);
-                        break;
-                      case 'delete':
-                        _showDeleteFolderDialog(theme);
-                        break;
-                    }
-                  },
+            ),
+            IconButton(
+              icon: const Icon(CupertinoIcons.search),
+              onPressed: _toggleSearch,
+            ),
+            PopupMenuButton(
+              icon: const Icon(CupertinoIcons.ellipsis_vertical),
+              itemBuilder: (context) => [
+                const PopupMenuItem(value: 'rename', child: Text('Rename')),
+                const PopupMenuItem(
+                  value: 'color',
+                  child: Text('Change Color'),
+                ),
+                const PopupMenuItem(
+                  value: 'delete',
+                  child: Text('Delete Folder'),
                 ),
               ],
+              onSelected: (value) {
+                switch (value) {
+                  case 'rename':
+                    _showRenameDialog(theme);
+                    break;
+                  case 'color':
+                    _showColorPicker(theme);
+                    break;
+                  case 'delete':
+                    _showDeleteFolderDialog(theme);
+                    break;
+                }
+              },
             ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 
@@ -622,51 +571,50 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
       const Color(0xFF4FC3F7),
     ];
 
-    showModalBottomSheet(
+    showDialog(
       context: context,
-      backgroundColor: Colors.transparent,
-      builder: (ctx) => Container(
-        margin: const EdgeInsets.all(16),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Choose Color', style: theme.textTheme.titleMedium),
-              const SizedBox(height: 16),
-              GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 5,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 12,
-                children: colors
-                    .map(
-                      (color) => GestureDetector(
-                        onTap: () {
-                          setState(() => _folder.color = color);
-                          CanvasDatabase().saveFolder(_folder);
-                          Navigator.pop(ctx);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: color,
-                            shape: BoxShape.circle,
-                            border: _folder.color.value == color.value
-                                ? Border.all(width: 3, color: Colors.white)
-                                : null,
-                          ),
-                        ),
+      builder: (ctx) => AlertDialog(
+        backgroundColor: theme.colorScheme.surface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text('Choose Color'),
+        content: SingleChildScrollView(
+          child: Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            alignment: WrapAlignment.center,
+            children: colors
+                .map(
+                  (color) => GestureDetector(
+                    onTap: () {
+                      setState(() => _folder.color = color);
+                      CanvasDatabase().saveFolder(_folder);
+                      Navigator.pop(ctx);
+                    },
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: color,
+                        shape: BoxShape.circle,
+                        border: _folder.color.value == color.value
+                            ? Border.all(
+                                width: 3,
+                                color: theme.colorScheme.onSurface,
+                              )
+                            : null,
                       ),
-                    )
-                    .toList(),
-              ),
-            ],
+                    ),
+                  ),
+                )
+                .toList(),
           ),
         ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+        ],
       ),
     );
   }

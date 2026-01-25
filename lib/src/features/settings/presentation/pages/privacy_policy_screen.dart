@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/seamless_header.dart';
+import 'package:flutter/cupertino.dart';
 
 class PrivacyPolicyScreen extends StatefulWidget {
   const PrivacyPolicyScreen({super.key});
@@ -19,7 +21,9 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
 
     // 1. Initialize the controller
     _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted) // Essential for Google Sites
+      ..setJavaScriptMode(
+        JavaScriptMode.unrestricted,
+      ) // Essential for Google Sites
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
@@ -34,25 +38,38 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
           },
         ),
       )
-    // 2. Load your Google Site URL here
-      ..loadRequest(Uri.parse('https://sites.google.com/view/copyclipapp?usp=sharing'));
+      // 2. Load your Google Site URL here
+      ..loadRequest(
+        Uri.parse('https://sites.google.com/view/copyclipapp?usp=sharing'),
+      );
   }
 
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: "Privacy Policy",
-      showBackArrow: true,
-      body: Stack(
+      title: null,
+      showBackArrow: false,
+      body: Column(
         children: [
-          // The actual scrollable web content
-          WebViewWidget(controller: _controller),
+          SeamlessHeader(
+            title: "Privacy Policy",
+            subtitle: "Your data is safe",
+            icon: CupertinoIcons.shield_fill,
+            iconColor: Colors.green,
+            showBackButton: true,
+          ),
+          Expanded(
+            child: Stack(
+              children: [
+                // The actual scrollable web content
+                WebViewWidget(controller: _controller),
 
-          // Show a glass-style loader while the site loads
-          if (_isLoading)
-            const Center(
-              child: CircularProgressIndicator(),
+                // Show a glass-style loader while the site loads
+                if (_isLoading)
+                  const Center(child: CircularProgressIndicator()),
+              ],
             ),
+          ),
         ],
       ),
     );

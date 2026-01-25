@@ -11,6 +11,7 @@ import 'package:flutter_quill/quill_delta.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -24,6 +25,7 @@ import '../../../../core/widgets/glass_rich_text_editor.dart';
 import '../../../clipboard/presentation/pages/clipboard_edit_screen.dart';
 import '../../data/journal_model.dart';
 import '../../../../core/app_content_palette.dart';
+import '../../../../core/widgets/animated_top_bar_title.dart';
 import '../../../../core/utils/widget_sync_service.dart';
 import '../../../../features/premium/presentation/widgets/premium_lock_dialog.dart';
 import '../../../../features/premium/presentation/provider/premium_provider.dart';
@@ -55,14 +57,11 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   bool _isFavorite = false;
 
   Color _scaffoldColor = AppContentPalette.palette.first;
-  late Color _initialColor;
-  String _initialTitle = "";
+
   String _initialContentJson = "";
-  String _initialMood = "";
 
   // Page Design
-  String _selectedPageDesignId = 'default';
-  String _initialPageDesignId = 'default';
+  String _selectedPageDesignId = 'ruled_wide';
 
   final Map<String, String> _moodMap = {
     'Happy': '😊',
@@ -91,11 +90,6 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       _selectedPageDesignId = widget.entry!.pageDesignId ?? 'default';
     }
 
-    _initialTitle = _titleController.text;
-    _initialDate = _selectedDate;
-    _initialColor = _scaffoldColor;
-    _initialMood = _selectedMood;
-    _initialPageDesignId = _selectedPageDesignId;
     _initQuill();
 
     // ✅ Add focus listener for keyboard handling
@@ -113,7 +107,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
         if (_scaffoldColor != defaultColor) {
           setState(() {
             _scaffoldColor = defaultColor;
-            _initialColor = defaultColor;
+            _scaffoldColor = defaultColor;
           });
         }
       }
@@ -162,10 +156,6 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       selection: const TextSelection.collapsed(offset: 0),
     );
     WidgetSyncService.syncJournal(); // Sync Widget
-
-    _initialContentJson = jsonEncode(
-      _quillController.document.toDelta().toJson(),
-    );
   }
 
   void _pickDateTime() {
@@ -327,8 +317,8 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   void _showPageDesignPicker() {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      isScrollControlled: true,
       builder: (context) => PageDesignPickerSheet(
         selectedDesignId: _selectedPageDesignId,
         onDesignSelected: (id) {
@@ -521,7 +511,8 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
           isFavorite: _isFavorite,
           colorValue: _scaffoldColor.value,
           sortIndex: newSortIndex,
-          pageDesignId: _selectedPageDesignId, // Save new field
+          pageDesignId: _selectedPageDesignId,
+          designId: 'classic_ruled', // Default card design
         ),
       );
     }
@@ -544,121 +535,199 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        final currentJson = jsonEncode(
-          _quillController.document.toDelta().toJson(),
-        );
-        bool hasChanges =
-            _titleController.text != _initialTitle ||
-            currentJson != _initialContentJson ||
-            _selectedDate != _initialDate ||
-            _selectedMood != _initialMood ||
-            _scaffoldColor.value != _initialColor.value ||
-            _selectedPageDesignId != _initialPageDesignId;
-
-        if (!hasChanges) return true;
-        final result = await showDialog<String>(
-          context: context,
-          builder: (ctx) => GlassDialog(
-            title: "Unsaved Changes",
-            content: "Save your journal entry?",
-            confirmText: "Save",
-            cancelText: "Discard",
-            onConfirm: () => Navigator.pop(ctx, 'save'),
-            onCancel: () => Navigator.pop(ctx, 'discard'),
-          ),
-        );
-        if (result == 'save') {
-          _saveEntry();
-          return true;
-        }
-        return result == 'discard';
+        // Auto-save on back
+        _saveEntry();
+        return true;
       },
       child: GlassScaffold(
         showBackArrow: true,
         backgroundColor: _scaffoldColor,
-        resizeToAvoidBottomInset: false, // Fix: Prevent background squashing
-        title: widget.entry == null ? 'New Entry' : 'Edit Entry',
+        resizeToAvoidBottomInset: false,
+        centerTitle: false,
+        titleSpacing: 0,
+        title: AnimatedTopBarTitle(
+          title: widget.entry == null ? 'New Entry' : 'Edit Entry',
+          icon: Icons.book,
+          iconHeroTag: 'journal_icon',
+          titleHeroTag: 'journal_title',
+          color: contrastColor,
+        ),
         actions: [
-          // New Page Design Picker Button
           IconButton(
-            icon: Icon(Icons.note_alt_outlined, color: contrastColor),
-            onPressed: _showPageDesignPicker,
+            icon: Icon(CupertinoIcons.layers, color: contrastColor),
             tooltip: 'Page Style',
-          ),
-          GestureDetector(
-            onTap: _showColorPicker,
-            child: Container(
-              margin: const EdgeInsets.only(right: 8),
-              width: 26,
-              height: 26,
-              decoration: BoxDecoration(
-                color: _scaffoldColor,
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: contrastColor.withOpacity(0.4),
-                  width: 1.5,
-                ),
-              ),
-              child: Icon(
-                Icons.palette_outlined,
-                size: 14,
-                color: contrastColor.withOpacity(0.6),
-              ),
-            ),
+            onPressed: _showPageDesignPicker,
           ),
           IconButton(
-            icon: Icon(
-              _isFavorite ? Icons.star : Icons.star_border,
-              color: _isFavorite
-                  ? Colors.amberAccent
-                  : contrastColor.withOpacity(0.5),
-            ),
-            onPressed: () => setState(() => _isFavorite = !_isFavorite),
+            icon: Icon(CupertinoIcons.doc_on_doc, color: contrastColor),
+            tooltip: 'Copy Content',
+            onPressed: () {
+              final text = _quillController.document.toPlainText().trim();
+              if (text.isNotEmpty) {
+                Clipboard.setData(ClipboardData(text: text));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text("Content copied"),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: contrastColor,
+                  ),
+                );
+              }
+            },
           ),
           PopupMenuButton<String>(
-            icon: Icon(Icons.ios_share, size: 20, color: contrastColor),
+            icon: Icon(CupertinoIcons.ellipsis_vertical, color: contrastColor),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+            ),
             onSelected: (val) {
-              if (val == 'pdf') {
-                final provider = Provider.of<PremiumProvider>(
-                  context,
-                  listen: false,
-                );
-                if (provider.isPremium) {
-                  _exportToPdf();
-                } else {
-                  PremiumLockDialog.show(
+              switch (val) {
+                case 'design':
+                  _showPageDesignPicker();
+                  break;
+                case 'mood':
+                  _showMoodPicker();
+                  break;
+                case 'date':
+                  _pickDateTime();
+                  break;
+                case 'favorite':
+                  setState(() => _isFavorite = !_isFavorite);
+                  break;
+                case 'color':
+                  _showColorPicker();
+                  break;
+                case 'pdf':
+                  final provider = Provider.of<PremiumProvider>(
                     context,
-                    featureName: 'PDF Export',
-                    onUnlockOnce: _exportToPdf,
+                    listen: false,
                   );
-                }
+                  if (provider.isPremium) {
+                    _exportToPdf();
+                  } else {
+                    PremiumLockDialog.show(
+                      context,
+                      featureName: 'PDF Export',
+                      onUnlockOnce: _exportToPdf,
+                    );
+                  }
+                  break;
+                case 'delete':
+                  if (widget.entry != null) {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => GlassDialog(
+                        title: "Move to Bin?",
+                        content: "You can restore this entry later.",
+                        confirmText: "Move",
+                        isDestructive: true,
+                        onConfirm: () {
+                          Navigator.pop(ctx);
+                          widget.entry!.isDeleted = true;
+                          widget.entry!.deletedAt = DateTime.now();
+                          widget.entry!.save();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    );
+                  } else {
+                    Navigator.pop(context);
+                  }
+                  break;
               }
             },
             itemBuilder: (ctx) => [
+              const PopupMenuItem(
+                value: 'design',
+                child: Row(
+                  children: [
+                    Icon(CupertinoIcons.layers, size: 18),
+                    SizedBox(width: 12),
+                    Text("Page Style"),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'mood',
+                child: Row(
+                  children: [
+                    Icon(CupertinoIcons.smiley, size: 18),
+                    SizedBox(width: 12),
+                    Text("Update Mood"),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'date',
+                child: Row(
+                  children: [
+                    Icon(CupertinoIcons.calendar, size: 18),
+                    SizedBox(width: 12),
+                    Text("Change Date"),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'favorite',
+                child: Row(
+                  children: [
+                    Icon(
+                      _isFavorite
+                          ? CupertinoIcons.star_fill
+                          : CupertinoIcons.star,
+                      size: 18,
+                      color: _isFavorite ? Colors.amber : null,
+                    ),
+                    const SizedBox(width: 12),
+                    Text(_isFavorite ? "Unfavorite" : "Favorite"),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'color',
+                child: Row(
+                  children: [
+                    Icon(CupertinoIcons.paintbrush, size: 18),
+                    SizedBox(width: 12),
+                    Text("Page Color"),
+                  ],
+                ),
+              ),
               PopupMenuItem(
                 value: 'pdf',
                 child: Row(
                   children: [
+                    const Icon(CupertinoIcons.share, size: 18),
+                    const SizedBox(width: 12),
                     const Text("Export as PDF"),
-                    const SizedBox(width: 8),
                     if (!Provider.of<PremiumProvider>(
                       context,
                       listen: false,
-                    ).isPremium)
-                      const Icon(Icons.lock, size: 14, color: Colors.amber),
+                    ).isPremium) ...[
+                      const Spacer(),
+                      const Icon(
+                        CupertinoIcons.lock_fill,
+                        size: 14,
+                        color: Colors.amber,
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'delete',
+                child: Row(
+                  children: [
+                    Icon(CupertinoIcons.trash, size: 18, color: Colors.red),
+                    SizedBox(width: 12),
+                    Text("Delete", style: TextStyle(color: Colors.red)),
                   ],
                 ),
               ),
             ],
           ),
-          IconButton(
-            icon: Icon(Icons.check, color: contrastColor),
-            onPressed: () {
-              _saveEntry();
-              context.pop();
-            },
-          ),
         ],
+
         body: SafeArea(
           child: Hero(
             tag: heroTag,

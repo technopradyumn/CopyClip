@@ -9,6 +9,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import 'package:copyclip/src/core/const/constant.dart';
+import 'package:flutter/cupertino.dart';
 
 // Models & Cards
 import '../../../clipboard/data/clipboard_model.dart';
@@ -242,11 +244,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
       child: Row(
         children: [
           IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: onSurface,
-              size: 20,
-            ),
+            icon: Icon(CupertinoIcons.back, color: onSurface, size: 20),
             onPressed: () => context.pop(),
           ),
           Expanded(
@@ -264,7 +262,9 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
               color: onSurface.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(
+                AppConstants.cornerRadius * 0.75,
+              ),
             ),
             child: Text(
               "${_allData.length} total",
@@ -284,7 +284,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
         height: 44,
         decoration: BoxDecoration(
           color: onSurface.withOpacity(0.08),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 0.5),
         ),
         child: TextField(
           controller: _searchController,
@@ -297,13 +297,13 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
               fontSize: 14,
             ),
             prefixIcon: Icon(
-              Icons.search_rounded,
+              CupertinoIcons.search,
               color: theme.colorScheme.primary,
               size: 20,
             ),
             suffixIcon: _searchController.text.isNotEmpty
                 ? IconButton(
-                    icon: const Icon(Icons.close, size: 18),
+                    icon: const Icon(CupertinoIcons.xmark, size: 18),
                     onPressed: _searchController.clear,
                   )
                 : null,
@@ -374,7 +374,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            Icons.search_off_rounded,
+            CupertinoIcons.search,
             size: 48,
             color: onSurface.withOpacity(0.2),
           ),

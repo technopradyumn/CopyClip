@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
-import '../../../../core/app_content_palette.dart';
+import 'package:copyclip/src/core/app_content_palette.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 
 class ClipboardCard extends StatelessWidget {
   final ClipboardItem item;
@@ -57,11 +59,11 @@ class ClipboardCard extends StatelessWidget {
   IconData _getTypeIconData(String type) {
     switch (type) {
       case 'link':
-        return Icons.link;
+        return CupertinoIcons.link;
       case 'phone':
-        return Icons.phone;
+        return CupertinoIcons.phone;
       default:
-        return Icons.notes;
+        return CupertinoIcons.doc_text;
     }
   }
 
@@ -83,8 +85,11 @@ class ClipboardCard extends StatelessWidget {
     // ✅ OPTIMIZATION: High-performance Decoration (Replaces GlassContainer)
     final decoration = BoxDecoration(
       color: clipThemeColor.withOpacity(isSelected ? 0.6 : 0.65),
-      borderRadius: BorderRadius.circular(24),
-      border: Border.all(color: Colors.black.withOpacity(0.2), width: 1.5),
+      borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+      border: Border.all(
+        color: Colors.black.withOpacity(0.2),
+        width: AppConstants.borderWidth,
+      ),
       boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.05),
@@ -134,8 +139,8 @@ class ClipboardCard extends StatelessWidget {
                   ),
                   Icon(
                     isSelected
-                        ? Icons.check_circle
-                        : Icons.radio_button_unchecked,
+                        ? CupertinoIcons.checkmark_circle_fill
+                        : CupertinoIcons.circle,
                     size: 20,
                     color: isSelected
                         ? theme.colorScheme.primary
@@ -148,7 +153,9 @@ class ClipboardCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.cornerRadius * 0.5,
+                    ),
                     child: Image.file(
                       File(imageUrl),
                       height: 120,
@@ -182,10 +189,14 @@ class ClipboardCard extends StatelessWidget {
                     ignoring: isSelected,
                     child: Row(
                       children: [
-                        _smallBtn(Icons.copy_rounded, onCopy, contentColor),
-                        _smallBtn(Icons.share_rounded, onShare, contentColor),
                         _smallBtn(
-                          Icons.delete_outline_rounded,
+                          CupertinoIcons.doc_on_doc,
+                          onCopy,
+                          contentColor,
+                        ),
+                        _smallBtn(CupertinoIcons.share, onShare, contentColor),
+                        _smallBtn(
+                          CupertinoIcons.trash,
                           onDelete,
                           Colors.redAccent,
                         ),
@@ -243,11 +254,13 @@ class _QuickColorPicker extends StatelessWidget {
                 color: isSelected
                     ? primaryColor
                     : contrastColor.withOpacity(0.2),
-                width: isSelected ? 2.5 : 1,
+                width: isSelected
+                    ? AppConstants.selectedBorderWidth
+                    : AppConstants.borderWidth,
               ),
             ),
             child: isSelected
-                ? Icon(Icons.check, size: 14, color: contrastColor)
+                ? Icon(CupertinoIcons.checkmark, size: 14, color: contrastColor)
                 : null,
           ),
         );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/widgets/glass_container.dart';
+import 'package:flutter/cupertino.dart';
+import '../../../../core/const/constant.dart';
 import '../../data/canvas_adapter.dart';
 import '../../data/canvas_model.dart';
 
@@ -27,11 +28,15 @@ class CanvasFolderCard extends StatelessWidget {
       child: Stack(
         children: [
           // Main Card Content
-          GlassContainer(
-            color: folder.color.withOpacity(isSelected ? 0.3 : 0.15),
-            borderRadius: 24,
-            blur: 15,
-            // 1. Force the container to fill the GridCell
+          Container(
+            decoration: BoxDecoration(
+              color: folder.color.withOpacity(isSelected ? 0.35 : 0.18),
+              borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+              border: Border.all(
+                color: folder.color.withOpacity(0.3),
+                width: AppConstants.borderWidth,
+              ),
+            ),
             child: Container(
               width: double.infinity,
               height: double.infinity,
@@ -47,12 +52,14 @@ class CanvasFolderCard extends StatelessWidget {
                         height: 48,
                         decoration: BoxDecoration(
                           color: folder.color.withOpacity(0.2),
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(32),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(
+                              AppConstants.cornerRadius * 2,
+                            ),
                           ),
                         ),
                         child: Icon(
-                          Icons.folder_open_rounded,
+                          CupertinoIcons.folder_open,
                           size: 22,
                           color: folder.color,
                         ),
@@ -105,7 +112,11 @@ class CanvasFolderCard extends StatelessWidget {
                   color: theme.colorScheme.primary,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.check, size: 16, color: Colors.white),
+                child: const Icon(
+                  CupertinoIcons.checkmark_alt,
+                  size: 16,
+                  color: Colors.white,
+                ),
               ),
             ),
         ],

@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:copyclip/src/core/const/premium_constants.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,109 +23,124 @@ class _PremiumScreenState extends State<PremiumScreen> {
     final theme = Theme.of(context);
 
     return GlassScaffold(
-      title: "Premium Access",
-      showBackArrow: true,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            // 1. Coins & Watch Ad Card (Combined)
-            _buildBalanceCard(context, provider),
+      title: null,
+      showBackArrow: false,
+      body: Column(
+        children: [
+          SeamlessHeader(
+            title: "Premium Access",
+            subtitle: provider.isPremium ? "Active" : "Unlock Features",
+            icon: Icons.star,
+            iconColor: Colors.amber,
+            showBackButton: true,
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  // 1. Coins & Watch Ad Card (Combined)
+                  _buildBalanceCard(context, provider),
 
-            const SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
-            // 2. Buy Premium Action
-            if (!provider.isPremium)
-              _ActionGlassCard(
-                title: "Buy Premium (7 Days)",
-                subtitle: "Cost: ${PremiumConstants.premiumCost} Coins",
-                icon: Icons.diamond_outlined,
-                color: Colors.purpleAccent,
-                isDisabled: provider.coins < PremiumConstants.premiumCost,
-                onTap: () async {
-                  final success = await provider.buyPremium();
-                  if (context.mounted) {
-                    if (success) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Premium Activated for 7 days!"),
-                          backgroundColor: Colors.green,
-                        ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Not enough coins!"),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  }
-                },
-              )
-            else
-              _GlassContainer(
-                color: Colors.greenAccent.withOpacity(0.1),
-                borderColor: Colors.greenAccent.withOpacity(0.3),
-                child: Column(
-                  children: [
-                    const Icon(
-                      Icons.check_circle_outline,
-                      color: Colors.greenAccent,
-                      size: 40,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Premium Active",
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        color: Colors.greenAccent,
-                        fontWeight: FontWeight.bold,
+                  // 2. Buy Premium Action
+                  if (!provider.isPremium)
+                    _ActionGlassCard(
+                      title: "Buy Premium (7 Days)",
+                      subtitle: "Cost: ${PremiumConstants.premiumCost} Coins",
+                      icon: Icons.diamond_outlined,
+                      color: Colors.purpleAccent,
+                      isDisabled: provider.coins < PremiumConstants.premiumCost,
+                      onTap: () async {
+                        final success = await provider.buyPremium();
+                        if (context.mounted) {
+                          if (success) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Premium Activated for 7 days!"),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Not enough coins!"),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        }
+                      },
+                    )
+                  else
+                    _GlassContainer(
+                      color: Colors.greenAccent.withOpacity(0.1),
+                      borderColor: Colors.greenAccent.withOpacity(0.3),
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Icons.check_circle_outline,
+                            color: Colors.greenAccent,
+                            size: 40,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            "Premium Active",
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              color: Colors.greenAccent,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            "Expires: ${DateFormat.yMMMd().format(provider.premiumExpiryDate!)}",
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: theme.colorScheme.onSurface.withOpacity(
+                                0.7,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      "Expires: ${DateFormat.yMMMd().format(provider.premiumExpiryDate!)}",
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurface.withOpacity(0.7),
-                      ),
-                    ),
-                  ],
-                ),
+
+                  const SizedBox(height: 32),
+
+                  // 3. Categorized Features
+                  _SectionHeader(title: "Rich Text Editor"),
+                  _PremiumFeatureTile(
+                    icon: Icons.picture_as_pdf_outlined,
+                    title: "PDF Export",
+                    description: "Export your documents to PDF instantly",
+                  ),
+                  _PremiumFeatureTile(
+                    icon: Icons.print_outlined,
+                    title: "Print Documents",
+                    description: "Directly print your notes",
+                  ),
+                  _PremiumFeatureTile(
+                    icon: Icons.find_replace_outlined,
+                    title: "Advanced Search",
+                    description: "Search & Replace within your text",
+                  ),
+                  _PremiumFeatureTile(
+                    icon: Icons.perm_media_outlined,
+                    title: "Rich Media",
+                    description: "Insert Images, Videos, and Links",
+                  ),
+                  _PremiumFeatureTile(
+                    icon: Icons.palette_outlined,
+                    title: "Styling & Colors",
+                    description: "Custom text and background colors",
+                  ),
+
+                  const SizedBox(height: 32),
+                ],
               ),
-
-            const SizedBox(height: 32),
-
-            // 3. Categorized Features
-            _SectionHeader(title: "Rich Text Editor"),
-            _PremiumFeatureTile(
-              icon: Icons.picture_as_pdf_outlined,
-              title: "PDF Export",
-              description: "Export your documents to PDF instantly",
             ),
-            _PremiumFeatureTile(
-              icon: Icons.print_outlined,
-              title: "Print Documents",
-              description: "Directly print your notes",
-            ),
-            _PremiumFeatureTile(
-              icon: Icons.find_replace_outlined,
-              title: "Advanced Search",
-              description: "Search & Replace within your text",
-            ),
-            _PremiumFeatureTile(
-              icon: Icons.perm_media_outlined,
-              title: "Rich Media",
-              description: "Insert Images, Videos, and Links",
-            ),
-            _PremiumFeatureTile(
-              icon: Icons.palette_outlined,
-              title: "Styling & Colors",
-              description: "Custom text and background colors",
-            ),
-
-            const SizedBox(height: 32),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

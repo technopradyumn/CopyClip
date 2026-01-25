@@ -90,14 +90,28 @@ class DesignPickerSheet extends StatelessWidget {
                         child: Stack(
                           children: [
                             Center(
-                              child: Text(
-                                design.name,
-                                style: theme.textTheme.titleMedium?.copyWith(
-                                  color: design.isDark
-                                      ? Colors.white
-                                      : Colors.black87,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    design.icon,
+                                    size: 24,
+                                    color: design.isDark
+                                        ? Colors.white
+                                        : Colors.black87,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    design.name,
+                                    style: theme.textTheme.titleMedium
+                                        ?.copyWith(
+                                          color: design.isDark
+                                              ? Colors.white
+                                              : Colors.black87,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
+                                ],
                               ),
                             ),
                             if (isSelected)

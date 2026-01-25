@@ -22,7 +22,9 @@ import '../../../../core/widgets/glass_scaffold.dart';
 import '../../../../core/widgets/glass_rich_text_editor.dart';
 import '../../data/note_model.dart';
 import '../../../../core/app_content_palette.dart';
+import '../../../../core/widgets/animated_top_bar_title.dart';
 import '../../../../core/utils/widget_sync_service.dart';
+import '../../../../core/const/constant.dart';
 import '../../../../features/premium/presentation/widgets/premium_lock_dialog.dart';
 import '../../../../features/premium/presentation/provider/premium_provider.dart';
 import 'package:provider/provider.dart';
@@ -71,10 +73,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       // and update it in didChangeDependencies if it matches the fallback.
       // Better approach: Use a flag to check if color was customized.
     }
-
-    _initialTitle = _titleController.text;
-    _initialDate = _selectedDate;
-    _initialColor = _scaffoldColor;
 
     _initQuill();
 
@@ -250,11 +248,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
     }
     // Sync Widget
     WidgetSyncService.syncNotes();
-
-    _initialTitle = title;
-    _initialContentJson = contentJson;
-    _initialColor = _scaffoldColor;
-    _initialDate = _selectedDate;
   }
 
   void _showColorPicker() {
@@ -288,12 +281,14 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: isSelected ? Colors.white : Colors.white24,
-                            width: isSelected ? 3 : 1.5,
+                            width: isSelected
+                                ? AppConstants.selectedBorderWidth
+                                : AppConstants.borderWidth,
                           ),
                         ),
                         child: isSelected
                             ? const Icon(
-                                Icons.check,
+                                CupertinoIcons.checkmark,
                                 color: Colors.white,
                                 size: 20,
                               )
@@ -306,7 +301,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxHeight: 250),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.cornerRadius,
+                    ),
                     child: ColorPicker(
                       pickerColor: _scaffoldColor,
                       onColorChanged: (color) {
@@ -421,63 +418,31 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        final currentJson = jsonEncode(
-          _quillController.document.toDelta().toJson(),
-        );
-        bool hasChanges =
-            _titleController.text != _initialTitle ||
-            currentJson != _initialContentJson ||
-            _scaffoldColor.value != _initialColor.value ||
-            _selectedDate != _initialDate;
-
-        if (!hasChanges) return true;
-
-        final result = await showDialog<String>(
-          context: context,
-          builder: (ctx) => GlassDialog(
-            title: "Unsaved Changes",
-            content: "Save your note?",
-            confirmText: "Save",
-            cancelText: "Discard",
-            onConfirm: () => Navigator.pop(ctx, 'save'),
-            onCancel: () => Navigator.pop(ctx, 'discard'),
-          ),
-        );
-        if (result == 'save') {
-          _saveNote();
-          return true;
-        }
-        return result == 'discard';
+        // Auto-save on back
+        _saveNote();
+        return true;
       },
       child: GlassScaffold(
         showBackArrow: true,
         backgroundColor: _scaffoldColor,
-        title: widget.note == null ? 'New Note' : 'Edit Note',
+        centerTitle: false,
+        titleSpacing: 0,
+        title: AnimatedTopBarTitle(
+          title: widget.note == null ? 'New Note' : 'Edit Note',
+          icon: CupertinoIcons.doc_text,
+          iconHeroTag: 'notes_icon',
+          titleHeroTag: 'notes_title',
+          color: contrastColor,
+        ),
         actions: [
-          GestureDetector(
-            onTap: _showColorPicker,
-            child: Container(
-              margin: const EdgeInsets.only(right: 8),
-              width: 26,
-              height: 26,
-              decoration: BoxDecoration(
-                color: _scaffoldColor,
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: contrastColor.withOpacity(0.4),
-                  width: 1.5,
-                ),
-              ),
-              child: Icon(
-                Icons.palette_outlined,
-                size: 14,
-                color: contrastColor.withOpacity(0.7),
-              ),
-            ),
-          ),
-
           IconButton(
-            icon: Icon(Icons.copy, size: 18, color: contrastColor),
+            icon: Icon(CupertinoIcons.paintbrush, color: contrastColor),
+            tooltip: 'Change Color',
+            onPressed: _showColorPicker,
+          ),
+          IconButton(
+            icon: Icon(CupertinoIcons.doc_on_doc, color: contrastColor),
+            tooltip: 'Copy Content',
             onPressed: () {
               final cleanText = _getCleanPlainText();
               if (cleanText.isNotEmpty) {
@@ -492,52 +457,124 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
               }
             },
           ),
-
           PopupMenuButton<String>(
-            icon: Icon(Icons.ios_share, size: 20, color: contrastColor),
+            icon: Icon(CupertinoIcons.ellipsis_vertical, color: contrastColor),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+            ),
             onSelected: (val) {
-              if (val == 'pdf') {
-                final provider = Provider.of<PremiumProvider>(
-                  context,
-                  listen: false,
-                );
-                if (provider.isPremium) {
-                  _exportToPdf();
-                } else {
-                  PremiumLockDialog.show(
+              switch (val) {
+                case 'color':
+                  _showColorPicker();
+                  break;
+                case 'copy':
+                  final cleanText = _getCleanPlainText();
+                  if (cleanText.isNotEmpty) {
+                    Clipboard.setData(ClipboardData(text: cleanText));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text("Content copied"),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: contrastColor,
+                      ),
+                    );
+                  }
+                  break;
+                case 'pdf':
+                  final provider = Provider.of<PremiumProvider>(
                     context,
-                    featureName: 'PDF Export',
-                    onUnlockOnce: _exportToPdf,
+                    listen: false,
                   );
-                }
+                  if (provider.isPremium) {
+                    _exportToPdf();
+                  } else {
+                    PremiumLockDialog.show(
+                      context,
+                      featureName: 'PDF Export',
+                      onUnlockOnce: _exportToPdf,
+                    );
+                  }
+                  break;
+                case 'delete':
+                  if (widget.note != null) {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => GlassDialog(
+                        title: "Move to Bin?",
+                        content: "You can restore this note later.",
+                        confirmText: "Move",
+                        isDestructive: true,
+                        onConfirm: () {
+                          Navigator.pop(ctx); // Close dialog
+                          widget.note!.isDeleted = true;
+                          widget.note!.deletedAt = DateTime.now();
+                          widget.note!.save();
+                          Navigator.pop(context); // Close screen
+                        },
+                      ),
+                    );
+                  } else {
+                    Navigator.pop(context); // Just close if it's new
+                  }
+                  break;
               }
             },
             itemBuilder: (ctx) => [
+              const PopupMenuItem(
+                value: 'color',
+                child: Row(
+                  children: [
+                    Icon(CupertinoIcons.paintbrush, size: 18),
+                    SizedBox(width: 12),
+                    Text("Change Color"),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'copy',
+                child: Row(
+                  children: [
+                    Icon(CupertinoIcons.doc_on_doc, size: 18),
+                    SizedBox(width: 12),
+                    Text("Copy Content"),
+                  ],
+                ),
+              ),
               PopupMenuItem(
                 value: 'pdf',
                 child: Row(
                   children: [
-                    Text("Export as PDF"),
-                    const SizedBox(width: 8),
+                    const Icon(CupertinoIcons.share, size: 18),
+                    const SizedBox(width: 12),
+                    const Text("Export as PDF"),
                     if (!Provider.of<PremiumProvider>(
                       context,
                       listen: false,
-                    ).isPremium)
-                      const Icon(Icons.lock, size: 14, color: Colors.amber),
+                    ).isPremium) ...[
+                      const Spacer(),
+                      const Icon(
+                        CupertinoIcons.lock_fill,
+                        size: 14,
+                        color: Colors.amber,
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'delete',
+                child: Row(
+                  children: [
+                    Icon(CupertinoIcons.trash, size: 18, color: Colors.red),
+                    SizedBox(width: 12),
+                    Text("Delete", style: TextStyle(color: Colors.red)),
                   ],
                 ),
               ),
             ],
           ),
-
-          IconButton(
-            icon: Icon(Icons.check, color: contrastColor),
-            onPressed: () {
-              _saveNote();
-              context.pop();
-            },
-          ),
         ],
+
         body: SafeArea(
           child: Hero(
             tag: heroTag,
@@ -586,7 +623,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                               alignment: Alignment.centerLeft,
                               child: InkWell(
                                 onTap: _pickDateTime,
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(
+                                  AppConstants.cornerRadius,
+                                ),
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 12,

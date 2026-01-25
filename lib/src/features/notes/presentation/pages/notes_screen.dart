@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -11,6 +11,8 @@ import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
+import 'package:copyclip/src/core/const/constant.dart';
+import 'package:copyclip/src/core/widgets/seamless_header.dart';
 
 // Data
 import '../../data/note_model.dart';
@@ -283,8 +285,11 @@ class _NotesScreenState extends State<NotesScreen> {
             ? null
             : FloatingActionButton(
                 onPressed: () => _openNoteEditor(null),
-                backgroundColor: theme.colorScheme.primary,
-                child: Icon(Icons.add, color: theme.colorScheme.onPrimary),
+                backgroundColor: FeatureColors.notes,
+                child: Icon(
+                  CupertinoIcons.add,
+                  color: theme.colorScheme.onPrimary,
+                ),
               ),
         body: Column(
           children: [
@@ -297,9 +302,12 @@ class _NotesScreenState extends State<NotesScreen> {
                 height: 48,
                 decoration: BoxDecoration(
                   color: onSurfaceColor.withOpacity(0.08),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(
+                    AppConstants.cornerRadius * 0.75,
+                  ),
                   border: Border.all(
                     color: theme.dividerColor.withOpacity(0.1),
+                    width: AppConstants.borderWidth,
                   ),
                 ),
                 child: TextField(
@@ -311,7 +319,7 @@ class _NotesScreenState extends State<NotesScreen> {
                       color: onSurfaceColor.withOpacity(0.5),
                     ),
                     prefixIcon: Icon(
-                      Icons.search,
+                      CupertinoIcons.search,
                       color: onSurfaceColor.withOpacity(0.5),
                       size: 20,
                     ),
@@ -321,7 +329,7 @@ class _NotesScreenState extends State<NotesScreen> {
                               _searchController.clear();
                             },
                             child: Icon(
-                              Icons.close,
+                              CupertinoIcons.xmark,
                               color: onSurfaceColor.withOpacity(0.5),
                               size: 18,
                             ),
@@ -437,186 +445,195 @@ class _NotesScreenState extends State<NotesScreen> {
   Widget _buildCustomTopBar() {
     final theme = Theme.of(context);
     final onSurfaceColor = theme.colorScheme.onSurface;
-    final primaryColor = theme.colorScheme.primary;
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-      child: Row(
-        children: [
+    if (_isSelectionMode) {
+      return SeamlessHeader(
+        title: '${_selectedNoteIds.length} Selected',
+        heroTagPrefix: 'notes',
+        showBackButton: true,
+        onBackTap: () => setState(() {
+          _isSelectionMode = false;
+          _selectedNoteIds.clear();
+        }),
+        actions: [
           IconButton(
-            icon: Icon(
-              _isSelectionMode ? Icons.close : Icons.arrow_back_ios_new,
-              color: theme.iconTheme.color,
-            ),
-            onPressed: () {
-              if (_isSelectionMode) {
-                setState(() {
-                  _isSelectionMode = false;
-                  _selectedNoteIds.clear();
-                });
-              } else {
-                context.pop();
-              }
-            },
+            icon: Icon(CupertinoIcons.checkmark_square, color: onSurfaceColor),
+            onPressed: _selectAll,
           ),
-          Expanded(
-            child: _isSelectionMode
-                ? Center(
-                    child: Text(
-                      '${_selectedNoteIds.length} Selected',
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                : Row(
+          IconButton(
+            icon: const Icon(CupertinoIcons.delete, color: Colors.redAccent),
+            onPressed: _deleteSelected,
+          ),
+        ],
+      );
+    }
+
+    return SeamlessHeader(
+      title: "Notes",
+      subtitle: "My Thoughts",
+      icon: CupertinoIcons.doc_text,
+      iconColor: FeatureColors.notes,
+      heroTagPrefix: 'notes',
+      actions: [
+        IconButton(
+          icon: Icon(
+            CupertinoIcons.checkmark_circle,
+            color: onSurfaceColor.withOpacity(0.6),
+          ),
+          onPressed: () => setState(() => _isSelectionMode = true),
+        ),
+        // SORT MENU
+        PopupMenuButton<NoteSortOption>(
+          icon: Icon(CupertinoIcons.slider_horizontal_3, color: onSurfaceColor),
+          tooltip: 'Sort Notes',
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          onSelected: (NoteSortOption result) {
+            setState(() {
+              _currentSort = result;
+              _applyFilters();
+            });
+          },
+          itemBuilder: (BuildContext context) =>
+              <PopupMenuEntry<NoteSortOption>>[
+                PopupMenuItem<NoteSortOption>(
+                  value: NoteSortOption.custom,
+                  child: Row(
                     children: [
-                      Hero(
-                        tag: 'notes_icon',
-                        child: Icon(
-                          Icons.note_alt_outlined,
-                          size: 28,
-                          color: primaryColor,
-                        ),
+                      Icon(
+                        CupertinoIcons.arrow_up_arrow_down,
+                        size: 18,
+                        color: _currentSort == NoteSortOption.custom
+                            ? FeatureColors.notes
+                            : null,
                       ),
-                      const SizedBox(width: 10),
-                      Hero(
-                        tag: 'notes_title',
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: Text(
-                            "Notes",
-                            style: theme.textTheme.titleLarge?.copyWith(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "Custom Order",
+                        style: TextStyle(
+                          color: _currentSort == NoteSortOption.custom
+                              ? FeatureColors.notes
+                              : null,
+                          fontWeight: _currentSort == NoteSortOption.custom
+                              ? FontWeight.bold
+                              : null,
                         ),
                       ),
                     ],
                   ),
-          ),
-          if (_isSelectionMode) ...[
-            IconButton(
-              icon: Icon(Icons.select_all, color: onSurfaceColor),
-              onPressed: _selectAll,
-            ),
-            IconButton(
-              icon: const Icon(Icons.delete, color: Colors.redAccent),
-              onPressed: _deleteSelected,
-            ),
-          ] else ...[
-            IconButton(
-              icon: Icon(
-                Icons.check_circle_outline,
-                color: onSurfaceColor.withOpacity(0.6),
-              ),
-              onPressed: () => setState(() => _isSelectionMode = true),
-            ),
-            IconButton(
-              icon: Icon(Icons.filter_list, color: onSurfaceColor),
-              onPressed: _showFilterMenu,
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.delete_sweep_outlined,
-                color: Colors.redAccent,
-              ),
-              onPressed: _deleteAll,
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  // ✅ IMPROVED BOTTOM SHEET: Solid Background for Visibility
-  void _showFilterMenu() {
-    final theme = Theme.of(context);
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (_) => Container(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 30),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface, // ✅ Solid Surface Color (Not Glass)
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(2),
                 ),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            Text(
-              "Sort Notes",
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            _buildSortOption(
-              NoteSortOption.custom,
-              "Custom Order (Drag & Drop)",
-            ),
-            _buildSortOption(NoteSortOption.dateNewest, "Date: Newest First"),
-            _buildSortOption(NoteSortOption.dateOldest, "Date: Oldest First"),
-            _buildSortOption(NoteSortOption.titleAZ, "Title: A-Z"),
-            _buildSortOption(NoteSortOption.titleZA, "Title: Z-A"),
-          ],
+                PopupMenuItem<NoteSortOption>(
+                  value: NoteSortOption.dateNewest,
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.calendar_today,
+                        size: 18,
+                        color: _currentSort == NoteSortOption.dateNewest
+                            ? FeatureColors.notes
+                            : null,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "Newest First",
+                        style: TextStyle(
+                          color: _currentSort == NoteSortOption.dateNewest
+                              ? FeatureColors.notes
+                              : null,
+                          fontWeight: _currentSort == NoteSortOption.dateNewest
+                              ? FontWeight.bold
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                PopupMenuItem<NoteSortOption>(
+                  value: NoteSortOption.dateOldest,
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.time,
+                        size: 18,
+                        color: _currentSort == NoteSortOption.dateOldest
+                            ? FeatureColors.notes
+                            : null,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "Oldest First",
+                        style: TextStyle(
+                          color: _currentSort == NoteSortOption.dateOldest
+                              ? FeatureColors.notes
+                              : null,
+                          fontWeight: _currentSort == NoteSortOption.dateOldest
+                              ? FontWeight.bold
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                PopupMenuItem<NoteSortOption>(
+                  value: NoteSortOption.titleAZ,
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.textformat,
+                        size: 18,
+                        color: _currentSort == NoteSortOption.titleAZ
+                            ? FeatureColors.notes
+                            : null,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "Title: A-Z",
+                        style: TextStyle(
+                          color: _currentSort == NoteSortOption.titleAZ
+                              ? FeatureColors.notes
+                              : null,
+                          fontWeight: _currentSort == NoteSortOption.titleAZ
+                              ? FontWeight.bold
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                PopupMenuItem<NoteSortOption>(
+                  value: NoteSortOption.titleZA,
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.textformat,
+                        size: 18,
+                        color: _currentSort == NoteSortOption.titleZA
+                            ? FeatureColors.notes
+                            : null,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "Title: Z-A",
+                        style: TextStyle(
+                          color: _currentSort == NoteSortOption.titleZA
+                              ? FeatureColors.notes
+                              : null,
+                          fontWeight: _currentSort == NoteSortOption.titleZA
+                              ? FontWeight.bold
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildSortOption(NoteSortOption option, String label) {
-    final selected = _currentSort == option;
-    final theme = Theme.of(context);
-
-    return InkWell(
-      onTap: () {
-        setState(() => _currentSort = option);
-        _applyFilters();
-        Navigator.pop(context);
-      },
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        child: Row(
-          children: [
-            Icon(
-              selected
-                  ? Icons.radio_button_checked
-                  : Icons.radio_button_unchecked,
-              color: selected
-                  ? theme.colorScheme.primary
-                  : theme.colorScheme.onSurface.withOpacity(0.5),
-            ),
-            const SizedBox(width: 16),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-                color: selected
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.onSurface,
-              ),
-            ),
-          ],
+        IconButton(
+          icon: const Icon(CupertinoIcons.trash, color: Colors.redAccent),
+          onPressed: _deleteAll,
         ),
-      ),
+      ],
     );
   }
 }

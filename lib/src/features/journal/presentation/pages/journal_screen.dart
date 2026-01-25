@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +13,9 @@ import 'package:share_plus/share_plus.dart';
 // Core Widgets
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
+import 'package:copyclip/src/core/utils/widget_sync_service.dart';
 import '../../../../core/router/app_router.dart';
 
 // Data
@@ -321,8 +325,11 @@ class _JournalScreenState extends State<JournalScreen> {
             ? null
             : FloatingActionButton(
                 onPressed: () => _openEditor(null),
-                backgroundColor: theme.colorScheme.primary,
-                child: Icon(Icons.add, color: theme.colorScheme.onPrimary),
+                backgroundColor: FeatureColors.journal,
+                child: Icon(
+                  CupertinoIcons.add,
+                  color: theme.colorScheme.onPrimary,
+                ),
               ),
         body: Column(
           children: [
@@ -339,15 +346,18 @@ class _JournalScreenState extends State<JournalScreen> {
                   ),
                   decoration: BoxDecoration(
                     color: onSurfaceColor.withOpacity(0.05),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.cornerRadius,
+                    ),
                     border: Border.all(
                       color: theme.dividerColor.withOpacity(0.1),
+                      width: AppConstants.borderWidth,
                     ),
                   ),
                   child: Row(
                     children: [
                       const Icon(
-                        Icons.lightbulb_outline,
+                        CupertinoIcons.lightbulb,
                         color: Colors.amberAccent,
                         size: 20,
                       ),
@@ -380,9 +390,12 @@ class _JournalScreenState extends State<JournalScreen> {
                 height: 44,
                 decoration: BoxDecoration(
                   color: onSurfaceColor.withOpacity(0.08),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(
+                    AppConstants.cornerRadius,
+                  ),
                   border: Border.all(
                     color: theme.dividerColor.withOpacity(0.1),
+                    width: AppConstants.borderWidth,
                   ),
                 ),
                 child: TextField(
@@ -394,13 +407,16 @@ class _JournalScreenState extends State<JournalScreen> {
                       color: onSurfaceColor.withOpacity(0.5),
                     ),
                     prefixIcon: Icon(
-                      Icons.search,
+                      CupertinoIcons.search,
                       color: onSurfaceColor.withOpacity(0.5),
                       size: 20,
                     ),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
-                            icon: const Icon(Icons.close, size: 18),
+                            icon: const Icon(
+                              CupertinoIcons.xmark_circle,
+                              size: 18,
+                            ),
                             onPressed: _searchController.clear,
                           )
                         : null,
@@ -466,6 +482,7 @@ class _JournalScreenState extends State<JournalScreen> {
                           onDesignChanged: (designId) {
                             entry.designId = designId;
                             entry.save();
+                            WidgetSyncService.syncJournal();
                           },
                         ),
                       );
@@ -483,193 +500,171 @@ class _JournalScreenState extends State<JournalScreen> {
   Widget _buildCustomTopBar() {
     final theme = Theme.of(context);
     final onSurfaceColor = theme.colorScheme.onSurface;
-    final primaryColor = theme.colorScheme.primary;
-    final errorColor = theme.colorScheme.error;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-      child: Row(
-        children: [
+    if (_isSelectionMode) {
+      return SeamlessHeader(
+        title: '${_selectedIds.length} Selected',
+        heroTagPrefix: 'journal',
+        showBackButton: true,
+        onBackTap: () => setState(() {
+          _isSelectionMode = false;
+          _selectedIds.clear();
+        }),
+        actions: [
           IconButton(
-            icon: Icon(
-              _isSelectionMode ? Icons.close : Icons.arrow_back_ios_new,
-              color: theme.iconTheme.color,
-            ),
-            onPressed: () {
-              if (_isSelectionMode) {
-                setState(() {
-                  _isSelectionMode = false;
-                  _selectedIds.clear();
-                });
-              } else {
-                context.pop();
-              }
-            },
+            icon: Icon(CupertinoIcons.square_list, color: onSurfaceColor),
+            onPressed: _selectAll,
           ),
-          Expanded(
-            child: _isSelectionMode
-                ? Center(
-                    child: Text(
-                      '${_selectedIds.length} Selected',
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                : Row(
+          IconButton(
+            icon: Icon(CupertinoIcons.delete, color: theme.colorScheme.error),
+            onPressed: _deleteSelected,
+          ),
+        ],
+      );
+    }
+
+    return SeamlessHeader(
+      title: "Journal",
+      subtitle: "My Memories",
+      icon: CupertinoIcons.book,
+      iconColor: Colors.blueAccent,
+      heroTagPrefix: 'journal',
+      actions: [
+        IconButton(
+          icon: Icon(
+            CupertinoIcons.checkmark_circle,
+            color: onSurfaceColor.withOpacity(0.54),
+          ),
+          onPressed: () => setState(() => _isSelectionMode = true),
+        ),
+        // SORT MENU
+        PopupMenuButton<JournalSortOption>(
+          icon: Icon(CupertinoIcons.slider_horizontal_3, color: onSurfaceColor),
+          tooltip: 'Sort Journal',
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          onSelected: (JournalSortOption result) {
+            setState(() {
+              _currentSort = result;
+              _applyFilters();
+            });
+          },
+          itemBuilder: (BuildContext context) =>
+              <PopupMenuEntry<JournalSortOption>>[
+                PopupMenuItem<JournalSortOption>(
+                  value: JournalSortOption.custom,
+                  child: Row(
                     children: [
-                      const Hero(
-                        tag: 'journal_icon',
-                        child: Icon(
-                          Icons.book_outlined,
-                          size: 28,
-                          color: Colors.blueAccent,
-                        ),
+                      Icon(
+                        CupertinoIcons.arrow_up_arrow_down,
+                        size: 18,
+                        color: _currentSort == JournalSortOption.custom
+                            ? FeatureColors.journal
+                            : null,
                       ),
-                      const SizedBox(width: 10),
-                      Hero(
-                        tag: 'journal_title',
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: Text(
-                            "Journal",
-                            style: theme.textTheme.titleLarge?.copyWith(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "Custom Order",
+                        style: TextStyle(
+                          color: _currentSort == JournalSortOption.custom
+                              ? FeatureColors.journal
+                              : null,
+                          fontWeight: _currentSort == JournalSortOption.custom
+                              ? FontWeight.bold
+                              : null,
                         ),
                       ),
                     ],
                   ),
-          ),
-          if (_isSelectionMode) ...[
-            IconButton(
-              icon: Icon(Icons.select_all, color: onSurfaceColor),
-              onPressed: _selectAll,
-            ),
-            IconButton(
-              icon: Icon(Icons.delete, color: errorColor),
-              onPressed: _deleteSelected,
-            ),
-          ] else ...[
-            IconButton(
-              icon: Icon(
-                Icons.check_circle_outline,
-                color: onSurfaceColor.withOpacity(0.54),
-              ),
-              onPressed: () => setState(() => _isSelectionMode = true),
-            ),
-            IconButton(
-              icon: Icon(Icons.filter_list, color: onSurfaceColor),
-              onPressed: _showFilterMenu,
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.delete_sweep_outlined,
-                color: Colors.redAccent,
-              ),
-              onPressed: _deleteAll,
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  // ✅ IMPROVED BOTTOM SHEET: Solid Background & StatefulBuilder
-  void _showFilterMenu() {
-    final theme = Theme.of(context);
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) => StatefulBuilder(
-        // Enables instant UI updates in sheet
-        builder: (context, setSheetState) {
-          return Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface, // Solid color
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(20),
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(2),
-                    ),
+                ),
+                PopupMenuItem<JournalSortOption>(
+                  value: JournalSortOption.dateNewest,
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.calendar_today,
+                        size: 18,
+                        color: _currentSort == JournalSortOption.dateNewest
+                            ? FeatureColors.journal
+                            : null,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "Newest First",
+                        style: TextStyle(
+                          color: _currentSort == JournalSortOption.dateNewest
+                              ? FeatureColors.journal
+                              : null,
+                          fontWeight:
+                              _currentSort == JournalSortOption.dateNewest
+                              ? FontWeight.bold
+                              : null,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 20),
-
-                Text(
-                  "Sort By",
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
+                PopupMenuItem<JournalSortOption>(
+                  value: JournalSortOption.dateOldest,
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.time,
+                        size: 18,
+                        color: _currentSort == JournalSortOption.dateOldest
+                            ? FeatureColors.journal
+                            : null,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "Oldest First",
+                        style: TextStyle(
+                          color: _currentSort == JournalSortOption.dateOldest
+                              ? FeatureColors.journal
+                              : null,
+                          fontWeight:
+                              _currentSort == JournalSortOption.dateOldest
+                              ? FontWeight.bold
+                              : null,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 16),
-
-                _buildSortOption(
-                  JournalSortOption.custom,
-                  "Custom Order (Drag & Drop)",
+                PopupMenuItem<JournalSortOption>(
+                  value: JournalSortOption.mood,
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.smiley,
+                        size: 18,
+                        color: _currentSort == JournalSortOption.mood
+                            ? FeatureColors.journal
+                            : null,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "By Mood",
+                        style: TextStyle(
+                          color: _currentSort == JournalSortOption.mood
+                              ? FeatureColors.journal
+                              : null,
+                          fontWeight: _currentSort == JournalSortOption.mood
+                              ? FontWeight.bold
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                _buildSortOption(JournalSortOption.dateNewest, "Newest First"),
-                _buildSortOption(JournalSortOption.dateOldest, "Oldest First"),
-                _buildSortOption(JournalSortOption.mood, "Group by Mood"),
               ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildSortOption(JournalSortOption option, String label) {
-    final selected = _currentSort == option;
-    final theme = Theme.of(context);
-
-    return InkWell(
-      onTap: () {
-        setState(() => _currentSort = option);
-        _applyFilters();
-        Navigator.pop(context);
-      },
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        child: Row(
-          children: [
-            Icon(
-              selected
-                  ? Icons.radio_button_checked
-                  : Icons.radio_button_unchecked,
-              color: selected
-                  ? theme.colorScheme.primary
-                  : theme.colorScheme.onSurface.withOpacity(0.5),
-            ),
-            const SizedBox(width: 16),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-                color: selected
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.onSurface,
-              ),
-            ),
-          ],
         ),
-      ),
+        IconButton(
+          icon: const Icon(CupertinoIcons.trash, color: Colors.redAccent),
+          onPressed: _deleteAll,
+        ),
+      ],
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:copyclip/src/features/expenses/data/expense_model.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 
 class ExpenseCard extends StatelessWidget {
   final Expense expense;
@@ -28,12 +30,14 @@ class ExpenseCard extends StatelessWidget {
     // ✅ OPTIMIZATION: High-performance Decoration
     final decoration = BoxDecoration(
       color: theme.colorScheme.surface.withOpacity(isSelected ? 0.3 : 0.15),
-      borderRadius: BorderRadius.circular(24),
+      borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
       border: Border.all(
         color: isSelected
             ? theme.colorScheme.primary
             : theme.colorScheme.outline.withOpacity(0.2), // Adaptive
-        width: 1.5,
+        width: isSelected
+            ? AppConstants.selectedBorderWidth
+            : AppConstants.borderWidth,
       ),
       boxShadow: [
         BoxShadow(
@@ -67,8 +71,8 @@ class ExpenseCard extends StatelessWidget {
                   ),
                   child: Icon(
                     expense.isIncome
-                        ? Icons.arrow_downward
-                        : Icons.arrow_upward,
+                        ? CupertinoIcons.arrow_down
+                        : CupertinoIcons.arrow_up,
                     color: expense.isIncome ? incomeColor : expenseColor,
                     size: 20,
                   ),
@@ -139,7 +143,7 @@ class ExpenseCard extends StatelessWidget {
               top: 10,
               right: 10,
               child: Icon(
-                Icons.check_circle,
+                CupertinoIcons.checkmark_circle_fill,
                 size: 16,
                 color: theme.colorScheme.primary,
               ),

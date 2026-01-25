@@ -527,107 +527,91 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     );
   }
 
-  // ✅ IMPROVED VISIBILITY: Solid Background Bottom Sheet
+  // ✅ IMPROVED VISIBILITY: Dialog for Sort & Filter
   void _showSortFilterSheet() {
     final theme = Theme.of(context);
-    showModalBottomSheet(
+    showDialog(
       context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
       builder: (context) => StatefulBuilder(
         builder: (context, setSheetState) {
-          return Container(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 30),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(24),
-              ),
+          return AlertDialog(
+            backgroundColor: theme.colorScheme.surface,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
+                const Text("Sort & Filter"),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _sortBy = "Newest";
+                      _dateRange = "All Time";
+                      _filterColor = null;
+                    });
+                    _applyFilters();
+                    setSheetState(() {});
+                    // Don't close, just reset
+                  },
+                  child: const Text("Reset"),
                 ),
-                const SizedBox(height: 20),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Sort & Filter",
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          _sortBy = "Newest";
-                          _dateRange = "All Time";
-                          _filterColor = null;
-                        });
-                        _applyFilters();
-                        Navigator.pop(context);
-                      },
-                      child: const Text("Reset"),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-                _sheetSectionTitle("Sort Order"),
-                Wrap(
-                  spacing: 8,
-                  children: ["Newest", "Oldest", "A-Z"]
-                      .map(
-                        (s) => ChoiceChip(
-                          label: Text(s),
-                          selected: _sortBy == s,
-                          onSelected: (v) {
-                            setSheetState(() => _sortBy = s);
-                            setState(() => _sortBy = s);
-                            _applyFilters();
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),
-
-                const SizedBox(height: 16),
-                _sheetSectionTitle("Timeframe"),
-                Wrap(
-                  spacing: 8,
-                  children: ["All Time", "Today", "This Week"]
-                      .map(
-                        (d) => ChoiceChip(
-                          label: Text(d),
-                          selected: _dateRange == d,
-                          onSelected: (v) {
-                            setSheetState(() => _dateRange = d);
-                            setState(() => _dateRange = d);
-                            _applyFilters();
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),
-
-                const SizedBox(height: 16),
-                _sheetSectionTitle("Color Tag"),
-                _buildColorFilterRow(setSheetState),
-                const SizedBox(height: 24),
               ],
             ),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _sheetSectionTitle("Sort Order"),
+                  Wrap(
+                    spacing: 8,
+                    children: ["Newest", "Oldest", "A-Z"]
+                        .map(
+                          (s) => ChoiceChip(
+                            label: Text(s),
+                            selected: _sortBy == s,
+                            onSelected: (v) {
+                              setSheetState(() => _sortBy = s);
+                              setState(() => _sortBy = s);
+                              _applyFilters();
+                            },
+                          ),
+                        )
+                        .toList(),
+                  ),
+
+                  const SizedBox(height: 16),
+                  _sheetSectionTitle("Timeframe"),
+                  Wrap(
+                    spacing: 8,
+                    children: ["All Time", "Today", "This Week"]
+                        .map(
+                          (d) => ChoiceChip(
+                            label: Text(d),
+                            selected: _dateRange == d,
+                            onSelected: (v) {
+                              setSheetState(() => _dateRange = d);
+                              setState(() => _dateRange = d);
+                              _applyFilters();
+                            },
+                          ),
+                        )
+                        .toList(),
+                  ),
+
+                  const SizedBox(height: 16),
+                  _sheetSectionTitle("Color Tag"),
+                  _buildColorFilterRow(setSheetState),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Done"),
+              ),
+            ],
           );
         },
       ),

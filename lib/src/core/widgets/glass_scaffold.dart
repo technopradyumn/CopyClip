@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,13 +9,15 @@ import 'ad_widget/banner_ad_widget.dart';
 class GlassScaffold extends StatelessWidget {
   final Widget body;
   final Widget? floatingActionButton;
-  final String? title;
+  final dynamic title;
   final List<Widget>? actions;
   final bool showBackArrow;
   final Color? backgroundColor;
   // enableGlassEffect is now ignored for performance, or used to toggle gradients
   final bool enableGlassEffect;
   final bool resizeToAvoidBottomInset;
+  final bool centerTitle;
+  final double? titleSpacing;
 
   const GlassScaffold({
     super.key,
@@ -25,6 +29,8 @@ class GlassScaffold extends StatelessWidget {
     this.backgroundColor,
     this.enableGlassEffect = true,
     this.resizeToAvoidBottomInset = true,
+    this.centerTitle = true,
+    this.titleSpacing,
   });
 
   @override
@@ -49,25 +55,28 @@ class GlassScaffold extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
                 elevation: 0,
-                centerTitle: true,
+                centerTitle: centerTitle,
+                titleSpacing: titleSpacing,
                 systemOverlayStyle: overlayStyle,
                 leading: showBackArrow
                     ? IconButton(
                         icon: Icon(
-                          Icons.arrow_back_ios_new,
+                          CupertinoIcons.back,
                           size: 20,
                           color: contentColor,
                         ),
                         onPressed: () => context.pop(),
                       )
                     : null,
-                title: Text(
-                  title!,
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    color: contentColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                title: title is Widget
+                    ? title as Widget
+                    : Text(
+                        title.toString(),
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          color: contentColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                 actions: actions,
               )
             : null,

@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:copyclip/src/core/utils/widget_sync_service.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 
 import '../../../../core/widgets/glass_dialog.dart';
 
@@ -262,8 +263,11 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
             child: Container(
               constraints: const BoxConstraints(maxHeight: 200),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: theme.dividerColor),
+                borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+                border: Border.all(
+                  color: theme.dividerColor,
+                  width: AppConstants.borderWidth,
+                ),
                 color: bgColor,
               ),
               child: ListView.builder(
@@ -313,8 +317,11 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
           margin: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: theme.colorScheme.surface.withOpacity(0.95),
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: theme.dividerColor),
+            borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+            border: Border.all(
+              color: theme.dividerColor,
+              width: AppConstants.borderWidth,
+            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.5),
@@ -509,12 +516,36 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
       behavior: HitTestBehavior.opaque,
       child: GlassScaffold(
         showBackArrow: true,
-        title: widget.todo == null ? 'New Task' : 'Edit Task',
+        title: Row(
+          children: [
+            const Hero(
+              tag: 'todos_icon',
+              child: Icon(
+                CupertinoIcons.list_bullet_indent,
+                size: 22,
+                color: Colors.blueAccent,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Hero(
+              tag: 'todos_title',
+              child: Material(
+                type: MaterialType.transparency,
+                child: Text(
+                  widget.todo == null ? 'New Task' : 'Edit Task',
+                  style: textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
         actions: [
           IconButton(
             onPressed: _undoStack.length > 1 ? _undo : null,
             icon: Icon(
-              Icons.undo,
+              CupertinoIcons.arrow_counterclockwise,
               color: _undoStack.length > 1
                   ? colorScheme.onSurface
                   : colorScheme.onSurface.withOpacity(0.3),
@@ -524,7 +555,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
           IconButton(
             onPressed: _redoStack.isNotEmpty ? _redo : null,
             icon: Icon(
-              Icons.redo,
+              CupertinoIcons.arrow_clockwise,
               color: _redoStack.isNotEmpty
                   ? colorScheme.onSurface
                   : colorScheme.onSurface.withOpacity(0.3),
@@ -532,10 +563,29 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
             tooltip: 'Redo',
           ),
           if (widget.todo != null)
-            IconButton(
-              onPressed: _deleteTodo,
-              icon: Icon(Icons.delete_outline, color: colorScheme.error),
-              tooltip: 'Delete Task',
+            PopupMenuButton<String>(
+              icon: Icon(
+                CupertinoIcons.ellipsis_vertical,
+                color: colorScheme.onSurface,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              onSelected: (val) {
+                if (val == 'delete') _deleteTodo();
+              },
+              itemBuilder: (context) => [
+                const PopupMenuItem(
+                  value: 'delete',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.delete, size: 18, color: Colors.red),
+                      SizedBox(width: 12),
+                      Text("Delete Task", style: TextStyle(color: Colors.red)),
+                    ],
+                  ),
+                ),
+              ],
             ),
         ],
         body: SingleChildScrollView(
@@ -566,14 +616,16 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                         filled: true,
                         fillColor: colorScheme.onSurface.withOpacity(0.08),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(
+                            AppConstants.cornerRadius * 0.5,
+                          ),
                           borderSide: BorderSide.none,
                         ),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _isDropdownOpen
-                                ? Icons.arrow_drop_up
-                                : Icons.arrow_drop_down,
+                                ? CupertinoIcons.chevron_up
+                                : CupertinoIcons.chevron_down,
                             color: colorScheme.onSurface.withOpacity(0.54),
                           ),
                           onPressed: () {
@@ -618,7 +670,9 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                       filled: true,
                       fillColor: colorScheme.onSurface.withOpacity(0.08),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(
+                          AppConstants.cornerRadius * 0.5,
+                        ),
                         borderSide: BorderSide.none,
                       ),
                       hintText: 'Enter task details...',
@@ -640,7 +694,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.calendar_month,
+                      CupertinoIcons.calendar,
                       color: _selectedDate == null
                           ? colorScheme.onSurface.withOpacity(0.54)
                           : colorScheme.error,
@@ -723,7 +777,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                     Row(
                       children: [
                         Icon(
-                          Icons.repeat,
+                          CupertinoIcons.repeat,
                           color: _repeatInterval != null
                               ? colorScheme.primary
                               : colorScheme.onSurface.withOpacity(0.54),
@@ -881,8 +935,8 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                   children: [
                     Icon(
                       _isDone
-                          ? Icons.check_circle
-                          : Icons.radio_button_unchecked,
+                          ? CupertinoIcons.check_mark_circled_solid
+                          : CupertinoIcons.circle,
                       color: _isDone
                           ? colorScheme.primary
                           : colorScheme.onSurface.withOpacity(0.54),
@@ -928,7 +982,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          icon: Icon(Icons.save, color: colorScheme.onPrimary),
+          icon: Icon(CupertinoIcons.check_mark, color: colorScheme.onPrimary),
         ),
       ),
     );

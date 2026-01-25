@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 
 class TodoCard extends StatelessWidget {
   final Todo todo;
@@ -79,12 +81,14 @@ class TodoCard extends StatelessWidget {
                     color: _getBackgroundColor(
                       colorScheme,
                     ), // Original logic preserved
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.cornerRadius,
+                    ),
                     border: Border.all(
                       color: _getBorderColor(
                         colorScheme,
                       ), // Original logic preserved
-                      width: 1,
+                      width: AppConstants.borderWidth,
                     ),
                   ),
                   child: Column(
@@ -112,7 +116,7 @@ class TodoCard extends StatelessWidget {
                                 ),
                                 child: todo.isDone
                                     ? Icon(
-                                        Icons.check,
+                                        CupertinoIcons.checkmark,
                                         size: 14,
                                         color: colorScheme.onPrimary,
                                       )
@@ -153,7 +157,7 @@ class TodoCard extends StatelessWidget {
                           child: Row(
                             children: [
                               Icon(
-                                Icons.access_time,
+                                CupertinoIcons.time,
                                 size: 12,
                                 color: stateColor,
                               ),
@@ -174,7 +178,7 @@ class TodoCard extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8),
                                   child: Icon(
-                                    Icons.notifications_active,
+                                    CupertinoIcons.bell_fill,
                                     size: 12,
                                     // ✅ Fix: Blue only if Future
                                     color: stateColor,
@@ -186,7 +190,7 @@ class TodoCard extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       Icon(
-                                        Icons.repeat,
+                                        CupertinoIcons.repeat,
                                         size: 12,
                                         color: stateColor,
                                       ),
@@ -214,7 +218,7 @@ class TodoCard extends StatelessWidget {
                     top: 8,
                     right: 8,
                     child: Icon(
-                      Icons.check_circle,
+                      CupertinoIcons.checkmark_circle_fill,
                       color: colorScheme.primary,
                       size: 20,
                     ),

@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:copyclip/src/features/journal/presentation/designs/journal_design_registry.dart'; // Registry
 import 'package:copyclip/src/features/journal/presentation/widgets/design_picker_sheet.dart'; // Picker
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:copyclip/src/features/journal/data/journal_model.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 
 class JournalCard extends StatelessWidget {
   final JournalEntry entry;
@@ -109,10 +111,10 @@ class JournalCard extends StatelessWidget {
 
     // Asymmetric Radius: Spine (Left) small, Open (Right) large
     final borderRadius = const BorderRadius.only(
-      topLeft: Radius.circular(4),
-      bottomLeft: Radius.circular(4),
-      topRight: Radius.circular(16),
-      bottomRight: Radius.circular(16),
+      topLeft: const Radius.circular(4),
+      bottomLeft: const Radius.circular(4),
+      topRight: Radius.circular(AppConstants.cornerRadius),
+      bottomRight: Radius.circular(AppConstants.cornerRadius),
     );
 
     return GestureDetector(
@@ -134,7 +136,9 @@ class JournalCard extends StatelessWidget {
                   : (theme.brightness == Brightness.dark
                         ? Colors.white.withOpacity(0.1)
                         : Colors.black.withOpacity(0.1)),
-              width: isSelected ? 3.0 : 0.8,
+              width: isSelected
+                  ? AppConstants.selectedBorderWidth
+                  : AppConstants.borderWidth,
             ),
             boxShadow: [
               BoxShadow(
@@ -181,7 +185,7 @@ class JournalCard extends StatelessWidget {
                           color: Colors.transparent,
                           child: PopupMenuButton<String>(
                             icon: Icon(
-                              Icons.more_vert,
+                              CupertinoIcons.ellipsis_vertical,
                               color: contentColor.withOpacity(0.6),
                               size: 20,
                             ),
@@ -206,7 +210,7 @@ class JournalCard extends StatelessWidget {
                                 value: 'design',
                                 child: Row(
                                   children: [
-                                    Icon(Icons.palette_outlined),
+                                    Icon(CupertinoIcons.paintbrush),
                                     SizedBox(width: 8),
                                     Text("Change Design"),
                                   ],
@@ -216,7 +220,7 @@ class JournalCard extends StatelessWidget {
                                 value: 'copy',
                                 child: Row(
                                   children: [
-                                    Icon(Icons.copy),
+                                    Icon(CupertinoIcons.doc_on_doc),
                                     SizedBox(width: 8),
                                     Text("Copy"),
                                   ],
@@ -226,7 +230,7 @@ class JournalCard extends StatelessWidget {
                                 value: 'share',
                                 child: Row(
                                   children: [
-                                    Icon(Icons.share),
+                                    Icon(CupertinoIcons.share),
                                     SizedBox(width: 8),
                                     Text("Share"),
                                   ],
@@ -236,7 +240,10 @@ class JournalCard extends StatelessWidget {
                                 value: 'delete',
                                 child: Row(
                                   children: [
-                                    Icon(Icons.delete, color: Colors.red),
+                                    Icon(
+                                      CupertinoIcons.trash,
+                                      color: Colors.red,
+                                    ),
                                     SizedBox(width: 8),
                                     Text(
                                       "Delete",
@@ -273,7 +280,9 @@ class JournalCard extends StatelessWidget {
                           margin: const EdgeInsets.only(bottom: 6),
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(
+                              AppConstants.cornerRadius * 0.5,
+                            ),
                             image: DecorationImage(
                               image: FileImage(File(imageUrl)),
                               fit: BoxFit.cover,
@@ -304,7 +313,7 @@ class JournalCard extends StatelessWidget {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.tag,
+                              CupertinoIcons.tag,
                               size: 12,
                               color: contentColor.withOpacity(0.5),
                             ),
@@ -330,7 +339,7 @@ class JournalCard extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Icon(
-                            Icons.check_circle,
+                            CupertinoIcons.checkmark_circle_fill,
                             color: theme.colorScheme.primary,
                             size: 20,
                           ),

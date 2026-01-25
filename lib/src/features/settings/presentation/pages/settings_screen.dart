@@ -13,6 +13,9 @@ import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import 'package:copyclip/src/core/widgets/seamless_header.dart';
+import 'package:copyclip/src/core/const/constant.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -359,8 +362,11 @@ class _SettingsScreenState extends State<SettingsScreen>
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
             color: theme.colorScheme.surface.withOpacity(0.95),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+            borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+            border: Border.all(
+              color: theme.dividerColor.withOpacity(0.1),
+              width: AppConstants.borderWidth,
+            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
@@ -372,7 +378,9 @@ class _SettingsScreenState extends State<SettingsScreen>
           child: Row(
             children: [
               Icon(
-                isError ? Icons.error_outline : Icons.check_circle_outline,
+                isError
+                    ? CupertinoIcons.exclamationmark_circle
+                    : CupertinoIcons.checkmark_circle,
                 color: color,
               ),
               const SizedBox(width: 12),
@@ -476,44 +484,44 @@ class _SettingsScreenState extends State<SettingsScreen>
       {
         'id': 'notes',
         'title': 'Notes',
-        'icon': Icons.note_alt_outlined,
-        'color': Colors.amberAccent,
+        'icon': CupertinoIcons.doc_text,
+        'color': FeatureColors.notes,
       },
       {
         'id': 'todos',
         'title': 'To-Dos',
-        'icon': Icons.check_circle_outline,
-        'color': Colors.greenAccent,
+        'icon': CupertinoIcons.checkmark_circle,
+        'color': FeatureColors.todos,
       },
       {
         'id': 'expenses',
         'title': 'Expense',
-        'icon': Icons.attach_money,
-        'color': Colors.redAccent,
+        'icon': CupertinoIcons.money_dollar,
+        'color': FeatureColors.expenses,
       },
       {
         'id': 'journal',
         'title': 'Journal',
-        'icon': Icons.book_outlined,
-        'color': Colors.blueAccent,
+        'icon': CupertinoIcons.book,
+        'color': FeatureColors.journal,
       },
       {
         'id': 'calendar',
         'title': 'Calendar',
-        'icon': Icons.calendar_today_outlined,
-        'color': Colors.orangeAccent,
+        'icon': CupertinoIcons.calendar,
+        'color': FeatureColors.calendar,
       },
       {
         'id': 'clipboard',
         'title': 'Clipboard',
-        'icon': Icons.paste,
-        'color': Colors.purpleAccent,
+        'icon': CupertinoIcons.doc_on_clipboard,
+        'color': FeatureColors.clipboard,
       },
       {
         'id': 'canvas',
         'title': 'Canvas',
-        'icon': Icons.gesture,
-        'color': Colors.tealAccent,
+        'icon': CupertinoIcons.hand_draw,
+        'color': FeatureColors.canvas,
       },
     ];
 
@@ -538,8 +546,13 @@ class _SettingsScreenState extends State<SettingsScreen>
                 width: 70,
                 decoration: BoxDecoration(
                   color: color.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: color.withOpacity(0.3)),
+                  borderRadius: BorderRadius.circular(
+                    AppConstants.cornerRadius * 0.5,
+                  ),
+                  border: Border.all(
+                    color: color.withOpacity(0.3),
+                    width: AppConstants.borderWidth,
+                  ),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -573,10 +586,10 @@ class _SettingsScreenState extends State<SettingsScreen>
     return _SectionCard(
       color: Colors.amber,
       child: ListTile(
-        leading: const Icon(Icons.workspace_premium, color: Colors.amber),
+        leading: const Icon(CupertinoIcons.star_fill, color: Colors.amber),
         title: const Text("Premium Features"),
         subtitle: const Text("Manage coins, ads, and premium status"),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+        trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
         onTap: () => context.push(AppRouter.premium),
       ),
     );
@@ -594,7 +607,7 @@ class _SettingsScreenState extends State<SettingsScreen>
       child: Stack(
         children: [
           ListTile(
-            leading: Icon(Icons.content_paste, color: primaryColor),
+            leading: Icon(CupertinoIcons.doc_on_clipboard, color: primaryColor),
             title: Text(
               "Auto-save Clipboard",
               style: theme.textTheme.bodyLarge,
@@ -634,7 +647,11 @@ class _SettingsScreenState extends State<SettingsScreen>
             const Positioned(
               top: 0,
               right: 0,
-              child: Icon(Icons.lock, size: 14, color: Colors.amber),
+              child: Icon(
+                CupertinoIcons.lock_fill,
+                size: 14,
+                color: Colors.amber,
+              ),
             ),
         ],
       ),
@@ -653,13 +670,13 @@ class _SettingsScreenState extends State<SettingsScreen>
       child: Column(
         children: [
           ListTile(
-            leading: Icon(Icons.brightness_6, color: primaryColor),
+            leading: Icon(CupertinoIcons.sun_max, color: primaryColor),
             title: Text("Theme Mode", style: theme.textTheme.bodyLarge),
             trailing: _ThemeDropdown(manager: themeManager),
           ),
           const Divider(indent: 50),
           ListTile(
-            leading: Icon(Icons.palette, color: primaryColor),
+            leading: Icon(CupertinoIcons.paintbrush, color: primaryColor),
             title: Text("Accent Color", style: theme.textTheme.bodyLarge),
           ),
           Padding(
@@ -683,7 +700,9 @@ class _SettingsScreenState extends State<SettingsScreen>
         valueListenable: state._notificationEnabledNotifier,
         builder: (context, isEnabled, _) => ListTile(
           leading: Icon(
-            isEnabled ? Icons.notifications_active : Icons.notifications_off,
+            isEnabled
+                ? CupertinoIcons.bell_fill
+                : CupertinoIcons.bell_slash_fill,
             color: primaryColor,
           ),
           title: Text("Push Notifications", style: theme.textTheme.bodyLarge),
@@ -712,7 +731,7 @@ class _SettingsScreenState extends State<SettingsScreen>
     return _SectionCard(
       color: primaryColor,
       child: ListTile(
-        leading: Icon(Icons.delete_sweep_outlined, color: primaryColor),
+        leading: Icon(CupertinoIcons.trash, color: primaryColor),
         title: Text("Recycle Bin", style: theme.textTheme.bodyLarge),
         subtitle: Text(
           "${state._getTrashCount()} items • Auto-deletes in 30 days",
@@ -720,7 +739,7 @@ class _SettingsScreenState extends State<SettingsScreen>
             color: theme.colorScheme.onSurface.withOpacity(0.5),
           ),
         ),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+        trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
         onTap: () async {
           await Navigator.push(
             context,
@@ -743,13 +762,13 @@ class _SettingsScreenState extends State<SettingsScreen>
       child: Column(
         children: [
           ListTile(
-            leading: Icon(Icons.upload_file, color: primaryColor),
+            leading: Icon(CupertinoIcons.cloud_upload, color: primaryColor),
             title: Text("Export Data", style: theme.textTheme.bodyLarge),
             onTap: state._showExportDialog,
           ),
           const Divider(indent: 50),
           ListTile(
-            leading: Icon(Icons.download, color: primaryColor),
+            leading: Icon(CupertinoIcons.cloud_download, color: primaryColor),
             title: Text("Import Data", style: theme.textTheme.bodyLarge),
             onTap: state._showImportDialog,
           ),
@@ -767,7 +786,7 @@ class _SettingsScreenState extends State<SettingsScreen>
     return _SectionCard(
       color: primaryColor,
       child: ListTile(
-        leading: Icon(Icons.feedback_outlined, color: primaryColor),
+        leading: Icon(CupertinoIcons.chat_bubble_2, color: primaryColor),
         title: Text("Send Feedback", style: theme.textTheme.bodyLarge),
         subtitle: Text(
           "Help us improve",
@@ -775,7 +794,7 @@ class _SettingsScreenState extends State<SettingsScreen>
             color: theme.colorScheme.onSurface.withOpacity(0.5),
           ),
         ),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+        trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
         onTap: () => context.push(AppRouter.feedback),
       ),
     );
@@ -800,9 +819,9 @@ class _SettingsScreenState extends State<SettingsScreen>
     return _SectionCard(
       color: primaryColor,
       child: ListTile(
-        leading: Icon(Icons.privacy_tip_outlined, color: primaryColor),
+        leading: Icon(CupertinoIcons.lock_shield, color: primaryColor),
         title: Text("Privacy Policy", style: theme.textTheme.bodyLarge),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+        trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
         onTap: () => context.push(AppRouter.privacyPolicy),
       ),
     );
@@ -841,7 +860,7 @@ class _SettingsScreenState extends State<SettingsScreen>
               "Open Source Licenses",
               style: theme.textTheme.bodyLarge,
             ),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+            trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
             onTap: () {
               showLicensePage(
                 context: context,
@@ -864,14 +883,17 @@ class _SettingsScreenState extends State<SettingsScreen>
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: onSurfaceColor.withOpacity(0.03),
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: onSurfaceColor.withOpacity(0.05)),
+          borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 1.5),
+          border: Border.all(
+            color: onSurfaceColor.withOpacity(0.05),
+            width: AppConstants.borderWidth,
+          ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              Icons.auto_awesome,
+              CupertinoIcons.sparkles,
               size: 12,
               color: primaryColor.withOpacity(0.6),
             ),
@@ -899,9 +921,12 @@ class _SettingsScreenState extends State<SettingsScreen>
       showBackArrow: false,
       body: Column(
         children: [
-          _TopBar(
-            rotationController: _rotationController,
-            onBackPressed: () => context.pop(),
+          SeamlessHeader(
+            title: "Settings",
+            subtitle: "Customize Your Experience",
+            icon: CupertinoIcons.settings,
+            iconColor: theme.colorScheme.primary,
+            heroTagPrefix: 'settings',
           ),
           Expanded(
             child: CustomScrollView(
@@ -943,43 +968,6 @@ class _SettingsScreenState extends State<SettingsScreen>
 
 // --- Extracted Widgets ---
 
-class _TopBar extends StatelessWidget {
-  const _TopBar({
-    required this.rotationController,
-    required this.onBackPressed,
-  });
-  final AnimationController rotationController;
-  final VoidCallback onBackPressed;
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final primaryColor = theme.colorScheme.primary;
-    return Padding(
-      padding: const EdgeInsets.only(left: 24, right: 24, bottom: 10),
-      child: Row(
-        children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back_ios_new, color: theme.iconTheme.color),
-            onPressed: onBackPressed,
-          ),
-          const SizedBox(width: 8),
-          Hero(
-            tag: 'settings_icon',
-            child: Icon(Icons.settings_outlined, size: 32, color: primaryColor),
-          ),
-          const SizedBox(width: 12),
-          Text(
-            "Settings",
-            style: theme.textTheme.headlineLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _SectionHeader extends StatelessWidget {
   const _SectionHeader({required this.title, required this.color});
   final String title;
@@ -1010,13 +998,13 @@ class _SectionCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: color.withOpacity(0.12),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
         border: Border.all(
           // ✅ FIX: Use dynamic border color based on theme/color
           color: isDark
               ? Colors.white.withOpacity(0.1)
               : color.withOpacity(0.3),
-          width: 1,
+          width: AppConstants.borderWidth,
         ),
       ),
       padding: const EdgeInsets.all(4),
@@ -1033,7 +1021,7 @@ class _ThemeDropdown extends StatelessWidget {
     return DropdownButtonHideUnderline(
       child: DropdownButton<ThemeMode>(
         value: manager.themeMode,
-        icon: const Icon(Icons.arrow_drop_down),
+        icon: const Icon(CupertinoIcons.chevron_down),
         onChanged: (mode) => mode != null ? manager.setThemeMode(mode) : null,
         items: const [
           DropdownMenuItem(value: ThemeMode.system, child: Text("System")),
@@ -1090,7 +1078,11 @@ class _ColorDot extends StatelessWidget {
               : null,
         ),
         child: isSelected
-            ? const Icon(Icons.check, size: 18, color: Colors.black)
+            ? const Icon(
+                CupertinoIcons.checkmark,
+                size: 18,
+                color: Colors.black,
+              )
             : null,
       ),
     );
@@ -1117,7 +1109,11 @@ class _CreditsContent extends StatelessWidget {
           CircleAvatar(
             radius: 40,
             backgroundColor: primaryColor.withOpacity(0.2),
-            child: Icon(Icons.person, size: 40, color: primaryColor),
+            child: Icon(
+              CupertinoIcons.person_fill,
+              size: 40,
+              color: primaryColor,
+            ),
           ),
           const SizedBox(height: 12),
           Text(
@@ -1154,7 +1150,7 @@ class _CreditsContent extends StatelessWidget {
             children: [
               Flexible(
                 child: _SocialButton(
-                  icon: Icons.work_outline,
+                  icon: CupertinoIcons.briefcase,
                   label: "LinkedIn",
                   color: const Color(0xFF0077B5),
                   onTap: () => _launchURL(
@@ -1166,7 +1162,7 @@ class _CreditsContent extends StatelessWidget {
               const SizedBox(width: 12),
               Flexible(
                 child: _SocialButton(
-                  icon: Icons.camera_alt_outlined,
+                  icon: CupertinoIcons.camera,
                   label: "Instagram",
                   color: const Color(0xFFE4405F),
                   onTap: () => _launchURL(
@@ -1202,8 +1198,11 @@ class _SocialButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withOpacity(0.3)),
+          borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 0.5),
+          border: Border.all(
+            color: color.withOpacity(0.3),
+            width: AppConstants.borderWidth,
+          ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,

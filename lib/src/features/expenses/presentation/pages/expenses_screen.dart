@@ -1,16 +1,20 @@
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 
 // Core Widgets
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
+import 'package:copyclip/src/core/services/interstitial_ad_service.dart';
 
 // Data
 import 'package:copyclip/src/features/expenses/data/expense_model.dart';
@@ -66,10 +70,17 @@ class _ExpensesScreenState extends State<ExpensesScreen>
   // Chart Interaction
   int _touchedIndexPie = -1;
 
+  // Interstitial Ad Service
+  final InterstitialAdService _adService = InterstitialAdService();
+  bool _hasShownAdForAnalytics = false;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    // Listen for Analytics tab access
+    _tabController.addListener(_onTabChanged);
 
     // ✅ Initialize the future ONCE here.
     // This prevents the "loading" flicker when scrolling or tapping.
@@ -90,6 +101,27 @@ class _ExpensesScreenState extends State<ExpensesScreen>
         _searchQuery = _searchController.text.toLowerCase();
       });
     });
+
+    // Load interstitial ad for analytics tab
+    _adService.loadAd();
+  }
+
+  void _onTabChanged() {
+    // When user switches to Analytics tab (index 1), show ad
+    if (_tabController.index == 1 && !_hasShownAdForAnalytics) {
+      // Immediately switch back to list tab
+      _tabController.index = 0;
+
+      // Show ad, then switch to analytics on completion
+      _adService.showAd(() {
+        if (mounted) {
+          setState(() {
+            _hasShownAdForAnalytics = true;
+            _tabController.index = 1; // Switch to analytics tab
+          });
+        }
+      });
+    }
   }
 
   /// ✅ Robust Open Logic: Handles if main.dart failed or data is corrupted
@@ -117,10 +149,14 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       );
   }
 
+  // ============ INTERSTITIAL AD FOR ANALYTICS TAB ============
+  // Using centralized InterstitialAdService
+
   @override
   void dispose() {
     _searchController.dispose();
     _tabController.dispose();
+    // Ad service is singleton, no need to dispose
     super.dispose();
   }
 
@@ -346,9 +382,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push(AppRouter.expenseEdit),
-        backgroundColor: theme.colorScheme.primary,
+        backgroundColor: FeatureColors.expenses,
         elevation: 4,
-        icon: Icon(Icons.add, color: theme.colorScheme.onPrimary),
+        icon: Icon(CupertinoIcons.add, color: theme.colorScheme.onPrimary),
         label: Text(
           "New $_selectedCurrency",
           style: TextStyle(
@@ -363,387 +399,369 @@ class _ExpensesScreenState extends State<ExpensesScreen>
   // ✅ UPDATED: No longer requires list argument
   Widget _buildTopBar() {
     final theme = Theme.of(context);
+    final onSurfaceColor = theme.colorScheme.onSurface;
 
     if (_isSearching) {
-      return SafeArea(
-        bottom: false,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: _kPadding, vertical: 8),
-          child: Container(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface.withOpacity(0.9),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
-            ),
-            child: TextField(
-              controller: _searchController,
-              autofocus: true,
-              style: theme.textTheme.bodyLarge,
-              decoration: InputDecoration(
-                prefixIcon: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: theme.colorScheme.onSurface,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isSearching = false;
-                      _searchQuery = "";
-                      _searchController.clear();
-                    });
-                  },
+      return SeamlessHeader(
+        title: "",
+        heroTagPrefix: 'expenses',
+        showBackButton: true,
+        onBackTap: () => setState(() {
+          _isSearching = false;
+          _searchQuery = "";
+          _searchController.clear();
+        }),
+        actions: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: TextField(
+                controller: _searchController,
+                autofocus: true,
+                style: theme.textTheme.bodyLarge,
+                decoration: InputDecoration(
+                  hintText: "Search in $_selectedCurrency...",
+                  hintStyle: TextStyle(color: onSurfaceColor.withOpacity(0.5)),
+                  border: InputBorder.none,
                 ),
-                hintText: "Search in $_selectedCurrency...",
-                hintStyle: TextStyle(
-                  color: theme.colorScheme.onSurface.withOpacity(0.5),
-                ),
-                border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(vertical: 14),
               ),
             ),
           ),
-        ),
+        ],
       );
     }
 
-    return SafeArea(
-      bottom: false,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: _kPadding, vertical: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    color: theme.colorScheme.onSurface,
+    return SeamlessHeader(
+      title: "Expense",
+      subtitle: _getPeriodTitle(),
+      icon: CupertinoIcons.money_dollar,
+      iconColor: Colors.redAccent,
+      heroTagPrefix: 'expenses',
+      actions: [
+        IconButton(
+          icon: Icon(CupertinoIcons.search, color: onSurfaceColor),
+          onPressed: () => setState(() => _isSearching = true),
+        ),
+        if (_isSelectionMode)
+          IconButton(
+            icon: const Icon(CupertinoIcons.delete, color: Colors.redAccent),
+            onPressed: _deleteSelected,
+          )
+        else
+          PopupMenuButton<dynamic>(
+            icon: Icon(
+              CupertinoIcons.slider_horizontal_3,
+              color: onSurfaceColor,
+            ),
+            tooltip: 'Sort & Filter',
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            onSelected: (dynamic result) {
+              if (result is ExpenseSort) {
+                setState(() {
+                  _currentSort = result;
+                  // Auto-reset filters if sorting changes? No, keep filters.
+                });
+              } else if (result == 'filter') {
+                // Open Filter Dialog
+                if (Hive.isBoxOpen('expenses_box')) {
+                  final list = Hive.box<Expense>(
+                    'expenses_box',
+                  ).values.toList();
+                  _showFilterDialog(list);
+                }
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<dynamic>>[
+              // SORTING SECTION
+              const PopupMenuItem<dynamic>(
+                enabled: false,
+                child: Text(
+                  'SORT BY',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey,
                   ),
-                  onPressed: () => context.pop(),
                 ),
-                // ✅ HERO TAG 1
-                Hero(
-                  tag: 'expenses_icon',
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.redAccent.withOpacity(0.2),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.attach_money,
-                      color: Colors.redAccent,
-                      size: 24,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              PopupMenuItem<dynamic>(
+                value: ExpenseSort.newest,
+                child: Row(
                   children: [
-                    // ✅ HERO TAG 2
-                    Hero(
-                      tag: 'expenses_title',
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: Text(
-                          "Expense",
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.onSurface,
-                          ),
-                        ),
-                      ),
+                    Icon(
+                      CupertinoIcons.calendar_today,
+                      size: 18,
+                      color: _currentSort == ExpenseSort.newest
+                          ? FeatureColors.expenses
+                          : null,
                     ),
+                    const SizedBox(width: 12),
                     Text(
-                      _getPeriodTitle(),
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
+                      "Newest First",
+                      style: TextStyle(
+                        color: _currentSort == ExpenseSort.newest
+                            ? FeatureColors.expenses
+                            : null,
+                        fontWeight: _currentSort == ExpenseSort.newest
+                            ? FontWeight.bold
+                            : null,
                       ),
                     ),
                   ],
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.search, color: theme.colorScheme.onSurface),
-                  onPressed: () => setState(() => _isSearching = true),
-                ),
-                if (_isSelectionMode)
-                  IconButton(
-                    icon: const Icon(Icons.delete, color: Colors.redAccent),
-                    onPressed: _deleteSelected,
-                  )
-                else
-                  IconButton(
-                    icon: Icon(
-                      Icons.filter_list,
-                      color: theme.colorScheme.onSurface,
+              ),
+              PopupMenuItem<dynamic>(
+                value: ExpenseSort.oldest,
+                child: Row(
+                  children: [
+                    Icon(
+                      CupertinoIcons.time,
+                      size: 18,
+                      color: _currentSort == ExpenseSort.oldest
+                          ? FeatureColors.expenses
+                          : null,
                     ),
-                    onPressed: () {
-                      // ✅ LAZY LOAD DATA: Only fetch list when filter is clicked
-                      if (Hive.isBoxOpen('expenses_box')) {
-                        final list = Hive.box<Expense>(
-                          'expenses_box',
-                        ).values.toList();
-                        _showFilterMenu(list);
-                      }
-                    },
-                  ),
-              ],
-            ),
-          ],
-        ),
-      ),
+                    const SizedBox(width: 12),
+                    Text(
+                      "Oldest First",
+                      style: TextStyle(
+                        color: _currentSort == ExpenseSort.oldest
+                            ? FeatureColors.expenses
+                            : null,
+                        fontWeight: _currentSort == ExpenseSort.oldest
+                            ? FontWeight.bold
+                            : null,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem<dynamic>(
+                value: ExpenseSort.amountHigh,
+                child: Row(
+                  children: [
+                    Icon(
+                      CupertinoIcons.arrow_up,
+                      size: 18,
+                      color: _currentSort == ExpenseSort.amountHigh
+                          ? FeatureColors.expenses
+                          : null,
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      "Highest Amount",
+                      style: TextStyle(
+                        color: _currentSort == ExpenseSort.amountHigh
+                            ? FeatureColors.expenses
+                            : null,
+                        fontWeight: _currentSort == ExpenseSort.amountHigh
+                            ? FontWeight.bold
+                            : null,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem<dynamic>(
+                value: ExpenseSort.amountLow,
+                child: Row(
+                  children: [
+                    Icon(
+                      CupertinoIcons.arrow_down,
+                      size: 18,
+                      color: _currentSort == ExpenseSort.amountLow
+                          ? FeatureColors.expenses
+                          : null,
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      "Lowest Amount",
+                      style: TextStyle(
+                        color: _currentSort == ExpenseSort.amountLow
+                            ? FeatureColors.expenses
+                            : null,
+                        fontWeight: _currentSort == ExpenseSort.amountLow
+                            ? FontWeight.bold
+                            : null,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const PopupMenuDivider(),
+              PopupMenuItem<dynamic>(
+                value: 'filter',
+                child: Row(
+                  children: [
+                    Icon(CupertinoIcons.slider_horizontal_3, size: 18),
+                    const SizedBox(width: 12),
+                    Text("More Filters..."),
+                  ],
+                ),
+              ),
+            ],
+          ),
+      ],
     );
   }
 
-  void _showFilterMenu(List<Expense> expenses) {
+  void _showFilterDialog(List<Expense> expenses) {
     final theme = Theme.of(context);
-    // Box is safe to access here because showFilterMenu is called from UI that waited for box
-    final box = Hive.box<Expense>('expenses_box');
     final categories =
-        box.values
+        expenses
             .where((e) => !e.isDeleted)
             .map((e) => e.category)
             .toSet()
             .toList()
           ..sort();
 
-    showModalBottomSheet(
+    // Local state for the dialog
+    String tempType = _typeFilter;
+    String tempCategory = _categoryFilter;
+
+    showDialog(
       context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (_) => StatefulBuilder(
-        builder: (context, setSheetState) {
-          return Container(
-            height: MediaQuery.of(context).size.height * 0.75,
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(20),
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              backgroundColor: theme.colorScheme.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
               ),
-            ),
-            child: Column(
-              children: [
-                const SizedBox(height: 12),
-                Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-
-                // Header
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Sort & Filter",
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          // Update MAIN state
-                          setState(() {
-                            _currentSort = ExpenseSort.newest;
-                            _typeFilter = 'All';
-                            _categoryFilter = 'All';
-                          });
-                          // Update SHEET state
-                          setSheetState(() {});
-                        },
-                        child: const Text("Reset"),
-                      ),
-                    ],
-                  ),
-                ),
-
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    children: [
-                      Text(
-                        "Sort By",
-                        style: theme.textTheme.titleSmall?.copyWith(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      _buildSortRadio(
-                        ExpenseSort.newest,
-                        "Newest Date",
-                        setSheetState,
-                      ),
-                      _buildSortRadio(
-                        ExpenseSort.oldest,
-                        "Oldest Date",
-                        setSheetState,
-                      ),
-                      _buildSortRadio(
-                        ExpenseSort.amountHigh,
-                        "Highest Amount",
-                        setSheetState,
-                      ),
-                      _buildSortRadio(
-                        ExpenseSort.amountLow,
-                        "Lowest Amount",
-                        setSheetState,
-                      ),
-
-                      const Divider(height: 32),
-
-                      Text(
-                        "Transaction Type",
-                        style: theme.textTheme.titleSmall?.copyWith(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Wrap(
-                        spacing: 10,
-                        children: ['All', 'Income', 'Expense']
-                            .map(
-                              (t) => _buildChoiceChip(t, _typeFilter, (val) {
-                                setState(() => _typeFilter = val);
-                                setSheetState(() {});
-                              }),
-                            )
-                            .toList(),
-                      ),
-
-                      const Divider(height: 32),
-
-                      Text(
-                        "Categories",
-                        style: theme.textTheme.titleSmall?.copyWith(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: ['All', ...categories]
-                            .map(
-                              (c) =>
-                                  _buildChoiceChip(c, _categoryFilter, (val) {
-                                    setState(() => _categoryFilter = val);
-                                    setSheetState(() {});
-                                  }),
-                            )
-                            .toList(),
-                      ),
-                      const SizedBox(height: 40),
-                    ],
-                  ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: theme.colorScheme.primary,
-                        foregroundColor: theme.colorScheme.onPrimary,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: const Text(
-                        "Done",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+              title: const Text("Filter Expenses"),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Transaction Type",
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
+                    const SizedBox(height: 12),
+                    Wrap(
+                      spacing: 10,
+                      children: ['All', 'Income', 'Expense']
+                          .map(
+                            (t) => ChoiceChip(
+                              label: Text(t),
+                              selected: tempType == t,
+                              onSelected: (selected) {
+                                if (selected) {
+                                  setDialogState(() => tempType = t);
+                                }
+                              },
+                              selectedColor: theme.colorScheme.primary,
+                              backgroundColor: theme
+                                  .colorScheme
+                                  .surfaceContainerHighest
+                                  .withOpacity(0.5),
+                              labelStyle: TextStyle(
+                                color: tempType == t
+                                    ? theme.colorScheme.onPrimary
+                                    : theme.colorScheme.onSurface,
+                                fontWeight: tempType == t
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                              ),
+                              side: BorderSide.none,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppConstants.cornerRadius,
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    const Divider(height: 32),
+                    Text(
+                      "Categories",
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: ['All', ...categories]
+                          .map(
+                            (c) => ChoiceChip(
+                              label: Text(c),
+                              selected: tempCategory == c,
+                              onSelected: (selected) {
+                                if (selected) {
+                                  setDialogState(() => tempCategory = c);
+                                }
+                              },
+                              selectedColor: theme.colorScheme.primary,
+                              backgroundColor: theme
+                                  .colorScheme
+                                  .surfaceContainerHighest
+                                  .withOpacity(0.5),
+                              labelStyle: TextStyle(
+                                color: tempCategory == c
+                                    ? theme.colorScheme.onPrimary
+                                    : theme.colorScheme.onSurface,
+                                fontWeight: tempCategory == c
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                              ),
+                              side: BorderSide.none,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppConstants.cornerRadius,
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    // Reset Logic
+                    setDialogState(() {
+                      tempType = 'All';
+                      tempCategory = 'All';
+                    });
+                  },
+                  child: const Text("Reset"),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text("Cancel"),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: theme.colorScheme.primary,
+                    foregroundColor: theme.colorScheme.onPrimary,
                   ),
+                  onPressed: () {
+                    setState(() {
+                      _typeFilter = tempType;
+                      _categoryFilter = tempCategory;
+                    });
+                    Navigator.pop(ctx);
+                  },
+                  child: const Text("Apply"),
                 ),
               ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildSortRadio(
-    ExpenseSort value,
-    String label,
-    StateSetter setSheetState,
-  ) {
-    final isSelected = _currentSort == value;
-    final theme = Theme.of(context);
-    return InkWell(
-      onTap: () {
-        setState(() => _currentSort = value);
-        setSheetState(() {});
+            );
+          },
+        );
       },
-      borderRadius: BorderRadius.circular(8),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-        child: Row(
-          children: [
-            Icon(
-              isSelected
-                  ? Icons.radio_button_checked
-                  : Icons.radio_button_unchecked,
-              color: isSelected ? theme.colorScheme.primary : Colors.grey,
-              size: 20,
-            ),
-            const SizedBox(width: 12),
-            Text(
-              label,
-              style: TextStyle(
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                color: theme.colorScheme.onSurface,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildChoiceChip(
-    String label,
-    String groupValue,
-    Function(String) onSelect,
-  ) {
-    final isSelected = label == groupValue;
-    final theme = Theme.of(context);
-    return ChoiceChip(
-      label: Text(label),
-      selected: isSelected,
-      onSelected: (_) => onSelect(label),
-      selectedColor: theme.colorScheme.primary,
-      backgroundColor: theme.colorScheme.surfaceContainerHighest.withOpacity(
-        0.5,
-      ),
-      labelStyle: TextStyle(
-        color: isSelected
-            ? theme.colorScheme.onPrimary
-            : theme.colorScheme.onSurface,
-        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-      ),
-      side: BorderSide.none,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     );
   }
 
@@ -1166,7 +1184,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                       ),
                       const SizedBox(height: 10),
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(
+                          AppConstants.cornerRadius,
+                        ),
                         child: LinearProgressIndicator(
                           value: budgetProgress,
                           minHeight: 12,
@@ -1366,10 +1386,12 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                                         color: _getColorForCategory(
                                           e.key,
                                         ).withOpacity(0.2),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius: BorderRadius.circular(
+                                          AppConstants.cornerRadius,
+                                        ),
                                       ),
                                       child: Icon(
-                                        Icons.category,
+                                        CupertinoIcons.square_grid_2x2,
                                         color: _getColorForCategory(e.key),
                                         size: 20,
                                       ),
@@ -1483,7 +1505,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
               child: GestureDetector(
                 onTap: onInfoTap,
                 child: Icon(
-                  Icons.info_outline,
+                  CupertinoIcons.info,
                   size: 16,
                   color: theme.colorScheme.onSurface.withOpacity(0.4),
                 ),

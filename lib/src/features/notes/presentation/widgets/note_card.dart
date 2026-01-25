@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:copyclip/src/features/notes/data/note_model.dart';
 import '../../../../core/app_content_palette.dart';
+import '../../../../core/const/constant.dart';
 
 class NoteCard extends StatelessWidget {
   final Note note;
@@ -74,8 +76,11 @@ class NoteCard extends StatelessWidget {
       color: noteThemeColor.withOpacity(
         isSelected ? 0.6 : 0.65,
       ), // Direct opacity
-      borderRadius: BorderRadius.circular(24),
-      border: Border.all(color: Colors.black.withOpacity(0.2), width: 1.5),
+      borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+      border: Border.all(
+        color: Colors.black.withOpacity(0.2),
+        width: AppConstants.borderWidth,
+      ),
       boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.05),
@@ -119,8 +124,8 @@ class NoteCard extends StatelessWidget {
                   ),
                   Icon(
                     isSelected
-                        ? Icons.check_circle
-                        : Icons.radio_button_unchecked,
+                        ? CupertinoIcons.checkmark_circle_fill
+                        : CupertinoIcons.circle,
                     size: 20,
                     color: isSelected
                         ? theme.colorScheme.primary
@@ -136,7 +141,7 @@ class NoteCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(
-                        Icons.access_time,
+                        CupertinoIcons.time,
                         size: 12,
                         color: contentColor.withOpacity(0.5),
                       ),
@@ -160,7 +165,9 @@ class NoteCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.cornerRadius * 0.5,
+                    ),
                     child: Image.file(
                       File(imageUrl),
                       height: 120,
@@ -196,13 +203,17 @@ class NoteCard extends StatelessWidget {
                     child: Row(
                       children: [
                         _smallActionBtn(
-                          Icons.copy_rounded,
+                          CupertinoIcons.doc_on_doc,
                           onCopy,
                           contentColor,
                         ),
-                        _smallActionBtn(Icons.share, onShare, contentColor),
                         _smallActionBtn(
-                          Icons.delete_outline_rounded,
+                          CupertinoIcons.share,
+                          onShare,
+                          contentColor,
+                        ),
+                        _smallActionBtn(
+                          CupertinoIcons.trash,
                           onDelete,
                           Colors.redAccent,
                         ),
@@ -258,12 +269,14 @@ class _QuickColorPicker extends StatelessWidget {
                 color: isSelected
                     ? contrastColorForDot
                     : color.withOpacity(0.5),
-                width: isSelected ? 2 : 1,
+                width: isSelected
+                    ? AppConstants.selectedBorderWidth
+                    : AppConstants.borderWidth,
               ),
             ),
             child: isSelected
                 ? Icon(
-                    Icons.check,
+                    CupertinoIcons.checkmark,
                     size: 14,
                     color: AppContentPalette.getContrastColor(color),
                   )

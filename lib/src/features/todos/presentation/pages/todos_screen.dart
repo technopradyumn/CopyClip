@@ -3,14 +3,16 @@ import 'package:copyclip/src/core/services/notification_service.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:copyclip/src/core/utils/widget_sync_service.dart';
-
-import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart'; // ✅ NEW
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart'; // ✅ NEW
+import 'package:copyclip/src/core/const/constant.dart';
+import 'package:copyclip/src/core/widgets/seamless_header.dart';
+import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import '../../../../core/router/app_router.dart';
 import '../../../../core/widgets/glass_dialog.dart';
@@ -598,7 +600,7 @@ class _TodosScreenState extends State<TodosScreen>
                 onPressed: () =>
                     _openTodoEditor(null), // Traditional add still works
                 backgroundColor: colorScheme.primary,
-                child: Icon(Icons.add, color: colorScheme.onPrimary),
+                child: Icon(CupertinoIcons.add, color: colorScheme.onPrimary),
               ),
         body: Column(
           children: [
@@ -611,9 +613,12 @@ class _TodosScreenState extends State<TodosScreen>
                 height: 44,
                 decoration: BoxDecoration(
                   color: colorScheme.onSurface.withOpacity(0.08),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(
+                    AppConstants.cornerRadius * 0.75,
+                  ),
                   border: Border.all(
                     color: theme.dividerColor.withOpacity(0.1),
+                    width: AppConstants.borderWidth,
                   ),
                 ),
                 child: TextField(
@@ -625,7 +630,7 @@ class _TodosScreenState extends State<TodosScreen>
                       color: colorScheme.onSurface.withOpacity(0.5),
                     ),
                     prefixIcon: Icon(
-                      Icons.search,
+                      CupertinoIcons.search,
                       color: colorScheme.onSurface.withOpacity(0.5),
                       size: 20,
                     ),
@@ -635,7 +640,7 @@ class _TodosScreenState extends State<TodosScreen>
                               _searchController.clear();
                             },
                             child: Icon(
-                              Icons.close,
+                              CupertinoIcons.xmark,
                               color: colorScheme.onSurface.withOpacity(0.5),
                               size: 18,
                             ),
@@ -713,11 +718,11 @@ class _TodosScreenState extends State<TodosScreen>
                           } else if (item is QuickAddItem) {
                             key = ValueKey('quick_add_${item.category}');
                           } else if (item is DividerItem) {
-                            key = ValueKey('divider_$index');
+                            key = ValueKey('divider_${item.hashCode}');
                           } else if (item is TodoItemWrapper) {
                             key = ValueKey(item.todo.id);
                           } else {
-                            key = ValueKey('unknown_$index');
+                            key = ValueKey('unknown_${item.hashCode}');
                           }
 
                           // No animations in ReorderableListView to prevent issues
@@ -806,10 +811,10 @@ class _TodosScreenState extends State<TodosScreen>
         margin: const EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 0.5),
           border: Border.all(
             color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-            width: 1.5,
+            width: AppConstants.borderWidth * 1.5,
           ),
         ),
         child: TextField(
@@ -848,15 +853,18 @@ class _TodosScreenState extends State<TodosScreen>
           margin: const EdgeInsets.only(bottom: 4, top: 4),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface.withOpacity(0.3),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(
+              AppConstants.cornerRadius * 0.5,
+            ),
             border: Border.all(
               color: Theme.of(context).dividerColor.withOpacity(0.05),
+              width: AppConstants.borderWidth,
             ),
           ),
           child: Row(
             children: [
               Icon(
-                Icons.add_rounded,
+                CupertinoIcons.add,
                 color: Theme.of(context).colorScheme.primary.withOpacity(0.8),
               ),
               const SizedBox(width: 12),
@@ -977,7 +985,7 @@ class _TodosScreenState extends State<TodosScreen>
               turns: item.isExpanded ? 0.25 : 0.0,
               duration: const Duration(milliseconds: 200),
               child: Icon(
-                Icons.keyboard_arrow_right,
+                CupertinoIcons.chevron_right,
                 color: colorScheme.onSurface.withOpacity(0.7),
                 size: 20,
               ),
@@ -999,10 +1007,10 @@ class _TodosScreenState extends State<TodosScreen>
             if (_isSelectionMode)
               Icon(
                 allSelected
-                    ? Icons.check_circle
+                    ? CupertinoIcons.checkmark_circle_fill
                     : (someSelected
-                          ? Icons.remove_circle_outline
-                          : Icons.circle_outlined),
+                          ? CupertinoIcons.minus_circle
+                          : CupertinoIcons.circle),
                 color: (allSelected || someSelected)
                     ? colorScheme.primary
                     : colorScheme.onSurface.withOpacity(0.38),
@@ -1032,149 +1040,199 @@ class _TodosScreenState extends State<TodosScreen>
     );
   }
 
-  // ✅ FIXED: Matches Notes/Expenses screen style & Hero Tags
   Widget _buildTopBar() {
     final theme = Theme.of(context);
-    final primaryColor = Colors.greenAccent; // Matches Dashboard 'todos' color
+    final primaryColor = FeatureColors.todos;
+    final onSurfaceColor = theme.colorScheme.onSurface;
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-      child: Row(
-        children: [
+    if (_isSelectionMode) {
+      return SeamlessHeader(
+        title: '${_selectedTodoIds.length} Selected',
+        heroTagPrefix: 'todos',
+        showBackButton: true,
+        onBackTap: () => setState(() {
+          _isSelectionMode = false;
+          _selectedTodoIds.clear();
+        }),
+        actions: [
           IconButton(
-            icon: Icon(
-              _isSelectionMode ? Icons.close : Icons.arrow_back_ios_new,
-              color: theme.iconTheme.color,
-            ),
-            onPressed: () {
-              if (_isSelectionMode) {
-                setState(() {
-                  _isSelectionMode = false;
-                  _selectedTodoIds.clear();
-                });
-              } else {
-                context.pop();
-              }
-            },
+            icon: Icon(CupertinoIcons.checkmark_square, color: onSurfaceColor),
+            onPressed: _selectAll,
           ),
-          Expanded(
-            child: _isSelectionMode
-                ? Center(
-                    child: Text(
-                      '${_selectedTodoIds.length} Selected',
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                : Row(
+          IconButton(
+            icon: const Icon(CupertinoIcons.delete, color: Colors.redAccent),
+            onPressed: _deleteSelected,
+          ),
+        ],
+      );
+    }
+
+    return SeamlessHeader(
+      title: "To-Dos",
+      subtitle: "Daily Tasks",
+      icon: CupertinoIcons.checkmark_circle,
+      iconColor: primaryColor,
+      heroTagPrefix: 'todos',
+      actions: [
+        // SORT MENU
+        PopupMenuButton<TodoSortOption>(
+          icon: Icon(CupertinoIcons.slider_horizontal_3, color: onSurfaceColor),
+          tooltip: 'Sort By',
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          onSelected: (TodoSortOption result) {
+            setState(() {
+              _currentSort = result;
+              _generateList();
+            });
+          },
+          itemBuilder: (BuildContext context) =>
+              <PopupMenuEntry<TodoSortOption>>[
+                PopupMenuItem<TodoSortOption>(
+                  value: TodoSortOption.custom,
+                  child: Row(
                     children: [
-                      // ✅ HERO TAG 1: 'todos_icon' (was 'todos')
-                      Hero(
-                        tag: 'todos_icon',
-                        child: Icon(
-                          Icons.check_circle_outline,
-                          size: 28,
-                          color: primaryColor,
-                        ),
+                      Icon(
+                        CupertinoIcons.arrow_up_arrow_down,
+                        size: 18,
+                        color: _currentSort == TodoSortOption.custom
+                            ? primaryColor
+                            : null,
                       ),
-                      const SizedBox(width: 10),
-                      // ✅ HERO TAG 2: 'todos_title'
-                      Hero(
-                        tag: 'todos_title',
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: Text(
-                            "To-Dos",
-                            style: theme.textTheme.titleLarge?.copyWith(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "Custom Order",
+                        style: TextStyle(
+                          color: _currentSort == TodoSortOption.custom
+                              ? primaryColor
+                              : null,
+                          fontWeight: _currentSort == TodoSortOption.custom
+                              ? FontWeight.bold
+                              : null,
                         ),
                       ),
                     ],
                   ),
-          ),
-          if (_isSelectionMode) ...[
-            IconButton(
-              icon: Icon(Icons.select_all, color: theme.iconTheme.color),
-              onPressed: _selectAll,
-            ),
-            IconButton(
-              icon: const Icon(Icons.delete, color: Colors.redAccent),
-              onPressed: _deleteSelected,
-            ),
-          ] else ...[
-            IconButton(
-              icon: Icon(
-                Icons.check_circle_outline,
-                color: theme.iconTheme.color?.withOpacity(0.54),
-              ),
-              onPressed: () => setState(() => _isSelectionMode = true),
-            ),
-            IconButton(
-              icon: Icon(Icons.filter_list, color: theme.iconTheme.color),
-              onPressed: _showFilterMenu,
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.delete_sweep_outlined,
-                color: Colors.redAccent,
-              ),
-              onPressed: _deleteAll,
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  // ✅ IMPROVED VISIBILITY: Solid Surface Bottom Sheet
-  void _showFilterMenu() {
-    final theme = Theme.of(context);
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (_) => Container(
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface, // ✅ Solid background
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        ),
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(2),
                 ),
+                PopupMenuItem<TodoSortOption>(
+                  value: TodoSortOption.dateNewest,
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.calendar_today,
+                        size: 18,
+                        color: _currentSort == TodoSortOption.dateNewest
+                            ? primaryColor
+                            : null,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "Newest First",
+                        style: TextStyle(
+                          color: _currentSort == TodoSortOption.dateNewest
+                              ? primaryColor
+                              : null,
+                          fontWeight: _currentSort == TodoSortOption.dateNewest
+                              ? FontWeight.bold
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                PopupMenuItem<TodoSortOption>(
+                  value: TodoSortOption.dateOldest,
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.time,
+                        size: 18,
+                        color: _currentSort == TodoSortOption.dateOldest
+                            ? primaryColor
+                            : null,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "Oldest First",
+                        style: TextStyle(
+                          color: _currentSort == TodoSortOption.dateOldest
+                              ? primaryColor
+                              : null,
+                          fontWeight: _currentSort == TodoSortOption.dateOldest
+                              ? FontWeight.bold
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                PopupMenuItem<TodoSortOption>(
+                  value: TodoSortOption.nameAZ,
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.textformat,
+                        size: 18,
+                        color: _currentSort == TodoSortOption.nameAZ
+                            ? primaryColor
+                            : null,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "Name: A-Z",
+                        style: TextStyle(
+                          color: _currentSort == TodoSortOption.nameAZ
+                              ? primaryColor
+                              : null,
+                          fontWeight: _currentSort == TodoSortOption.nameAZ
+                              ? FontWeight.bold
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+        ),
+
+        // MORE MENU (Select, Delete All)
+        PopupMenuButton<String>(
+          icon: Icon(CupertinoIcons.ellipsis_vertical, color: onSurfaceColor),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          onSelected: (val) {
+            if (val == 'select') {
+              setState(() => _isSelectionMode = true);
+            } else if (val == 'delete_all') {
+              _deleteAll();
+            }
+          },
+          itemBuilder: (context) => [
+            const PopupMenuItem(
+              value: 'select',
+              child: Row(
+                children: [
+                  Icon(CupertinoIcons.checkmark_circle, size: 18),
+                  SizedBox(width: 12),
+                  Text("Select Items"),
+                ],
               ),
             ),
-            const SizedBox(height: 20),
-            Text(
-              "Sort By",
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+            const PopupMenuItem(
+              value: 'delete_all',
+              child: Row(
+                children: [
+                  Icon(CupertinoIcons.trash, size: 18, color: Colors.red),
+                  SizedBox(width: 12),
+                  Text("Delete All", style: TextStyle(color: Colors.red)),
+                ],
               ),
             ),
-            const SizedBox(height: 16),
-            _buildSortOption(
-              TodoSortOption.custom,
-              "Custom Order (Drag & Drop)",
-            ),
-            _buildSortOption(TodoSortOption.dateNewest, "Date: Newest First"),
-            _buildSortOption(TodoSortOption.dateOldest, "Date: Oldest First"),
-            _buildSortOption(TodoSortOption.nameAZ, "Name: A-Z"),
           ],
         ),
-      ),
+      ],
     );
   }
 
@@ -1194,8 +1252,8 @@ class _TodosScreenState extends State<TodosScreen>
           children: [
             Icon(
               selected
-                  ? Icons.radio_button_checked
-                  : Icons.radio_button_unchecked,
+                  ? CupertinoIcons.check_mark_circled_solid
+                  : CupertinoIcons.circle,
               color: selected
                   ? theme.colorScheme.primary
                   : theme.iconTheme.color?.withOpacity(0.5),

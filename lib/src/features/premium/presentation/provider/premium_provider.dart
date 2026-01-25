@@ -12,6 +12,10 @@ class PremiumProvider extends ChangeNotifier {
   static const String _coinsKey = 'user_coins';
   static const String _premiumExpiryKey = 'premium_expiry';
 
+  // --- GLOBAL PREMIUM TOGGLE ---
+  // Set this to true to unlock all features for testing/distribution
+  static const bool forcePremium = false;
+
   int _coins = 0;
   DateTime? _premiumExpiryDate;
 
@@ -21,6 +25,7 @@ class PremiumProvider extends ChangeNotifier {
 
   int get coins => _coins;
   bool get isPremium {
+    if (forcePremium) return true;
     if (_premiumExpiryDate == null) return false;
     return _premiumExpiryDate!.isAfter(DateTime.now());
   }

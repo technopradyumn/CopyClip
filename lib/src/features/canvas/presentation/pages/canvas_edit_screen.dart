@@ -4,13 +4,13 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'dart:ui' as ui;
-import 'dart:typed_data';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 import '../../data/canvas_adapter.dart';
 
 import '../../data/canvas_model.dart';
@@ -423,7 +423,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     backgroundColor: colorScheme.primary,
                     foregroundColor: colorScheme.onPrimary,
                     elevation: 4,
-                    child: const Icon(Icons.sort_by_alpha),
+                    child: const Icon(CupertinoIcons.text_cursor),
                   ),
                 ),
             ],
@@ -435,37 +435,72 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
 
   Widget _buildCompactHeader(ThemeData theme, ColorScheme colorScheme) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
         children: [
           IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, size: 20),
+            icon: Icon(
+              CupertinoIcons.back,
+              size: 22,
+              color: theme.colorScheme.onSurface,
+            ),
             onPressed: () {
               _saveNote();
               context.pop();
             },
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.zero,
+            alignment: Alignment.centerLeft,
           ),
+          const SizedBox(width: 8),
+
+          Hero(
+            tag: 'canvas_icon',
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: const Color(
+                  0xFF4DB6AC,
+                ).withOpacity(0.12), // Match SeamlessHeader style
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                CupertinoIcons.scribble,
+                color: Color(0xFF4DB6AC),
+                size: 22, // AppConstants.headerIconSize usually 22-24
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextField(
-                  controller: _titleController,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: 'Note title',
-                    border: InputBorder.none,
-                    isDense: true,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 4,
-                      vertical: 2,
-                    ),
-                    hintStyle: theme.textTheme.titleMedium?.copyWith(
-                      color: colorScheme.onSurface.withOpacity(0.4),
+                Hero(
+                  tag: 'canvas_title',
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: TextField(
+                      controller: _titleController,
+                      style: theme.textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.w900,
+                        fontSize:
+                            20, // Slightly smaller than headerTitleSize (24) to fit input
+                        letterSpacing: -0.5,
+                        color: theme.colorScheme.onSurface,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Note title',
+                        border: InputBorder.none,
+                        isDense: true,
+                        contentPadding: EdgeInsets.zero,
+                        hintStyle: theme.textTheme.headlineMedium?.copyWith(
+                          color: colorScheme.onSurface.withOpacity(0.3),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -475,8 +510,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     DateFormat(
                       'MMM d, h:mm a',
                     ).format(_currentNote.lastModified),
-                    style: theme.textTheme.labelSmall?.copyWith(
+                    style: theme.textTheme.bodySmall?.copyWith(
                       color: colorScheme.onSurface.withOpacity(0.5),
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -484,7 +520,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             ),
           ),
 
-          // --- NEW: Page Number Indicator ---
+          // --- Page Indicators & Actions ---
+
+          // Page Count
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
@@ -497,12 +535,12 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             ),
           ),
 
-          // ----------------------------------
-          // ----------------------------------
-          // Top Bar Pages Toggle
+          // Layers Toggle
           IconButton(
             icon: Icon(
-              _showPageScroller ? Icons.layers : Icons.layers_outlined,
+              _showPageScroller
+                  ? CupertinoIcons.layers_fill
+                  : CupertinoIcons.layers,
               size: 20,
               color: _showPageScroller
                   ? colorScheme.primary
@@ -514,13 +552,101 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                 if (_showPageScroller) _showPenSizeSlider = false;
               });
             },
-            padding: const EdgeInsets.all(8),
           ),
 
-          IconButton(
-            icon: const Icon(Icons.more_vert, size: 20),
-            onPressed: () => _showOptionsMenu(context, theme, colorScheme),
-            padding: const EdgeInsets.all(8),
+          // More Menu
+          PopupMenuButton<String>(
+            icon: Icon(
+              CupertinoIcons.ellipsis_vertical,
+              color: theme.colorScheme.onSurface,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            onSelected: (val) {
+              switch (val) {
+                case 'scroll':
+                  _showScrollDirectionPicker(context);
+                  break;
+                case 'pdf':
+                  final provider = Provider.of<PremiumProvider>(
+                    context,
+                    listen: false,
+                  );
+                  if (provider.isPremium) {
+                    _exportToPdf();
+                  } else {
+                    PremiumLockDialog.show(
+                      context,
+                      featureName: 'PDF Export',
+                      onUnlockOnce: _exportToPdf,
+                    );
+                  }
+                  break;
+                case 'info':
+                  _showNoteInfo(theme);
+                  break;
+                case 'clear':
+                  _showClearDialog(theme);
+                  break;
+              }
+            },
+            itemBuilder: (context) {
+              final isPremium = Provider.of<PremiumProvider>(
+                context,
+                listen: false,
+              ).isPremium;
+              return [
+                const PopupMenuItem(
+                  value: 'scroll',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.hand_draw, size: 18),
+                      SizedBox(width: 12),
+                      Text("Scroll Direction"),
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'info',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.info, size: 18),
+                      SizedBox(width: 12),
+                      Text("Note Info"),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 'pdf',
+                  child: Row(
+                    children: [
+                      const Icon(CupertinoIcons.share, size: 18),
+                      const SizedBox(width: 12),
+                      const Text("Export as PDF"),
+                      if (!isPremium) ...[
+                        const Spacer(),
+                        const Icon(
+                          CupertinoIcons.lock_fill,
+                          size: 14,
+                          color: Colors.amber,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'clear',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.trash, size: 18, color: Colors.red),
+                      SizedBox(width: 12),
+                      Text("Clear All", style: TextStyle(color: Colors.red)),
+                    ],
+                  ),
+                ),
+              ];
+            },
           ),
         ],
       ),
@@ -920,7 +1046,11 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     color: Colors.red.withOpacity(0.9),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.close, size: 14, color: Colors.white),
+                  child: const Icon(
+                    CupertinoIcons.xmark,
+                    size: 14,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -961,7 +1091,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                 border: Border.all(color: colorScheme.outline.withOpacity(0.2)),
               ),
               child: Icon(
-                Icons.add,
+                CupertinoIcons.plus,
                 size: 14,
                 color: colorScheme.onSurfaceVariant,
               ),
@@ -1013,7 +1143,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                         )
                       else
                         Icon(
-                          Icons.picture_as_pdf,
+                          CupertinoIcons.doc_text_fill,
                           size: 16,
                           color: colorScheme.primary,
                         ),
@@ -1101,7 +1231,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                         elevation: 5,
                         color: Colors.transparent,
                         shadowColor: Colors.black26,
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(
+                          AppConstants.cornerRadius,
+                        ),
                         child: child,
                       );
                     },
@@ -1148,7 +1280,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                Icons.note_add_outlined,
+                CupertinoIcons.plus_app,
                 color: colorScheme.primary,
                 size: 28,
               ),
@@ -1185,7 +1317,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
           height: double.infinity,
           decoration: BoxDecoration(
             color: theme.cardColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
             border: Border.all(color: Colors.grey.withOpacity(0.1)),
             boxShadow: [
               BoxShadow(
@@ -1244,7 +1376,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     : Colors.transparent,
                 width: isSelected ? 2 : 1,
               ),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(
+                AppConstants.cornerRadius * 0.5,
+              ),
             ),
             child: TextField(
               focusNode: focusNode,
@@ -1289,7 +1423,11 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       ),
                     ],
                   ),
-                  child: const Icon(Icons.close, size: 18, color: Colors.white),
+                  child: const Icon(
+                    CupertinoIcons.xmark,
+                    size: 18,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -1326,7 +1464,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     ],
                   ),
                   child: const Icon(
-                    Icons.arrow_outward,
+                    CupertinoIcons.arrow_up_right,
                     size: 16,
                     color: Colors.white,
                   ),
@@ -1360,7 +1498,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                         ],
                       ),
                       child: const Icon(
-                        Icons.add,
+                        CupertinoIcons.plus,
                         size: 18,
                         color: Colors.white,
                       ),
@@ -1389,7 +1527,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                         ],
                       ),
                       child: const Icon(
-                        Icons.remove,
+                        CupertinoIcons.minus,
                         size: 18,
                         color: Colors.white,
                       ),
@@ -1466,7 +1604,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
           padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Row(
             children: [
-              _buildToolButton(Icons.pan_tool, _isHandMode, () {
+              _buildToolButton(CupertinoIcons.hand_raised, _isHandMode, () {
                 setState(() {
                   _isHandMode = !_isHandMode;
                   if (_isHandMode) {
@@ -1477,7 +1615,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               }, colorScheme),
               SizedBox(width: 8),
               _buildToolButton(
-                Icons.edit,
+                CupertinoIcons.pencil,
                 _isDrawingMode && !_isErasing && canEdit,
                 () {
                   setState(() {
@@ -1495,7 +1633,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                 enabled: canEdit,
               ),
               _buildToolButton(
-                Icons.check_box_outline_blank, // Fallback icon
+                CupertinoIcons.capslock_fill, // Fallback icon for eraser
                 _isErasing && canEdit,
                 () {
                   setState(() {
@@ -1519,7 +1657,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                 ),
               ),
               _buildToolButton(
-                Icons.text_fields,
+                CupertinoIcons.textformat,
                 _isTextMode && canEdit,
                 () => _enableTextMode(),
                 colorScheme,
@@ -1543,8 +1681,8 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
-                    Icons
-                        .layers_outlined, // Changed to Layers icon for better meaning
+                    CupertinoIcons
+                        .layers, // Changed to Layers icon for better meaning
                     size: 20,
                     color: _showPageScroller
                         ? colorScheme.primary

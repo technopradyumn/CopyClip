@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import 'package:copyclip/src/core/widgets/seamless_header.dart';
 // import 'package:copyclip/src/core/widgets/glass_container.dart'; // ❌ REMOVED to prevent lag
 
 import '../../../clipboard/data/clipboard_model.dart';
@@ -86,21 +88,21 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
         'subtitle': cleanContent.length > 40
             ? "${cleanContent.substring(0, 40)}..."
             : cleanContent,
-        'icon': Icons.note_alt_rounded,
+        'icon': CupertinoIcons.doc_text,
         'color': Colors.amberAccent,
       };
     } else if (item is Todo) {
       return {
         'title': item.task,
         'subtitle': "Category: ${item.category}",
-        'icon': Icons.check_circle_rounded,
+        'icon': CupertinoIcons.checkmark_circle,
         'color': Colors.greenAccent,
       };
     } else if (item is Expense) {
       return {
         'title': item.title,
         'subtitle': "${item.currency}${item.amount.toStringAsFixed(2)}",
-        'icon': Icons.account_balance_wallet_rounded,
+        'icon': CupertinoIcons.money_dollar,
         'color': Colors.redAccent,
       };
     } else if (item is JournalEntry) {
@@ -110,7 +112,7 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
         'subtitle': cleanContent.length > 40
             ? "${cleanContent.substring(0, 40)}..."
             : "Mood: ${item.mood}",
-        'icon': Icons.book_rounded,
+        'icon': CupertinoIcons.book,
         'color': Colors.blueAccent,
       };
     } else if (item is ClipboardItem) {
@@ -120,14 +122,14 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
             ? "${cleanClip.substring(0, 35)}..."
             : cleanClip,
         'subtitle': "Clipboard History",
-        'icon': Icons.copy_rounded,
+        'icon': CupertinoIcons.doc_on_doc,
         'color': Colors.purpleAccent,
       };
     }
     return {
       'title': "Unknown",
       'subtitle': "",
-      'icon': Icons.help_outline,
+      'icon': CupertinoIcons.question_circle,
       'color': Colors.grey,
     };
   }
@@ -236,149 +238,234 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
     final items = _getAllDeleted();
 
     return GlassScaffold(
-      title: "Recycle Bin",
-      showBackArrow: true,
-      actions: [
-        if (items.isNotEmpty)
-          IconButton(
-            icon: const Icon(
-              Icons.delete_sweep_rounded,
-              color: Colors.redAccent,
-            ),
-            onPressed: _emptyTrash,
-          ),
-      ],
+      title: null,
+      showBackArrow: false,
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Row(
-              children: [
-                _filterChip(
-                  "Recent",
-                  _sortBy == 'date',
-                  () => setState(() => _sortBy = 'date'),
+          SeamlessHeader(
+            title: "Recycle Bin",
+            subtitle: items.isNotEmpty ? "${items.length} items" : "Empty",
+            icon: CupertinoIcons.trash,
+            iconColor: Colors.redAccent,
+            heroTagPrefix: 'recycle_bin',
+            actions: [
+              if (items.isNotEmpty)
+                IconButton(
+                  icon: const Icon(
+                    CupertinoIcons.trash,
+                    color: Colors.redAccent,
+                  ),
+                  onPressed: _emptyTrash,
                 ),
-                const SizedBox(width: 8),
-                _filterChip(
-                  "Category",
-                  _sortBy == 'type',
-                  () => setState(() => _sortBy = 'type'),
+            ],
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  child: Row(
+                    children: [
+                      _filterChip(
+                        "Recent",
+                        _sortBy == 'date',
+                        () => setState(() => _sortBy = 'date'),
+                      ),
+                      const SizedBox(width: 8),
+                      _filterChip(
+                        "Category",
+                        _sortBy == 'type',
+                        () => setState(() => _sortBy = 'type'),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: items.isEmpty
+                      ? Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                CupertinoIcons.trash,
+                                size: 64,
+                                color: onSurface.withOpacity(0.3),
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                "Recycle Bin is empty",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: onSurface.withOpacity(0.6),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : ValueListenableBuilder(
+                          valueListenable: Hive.box<Note>(
+                            'notes_box',
+                          ).listenable(),
+                          builder: (context, _, __) {
+                            return ValueListenableBuilder(
+                              valueListenable: Hive.box<Todo>(
+                                'todos_box',
+                              ).listenable(),
+                              builder: (context, _, __) {
+                                return ValueListenableBuilder(
+                                  valueListenable: Hive.box<Expense>(
+                                    'expenses_box',
+                                  ).listenable(),
+                                  builder: (context, _, __) {
+                                    return ValueListenableBuilder(
+                                      valueListenable: Hive.box<JournalEntry>(
+                                        'journal_box',
+                                      ).listenable(),
+                                      builder: (context, _, __) {
+                                        return ValueListenableBuilder(
+                                          valueListenable:
+                                              Hive.box<ClipboardItem>(
+                                                'clipboard_box',
+                                              ).listenable(),
+                                          builder: (context, _, __) {
+                                            final currentItems =
+                                                _getAllDeleted();
+                                            return ListView.separated(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 16,
+                                                    vertical: 8,
+                                                  ),
+                                              itemCount: currentItems.length,
+                                              separatorBuilder: (_, __) =>
+                                                  const SizedBox(height: 12),
+                                              itemBuilder: (context, index) {
+                                                final item =
+                                                    currentItems[index];
+                                                final data =
+                                                    _getItemDisplayData(item);
+                                                final deletedAt =
+                                                    (item as dynamic).deletedAt;
+                                                String timeLabel = 'Unknown';
+                                                if (deletedAt != null) {
+                                                  final now = DateTime.now();
+                                                  final diff = now.difference(
+                                                    deletedAt,
+                                                  );
+                                                  if (diff.inMinutes < 1) {
+                                                    timeLabel = 'Just now';
+                                                  } else if (diff.inHours < 1) {
+                                                    timeLabel =
+                                                        '${diff.inMinutes}m ago';
+                                                  } else if (diff.inDays < 1) {
+                                                    timeLabel =
+                                                        '${diff.inHours}h ago';
+                                                  } else {
+                                                    timeLabel =
+                                                        '${diff.inDays}d ago';
+                                                  }
+                                                }
+                                                return Container(
+                                                  decoration: BoxDecoration(
+                                                    color: theme
+                                                        .colorScheme
+                                                        .surface
+                                                        .withOpacity(0.6),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          AppConstants
+                                                              .cornerRadius,
+                                                        ),
+                                                    border: Border.all(
+                                                      color: theme.dividerColor
+                                                          .withOpacity(0.1),
+                                                      width: AppConstants
+                                                          .borderWidth,
+                                                    ),
+                                                  ),
+                                                  child: ListTile(
+                                                    contentPadding:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal: 16,
+                                                          vertical: 8,
+                                                        ),
+                                                    leading: Icon(
+                                                      data['icon'] as IconData,
+                                                      color:
+                                                          data['color']
+                                                              as Color,
+                                                      size: 30,
+                                                    ),
+                                                    title: Text(
+                                                      data['title'] as String,
+                                                      style: theme
+                                                          .textTheme
+                                                          .bodyLarge
+                                                          ?.copyWith(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                    subtitle: Text(
+                                                      "${data['subtitle']} • $timeLabel",
+                                                      style: theme
+                                                          .textTheme
+                                                          .bodySmall,
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                    trailing: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        IconButton(
+                                                          icon: const Icon(
+                                                            CupertinoIcons
+                                                                .arrow_counterclockwise,
+                                                          ),
+                                                          onPressed: () =>
+                                                              _restoreItem(
+                                                                item,
+                                                              ),
+                                                        ),
+                                                        IconButton(
+                                                          icon: const Icon(
+                                                            CupertinoIcons
+                                                                .delete,
+                                                            color: Colors
+                                                                .redAccent,
+                                                          ),
+                                                          onPressed: () =>
+                                                              _permanentlyDeleteItem(
+                                                                item,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        ),
                 ),
               ],
             ),
-          ),
-          Expanded(
-            child: items.isEmpty
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.delete_outline_rounded,
-                          size: 80,
-                          color: onSurface.withOpacity(0.1),
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          "Recycle Bin is empty",
-                          style: TextStyle(
-                            color: onSurface.withOpacity(0.4),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : ListView.builder(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      final item = items[index];
-                      final data = _getItemDisplayData(item);
-                      final deleteDate = item.deletedAt != null
-                          ? DateFormat(
-                              'MMM dd, hh:mm a',
-                            ).format(item.deletedAt!)
-                          : "Unknown date";
-
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        // ✅ Replaced GlassContainer with a simple Container
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: theme.colorScheme.surface.withOpacity(
-                              0.1,
-                            ), // Simple transparency
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: theme.colorScheme.outline.withOpacity(0.2),
-                            ),
-                          ),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundColor: data['color'].withOpacity(0.15),
-                              child: Icon(
-                                data['icon'],
-                                color: data['color'],
-                                size: 20,
-                              ),
-                            ),
-                            title: Text(
-                              data['title'],
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data['subtitle'],
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: onSurface.withOpacity(0.7),
-                                  ),
-                                ),
-                                Text(
-                                  "Deleted $deleteDate",
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: onSurface.withOpacity(0.4),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.restore_rounded,
-                                    color: Colors.greenAccent,
-                                  ),
-                                  onPressed: () => _restoreItem(item),
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.delete_forever_rounded,
-                                    color: Colors.redAccent,
-                                  ),
-                                  onPressed: () => _permanentlyDeleteItem(item),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
           ),
         ],
       ),
@@ -394,7 +481,7 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
           color: isSelected
               ? theme.colorScheme.primary.withOpacity(0.2)
               : Colors.transparent,
@@ -402,6 +489,7 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
             color: isSelected
                 ? theme.colorScheme.primary.withOpacity(0.3)
                 : theme.colorScheme.outline.withOpacity(0.2),
+            width: AppConstants.borderWidth,
           ),
         ),
         child: Text(

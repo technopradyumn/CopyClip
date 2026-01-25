@@ -1,5 +1,7 @@
 import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 import 'package:provider/provider.dart';
 
 class PremiumBadge extends StatelessWidget {
@@ -49,7 +51,11 @@ class PremiumBadge extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const Icon(Icons.star, size: 12, color: Colors.white),
+                child: const Icon(
+                  CupertinoIcons.star_fill,
+                  size: 12,
+                  color: Colors.white,
+                ),
               );
             },
           ),
@@ -68,7 +74,7 @@ class PremiumFeatureIcon extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
         color: Colors.amber,
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 0.25),
       ),
       child: const Text(
         'PRO',

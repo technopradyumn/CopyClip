@@ -1,6 +1,7 @@
 import 'dart:io' show File;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill/quill_delta.dart';
@@ -17,6 +18,7 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/features/premium/presentation/widgets/premium_lock_dialog.dart';
 import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart';
 import 'package:provider/provider.dart';
@@ -1099,10 +1101,10 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
           decoration: BoxDecoration(
             color: colorScheme.surface.withOpacity(0.95),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
             border: Border.all(
               color: colorScheme.primary.withOpacity(0.2),
-              width: 1.2,
+              width: AppConstants.borderWidth,
             ),
             boxShadow: [
               BoxShadow(
@@ -1126,68 +1128,68 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                   ),
                   children: [
                     _buildIconButton(
-                      icon: Icons.picture_as_pdf,
+                      icon: CupertinoIcons.doc_text,
                       tooltip: 'Export to PDF',
                       isPremiumFeature: true,
                       onPressed: _exportToPdf,
                     ),
                     _buildIconButton(
                       icon: widget.controller.readOnly
-                          ? Icons.lock
-                          : Icons.lock_open,
+                          ? CupertinoIcons.lock_fill
+                          : CupertinoIcons.lock_open_fill,
                       tooltip: 'Lock/Unlock Editor',
                       onPressed: _toggleReadOnly,
                     ),
                     _buildIconButton(
-                      icon: Icons.undo,
+                      icon: CupertinoIcons.arrow_counterclockwise,
                       tooltip: 'Undo',
                       isDisabled: !canUndo,
                       onPressed: canUndo ? widget.controller.undo : null,
                     ),
                     _buildIconButton(
-                      icon: Icons.redo,
+                      icon: CupertinoIcons.arrow_clockwise,
                       tooltip: 'Redo',
                       isDisabled: !canRedo,
                       onPressed: canRedo ? widget.controller.redo : null,
                     ),
                     _buildIconButton(
-                      icon: Icons.copy,
+                      icon: CupertinoIcons.doc_on_doc,
                       tooltip: 'Copy',
                       onPressed: _copy,
                     ),
                     _buildIconButton(
-                      icon: Icons.paste,
+                      icon: CupertinoIcons.doc_on_clipboard,
                       tooltip: 'Paste',
                       onPressed: _paste,
                     ),
                     const SizedBox(width: 4),
                     _buildIconButton(
-                      icon: Icons.format_bold,
+                      icon: CupertinoIcons.bold,
                       tooltip: 'Bold',
                       isSelected: _hasAttribute(Attribute.bold),
                       onPressed: () => _toggleFormat(Attribute.bold),
                     ),
                     _buildIconButton(
-                      icon: Icons.format_italic,
+                      icon: CupertinoIcons.italic,
                       tooltip: 'Italic',
                       isSelected: _hasAttribute(Attribute.italic),
                       onPressed: () => _toggleFormat(Attribute.italic),
                     ),
                     _buildIconButton(
-                      icon: Icons.format_underlined,
+                      icon: CupertinoIcons.underline,
                       tooltip: 'Underline',
                       isSelected: _hasAttribute(Attribute.underline),
                       onPressed: () => _toggleFormat(Attribute.underline),
                     ),
                     _buildIconButton(
-                      icon: Icons.strikethrough_s,
+                      icon: CupertinoIcons.strikethrough,
                       tooltip: 'Strikethrough',
                       isSelected: _hasAttribute(Attribute.strikeThrough),
                       onPressed: () => _toggleFormat(Attribute.strikeThrough),
                     ),
                     const SizedBox(width: 4),
                     _buildIconButton(
-                      icon: Icons.palette,
+                      icon: CupertinoIcons.paintbrush,
                       tooltip: 'Text Color',
                       iconColor: () {
                         final style = widget.controller.getSelectionStyle();
@@ -1200,10 +1202,10 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                         }
                       }(),
                       onPressed: () => _pickColor(false),
-                      isPremiumFeature: true,
+                      isPremiumFeature: false,
                     ),
                     _buildIconButton(
-                      icon: Icons.format_color_fill,
+                      icon: CupertinoIcons.color_filter,
                       tooltip: 'Background Color',
                       iconColor: () {
                         final style = widget.controller.getSelectionStyle();
@@ -1217,59 +1219,59 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                         }
                       }(),
                       onPressed: () => _pickColor(true),
-                      isPremiumFeature: true,
+                      isPremiumFeature: false,
                     ),
                     const SizedBox(width: 4),
 
                     const SizedBox(width: 4),
                     _buildDropdownButton(
                       title: _getDropdownDisplayText('fontSize'),
-                      icon: Icons.format_size,
+                      icon: CupertinoIcons.textformat_size,
                       dropdownKey: 'fontSize',
                     ),
                     const SizedBox(width: 4),
                     _buildDropdownButton(
                       title: _getDropdownDisplayText('fontFamily'),
-                      icon: Icons.font_download,
+                      icon: CupertinoIcons.textformat_alt,
                       dropdownKey: 'fontFamily',
                     ),
                     const SizedBox(width: 4),
                     _buildDropdownButton(
                       title: _getDropdownDisplayText('heading'),
-                      icon: Icons.title,
+                      icon: CupertinoIcons.textformat,
                       dropdownKey: 'heading',
                     ),
                     const SizedBox(width: 4),
                     _buildDropdownButton(
                       title: _getDropdownDisplayText('lineHeight'),
-                      icon: Icons.format_line_spacing,
+                      icon: CupertinoIcons.line_horizontal_3,
                       dropdownKey: 'lineHeight',
                     ),
                     const SizedBox(width: 12),
 
                     _buildIconButton(
-                      icon: Icons.format_align_left,
+                      icon: CupertinoIcons.text_alignleft,
                       tooltip: 'Align Left',
                       isSelected: _isAlignmentActive(Attribute.leftAlignment),
                       onPressed: () =>
                           _toggleAlignment(Attribute.leftAlignment),
                     ),
                     _buildIconButton(
-                      icon: Icons.format_align_center,
+                      icon: CupertinoIcons.text_aligncenter,
                       tooltip: 'Align Center',
                       isSelected: _isAlignmentActive(Attribute.centerAlignment),
                       onPressed: () =>
                           _toggleAlignment(Attribute.centerAlignment),
                     ),
                     _buildIconButton(
-                      icon: Icons.format_align_right,
+                      icon: CupertinoIcons.text_alignright,
                       tooltip: 'Align Right',
                       isSelected: _isAlignmentActive(Attribute.rightAlignment),
                       onPressed: () =>
                           _toggleAlignment(Attribute.rightAlignment),
                     ),
                     _buildIconButton(
-                      icon: Icons.format_align_justify,
+                      icon: CupertinoIcons.text_justify,
                       tooltip: 'Align Justify',
                       isSelected: _isAlignmentActive(
                         Attribute.justifyAlignment,
@@ -1279,19 +1281,19 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     ),
                     _buildDivider(),
                     _buildIconButton(
-                      icon: Icons.format_list_numbered,
+                      icon: CupertinoIcons.list_number,
                       tooltip: 'Numbered List',
                       isSelected: _isListActive(Attribute.ol),
                       onPressed: () => _toggleList(Attribute.ol),
                     ),
                     _buildIconButton(
-                      icon: Icons.format_list_bulleted,
+                      icon: CupertinoIcons.list_bullet,
                       tooltip: 'Bulleted List',
                       isSelected: _isListActive(Attribute.ul),
                       onPressed: () => _toggleList(Attribute.ul),
                     ),
                     _buildIconButton(
-                      icon: Icons.checklist,
+                      icon: CupertinoIcons.checkmark_square,
                       tooltip: 'Checklist',
                       isSelected: _isListActive(Attribute.unchecked),
                       onPressed: () => _toggleList(Attribute.unchecked),
@@ -1300,25 +1302,25 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildDivider(),
                     const SizedBox(width: 8),
                     _buildIconButton(
-                      icon: Icons.subscript,
+                      icon: CupertinoIcons.textformat_subscript,
                       tooltip: 'Subscript',
                       isSelected: _hasAttribute(Attribute.subscript),
                       onPressed: () => _toggleFormat(Attribute.subscript),
                     ),
                     _buildIconButton(
-                      icon: Icons.superscript,
+                      icon: CupertinoIcons.textformat_superscript,
                       tooltip: 'Superscript',
                       isSelected: _hasAttribute(Attribute.superscript),
                       onPressed: () => _toggleFormat(Attribute.superscript),
                     ),
                     _buildIconButton(
-                      icon: Icons.code,
+                      icon: CupertinoIcons.captions_bubble,
                       tooltip: 'Inline Code',
                       isSelected: _hasAttribute(Attribute.inlineCode),
                       onPressed: () => _toggleFormat(Attribute.inlineCode),
                     ),
                     _buildIconButton(
-                      icon: Icons.format_size,
+                      icon: CupertinoIcons.textformat_size,
                       tooltip: 'Small Text',
                       isSelected: _hasAttribute(Attribute.small),
                       onPressed: () => _toggleFormat(Attribute.small),
@@ -1327,7 +1329,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildDivider(),
                     const SizedBox(width: 4),
                     _buildIconButton(
-                      icon: Icons.format_clear,
+                      icon: CupertinoIcons.clear,
                       tooltip: 'Clear Format',
                       onPressed: _clearFormat,
                     ),
@@ -1335,12 +1337,12 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildDivider(),
                     const SizedBox(width: 4),
                     _buildIconButton(
-                      icon: Icons.format_indent_increase,
+                      icon: CupertinoIcons.increase_indent,
                       tooltip: 'Increase Indent',
                       onPressed: () => widget.controller.indentSelection(true),
                     ),
                     _buildIconButton(
-                      icon: Icons.format_indent_decrease,
+                      icon: CupertinoIcons.decrease_indent,
                       tooltip: 'Decrease Indent',
                       onPressed: () => widget.controller.indentSelection(false),
                     ),
@@ -1348,13 +1350,13 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildDivider(),
                     const SizedBox(width: 4),
                     _buildIconButton(
-                      icon: Icons.code,
+                      icon: CupertinoIcons.captions_bubble_fill,
                       tooltip: 'Code Block',
                       isSelected: _hasAttribute(Attribute.codeBlock),
                       onPressed: () => _toggleFormat(Attribute.codeBlock),
                     ),
                     _buildIconButton(
-                      icon: Icons.format_quote,
+                      icon: CupertinoIcons.quote_bubble,
                       tooltip: 'Block Quote',
                       isSelected: _hasAttribute(Attribute.blockQuote),
                       onPressed: () => _toggleFormat(Attribute.blockQuote),
@@ -1363,19 +1365,19 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildDivider(),
                     const SizedBox(width: 4),
                     _buildIconButton(
-                      icon: Icons.link,
+                      icon: CupertinoIcons.link,
                       tooltip: 'Insert Link',
                       isPremiumFeature: true,
                       onPressed: _insertLink,
                     ),
                     _buildIconButton(
-                      icon: Icons.image,
+                      icon: CupertinoIcons.photo,
                       tooltip: 'Insert Image',
                       isPremiumFeature: true,
                       onPressed: _insertImage,
                     ),
                     _buildIconButton(
-                      icon: Icons.videocam,
+                      icon: CupertinoIcons.video_camera,
                       tooltip: 'Insert Video',
                       isPremiumFeature: true,
                       onPressed: _insertVideo,
@@ -1385,45 +1387,45 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     _buildDivider(),
 
                     _buildIconButton(
-                      icon: Icons.access_time,
+                      icon: CupertinoIcons.time,
                       tooltip: 'Insert Time',
                       onPressed: _insertTimestamp,
                     ),
                     _buildIconButton(
-                      icon: Icons.calendar_today,
+                      icon: CupertinoIcons.calendar,
                       tooltip: 'Insert Date',
                       onPressed: _insertDate,
                     ),
                     _buildIconButton(
-                      icon: Icons.horizontal_rule,
+                      icon: CupertinoIcons.minus,
                       tooltip: 'Horizontal Line',
                       onPressed: _insertHorizontalLine,
                     ),
                     _buildIconButton(
-                      icon: Icons.analytics,
+                      icon: CupertinoIcons.graph_square,
                       tooltip: 'Word Count',
                       isPremiumFeature: true,
                       onPressed: _showWordCount,
                     ),
                     _buildIconButton(
-                      icon: Icons.select_all,
+                      icon: CupertinoIcons.square_stack_3d_up,
                       tooltip: 'Select All',
                       onPressed: _selectAll,
                     ),
                     _buildIconButton(
-                      icon: Icons.search,
+                      icon: CupertinoIcons.search,
                       tooltip: 'Search & Replace',
                       isPremiumFeature: true,
                       onPressed: _toggleSearchReplace,
                     ),
                     _buildIconButton(
-                      icon: Icons.emoji_emotions,
+                      icon: CupertinoIcons.smiley,
                       tooltip: 'Emoji Picker',
                       isPremiumFeature: true,
                       onPressed: _toggleEmojiPicker,
                     ),
                     _buildIconButton(
-                      icon: Icons.arrow_upward,
+                      icon: CupertinoIcons.arrow_up,
                       tooltip: 'Uppercase Selection',
                       isPremiumFeature: true,
                       isSelected: () {
@@ -1443,7 +1445,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                       onPressed: _uppercaseSelection,
                     ),
                     _buildIconButton(
-                      icon: Icons.arrow_downward,
+                      icon: CupertinoIcons.arrow_down,
                       tooltip: 'Lowercase Selection',
                       isPremiumFeature: true,
                       isSelected: () {
@@ -1463,19 +1465,19 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                       onPressed: _lowercaseSelection,
                     ),
                     _buildIconButton(
-                      icon: Icons.control_point_duplicate_rounded,
+                      icon: CupertinoIcons.plus_square_on_square,
                       tooltip: 'Duplicate Line',
                       isPremiumFeature: true,
                       onPressed: _duplicateLine,
                     ),
                     _buildIconButton(
-                      icon: Icons.format_quote,
+                      icon: CupertinoIcons.quote_bubble_fill,
                       tooltip: 'Insert Random Quote',
                       isPremiumFeature: true,
                       onPressed: _insertRandomQuote,
                     ),
                     _buildIconButton(
-                      icon: Icons.print,
+                      icon: CupertinoIcons.printer,
                       tooltip: 'Print Document',
                       isPremiumFeature: true,
                       onPressed: _printDocument,
@@ -1567,7 +1569,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                                 Row(
                                   children: [
                                     IconButton(
-                                      icon: const Icon(Icons.arrow_upward),
+                                      icon: const Icon(CupertinoIcons.arrow_up),
                                       tooltip: 'Previous Match',
                                       onPressed: matches.isEmpty
                                           ? null
@@ -1575,7 +1577,9 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                                       color: colorScheme.primary,
                                     ),
                                     IconButton(
-                                      icon: const Icon(Icons.arrow_downward),
+                                      icon: const Icon(
+                                        CupertinoIcons.arrow_down,
+                                      ),
                                       tooltip: 'Next Match',
                                       onPressed: matches.isEmpty
                                           ? null
@@ -1667,7 +1671,9 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
               ),
             ),
             Icon(
-              isExpanded ? Icons.expand_less : Icons.expand_more,
+              isExpanded
+                  ? CupertinoIcons.chevron_up
+                  : CupertinoIcons.chevron_down,
               size: 16,
               color: isExpanded ? colorScheme.primary : colorScheme.onSurface,
             ),
@@ -1939,12 +1945,14 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     color: isSelected
                         ? colorScheme.primary.withOpacity(0.15)
                         : Colors.transparent,
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.cornerRadius * 0.4,
+                    ),
                     border: Border.all(
                       color: isSelected
                           ? colorScheme.primary.withOpacity(0.4)
                           : Colors.transparent,
-                      width: 1,
+                      width: AppConstants.borderWidth,
                     ),
                   ),
                   child: Icon(icon, size: 18, color: effectiveIconColor),
@@ -1959,7 +1967,11 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                         color: colorScheme.surface,
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.lock, size: 10, color: Colors.amber),
+                      child: Icon(
+                        CupertinoIcons.lock_fill,
+                        size: 10,
+                        color: Colors.amber,
+                      ),
                     ),
                   ),
               ],

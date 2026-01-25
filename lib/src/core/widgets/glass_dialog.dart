@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:copyclip/src/core/const/constant.dart';
 
 class GlassDialog extends StatelessWidget {
   final String title;
@@ -39,14 +40,19 @@ class GlassDialog extends StatelessWidget {
         children: [
           // 1. The Blur (Frosted Base)
           ClipRRect(
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
               child: Container(
                 decoration: BoxDecoration(
                   color: baseGlassColor,
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: borderColor, width: 1),
+                  borderRadius: BorderRadius.circular(
+                    AppConstants.cornerRadius,
+                  ),
+                  border: Border.all(
+                    color: borderColor,
+                    width: AppConstants.borderWidth,
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: primaryColor.withOpacity(0.1),
@@ -66,7 +72,13 @@ class GlassDialog extends StatelessWidget {
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: textColor,
-                        shadows: [Shadow(color: Colors.black.withOpacity(0.5), blurRadius: 10, offset: const Offset(0, 2))],
+                        shadows: [
+                          Shadow(
+                            color: Colors.black.withOpacity(0.5),
+                            blurRadius: 10,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -90,12 +102,20 @@ class GlassDialog extends StatelessWidget {
                       children: [
                         TextButton(
                           onPressed: onCancel ?? () => Navigator.pop(context),
-                          child: Text(cancelText, style: TextStyle(color: textColor.withOpacity(0.6), fontSize: 16)),
+                          child: Text(
+                            cancelText,
+                            style: TextStyle(
+                              color: textColor.withOpacity(0.6),
+                              fontSize: 16,
+                            ),
+                          ),
                         ),
                         const SizedBox(width: 8),
                         _GlassButton(
                           text: confirmText,
-                          color: isDestructive ? theme.colorScheme.error : primaryColor,
+                          color: isDestructive
+                              ? theme.colorScheme.error
+                              : primaryColor,
                           textColor: textColor,
                           onTap: onConfirm ?? () => Navigator.pop(context),
                         ),
@@ -107,18 +127,22 @@ class GlassDialog extends StatelessWidget {
             ),
           ),
 
-          // Layers 2 and 3 (Reflection & Rim Light) remain exactly as you provided...
+          // Layers 2 and 3 (Reflection & Rim Light)
           Positioned.fill(
             child: IgnorePointer(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       stops: const [0.0, 0.4, 1.0],
-                      colors: [Colors.white.withOpacity(0.15), Colors.white.withOpacity(0.0), Colors.transparent],
+                      colors: [
+                        Colors.white.withOpacity(0.15),
+                        Colors.white.withOpacity(0.0),
+                        Colors.transparent,
+                      ],
                     ),
                   ),
                 ),
@@ -129,12 +153,21 @@ class GlassDialog extends StatelessWidget {
             child: IgnorePointer(
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: primaryColor.withOpacity(0.2), width: 1.5),
+                  borderRadius: BorderRadius.circular(
+                    AppConstants.cornerRadius,
+                  ),
+                  border: Border.all(
+                    color: primaryColor.withOpacity(0.2),
+                    width: AppConstants.borderWidth + 0.3,
+                  ),
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [primaryColor.withOpacity(0.4), Colors.transparent, Colors.black.withOpacity(0.2)],
+                    colors: [
+                      primaryColor.withOpacity(0.4),
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.2),
+                    ],
                   ),
                 ),
               ),
@@ -147,8 +180,16 @@ class GlassDialog extends StatelessWidget {
 }
 
 class _GlassButton extends StatelessWidget {
-  final String text; final Color color; final Color textColor; final VoidCallback onTap;
-  const _GlassButton({required this.text, required this.color, required this.textColor, required this.onTap});
+  final String text;
+  final Color color;
+  final Color textColor;
+  final VoidCallback onTap;
+  const _GlassButton({
+    required this.text,
+    required this.color,
+    required this.textColor,
+    required this.onTap,
+  });
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -156,12 +197,38 @@ class _GlassButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [color.withOpacity(0.4), color.withOpacity(0.2)]),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withOpacity(0.6), width: 1),
-          boxShadow: [BoxShadow(color: color.withOpacity(0.2), blurRadius: 10, offset: const Offset(0, 2))],
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [color.withOpacity(0.4), color.withOpacity(0.2)],
+          ),
+          borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 0.5),
+          border: Border.all(
+            color: color.withOpacity(0.6),
+            width: AppConstants.borderWidth,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: color.withOpacity(0.2),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
-        child: Text(text, style: TextStyle(color: textColor, fontWeight: FontWeight.bold, shadows: [Shadow(color: Colors.black.withOpacity(0.5), blurRadius: 2, offset: const Offset(0, 1))])),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.bold,
+            shadows: [
+              Shadow(
+                color: Colors.black.withOpacity(0.5),
+                blurRadius: 2,
+                offset: const Offset(0, 1),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
