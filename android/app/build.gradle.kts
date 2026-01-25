@@ -38,8 +38,8 @@ android {
         applicationId = "com.technopradyumn.copyclip"
         minSdk = 24
         targetSdk = flutter.targetSdkVersion
-        versionCode = 19
-        versionName = "1.3.2"
+        versionCode = 20
+        versionName = "1.3.3"
         multiDexEnabled = true
     }
 
