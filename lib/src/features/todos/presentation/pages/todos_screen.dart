@@ -108,6 +108,11 @@ class _TodosScreenState extends State<TodosScreen>
 
     _quickAddController.clear(); // Clear UI immediately
 
+    // ✅ CRITICAL: Keep focus for continuous entry
+    if (mounted) {
+      _quickAddFocus.requestFocus();
+    }
+
     try {
       // Calculate Sort Index
       final categoryTodos = _rawTodos
@@ -152,11 +157,7 @@ class _TodosScreenState extends State<TodosScreen>
         payload: newTodo.id,
       );
 
-      // Hive listener will trigger _refreshTodos(), so we don't need to call it manually
-      // except maybe to request focus if lost?
-      if (mounted) {
-        _quickAddFocus.requestFocus();
-      }
+      // Focus request moved up to be immediate
     } finally {
       // Small delay to release lock to allow UI to settle
       await Future.delayed(const Duration(milliseconds: 100));

@@ -94,7 +94,9 @@ class _PremiumScreenState extends State<PremiumScreen> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            "Expires: ${DateFormat.yMMMd().format(provider.premiumExpiryDate!)}",
+                            provider.premiumExpiryDate != null
+                                ? "Expires: ${DateFormat.yMMMd().format(provider.premiumExpiryDate!)}"
+                                : "Temporary Access",
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: theme.colorScheme.onSurface.withOpacity(
                                 0.7,
