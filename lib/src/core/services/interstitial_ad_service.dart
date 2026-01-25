@@ -12,7 +12,7 @@ class InterstitialAdService {
   factory InterstitialAdService() => _instance;
   InterstitialAdService._internal();
 
-  InterstitialAd? _interstitialAd;
+  RewardedInterstitialAd? _interstitialAd;
   bool _isAdLoading = false;
 
   bool get isAdReady => _interstitialAd != null;
@@ -22,13 +22,13 @@ class InterstitialAdService {
   String get _interstitialAdUnitId {
     if (Platform.isAndroid) {
       return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ??
-          '';
+          'ca-app-pub-3940256099942544/5354046379'; // Test ID (Rewarded Interstitial)
     }
     // else if (Platform.isIOS) {
     //   return dotenv.env['IOS_INTERSTITIAL_AD_UNIT_ID'] ??
     //       '';
     // }
-    return '';
+    return 'ca-app-pub-3940256099942544/5354046379';
   }
 
   /// Load an interstitial ad
@@ -36,17 +36,17 @@ class InterstitialAdService {
     if (_isAdLoading) return;
     _isAdLoading = true;
 
-    InterstitialAd.load(
+    RewardedInterstitialAd.load(
       adUnitId: _interstitialAdUnitId,
       request: const AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
+      rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
         onAdLoaded: (ad) {
-          debugPrint('✅ Interstitial Ad Loaded');
+          debugPrint('✅ Rewarded Interstitial Ad Loaded');
           _interstitialAd = ad;
           _isAdLoading = false;
         },
         onAdFailedToLoad: (error) {
-          debugPrint('❌ Interstitial Ad Failed: $error');
+          debugPrint('❌ Rewarded Interstitial Ad Failed: $error');
           _interstitialAd = null;
           _isAdLoading = false;
         },
@@ -64,25 +64,36 @@ class InterstitialAdService {
       return;
     }
 
-    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+    // ✅ CRITICAL: Safely consume ad instance to prevent Double-Show / NullPointer
+    final ad = _interstitialAd!;
+    _interstitialAd = null;
+
+    ad.fullScreenContentCallback = FullScreenContentCallback(
       onAdDismissedFullScreenContent: (ad) {
         debugPrint('👋 Ad Dismissed - Executing Action');
         ad.dispose();
-        _interstitialAd = null;
         loadAd(); // Preload next one
         onComplete(); // ✅ Execute callback HERE
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
         debugPrint('❌ Ad Failed to Show - Executing Action');
         ad.dispose();
-        _interstitialAd = null;
         loadAd();
         onComplete(); // Ensure action happens even if ad fails
       },
     );
 
-    _interstitialAd!.setImmersiveMode(true);
-    _interstitialAd!.show();
+    try {
+      ad.setImmersiveMode(true);
+    } catch (e) {
+      debugPrint("⚠️ Failed to set immersive mode: $e");
+    }
+
+    ad.show(
+      onUserEarnedReward: (adWithoutView, rewardItem) {
+        // Just proceed, we don't track coins for this simple unlock
+      },
+    );
   }
 
   /// Dispose the ad (call this when needed)
