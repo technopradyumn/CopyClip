@@ -3,6 +3,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:rxdart/rxdart.dart';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
@@ -60,6 +61,23 @@ class NotificationService {
         }
       },
     );
+
+    // ✅ CHECK COLD START:
+    // If app was launched by tapping a notification, we need to handle it manually here
+    // because streams aren't listened to yet.
+    final details = await flutterLocalNotificationsPlugin
+        .getNotificationAppLaunchDetails();
+    if (details != null &&
+        details.didNotificationLaunchApp &&
+        details.notificationResponse?.payload != null) {
+      debugPrint(
+        '🚀 App launched via notification payload: ${details.notificationResponse!.payload}',
+      );
+      // Brief delay to allow listeners to attach in main.dart
+      Future.delayed(const Duration(milliseconds: 500), () {
+        onNotifications.add(details.notificationResponse!.payload);
+      });
+    }
   }
 
   Future<bool> checkPermissions() async {

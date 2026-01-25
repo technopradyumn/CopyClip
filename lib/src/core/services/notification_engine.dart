@@ -47,6 +47,32 @@ class NotificationEngine {
   /// Called by Background Worker daily at ~8:00 PM
   Future<void> triggerEveningCheck() async {
     debugPrint('🌙 Triggering Evening Check...');
+
+    // 1. Task Check for Evening Planning
+    try {
+      final todos = await TodoSchedulerService().getPendingTodosForToday();
+      final count = todos.length;
+
+      String title = "🌙 Evening Wrap-Up";
+      String body = "Time to plan for tomorrow!";
+
+      if (count > 0) {
+        body =
+            "You have $count pending tasks. Finish them up and plan for tomorrow!";
+      }
+
+      await NotificationService().showInstantNotification(
+        id: 8890,
+        title: title,
+        body: body,
+        channelId: 'todos',
+        payload: "dashboard",
+      );
+    } catch (e) {
+      debugPrint("Warning: Evening task check failed: $e");
+    }
+
+    // 2. Run other handlers
     await Future.wait([
       JournalNotificationHandler().checkAndNotify(),
       ExpenseNotificationHandler().checkAndNotify(),

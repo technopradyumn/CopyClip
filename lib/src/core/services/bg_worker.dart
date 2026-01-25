@@ -124,8 +124,26 @@ class BackgroundWorker {
     );
   }
 
+  static Future<void> _scheduleEveningWorker() async {
+    final now = DateTime.now();
+    var scheduledDate = DateTime(now.year, now.month, now.day, 19, 0); // 7 PM
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    final timeDiff = scheduledDate.difference(now);
+
+    await Workmanager().registerOneOffTask(
+      "evening-check-oneoff",
+      kTaskEveningCheck,
+      initialDelay: timeDiff,
+      constraints: Constraints(requiresBatteryNotLow: true),
+      existingWorkPolicy: ExistingWorkPolicy.replace,
+    );
+  }
+
   /// Call this when app opens to re-schedule/ensure the next briefing is set
   static Future<void> rescheduleDailyBriefing() async {
     await _scheduleDailyBriefingWorker();
+    await _scheduleEveningWorker();
   }
 }
