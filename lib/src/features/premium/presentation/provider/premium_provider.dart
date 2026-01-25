@@ -35,7 +35,8 @@ class PremiumProvider extends ChangeNotifier {
 
   PremiumProvider() {
     _loadData();
-    _loadRewardedAd();
+    // ✅ DELAYED LOAD: Ensure MobileAds SDK is initialized (in main.dart) before loading
+    Future.delayed(const Duration(seconds: 3), _loadRewardedAd);
   }
 
   Future<void> _loadData() async {
@@ -83,12 +84,13 @@ class PremiumProvider extends ChangeNotifier {
   String get _rewardedAdUnitId {
     if (Platform.isAndroid) {
       return dotenv.env['ANDROID_REWARDED_AD_UNIT_ID'] ??
-          'ca-app-pub-3940256099942544/5224354917'; // Test ID
-    } else if (Platform.isIOS) {
-      return dotenv.env['IOS_REWARDED_AD_UNIT_ID'] ??
-          'ca-app-pub-3940256099942544/1712485313'; // Test ID
+          '';
     }
-    return 'ca-app-pub-3940256099942544/5224354917';
+    // else if (Platform.isIOS) {
+    //   return dotenv.env['IOS_REWARDED_AD_UNIT_ID'] ??
+    //       '';
+    // }
+    return '';
   }
 
   void _loadRewardedAd() {

@@ -20,11 +20,16 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   // ✅ TEST ID FALLBACK (Standard Google Test Banner ID)
   // This ensures ads show up even if .env is missing or invalid
   String get _adUnitId {
+
     if (Platform.isAndroid) {
-      final key = dotenv.env['ANDROID_BANNER_AD_UNIT_ID'];
-      if (key != null && key.isNotEmpty) return key;
+      return dotenv.env['ANDROID_BANNER_AD_UNIT_ID'] ??
+          ''; // Test ID
     }
-    return 'ca-app-pub-3940256099942544/6300978111';
+    // else if (Platform.isIOS) {
+    //   return dotenv.env['IOS_BANNER_AD_UNIT_ID'] ??
+    //       ''; // Test ID
+    // }
+    return '';
   }
 
   @override

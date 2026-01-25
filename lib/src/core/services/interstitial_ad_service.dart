@@ -22,12 +22,13 @@ class InterstitialAdService {
   String get _interstitialAdUnitId {
     if (Platform.isAndroid) {
       return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ??
-          'ca-app-pub-3940256099942544/1033173712'; // Test ID
-    } else if (Platform.isIOS) {
-      return dotenv.env['IOS_INTERSTITIAL_AD_UNIT_ID'] ??
-          'ca-app-pub-3940256099942544/4411468910'; // Test ID
+          '';
     }
-    return 'ca-app-pub-3940256099942544/1033173712';
+    // else if (Platform.isIOS) {
+    //   return dotenv.env['IOS_INTERSTITIAL_AD_UNIT_ID'] ??
+    //       '';
+    // }
+    return '';
   }
 
   /// Load an interstitial ad

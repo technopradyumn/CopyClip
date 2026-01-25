@@ -74,7 +74,7 @@ android {
 
         debug {
             signingConfig = signingConfigs.getByName("debug")
-            manifestPlaceholders["ADMOB_APP_ID"] = "ca-app-pub-3940256099942544~3347511713"
+            manifestPlaceholders["ADMOB_APP_ID"] = "ca-app-pub-4440456026843696~3660644370"
         }
     }
 
