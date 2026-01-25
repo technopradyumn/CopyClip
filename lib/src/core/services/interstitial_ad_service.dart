@@ -12,7 +12,7 @@ class InterstitialAdService {
   factory InterstitialAdService() => _instance;
   InterstitialAdService._internal();
 
-  RewardedInterstitialAd? _interstitialAd;
+  InterstitialAd? _interstitialAd;
   bool _isAdLoading = false;
 
   bool get isAdReady => _interstitialAd != null;
@@ -21,13 +21,8 @@ class InterstitialAdService {
   /// Get the appropriate ad unit ID based on platform
   String get _interstitialAdUnitId {
     if (Platform.isAndroid) {
-      return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ??
-          '';
+      return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ?? '';
     }
-    // else if (Platform.isIOS) {
-    //   return dotenv.env['IOS_INTERSTITIAL_AD_UNIT_ID'] ??
-    //       '';
-    // }
     return '';
   }
 
@@ -36,17 +31,17 @@ class InterstitialAdService {
     if (_isAdLoading) return;
     _isAdLoading = true;
 
-    RewardedInterstitialAd.load(
+    InterstitialAd.load(
       adUnitId: _interstitialAdUnitId,
       request: const AdRequest(),
-      rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
+      adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
-          debugPrint('✅ Rewarded Interstitial Ad Loaded');
+          debugPrint('✅ Interstitial Ad Loaded');
           _interstitialAd = ad;
           _isAdLoading = false;
         },
         onAdFailedToLoad: (error) {
-          debugPrint('❌ Rewarded Interstitial Ad Failed: $error');
+          debugPrint('❌ Interstitial Ad Failed: $error');
           _interstitialAd = null;
           _isAdLoading = false;
         },
@@ -89,11 +84,8 @@ class InterstitialAdService {
       debugPrint("⚠️ Failed to set immersive mode: $e");
     }
 
-    ad.show(
-      onUserEarnedReward: (adWithoutView, rewardItem) {
-        // Just proceed, we don't track coins for this simple unlock
-      },
-    );
+    // Standard InterstitialAd.show() takes no arguments
+    ad.show();
   }
 
   /// Dispose the ad (call this when needed)

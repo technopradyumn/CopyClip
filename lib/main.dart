@@ -383,6 +383,15 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     debugPrint('🚀 Post-frame initialization...');
 
     // Initialize ads (deferred from startup)
+    // ✅ ADDED: Test Device Configuration
+    await MobileAds.instance.updateRequestConfiguration(
+      RequestConfiguration(
+        testDeviceIds: [
+          "144FE4F3F00EAB19BA87344D34904C8B", // User's Device
+        ],
+      ),
+    );
+
     MobileAds.instance.initialize().catchError((e) {
       debugPrint('❌ Ad initialization error: $e');
     });
