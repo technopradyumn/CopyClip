@@ -19,8 +19,8 @@ class PremiumProvider extends ChangeNotifier {
   int _coins = 0;
   DateTime? _premiumExpiryDate;
 
+  Object? _ad; // Can be RewardedAd or RewardedInterstitialAd
   bool _isAdLoading = false;
-  RewardedAd? _rewardedAd;
   Completer<void>? _adLoadCompleter;
 
   int get coins => _coins;
@@ -35,8 +35,7 @@ class PremiumProvider extends ChangeNotifier {
 
   PremiumProvider() {
     _loadData();
-    // ✅ DELAYED LOAD: Ensure MobileAds SDK is initialized (in main.dart) before loading
-    Future.delayed(const Duration(seconds: 3), _loadRewardedAd);
+    // No automatic load here to avoid race conditions with main.dart init
   }
 
   Future<void> _loadData() async {
@@ -78,50 +77,96 @@ class PremiumProvider extends ChangeNotifier {
     }
     return false;
   }
-
   // --- ADS ---
 
   String get _rewardedAdUnitId {
     if (Platform.isAndroid) {
-      return dotenv.env['ANDROID_REWARDED_AD_UNIT_ID'] ??
-          '';
+      return dotenv.env['ANDROID_REWARDED_AD_UNIT_ID'] ?? '';
     }
-    // else if (Platform.isIOS) {
-    //   return dotenv.env['IOS_REWARDED_AD_UNIT_ID'] ??
-    //       '';
-    // }
     return '';
   }
 
   void _loadRewardedAd() {
+    if (_adLoading) return;
+    final unitId = _rewardedAdUnitId;
+    if (unitId.isEmpty) {
+      debugPrint('⚠️ Rewarded Ad Unit ID is empty. Waiting...');
+      return;
+    }
+
+    _isAdLoading = true;
+
+    debugPrint('🚀 Loading Rewarded Ad: $unitId');
+
     RewardedAd.load(
-      adUnitId: _rewardedAdUnitId,
+      adUnitId: unitId,
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
           debugPrint('✅ Rewarded Ad Loaded');
-          _rewardedAd = ad;
+          _ad = ad;
           _isAdLoading = false;
-          if (_adLoadCompleter != null && !_adLoadCompleter!.isCompleted) {
-            _adLoadCompleter!.complete();
-          }
+          _completeAdLoad();
           notifyListeners();
         },
         onAdFailedToLoad: (error) {
           debugPrint('❌ Rewarded Ad Failed: $error');
-          _rewardedAd = null;
-          _isAdLoading = false;
-          if (_adLoadCompleter != null && !_adLoadCompleter!.isCompleted) {
-            _adLoadCompleter!.completeError(error);
+          // Check for format mismatch
+          if (error.message.toLowerCase().contains("format")) {
+            debugPrint(
+              '🔄 Format mismatch detected. Trying RewardedInterstitialAd...',
+            );
+            _loadRewardedInterstitialAd(unitId);
+          } else {
+            _ad = null;
+            _isAdLoading = false;
+            _failAdLoad(error);
+            notifyListeners();
           }
+        },
+      ),
+    );
+  }
+
+  void _loadRewardedInterstitialAd(String unitId) {
+    RewardedInterstitialAd.load(
+      adUnitId: unitId,
+      request: const AdRequest(),
+      rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          debugPrint('✅ Rewarded Interstitial Ad Loaded');
+          _ad = ad;
+          _isAdLoading = false;
+          _completeAdLoad();
+          notifyListeners();
+        },
+        onAdFailedToLoad: (error) {
+          debugPrint('❌ Rewarded Interstitial Ad Failed: $error');
+          _ad = null;
+          _isAdLoading = false;
+          _failAdLoad(error);
           notifyListeners();
         },
       ),
     );
   }
 
+  void _completeAdLoad() {
+    if (_adLoadCompleter != null && !_adLoadCompleter!.isCompleted) {
+      _adLoadCompleter!.complete();
+    }
+  }
+
+  void _failAdLoad(dynamic error) {
+    if (_adLoadCompleter != null && !_adLoadCompleter!.isCompleted) {
+      _adLoadCompleter!.completeError(error);
+    }
+  }
+
+  bool get _adLoading => _isAdLoading;
+
   Future<void> showRewardedAd({required Function(int) onReward}) async {
-    if (_rewardedAd == null) {
+    if (_ad == null) {
       debugPrint('⚠️ Ad not ready. Loading new ad...');
       _isAdLoading = true;
       notifyListeners();
@@ -130,7 +175,7 @@ class PremiumProvider extends ChangeNotifier {
       _loadRewardedAd();
 
       try {
-        await _adLoadCompleter!.future.timeout(const Duration(seconds: 10));
+        await _adLoadCompleter!.future.timeout(const Duration(seconds: 15));
       } catch (e) {
         debugPrint('❌ Ad timeout or error: $e');
         _isAdLoading = false;
@@ -139,26 +184,44 @@ class PremiumProvider extends ChangeNotifier {
       }
     }
 
-    if (_rewardedAd != null) {
-      _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-        onAdDismissedFullScreenContent: (ad) {
-          ad.dispose();
-          _rewardedAd = null;
-          _loadRewardedAd(); // Preload next
-        },
-        onAdFailedToShowFullScreenContent: (ad, error) {
-          debugPrint('❌ Ad failed to show: $error');
-          ad.dispose();
-          _rewardedAd = null;
-          _loadRewardedAd();
-        },
-      );
-
-      _rewardedAd!.show(
-        onUserEarnedReward: (adWithoutView, rewardItem) {
-          onReward(PremiumConstants.rewardCoinAmount);
-        },
-      );
+    if (_ad != null) {
+      if (_ad is RewardedAd) {
+        final ad = _ad as RewardedAd;
+        ad.fullScreenContentCallback = FullScreenContentCallback(
+          onAdDismissedFullScreenContent: (ad) {
+            ad.dispose();
+            _ad = null;
+            _loadRewardedAd();
+          },
+          onAdFailedToShowFullScreenContent: (ad, error) {
+            ad.dispose();
+            _ad = null;
+            _loadRewardedAd();
+          },
+        );
+        ad.show(
+          onUserEarnedReward: (ad, reward) =>
+              onReward(PremiumConstants.rewardCoinAmount),
+        );
+      } else if (_ad is RewardedInterstitialAd) {
+        final ad = _ad as RewardedInterstitialAd;
+        ad.fullScreenContentCallback = FullScreenContentCallback(
+          onAdDismissedFullScreenContent: (ad) {
+            ad.dispose();
+            _ad = null;
+            _loadRewardedAd();
+          },
+          onAdFailedToShowFullScreenContent: (ad, error) {
+            ad.dispose();
+            _ad = null;
+            _loadRewardedAd();
+          },
+        );
+        ad.show(
+          onUserEarnedReward: (ad, reward) =>
+              onReward(PremiumConstants.rewardCoinAmount),
+        );
+      }
     }
   }
 }

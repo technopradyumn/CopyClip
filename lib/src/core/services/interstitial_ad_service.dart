@@ -12,7 +12,7 @@ class InterstitialAdService {
   factory InterstitialAdService() => _instance;
   InterstitialAdService._internal();
 
-  InterstitialAd? _interstitialAd;
+  dynamic _interstitialAd; // Can be InterstitialAd or RewardedInterstitialAd
   bool _isAdLoading = false;
 
   bool get isAdReady => _interstitialAd != null;
@@ -29,10 +29,13 @@ class InterstitialAdService {
   /// Load an interstitial ad
   void loadAd() {
     if (_isAdLoading) return;
+    final unitId = _interstitialAdUnitId;
+    if (unitId.isEmpty) return;
+
     _isAdLoading = true;
 
     InterstitialAd.load(
-      adUnitId: _interstitialAdUnitId,
+      adUnitId: unitId,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
@@ -42,6 +45,32 @@ class InterstitialAdService {
         },
         onAdFailedToLoad: (error) {
           debugPrint('❌ Interstitial Ad Failed: $error');
+          if (error.message.toLowerCase().contains("format")) {
+            debugPrint(
+              '🔄 Format mismatch. Trying RewardedInterstitialAd fallback...',
+            );
+            _loadRewardedInterstitialAd(unitId);
+          } else {
+            _interstitialAd = null;
+            _isAdLoading = false;
+          }
+        },
+      ),
+    );
+  }
+
+  void _loadRewardedInterstitialAd(String unitId) {
+    RewardedInterstitialAd.load(
+      adUnitId: unitId,
+      request: const AdRequest(),
+      rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          debugPrint('✅ Rewarded Interstitial Ad Loaded (Fallback)');
+          _interstitialAd = ad;
+          _isAdLoading = false;
+        },
+        onAdFailedToLoad: (error) {
+          debugPrint('❌ Rewarded Interstitial Fallback Failed: $error');
           _interstitialAd = null;
           _isAdLoading = false;
         },
@@ -60,32 +89,47 @@ class InterstitialAdService {
     }
 
     // ✅ CRITICAL: Safely consume ad instance to prevent Double-Show / NullPointer
-    final ad = _interstitialAd!;
+    final ad = _interstitialAd;
     _interstitialAd = null;
 
-    ad.fullScreenContentCallback = FullScreenContentCallback(
-      onAdDismissedFullScreenContent: (ad) {
-        debugPrint('👋 Ad Dismissed - Executing Action');
-        ad.dispose();
-        loadAd(); // Preload next one
-        onComplete(); // ✅ Execute callback HERE
-      },
-      onAdFailedToShowFullScreenContent: (ad, error) {
-        debugPrint('❌ Ad Failed to Show - Executing Action');
-        ad.dispose();
-        loadAd();
-        onComplete(); // Ensure action happens even if ad fails
-      },
-    );
-
-    try {
-      ad.setImmersiveMode(true);
-    } catch (e) {
-      debugPrint("⚠️ Failed to set immersive mode: $e");
+    if (ad is InterstitialAd) {
+      ad.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          debugPrint('👋 Ad Dismissed - Executing Action');
+          ad.dispose();
+          loadAd(); // Preload next one
+          onComplete(); // ✅ Execute callback HERE
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          debugPrint('❌ Ad Failed to Show - Executing Action');
+          ad.dispose();
+          loadAd();
+          onComplete(); // Ensure action happens even if ad fails
+        },
+      );
+      try {
+        ad.setImmersiveMode(true);
+      } catch (e) {
+        debugPrint("⚠️ Failed to set immersive mode: $e");
+      }
+      ad.show();
+    } else if (ad is RewardedInterstitialAd) {
+      ad.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          debugPrint('👋 Ad Dismissed - Executing Action');
+          ad.dispose();
+          loadAd();
+          onComplete();
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          debugPrint('❌ Ad Failed to Show - Executing Action');
+          ad.dispose();
+          loadAd();
+          onComplete();
+        },
+      );
+      ad.show(onUserEarnedReward: (ad, reward) => null);
     }
-
-    // Standard InterstitialAd.show() takes no arguments
-    ad.show();
   }
 
   /// Dispose the ad (call this when needed)

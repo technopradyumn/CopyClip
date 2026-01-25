@@ -136,8 +136,13 @@ Future<void> _initializeApp(AppInitializationState state) async {
     // ✅ OPTIMIZATION: Initialize Home Widget Service
     await HomeWidgetService.initialize();
 
-    // ✅ OPTIMIZATION: Defer ad initialization to improve startup time
-    // Ads will be initialized after the first frame is rendered
+    // ✅ Initialize AdMob early with Test Device configuration
+    await MobileAds.instance.updateRequestConfiguration(
+      RequestConfiguration(testDeviceIds: ["144FE4F3F00EAB19BA87344D34904C8B"]),
+    );
+    await MobileAds.instance.initialize().catchError((e) {
+      debugPrint('❌ Ad initialization error: $e');
+    });
 
     // Step 2: Hive setup
     state.updateProgress('Setting up database...', 0.4);
@@ -381,20 +386,6 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   /// ✅ OPTIMIZATION: Initialize ads and preload boxes after first frame
   Future<void> _postFrameInitialization() async {
     debugPrint('🚀 Post-frame initialization...');
-
-    // Initialize ads (deferred from startup)
-    // ✅ ADDED: Test Device Configuration
-    await MobileAds.instance.updateRequestConfiguration(
-      RequestConfiguration(
-        testDeviceIds: [
-          "144FE4F3F00EAB19BA87344D34904C8B", // User's Device
-        ],
-      ),
-    );
-
-    MobileAds.instance.initialize().catchError((e) {
-      debugPrint('❌ Ad initialization error: $e');
-    });
 
     // Preload common boxes in background
     LazyBoxLoader.preloadCommonBoxes().catchError((e) {
