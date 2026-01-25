@@ -10,6 +10,7 @@ import '../../data/canvas_adapter.dart';
 import '../../data/canvas_model.dart';
 import '../widgets/canvas_sketch_card.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
+import 'package:copyclip/src/core/widgets/search_header_field.dart';
 
 // Sorting options for the folder view
 enum FolderSortOption { dateNewest, dateOldest, nameAZ, nameZA }
@@ -327,28 +328,12 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
         titleHeroTag: 'folder_name_${widget.folderId}',
         showBackButton: true,
         onBackTap: _toggleSearch,
-        actions: [
-          Expanded(
-            child: Hero(
-              tag: 'search_bar_folder',
-              child: Material(
-                color: Colors.transparent,
-                child: TextField(
-                  controller: _searchController,
-                  focusNode: _searchFocusNode,
-                  decoration: InputDecoration(
-                    hintText: "Search in ${_folder.name}...",
-                    border: InputBorder.none,
-                    suffixIcon: IconButton(
-                      icon: const Icon(CupertinoIcons.xmark, size: 20),
-                      onPressed: () => _searchController.clear(),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+        titleWidget: SearchHeaderField(
+          controller: _searchController,
+          focusNode: _searchFocusNode,
+          heroTag: 'search_bar_folder',
+          hintText: "Search in ${_folder.name}...",
+        ),
       );
     }
 

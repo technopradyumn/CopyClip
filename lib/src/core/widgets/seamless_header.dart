@@ -14,7 +14,7 @@ class SeamlessHeader extends StatelessWidget {
   final String? iconHeroTag;
   final String? titleHeroTag;
 
-  // NEW: Support for custom content below the header
+  final Widget? titleWidget;
   final Widget? customContent;
   final bool showDivider;
 
@@ -30,6 +30,7 @@ class SeamlessHeader extends StatelessWidget {
     this.heroTagPrefix,
     this.iconHeroTag,
     this.titleHeroTag,
+    this.titleWidget,
     this.customContent,
     this.showDivider = false,
   });
@@ -79,41 +80,43 @@ class SeamlessHeader extends StatelessWidget {
               ],
 
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Hero(
-                      tag: effectiveTitleTag ?? 'header_title_$title',
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            title,
-                            style: theme.textTheme.headlineMedium?.copyWith(
-                              fontWeight: FontWeight.w900,
-                              fontSize: AppConstants.headerTitleSize,
-                              letterSpacing: -1.2,
-                              color: onSurface,
+                child:
+                    titleWidget ??
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Hero(
+                          tag: effectiveTitleTag ?? 'header_title_$title',
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                title,
+                                style: theme.textTheme.headlineMedium?.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: AppConstants.headerTitleSize,
+                                  letterSpacing: -1.2,
+                                  color: onSurface,
+                                ),
+                                maxLines: 1,
+                              ),
                             ),
-                            maxLines: 1,
                           ),
                         ),
-                      ),
+                        if (subtitle != null)
+                          Text(
+                            subtitle!,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: onSurface.withOpacity(0.5),
+                              fontWeight: FontWeight.w500,
+                              fontSize: AppConstants.headerSubtitleSize,
+                            ),
+                          ),
+                      ],
                     ),
-                    if (subtitle != null)
-                      Text(
-                        subtitle!,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: onSurface.withOpacity(0.5),
-                          fontWeight: FontWeight.w500,
-                          fontSize: AppConstants.headerSubtitleSize,
-                        ),
-                      ),
-                  ],
-                ),
               ),
 
               if (actions != null) ...actions!,

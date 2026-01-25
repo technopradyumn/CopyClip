@@ -467,6 +467,12 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
 
   void _saveEntry() {
     final title = _titleController.text.trim();
+    final plainText = _quillController.document.toPlainText().trim();
+
+    if (title.isEmpty && plainText.isEmpty) {
+      return; // Do not save empty journals
+    }
+
     final contentJson = jsonEncode(
       _quillController.document.toDelta().toJson(),
     );
@@ -761,43 +767,51 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 40,
+                              horizontal: 24,
                               vertical: 0,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                InkWell(
-                                  onTap: _pickDateTime,
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 14,
-                                      vertical: 8,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: contrastColor.withOpacity(0.08),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.calendar_month,
-                                          size: 14,
-                                          color: contrastColor.withOpacity(0.7),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          DateFormat(
-                                            'MMM dd, yyyy  •  hh:mm a',
-                                          ).format(_selectedDate),
-                                          style: TextStyle(
-                                            color: contrastColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12,
+                                Flexible(
+                                  child: InkWell(
+                                    onTap: _pickDateTime,
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 14,
+                                        vertical: 8,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: contrastColor.withOpacity(0.08),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.calendar_month,
+                                            size: 14,
+                                            color: contrastColor.withOpacity(
+                                              0.7,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                          const SizedBox(width: 8),
+                                          Flexible(
+                                            child: Text(
+                                              DateFormat(
+                                                'MMM dd, yyyy  •  hh:mm a',
+                                              ).format(_selectedDate),
+                                              style: TextStyle(
+                                                color: contrastColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

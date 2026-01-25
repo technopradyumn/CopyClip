@@ -46,7 +46,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
   final ScrollController _editorScrollController = ScrollController();
 
   DateTime _selectedDate = DateTime.now();
-  late DateTime _initialDate;
   late Box<Note> _notesBox;
 
   Color _scaffoldColor = AppContentPalette.palette.first;
@@ -67,12 +66,11 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
           ? Color(widget.note!.colorValue!)
           : AppContentPalette.palette.first;
     } else {
-      // ✅ Dynamic Default Color for New Notes
-      // We must defer this slightly to access context, or use a post-frame callback
-      // However, since we need it in initState variables, we'll initialize with a safe default
-      // and update it in didChangeDependencies if it matches the fallback.
-      // Better approach: Use a flag to check if color was customized.
+      _selectedDate = DateTime.now();
     }
+
+    _initialColor = _scaffoldColor;
+    _initialTitle = _titleController.text;
 
     _initQuill();
 
@@ -212,6 +210,12 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
 
   void _saveNote() {
     final title = _titleController.text.trim();
+    final plainText = _quillController.document.toPlainText().trim();
+
+    if (title.isEmpty && plainText.isEmpty) {
+      return; // Do not save empty notes
+    }
+
     final contentJson = jsonEncode(
       _quillController.document.toDelta().toJson(),
     );

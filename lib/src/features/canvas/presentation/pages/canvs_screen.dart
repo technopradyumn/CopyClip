@@ -11,6 +11,7 @@ import '../../data/canvas_model.dart';
 import '../widgets/canvas_folder_card.dart';
 import '../widgets/canvas_sketch_card.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
+import 'package:copyclip/src/core/widgets/search_header_field.dart';
 
 // Sorting Enum
 enum CanvasSortOption { dateNewest, dateOldest, nameAZ, nameZA }
@@ -410,7 +411,12 @@ class _CanvasScreenState extends State<CanvasScreen>
         heroTagPrefix: 'canvas',
         showBackButton: true,
         onBackTap: _toggleSearch,
-        actions: [Expanded(child: _buildSearchBar(theme))],
+        titleWidget: SearchHeaderField(
+          controller: _searchController,
+          focusNode: _searchFocusNode,
+          heroTag: 'search_bar_main',
+          hintText: "Search sketches and folders...",
+        ),
       );
     }
 
@@ -560,44 +566,6 @@ class _CanvasScreenState extends State<CanvasScreen>
           ],
         );
       },
-    );
-  }
-
-  Widget _buildSearchBar(ThemeData theme) {
-    return Hero(
-      tag: 'search_bar_main',
-      child: Material(
-        color: Colors.transparent,
-        child: Container(
-          height: 45,
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surface.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(
-              AppConstants.cornerRadius * 0.5,
-            ),
-            border: Border.all(
-              color: theme.colorScheme.outline.withOpacity(0.1),
-              width: AppConstants.borderWidth,
-            ),
-          ),
-          child: TextField(
-            controller: _searchController,
-            focusNode: _searchFocusNode,
-            decoration: InputDecoration(
-              hintText: "Search...",
-              border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 10,
-              ),
-              suffixIcon: IconButton(
-                icon: const Icon(CupertinoIcons.xmark, size: 20),
-                onPressed: () => _searchController.clear(),
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 
