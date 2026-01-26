@@ -81,12 +81,8 @@ class TodosRemoteViewsFactory(private val context: Context) : RemoteViewsService
             editIntent.data = android.net.Uri.parse("copyclip://app/todos/edit?id=$todoId")
             views.setOnClickFillInIntent(R.id.todo_item_root, editIntent)
 
-            // 2. Click on Checkbox -> Toggle Status
-            val toggleIntent = Intent()
-            toggleIntent.putExtra("todo_id", todoId)
-            toggleIntent.putExtra("todo_action", "toggle")
-            toggleIntent.data = android.net.Uri.parse("copyclip://app/todos/toggle") // Add explicit data
-            views.setOnClickFillInIntent(R.id.todo_item_check, toggleIntent)
+            // 2. Click on Checkbox -> Open Edit Screen (Removed Toggle)
+            views.setOnClickFillInIntent(R.id.todo_item_check, editIntent)
             
             return views       } catch (e: Exception) {
             e.printStackTrace()

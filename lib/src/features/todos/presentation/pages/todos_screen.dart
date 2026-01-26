@@ -526,7 +526,13 @@ class _TodosScreenState extends State<TodosScreen>
       if (todo != null) _toggleSelection(todo.id);
       return;
     }
-    await context.push(AppRouter.todoEdit, extra: todo);
+    // Pass both object (extra) and ID (query param) for robustness
+    final uri = Uri(
+      path: AppRouter.todoEdit,
+      queryParameters: todo != null ? {'id': todo.id} : null,
+    ).toString();
+
+    await context.push(uri, extra: todo);
     // Refresh UI after returning to ensure real-time updates
     _refreshTodos();
     WidgetSyncService.syncTodos();

@@ -110,7 +110,10 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
   @override
   void initState() {
     super.initState();
-    _initData();
+
+    // Initialize controllers once
+    _taskController = TextEditingController();
+    _categoryController = TextEditingController();
 
     _categoryFocusNode.addListener(() {
       if (_categoryFocusNode.hasFocus) {
@@ -120,11 +123,15 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
       }
     });
 
-    _taskController = TextEditingController(); // Init temporarily
-    _categoryController = TextEditingController(); // Init temporarily
+    // Add listeners immediately
+    _taskController.addListener(_onTextChanged);
+    _categoryController.addListener(_onTextChanged);
+
+    _initData();
   }
 
   Future<void> _initData() async {
+    debugPrint("TodoEditScreen: _initData started");
     // Ensure box is open
     if (!Hive.isBoxOpen('todos_box')) {
       await Hive.openBox<Todo>('todos_box');
@@ -135,23 +142,40 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
     // Resolve Todo
     if (widget.todo != null) {
       _editingTodo = widget.todo;
+      debugPrint(
+        "TodoEditScreen: Received Todo via widget: ${_editingTodo?.task} (${_editingTodo?.category})",
+      );
     } else if (widget.todoId != null) {
       debugPrint("TodoEditScreen: Resolving ID ${widget.todoId}");
       _editingTodo = Hive.box<Todo>('todos_box').get(widget.todoId);
-      debugPrint("TodoEditScreen: Found Todo? ${_editingTodo != null}");
+      debugPrint(
+        "TodoEditScreen: Found Todo from Box? ${_editingTodo != null} - ${_editingTodo?.task}",
+      );
+    } else {
+      debugPrint("TodoEditScreen: No Todo passed. Mode: NEW");
     }
 
-    _taskController = TextEditingController(text: _editingTodo?.task ?? '');
-    _categoryController = TextEditingController(
-      text: _editingTodo?.category ?? 'General',
-    );
-
-    _taskController.addListener(_onTextChanged);
-    _categoryController.addListener(_onTextChanged);
+    // Update Controller Text
+    if (_editingTodo != null) {
+      _taskController.text = _editingTodo!.task;
+      _categoryController.text = _editingTodo!.category;
+    } else {
+      _taskController.text = '';
+      _categoryController.text = 'General';
+    }
 
     // ✅ DEFAULT: Notifications ON for new tasks
     if (_editingTodo == null) {
-      _selectedDate = DateTime.now();
+      final now = DateTime.now();
+      // Set to 8 PM today
+      DateTime targetDate = DateTime(now.year, now.month, now.day, 20, 0);
+
+      // If 8 PM has passed, schedule for tomorrow 8 PM
+      if (targetDate.isBefore(now)) {
+        targetDate = targetDate.add(const Duration(days: 1));
+      }
+
+      _selectedDate = targetDate;
       _hasReminder = true;
     } else {
       _selectedDate = _editingTodo?.dueDate;
@@ -166,6 +190,15 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
     _saveSnapshot(clearRedo: true);
 
     if (mounted) setState(() => _isLoading = false);
+  }
+
+  @override
+  void didUpdateWidget(covariant TodoEditScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.todo != oldWidget.todo || widget.todoId != oldWidget.todoId) {
+      debugPrint("TodoEditScreen: Widget updated. Re-initializing...");
+      _initData();
+    }
   }
 
   @override

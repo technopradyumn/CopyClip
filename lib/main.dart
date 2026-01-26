@@ -251,6 +251,15 @@ Future<void> _initializeBackgroundTasks() async {
     Future.delayed(const Duration(seconds: 2), () {
       NotificationEngine().checkAndTriggerWelcome();
     });
+
+    // ✅ NEW: Schedule Daily Planning Notification (9 PM)
+    await NotificationService().scheduleDailyNotification(
+      id: 9999, // Fixed ID for daily planning
+      title: 'Plan Your Tomorrow 🌙',
+      body:
+          'Take a moment to organize your tasks for the next day.\nA little planning tonight makes a productive tomorrow!',
+      time: const TimeOfDay(hour: 21, minute: 0),
+    );
   } catch (e) {
     debugPrint("❌ Widget data init error: $e");
   }
@@ -504,7 +513,23 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
   // Handle widget navigation
   void _handleWidgetNavigation(Uri uri) {
-    final featureId = uri.host;
+    final host = uri.host;
+
+    // ✅ Handle 'app' host (Standard Deep Links)
+    // Example: copyclip://app/todos/edit?id=123
+    if (host == 'app') {
+      final path = uri.path;
+      final query = uri.query;
+      final fullPath = query.isNotEmpty ? '$path?$query' : path;
+
+      if (fullPath.isNotEmpty && mounted) {
+        debugPrint('🚀 Widget Deep Link Navigation: $fullPath');
+        router.push(fullPath);
+      }
+      return;
+    }
+
+    // Legacy/Simple Host Mapping
     final routesMap = {
       'notes': AppRouter.notes,
       'todos': AppRouter.todos,
@@ -515,7 +540,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       'canvas': AppRouter.canvas,
     };
 
-    final route = routesMap[featureId];
+    final route = routesMap[host];
     if (route != null && mounted) {
       router.push(route);
     }
