@@ -95,6 +95,7 @@ class PremiumProvider extends ChangeNotifier {
     }
 
     _isAdLoading = true;
+    notifyListeners(); // ✅ Update UI to show loading state
 
     debugPrint('🚀 Loading Rewarded Ad: $unitId');
 
@@ -168,8 +169,8 @@ class PremiumProvider extends ChangeNotifier {
   Future<void> showRewardedAd({required Function(int) onReward}) async {
     if (_ad == null) {
       debugPrint('⚠️ Ad not ready. Loading new ad...');
-      _isAdLoading = true;
-      notifyListeners();
+      // _isAdLoading = true; // REMOVED: Caused deadlock with _loadRewardedAd check
+      // notifyListeners();
 
       _adLoadCompleter = Completer<void>();
       _loadRewardedAd();
