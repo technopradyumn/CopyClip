@@ -31,8 +31,9 @@ import 'package:provider/provider.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final Note? note;
+  final String? noteId;
 
-  const NoteEditScreen({super.key, this.note});
+  const NoteEditScreen({super.key, this.note, this.noteId});
 
   @override
   State<NoteEditScreen> createState() => _NoteEditScreenState();
@@ -48,57 +49,86 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
   DateTime _selectedDate = DateTime.now();
   late Box<Note> _notesBox;
 
+  // Local reference to the note being edited (either from widget or fetched)
+  Note? _editingNote;
+
   Color _scaffoldColor = AppContentPalette.palette.first;
   late Color _initialColor;
 
   String _initialTitle = "";
   String _initialContentJson = "";
 
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
-    _notesBox = Hive.box<Note>('notes_box');
-
-    if (widget.note != null) {
-      _titleController.text = widget.note!.title;
-      _selectedDate = widget.note!.updatedAt;
-      _scaffoldColor = widget.note!.colorValue != null
-          ? Color(widget.note!.colorValue!)
-          : AppContentPalette.palette.first;
-    } else {
-      _selectedDate = DateTime.now();
-    }
-
-    _initialColor = _scaffoldColor;
-    _initialTitle = _titleController.text;
-
-    _initQuill();
-
+    _initData();
     // ✅ Add focus listener for keyboard handling
     _editorFocusNode.addListener(_onFocusChanged);
+  }
+
+  Future<void> _initData() async {
+    try {
+      // Ensure box is open (Deep Link Fix)
+      if (!Hive.isBoxOpen('notes_box')) {
+        await Hive.openBox<Note>('notes_box');
+      }
+      _notesBox = Hive.box<Note>('notes_box');
+
+      // Resolve Note
+      _editingNote = widget.note;
+      if (_editingNote == null && widget.noteId != null) {
+        debugPrint("NoteEditScreen: Resolving ID ${widget.noteId}");
+        _editingNote = _notesBox.get(widget.noteId);
+        debugPrint("NoteEditScreen: Found Note? ${_editingNote != null}");
+      }
+
+      if (_editingNote != null) {
+        _titleController.text = _editingNote!.title;
+        _selectedDate = _editingNote!.updatedAt;
+        _scaffoldColor = _editingNote!.colorValue != null
+            ? Color(_editingNote!.colorValue!)
+            : AppContentPalette.palette.first;
+      } else {
+        _selectedDate = DateTime.now();
+        _scaffoldColor = AppContentPalette.palette.first;
+      }
+
+      _initialColor = _scaffoldColor;
+      _initialTitle = _titleController.text;
+
+      // Apply dynamic default color if creating a new note
+      if (_editingNote == null &&
+          _scaffoldColor == AppContentPalette.palette.first) {
+        if (mounted) {
+          final defaultColor = AppContentPalette.getDefaultColor(context);
+          if (_scaffoldColor != defaultColor) {
+            _scaffoldColor = defaultColor;
+            _initialColor = defaultColor;
+          }
+        }
+      }
+
+      _initQuill();
+    } catch (e) {
+      debugPrint("Error initializing Note data: $e");
+      // Fallback init to prevent crash
+      _selectedDate = DateTime.now();
+      _scaffoldColor = AppContentPalette.palette.first;
+      _initQuill();
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // ✅ Apply dynamic default color if creating a new note
-    if (widget.note == null &&
-        _scaffoldColor == AppContentPalette.palette.first) {
-      // Check if we haven't manually changed it yet (we use the palette first color as a "sentinel" for default)
-      // Actually, easier way: just set it here once.
-      // But didChangeDependencies runs multiple times.
-      // Let's just set it if it matches the hardcoded default we initialized with.
-      // A cleaner way for "New Note" logic:
-      if (_initialColor == AppContentPalette.palette.first) {
-        final defaultColor = AppContentPalette.getDefaultColor(context);
-        if (_scaffoldColor != defaultColor) {
-          setState(() {
-            _scaffoldColor = defaultColor;
-            _initialColor = defaultColor;
-          });
-        }
-      }
-    }
   }
 
   // ✅ Handle focus changes and ensure cursor visibility
@@ -129,13 +159,13 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
   void _initQuill() {
     Document doc;
     try {
-      if (widget.note != null && widget.note!.content.isNotEmpty) {
-        doc = Document.fromJson(jsonDecode(widget.note!.content));
+      if (_editingNote != null && _editingNote!.content.isNotEmpty) {
+        doc = Document.fromJson(jsonDecode(_editingNote!.content));
       } else {
         doc = Document();
       }
     } catch (e) {
-      doc = Document()..insert(0, widget.note?.content ?? "");
+      doc = Document()..insert(0, _editingNote?.content ?? "");
     }
     _quillController = QuillController(
       document: doc,
@@ -220,13 +250,42 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       _quillController.document.toDelta().toJson(),
     );
 
-    if (widget.note != null) {
-      widget.note!.title = title;
-      widget.note!.content = contentJson;
-      widget.note!.updatedAt = _selectedDate;
-      widget.note!.colorValue = _scaffoldColor.value;
-      widget.note!.save();
+    // Robust Save Logic
+    if (_editingNote != null) {
+      debugPrint("NoteEditScreen: Saving existing note (${_editingNote!.id})");
+
+      _editingNote!.title = title;
+      _editingNote!.content = contentJson;
+      _editingNote!.updatedAt = _selectedDate;
+      _editingNote!.colorValue = _scaffoldColor.value;
+
+      if (_editingNote!.isInBox) {
+        _editingNote!.save();
+        debugPrint("NoteEditScreen: Saved using .save()");
+      } else {
+        debugPrint(
+          "NoteEditScreen: Note not in box! Attempting to locate key.",
+        );
+        try {
+          // Find real note by ID
+          final realNoteIndex = _notesBox.values.toList().indexWhere(
+            (n) => n.id == _editingNote!.id,
+          );
+          if (realNoteIndex != -1) {
+            final key = _notesBox.keyAt(realNoteIndex);
+            _notesBox.put(key, _editingNote!);
+            debugPrint("NoteEditScreen: Saved using box.put($key)");
+          } else {
+            // Re-add if lost
+            debugPrint("NoteEditScreen: Note lost. Re-adding.");
+            _notesBox.add(_editingNote!);
+          }
+        } catch (e) {
+          debugPrint("NoteEditScreen: Error saving: $e");
+        }
+      }
     } else {
+      debugPrint("NoteEditScreen: Creating NEW note");
       int newSortIndex = 0;
       if (_notesBox.isNotEmpty) {
         final existingIndices = _notesBox.values.map((e) => e.sortIndex);
@@ -249,6 +308,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
         sortIndex: newSortIndex,
       );
       _notesBox.put(newNote.id, newNote);
+      _editingNote = newNote;
     }
     // Sync Widget
     WidgetSyncService.syncNotes();
@@ -416,9 +476,21 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
         ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
     final contrastColor = isColorDark ? Colors.white : Colors.black87;
 
-    final String heroTag = widget.note != null
-        ? 'note_background_${widget.note!.id}'
+    final heroTag = _editingNote != null
+        ? 'note_background_${_editingNote!.id}'
         : 'new_note_hero';
+
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: const BackButton(),
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
 
     return WillPopScope(
       onWillPop: () async {
@@ -432,7 +504,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
         centerTitle: false,
         titleSpacing: 0,
         title: AnimatedTopBarTitle(
-          title: widget.note == null ? 'New Note' : 'Edit Note',
+          title: _editingNote == null ? 'New Note' : 'Edit Note',
           icon: CupertinoIcons.doc_text,
           iconHeroTag: 'notes_icon',
           titleHeroTag: 'notes_title',
@@ -500,7 +572,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                   }
                   break;
                 case 'delete':
-                  if (widget.note != null) {
+                  if (_editingNote != null) {
                     showDialog(
                       context: context,
                       builder: (ctx) => GlassDialog(
@@ -510,9 +582,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                         isDestructive: true,
                         onConfirm: () {
                           Navigator.pop(ctx); // Close dialog
-                          widget.note!.isDeleted = true;
-                          widget.note!.deletedAt = DateTime.now();
-                          widget.note!.save();
+                          _editingNote!.isDeleted = true;
+                          _editingNote!.deletedAt = DateTime.now();
+                          _editingNote!.save();
                           Navigator.pop(context); // Close screen
                         },
                       ),

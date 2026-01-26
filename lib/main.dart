@@ -534,6 +534,53 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         router.push(route);
         debugPrint('✅ Navigated to: $route');
       }
+    } else if (call.method == 'toggleTodo') {
+      final dynamic args = call.arguments;
+      if (args is Map && args['id'] != null) {
+        final String id = args['id'];
+
+        // Ensure box is open
+        if (!Hive.isBoxOpen('todos_box')) {
+          await LazyBoxLoader.getBox<Todo>('todos_box');
+        }
+        final box = Hive.box<Todo>('todos_box');
+
+        try {
+          final Todo? todo = box.get(id);
+          // If null, try linear search safety
+          final target =
+              todo ??
+              (box.values.any((t) => t.id == id)
+                  ? box.values.firstWhere((t) => t.id == id)
+                  : null);
+
+          if (target != null) {
+            // Toggle logic
+            if (!target.isDone) {
+              await TodoSchedulerService().completeTodo(target);
+            } else {
+              target.isDone = false;
+              // target.completedAt = null; // Field removed
+              await target.save();
+            }
+
+            await WidgetSyncService.syncTodos();
+
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    target.isDone ? "Task completed!" : "Task uncompleted",
+                  ),
+                  duration: const Duration(seconds: 1),
+                ),
+              );
+            }
+          }
+        } catch (e) {
+          debugPrint("Error toggling todo: $e");
+        }
+      }
     }
   }
 

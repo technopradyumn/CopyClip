@@ -32,8 +32,9 @@ import 'package:provider/provider.dart';
 
 class ClipboardEditScreen extends StatefulWidget {
   final ClipboardItem? item;
+  final String? itemId;
 
-  const ClipboardEditScreen({super.key, this.item});
+  const ClipboardEditScreen({super.key, this.item, this.itemId});
 
   @override
   State<ClipboardEditScreen> createState() => _ClipboardEditScreenState();
@@ -50,22 +51,46 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
 
   Color _scaffoldColor = AppContentPalette.palette.first;
 
+  ClipboardItem? _editingItem;
+
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
-    _clipboardBox = Hive.box<ClipboardItem>('clipboard_box');
-
-    if (widget.item != null) {
-      _selectedDate = widget.item!.createdAt;
-      _scaffoldColor = widget.item!.colorValue != null
-          ? Color(widget.item!.colorValue!)
-          : AppContentPalette.palette.first;
-    }
-
-    _initQuill();
-
+    _initData();
     // ✅ Add listener to handle keyboard appearance
     _focusNode.addListener(_onFocusChanged);
+  }
+
+  Future<void> _initData() async {
+    try {
+      // Ensure box is open
+      if (!Hive.isBoxOpen('clipboard_box')) {
+        await Hive.openBox<ClipboardItem>('clipboard_box');
+      }
+      _clipboardBox = Hive.box<ClipboardItem>('clipboard_box');
+
+      // Resolve Item
+      _editingItem = widget.item;
+      if (_editingItem == null && widget.itemId != null) {
+        _editingItem = _clipboardBox.get(widget.itemId);
+      }
+
+      if (_editingItem != null) {
+        _selectedDate = _editingItem!.createdAt;
+        _scaffoldColor = _editingItem!.colorValue != null
+            ? Color(_editingItem!.colorValue!)
+            : AppContentPalette.palette.first;
+      }
+
+      _initQuill();
+    } catch (e) {
+      debugPrint("Error initializing Clipboard data: $e");
+      _initQuill();
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   // ✅ Handle focus changes and ensure cursor visibility
@@ -155,13 +180,13 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
   void _initQuill() {
     Document doc;
     try {
-      if (widget.item != null && widget.item!.content.isNotEmpty) {
-        doc = Document.fromJson(jsonDecode(widget.item!.content));
+      if (_editingItem != null && _editingItem!.content.isNotEmpty) {
+        doc = Document.fromJson(jsonDecode(_editingItem!.content));
       } else {
         doc = Document();
       }
     } catch (e) {
-      doc = Document()..insert(0, widget.item?.content ?? "");
+      doc = Document()..insert(0, _editingItem?.content ?? "");
     }
     _quillController = QuillController(
       document: doc,
@@ -248,11 +273,11 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
     );
     if (_quillController.document.toPlainText().trim().isEmpty) return;
 
-    final id = widget.item?.id ?? const Uuid().v4();
+    final id = _editingItem?.id ?? const Uuid().v4();
 
-    int newSortIndex = widget.item?.sortIndex ?? 0;
+    int newSortIndex = _editingItem?.sortIndex ?? 0;
 
-    if (widget.item == null && _clipboardBox.isNotEmpty) {
+    if (_editingItem == null && _clipboardBox.isNotEmpty) {
       final existingIndices = _clipboardBox.values.map((e) => e.sortIndex);
       if (existingIndices.isNotEmpty) {
         newSortIndex =
@@ -270,7 +295,16 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
       colorValue: _scaffoldColor.value,
     );
 
-    _clipboardBox.put(id, newItem);
+    // Robust Save Logic
+    if (_editingItem != null && _editingItem!.isInBox) {
+      // If we know the key, use it. Clipboard loads via ID usually, or Box index.
+      // But here we are just putting by ID.
+      _clipboardBox.put(id, newItem);
+    } else {
+      _clipboardBox.put(id, newItem);
+    }
+    _editingItem = newItem;
+
     WidgetSyncService.syncClipboard(); // Sync Widget
   }
 
@@ -381,9 +415,21 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
         ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
     final contrastColor = isColorDark ? Colors.white : Colors.black87;
 
-    final String heroTag = widget.item != null
-        ? 'clip_bg_${widget.item!.id}'
+    final String heroTag = _editingItem != null
+        ? 'clip_bg_${_editingItem!.id}'
         : 'new_clip_hero';
+
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: const BackButton(),
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
 
     return WillPopScope(
       onWillPop: () async {
@@ -397,7 +443,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
         centerTitle: false,
         titleSpacing: 0,
         title: AnimatedTopBarTitle(
-          title: widget.item == null ? 'New Clip' : 'Edit Clip',
+          title: _editingItem == null ? 'New Clip' : 'Edit Clip',
           icon: CupertinoIcons.doc_on_clipboard,
           iconHeroTag: 'clipboard_icon',
           titleHeroTag: 'clipboard_title',
@@ -465,7 +511,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                   }
                   break;
                 case 'delete':
-                  if (widget.item != null) {
+                  if (_editingItem != null) {
                     showDialog(
                       context: context,
                       builder: (ctx) => GlassDialog(
@@ -475,9 +521,9 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                         isDestructive: true,
                         onConfirm: () {
                           Navigator.pop(ctx);
-                          widget.item!.isDeleted = true;
-                          widget.item!.deletedAt = DateTime.now();
-                          widget.item!.save();
+                          _editingItem!.isDeleted = true;
+                          _editingItem!.deletedAt = DateTime.now();
+                          _editingItem!.save();
                           Navigator.pop(context);
                         },
                       ),

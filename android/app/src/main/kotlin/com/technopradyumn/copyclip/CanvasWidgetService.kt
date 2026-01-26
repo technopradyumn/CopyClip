@@ -48,7 +48,8 @@ class CanvasRemoteViewsFactory(private val context: Context) : RemoteViewsServic
             views.setTextViewText(R.id.canvas_item_date, date)
 
             val fillInIntent = Intent()
-            fillInIntent.putExtra("canvas_id", id)
+            fillInIntent.putExtra("canvas_id", id) // Keep for legacy safety
+            fillInIntent.data = android.net.Uri.parse("copyclip://app/canvas/edit?id=$id")
             views.setOnClickFillInIntent(R.id.canvas_item_root, fillInIntent)
         } catch (e: Exception) {
             e.printStackTrace()

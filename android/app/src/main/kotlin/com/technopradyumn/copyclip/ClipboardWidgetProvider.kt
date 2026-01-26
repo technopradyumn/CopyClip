@@ -50,9 +50,20 @@ class ClipboardWidgetProvider : AppWidgetProvider() {
                 views.setTextViewText(R.id.latest_clip_content, latestClip)
             }
 
+            // Template for List Items
+            val itemIntent = Intent(context, MainActivity::class.java).apply {
+                action = Intent.ACTION_VIEW
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            val itemPendingIntent = PendingIntent.getActivity(
+                context, 102, itemIntent, // Unique Request Code
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+            )
+            views.setPendingIntentTemplate(R.id.clipboard_list, itemPendingIntent)
+
             val intent = Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("copyclip://clipboard")
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                data = Uri.parse("copyclip://app/clipboard")
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
 
             val pendingIntent = PendingIntent.getActivity(

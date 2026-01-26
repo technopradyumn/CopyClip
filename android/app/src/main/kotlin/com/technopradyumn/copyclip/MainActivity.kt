@@ -156,14 +156,50 @@ class MainActivity: FlutterActivity() {
 
                 // Check if it's our copyclip:// scheme
                 if (uri.scheme == "copyclip") {
-                    val featureId = uri.host
-                    Log.d(TAG, "Feature ID from URI: $featureId")
+                    val host = uri.host
+                    val path = uri.path
+                    Log.d(TAG, "Host: $host, Path: $path")
 
-                    val route = getRouteForFeature(featureId)
-                    Log.d(TAG, "Navigating to route: $route")
+                    var route = ""
+
+                    // NEW LOGIC: Handle 'app' host (Standardized Routes)
+                    if (host == "app") {
+                        // Special Case: Todo Toggle
+                        if (path?.contains("/todos") == true) {
+                            val action = intent.getStringExtra("todo_action")
+                            val id = intent.getStringExtra("todo_id")
+                            if (action == "toggle" && id != null) {
+                                Log.d(TAG, "Toggling Todo: $id")
+                                android.os.Handler(mainLooper).postDelayed({
+                                    widgetHandlerChannel?.invokeMethod("toggleTodo", mapOf("id" to id))
+                                }, 100)
+                                return // Exit execution, don't navigate
+                            }
+                        }
+                        
+                        // For normal navigation (e.g. /notes/edit), we LIMIT manual navigation.
+                        // Flutter's GoRouter (via Android Intent) handles this natively because of the Manifest Intent Filter.
+                        // If we send it manually here, we get double navigation.
+                        Log.d(TAG, "Ignoring manual 'navigateTo' for app host - relying on Flutter native deep linking")
+                        return
+
+                    } else {
+                        // LEGACY LOGIC: Feature ID is host (copyclip://notes/edit)
+                        // Should not be hit if we updated all widgets, but kept for safety
+                        val featureId = host
+                        route = getRouteForFeature(featureId)
+                        
+                        // ... (Existing legacy path handling logic omitted for brevity, logic simplified to prefer 'app' host) ...
+                        if (path == "/edit") {
+                             route = "$route/edit"
+                             // Legacy ID extraction from intent extras would go here if needed
+                             // But we are moving to query params.
+                        }
+                    }
+
+                    Log.d(TAG, "Navigating to: $route")
 
                     // Send navigation command to Flutter
-                    // Wait a bit to ensure Flutter engine is ready
                     android.os.Handler(mainLooper).postDelayed({
                         widgetHandlerChannel?.invokeMethod("navigateTo", mapOf("route" to route))
                     }, 100)

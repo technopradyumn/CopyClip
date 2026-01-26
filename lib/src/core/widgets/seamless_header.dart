@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:copyclip/src/core/const/constant.dart';
+import 'package:go_router/go_router.dart';
 
 class SeamlessHeader extends StatelessWidget {
   final String title;
@@ -56,7 +57,15 @@ class SeamlessHeader extends StatelessWidget {
               if (showBackButton)
                 IconButton(
                   icon: Icon(CupertinoIcons.back, color: onSurface, size: 22),
-                  onPressed: onBackTap ?? () => Navigator.of(context).pop(),
+                  onPressed:
+                      onBackTap ??
+                      () {
+                        if (Navigator.of(context).canPop()) {
+                          Navigator.of(context).pop();
+                        } else {
+                          context.go('/');
+                        }
+                      },
                 ),
 
               if (icon != null) ...[

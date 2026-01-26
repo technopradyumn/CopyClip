@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- ✅ MODERN IOS-STYLE CALENDAR WIDGET -->
+<!-- ✅ MODERN IOS-STYLE CALENDAR WIDGET (MATCHING NOTE WIDGET STRUCTURE) -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_header"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/widget_background"
+    android:background="@drawable/widget_container_background"
     android:padding="16dp"
     android:clickable="true"
     android:focusable="true">
@@ -27,7 +27,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_widget"
-                android:tint="#A5D6A7"
+                android:tint="#81D4FA"
                 android:contentDescription="Icon" />
 
             <TextView
@@ -36,12 +36,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
-                android:text="Schedule"
+                android:text="Today"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary" />
 
-             <TextView
+            <TextView
                 android:id="@+id/events_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,11 +69,11 @@
             <!-- Empty State -->
             <LinearLayout
                 android:id="@+id/empty_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/widget_item_background"
                 android:orientation="vertical"
+                android:gravity="center"
                 android:visibility="visible">
 
                 <TextView
@@ -86,17 +86,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="No Upcoming Events"
+                    android:text="No Events Today"
                     android:textSize="14sp"
                     android:textColor="@color/text_secondary"
-                    android:alpha="0.5"
+                    android:alpha="0.8"
                     android:textStyle="bold" />
+
             </LinearLayout>
 
-             <ListView
-                android:id="@+id/events_list"
+            <ListView
+                android:id="@+id/calendar_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:divider="@null"
                 android:visibility="gone" />
 
         </FrameLayout>

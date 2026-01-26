@@ -75,11 +75,19 @@ class TodosRemoteViewsFactory(private val context: Context) : RemoteViewsService
                  views.setTextColor(R.id.todo_item_task, textColor) 
             }
 
-            // Click Intent
-            val fillInIntent = Intent()
-            fillInIntent.putExtra("todo_id", todoId)
-            views.setOnClickFillInIntent(R.id.todo_item_root, fillInIntent)
+            // 1. Click on Row -> Open Edit Screen
+            val editIntent = Intent()
+            editIntent.putExtra("todo_id", todoId)
+            editIntent.data = android.net.Uri.parse("copyclip://app/todos/edit?id=$todoId")
+            views.setOnClickFillInIntent(R.id.todo_item_root, editIntent)
 
+            // 2. Click on Checkbox -> Toggle Status
+            val toggleIntent = Intent()
+            toggleIntent.putExtra("todo_id", todoId)
+            toggleIntent.putExtra("todo_action", "toggle")
+            toggleIntent.data = android.net.Uri.parse("copyclip://app/todos/toggle") // Add explicit data
+            views.setOnClickFillInIntent(R.id.todo_item_check, toggleIntent)
+            
             return views       } catch (e: Exception) {
             e.printStackTrace()
         }

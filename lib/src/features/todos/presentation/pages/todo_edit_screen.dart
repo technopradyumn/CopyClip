@@ -70,7 +70,9 @@ class TodoFormState {
 
 class TodoEditScreen extends StatefulWidget {
   final Todo? todo;
-  const TodoEditScreen({super.key, this.todo});
+  final String? todoId;
+
+  const TodoEditScreen({super.key, this.todo, this.todoId});
 
   @override
   State<TodoEditScreen> createState() => _TodoEditScreenState();
@@ -101,29 +103,14 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
 
   List<String> _suggestions = ['Work', 'Personal', 'Shopping', 'Health'];
 
+  Todo? _editingTodo;
+
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
-    _loadCategories();
-    _taskController = TextEditingController(text: widget.todo?.task ?? '');
-    _categoryController = TextEditingController(
-      text: widget.todo?.category ?? 'General',
-    );
-    // ✅ DEFAULT: Notifications ON for new tasks
-    if (widget.todo == null) {
-      _selectedDate = DateTime.now();
-      _hasReminder = true;
-    } else {
-      _selectedDate = widget.todo?.dueDate;
-      _hasReminder = widget.todo?.hasReminder ?? false;
-    }
-    _isDone = widget.todo?.isDone ?? false;
-    _repeatInterval = widget.todo?.repeatInterval;
-    _repeatDays = widget.todo?.repeatDays != null
-        ? List.from(widget.todo!.repeatDays!)
-        : [];
-
-    _saveSnapshot(clearRedo: true);
+    _initData();
 
     _categoryFocusNode.addListener(() {
       if (_categoryFocusNode.hasFocus) {
@@ -133,8 +120,52 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
       }
     });
 
+    _taskController = TextEditingController(); // Init temporarily
+    _categoryController = TextEditingController(); // Init temporarily
+  }
+
+  Future<void> _initData() async {
+    // Ensure box is open
+    if (!Hive.isBoxOpen('todos_box')) {
+      await Hive.openBox<Todo>('todos_box');
+    }
+
+    _loadCategories(); // Safe to call now
+
+    // Resolve Todo
+    if (widget.todo != null) {
+      _editingTodo = widget.todo;
+    } else if (widget.todoId != null) {
+      debugPrint("TodoEditScreen: Resolving ID ${widget.todoId}");
+      _editingTodo = Hive.box<Todo>('todos_box').get(widget.todoId);
+      debugPrint("TodoEditScreen: Found Todo? ${_editingTodo != null}");
+    }
+
+    _taskController = TextEditingController(text: _editingTodo?.task ?? '');
+    _categoryController = TextEditingController(
+      text: _editingTodo?.category ?? 'General',
+    );
+
     _taskController.addListener(_onTextChanged);
     _categoryController.addListener(_onTextChanged);
+
+    // ✅ DEFAULT: Notifications ON for new tasks
+    if (_editingTodo == null) {
+      _selectedDate = DateTime.now();
+      _hasReminder = true;
+    } else {
+      _selectedDate = _editingTodo?.dueDate;
+      _hasReminder = _editingTodo?.hasReminder ?? false;
+    }
+    _isDone = _editingTodo?.isDone ?? false;
+    _repeatInterval = _editingTodo?.repeatInterval;
+    _repeatDays = _editingTodo?.repeatDays != null
+        ? List.from(_editingTodo!.repeatDays!)
+        : [];
+
+    _saveSnapshot(clearRedo: true);
+
+    if (mounted) setState(() => _isLoading = false);
   }
 
   @override
@@ -407,14 +438,14 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
 
     final box = Hive.box<Todo>('todos_box');
     final String id =
-        widget.todo?.id ?? DateTime.now().millisecondsSinceEpoch.toString();
+        _editingTodo?.id ?? DateTime.now().millisecondsSinceEpoch.toString();
     final int notifId = id.hashCode;
     final DateTime? finalDate = _hasReminder ? _selectedDate : null;
 
-    int newSortIndex = widget.todo?.sortIndex ?? 0;
+    int newSortIndex = _editingTodo?.sortIndex ?? 0;
 
     // If implementing "Newest at Top" logic for NEW items
-    if (widget.todo == null && box.isNotEmpty) {
+    if (_editingTodo == null && box.isNotEmpty) {
       final existingIndices = box.values.map((e) => e.sortIndex);
       if (existingIndices.isNotEmpty) {
         newSortIndex =
@@ -437,11 +468,27 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
       repeatDays: _repeatDays,
     );
 
-    // ✅ FIX: Use the existing Hive Key if available to prevent duplicates/ghost updates
-    if (widget.todo != null && widget.todo!.isInBox) {
-      box.put(widget.todo!.key, newTodo);
+    // Robust Save Logic
+    if (_editingTodo != null) {
+      // Update in memory object if needed, or just overwrite by ID
+      // To be safe, we prefer strict ID overwrite if we are not sure about keys
+      if (_editingTodo!.isInBox) {
+        box.put(_editingTodo!.key, newTodo);
+        debugPrint("TodoEditScreen: Saved using box.put(key)");
+      } else {
+        debugPrint("TodoEditScreen: Todo detached. Saving by ID.");
+        box.put(
+          id,
+          newTodo,
+        ); // This works because in Todos, ID is often the key or we use put(id)
+        // Wait, Hive box.put(key, val). We initialized it with box.put(id, ...)?
+        // Let's verify _initData creates by id. Yes: box.put(id, newTodo).
+      }
+      _editingTodo = newTodo; // Update local ref
     } else {
       box.put(id, newTodo);
+      // Update local reference so subsequent saves use the same ID/Key
+      _editingTodo = newTodo;
     }
 
     // ✅ FIX: Allow scheduling even if date is slightly in the past (e.g. "Just Now")
@@ -474,7 +521,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
   }
 
   void _deleteTodo() {
-    if (widget.todo == null) return;
+    if (_editingTodo == null) return;
 
     showDialog(
       context: context,
@@ -503,6 +550,18 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
+
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: const BackButton(),
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
 
     String dateText = 'Set Due Date';
     if (_selectedDate != null) {

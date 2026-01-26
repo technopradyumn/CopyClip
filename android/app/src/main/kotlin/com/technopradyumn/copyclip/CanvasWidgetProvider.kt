@@ -51,9 +51,9 @@ class CanvasWidgetProvider : AppWidgetProvider() {
             }
 
             // Click Intent Template
-            val clickIntent = Intent(Intent.ACTION_VIEW).apply {
-                 data = Uri.parse("copyclip://canvas/edit") // Handle deep link in MainActivity
-                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            val clickIntent = Intent(context, MainActivity::class.java).apply {
+                 action = Intent.ACTION_VIEW
+                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             val clickPendingIntent = PendingIntent.getActivity(
                 context, 0, clickIntent,
@@ -61,16 +61,20 @@ class CanvasWidgetProvider : AppWidgetProvider() {
             )
             views.setPendingIntentTemplate(R.id.canvas_list, clickPendingIntent)
 
-            // Header Click
-            val headerIntent = Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("copyclip://canvas")
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            // Header Click - Use EXPLICIT Intent to ensure it launches the app
+            val headerIntent = Intent(context, MainActivity::class.java).apply {
+                action = Intent.ACTION_VIEW
+                data = Uri.parse("copyclip://app/canvas")
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
+            // Use unique request code 2 for Canvas
             val headerPendingIntent = PendingIntent.getActivity(
-                context, 1, headerIntent, // RequestCode 1 to avoid conflict
+                context, 2, headerIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.widget_header, headerPendingIntent)
+            views.setOnClickPendingIntent(R.id.widget_title, headerPendingIntent)
+            views.setOnClickPendingIntent(R.id.empty_state, headerPendingIntent)
 
         } catch (e: Exception) {
             e.printStackTrace()

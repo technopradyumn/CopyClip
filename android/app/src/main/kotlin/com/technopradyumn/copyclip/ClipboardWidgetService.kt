@@ -48,7 +48,8 @@ class ClipboardRemoteViewsFactory(private val context: Context) : RemoteViewsSer
             
             val fillInIntent = Intent()
             fillInIntent.putExtra("clip_id", clipObj.optString("id"))
-            views.setOnClickFillInIntent(R.id.clipboard_item_content, fillInIntent)
+            fillInIntent.data = android.net.Uri.parse("copyclip://app/clipboard/edit?id=${clipObj.optString("id")}")
+            views.setOnClickFillInIntent(R.id.clipboard_item_root, fillInIntent)
             
         } catch (e: Exception) {
             e.printStackTrace()

@@ -1,4 +1,5 @@
 import 'package:copyclip/src/features/canvas/presentation/pages/canvas_edit_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/calendar/presentation/pages/calendar_screen.dart';
 import '../../features/calendar/presentation/pages/date_detail_screen.dart';
@@ -80,7 +81,9 @@ List<GoRoute> getAuthRoutes() {
       path: AppRouter.noteEdit,
       builder: (context, state) {
         final note = state.extra as Note?;
-        return NoteEditScreen(note: note);
+        final id = state.uri.queryParameters['id'];
+        debugPrint("ROUTER: NoteEditScreen -> ID: $id, URI: ${state.uri}");
+        return NoteEditScreen(note: note, noteId: id);
       },
     ),
     GoRoute(
@@ -91,7 +94,9 @@ List<GoRoute> getAuthRoutes() {
       path: AppRouter.todoEdit,
       builder: (context, state) {
         final todo = state.extra as Todo?;
-        return TodoEditScreen(todo: todo);
+        final id = state.uri.queryParameters['id'];
+        debugPrint("ROUTER: TodoEditScreen -> ID: $id, URI: ${state.uri}");
+        return TodoEditScreen(todo: todo, todoId: id);
       },
     ),
     GoRoute(
@@ -113,7 +118,8 @@ List<GoRoute> getAuthRoutes() {
       path: AppRouter.journalEdit,
       builder: (context, state) {
         final entry = state.extra as JournalEntry?;
-        return JournalEditScreen(entry: entry);
+        final id = state.uri.queryParameters['id']; // Support Deep Link ID
+        return JournalEditScreen(entry: entry, entryId: id);
       },
     ),
     GoRoute(
@@ -125,7 +131,8 @@ List<GoRoute> getAuthRoutes() {
       path: AppRouter.clipboardEdit,
       builder: (context, state) {
         final item = state.extra as ClipboardItem?;
-        return ClipboardEditScreen(item: item);
+        final id = state.uri.queryParameters['id'];
+        return ClipboardEditScreen(item: item, itemId: id);
       },
     ),
 
@@ -172,6 +179,11 @@ List<GoRoute> getAuthRoutes() {
         } else if (extra is Map<String, dynamic>) {
           noteId = extra['noteId'] as String?;
           folderId = extra['folderId'] as String?;
+        }
+
+        // Deep Link Support
+        if (noteId == null) {
+          noteId = state.uri.queryParameters['id'];
         }
 
         return CanvasEditScreen(noteId: noteId, folderId: folderId);

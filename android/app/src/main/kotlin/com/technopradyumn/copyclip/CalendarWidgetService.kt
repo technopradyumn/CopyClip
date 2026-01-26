@@ -8,14 +8,14 @@ import es.antonborri.home_widget.HomeWidgetPlugin
 import org.json.JSONArray
 import org.json.JSONObject
 
-class NotesWidgetService : RemoteViewsService() {
+class CalendarWidgetService : RemoteViewsService() {
     override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
-        return NotesRemoteViewsFactory(this.applicationContext)
+        return CalendarRemoteViewsFactory(this.applicationContext)
     }
 }
 
-class NotesRemoteViewsFactory(private val context: Context) : RemoteViewsService.RemoteViewsFactory {
-    private var notesArray = JSONArray()
+class CalendarRemoteViewsFactory(private val context: Context) : RemoteViewsService.RemoteViewsFactory {
+    private var eventsArray = JSONArray()
 
     override fun onCreate() {
         // Initial load could go here
@@ -24,11 +24,11 @@ class NotesRemoteViewsFactory(private val context: Context) : RemoteViewsService
     override fun onDataSetChanged() {
         try {
             val widgetData = HomeWidgetPlugin.getData(context)
-            val jsonStr = widgetData.getString("notes_data", "[]")
-            notesArray = JSONArray(jsonStr)
+            val jsonStr = widgetData.getString("calendar_data", "[]")
+            eventsArray = JSONArray(jsonStr)
         } catch (e: Exception) {
             e.printStackTrace()
-            notesArray = JSONArray()
+            eventsArray = JSONArray()
         }
     }
 
@@ -37,25 +37,24 @@ class NotesRemoteViewsFactory(private val context: Context) : RemoteViewsService
     }
 
     override fun getCount(): Int {
-        return notesArray.length()
+        return eventsArray.length()
     }
 
     override fun getViewAt(position: Int): RemoteViews {
-        val views = RemoteViews(context.packageName, R.layout.note_widget_item)
+        val views = RemoteViews(context.packageName, R.layout.calendar_widget_item)
         try {
-            val noteObj = notesArray.getJSONObject(position)
-            val title = noteObj.optString("title", "Untitled")
-            val date = noteObj.optString("date", "")
+            val eventObj = eventsArray.getJSONObject(position)
+            val title = eventObj.optString("title", "Untitled")
+            val time = eventObj.optString("time", "All Day")
             
-            views.setTextViewText(R.id.note_item_title, title)
-            views.setTextViewText(R.id.note_item_date, date)
+            views.setTextViewText(R.id.calendar_item_title, title)
+            views.setTextViewText(R.id.calendar_item_time, time)
             
-            // Fill intent for click
+            // Fill intent for click (optional, if we want specific item clicks to open details)
+            // For now, let's just use the template to open calendar
             val fillInIntent = Intent()
-            val id = noteObj.optString("id")
-            fillInIntent.putExtra("note_id", id)
-            fillInIntent.data = android.net.Uri.parse("copyclip://app/notes/edit?id=$id")
-            views.setOnClickFillInIntent(R.id.note_item_root, fillInIntent) // Bind to ROOT for full area click
+            // We can add extras here if needed
+            views.setOnClickFillInIntent(R.id.calendar_item_root, fillInIntent)
             
         } catch (e: Exception) {
             e.printStackTrace()

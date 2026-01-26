@@ -18,39 +18,68 @@ class CalendarWidgetProvider : AppWidgetProvider() {
     ) {
         appWidgetIds.forEach { widgetId ->
             val views = RemoteViews(context.packageName, R.layout.calender_widget_layout)
-            updateWidget(context, views)
+            updateWidget(context, views, widgetId)
             appWidgetManager.updateAppWidget(widgetId, views)
+            appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, R.id.calendar_list)
         }
     }
 
-    private fun updateWidget(context: Context, views: RemoteViews) {
+    private fun updateWidget(context: Context, views: RemoteViews, appWidgetId: Int) {
         try {
             val widgetData = HomeWidgetPlugin.getData(context)
             val eventsCount = widgetData.getString("events_count", "0 events")
+            val hasEvents = widgetData.getBoolean("has_events", false)
 
-            views.setTextViewText(R.id.widget_title, "Schedule")
-            
-            // Bind New Views
-            // views.setTextViewText(R.id.today_date, ... ) // Removed: Not in XML
-            views.setTextViewText(R.id.events_count, eventsCount) // Correct XML ID
-            // views.setImageViewResource(R.id.widget_icon, R.drawable.ic_widget) // Let XML handle
+            views.setTextViewText(R.id.widget_title, "Today") // or Schedule
+            views.setTextViewText(R.id.events_count, eventsCount)
 
-            // Default State
-            views.setViewVisibility(R.id.empty_state, View.VISIBLE)
+            // Set Adapter for List View
+            val serviceIntent = Intent(context, CalendarWidgetService::class.java).apply {
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                data = Uri.parse(toUri(Intent.URI_INTENT_SCHEME))
+            }
+            views.setRemoteAdapter(R.id.calendar_list, serviceIntent)
+            views.setEmptyView(R.id.calendar_list, R.id.empty_state)
 
-            val intent = Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("copyclip://calendar")
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            // Visibility Logic
+            if (hasEvents) {
+                views.setViewVisibility(R.id.calendar_list, View.VISIBLE)
+                views.setViewVisibility(R.id.empty_state, View.GONE)
+            } else {
+                views.setViewVisibility(R.id.calendar_list, View.GONE)
+                views.setViewVisibility(R.id.empty_state, View.VISIBLE)
+            }
+
+            // Click Intent (Root Header opens Calendar)
+            val intent = Intent(context, MainActivity::class.java).apply {
+                action = Intent.ACTION_VIEW
+                data = Uri.parse("copyclip://app/calendar")
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
 
             val pendingIntent = PendingIntent.getActivity(
-                context, 0, intent,
+                context, appWidgetId, intent, // Unique ID per widget instance
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
             views.setOnClickPendingIntent(R.id.widget_header, pendingIntent)
+            
+            // Redundant listener for empty state
+            views.setOnClickPendingIntent(R.id.empty_state, pendingIntent)
+            
+            // List Item Click Template
+             val clickIntentTemplate = Intent(context, MainActivity::class.java).apply {
+                 action = Intent.ACTION_VIEW
+                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            val clickPendingIntentTemplate = PendingIntent.getActivity(
+                context, appWidgetId + 1000, clickIntentTemplate,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+            )
+            views.setPendingIntentTemplate(R.id.calendar_list, clickPendingIntentTemplate)
+
         } catch (e: Exception) {
-            android.util.Log.e("CalendarWidget", "Error updating widget", e)
+            e.printStackTrace()
         }
     }
 }

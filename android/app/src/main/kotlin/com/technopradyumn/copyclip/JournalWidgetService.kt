@@ -50,7 +50,8 @@ class JournalRemoteViewsFactory(private val context: Context) : RemoteViewsServi
             views.setTextViewText(R.id.journal_item_emoji, mood)
 
             val fillInIntent = Intent()
-            fillInIntent.putExtra("journal_id", id)
+            fillInIntent.putExtra("journal_id", id) // Keep for legacy safety
+            fillInIntent.data = android.net.Uri.parse("copyclip://app/journal/edit?id=$id")
             views.setOnClickFillInIntent(R.id.journal_item_root, fillInIntent)
         } catch (e: Exception) {
             e.printStackTrace()

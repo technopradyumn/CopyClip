@@ -75,6 +75,9 @@
                 <data
                     android:scheme="copyclip"
                     android:host="canvas" />
+                <data
+                    android:scheme="copyclip"
+                    android:host="app" />
             </intent-filter>
 
         </activity>

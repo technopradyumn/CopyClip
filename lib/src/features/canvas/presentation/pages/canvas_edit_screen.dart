@@ -110,22 +110,48 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   // Zoom/Pan state
   late TransformationController _transformationController;
 
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
-    _initializeNote();
     _transformationController = TransformationController();
     _toolbarAnimController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
     _toolbarAnimController.forward();
+    _initData();
+  }
+
+  Future<void> _initData() async {
+    try {
+      // Ensure Database is initialized (Deep Link Safety)
+      try {
+        await CanvasDatabase().init();
+      } catch (e) {
+        debugPrint("Canvas DB Init Warning: $e");
+      }
+
+      _initializeNote();
+    } catch (e) {
+      debugPrint("Error initializing Canvas data: $e");
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   void _initializeNote() {
     final db = CanvasDatabase();
     if (widget.noteId != null) {
-      _currentNote = db.getNote(widget.noteId!)!;
+      _currentNote =
+          db.getNote(widget.noteId!) ??
+          CanvasNote(
+            id: DateTime.now().millisecondsSinceEpoch.toString(), // Fallback
+            title: 'Error Loading Note',
+            folderId: 'default',
+            pages: [CanvasPage()],
+          );
       _titleController = TextEditingController(text: _currentNote.title);
       if (_currentNote.pages.isEmpty) _currentNote.pages.add(CanvasPage());
     } else {
@@ -342,6 +368,18 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: const BackButton(),
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
 
     return WillPopScope(
       onWillPop: () async {

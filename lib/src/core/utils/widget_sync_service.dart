@@ -54,8 +54,57 @@ class WidgetSyncService {
         ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
       final topNotes = notesList.take(5).map((e) {
+        String contentText = '';
+        try {
+          if (e.content.isNotEmpty) {
+            String rawContent = e.content.trim();
+            if (rawContent.startsWith('{') || rawContent.startsWith('[')) {
+              // Try parsing as JSON
+              dynamic decoded = jsonDecode(rawContent);
+              List<dynamic>? ops;
+
+              if (decoded is List) {
+                ops = decoded;
+              } else if (decoded is Map && decoded.containsKey('ops')) {
+                ops = decoded['ops'];
+              }
+
+              if (ops != null) {
+                final buffer = StringBuffer();
+                for (var op in ops) {
+                  if (op['insert'] is String) {
+                    buffer.write(op['insert']);
+                  }
+                }
+                contentText = buffer.toString().trim();
+              } else {
+                // Is JSON but not structure we know, use raw fallback or maybe it's just a string in quotes
+                contentText = rawContent;
+              }
+            } else {
+              // Not JSON, treat as plain text
+              contentText = rawContent;
+            }
+          }
+        } catch (_) {
+          // JSON Parse failed, assuming it's plain text or malformed. Use raw content.
+          if (e.content.isNotEmpty) {
+            contentText = e.content.trim();
+          }
+        }
+
+        // Final fallback: If extraction resulted in empty string (e.g. empty doc), use Title
+        if (contentText.isEmpty) {
+          contentText = e.title.isNotEmpty ? e.title : 'Untitled';
+        }
+
+        // Truncate if too long
+        if (contentText.length > 50) {
+          contentText = contentText.substring(0, 50) + '...';
+        }
+
         return {
-          'title': e.title.isEmpty ? 'Untitled' : e.title,
+          'title': contentText, // User requested content instead of title
           'date': DateFormat('MMM d').format(e.updatedAt),
           'id': e.id,
         };
@@ -100,8 +149,24 @@ class WidgetSyncService {
       });
 
       final widgetTodos = todoList.take(20).map((t) {
+        String taskText = t.task;
+        try {
+          if (taskText.trim().startsWith('{') ||
+              taskText.trim().startsWith('[')) {
+            // Attempt to clean if it looks like JSON (Legacy data safety)
+            final decoded = jsonDecode(taskText);
+            if (decoded is List) {
+              taskText = decoded.map((op) => op['insert'] ?? '').join();
+            } else if (decoded is Map && decoded.containsKey('insert')) {
+              taskText = decoded['insert'];
+            }
+          }
+        } catch (_) {
+          // Not JSON or parse failed, keep original
+        }
+
         return {
-          'task': t.task,
+          'task': taskText,
           'id': t.id,
           'isDone': t.isDone,
           'category': t.category,
@@ -127,41 +192,58 @@ class WidgetSyncService {
           ? Hive.box<Expense>('expenses_box')
           : await Hive.openBox<Expense>('expenses_box');
 
-      double income = 0;
-      double expense = 0;
+      // Get Selected Currency (Fallback only)
+      final settingsBox = Hive.isBoxOpen('settings')
+          ? Hive.box('settings')
+          : await Hive.openBox('settings');
+      final fallbackCurrency = settingsBox.get(
+        'last_currency',
+        defaultValue: '\$',
+      );
+
+      // Group totals by currency
+      final Map<String, double> balances = {};
 
       for (var e in box.values) {
-        if (e.isDeleted) continue; // Filter Deleted
+        if (e.isDeleted) continue;
+
+        final curr = e.currency;
+        if (!balances.containsKey(curr)) balances[curr] = 0;
+
         if (e.isIncome) {
-          income += e.amount;
+          balances[curr] = balances[curr]! + e.amount;
         } else {
-          expense += e.amount;
+          balances[curr] = balances[curr]! - e.amount;
         }
       }
-      final total = income - expense;
-      final currency = '\$'; // Or get from settings
+
+      // Build Display String
+      final buffer = StringBuffer();
+      if (balances.isEmpty) {
+        buffer.write('$fallbackCurrency 0.00');
+      } else {
+        int count = 0;
+        balances.forEach((curr, amount) {
+          if (count > 0) buffer.writeln();
+          buffer.write('$curr ${amount.toStringAsFixed(2)}');
+          count++;
+        });
+      }
 
       await HomeWidget.saveWidgetData<String>(
         'total_balance',
-        '$currency${total.toStringAsFixed(2)}',
+        buffer.toString(),
       );
-      await HomeWidget.saveWidgetData<String>(
-        'income_amount',
-        '$currency${income.toStringAsFixed(0)}',
-      );
-      await HomeWidget.saveWidgetData<String>(
-        'expense_amount',
-        '$currency${expense.toStringAsFixed(0)}',
-      );
+
+      // Clear specific amounts as they don't make sense in aggregate w/o currency
+      await HomeWidget.saveWidgetData<String>('income_amount', '');
+      await HomeWidget.saveWidgetData<String>('expense_amount', '');
 
       // Save raw values for Progress Bars
-      await HomeWidget.saveWidgetData<String>('income_val', income.toString());
-      await HomeWidget.saveWidgetData<String>(
-        'expense_val',
-        expense.toString(),
-      );
+      await HomeWidget.saveWidgetData<String>('income_val', '0');
+      await HomeWidget.saveWidgetData<String>('expense_val', '0');
 
-      // Save Transaction List (Top 5)
+      // Save Transaction List (Top 5) - All Currencies
       final allTx = box.values.where((e) => !e.isDeleted).toList()
         ..sort((a, b) => b.date.compareTo(a.date));
 
@@ -169,7 +251,7 @@ class WidgetSyncService {
         return {
           'title': e.title.isEmpty ? 'Transaction' : e.title,
           'amount':
-              '${e.isIncome ? '+' : '-'}${currency}${e.amount.toStringAsFixed(0)}',
+              '${e.isIncome ? '+' : '-'}${e.currency} ${e.amount.toStringAsFixed(0)}',
           'isIncome': e.isIncome,
           'date': DateFormat('MMM d').format(e.date),
           'id': e.id,
@@ -357,8 +439,118 @@ class WidgetSyncService {
   // --- CALENDAR ---
   static Future<void> syncCalendar() async {
     try {
-      // Placeholder for now
-      await HomeWidget.saveWidgetData<String>('events_count', 'No events');
+      final now = DateTime.now();
+      final dateKey = DateFormat('yyyy-MM-dd').format(now);
+      List<Map<String, String>> events = [];
+
+      // Helper to add events
+      void addEvents<T>(
+        String boxName,
+        bool Function(T) filter,
+        String Function(T) titleMapper,
+        String Function(T) timeMapper,
+      ) async {
+        if (Hive.isBoxOpen(boxName)) {
+          final box = Hive.box<T>(boxName);
+          final items = box.values.where(filter).toList();
+          for (var item in items) {
+            events.add({
+              'title': titleMapper(item),
+              'time': timeMapper(item), // e.g., 'All Day' or specific time
+            });
+          }
+        } else {
+          // Try to open if closed (safety)
+          try {
+            final box = await Hive.openBox<T>(boxName);
+            final items = box.values.where(filter).toList();
+            for (var item in items) {
+              events.add({
+                'title': titleMapper(item),
+                'time': timeMapper(item),
+              });
+            }
+          } catch (_) {}
+        }
+      }
+
+      // --- FETCH DATA (Mirroring CalendarScreen logic) ---
+
+      // 1. Notes (Updated Today)
+      // Note: We need to manually handle types because the generic helper above is a bit tricky with sync/async mixed.
+      // Let's just do inline for simplicity and reliability.
+
+      // Notes
+      if (!Hive.isBoxOpen('notes_box')) await Hive.openBox<Note>('notes_box');
+      final notesBox = Hive.box<Note>('notes_box');
+      final notes = notesBox.values.where(
+        (n) =>
+            !n.isDeleted &&
+            DateFormat('yyyy-MM-dd').format(n.updatedAt) == dateKey,
+      );
+      for (var n in notes) {
+        events.add({
+          'title': n.title.isEmpty ? 'Untitled Note' : n.title,
+          'time': 'Note',
+        });
+      }
+
+      // Todos (Due Today)
+      if (!Hive.isBoxOpen('todos_box'))
+        await Hive.openBox<Todo>('todos_box'); // correct box name
+      final todosBox = Hive.box<Todo>('todos_box');
+      final todos = todosBox.values.where(
+        (t) =>
+            !t.isDeleted &&
+            t.dueDate != null &&
+            DateFormat('yyyy-MM-dd').format(t.dueDate!) == dateKey,
+      );
+      for (var t in todos) {
+        events.add({'title': t.task, 'time': t.isDone ? 'Done' : 'Todo'});
+      }
+
+      // Expenses (Today)
+      if (!Hive.isBoxOpen('expenses_box'))
+        await Hive.openBox<Expense>('expenses_box');
+      final expBox = Hive.box<Expense>('expenses_box');
+      final expenses = expBox.values.where(
+        (e) =>
+            !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.date) == dateKey,
+      );
+      for (var e in expenses) {
+        final amount = '${e.currency} ${e.amount.toStringAsFixed(0)}';
+        events.add({
+          'title': e.title.isEmpty ? 'Expense' : e.title,
+          'time': amount,
+        });
+      }
+
+      // Journal (Today)
+      if (!Hive.isBoxOpen('journal_box'))
+        await Hive.openBox<JournalEntry>('journal_box');
+      final journalBox = Hive.box<JournalEntry>('journal_box');
+      final journals = journalBox.values.where(
+        (j) =>
+            !j.isDeleted && DateFormat('yyyy-MM-dd').format(j.date) == dateKey,
+      );
+      for (var j in journals) {
+        events.add({
+          'title': j.title.isEmpty ? 'Journal Entry' : j.title,
+          'time': 'Journal',
+        });
+      }
+
+      // Save Data
+      await HomeWidget.saveWidgetData<String>(
+        'events_count',
+        '${events.length} events',
+      );
+      await HomeWidget.saveWidgetData<bool>('has_events', events.isNotEmpty);
+      await HomeWidget.saveWidgetData<String>(
+        'calendar_data',
+        jsonEncode(events),
+      );
+
       await HomeWidget.updateWidget(androidName: 'CalendarWidgetProvider');
     } catch (e) {
       print('Error syncing calendar: $e');

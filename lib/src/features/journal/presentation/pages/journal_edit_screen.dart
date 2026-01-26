@@ -36,8 +36,9 @@ import '../widgets/page_design_picker.dart';
 
 class JournalEditScreen extends StatefulWidget {
   final JournalEntry? entry;
+  final String? entryId; // Support for Deep Linking
 
-  const JournalEditScreen({super.key, this.entry});
+  const JournalEditScreen({super.key, this.entry, this.entryId});
 
   @override
   State<JournalEditScreen> createState() => _JournalEditScreenState();
@@ -63,6 +64,9 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   // Page Design
   String _selectedPageDesignId = 'ruled_wide';
 
+  // Resolved Entry (from widget or ID)
+  JournalEntry? _resolvedEntry;
+
   final Map<String, String> _moodMap = {
     'Happy': '😊',
     'Excited': '🤩',
@@ -74,44 +78,73 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
     'Love': '😍',
   };
 
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
-    if (widget.entry != null) {
-      _titleController.text = widget.entry!.title;
-      _tagsController.text = widget.entry!.tags.join(', ');
-      _selectedDate = widget.entry!.date;
-      _selectedMood = widget.entry!.mood;
-      _isFavorite = widget.entry!.isFavorite;
-      _scaffoldColor = widget.entry!.colorValue != null
-          ? Color(widget.entry!.colorValue!)
-          : AppContentPalette.palette.first;
-      // Load page design
-      _selectedPageDesignId = widget.entry!.pageDesignId ?? 'default';
-    }
-
-    _initQuill();
-
+    _initData();
     // ✅ Add focus listener for keyboard handling
     _editorFocusNode.addListener(_onFocusChanged);
+  }
+
+  Future<void> _initData() async {
+    try {
+      // Ensure box is open
+      if (!Hive.isBoxOpen('journal_box')) {
+        await Hive.openBox<JournalEntry>('journal_box');
+      }
+
+      _resolvedEntry = widget.entry;
+
+      // Resolve by ID if entry is null
+      if (_resolvedEntry == null && widget.entryId != null) {
+        final box = Hive.box<JournalEntry>('journal_box');
+        try {
+          _resolvedEntry = box.values.firstWhere((e) => e.id == widget.entryId);
+        } catch (e) {
+          debugPrint("Error finding journal entry by ID: ${widget.entryId}");
+        }
+      }
+
+      if (_resolvedEntry != null) {
+        _titleController.text = _resolvedEntry!.title;
+        _tagsController.text = _resolvedEntry!.tags.join(', ');
+        _selectedDate = _resolvedEntry!.date;
+        _selectedMood = _resolvedEntry!.mood;
+        _isFavorite = _resolvedEntry!.isFavorite;
+        _scaffoldColor = _resolvedEntry!.colorValue != null
+            ? Color(_resolvedEntry!.colorValue!)
+            : AppContentPalette.palette.first;
+        // Load page design
+        _selectedPageDesignId = _resolvedEntry!.pageDesignId ?? 'default';
+      }
+
+      // Dynamic Default Color logic
+      if (_resolvedEntry == null) {
+        if (_scaffoldColor == AppContentPalette.palette.first) {
+          if (mounted) {
+            final defaultColor = AppContentPalette.getDefaultColor(context);
+            if (_scaffoldColor != defaultColor) {
+              _scaffoldColor = defaultColor;
+            }
+          }
+        }
+      }
+
+      _initQuill();
+    } catch (e) {
+      debugPrint("Error initializing Journal data: $e");
+      // Fallback init to prevent crash
+      _initQuill();
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // ✅ Apply dynamic default color for new entries
-    if (widget.entry == null) {
-      // Use a simpler check: if _scaffoldColor is the static default, update it to dynamic default
-      if (_scaffoldColor == AppContentPalette.palette.first) {
-        final defaultColor = AppContentPalette.getDefaultColor(context);
-        if (_scaffoldColor != defaultColor) {
-          setState(() {
-            _scaffoldColor = defaultColor;
-            _scaffoldColor = defaultColor;
-          });
-        }
-      }
-    }
   }
 
   // ✅ Handle focus changes and ensure cursor visibility
@@ -143,13 +176,13 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   void _initQuill() {
     Document doc;
     try {
-      if (widget.entry != null && widget.entry!.content.isNotEmpty) {
-        doc = Document.fromJson(jsonDecode(widget.entry!.content));
+      if (_resolvedEntry != null && _resolvedEntry!.content.isNotEmpty) {
+        doc = Document.fromJson(jsonDecode(_resolvedEntry!.content));
       } else {
         doc = Document();
       }
     } catch (e) {
-      doc = Document()..insert(0, widget.entry?.content ?? "");
+      doc = Document()..insert(0, _resolvedEntry?.content ?? "");
     }
     _quillController = QuillController(
       document: doc,
@@ -483,17 +516,49 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
         .toList();
 
     final box = Hive.box<JournalEntry>('journal_box');
-    if (widget.entry != null) {
-      widget.entry!.title = title;
-      widget.entry!.content = contentJson;
-      widget.entry!.date = _selectedDate;
-      widget.entry!.mood = _selectedMood;
-      widget.entry!.tags = tags;
-      widget.entry!.isFavorite = _isFavorite;
-      widget.entry!.colorValue = _scaffoldColor.value;
-      widget.entry!.pageDesignId = _selectedPageDesignId; // Save new field
-      widget.entry!.save();
+
+    // Logic to ensure robust saving
+    if (_resolvedEntry != null) {
+      debugPrint(
+        "JournalEditScreen: Saving existing entry (${_resolvedEntry!.id})",
+      );
+
+      _resolvedEntry!.title = title;
+      _resolvedEntry!.content = contentJson;
+      _resolvedEntry!.date = _selectedDate;
+      _resolvedEntry!.mood = _selectedMood;
+      _resolvedEntry!.tags = tags;
+      _resolvedEntry!.isFavorite = _isFavorite;
+      _resolvedEntry!.colorValue = _scaffoldColor.value;
+      _resolvedEntry!.pageDesignId = _selectedPageDesignId;
+
+      if (_resolvedEntry!.isInBox) {
+        _resolvedEntry!.save();
+        debugPrint("JournalEditScreen: Saved using .save()");
+      } else {
+        debugPrint(
+          "JournalEditScreen: Entry not in box! Attempting to locate key.",
+        );
+        // Fallback: This entry might be a detached copy. Find real entry by ID.
+        try {
+          final realEntryIndex = box.values.toList().indexWhere(
+            (e) => e.id == _resolvedEntry!.id,
+          );
+          if (realEntryIndex != -1) {
+            final key = box.keyAt(realEntryIndex);
+            box.put(key, _resolvedEntry!);
+            debugPrint("JournalEditScreen: Saved using box.put($key)");
+          } else {
+            // Not found? Re-add.
+            debugPrint("JournalEditScreen: Entry lost. Re-adding.");
+            box.add(_resolvedEntry!);
+          }
+        } catch (e) {
+          debugPrint("JournalEditScreen: Error saving: $e");
+        }
+      }
     } else {
+      debugPrint("JournalEditScreen: Creating NEW entry");
       int newSortIndex = 0;
       if (box.isNotEmpty) {
         final existingIndices = box.values.map((e) => e.sortIndex);
@@ -506,22 +571,27 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
         }
       }
 
-      box.add(
-        JournalEntry(
-          id: const Uuid().v4(),
-          title: title,
-          content: contentJson,
-          date: _selectedDate,
-          mood: _selectedMood,
-          tags: tags,
-          isFavorite: _isFavorite,
-          colorValue: _scaffoldColor.value,
-          sortIndex: newSortIndex,
-          pageDesignId: _selectedPageDesignId,
-          designId: 'classic_ruled', // Default card design
-        ),
+      final newEntry = JournalEntry(
+        id: const Uuid().v4(),
+        title: title,
+        content: contentJson,
+        date: _selectedDate,
+        mood: _selectedMood,
+        tags: tags,
+        isFavorite: _isFavorite,
+        colorValue: _scaffoldColor.value,
+        sortIndex: newSortIndex,
+        pageDesignId: _selectedPageDesignId,
+        designId: 'classic_ruled', // Default card design
       );
+      box.add(newEntry);
+
+      // Update local reference to avoid creating duplicates on next save
+      _resolvedEntry = newEntry;
     }
+
+    // Sync Widget
+    WidgetSyncService.syncJournal();
   }
 
   @override
@@ -532,12 +602,24 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
         ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
     final contrastColor = isColorDark ? Colors.white : Colors.black87;
 
-    final String heroTag = widget.entry != null
-        ? 'journal_bg_${widget.entry!.id}'
+    final String heroTag = _resolvedEntry != null
+        ? 'journal_bg_${_resolvedEntry!.id}'
         : 'journal_new_hero';
 
     // Page Design Plugin
     final pageDesign = JournalPageRegistry.getDesign(_selectedPageDesignId);
+
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: const BackButton(),
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
 
     return WillPopScope(
       onWillPop: () async {
@@ -552,7 +634,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
         centerTitle: false,
         titleSpacing: 0,
         title: AnimatedTopBarTitle(
-          title: widget.entry == null ? 'New Entry' : 'Edit Entry',
+          title: _resolvedEntry == null ? 'New Entry' : 'Edit Entry',
           icon: Icons.book,
           iconHeroTag: 'journal_icon',
           titleHeroTag: 'journal_title',

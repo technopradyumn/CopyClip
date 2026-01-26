@@ -55,9 +55,21 @@ class NotesWidgetProvider : AppWidgetProvider() {
                 views.setViewVisibility(R.id.empty_state, View.VISIBLE)
             }
 
-            val intent = Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("copyclip://notes")
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            // Template for List Items
+            val itemIntent = Intent(context, MainActivity::class.java).apply {
+                action = Intent.ACTION_VIEW
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            val itemPendingIntent = PendingIntent.getActivity(
+                context, 100, itemIntent, // Unique Request Code
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE // MUTABLE required for fillInIntent
+            )
+            views.setPendingIntentTemplate(R.id.notes_list, itemPendingIntent)
+
+            val intent = Intent(context, MainActivity::class.java).apply {
+                action = Intent.ACTION_VIEW
+                data = Uri.parse("copyclip://app/notes")
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
 
             val pendingIntent = PendingIntent.getActivity(

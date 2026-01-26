@@ -65,7 +65,13 @@ class GlassScaffold extends StatelessWidget {
                           size: 20,
                           color: contentColor,
                         ),
-                        onPressed: () => context.pop(),
+                        onPressed: () {
+                          if (context.canPop()) {
+                            context.pop();
+                          } else {
+                            context.go('/');
+                          }
+                        },
                       )
                     : null,
                 title: title is Widget
