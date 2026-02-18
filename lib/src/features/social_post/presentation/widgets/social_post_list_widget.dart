@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 
 import 'package:copyclip/src/features/social_post/data/social_post_model.dart';
-// import '../../../../l10n/app_localizations.dart'; // Unused
+import '../../../../l10n/app_localizations.dart';
 import 'package:copyclip/src/features/social_post/presentation/widgets/social_platform_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -124,7 +124,11 @@ class SocialPostListWidgetState extends State<SocialPostListWidget> {
         }
 
         if (snapshot.hasError) {
-          return Center(child: Text("Error: ${snapshot.error}"));
+          return Center(
+            child: Text(
+              AppLocalizations.of(context)!.error(snapshot.error.toString()),
+            ),
+          );
         }
 
         final postsBox = snapshot.data![0] as Box<SocialPost>;
@@ -262,10 +266,10 @@ class SocialPostListWidgetState extends State<SocialPostListWidget> {
           SizedBox(height: 16.h),
           Text(
             widget.filter == 'favorites'
-                ? 'No favorites yet'
+                ? AppLocalizations.of(context)!.noFavoritesYet
                 : widget.filter == 'drafts'
-                ? 'No drafts yet'
-                : 'Start your social journey!',
+                ? AppLocalizations.of(context)!.noDraftsYet
+                : AppLocalizations.of(context)!.startSocialJourney,
             style: TextStyle(
               fontSize: 18.sp,
               color: Colors.grey[600],
@@ -366,7 +370,7 @@ class SocialPostListWidgetState extends State<SocialPostListWidget> {
                         ),
                       ),
                       child: Text(
-                        'DRAFT',
+                        AppLocalizations.of(context)!.draft,
                         style: TextStyle(
                           fontSize: 10.sp,
                           color: Colors.orange[800],
@@ -405,7 +409,9 @@ class SocialPostListWidgetState extends State<SocialPostListWidget> {
                       Icon(Icons.attachment, size: 16.sp, color: Colors.grey),
                       SizedBox(width: 4.w),
                       Text(
-                        '${post.mediaPaths.length} attachment${post.mediaPaths.length > 1 ? 's' : ''}',
+                        AppLocalizations.of(
+                          context,
+                        )!.attachmentCount(post.mediaPaths.length),
                         style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                       ),
                     ],

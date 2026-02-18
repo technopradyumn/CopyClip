@@ -18,6 +18,7 @@ import 'package:copyclip/src/core/common_widgets/mascot_character.dart';
 import 'package:copyclip/src/core/common_widgets/micro_animation.dart';
 
 import '../../../../core/router/app_router.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../core/widgets/glass_dialog.dart';
 import '../widgets/todo_card.dart';
 
@@ -470,12 +471,15 @@ class _TodosScreenState extends State<TodosScreen>
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Great job!",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      Text(
+                        AppLocalizations.of(context)!.greatJob,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "You earned 10 XP! Next task: ${DateFormat('MMM d').format(result.dueDate!)}",
+                        AppLocalizations.of(context)!.youEarnedXPNextTask(
+                          10,
+                          DateFormat('MMM d').format(result.dueDate!),
+                        ),
                         style: const TextStyle(fontSize: 12),
                       ),
                     ],
@@ -505,7 +509,7 @@ class _TodosScreenState extends State<TodosScreen>
               children: [
                 const MascotCharacter(size: 40, state: MascotState.happy),
                 const SizedBox(width: 12),
-                const Text("Task completed! +10 XP"),
+                Text(AppLocalizations.of(context)!.taskCompletedXP(10)),
               ],
             ),
             duration: const Duration(seconds: 2),
@@ -553,9 +557,9 @@ class _TodosScreenState extends State<TodosScreen>
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete All?",
-        content: "Move all active tasks to Recycle Bin?",
-        confirmText: "Delete All",
+        title: AppLocalizations.of(context)!.deleteAllQuestion,
+        content: AppLocalizations.of(context)!.moveTasksToRecycleBin,
+        confirmText: AppLocalizations.of(context)!.deleteAll,
         isDestructive: true,
         onConfirm: () {
           final now = DateTime.now();
@@ -884,8 +888,8 @@ class _TodosScreenState extends State<TodosScreen>
           controller: _quickAddController,
           focusNode: _quickAddFocus,
           autofocus: true,
-          decoration: const InputDecoration(
-            hintText: "Type a new task...",
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!.typeNewTask,
             border: InputBorder.none,
             isDense: true,
             contentPadding: EdgeInsets.all(8),
@@ -933,7 +937,7 @@ class _TodosScreenState extends State<TodosScreen>
               ),
               const SizedBox(width: 12),
               Text(
-                "Add a task",
+                AppLocalizations.of(context)!.addTask,
                 style: TextStyle(
                   color: Theme.of(
                     context,
@@ -961,7 +965,7 @@ class _TodosScreenState extends State<TodosScreen>
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-                'Completed',
+                AppLocalizations.of(context)!.completed,
                 style: TextStyle(
                   color: Theme.of(
                     context,
@@ -987,6 +991,7 @@ class _TodosScreenState extends State<TodosScreen>
         child: MicroAnimation(
           type: AnimationType.scale,
           delay: Duration(milliseconds: index * 30),
+          animate: _enableAnimations,
           child: TodoCard(
             todo: item.todo,
             isSelected: _selectedTodoIds.contains(item.todo.id),
@@ -1113,7 +1118,8 @@ class _TodosScreenState extends State<TodosScreen>
 
     if (_isSelectionMode) {
       return SeamlessHeader(
-        title: '${_selectedTodoIds.length} Selected',
+        title:
+            '${_selectedTodoIds.length} ${AppLocalizations.of(context)!.selected}',
         heroTagPrefix: 'todos',
         showBackButton: true,
         onBackTap: () => setState(() {
@@ -1134,8 +1140,9 @@ class _TodosScreenState extends State<TodosScreen>
     }
 
     return SeamlessHeader(
-      title: "To-Dos",
-      subtitle: "Daily Tasks",
+      title: AppLocalizations.of(context)!.todos,
+      subtitle:
+          "Daily Tasks", // Needs localization? "Daily Tasks" - maybe add it? Or use existing description?
       icon: CupertinoIcons.checkmark_circle,
       iconColor: primaryColor,
       heroTagPrefix: 'todos',
@@ -1168,7 +1175,7 @@ class _TodosScreenState extends State<TodosScreen>
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Custom Order",
+                        AppLocalizations.of(context)!.customOrder,
                         style: TextStyle(
                           color: _currentSort == TodoSortOption.custom
                               ? primaryColor
@@ -1194,7 +1201,7 @@ class _TodosScreenState extends State<TodosScreen>
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Newest First",
+                        AppLocalizations.of(context)!.newestFirst,
                         style: TextStyle(
                           color: _currentSort == TodoSortOption.dateNewest
                               ? primaryColor
@@ -1220,7 +1227,7 @@ class _TodosScreenState extends State<TodosScreen>
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Oldest First",
+                        AppLocalizations.of(context)!.oldestFirst,
                         style: TextStyle(
                           color: _currentSort == TodoSortOption.dateOldest
                               ? primaryColor
@@ -1246,7 +1253,7 @@ class _TodosScreenState extends State<TodosScreen>
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Name: A-Z",
+                        AppLocalizations.of(context)!.titleAZ,
                         style: TextStyle(
                           color: _currentSort == TodoSortOption.nameAZ
                               ? primaryColor
@@ -1276,23 +1283,26 @@ class _TodosScreenState extends State<TodosScreen>
             }
           },
           itemBuilder: (context) => [
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'select',
               child: Row(
                 children: [
                   Icon(CupertinoIcons.checkmark_circle, size: 18),
                   SizedBox(width: 12),
-                  Text("Select Items"),
+                  Text(AppLocalizations.of(context)!.selectItems),
                 ],
               ),
             ),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'delete_all',
               child: Row(
                 children: [
                   Icon(CupertinoIcons.trash, size: 18, color: Colors.red),
                   SizedBox(width: 12),
-                  Text("Delete All", style: TextStyle(color: Colors.red)),
+                  Text(
+                    AppLocalizations.of(context)!.deleteAll,
+                    style: TextStyle(color: Colors.red),
+                  ),
                 ],
               ),
             ),

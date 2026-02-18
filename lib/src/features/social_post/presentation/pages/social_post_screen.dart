@@ -197,9 +197,7 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
     if (plainText.isEmpty && _mediaPaths.isEmpty) {
       // Keep error/validation snackbars as they are critical
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please add some content or media to share'),
-        ),
+        SnackBar(content: Text(AppLocalizations.of(context)!.pleaseAddContent)),
       );
       return;
     }
@@ -222,7 +220,11 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
       if (!file.existsSync()) {
         debugPrint("ERROR: File does not exist: $path");
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error: File not found at $path")),
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)!.fileNotFoundError(path),
+            ),
+          ),
         );
         setState(() => _isSharing = false);
         return;
@@ -278,13 +280,13 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
               final files = _mediaPaths.map((path) => XFile(path)).toList();
               // ignore: deprecated_member_use
               await Share.shareXFiles(files, text: plainText);
-              response = "Check Facebook app";
+              response = AppLocalizations.of(context)!.checkFacebookApp;
             }
           } else {
             // System share fallback
             // ignore: deprecated_member_use
             await Share.share(plainText);
-            response = "System Share";
+            response = AppLocalizations.of(context)!.systemShare;
           }
           break;
 
@@ -397,12 +399,12 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            title: Text("Share to $platform Story"),
+            title: Text(AppLocalizations.of(context)!.shareToStory(platform)),
             leading: const Icon(Icons.history_edu),
             onTap: () => Navigator.pop(context, 'story'),
           ),
           ListTile(
-            title: Text("Share to $platform Feed"),
+            title: Text(AppLocalizations.of(context)!.shareToFeed(platform)),
             leading: const Icon(Icons.feed),
             onTap: () => Navigator.pop(context, 'feed'),
           ),
@@ -739,12 +741,12 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
                               ? Colors.red
                               : theme.colorScheme.onSurfaceVariant,
                         ),
-                        tooltip: "Favorite",
+                        tooltip: AppLocalizations.of(context)!.favorite,
                       ),
                       IconButton(
                         onPressed: () => _savePost(isDraft: true),
                         icon: const Icon(Icons.save_as_outlined),
-                        tooltip: "Save Draft",
+                        tooltip: AppLocalizations.of(context)!.saveDraft,
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ],

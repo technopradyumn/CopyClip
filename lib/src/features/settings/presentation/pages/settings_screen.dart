@@ -304,18 +304,19 @@ class _SettingsScreenState extends State<SettingsScreen>
       final status = await Permission.notification.request();
       _notificationEnabledNotifier.value = status.isGranted;
       if (status.isPermanentlyDenied) {
-        _showSnackBar(
-          "Permission permanently denied. Please enable in Settings.",
-          isError: true,
-        );
+        final l10n = AppLocalizations.of(context)!;
+        _showSnackBar(l10n.permissionDeniedSettings, isError: true);
         await openAppSettings();
       } else if (!status.isGranted) {
-        _showSnackBar("Notification permission denied.", isError: true);
+        final l10n = AppLocalizations.of(context)!;
+        _showSnackBar(l10n.notificationPermissionDenied, isError: true);
       } else {
-        _showSnackBar("Notifications enabled!");
+        final l10n = AppLocalizations.of(context)!;
+        _showSnackBar(l10n.notificationsEnabled);
       }
     } else {
-      _showSnackBar("Redirecting to settings to disable notifications...");
+      final l10n = AppLocalizations.of(context)!;
+      _showSnackBar(l10n.redirectingToSettings);
       await openAppSettings();
     }
   }
@@ -433,7 +434,7 @@ class _SettingsScreenState extends State<SettingsScreen>
       context: context,
       builder: (ctx) => GlassDialog(
         title: l10n.backupData,
-        content: l10n.saveJsonFile,
+        content: l10n.backupDataDesc,
         confirmText: l10n.exportNow,
         onConfirm: () {
           Navigator.pop(ctx);
@@ -460,8 +461,8 @@ class _SettingsScreenState extends State<SettingsScreen>
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: l10n.importDataTitle,
-        content: l10n.mergeBackupFile,
+        title: l10n.importData,
+        content: l10n.importDataDesc,
         confirmText: l10n.selectFile,
         onConfirm: () {
           Navigator.pop(ctx);

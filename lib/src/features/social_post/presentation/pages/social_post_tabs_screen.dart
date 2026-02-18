@@ -99,19 +99,17 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Delete All Posts"),
-        content: const Text(
-          "Are you sure you want to delete ALL social posts? This cannot be undone.",
-        ),
+        title: Text(AppLocalizations.of(context)!.deleteAllPosts),
+        content: Text(AppLocalizations.of(context)!.deleteAllPostsConfirmation),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text("Cancel"),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text(
-              "Delete All",
+            child: Text(
+              AppLocalizations.of(context)!.deleteAll,
               style: TextStyle(color: Colors.red),
             ),
           ),
@@ -159,7 +157,7 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
                   context.push(AppRouter.socialPostEdit);
                 },
                 backgroundColor: FeatureColors.socialPost,
-                label: const Text('New Post'),
+                label: Text(AppLocalizations.of(context)!.newPost),
                 icon: const Icon(Icons.edit),
               ),
 
@@ -180,10 +178,10 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
                   unselectedLabelColor: theme.colorScheme.onSurface.withValues(
                     alpha: 0.6,
                   ),
-                  tabs: const [
-                    Tab(text: 'All Posts'),
-                    Tab(text: 'Favorites'),
-                    Tab(text: 'Drafts'),
+                  tabs: [
+                    Tab(text: AppLocalizations.of(context)!.allPosts),
+                    Tab(text: AppLocalizations.of(context)!.favorites),
+                    Tab(text: AppLocalizations.of(context)!.drafts),
                   ],
                 ),
 
@@ -225,7 +223,7 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
 
     if (_isSelectionMode) {
       return SeamlessHeader(
-        title: '$_selectedCount Selected',
+        title: '$_selectedCount ${AppLocalizations.of(context)!.selected}',
         heroTagPrefix: 'social_selection', // Different tag
         showBackButton: true,
         onBackTap: _exitSelectionMode,
@@ -233,13 +231,13 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
           IconButton(
             icon: Icon(CupertinoIcons.checkmark_square, color: onSurfaceColor),
             onPressed: _selectAll,
-            tooltip: 'Select All',
+            tooltip: AppLocalizations.of(context)!.selectAll,
           ),
           IconButton(
             icon: const Icon(CupertinoIcons.delete, color: Colors.redAccent),
             onPressed:
                 _deleteSelected, // Logic handles local deletion (no dialog)
-            tooltip: 'Delete Selected',
+            tooltip: AppLocalizations.of(context)!.deleteSelected,
           ),
         ],
       );
@@ -259,13 +257,16 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
             }
           },
           itemBuilder: (context) => [
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'delete_all',
               child: Row(
                 children: [
                   Icon(Icons.delete_forever, color: Colors.red),
                   SizedBox(width: 8),
-                  Text('Delete All', style: TextStyle(color: Colors.red)),
+                  Text(
+                    AppLocalizations.of(context)!.deleteAll,
+                    style: TextStyle(color: Colors.red),
+                  ),
                 ],
               ),
             ),

@@ -849,31 +849,31 @@ abstract class AppLocalizations {
   /// No description provided for @exportFailed.
   ///
   /// In en, this message translates to:
-  /// **'Export failed'**
+  /// **'Export failed.'**
   String get exportFailed;
 
   /// No description provided for @importSuccess.
   ///
   /// In en, this message translates to:
-  /// **'Imported {count} new items.'**
+  /// **'{count} items restored successfully!'**
   String importSuccess(Object count);
 
   /// No description provided for @importFailed.
   ///
   /// In en, this message translates to:
-  /// **'Import failed'**
+  /// **'Import failed.'**
   String get importFailed;
 
   /// No description provided for @widgetAdded.
   ///
   /// In en, this message translates to:
-  /// **'{widget} widget added to Home Screen!'**
+  /// **'Widget added to Home Screen!'**
   String widgetAdded(Object widget);
 
   /// No description provided for @widgetRequestSent.
   ///
   /// In en, this message translates to:
-  /// **'Widget request sent (check home screen)'**
+  /// **'Widget request sent. Please check your home screen.'**
   String get widgetRequestSent;
 
   /// No description provided for @widgetAddFailed.
@@ -959,6 +959,690 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Customize Your Experience'**
   String get settingsSubtitle;
+
+  /// No description provided for @welcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to CopyClip'**
+  String get welcomeTitle;
+
+  /// No description provided for @welcomeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your ultimate productivity companion. Let\'s get you set up with powerful tools to manage your day.'**
+  String get welcomeDescription;
+
+  /// No description provided for @onboardingNotesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Notes'**
+  String get onboardingNotesTitle;
+
+  /// No description provided for @onboardingNotesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.'**
+  String get onboardingNotesDesc;
+
+  /// No description provided for @onboardingTodosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Management'**
+  String get onboardingTodosTitle;
+
+  /// No description provided for @onboardingTodosDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.'**
+  String get onboardingTodosDesc;
+
+  /// No description provided for @onboardingExpensesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense Tracking'**
+  String get onboardingExpensesTitle;
+
+  /// No description provided for @onboardingExpensesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Take control of your finances. Track income and expenses easily to understand your spending habits.'**
+  String get onboardingExpensesDesc;
+
+  /// No description provided for @onboardingJournalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Journal'**
+  String get onboardingJournalTitle;
+
+  /// No description provided for @onboardingJournalDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.'**
+  String get onboardingJournalDesc;
+
+  /// No description provided for @onboardingCalendarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar & Events'**
+  String get onboardingCalendarTitle;
+
+  /// No description provided for @onboardingCalendarDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Never miss a moment. Organize your schedule and keep track of important upcoming events.'**
+  String get onboardingCalendarDesc;
+
+  /// No description provided for @onboardingClipboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clipboard Manager'**
+  String get onboardingClipboardTitle;
+
+  /// No description provided for @onboardingClipboardDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.'**
+  String get onboardingClipboardDesc;
+
+  /// No description provided for @onboardingCanvasTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creative Canvas'**
+  String get onboardingCanvasTitle;
+
+  /// No description provided for @onboardingCanvasDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.'**
+  String get onboardingCanvasDesc;
+
+  /// No description provided for @featuresNotesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Create and manage your notes'**
+  String get featuresNotesDesc;
+
+  /// No description provided for @featuresTodosDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep track of your tasks'**
+  String get featuresTodosDesc;
+
+  /// No description provided for @featuresExpensesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor your expenses'**
+  String get featuresExpensesDesc;
+
+  /// No description provided for @featuresJournalDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Write down your thoughts'**
+  String get featuresJournalDesc;
+
+  /// No description provided for @featuresCalendarDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Organize your schedule'**
+  String get featuresCalendarDesc;
+
+  /// No description provided for @featuresClipboardDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Access your clipboard history'**
+  String get featuresClipboardDesc;
+
+  /// No description provided for @featuresCanvasDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Draw and sketch freely'**
+  String get featuresCanvasDesc;
+
+  /// No description provided for @featuresSocialPost.
+  ///
+  /// In en, this message translates to:
+  /// **'Social Post'**
+  String get featuresSocialPost;
+
+  /// No description provided for @featuresSocialPostDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Create engaging social media content'**
+  String get featuresSocialPostDesc;
+
+  /// No description provided for @chooseYourAura.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Your Aura'**
+  String get chooseYourAura;
+
+  /// No description provided for @expressYourselfTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Express yourself with a new theme color!'**
+  String get expressYourselfTheme;
+
+  /// No description provided for @level.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get level;
+
+  /// No description provided for @xpToNextLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'XP to Level'**
+  String get xpToNextLevel;
+
+  /// No description provided for @checkUpcomingEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Check upcoming events'**
+  String get checkUpcomingEvents;
+
+  /// No description provided for @startNewSketch.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a new sketch'**
+  String get startNewSketch;
+
+  /// No description provided for @noTransactionsMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions this month'**
+  String get noTransactionsMonth;
+
+  /// No description provided for @transactionsThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} transaction{count, plural, =1{} other{s}} this month'**
+  String transactionsThisMonth(num count);
+
+  /// No description provided for @autoSaveClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-save Clipboard'**
+  String get autoSaveClipboard;
+
+  /// No description provided for @autoSaveClipboardDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically save copied items'**
+  String get autoSaveClipboardDesc;
+
+  /// No description provided for @permissionDeniedSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission permanently denied. Please enable in Settings.'**
+  String get permissionDeniedSettings;
+
+  /// No description provided for @notificationsEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications enabled!'**
+  String get notificationsEnabled;
+
+  /// No description provided for @redirectingToSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Redirecting to settings to disable notifications...'**
+  String get redirectingToSettings;
+
+  /// No description provided for @premiumAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Access'**
+  String get premiumAccess;
+
+  /// No description provided for @premiumActiveUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Active until'**
+  String get premiumActiveUntil;
+
+  /// No description provided for @unlockAllFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock All Features'**
+  String get unlockAllFeatures;
+
+  /// No description provided for @buyPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy Premium (7 Days)'**
+  String get buyPremium;
+
+  /// No description provided for @costCoins.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost: {cost} Coins'**
+  String costCoins(Object cost);
+
+  /// No description provided for @premiumActivated.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Activated for 7 days!'**
+  String get premiumActivated;
+
+  /// No description provided for @premiumActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Active'**
+  String get premiumActive;
+
+  /// No description provided for @expires.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires:'**
+  String get expires;
+
+  /// No description provided for @temporaryAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Temporary Access'**
+  String get temporaryAccess;
+
+  /// No description provided for @journalExpression.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal & Expression'**
+  String get journalExpression;
+
+  /// No description provided for @artisticDesigns.
+  ///
+  /// In en, this message translates to:
+  /// **'Artistic Designs'**
+  String get artisticDesigns;
+
+  /// No description provided for @artisticDesignsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock 10+ unique journal card themes'**
+  String get artisticDesignsDesc;
+
+  /// No description provided for @premiumLayouts.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Layouts'**
+  String get premiumLayouts;
+
+  /// No description provided for @premiumLayoutsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Exclusive ways to view your memories'**
+  String get premiumLayoutsDesc;
+
+  /// No description provided for @calendarTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar & Tools'**
+  String get calendarTools;
+
+  /// No description provided for @fullCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Calendar'**
+  String get fullCalendar;
+
+  /// No description provided for @fullCalendarDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete event management system'**
+  String get fullCalendarDesc;
+
+  /// No description provided for @clipboardAutoSaveDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Background clipboard history capture'**
+  String get clipboardAutoSaveDesc;
+
+  /// No description provided for @proWidgets.
+  ///
+  /// In en, this message translates to:
+  /// **'Pro Widgets'**
+  String get proWidgets;
+
+  /// No description provided for @proWidgetsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'All features available on your home screen'**
+  String get proWidgetsDesc;
+
+  /// No description provided for @dataExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Data & Export'**
+  String get dataExport;
+
+  /// No description provided for @advancedBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Backup'**
+  String get advancedBackup;
+
+  /// No description provided for @advancedBackupDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure import/export of all data'**
+  String get advancedBackupDesc;
+
+  /// No description provided for @pdfExport.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF Export'**
+  String get pdfExport;
+
+  /// No description provided for @pdfExportDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Export notes & journals to PDF'**
+  String get pdfExportDesc;
+
+  /// No description provided for @printReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Print Ready'**
+  String get printReady;
+
+  /// No description provided for @printReadyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct printing support'**
+  String get printReadyDesc;
+
+  /// No description provided for @richTextEditor.
+  ///
+  /// In en, this message translates to:
+  /// **'Rich Text Editor'**
+  String get richTextEditor;
+
+  /// No description provided for @advancedSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Search'**
+  String get advancedSearch;
+
+  /// No description provided for @advancedSearchDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Search & Replace within your text'**
+  String get advancedSearchDesc;
+
+  /// No description provided for @richMedia.
+  ///
+  /// In en, this message translates to:
+  /// **'Rich Media'**
+  String get richMedia;
+
+  /// No description provided for @richMediaDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Insert Images, Videos, and Links'**
+  String get richMediaDesc;
+
+  /// No description provided for @editorStyling.
+  ///
+  /// In en, this message translates to:
+  /// **'Editor Styling'**
+  String get editorStyling;
+
+  /// No description provided for @editorStylingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom text and editor backgrounds'**
+  String get editorStylingDesc;
+
+  /// No description provided for @balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get balance;
+
+  /// No description provided for @loadingAd.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading Ad...'**
+  String get loadingAd;
+
+  /// No description provided for @watchAd.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch Ad (+{amount})'**
+  String watchAd(Object amount);
+
+  /// No description provided for @loadAd.
+  ///
+  /// In en, this message translates to:
+  /// **'Load Ad'**
+  String get loadAd;
+
+  /// No description provided for @backupDataDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Save a JSON file of your data'**
+  String get backupDataDesc;
+
+  /// No description provided for @importDataDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge a backup file into CopyClip'**
+  String get importDataDesc;
+
+  /// No description provided for @notificationPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification permission denied.'**
+  String get notificationPermissionDenied;
+
+  /// No description provided for @typeNewTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a new task...'**
+  String get typeNewTask;
+
+  /// No description provided for @addTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a task'**
+  String get addTask;
+
+  /// No description provided for @completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completed;
+
+  /// No description provided for @greatJob.
+  ///
+  /// In en, this message translates to:
+  /// **'Great job!'**
+  String get greatJob;
+
+  /// No description provided for @youEarnedXPNextTask.
+  ///
+  /// In en, this message translates to:
+  /// **'You earned {amount} XP! Next task: {date}'**
+  String youEarnedXPNextTask(Object amount, Object date);
+
+  /// No description provided for @taskCompletedXP.
+  ///
+  /// In en, this message translates to:
+  /// **'Task completed! +{amount} XP'**
+  String taskCompletedXP(Object amount);
+
+  /// No description provided for @moveTasksToRecycleBin.
+  ///
+  /// In en, this message translates to:
+  /// **'Move all active tasks to Recycle Bin?'**
+  String get moveTasksToRecycleBin;
+
+  /// No description provided for @deleteAllPosts.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete All Posts'**
+  String get deleteAllPosts;
+
+  /// No description provided for @deleteAllPostsConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete ALL social posts? This cannot be undone.'**
+  String get deleteAllPostsConfirmation;
+
+  /// No description provided for @allPosts.
+  ///
+  /// In en, this message translates to:
+  /// **'All Posts'**
+  String get allPosts;
+
+  /// No description provided for @favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favorites;
+
+  /// No description provided for @drafts.
+  ///
+  /// In en, this message translates to:
+  /// **'Drafts'**
+  String get drafts;
+
+  /// No description provided for @noFavoritesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorites yet'**
+  String get noFavoritesYet;
+
+  /// No description provided for @noDraftsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No drafts yet'**
+  String get noDraftsYet;
+
+  /// No description provided for @startSocialJourney.
+  ///
+  /// In en, this message translates to:
+  /// **'Start your social journey!'**
+  String get startSocialJourney;
+
+  /// No description provided for @draft.
+  ///
+  /// In en, this message translates to:
+  /// **'DRAFT'**
+  String get draft;
+
+  /// No description provided for @attachmentCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} attachment{count, plural, =1{} other{s}}'**
+  String attachmentCount(num count);
+
+  /// No description provided for @pleaseAddContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add some content or media to share'**
+  String get pleaseAddContent;
+
+  /// No description provided for @fileNotFoundError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: File not found at {path}'**
+  String fileNotFoundError(Object path);
+
+  /// No description provided for @checkFacebookApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Facebook app'**
+  String get checkFacebookApp;
+
+  /// No description provided for @systemShare.
+  ///
+  /// In en, this message translates to:
+  /// **'System Share'**
+  String get systemShare;
+
+  /// No description provided for @socialPost.
+  ///
+  /// In en, this message translates to:
+  /// **'Social Post'**
+  String get socialPost;
+
+  /// No description provided for @favorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite'**
+  String get favorite;
+
+  /// No description provided for @saveDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Draft'**
+  String get saveDraft;
+
+  /// No description provided for @entryCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry copied'**
+  String get entryCopied;
+
+  /// No description provided for @moveEntriesToRecycleBin.
+  ///
+  /// In en, this message translates to:
+  /// **'Move all active entries to Recycle Bin?'**
+  String get moveEntriesToRecycleBin;
+
+  /// No description provided for @startWritingStory.
+  ///
+  /// In en, this message translates to:
+  /// **'Start writing your story'**
+  String get startWritingStory;
+
+  /// No description provided for @recordMemories.
+  ///
+  /// In en, this message translates to:
+  /// **'Record your daily memories and feelings.'**
+  String get recordMemories;
+
+  /// No description provided for @writeJournal.
+  ///
+  /// In en, this message translates to:
+  /// **'Write Journal'**
+  String get writeJournal;
+
+  /// No description provided for @myMemories.
+  ///
+  /// In en, this message translates to:
+  /// **'My Memories'**
+  String get myMemories;
+
+  /// No description provided for @sortJournal.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort Journal'**
+  String get sortJournal;
+
+  /// No description provided for @byMood.
+  ///
+  /// In en, this message translates to:
+  /// **'By Mood'**
+  String get byMood;
+
+  /// No description provided for @searchMemories.
+  ///
+  /// In en, this message translates to:
+  /// **'Search memories...'**
+  String get searchMemories;
+
+  /// No description provided for @selectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Select All'**
+  String get selectAll;
+
+  /// No description provided for @deleteSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Selected'**
+  String get deleteSelected;
 }
 
 class _AppLocalizationsDelegate

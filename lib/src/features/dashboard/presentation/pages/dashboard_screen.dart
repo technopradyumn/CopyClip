@@ -21,6 +21,7 @@ import '../../../../core/theme/bloc/theme_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../core/widgets/ad_widget/banner_ad_widget.dart';
 import '../../../notes/data/note_model.dart';
 import '../../../todos/data/todo_model.dart';
@@ -100,7 +101,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   int _onboardingStep = 0;
   final PageController _onboardingController = PageController();
 
-  final Map<String, FeatureItem> _features = {
+  late Map<String, FeatureItem> _features; /*
     'notes': FeatureItem(
       'notes',
       'Notes',
@@ -165,9 +166,9 @@ class _DashboardScreenState extends State<DashboardScreen>
       AppRouter.socialPost,
       'Create engaging social media content',
     ),
-  };
+  */
 
-  late final List<OnboardingContent> _onboardingData;
+  late List<OnboardingContent> _onboardingData;
 
   // State for View Mode
   bool _isGridView = false;
@@ -179,7 +180,136 @@ class _DashboardScreenState extends State<DashboardScreen>
   void initState() {
     super.initState();
     _startMascotMoodCycle();
-    _initData();
+    _initHive();
+    _adService.loadAd();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initLocalizedData();
+  }
+
+  void _initLocalizedData() {
+    final l10n = AppLocalizations.of(context)!;
+
+    _features = {
+      'notes': FeatureItem(
+        'notes',
+        l10n.notes,
+        CupertinoIcons.doc_text,
+        FeatureColors.notes,
+        AppRouter.notes,
+        l10n.featuresNotesDesc,
+      ),
+      'todos': FeatureItem(
+        'todos',
+        l10n.todos,
+        CupertinoIcons.checkmark_circle,
+        FeatureColors.todos,
+        AppRouter.todos,
+        l10n.featuresTodosDesc,
+      ),
+      'expenses': FeatureItem(
+        'expenses',
+        l10n.expenses,
+        CupertinoIcons.money_dollar,
+        FeatureColors.expenses,
+        AppRouter.expenses,
+        l10n.featuresExpensesDesc,
+      ),
+      'journal': FeatureItem(
+        'journal',
+        l10n.journal,
+        CupertinoIcons.book,
+        FeatureColors.journal,
+        AppRouter.journal,
+        l10n.featuresJournalDesc,
+      ),
+      'calendar': FeatureItem(
+        'calendar',
+        l10n.calendar,
+        CupertinoIcons.calendar,
+        FeatureColors.calendar,
+        AppRouter.calendar,
+        l10n.featuresCalendarDesc,
+      ),
+      'clipboard': FeatureItem(
+        'clipboard',
+        l10n.clipboard,
+        CupertinoIcons.doc_on_clipboard,
+        FeatureColors.clipboard,
+        AppRouter.clipboard,
+        l10n.featuresClipboardDesc,
+      ),
+      'canvas': FeatureItem(
+        'canvas',
+        l10n.canvas,
+        CupertinoIcons.scribble,
+        FeatureColors.canvas,
+        AppRouter.canvas,
+        l10n.featuresCanvasDesc,
+      ),
+      'social_post': FeatureItem(
+        'social_post',
+        l10n.featuresSocialPost,
+        CupertinoIcons.share_up,
+        FeatureColors.socialPost,
+        AppRouter.socialPost,
+        l10n.featuresSocialPostDesc,
+      ),
+    };
+
+    _onboardingData = [
+      OnboardingContent(
+        title: l10n.welcomeTitle,
+        description: l10n.welcomeDescription,
+        icon: CupertinoIcons.square_grid_2x2,
+        color: const Color(0xFF6C63FF),
+      ),
+      OnboardingContent(
+        title: l10n.onboardingNotesTitle,
+        description: l10n.onboardingNotesDesc,
+        icon: CupertinoIcons.doc_text,
+        color: FeatureColors.notes,
+      ),
+      OnboardingContent(
+        title: l10n.onboardingTodosTitle,
+        description: l10n.onboardingTodosDesc,
+        icon: CupertinoIcons.checkmark_circle,
+        color: FeatureColors.todos,
+      ),
+      OnboardingContent(
+        title: l10n.onboardingExpensesTitle,
+        description: l10n.onboardingExpensesDesc,
+        icon: CupertinoIcons.money_dollar,
+        color: FeatureColors.expenses,
+      ),
+      OnboardingContent(
+        title: l10n.onboardingJournalTitle,
+        description: l10n.onboardingJournalDesc,
+        icon: CupertinoIcons.book,
+        color: FeatureColors.journal,
+      ),
+      OnboardingContent(
+        title: l10n.onboardingCalendarTitle,
+        description: l10n.onboardingCalendarDesc,
+        icon: CupertinoIcons.calendar,
+        color: FeatureColors.calendar,
+      ),
+      OnboardingContent(
+        title: l10n.onboardingClipboardTitle,
+        description: l10n.onboardingClipboardDesc,
+        icon: CupertinoIcons.doc_on_clipboard,
+        color: FeatureColors.clipboard,
+      ),
+      OnboardingContent(
+        title: l10n.onboardingCanvasTitle,
+        description: l10n.onboardingCanvasDesc,
+        icon: CupertinoIcons.scribble,
+        color: FeatureColors.canvas,
+      ),
+    ];
   }
 
   void _startMascotMoodCycle() {
@@ -212,76 +342,8 @@ class _DashboardScreenState extends State<DashboardScreen>
     super.dispose();
   }
 
-  void _initData() {
-    WidgetsBinding.instance.addObserver(this);
-
-    _settingsAnimationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-
-    _onboardingData = [
-      OnboardingContent(
-        title: 'Welcome to CopyClip',
-        description:
-            'Your ultimate productivity companion. Let\'s get you set up with powerful tools to manage your day.',
-        icon: CupertinoIcons.square_grid_2x2,
-        color: const Color(0xFF6C63FF),
-      ),
-      OnboardingContent(
-        title: 'Smart Notes',
-        description:
-            'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.',
-        icon: CupertinoIcons.doc_text,
-        color: FeatureColors.notes,
-      ),
-      OnboardingContent(
-        title: 'Task Management',
-        description:
-            'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.',
-        icon: CupertinoIcons.checkmark_circle,
-        color: FeatureColors.todos,
-      ),
-      OnboardingContent(
-        title: 'Expense Tracking',
-        description:
-            'Take control of your finances. Track income and expenses easily to understand your spending habits.',
-        icon: CupertinoIcons.money_dollar,
-        color: FeatureColors.expenses,
-      ),
-      OnboardingContent(
-        title: 'Personal Journal',
-        description:
-            'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.',
-        icon: CupertinoIcons.book,
-        color: FeatureColors.journal,
-      ),
-      OnboardingContent(
-        title: 'Calendar & Events',
-        description:
-            'Never miss a moment. Organize your schedule and keep track of important upcoming events.',
-        icon: CupertinoIcons.calendar,
-        color: FeatureColors.calendar,
-      ),
-      OnboardingContent(
-        title: 'Clipboard Manager',
-        description:
-            'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.',
-        icon: CupertinoIcons.doc_on_clipboard,
-        color: FeatureColors.clipboard,
-      ),
-      OnboardingContent(
-        title: 'Creative Canvas',
-        description:
-            'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.',
-        icon: CupertinoIcons.scribble,
-        color: FeatureColors.canvas,
-      ),
-    ];
-
-    _initHive();
-    _adService.loadAd();
-  }
+  // _onboardingData initialization moved to didChangeDependencies
+  // _adService.loadAd(); // Moved to initState
 
   Future<void> _initHive() async {
     if (!Hive.isBoxOpen('settings')) await Hive.openBox('settings');
@@ -418,9 +480,10 @@ class _DashboardScreenState extends State<DashboardScreen>
               e.date.month == now.month,
         )
         .toList();
-    if (thisMonth.isEmpty) return 'No transactions this month';
+    if (thisMonth.isEmpty)
+      return AppLocalizations.of(context)!.noTransactionsMonth;
     final count = thisMonth.length;
-    return '$count transaction${count > 1 ? 's' : ''} this month';
+    return AppLocalizations.of(context)!.transactionsThisMonth(count);
   }
 
   void _completeOnboarding() {
@@ -430,7 +493,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   Widget _buildTopHeader(ThemeData theme) {
     return SeamlessHeader(
-      title: "Dashboard",
+      title: AppLocalizations.of(context)!.clipboard,
       subtitle: "Overview",
       showBackButton: false,
       actions: [
@@ -505,7 +568,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 const MascotCharacter(size: 40, state: MascotState.happy),
                 const SizedBox(width: 12),
                 Text(
-                  "Choose Your Aura",
+                  AppLocalizations.of(context)!.chooseYourAura,
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -514,7 +577,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             ),
             const SizedBox(height: 8),
             Text(
-              "Express yourself with a new theme color!",
+              AppLocalizations.of(context)!.expressYourselfTheme,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
               ),
@@ -611,7 +674,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Level ${model.level}',
+                          '${AppLocalizations.of(context)!.level} ${model.level}',
                           style: theme.textTheme.displaySmall?.copyWith(
                             fontSize: 20,
                             color: theme.colorScheme.primary,
@@ -632,7 +695,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${model.xp} / ${model.xpToNextLevel} XP to Level ${model.level + 1}',
+                          '${model.xp} / ${model.xpToNextLevel} ${AppLocalizations.of(context)!.xpToNextLevel} ${model.level + 1}',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurface.withOpacity(0.6),
                           ),
@@ -705,10 +768,10 @@ class _DashboardScreenState extends State<DashboardScreen>
         preview = _getExpensesSummary();
         break;
       case 'calendar':
-        preview = 'Check upcoming events';
+        preview = AppLocalizations.of(context)!.checkUpcomingEvents;
         break;
       case 'canvas':
-        preview = 'Start a new sketch';
+        preview = AppLocalizations.of(context)!.startNewSketch;
         break;
     }
 

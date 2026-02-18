@@ -9,6 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:reorderable_grid_view/reorderable_grid_view.dart';
 import 'package:share_plus/share_plus.dart';
+import '../../../../l10n/app_localizations.dart';
 
 // Core Widgets
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
@@ -205,8 +206,8 @@ class _JournalScreenState extends State<JournalScreen> {
   void _copyEntry(JournalEntry entry) {
     Clipboard.setData(ClipboardData(text: _formatJournalForExport(entry)));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Entry copied"),
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.entryCopied),
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -221,9 +222,9 @@ class _JournalScreenState extends State<JournalScreen> {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Move to Bin?",
-        content: "You can restore this later.",
-        confirmText: "Move",
+        title: AppLocalizations.of(context)!.moveToBinQuestion,
+        content: AppLocalizations.of(context)!.restoreNoteLater,
+        confirmText: AppLocalizations.of(context)!.move,
         isDestructive: true,
         onConfirm: () {
           Navigator.pop(ctx);
@@ -255,9 +256,9 @@ class _JournalScreenState extends State<JournalScreen> {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete All?",
-        content: "Move all active entries to Recycle Bin?",
-        confirmText: "Delete All",
+        title: AppLocalizations.of(context)!.deleteAllQuestion,
+        content: AppLocalizations.of(context)!.moveEntriesToRecycleBin,
+        confirmText: AppLocalizations.of(context)!.deleteAll,
         isDestructive: true,
         onConfirm: () {
           final now = DateTime.now();
@@ -405,7 +406,7 @@ class _JournalScreenState extends State<JournalScreen> {
                     controller: _searchController,
                     style: theme.textTheme.bodyMedium,
                     decoration: InputDecoration(
-                      hintText: 'Search memories...',
+                      hintText: AppLocalizations.of(context)!.searchMemories,
                       hintStyle: theme.textTheme.bodyMedium?.copyWith(
                         color: onSurfaceColor.withValues(alpha: 0.5),
                       ),
@@ -439,11 +440,16 @@ class _JournalScreenState extends State<JournalScreen> {
                     if (entries.isEmpty) {
                       return Center(
                         child: EmptyStateWidget(
-                          message: "Start writing your story",
-                          subMessage:
-                              "Record your daily memories and feelings.",
+                          message: AppLocalizations.of(
+                            context,
+                          )!.startWritingStory,
+                          subMessage: AppLocalizations.of(
+                            context,
+                          )!.recordMemories,
                           onAction: () => _openEditor(null),
-                          actionLabel: "Write Journal",
+                          actionLabel: AppLocalizations.of(
+                            context,
+                          )!.writeJournal,
                         ),
                       );
                     }
@@ -508,7 +514,8 @@ class _JournalScreenState extends State<JournalScreen> {
 
     if (_isSelectionMode) {
       return SeamlessHeader(
-        title: '${_selectedIds.length} Selected',
+        title:
+            '${_selectedIds.length} ${AppLocalizations.of(context)!.selected}',
         heroTagPrefix: 'journal',
         showBackButton: true,
         onBackTap: () => setState(() {
@@ -529,8 +536,8 @@ class _JournalScreenState extends State<JournalScreen> {
     }
 
     return SeamlessHeader(
-      title: "Journal",
-      subtitle: "My Memories",
+      title: AppLocalizations.of(context)!.journal,
+      subtitle: AppLocalizations.of(context)!.myMemories,
       icon: CupertinoIcons.book,
       iconColor: Colors.blueAccent,
       heroTagPrefix: 'journal',
@@ -545,7 +552,7 @@ class _JournalScreenState extends State<JournalScreen> {
         // SORT MENU
         PopupMenuButton<JournalSortOption>(
           icon: Icon(CupertinoIcons.slider_horizontal_3, color: onSurfaceColor),
-          tooltip: 'Sort Journal',
+          tooltip: AppLocalizations.of(context)!.sortJournal,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -570,7 +577,7 @@ class _JournalScreenState extends State<JournalScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Custom Order",
+                        AppLocalizations.of(context)!.customOrder,
                         style: TextStyle(
                           color: _currentSort == JournalSortOption.custom
                               ? FeatureColors.journal
@@ -596,7 +603,7 @@ class _JournalScreenState extends State<JournalScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Newest First",
+                        AppLocalizations.of(context)!.newestFirst,
                         style: TextStyle(
                           color: _currentSort == JournalSortOption.dateNewest
                               ? FeatureColors.journal
@@ -623,7 +630,7 @@ class _JournalScreenState extends State<JournalScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Oldest First",
+                        AppLocalizations.of(context)!.oldestFirst,
                         style: TextStyle(
                           color: _currentSort == JournalSortOption.dateOldest
                               ? FeatureColors.journal
@@ -650,7 +657,7 @@ class _JournalScreenState extends State<JournalScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "By Mood",
+                        AppLocalizations.of(context)!.byMood,
                         style: TextStyle(
                           color: _currentSort == JournalSortOption.mood
                               ? FeatureColors.journal

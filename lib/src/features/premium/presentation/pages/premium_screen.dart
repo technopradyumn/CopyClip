@@ -39,10 +39,10 @@ class _PremiumScreenState extends State<PremiumScreen> {
           body: Column(
             children: [
               SeamlessHeader(
-                title: "Premium Access",
+                title: AppLocalizations.of(context)!.premiumAccess,
                 subtitle: state.isPremium
-                    ? "Premium Active until ${state.premiumExpiryDate != null ? DateFormat.yMMMd().format(state.premiumExpiryDate!) : '∞'}"
-                    : "Unlock All Features",
+                    ? "${AppLocalizations.of(context)!.premiumActiveUntil} ${state.premiumExpiryDate != null ? DateFormat.yMMMd().format(state.premiumExpiryDate!) : '∞'}"
+                    : AppLocalizations.of(context)!.unlockAllFeatures,
                 icon: Icons.star,
                 iconColor: Colors.amber,
                 showBackButton: true,
@@ -61,9 +61,10 @@ class _PremiumScreenState extends State<PremiumScreen> {
                       // 2. Buy Premium Action
                       if (!state.isPremium)
                         _ActionGlassCard(
-                          title: "Buy Premium (7 Days)",
-                          subtitle:
-                              "Cost: ${PremiumConstants.premiumCost} Coins",
+                          title: AppLocalizations.of(context)!.buyPremium,
+                          subtitle: AppLocalizations.of(
+                            context,
+                          )!.costCoins(PremiumConstants.premiumCost),
                           icon: Icons.diamond_outlined,
                           color: Colors.purpleAccent,
                           isDisabled:
@@ -72,17 +73,23 @@ class _PremiumScreenState extends State<PremiumScreen> {
                             if (state.coins >= PremiumConstants.premiumCost) {
                               context.read<PremiumBloc>().add(BuyPremium());
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   content: Text(
-                                    "Premium Activated for 7 days!",
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.premiumActivated,
                                   ),
                                   backgroundColor: Colors.green,
                                 ),
                               );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Not enough coins!"),
+                                SnackBar(
+                                  content: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.notEnoughCoins,
+                                  ),
                                   backgroundColor: Colors.red,
                                 ),
                               );
@@ -104,7 +111,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                "Premium Active",
+                                AppLocalizations.of(context)!.premiumActive,
                                 style: theme.textTheme.titleLarge?.copyWith(
                                   color: Colors.greenAccent,
                                   fontWeight: FontWeight.bold,
@@ -113,8 +120,10 @@ class _PremiumScreenState extends State<PremiumScreen> {
                               const SizedBox(height: 4),
                               Text(
                                 state.premiumExpiryDate != null
-                                    ? "Expires: ${DateFormat.yMMMd().format(state.premiumExpiryDate!)}"
-                                    : "Temporary Access",
+                                    ? "${AppLocalizations.of(context)!.expires} ${DateFormat.yMMMd().format(state.premiumExpiryDate!)}"
+                                    : AppLocalizations.of(
+                                        context,
+                                      )!.temporaryAccess,
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: theme.colorScheme.onSurface.withValues(
                                     alpha: 0.7,
@@ -128,74 +137,103 @@ class _PremiumScreenState extends State<PremiumScreen> {
                       const SizedBox(height: 32),
 
                       // 3. Categorized Features
-                      const _SectionHeader(title: "Journal & Expression"),
-                      const _PremiumFeatureTile(
+                      _SectionHeader(
+                        title: AppLocalizations.of(context)!.journalExpression,
+                      ),
+                      _PremiumFeatureTile(
                         icon: Icons.palette_outlined,
-                        title: "Artistic Designs",
-                        description: "Unlock 10+ unique journal card themes",
+                        title: AppLocalizations.of(context)!.artisticDesigns,
+                        description: AppLocalizations.of(
+                          context,
+                        )!.artisticDesignsDesc,
                       ),
-                      const _PremiumFeatureTile(
+                      _PremiumFeatureTile(
                         icon: Icons.auto_awesome,
-                        title: "Premium Layouts",
-                        description: "Exclusive ways to view your memories",
+                        title: AppLocalizations.of(context)!.premiumLayouts,
+                        description: AppLocalizations.of(
+                          context,
+                        )!.premiumLayoutsDesc,
                       ),
 
                       const SizedBox(height: 24),
 
-                      const _SectionHeader(title: "Calendar & Tools"),
-                      const _PremiumFeatureTile(
+                      _SectionHeader(
+                        title: AppLocalizations.of(context)!.calendarTools,
+                      ),
+                      _PremiumFeatureTile(
                         icon: Icons.calendar_month,
-                        title: "Full Calendar",
-                        description: "Complete event management system",
+                        title: AppLocalizations.of(context)!.fullCalendar,
+                        description: AppLocalizations.of(
+                          context,
+                        )!.fullCalendarDesc,
                       ),
-                      const _PremiumFeatureTile(
+                      _PremiumFeatureTile(
                         icon: Icons.copy_all,
-                        title: "Clipboard Auto-save",
-                        description: "Background clipboard history capture",
+                        title: AppLocalizations.of(context)!.autoSaveClipboard,
+                        description: AppLocalizations.of(
+                          context,
+                        )!.clipboardAutoSaveDesc,
                       ),
-                      const _PremiumFeatureTile(
+                      _PremiumFeatureTile(
                         icon: Icons.widgets_outlined,
-                        title: "Pro Widgets",
-                        description:
-                            "All features available on your home screen",
+                        title: AppLocalizations.of(context)!.proWidgets,
+                        description: AppLocalizations.of(
+                          context,
+                        )!.proWidgetsDesc,
                       ),
 
                       const SizedBox(height: 24),
 
-                      const _SectionHeader(title: "Data & Export"),
-                      const _PremiumFeatureTile(
+                      _SectionHeader(
+                        title: AppLocalizations.of(context)!.dataExport,
+                      ),
+                      _PremiumFeatureTile(
                         icon: Icons.cloud_done_outlined,
-                        title: "Advanced Backup",
-                        description: "Secure import/export of all data",
+                        title: AppLocalizations.of(context)!.advancedBackup,
+                        description: AppLocalizations.of(
+                          context,
+                        )!.advancedBackupDesc,
                       ),
-                      const _PremiumFeatureTile(
+                      _PremiumFeatureTile(
                         icon: Icons.picture_as_pdf_outlined,
-                        title: "PDF Export",
-                        description: "Export notes & journals to PDF",
+                        title: AppLocalizations.of(context)!.pdfExport,
+                        description: AppLocalizations.of(
+                          context,
+                        )!.pdfExportDesc,
                       ),
-                      const _PremiumFeatureTile(
+                      _PremiumFeatureTile(
                         icon: Icons.print_outlined,
-                        title: "Print Ready",
-                        description: "Direct printing support",
+                        title: AppLocalizations.of(context)!.printReady,
+                        description: AppLocalizations.of(
+                          context,
+                        )!.printReadyDesc,
                       ),
 
                       const SizedBox(height: 24),
 
-                      const _SectionHeader(title: "Rich Text Editor"),
-                      const _PremiumFeatureTile(
+                      _SectionHeader(
+                        title: AppLocalizations.of(context)!.richTextEditor,
+                      ),
+                      _PremiumFeatureTile(
                         icon: Icons.find_replace_outlined,
-                        title: "Advanced Search",
-                        description: "Search & Replace within your text",
+                        title: AppLocalizations.of(context)!.advancedSearch,
+                        description: AppLocalizations.of(
+                          context,
+                        )!.advancedSearchDesc,
                       ),
-                      const _PremiumFeatureTile(
+                      _PremiumFeatureTile(
                         icon: Icons.perm_media_outlined,
-                        title: "Rich Media",
-                        description: "Insert Images, Videos, and Links",
+                        title: AppLocalizations.of(context)!.richMedia,
+                        description: AppLocalizations.of(
+                          context,
+                        )!.richMediaDesc,
                       ),
-                      const _PremiumFeatureTile(
+                      _PremiumFeatureTile(
                         icon: Icons.format_paint_outlined,
-                        title: "Editor Styling",
-                        description: "Custom text and editor backgrounds",
+                        title: AppLocalizations.of(context)!.editorStyling,
+                        description: AppLocalizations.of(
+                          context,
+                        )!.editorStylingDesc,
                       ),
 
                       const SizedBox(height: 32),
@@ -234,7 +272,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Balance",
+                    AppLocalizations.of(context)!.balance,
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.9),
                       fontSize: 14,
@@ -322,10 +360,12 @@ class _PremiumScreenState extends State<PremiumScreen> {
                   : const Icon(Icons.play_circle_fill),
               label: Text(
                 isLoading
-                    ? "Loading Ad..."
+                    ? AppLocalizations.of(context)!.loadingAd
                     : (isReady
-                          ? "Watch Ad (+${PremiumConstants.rewardCoinAmount})"
-                          : "Load Ad"),
+                          ? AppLocalizations.of(
+                              context,
+                            )!.watchAd(PremiumConstants.rewardCoinAmount)
+                          : AppLocalizations.of(context)!.loadAd),
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),

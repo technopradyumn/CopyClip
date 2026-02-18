@@ -54,10 +54,8 @@ class PremiumBloc extends Bloc<PremiumEvent, PremiumState> {
       ),
     );
 
-    // Proactively load ad if not premium
-    if (!state.isPremium) {
-      add(LoadRewardedAd());
-    }
+    // Proactively load ad
+    add(LoadRewardedAd());
   }
 
   Future<void> _onAddCoins(AddCoins event, Emitter<PremiumState> emit) async {
@@ -112,7 +110,7 @@ class PremiumBloc extends Bloc<PremiumEvent, PremiumState> {
     LoadRewardedAd event,
     Emitter<PremiumState> emit,
   ) async {
-    if (state.isPremium || state.isAdLoading || state.isAdReady) return;
+    if (state.isAdLoading || state.isAdReady) return;
 
     final unitId = _rewardedAdUnitId;
     if (unitId.isEmpty) return;
@@ -156,7 +154,7 @@ class PremiumBloc extends Bloc<PremiumEvent, PremiumState> {
         emit(state.copyWith(isAdLoading: false, isAdReady: false));
         // Retry with a delay if ad failed to load (to be more aggressive)
         Future.delayed(const Duration(seconds: 5), () {
-          if (!isClosed && !state.isPremium && !state.isAdReady) {
+          if (!isClosed && !state.isAdReady) {
             add(LoadRewardedAd());
           }
         });
@@ -194,7 +192,7 @@ class PremiumBloc extends Bloc<PremiumEvent, PremiumState> {
       emit(state.copyWith(isAdLoading: false, isAdReady: false));
       // Final retry with delay
       Future.delayed(const Duration(seconds: 10), () {
-        if (!isClosed && !state.isPremium && !state.isAdReady) {
+        if (!isClosed && !state.isAdReady) {
           add(LoadRewardedAd());
         }
       });
@@ -205,8 +203,6 @@ class PremiumBloc extends Bloc<PremiumEvent, PremiumState> {
     ShowRewardedAd event,
     Emitter<PremiumState> emit,
   ) async {
-    if (state.isPremium) return;
-
     if (_ad == null) {
       // Proactively try to load and show
       if (!state.isAdLoading) {

@@ -8,6 +8,7 @@ class MicroAnimation extends StatelessWidget {
   final AnimationType type;
   final Duration delay;
   final Duration duration;
+  final bool animate;
 
   const MicroAnimation({
     super.key,
@@ -15,10 +16,12 @@ class MicroAnimation extends StatelessWidget {
     this.type = AnimationType.pop,
     this.delay = Duration.zero,
     this.duration = const Duration(milliseconds: 400),
+    this.animate = true,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (!animate) return child;
     var animation = child.animate(delay: delay);
 
     switch (type) {

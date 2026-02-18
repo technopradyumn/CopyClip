@@ -388,4 +388,384 @@ class AppLocalizationsLv extends AppLocalizations {
 
   @override
   String get settingsSubtitle => 'Customize Your Experience';
+
+  @override
+  String get welcomeTitle => 'Welcome to CopyClip';
+
+  @override
+  String get welcomeDescription =>
+      'Your ultimate productivity companion. Let\'s get you set up with powerful tools to manage your day.';
+
+  @override
+  String get onboardingNotesTitle => 'Smart Notes';
+
+  @override
+  String get onboardingNotesDesc =>
+      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+
+  @override
+  String get onboardingTodosTitle => 'Task Management';
+
+  @override
+  String get onboardingTodosDesc =>
+      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+
+  @override
+  String get onboardingExpensesTitle => 'Expense Tracking';
+
+  @override
+  String get onboardingExpensesDesc =>
+      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+
+  @override
+  String get onboardingJournalTitle => 'Personal Journal';
+
+  @override
+  String get onboardingJournalDesc =>
+      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+
+  @override
+  String get onboardingCalendarTitle => 'Calendar & Events';
+
+  @override
+  String get onboardingCalendarDesc =>
+      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+
+  @override
+  String get onboardingClipboardTitle => 'Clipboard Manager';
+
+  @override
+  String get onboardingClipboardDesc =>
+      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+
+  @override
+  String get onboardingCanvasTitle => 'Creative Canvas';
+
+  @override
+  String get onboardingCanvasDesc =>
+      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+
+  @override
+  String get featuresNotesDesc => 'Create and manage your notes';
+
+  @override
+  String get featuresTodosDesc => 'Keep track of your tasks';
+
+  @override
+  String get featuresExpensesDesc => 'Monitor your expenses';
+
+  @override
+  String get featuresJournalDesc => 'Write down your thoughts';
+
+  @override
+  String get featuresCalendarDesc => 'Organize your schedule';
+
+  @override
+  String get featuresClipboardDesc => 'Access your clipboard history';
+
+  @override
+  String get featuresCanvasDesc => 'Draw and sketch freely';
+
+  @override
+  String get featuresSocialPost => 'Social Post';
+
+  @override
+  String get featuresSocialPostDesc => 'Create engaging social media content';
+
+  @override
+  String get chooseYourAura => 'Choose Your Aura';
+
+  @override
+  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+
+  @override
+  String get level => 'Level';
+
+  @override
+  String get xpToNextLevel => 'XP to Level';
+
+  @override
+  String get checkUpcomingEvents => 'Check upcoming events';
+
+  @override
+  String get startNewSketch => 'Start a new sketch';
+
+  @override
+  String get noTransactionsMonth => 'No transactions this month';
+
+  @override
+  String transactionsThisMonth(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 's',
+      one: '',
+    );
+    return '$count transaction$_temp0 this month';
+  }
+
+  @override
+  String get autoSaveClipboard => 'Auto-save Clipboard';
+
+  @override
+  String get autoSaveClipboardDesc => 'Automatically save copied items';
+
+  @override
+  String get permissionDeniedSettings =>
+      'Permission permanently denied. Please enable in Settings.';
+
+  @override
+  String get notificationsEnabled => 'Notifications enabled!';
+
+  @override
+  String get redirectingToSettings =>
+      'Redirecting to settings to disable notifications...';
+
+  @override
+  String get premiumAccess => 'Premium Access';
+
+  @override
+  String get premiumActiveUntil => 'Premium Active until';
+
+  @override
+  String get unlockAllFeatures => 'Unlock All Features';
+
+  @override
+  String get buyPremium => 'Buy Premium (7 Days)';
+
+  @override
+  String costCoins(Object cost) {
+    return 'Cost: $cost Coins';
+  }
+
+  @override
+  String get premiumActivated => 'Premium Activated for 7 days!';
+
+  @override
+  String get premiumActive => 'Premium Active';
+
+  @override
+  String get expires => 'Expires:';
+
+  @override
+  String get temporaryAccess => 'Temporary Access';
+
+  @override
+  String get journalExpression => 'Journal & Expression';
+
+  @override
+  String get artisticDesigns => 'Artistic Designs';
+
+  @override
+  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+
+  @override
+  String get premiumLayouts => 'Premium Layouts';
+
+  @override
+  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+
+  @override
+  String get calendarTools => 'Calendar & Tools';
+
+  @override
+  String get fullCalendar => 'Full Calendar';
+
+  @override
+  String get fullCalendarDesc => 'Complete event management system';
+
+  @override
+  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+
+  @override
+  String get proWidgets => 'Pro Widgets';
+
+  @override
+  String get proWidgetsDesc => 'All features available on your home screen';
+
+  @override
+  String get dataExport => 'Data & Export';
+
+  @override
+  String get advancedBackup => 'Advanced Backup';
+
+  @override
+  String get advancedBackupDesc => 'Secure import/export of all data';
+
+  @override
+  String get pdfExport => 'PDF Export';
+
+  @override
+  String get pdfExportDesc => 'Export notes & journals to PDF';
+
+  @override
+  String get printReady => 'Print Ready';
+
+  @override
+  String get printReadyDesc => 'Direct printing support';
+
+  @override
+  String get richTextEditor => 'Rich Text Editor';
+
+  @override
+  String get advancedSearch => 'Advanced Search';
+
+  @override
+  String get advancedSearchDesc => 'Search & Replace within your text';
+
+  @override
+  String get richMedia => 'Rich Media';
+
+  @override
+  String get richMediaDesc => 'Insert Images, Videos, and Links';
+
+  @override
+  String get editorStyling => 'Editor Styling';
+
+  @override
+  String get editorStylingDesc => 'Custom text and editor backgrounds';
+
+  @override
+  String get balance => 'Balance';
+
+  @override
+  String get loadingAd => 'Loading Ad...';
+
+  @override
+  String watchAd(Object amount) {
+    return 'Watch Ad (+$amount)';
+  }
+
+  @override
+  String get loadAd => 'Load Ad';
+
+  @override
+  String get backupDataDesc => 'Save a JSON file of your data';
+
+  @override
+  String get importDataDesc => 'Merge a backup file into CopyClip';
+
+  @override
+  String get notificationPermissionDenied => 'Notification permission denied.';
+
+  @override
+  String get typeNewTask => 'Type a new task...';
+
+  @override
+  String get addTask => 'Add a task';
+
+  @override
+  String get completed => 'Completed';
+
+  @override
+  String get greatJob => 'Great job!';
+
+  @override
+  String youEarnedXPNextTask(Object amount, Object date) {
+    return 'You earned $amount XP! Next task: $date';
+  }
+
+  @override
+  String taskCompletedXP(Object amount) {
+    return 'Task completed! +$amount XP';
+  }
+
+  @override
+  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+
+  @override
+  String get deleteAllPosts => 'Delete All Posts';
+
+  @override
+  String get deleteAllPostsConfirmation =>
+      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+
+  @override
+  String get allPosts => 'All Posts';
+
+  @override
+  String get favorites => 'Favorites';
+
+  @override
+  String get drafts => 'Drafts';
+
+  @override
+  String get noFavoritesYet => 'No favorites yet';
+
+  @override
+  String get noDraftsYet => 'No drafts yet';
+
+  @override
+  String get startSocialJourney => 'Start your social journey!';
+
+  @override
+  String get draft => 'DRAFT';
+
+  @override
+  String attachmentCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 's',
+      one: '',
+    );
+    return '$count attachment$_temp0';
+  }
+
+  @override
+  String get pleaseAddContent => 'Please add some content or media to share';
+
+  @override
+  String fileNotFoundError(Object path) {
+    return 'Error: File not found at $path';
+  }
+
+  @override
+  String get checkFacebookApp => 'Check Facebook app';
+
+  @override
+  String get systemShare => 'System Share';
+
+  @override
+  String get socialPost => 'Social Post';
+
+  @override
+  String get favorite => 'Favorite';
+
+  @override
+  String get saveDraft => 'Save Draft';
+
+  @override
+  String get entryCopied => 'Entry copied';
+
+  @override
+  String get moveEntriesToRecycleBin =>
+      'Move all active entries to Recycle Bin?';
+
+  @override
+  String get startWritingStory => 'Start writing your story';
+
+  @override
+  String get recordMemories => 'Record your daily memories and feelings.';
+
+  @override
+  String get writeJournal => 'Write Journal';
+
+  @override
+  String get myMemories => 'My Memories';
+
+  @override
+  String get sortJournal => 'Sort Journal';
+
+  @override
+  String get byMood => 'By Mood';
+
+  @override
+  String get searchMemories => 'Search memories...';
+
+  @override
+  String get selectAll => 'Select All';
+
+  @override
+  String get deleteSelected => 'Delete Selected';
 }
