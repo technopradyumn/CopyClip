@@ -63,8 +63,8 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
     return allDeleted;
   }
 
-  String _parsePlainContent(String source) {
-    if (source.isEmpty) return "No content";
+  String _parsePlainContent(BuildContext context, String source) {
+    if (source.isEmpty) return AppLocalizations.of(context)!.noContent;
     if (source.startsWith('[')) {
       try {
         final List<dynamic> delta = jsonDecode(source);
@@ -82,11 +82,12 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
     return source.trim().replaceAll('\n', ' ');
   }
 
-  Map<String, dynamic> _getItemDisplayData(dynamic item) {
+  Map<String, dynamic> _getItemDisplayData(BuildContext context, dynamic item) {
+    final l10n = AppLocalizations.of(context)!;
     if (item is Note) {
-      final cleanContent = _parsePlainContent(item.content);
+      final cleanContent = _parsePlainContent(context, item.content);
       return {
-        'title': item.title.isEmpty ? "Untitled Note" : item.title,
+        'title': item.title.isEmpty ? l10n.untitledNote : item.title,
         'subtitle': cleanContent.length > 40
             ? "${cleanContent.substring(0, 40)}..."
             : cleanContent,
@@ -96,7 +97,7 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
     } else if (item is Todo) {
       return {
         'title': item.task,
-        'subtitle': "Category: ${item.category}",
+        'subtitle': l10n.categoryLabel(item.category),
         'icon': CupertinoIcons.checkmark_circle,
         'color': Colors.greenAccent,
       };
@@ -108,9 +109,9 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
         'color': Colors.redAccent,
       };
     } else if (item is JournalEntry) {
-      final cleanContent = _parsePlainContent(item.content);
+      final cleanContent = _parsePlainContent(context, item.content);
       return {
-        'title': item.title.isEmpty ? "Daily Entry" : item.title,
+        'title': item.title.isEmpty ? l10n.dailyEntry : item.title,
         'subtitle': cleanContent.length > 40
             ? "${cleanContent.substring(0, 40)}..."
             : "Mood: ${item.mood}",
@@ -123,13 +124,13 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
         'title': cleanClip.length > 35
             ? "${cleanClip.substring(0, 35)}..."
             : cleanClip,
-        'subtitle': "Clipboard History",
+        'subtitle': l10n.clipboardHistory,
         'icon': CupertinoIcons.doc_on_doc,
         'color': Colors.purpleAccent,
       };
     }
     return {
-      'title': "Unknown",
+      'title': l10n.untitled,
       'subtitle': "",
       'icon': CupertinoIcons.question_circle,
       'color': Colors.grey,
@@ -155,8 +156,8 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
     await item.save();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Item restored"),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.itemRestored),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -167,9 +168,9 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete Permanently?",
-        content: "This action cannot be undone.",
-        confirmText: "Delete",
+        title: AppLocalizations.of(context)!.permanentlyDelete,
+        content: AppLocalizations.of(context)!.deletePermanentlyContent,
+        confirmText: AppLocalizations.of(context)!.delete,
         isDestructive: true,
         onConfirm: () async {
           await item.delete();
@@ -188,10 +189,11 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Empty Recycle Bin?",
-        content:
-            "All ${itemsToDelete.length} items will be permanently deleted.",
-        confirmText: "Empty Bin",
+        title: AppLocalizations.of(context)!.emptyRecycleBinTitle,
+        content: AppLocalizations.of(
+          context,
+        )!.emptyRecycleBinContent(itemsToDelete.length),
+        confirmText: AppLocalizations.of(context)!.emptyBin,
         isDestructive: true,
         onConfirm: () async {
           // Close dialog first to avoid UI freeze perception
@@ -246,8 +248,10 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
       body: Column(
         children: [
           SeamlessHeader(
-            title: "Recycle Bin",
-            subtitle: items.isNotEmpty ? "${items.length} items" : "Empty",
+            title: AppLocalizations.of(context)!.recycleBin,
+            subtitle: items.isNotEmpty
+                ? AppLocalizations.of(context)!.selectedCount(items.length)
+                : AppLocalizations.of(context)!.empty,
             icon: CupertinoIcons.trash,
             iconColor: Colors.redAccent,
             heroTagPrefix: 'recycle_bin',
@@ -273,13 +277,13 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
                   child: Row(
                     children: [
                       _filterChip(
-                        "Recent",
+                        AppLocalizations.of(context)!.recent,
                         _sortBy == 'date',
                         () => setState(() => _sortBy = 'date'),
                       ),
                       const SizedBox(width: 8),
                       _filterChip(
-                        "Category",
+                        AppLocalizations.of(context)!.category,
                         _sortBy == 'type',
                         () => setState(() => _sortBy = 'type'),
                       ),
@@ -290,8 +294,12 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
                   child: items.isEmpty
                       ? Center(
                           child: EmptyStateWidget(
-                            message: "Recycle Bin is empty",
-                            subMessage: "Deleted items will appear here.",
+                            message: AppLocalizations.of(
+                              context,
+                            )!.recycleBinEmpty,
+                            subMessage: AppLocalizations.of(
+                              context,
+                            )!.deletedItemsAppearHere,
                             assetPath: "assets/images/recycle_bin_empty.svg",
                           ),
                         )
@@ -336,26 +344,39 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
                                                 final item =
                                                     currentItems[index];
                                                 final data =
-                                                    _getItemDisplayData(item);
+                                                    _getItemDisplayData(
+                                                      context,
+                                                      item,
+                                                    );
                                                 final deletedAt =
                                                     (item as dynamic).deletedAt;
-                                                String timeLabel = 'Unknown';
+                                                String timeLabel =
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    )!.untitled;
                                                 if (deletedAt != null) {
                                                   final now = DateTime.now();
                                                   final diff = now.difference(
                                                     deletedAt,
                                                   );
+                                                  final l10n =
+                                                      AppLocalizations.of(
+                                                        context,
+                                                      )!;
                                                   if (diff.inMinutes < 1) {
-                                                    timeLabel = 'Just now';
+                                                    timeLabel = l10n.justNow;
                                                   } else if (diff.inHours < 1) {
-                                                    timeLabel =
-                                                        '${diff.inMinutes}m ago';
+                                                    timeLabel = l10n.minutesAgo(
+                                                      diff.inMinutes,
+                                                    );
                                                   } else if (diff.inDays < 1) {
-                                                    timeLabel =
-                                                        '${diff.inHours}h ago';
+                                                    timeLabel = l10n.hoursAgo(
+                                                      diff.inHours,
+                                                    );
                                                   } else {
-                                                    timeLabel =
-                                                        '${diff.inDays}d ago';
+                                                    timeLabel = l10n.daysAgo(
+                                                      diff.inDays,
+                                                    );
                                                   }
                                                 }
                                                 return Container(

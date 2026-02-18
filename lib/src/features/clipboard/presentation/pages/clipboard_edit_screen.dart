@@ -139,7 +139,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                 child: TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    'Done',
+                    AppLocalizations.of(context)!.done,
                     style: TextStyle(
                       color: primaryColor,
                       fontSize: 16,
@@ -200,8 +200,8 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => GlassDialog(
-          title: "Clip Theme",
-          confirmText: "Save",
+          title: AppLocalizations.of(context)!.clipTheme,
+          confirmText: AppLocalizations.of(context)!.save,
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -493,7 +493,9 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: const Text("Copied plain text"),
+                      content: Text(
+                        AppLocalizations.of(context)!.copiedPlainText,
+                      ),
                       behavior: SnackBarBehavior.floating,
                       backgroundColor: contrastColor,
                     ),

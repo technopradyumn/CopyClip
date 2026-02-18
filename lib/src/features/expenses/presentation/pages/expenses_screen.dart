@@ -472,10 +472,6 @@ class _ExpensesScreenState extends State<ExpensesScreen>
           )
         else
           PopupMenuButton<dynamic>(
-            icon: Icon(
-              CupertinoIcons.slider_horizontal_3,
-              color: onSurfaceColor,
-            ),
             tooltip: AppLocalizations.of(context)!.sortAndFilter,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -643,6 +639,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
     // Local state for the dialog
     String tempType = _typeFilter;
     String tempCategory = _categoryFilter;
+    final l10n = AppLocalizations.of(context)!;
 
     showDialog(
       context: context,
@@ -654,14 +651,14 @@ class _ExpensesScreenState extends State<ExpensesScreen>
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
-              title: const Text("Filter Expenses"),
+              title: Text(l10n.filterExpenses),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Transaction Type",
+                      l10n.transactionType,
                       style: theme.textTheme.titleSmall?.copyWith(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -670,42 +667,45 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                     const SizedBox(height: 12),
                     Wrap(
                       spacing: 10,
-                      children: ['All', 'Income', 'Expense']
-                          .map(
-                            (t) => ChoiceChip(
-                              label: Text(t),
-                              selected: tempType == t,
-                              onSelected: (selected) {
-                                if (selected) {
-                                  setDialogState(() => tempType = t);
-                                }
-                              },
-                              selectedColor: theme.colorScheme.primary,
-                              backgroundColor: theme
-                                  .colorScheme
-                                  .surfaceContainerHighest
-                                  .withValues(alpha: 0.5),
-                              labelStyle: TextStyle(
-                                color: tempType == t
-                                    ? theme.colorScheme.onPrimary
-                                    : theme.colorScheme.onSurface,
-                                fontWeight: tempType == t
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
-                              ),
-                              side: BorderSide.none,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AppConstants.cornerRadius,
-                                ),
-                              ),
+                      children: ['All', 'Income', 'Expense'].map((t) {
+                        String label = t;
+                        if (t == 'All') label = l10n.all;
+                        if (t == 'Income') label = l10n.income;
+                        if (t == 'Expense') label = l10n.expense;
+
+                        return ChoiceChip(
+                          label: Text(label),
+                          selected: tempType == t,
+                          onSelected: (selected) {
+                            if (selected) {
+                              setDialogState(() => tempType = t);
+                            }
+                          },
+                          selectedColor: theme.colorScheme.primary,
+                          backgroundColor: theme
+                              .colorScheme
+                              .surfaceContainerHighest
+                              .withValues(alpha: 0.5),
+                          labelStyle: TextStyle(
+                            color: tempType == t
+                                ? theme.colorScheme.onPrimary
+                                : theme.colorScheme.onSurface,
+                            fontWeight: tempType == t
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                          side: BorderSide.none,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppConstants.cornerRadius,
                             ),
-                          )
-                          .toList(),
+                          ),
+                        );
+                      }).toList(),
                     ),
                     const Divider(height: 32),
                     Text(
-                      "Categories",
+                      l10n.categories,
                       style: theme.textTheme.titleSmall?.copyWith(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -715,38 +715,37 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
-                      children: ['All', ...categories]
-                          .map(
-                            (c) => ChoiceChip(
-                              label: Text(c),
-                              selected: tempCategory == c,
-                              onSelected: (selected) {
-                                if (selected) {
-                                  setDialogState(() => tempCategory = c);
-                                }
-                              },
-                              selectedColor: theme.colorScheme.primary,
-                              backgroundColor: theme
-                                  .colorScheme
-                                  .surfaceContainerHighest
-                                  .withValues(alpha: 0.5),
-                              labelStyle: TextStyle(
-                                color: tempCategory == c
-                                    ? theme.colorScheme.onPrimary
-                                    : theme.colorScheme.onSurface,
-                                fontWeight: tempCategory == c
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
-                              ),
-                              side: BorderSide.none,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AppConstants.cornerRadius,
-                                ),
-                              ),
+                      children: ['All', ...categories].map((c) {
+                        String label = c == 'All' ? l10n.all : c;
+                        return ChoiceChip(
+                          label: Text(label),
+                          selected: tempCategory == c,
+                          onSelected: (selected) {
+                            if (selected) {
+                              setDialogState(() => tempCategory = c);
+                            }
+                          },
+                          selectedColor: theme.colorScheme.primary,
+                          backgroundColor: theme
+                              .colorScheme
+                              .surfaceContainerHighest
+                              .withValues(alpha: 0.5),
+                          labelStyle: TextStyle(
+                            color: tempCategory == c
+                                ? theme.colorScheme.onPrimary
+                                : theme.colorScheme.onSurface,
+                            fontWeight: tempCategory == c
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                          side: BorderSide.none,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppConstants.cornerRadius,
                             ),
-                          )
-                          .toList(),
+                          ),
+                        );
+                      }).toList(),
                     ),
                   ],
                 ),
@@ -760,11 +759,11 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                       tempCategory = 'All';
                     });
                   },
-                  child: const Text("Reset"),
+                  child: Text(l10n.reset),
                 ),
                 TextButton(
                   onPressed: () => Navigator.pop(ctx),
-                  child: const Text("Cancel"),
+                  child: Text(l10n.cancel),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -778,7 +777,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                     });
                     Navigator.pop(ctx);
                   },
-                  child: const Text("Apply"),
+                  child: Text(l10n.apply),
                 ),
               ],
             );
@@ -856,9 +855,21 @@ class _ExpensesScreenState extends State<ExpensesScreen>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: AnalysisPeriod.values.map((period) {
             final isSelected = _currentPeriod == period;
-            String label =
-                period.name.substring(0, 1).toUpperCase() +
-                period.name.substring(1);
+            String label = "";
+            switch (period) {
+              case AnalysisPeriod.daily:
+                label = AppLocalizations.of(context)!.daily;
+                break;
+              case AnalysisPeriod.weekly:
+                label = AppLocalizations.of(context)!.weekly;
+                break;
+              case AnalysisPeriod.monthly:
+                label = AppLocalizations.of(context)!.monthly;
+                break;
+              case AnalysisPeriod.yearly:
+                label = AppLocalizations.of(context)!.yearly;
+                break;
+            }
             return Expanded(
               child: GestureDetector(
                 onTap: () {
@@ -930,7 +941,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
         child: Column(
           children: [
             Text(
-              "Balance",
+              AppLocalizations.of(context)!.balance,
               style: theme.textTheme.titleMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.bold,
@@ -1055,12 +1066,12 @@ class _ExpensesScreenState extends State<ExpensesScreen>
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: Colors.transparent,
         tabs: [
-          const Tab(text: "Transactions"),
+          Tab(text: AppLocalizations.of(context)!.transactions),
           Tab(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text("Insights"),
+                Text(AppLocalizations.of(context)!.insights),
                 const SizedBox(width: 4),
                 BlocBuilder<PremiumBloc, PremiumState>(
                   builder: (context, state) {
@@ -1086,11 +1097,11 @@ class _ExpensesScreenState extends State<ExpensesScreen>
     if (expenses.isEmpty) {
       return Center(
         child: EmptyStateWidget(
-          message: "No expenses recorded",
-          subMessage: "Track your spending habits easily.",
+          message: AppLocalizations.of(context)!.noExpensesRecorded,
+          subMessage: AppLocalizations.of(context)!.trackSpendingHabits,
           assetPath: "assets/images/expenses_empty.svg",
           onAction: () => _openExpenseEditor(null),
-          actionLabel: "Add Expense",
+          actionLabel: AppLocalizations.of(context)!.addExpense,
         ),
       );
     }
@@ -1124,7 +1135,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
 
   Widget _buildAnalyticsTab(List<Expense> expenses) {
     if (expenses.isEmpty) {
-      return const Center(child: Text("No data for this period"));
+      return Center(child: Text(AppLocalizations.of(context)!.noDataForPeriod));
     }
 
     double totalIncome = 0;
@@ -1152,7 +1163,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
     if (totalExpense > totalIncome) healthScore = 20;
 
     String budgetTitle =
-        "${_currentPeriod.name[0].toUpperCase()}${_currentPeriod.name.substring(1)} Budget";
+        "${_currentPeriod.name[0].toUpperCase()}${_currentPeriod.name.substring(1)} ${AppLocalizations.of(context)!.budget}";
 
     // ✅ DYNAMIC LIMIT: User requested actual total income as the limit
     double budgetLimit = totalIncome;
@@ -1193,14 +1204,14 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Spent: $_selectedCurrency${totalExpense.toStringAsFixed(0)}",
+                            "${AppLocalizations.of(context)!.spent}: $_selectedCurrency${totalExpense.toStringAsFixed(0)}",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: theme.colorScheme.onSurface,
                             ),
                           ),
                           Text(
-                            "Limit: $_selectedCurrency${budgetLimit.toStringAsFixed(0)}",
+                            "${AppLocalizations.of(context)!.limit}: $_selectedCurrency${budgetLimit.toStringAsFixed(0)}",
                             style: TextStyle(
                               color: theme.colorScheme.onSurface.withValues(
                                 alpha: 0.6,
@@ -1229,8 +1240,10 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                       const SizedBox(height: 8),
                       Text(
                         budgetProgress >= 1.0
-                            ? "Over Budget!"
-                            : "${((1 - budgetProgress) * 100).toStringAsFixed(0)}% remaining",
+                            ? AppLocalizations.of(context)!.overBudget
+                            : AppLocalizations.of(context)!.remainingBudget(
+                                ((1 - budgetProgress) * 100).toStringAsFixed(0),
+                              ),
                         style: TextStyle(
                           color: budgetProgress >= 1.0
                               ? Colors.red
@@ -1255,20 +1268,20 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                     childAspectRatio: 1.5,
                     children: [
                       _buildStatCard(
-                        "Net Balance",
+                        AppLocalizations.of(context)!.netBalance,
                         netBalance,
                         Icons.account_balance_wallet,
                         Colors.blue,
                       ),
                       _buildStatCard(
-                        "Savings Rate",
+                        AppLocalizations.of(context)!.savingsRate,
                         savingsRate,
                         Icons.savings,
                         savingsRate > 0 ? Colors.green : Colors.orange,
                         isPercent: true,
                       ),
                       _buildStatCard(
-                        "Health Score",
+                        AppLocalizations.of(context)!.healthScore,
                         healthScore,
                         Icons.health_and_safety,
                         healthScore > 70 ? Colors.green : Colors.amber,
@@ -1279,20 +1292,18 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                           showDialog(
                             context: context,
                             builder: (ctx) => GlassDialog(
-                              title: "Health Score",
-                              content:
-                                  "This score is based on your Savings Rate.\n\n"
-                                  "• > 50% saved = Excellent (100)\n"
-                                  "• 0% saved = Average (50)\n"
-                                  "• Spending > Income = Poor (<50)",
-                              confirmText: "OK",
+                              title: AppLocalizations.of(context)!.healthScore,
+                              content: AppLocalizations.of(
+                                context,
+                              )!.healthScoreExplanation,
+                              confirmText: AppLocalizations.of(context)!.ok,
                               onConfirm: () => Navigator.pop(ctx),
                             ),
                           );
                         },
                       ),
                       _buildStatCard(
-                        "Transactions",
+                        AppLocalizations.of(context)!.transactions,
                         txCount.toDouble(),
                         Icons.receipt_long,
                         Colors.purpleAccent,
@@ -1843,10 +1854,11 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       int key;
       if (_currentPeriod == AnalysisPeriod.yearly) {
         key = e.date.month;
-      } else if (_currentPeriod == AnalysisPeriod.monthly)
+      } else if (_currentPeriod == AnalysisPeriod.monthly) {
         key = e.date.day;
-      else
+      } else {
         key = e.date.weekday;
+      }
 
       double val = data[key] ?? 0;
       if (e.isIncome) {

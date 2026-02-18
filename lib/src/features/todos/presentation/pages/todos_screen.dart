@@ -155,7 +155,7 @@ class _TodosScreenState extends State<TodosScreen>
       // ✅ SCHEDULE NOTIFICATION
       NotificationService().scheduleNotification(
         id: newTodo.id.hashCode,
-        title: 'Task Reminder',
+        title: AppLocalizations.of(context)!.taskReminder,
         body: newTodo.task,
         scheduledDate: defaultDate,
         payload: newTodo.id,
@@ -694,7 +694,7 @@ class _TodosScreenState extends State<TodosScreen>
                   controller: _searchController,
                   style: theme.textTheme.bodyMedium,
                   decoration: InputDecoration(
-                    hintText: 'Search tasks...',
+                    hintText: AppLocalizations.of(context)!.searchTasks,
                     hintStyle: theme.textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurface.withValues(alpha: 0.5),
                     ),
@@ -746,7 +746,7 @@ class _TodosScreenState extends State<TodosScreen>
                     if (items.isEmpty) {
                       return Center(
                         child: Text(
-                          "No tasks found.",
+                          AppLocalizations.of(context)!.noTasksFound,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: colorScheme.onSurface.withValues(alpha: 0.4),
                           ),

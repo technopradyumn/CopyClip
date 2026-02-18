@@ -597,46 +597,47 @@ class _SettingsScreenState extends State<SettingsScreen>
   ) {
     final theme = Theme.of(context);
 
+    final l10n = AppLocalizations.of(context)!;
     final widgets = [
       {
         'id': 'notes',
-        'title': 'Notes',
+        'title': l10n.notes,
         'icon': CupertinoIcons.doc_text,
         'color': FeatureColors.notes,
       },
       {
         'id': 'todos',
-        'title': 'To-Dos',
+        'title': l10n.todos,
         'icon': CupertinoIcons.checkmark_circle,
         'color': FeatureColors.todos,
       },
       {
         'id': 'expenses',
-        'title': 'Expense',
+        'title': l10n.expenses,
         'icon': CupertinoIcons.money_dollar,
         'color': FeatureColors.expenses,
       },
       {
         'id': 'journal',
-        'title': 'Journal',
+        'title': l10n.journal,
         'icon': CupertinoIcons.book,
         'color': FeatureColors.journal,
       },
       {
         'id': 'calendar',
-        'title': 'Calendar',
+        'title': l10n.calendar,
         'icon': CupertinoIcons.calendar,
         'color': FeatureColors.calendar,
       },
       {
         'id': 'clipboard',
-        'title': 'Clipboard',
+        'title': l10n.clipboard,
         'icon': CupertinoIcons.doc_on_clipboard,
         'color': FeatureColors.clipboard,
       },
       {
         'id': 'canvas',
-        'title': 'Canvas',
+        'title': l10n.canvas,
         'icon': CupertinoIcons.hand_draw,
         'color': FeatureColors.canvas,
       },
@@ -735,11 +736,11 @@ class _SettingsScreenState extends State<SettingsScreen>
                 color: primaryColor,
               ),
               title: Text(
-                "Auto-save Clipboard",
+                AppLocalizations.of(context)!.autoSaveClipboard,
                 style: theme.textTheme.bodyLarge,
               ),
               subtitle: Text(
-                "Automatically save copied items",
+                AppLocalizations.of(context)!.autoSaveClipboardDesc,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                 ),
@@ -756,7 +757,9 @@ class _SettingsScreenState extends State<SettingsScreen>
                         // Trying to enable
                         PremiumLockDialog.show(
                           context,
-                          featureName: 'Auto-save Clipboard',
+                          featureName: AppLocalizations.of(
+                            context,
+                          )!.autoSaveClipboard,
                           onUnlockOnce: () => state._toggleAutoSave(true),
                         );
                       } else {

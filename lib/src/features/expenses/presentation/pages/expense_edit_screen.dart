@@ -4,12 +4,11 @@ import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 import 'package:copyclip/src/features/expenses/data/expense_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:copyclip/src/core/widgets/animated_top_bar_title.dart';
-import 'package:copyclip/src/core/widgets/seamless_header.dart'; // Just in case
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../core/utils/widget_sync_service.dart';
 import '../../../../core/widgets/glass_dialog.dart';
 
@@ -111,7 +110,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
       text: widget.expense?.amount.toString().replaceAll('.0', '') ?? '',
     );
     _categoryController = TextEditingController(
-      text: widget.expense?.category ?? 'General',
+      text: widget.expense?.category ?? '',
     );
 
     if (widget.expense != null) {
@@ -124,6 +123,16 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _completeInitialization();
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInitialized && widget.expense == null) {
+      final l10n = AppLocalizations.of(context)!;
+      _categoryController.text = l10n.general;
+    }
+    // Note: _completeInitialization will be called by post frame callback from initState
   }
 
   void _completeInitialization() {
@@ -225,13 +234,14 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
       return;
     }
 
+    final l10n = AppLocalizations.of(context)!;
     final result = await showDialog<String>(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Unsaved Changes",
-        content: "Do you want to save this transaction?",
-        confirmText: "Save",
-        cancelText: "Discard",
+        title: l10n.unsavedChanges,
+        content: l10n.saveTransactionQuestion,
+        confirmText: l10n.save,
+        cancelText: l10n.discard,
         onConfirm: () => Navigator.pop(ctx, 'save'),
         onCancel: () => Navigator.pop(ctx, 'discard'),
       ),
@@ -404,7 +414,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    'Done',
+                    AppLocalizations.of(context)!.done,
                     style: TextStyle(
                       color: primaryColor,
                       fontSize: 16,
@@ -442,10 +452,11 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
   }
 
   Future<void> _save() async {
+    final l10n = AppLocalizations.of(context)!;
     if (_titleController.text.isEmpty || _amountController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in title and amount')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.fillTitleAmount)));
       return;
     }
 
@@ -457,7 +468,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
     if (amount == null) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Invalid amount format')));
+      ).showSnackBar(SnackBar(content: Text(l10n.invalidAmount)));
       return;
     }
 
@@ -479,7 +490,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
         currency: _selectedCurrency,
         date: _selectedDate,
         category: _categoryController.text.isEmpty
-            ? 'General'
+            ? l10n.general
             : _categoryController.text.trim(),
         isIncome: _isIncome,
         sortIndex: widget.expense?.sortIndex ?? 0,
@@ -514,14 +525,15 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
   }
 
   void _confirmDelete() {
+    final l10n = AppLocalizations.of(context)!;
     if (widget.expense == null) return;
 
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Move Transaction to Recycle Bin?",
-        content: "You can restore this transaction later from settings.",
-        confirmText: "Move",
+        title: l10n.moveTransactionToBinTitle,
+        content: l10n.restoreTransactionLater,
+        confirmText: l10n.move,
         isDestructive: true,
         onConfirm: () async {
           try {
@@ -532,8 +544,8 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
             expense.isDeleted = true;
             expense.deletedAt = DateTime.now();
             await expense.save(); // Using HiveObject save method
-            if (mounted) {
-              Navigator.pop(ctx);
+            Navigator.pop(ctx);
+            if (context.mounted) {
               context.pop();
             }
           } catch (e) {
@@ -569,7 +581,9 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
           centerTitle: false,
           titleSpacing: 0,
           title: AnimatedTopBarTitle(
-            title: widget.expense == null ? 'New Transaction' : 'Edit',
+            title: widget.expense == null
+                ? AppLocalizations.of(context)!.newTransaction
+                : AppLocalizations.of(context)!.edit,
             icon: CupertinoIcons.money_dollar,
             iconHeroTag: 'expenses_icon',
             titleHeroTag: 'expenses_title',
@@ -584,7 +598,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                     ? onSurfaceColor
                     : onSurfaceColor.withValues(alpha: 0.24),
               ),
-              tooltip: 'Undo',
+              tooltip: AppLocalizations.of(context)!.undo,
             ),
             IconButton(
               onPressed: _redoStack.isNotEmpty ? _redo : null,
@@ -594,7 +608,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                     ? onSurfaceColor
                     : onSurfaceColor.withValues(alpha: 0.24),
               ),
-              tooltip: 'Redo',
+              tooltip: AppLocalizations.of(context)!.redo,
             ),
             if (widget.expense != null)
               IconButton(
@@ -632,7 +646,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                                 vertical: 10,
                               ),
                               child: Text(
-                                "Expense",
+                                AppLocalizations.of(context)!.expense,
                                 style: TextStyle(
                                   color: !_isIncome
                                       ? Colors.white
@@ -646,7 +660,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                                 vertical: 10,
                               ),
                               child: Text(
-                                "Income",
+                                AppLocalizations.of(context)!.income,
                                 style: TextStyle(
                                   color: _isIncome
                                       ? Colors.black
@@ -736,7 +750,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
 
                       // Description
                       Text(
-                        "Description",
+                        AppLocalizations.of(context)!.description,
                         style: textTheme.bodySmall?.copyWith(
                           color: onSurfaceColor.withValues(alpha: 0.7),
                         ),
@@ -757,7 +771,9 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide.none,
                             ),
-                            hintText: 'What is this for?',
+                            hintText: AppLocalizations.of(
+                              context,
+                            )!.whatIsThisFor,
                             hintStyle: textTheme.bodyLarge?.copyWith(
                               color: onSurfaceColor.withValues(alpha: 0.38),
                             ),
@@ -768,7 +784,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
 
                       // Category
                       Text(
-                        "Category",
+                        AppLocalizations.of(context)!.category,
                         style: textTheme.bodySmall?.copyWith(
                           color: onSurfaceColor.withValues(alpha: 0.7),
                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'package:copyclip/src/features/expenses/data/expense_model.dart';
 import 'package:copyclip/src/core/const/constant.dart';
 
@@ -117,7 +118,7 @@ class ExpenseCard extends StatelessWidget {
                               child: Text(
                                 expense.title.isNotEmpty
                                     ? expense.title
-                                    : "Untitled",
+                                    : AppLocalizations.of(context)!.untitled,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: theme.textTheme.titleSmall?.copyWith(

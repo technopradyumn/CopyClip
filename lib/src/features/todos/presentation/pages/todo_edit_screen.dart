@@ -414,7 +414,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                       ),
                     ),
                     Text(
-                      'Select Date & Time',
+                      AppLocalizations.of(context)!.selectDateTime,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),

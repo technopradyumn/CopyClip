@@ -1735,7 +1735,7 @@ abstract class AppLocalizations {
   /// No description provided for @expenseTitle.
   ///
   /// In en, this message translates to:
-  /// **'Expense'**
+  /// **'Expenses'**
   String get expenseTitle;
 
   /// No description provided for @searchInCurrency.
@@ -2277,6 +2277,336 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Copied plain text'**
   String get copiedPlainText;
+
+  /// No description provided for @clipTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Clip Theme'**
+  String get clipTheme;
+
+  /// No description provided for @justNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get justNow;
+
+  /// No description provided for @minutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String minutesAgo(Object count);
+
+  /// No description provided for @hoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String hoursAgo(Object count);
+
+  /// No description provided for @daysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String daysAgo(Object count);
+
+  /// No description provided for @noTasksFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks found.'**
+  String get noTasksFound;
+
+  /// No description provided for @searchTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Search tasks...'**
+  String get searchTasks;
+
+  /// No description provided for @taskReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Reminder'**
+  String get taskReminder;
+
+  /// No description provided for @untitledNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Untitled Note'**
+  String get untitledNote;
+
+  /// No description provided for @dailyEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Entry'**
+  String get dailyEntry;
+
+  /// No description provided for @clipboardHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Clipboard History'**
+  String get clipboardHistory;
+
+  /// No description provided for @deletePermanentlyContent.
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone.'**
+  String get deletePermanentlyContent;
+
+  /// No description provided for @emptyRecycleBinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty Recycle Bin?'**
+  String get emptyRecycleBinTitle;
+
+  /// No description provided for @emptyRecycleBinContent.
+  ///
+  /// In en, this message translates to:
+  /// **'All {count} items will be permanently deleted.'**
+  String emptyRecycleBinContent(Object count);
+
+  /// No description provided for @emptyBin.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty Bin'**
+  String get emptyBin;
+
+  /// No description provided for @recycleBinEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Recycle Bin is empty'**
+  String get recycleBinEmpty;
+
+  /// No description provided for @deletedItemsAppearHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted items will appear here.'**
+  String get deletedItemsAppearHere;
+
+  /// No description provided for @empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty'**
+  String get empty;
+
+  /// No description provided for @recent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get recent;
+
+  /// No description provided for @categoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category: {category}'**
+  String categoryLabel(Object category);
+
+  /// No description provided for @general.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get general;
+
+  /// No description provided for @saveTransactionQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to save this transaction?'**
+  String get saveTransactionQuestion;
+
+  /// No description provided for @fillTitleAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in title and amount'**
+  String get fillTitleAmount;
+
+  /// No description provided for @invalidAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid amount format'**
+  String get invalidAmount;
+
+  /// No description provided for @moveTransactionToBinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Move Transaction to Recycle Bin?'**
+  String get moveTransactionToBinTitle;
+
+  /// No description provided for @restoreTransactionLater.
+  ///
+  /// In en, this message translates to:
+  /// **'You can restore this transaction later from settings.'**
+  String get restoreTransactionLater;
+
+  /// No description provided for @newTransaction.
+  ///
+  /// In en, this message translates to:
+  /// **'New Transaction'**
+  String get newTransaction;
+
+  /// No description provided for @whatIsThisFor.
+  ///
+  /// In en, this message translates to:
+  /// **'What is this for?'**
+  String get whatIsThisFor;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @daily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get daily;
+
+  /// No description provided for @weekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get weekly;
+
+  /// No description provided for @monthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get monthly;
+
+  /// No description provided for @yearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get yearly;
+
+  /// No description provided for @totalIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Income'**
+  String get totalIncome;
+
+  /// No description provided for @totalExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Expense'**
+  String get totalExpense;
+
+  /// No description provided for @analysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis'**
+  String get analysis;
+
+  /// No description provided for @transactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get transactions;
+
+  /// No description provided for @noExpensesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No expenses found for this period.'**
+  String get noExpensesFound;
+
+  /// No description provided for @netBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Net Balance'**
+  String get netBalance;
+
+  /// No description provided for @topCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Categories'**
+  String get topCategories;
+
+  /// No description provided for @spendingTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending Trend'**
+  String get spendingTrend;
+
+  /// No description provided for @insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Insights'**
+  String get insights;
+
+  /// No description provided for @noExpensesRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'No expenses recorded'**
+  String get noExpensesRecorded;
+
+  /// No description provided for @trackSpendingHabits.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your spending habits easily.'**
+  String get trackSpendingHabits;
+
+  /// No description provided for @addExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Expense'**
+  String get addExpense;
+
+  /// No description provided for @noDataForPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'No data for this period'**
+  String get noDataForPeriod;
+
+  /// No description provided for @budget.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget'**
+  String get budget;
+
+  /// No description provided for @spent.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent'**
+  String get spent;
+
+  /// No description provided for @limit.
+  ///
+  /// In en, this message translates to:
+  /// **'Limit'**
+  String get limit;
+
+  /// No description provided for @overBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Over Budget!'**
+  String get overBudget;
+
+  /// No description provided for @remainingBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% remaining'**
+  String remainingBudget(Object percent);
+
+  /// No description provided for @savingsRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Savings Rate'**
+  String get savingsRate;
+
+  /// No description provided for @healthScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Score'**
+  String get healthScore;
+
+  /// No description provided for @healthScoreExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)'**
+  String get healthScoreExplanation;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
 }
 
 class _AppLocalizationsDelegate

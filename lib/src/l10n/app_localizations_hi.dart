@@ -1188,4 +1188,183 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get copiedPlainText => 'Copied plain text';
+
+  @override
+  String get clipTheme => 'Clip Theme';
+
+  @override
+  String get justNow => 'Just now';
+
+  @override
+  String minutesAgo(Object count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String hoursAgo(Object count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String daysAgo(Object count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String get noTasksFound => 'No tasks found.';
+
+  @override
+  String get searchTasks => 'Search tasks...';
+
+  @override
+  String get taskReminder => 'Task Reminder';
+
+  @override
+  String get untitledNote => 'Untitled Note';
+
+  @override
+  String get dailyEntry => 'Daily Entry';
+
+  @override
+  String get clipboardHistory => 'Clipboard History';
+
+  @override
+  String get deletePermanentlyContent => 'This action cannot be undone.';
+
+  @override
+  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+
+  @override
+  String emptyRecycleBinContent(Object count) {
+    return 'All $count items will be permanently deleted.';
+  }
+
+  @override
+  String get emptyBin => 'Empty Bin';
+
+  @override
+  String get recycleBinEmpty => 'Recycle Bin is empty';
+
+  @override
+  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+
+  @override
+  String get empty => 'Empty';
+
+  @override
+  String get recent => 'Recent';
+
+  @override
+  String categoryLabel(Object category) {
+    return 'Category: $category';
+  }
+
+  @override
+  String get general => 'General';
+
+  @override
+  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+
+  @override
+  String get fillTitleAmount => 'Please fill in title and amount';
+
+  @override
+  String get invalidAmount => 'Invalid amount format';
+
+  @override
+  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+
+  @override
+  String get restoreTransactionLater =>
+      'You can restore this transaction later from settings.';
+
+  @override
+  String get newTransaction => 'New Transaction';
+
+  @override
+  String get whatIsThisFor => 'What is this for?';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get daily => 'Daily';
+
+  @override
+  String get weekly => 'Weekly';
+
+  @override
+  String get monthly => 'Monthly';
+
+  @override
+  String get yearly => 'Yearly';
+
+  @override
+  String get totalIncome => 'Total Income';
+
+  @override
+  String get totalExpense => 'Total Expense';
+
+  @override
+  String get analysis => 'Analysis';
+
+  @override
+  String get transactions => 'Transactions';
+
+  @override
+  String get noExpensesFound => 'No expenses found for this period.';
+
+  @override
+  String get netBalance => 'Net Balance';
+
+  @override
+  String get topCategories => 'Top Categories';
+
+  @override
+  String get spendingTrend => 'Spending Trend';
+
+  @override
+  String get insights => 'Insights';
+
+  @override
+  String get noExpensesRecorded => 'No expenses recorded';
+
+  @override
+  String get trackSpendingHabits => 'Track your spending habits easily.';
+
+  @override
+  String get addExpense => 'Add Expense';
+
+  @override
+  String get noDataForPeriod => 'No data for this period';
+
+  @override
+  String get budget => 'Budget';
+
+  @override
+  String get spent => 'Spent';
+
+  @override
+  String get limit => 'Limit';
+
+  @override
+  String get overBudget => 'Over Budget!';
+
+  @override
+  String remainingBudget(Object percent) {
+    return '$percent% remaining';
+  }
+
+  @override
+  String get savingsRate => 'Savings Rate';
+
+  @override
+  String get healthScore => 'Health Score';
+
+  @override
+  String get healthScoreExplanation =>
+      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+
+  @override
+  String get ok => 'OK';
 }
