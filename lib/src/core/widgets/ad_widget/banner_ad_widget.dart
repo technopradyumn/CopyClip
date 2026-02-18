@@ -1,10 +1,11 @@
 import 'dart:io';
 // Required for View.of(context)
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:provider/provider.dart';
-import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
 
 class BannerAdWidget extends StatefulWidget {
   final bool hideOnKeyboard;
@@ -75,35 +76,37 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // Check Premium Status using Provider
-    final isPremium = context.watch<PremiumProvider>().isPremium;
-    if (isPremium) return const SizedBox.shrink();
+    return BlocBuilder<PremiumBloc, PremiumState>(
+      builder: (context, state) {
+        if (state.isPremium) return const SizedBox.shrink();
 
-    // 1. Check if Keyboard is visible
-    if (widget.hideOnKeyboard) {
-      final bottomInset = View.of(context).viewInsets.bottom;
-      if (bottomInset > 0) return const SizedBox.shrink();
-    }
+        // 1. Check if Keyboard is visible
+        if (widget.hideOnKeyboard) {
+          final bottomInset = View.of(context).viewInsets.bottom;
+          if (bottomInset > 0) return const SizedBox.shrink();
+        }
 
-    // 2. If Ad is not ready, hide it
-    if (!_isAdLoaded || _bannerAd == null) return const SizedBox.shrink();
+        // 2. If Ad is not ready, hide it
+        if (!_isAdLoaded || _bannerAd == null) return const SizedBox.shrink();
 
-    // 3. Show Ad
-    return Container(
-      alignment: Alignment.center,
-      width: _bannerAd!.size.width.toDouble(),
-      height: _bannerAd!.size.height.toDouble(),
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 4,
-            offset: const Offset(0, -2),
+        // 3. Show Ad
+        return Container(
+          alignment: Alignment.center,
+          width: _bannerAd!.size.width.toDouble(),
+          height: _bannerAd!.size.height.toDouble(),
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 4,
+                offset: const Offset(0, -2),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: AdWidget(ad: _bannerAd!),
+          child: AdWidget(ad: _bannerAd!),
+        );
+      },
     );
   }
 }

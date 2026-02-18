@@ -21,6 +21,7 @@ import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 import 'package:copyclip/src/features/expenses/data/expense_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
 
 // Widgets
 import '../widgets/expense_card.dart';
@@ -436,7 +437,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 style: theme.textTheme.bodyLarge,
                 decoration: InputDecoration(
                   hintText: "Search in $_selectedCurrency...",
-                  hintStyle: TextStyle(color: onSurfaceColor.withValues(alpha: 0.5)),
+                  hintStyle: TextStyle(
+                    color: onSurfaceColor.withValues(alpha: 0.5),
+                  ),
                   border: InputBorder.none,
                 ),
               ),
@@ -809,8 +812,8 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 decoration: BoxDecoration(
                   color: isSelected
                       ? theme.colorScheme.primary
-                      : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 
-                          0.5,
+                      : theme.colorScheme.surfaceContainerHighest.withValues(
+                          alpha: 0.5,
                         ),
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -949,7 +952,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
     return Container(
       margin: EdgeInsets.symmetric(horizontal: _kPadding),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface.withValues(alpha: 0.5), // Fast transparency
+        color: theme.colorScheme.surface.withValues(
+          alpha: 0.5,
+        ), // Fast transparency
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
       ),
@@ -1046,7 +1051,27 @@ class _ExpensesScreenState extends State<ExpensesScreen>
         dividerColor: Colors.transparent,
         tabs: [
           const Tab(text: "Transactions"),
-          const Tab(text: "Insights"),
+          Tab(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text("Insights"),
+                const SizedBox(width: 4),
+                BlocBuilder<PremiumBloc, PremiumState>(
+                  builder: (context, state) {
+                    if (!state.isPremium) {
+                      return const Icon(
+                        CupertinoIcons.star_fill,
+                        color: Colors.amber,
+                        size: 12,
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -1172,8 +1197,8 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                           Text(
                             "Limit: $_selectedCurrency${budgetLimit.toStringAsFixed(0)}",
                             style: TextStyle(
-                              color: theme.colorScheme.onSurface.withValues(alpha: 
-                                0.6,
+                              color: theme.colorScheme.onSurface.withValues(
+                                alpha: 0.6,
                               ),
                             ),
                           ),
@@ -1313,10 +1338,14 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.surface.withValues(alpha: 0.5),
+                          color: theme.colorScheme.surface.withValues(
+                            alpha: 0.5,
+                          ),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: theme.colorScheme.outline.withValues(alpha: 0.2),
+                            color: theme.colorScheme.outline.withValues(
+                              alpha: 0.2,
+                            ),
                           ),
                         ),
                         child: Column(
@@ -1491,7 +1520,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       decoration: BoxDecoration(
         color: theme.colorScheme.surface.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
+        border: Border.all(
+          color: theme.colorScheme.outline.withValues(alpha: 0.2),
+        ),
       ),
       child: Stack(
         children: [
@@ -1596,7 +1627,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       decoration: BoxDecoration(
         color: theme.colorScheme.surface.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
+        border: Border.all(
+          color: theme.colorScheme.outline.withValues(alpha: 0.2),
+        ),
       ),
       child: BarChart(
         BarChartData(
@@ -1852,7 +1885,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       decoration: BoxDecoration(
         color: theme.colorScheme.surface.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
+        border: Border.all(
+          color: theme.colorScheme.outline.withValues(alpha: 0.2),
+        ),
       ),
       child: LineChart(
         LineChartData(
@@ -1891,7 +1926,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                     child: Text(
                       val.toInt().toString(),
                       style: TextStyle(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: 0.5,
+                        ),
                         fontSize: 10,
                       ),
                     ),

@@ -131,7 +131,7 @@ void main() async {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => ThemeBloc()..add(LoadTheme())),
-          BlocProvider(create: (_) => PremiumBloc()..add(LoadPremiumData())),
+          BlocProvider(create: (_) => PremiumBloc()),
         ],
         child: const LoadingApp(),
       ),
@@ -399,6 +399,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
+    // ✅ Load Premium Data (Safe place after Hive Init)
+    context.read<PremiumBloc>().add(LoadPremiumData());
+
     WidgetsBinding.instance.addObserver(this);
     widgetChannel.setMethodCallHandler(_handleNativeCalls);
 
@@ -484,7 +488,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
           todo ??= box.values.firstWhere((t) => t.id == todoId);
           await TodoSchedulerService().completeTodo(todo);
           debugPrint("✅ Todo marked done from notification: ${todo.task}");
-                } catch (e) {
+        } catch (e) {
           debugPrint("❌ Failed to process action: $e");
         }
         return;

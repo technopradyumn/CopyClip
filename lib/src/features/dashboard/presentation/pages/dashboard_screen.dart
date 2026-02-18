@@ -19,6 +19,9 @@ import '../../../journal/data/journal_model.dart';
 import '../../../clipboard/data/clipboard_model.dart';
 import '../../../expenses/data/expense_model.dart';
 import '../../../canvas/data/canvas_adapter.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FeatureItem {
   final String id;
@@ -492,9 +495,10 @@ class _DashboardScreenState extends State<DashboardScreen>
           borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
           onTap: () {
             if (id == 'calendar') {
+              final isPremium = context.read<PremiumBloc>().state.isPremium;
               _adService.showAd(() {
                 context.push(item.route);
-              });
+              }, isPremium: isPremium);
             } else {
               context.push(item.route);
             }
@@ -716,9 +720,10 @@ class _DashboardScreenState extends State<DashboardScreen>
               borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
               onTap: () {
                 if (id == 'calendar') {
+                  final isPremium = context.read<PremiumBloc>().state.isPremium;
                   _adService.showAd(() {
                     context.push(item.route);
-                  });
+                  }, isPremium: isPremium);
                 } else {
                   context.push(item.route);
                 }
@@ -753,6 +758,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                             ),
                           ],
                         ),
+                        alignment: Alignment.center,
                         child: Icon(
                           item.icon,
                           color: Colors.white,
@@ -761,19 +767,40 @@ class _DashboardScreenState extends State<DashboardScreen>
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Hero(
-                      tag: '${id}_title',
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: Text(
-                          item.title,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: isSmall ? 14 : 16,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Hero(
+                          tag: '${id}_title',
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: Text(
+                              item.title,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: isSmall ? 13 : 15,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                      ),
+                        // Premium Tag for Calendar
+                        if (id == 'calendar') ...[
+                          SizedBox(width: 4),
+                          BlocBuilder<PremiumBloc, PremiumState>(
+                            builder: (context, state) {
+                              if (!state.isPremium) {
+                                return Icon(
+                                  CupertinoIcons.star_fill,
+                                  color: Colors.amber,
+                                  size: 14,
+                                );
+                              }
+                              return SizedBox.shrink();
+                            },
+                          ),
+                        ],
+                      ],
                     ),
                     if (!isSmall && preview != null) ...[
                       const SizedBox(height: 4),

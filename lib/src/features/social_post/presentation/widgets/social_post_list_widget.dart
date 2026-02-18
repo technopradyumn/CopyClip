@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'dart:ui' as ui;
 
 import 'package:copyclip/src/features/social_post/data/social_post_model.dart';
-import '../../../../l10n/app_localizations.dart';
+// import '../../../../l10n/app_localizations.dart'; // Unused
 import 'package:copyclip/src/features/social_post/presentation/widgets/social_platform_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,22 +16,102 @@ import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 
 class SocialPostListWidget extends StatefulWidget {
   final String filter; // 'all', 'favorites', 'drafts'
+  final Function(bool isSelectionMode, int selectedCount)? onSelectionChanged;
 
-  const SocialPostListWidget({super.key, required this.filter});
+  const SocialPostListWidget({
+    super.key,
+    required this.filter,
+    this.onSelectionChanged,
+  });
 
   @override
-  State<SocialPostListWidget> createState() => _SocialPostListWidgetState();
+  State<SocialPostListWidget> createState() => SocialPostListWidgetState();
 }
 
-class _SocialPostListWidgetState extends State<SocialPostListWidget> {
+class SocialPostListWidgetState extends State<SocialPostListWidget> {
   late Future<Box<SocialPost>> _boxFuture;
   late Future<Box> _settingsBoxFuture;
+
+  // Selection State
+  bool _isSelectionMode = false;
+  final Set<String> _selectedIds = {};
+  List<SocialPost> _currentPosts = []; // Keep track for selectAll
 
   @override
   void initState() {
     super.initState();
     _boxFuture = LazyBoxLoader.getBox<SocialPost>('social_posts_box');
     _settingsBoxFuture = LazyBoxLoader.getBox('settings');
+  }
+
+  // --- Public Methods for Parent ---
+
+  void selectAll() {
+    if (_currentPosts.isEmpty) return;
+    setState(() {
+      _isSelectionMode = true;
+      _selectedIds.clear();
+      _selectedIds.addAll(_currentPosts.map((p) => p.id));
+    });
+    _notifySelectionChanged();
+  }
+
+  void deselectAll() {
+    setState(() {
+      _isSelectionMode = false;
+      _selectedIds.clear();
+    });
+    _notifySelectionChanged();
+  }
+
+  Future<void> deleteSelected() async {
+    final box = await _boxFuture;
+    final idsToDelete = _selectedIds.toList();
+
+    // Delete from Hive
+    await box.deleteAll(idsToDelete);
+
+    // Also remove from order list if applicable
+    if (widget.filter == 'all') {
+      final settingsBox = await _settingsBoxFuture;
+      final List<String>? savedOrder = settingsBox
+          .get('social_posts_order', defaultValue: <String>[])
+          ?.cast<String>();
+
+      if (savedOrder != null) {
+        final newOrder = savedOrder
+            .where((id) => !idsToDelete.contains(id))
+            .toList();
+        await settingsBox.put('social_posts_order', newOrder);
+      }
+    }
+
+    deselectAll();
+
+    if (mounted) {
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('${idsToDelete.length} posts deleted')),
+      // );
+    }
+  }
+
+  void _notifySelectionChanged() {
+    widget.onSelectionChanged?.call(_isSelectionMode, _selectedIds.length);
+  }
+
+  void _toggleSelection(String id) {
+    setState(() {
+      if (_selectedIds.contains(id)) {
+        _selectedIds.remove(id);
+        if (_selectedIds.isEmpty) {
+          _isSelectionMode = false;
+        }
+      } else {
+        _selectedIds.add(id);
+        _isSelectionMode = true;
+      }
+    });
+    _notifySelectionChanged();
   }
 
   @override
@@ -98,99 +179,70 @@ class _SocialPostListWidgetState extends State<SocialPostListWidget> {
               posts.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
             }
 
+            _currentPosts = posts; // Update local ref
+
             if (posts.isEmpty) {
               return _buildEmptyState();
             }
 
             // 3. REORDERABLE LIST
-            return ReorderableListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-              itemCount: posts.length,
-              proxyDecorator: (child, index, animation) => Material(
-                elevation: 4,
-                color: Colors.transparent,
-                child: child,
-              ),
-              onReorder: (oldIndex, newIndex) {
-                if (widget.filter != 'all') {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Ordering only available in 'All Posts'"),
-                    ),
-                  );
-                  return;
-                }
+            // Only allow reordering if NOT in selection mode and filter is 'all'
+            final canReorder = widget.filter == 'all' && !_isSelectionMode;
 
-                if (newIndex > oldIndex) newIndex -= 1;
-                final item = posts.removeAt(oldIndex);
-                posts.insert(newIndex, item);
-
-                // Save new order
-                final newOrderIds = posts.map((p) => p.id).toList();
-
-                // We must also include IDs that might be hidden by filters if we supported complex filtering,
-                // but here 'all' includes everything except maybe strictly deleted ones.
-                // However, to be safe, we should merge with existing IDs not in this view?
-                // For simplicity, assuming 'all' shows all items.
-                // Wait! 'all' shows everything.
-
-                // BUT, what if there are items NOT loaded? Hive loads all.
-                // What if we just filtered out drafts? 'all' usually implies everything.
-                // The prompt implies 'all' tab.
-
-                settingsBox.put('social_posts_order', newOrderIds);
-              },
-              itemBuilder: (context, index) {
-                final post = posts[index];
-                return Dismissible(
-                  key: ValueKey(post.id),
-                  background: Container(
-                    margin: EdgeInsets.symmetric(vertical: 8.h),
-                    decoration: BoxDecoration(
-                      color: Colors.red.withValues(alpha: 0.8),
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    alignment: Alignment.centerRight,
-                    padding: EdgeInsets.only(right: 20.w),
-                    child: const Icon(Icons.delete, color: Colors.white),
-                  ),
-                  direction: DismissDirection.endToStart,
-                  confirmDismiss: (direction) async {
-                    return await showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                        title: Text(AppLocalizations.of(context)!.deletePost),
-                        content: Text(
-                          AppLocalizations.of(
-                            context,
-                          )!.areYouSureYouWantToDeleteThisPost,
+            if (canReorder) {
+              return ReorderableListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                itemCount: posts.length,
+                proxyDecorator: (child, index, animation) {
+                  return AnimatedBuilder(
+                    animation: animation,
+                    builder: (BuildContext context, Widget? child) {
+                      final double animValue = Curves.easeInOut.transform(
+                        animation.value,
+                      );
+                      final double scale = ui.lerpDouble(1, 1.1, animValue)!;
+                      return Transform.scale(
+                        scale: scale,
+                        child: Material(
+                          color: Colors.transparent,
+                          elevation: 10,
+                          shadowColor: Colors.black45,
+                          child: child,
                         ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(ctx).pop(false),
-                            child: Text(AppLocalizations.of(context)!.cancel),
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.of(ctx).pop(true),
-                            child: const Text(
-                              "Delete",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  onDismissed: (direction) {
-                    post.delete();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Post deleted")),
-                    );
-                  },
-                  child: _buildPostCard(context, post),
-                );
-              },
-            );
+                      );
+                    },
+                    child: child,
+                  );
+                },
+                onReorder: (oldIndex, newIndex) {
+                  if (newIndex > oldIndex) newIndex -= 1;
+                  final item = posts.removeAt(oldIndex);
+                  posts.insert(newIndex, item);
+
+                  // Save new order
+                  final newOrderIds = posts.map((p) => p.id).toList();
+                  settingsBox.put('social_posts_order', newOrderIds);
+                },
+                itemBuilder: (context, index) {
+                  final post = posts[index];
+                  return ReorderableDelayedDragStartListener(
+                    key: ValueKey(post.id),
+                    index: index,
+                    child: _buildPostCard(context, post),
+                  );
+                },
+              );
+            } else {
+              // Standard List when reordering disabled (e.g. selection mode or other tabs)
+              return ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                itemCount: posts.length,
+                itemBuilder: (context, index) {
+                  final post = posts[index];
+                  return _buildPostCard(context, post);
+                },
+              );
+            }
           },
         );
       },
@@ -203,7 +255,7 @@ class _SocialPostListWidgetState extends State<SocialPostListWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            'assets/images/social_empty.svg', // Uses the newly created SVG
+            'assets/images/social_empty.svg',
             width: 150.w,
             height: 150.w,
           ),
@@ -226,15 +278,36 @@ class _SocialPostListWidgetState extends State<SocialPostListWidget> {
   }
 
   Widget _buildPostCard(BuildContext context, SocialPost post) {
+    final isSelected = _selectedIds.contains(post.id);
+    final theme = Theme.of(context);
+
+    // Dynamic background color based on selection
+    final backgroundColor = isSelected
+        ? theme.colorScheme.primaryContainer.withValues(alpha: 0.3)
+        : theme.cardColor;
+
     return Card(
-      key: ValueKey(post.id), // Important for ReorderableListView
+      key: ValueKey(post.id),
       margin: EdgeInsets.only(bottom: 12.h),
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      elevation: isSelected ? 4 : 2,
+      color: backgroundColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        side: isSelected
+            ? BorderSide(color: theme.colorScheme.primary, width: 2)
+            : BorderSide.none,
+      ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12.r),
         onTap: () {
-          context.push(AppRouter.socialPostEdit, extra: post);
+          if (_isSelectionMode) {
+            _toggleSelection(post.id);
+          } else {
+            context.push(AppRouter.socialPostEdit, extra: post);
+          }
+        },
+        onLongPress: () {
+          _toggleSelection(post.id);
         },
         child: Padding(
           padding: EdgeInsets.all(12.w),
@@ -243,6 +316,17 @@ class _SocialPostListWidgetState extends State<SocialPostListWidget> {
             children: [
               Row(
                 children: [
+                  // Selection Checkbox
+                  if (_isSelectionMode) ...[
+                    Icon(
+                      isSelected ? Icons.check_circle : Icons.circle_outlined,
+                      color: isSelected
+                          ? theme.colorScheme.primary
+                          : Colors.grey,
+                      size: 20.sp,
+                    ),
+                    SizedBox(width: 8.w),
+                  ],
                   _PlatformIcon(platform: post.platform),
                   SizedBox(width: 8.w),
                   Expanded(
@@ -258,6 +342,12 @@ class _SocialPostListWidgetState extends State<SocialPostListWidget> {
                       size: 20.sp,
                     ),
                     onPressed: () {
+                      // Dont allow favorite toggle in selection mode to avoid confusion?
+                      // Or just let it happen. Let's block it in selection mode for cleaner UX.
+                      if (_isSelectionMode) {
+                        _toggleSelection(post.id);
+                        return;
+                      }
                       post.isFavorite = !post.isFavorite;
                       post.save();
                     },
@@ -286,7 +376,7 @@ class _SocialPostListWidgetState extends State<SocialPostListWidget> {
                       ),
                     ),
                   // Drag Handle
-                  if (widget.filter == 'all')
+                  if (widget.filter == 'all' && !_isSelectionMode)
                     const Padding(
                       padding: EdgeInsets.only(left: 8),
                       child: Icon(Icons.drag_handle, color: Colors.grey),
@@ -295,6 +385,7 @@ class _SocialPostListWidgetState extends State<SocialPostListWidget> {
               ),
               SizedBox(height: 8.h),
               // Hero Animation on content preview
+              // Matches the tag in SocialPostScreen (which we will add next)
               Hero(
                 tag: 'post_content_${post.id}',
                 child: Material(

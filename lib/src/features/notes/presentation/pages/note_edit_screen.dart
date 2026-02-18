@@ -22,7 +22,8 @@ import '../../../../core/widgets/animated_top_bar_title.dart';
 import '../../../../core/utils/widget_sync_service.dart';
 import '../../../../core/const/constant.dart';
 import '../../../../features/premium/presentation/widgets/premium_lock_dialog.dart';
-import '../../../../features/premium/presentation/provider/premium_provider.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class NoteEditScreen extends StatefulWidget {
@@ -478,13 +479,10 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
     }
 
     return PopScope(
-      canPop: false,
+      canPop: true,
       onPopInvokedWithResult: (didPop, result) {
-        if (didPop) return;
-        // Auto-save on back
-        _saveNote();
-        if (context.mounted) {
-          Navigator.pop(context);
+        if (didPop) {
+          _saveNote();
         }
       },
       child: GlassScaffold(
@@ -547,11 +545,8 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                   }
                   break;
                 case 'pdf':
-                  final provider = Provider.of<PremiumProvider>(
-                    context,
-                    listen: false,
-                  );
-                  if (provider.isPremium) {
+                  final isPremium = context.read<PremiumBloc>().state.isPremium;
+                  if (isPremium) {
                     _exportToPdf();
                   } else {
                     PremiumLockDialog.show(
@@ -585,60 +580,60 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                   break;
               }
             },
-            itemBuilder: (ctx) => [
-              const PopupMenuItem(
-                value: 'color',
-                child: Row(
-                  children: [
-                    Icon(CupertinoIcons.paintbrush, size: 18),
-                    SizedBox(width: 12),
-                    Text("Change Color"),
-                  ],
-                ),
-              ),
-              const PopupMenuItem(
-                value: 'copy',
-                child: Row(
-                  children: [
-                    Icon(CupertinoIcons.doc_on_doc, size: 18),
-                    SizedBox(width: 12),
-                    Text("Copy Content"),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 'pdf',
-                child: Row(
-                  children: [
-                    const Icon(CupertinoIcons.share, size: 18),
-                    const SizedBox(width: 12),
-                    const Text("Export as PDF"),
-                    // Premium Star Icon
-                    if (!Provider.of<PremiumProvider>(
-                      context,
-                      listen: false,
-                    ).isPremium) ...[
-                      const Spacer(),
-                      const Icon(
-                        CupertinoIcons.star_fill, // Changed to Star
-                        size: 14,
-                        color: Colors.amber,
-                      ),
+            itemBuilder: (ctx) {
+              final isPremium = ctx.read<PremiumBloc>().state.isPremium;
+              return [
+                const PopupMenuItem(
+                  value: 'color',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.paintbrush, size: 18),
+                      SizedBox(width: 12),
+                      Text("Change Color"),
                     ],
-                  ],
+                  ),
                 ),
-              ),
-              const PopupMenuItem(
-                value: 'delete',
-                child: Row(
-                  children: [
-                    Icon(CupertinoIcons.trash, size: 18, color: Colors.red),
-                    SizedBox(width: 12),
-                    Text("Delete", style: TextStyle(color: Colors.red)),
-                  ],
+                const PopupMenuItem(
+                  value: 'copy',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.doc_on_doc, size: 18),
+                      SizedBox(width: 12),
+                      Text("Copy Content"),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                PopupMenuItem(
+                  value: 'pdf',
+                  child: Row(
+                    children: [
+                      const Icon(CupertinoIcons.share, size: 18),
+                      const SizedBox(width: 12),
+                      const Text("Export as PDF"),
+                      // Premium Star Icon
+                      if (!isPremium) ...[
+                        const Spacer(),
+                        const Icon(
+                          CupertinoIcons.star_fill, // Changed to Star
+                          size: 14,
+                          color: Colors.amber,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'delete',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.trash, size: 18, color: Colors.red),
+                      SizedBox(width: 12),
+                      Text("Delete", style: TextStyle(color: Colors.red)),
+                    ],
+                  ),
+                ),
+              ];
+            },
           ),
         ],
 
