@@ -40,11 +40,11 @@ class AppColors {
     }
   }
 
-  // Gamification Palette (Duolingo-inspired)
-  static const Color duoGreen = Color(0xFF58CC02);
-  static const Color duoBlue = Color(0xFF1CB0F6);
-  static const Color duoOrange = Color(0xFFFF9600);
-  static const Color duoYellow = Color(0xFFFFC800);
-  static const Color duoRed = Color(0xFFFF4B4B);
-  static const Color duoPink = Color(0xFFCE82FF);
+  // Cosmic Aura Palette (Sophisticated & Unique)
+  static const Color auroraPink = Color(0xFFF472B6);
+  static const Color cosmicIndigo = Color(0xFF6366F1);
+  static const Color nebulaViolet = Color(0xFF8B5CF6);
+  static const Color starlightTeal = Color(0xFF2DD4BF);
+  static const Color solarAmber = Color(0xFFF59E0B);
+  static const Color novaEmerald = Color(0xFF10B981);
 }

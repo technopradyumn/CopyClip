@@ -1,16 +1,21 @@
 import 'dart:math' as math;
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
-enum MascotState { idle, happy, encouraging, sad }
+enum MascotState { idle, happy, encouraging, sad, amazed, thinking, sleeping }
 
 class MascotCharacter extends StatefulWidget {
   final MascotState state;
   final double size;
+  final VoidCallback? onTap;
+  final bool useThemeColor;
 
   const MascotCharacter({
     super.key,
     this.state = MascotState.idle,
     this.size = 150,
+    this.onTap,
+    this.useThemeColor = true,
   });
 
   @override
@@ -18,200 +23,392 @@ class MascotCharacter extends StatefulWidget {
 }
 
 class _MascotCharacterState extends State<MascotCharacter>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _bounceAnimation;
-  late Animation<double> _blinkAnimation;
-  late Animation<double> _wingAnimation;
+  late AnimationController _interactionController;
+
+  late Animation<double> _driftAnimation;
+  late Animation<double> _pulseAnimation;
+  late Animation<double> _rotationAnimation;
+  late Animation<double> _orbitalTiltAnimation;
+  late Animation<double> _interactionPulse;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 3000),
     )..repeat();
 
-    _bounceAnimation = TweenSequence<double>([
-      TweenSequenceItem(tween: Tween(begin: 0.0, end: -10.0), weight: 50),
-      TweenSequenceItem(tween: Tween(begin: -10.0, end: 0.0), weight: 50),
-    ]).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _interactionController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
 
-    _blinkAnimation = TweenSequence<double>([
-      TweenSequenceItem(tween: ConstantTween(1.0), weight: 90),
-      TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.1), weight: 5),
-      TweenSequenceItem(tween: Tween(begin: 0.1, end: 1.0), weight: 5),
+    _driftAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 0.0,
+          end: -15.0,
+        ).chain(CurveTween(curve: Curves.easeInOutSine)),
+        weight: 50,
+      ),
+      TweenSequenceItem(
+        tween: Tween(
+          begin: -15.0,
+          end: 0.0,
+        ).chain(CurveTween(curve: Curves.easeInOutSine)),
+        weight: 50,
+      ),
     ]).animate(_controller);
 
-    _wingAnimation = TweenSequence<double>([
-      TweenSequenceItem(tween: Tween(begin: 0.0, end: 0.5), weight: 50),
-      TweenSequenceItem(tween: Tween(begin: 0.5, end: 0.0), weight: 50),
-    ]).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _pulseAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 1.0,
+          end: 1.08,
+        ).chain(CurveTween(curve: Curves.easeInOut)),
+        weight: 50,
+      ),
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 1.08,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeInOut)),
+        weight: 50,
+      ),
+    ]).animate(_controller);
+
+    _interactionPulse = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 1.0,
+          end: 1.5,
+        ).chain(CurveTween(curve: Curves.easeOutCubic)),
+        weight: 30,
+      ),
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 1.5,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.elasticOut)),
+        weight: 70,
+      ),
+    ]).animate(_interactionController);
+
+    _rotationAnimation = Tween<double>(
+      begin: 0.0,
+      end: 2 * math.pi,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
+
+    _orbitalTiltAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween(
+          begin: -0.2,
+          end: 0.2,
+        ).chain(CurveTween(curve: Curves.easeInOutSine)),
+        weight: 50,
+      ),
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 0.2,
+          end: -0.2,
+        ).chain(CurveTween(curve: Curves.easeInOutSine)),
+        weight: 50,
+      ),
+    ]).animate(_controller);
+  }
+
+  void _handleTap() {
+    if (widget.onTap != null) widget.onTap!();
+    if (!_interactionController.isAnimating) {
+      _interactionController.forward(from: 0.0);
+    }
   }
 
   @override
   void didUpdateWidget(MascotCharacter oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.state != oldWidget.state) {
-      if (widget.state == MascotState.happy) {
-        _controller.duration = const Duration(milliseconds: 800);
-      } else {
-        _controller.duration = const Duration(milliseconds: 2000);
-      }
-      _controller.repeat();
+      _updateAnimationSpeed();
     }
+  }
+
+  void _updateAnimationSpeed() {
+    switch (widget.state) {
+      case MascotState.happy:
+        _controller.duration = const Duration(milliseconds: 1500);
+        break;
+      case MascotState.sleeping:
+        _controller.duration = const Duration(milliseconds: 6000);
+        break;
+      case MascotState.amazed:
+        _controller.duration = const Duration(milliseconds: 2000);
+        break;
+      default:
+        _controller.duration = const Duration(milliseconds: 3000);
+    }
+    _controller.repeat();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _interactionController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return CustomPaint(
-          size: Size(widget.size, widget.size),
-          painter: _MascotPainter(
-            state: widget.state,
-            bounce: _bounceAnimation.value,
-            blink: _blinkAnimation.value,
-            wingFlap: _wingAnimation.value,
-          ),
-        );
-      },
+    final theme = Theme.of(context);
+    final auraColor = widget.useThemeColor
+        ? theme.colorScheme.primary
+        : const Color(0xFF6366F1);
+
+    return GestureDetector(
+      onTap: _handleTap,
+      child: AnimatedBuilder(
+        animation: Listenable.merge([_controller, _interactionController]),
+        builder: (context, child) {
+          final totalPulse = _pulseAnimation.value * _interactionPulse.value;
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Transform.translate(
+                offset: Offset(0, _driftAnimation.value),
+                child: CustomPaint(
+                  size: Size(widget.size, widget.size),
+                  painter: _AuraEntityPainter(
+                    state: widget.state,
+                    pulse: totalPulse,
+                    rotation: _rotationAnimation.value,
+                    tilt: _orbitalTiltAnimation.value,
+                    auraColor: auraColor,
+                    interactionValue: _interactionController.value,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Dynamic Shadow
+              Transform.scale(
+                scale: 1.0 - (_driftAnimation.value / -60),
+                child: Container(
+                  width: widget.size * 0.4,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: auraColor.withAlpha(20),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: auraColor.withAlpha(15),
+                        blurRadius: 10,
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
 
-class _MascotPainter extends CustomPainter {
+class _AuraEntityPainter extends CustomPainter {
   final MascotState state;
-  final double bounce;
-  final double blink;
-  final double wingFlap;
+  final double pulse;
+  final double rotation;
+  final double tilt;
+  final Color auraColor;
+  final double interactionValue;
 
-  _MascotPainter({
+  _AuraEntityPainter({
     required this.state,
-    required this.bounce,
-    required this.blink,
-    required this.wingFlap,
+    required this.pulse,
+    required this.rotation,
+    required this.tilt,
+    required this.auraColor,
+    required this.interactionValue,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final bodyColor = const Color(0xFF4DB6AC);
-    final accentColor = const Color(0xFF80CBC4);
-    final eyeColor = Colors.white;
-    final pupilColor = Colors.black;
-    final beakColor = Colors.orange;
+    final coreRadius = size.width * 0.25 * pulse;
 
-    final bodyPaint = Paint()..color = bodyColor;
-    final accentPaint = Paint()..color = accentColor;
-    final eyePaint = Paint()..color = eyeColor;
-    final pupilPaint = Paint()..color = pupilColor;
-    final beakPaint = Paint()..color = beakColor;
+    // Draw Aura Glow
+    final glowPaint = Paint()
+      ..shader = RadialGradient(
+        colors: [auraColor.withAlpha(60), Colors.transparent],
+      ).createShader(Rect.fromCircle(center: center, radius: size.width * 0.5));
+    canvas.drawCircle(center, size.width * 0.5, glowPaint);
 
-    // Apply bounce
-    double verticalOffset = bounce;
-    if (state == MascotState.sad) verticalOffset = 5;
+    // Draw Orbital Ring
+    _drawOrbitalRing(canvas, center, size.width * 0.45);
 
-    // Draw Body
-    final bodyRect = Rect.fromCenter(
-      center: center.translate(0, verticalOffset),
-      width: size.width * 0.7,
-      height: size.height * 0.75,
+    // Draw the Faceted Core
+    _drawFacetedCore(canvas, center, coreRadius);
+
+    // Draw Digital Pulse Eyes
+    _drawDigitalEyes(canvas, center, coreRadius);
+  }
+
+  void _drawFacetedCore(Canvas canvas, Offset center, double radius) {
+    final path = Path();
+    final points = 6;
+    final angleStep = (2 * math.pi) / points;
+
+    // Base shape (Hexagonal Gem)
+    for (int i = 0; i < points; i++) {
+      final angle = i * angleStep + interactionValue * math.pi;
+      final x = center.dx + radius * math.cos(angle);
+      final y = center.dy + radius * math.sin(angle);
+      if (i == 0)
+        path.moveTo(x, y);
+      else
+        path.lineTo(x, y);
+    }
+    path.close();
+
+    final corePaint = Paint()
+      ..shader = LinearGradient(
+        colors: [auraColor, auraColor.withAlpha(150), auraColor.withValue(0.9)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ).createShader(Rect.fromCircle(center: center, radius: radius));
+
+    canvas.drawPath(path, corePaint);
+
+    // Facet lines for high-end look
+    final linePaint = Paint()
+      ..color = Colors.white.withAlpha(100)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5;
+
+    for (int i = 0; i < points; i++) {
+      final angle = i * angleStep + interactionValue * math.pi;
+      canvas.drawLine(
+        center,
+        Offset(
+          center.dx + radius * math.cos(angle),
+          center.dy + radius * math.sin(angle),
+        ),
+        linePaint,
+      );
+    }
+  }
+
+  void _drawOrbitalRing(Canvas canvas, Offset center, double radius) {
+    final ringPaint = Paint()
+      ..color = auraColor.withAlpha(180)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3
+      ..strokeCap = StrokeCap.round;
+
+    final rect = Rect.fromCenter(
+      center: center,
+      width: radius * 2,
+      height: radius * 0.4,
     );
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(bodyRect, Radius.circular(size.width * 0.3)),
-      bodyPaint,
-    );
 
-    // Draw Belly/Accent
-    final bellyRect = Rect.fromCenter(
-      center: center.translate(0, verticalOffset + size.height * 0.1),
-      width: size.width * 0.5,
-      height: size.height * 0.4,
-    );
-    canvas.drawOval(bellyRect, accentPaint);
-
-    // Draw Wings
-    final wingWidth = size.width * 0.15;
-    final wingHeight = size.height * 0.25;
-    final flapAngle = state == MascotState.happy ? wingFlap * math.pi / 2 : 0.0;
-
-    // Left Wing
     canvas.save();
-    canvas.translate(center.dx - size.width * 0.35, center.dy + verticalOffset);
-    canvas.rotate(-flapAngle);
-    canvas.drawOval(
-      Rect.fromLTWH(-wingWidth, -wingHeight / 2, wingWidth, wingHeight),
-      bodyPaint,
+    canvas.translate(center.dx, center.dy);
+    canvas.rotate(
+      tilt + (state == MascotState.happy ? rotation * 2 : rotation),
     );
-    canvas.restore();
+    canvas.translate(-center.dx, -center.dy);
 
-    // Right Wing
-    canvas.save();
-    canvas.translate(center.dx + size.width * 0.35, center.dy + verticalOffset);
-    canvas.rotate(flapAngle);
-    canvas.drawOval(
-      Rect.fromLTWH(0, -wingHeight / 2, wingWidth, wingHeight),
-      bodyPaint,
-    );
-    canvas.restore();
-
-    // Draw Eyes
-    final eyeSpacing = size.width * 0.18;
-    final eyeSize = size.width * 0.12;
-    final eyeY = center.dy + verticalOffset - size.height * 0.1;
-
-    void drawEye(Offset eyeCenter) {
-      if (state == MascotState.sad) {
-        // Draw droopy eyes
-        final droopPaint = Paint()
-          ..color = pupilColor
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 3;
-        canvas.drawArc(
-          Rect.fromCenter(center: eyeCenter, width: eyeSize, height: eyeSize),
-          0,
-          math.pi,
-          false,
-          droopPaint,
-        );
-      } else {
-        // Draw normal eyes with blink
-        final currentEyeHeight =
-            eyeSize * (state == MascotState.happy ? 1.2 : blink);
-        canvas.drawOval(
-          Rect.fromCenter(
-            center: eyeCenter,
-            width: eyeSize,
-            height: currentEyeHeight,
-          ),
-          eyePaint,
-        );
-        if (currentEyeHeight > eyeSize * 0.3) {
-          canvas.drawCircle(eyeCenter, eyeSize * 0.3, pupilPaint);
-        }
-      }
+    // Draw segmented ring for "tech" feel
+    for (int i = 0; i < 4; i++) {
+      canvas.drawArc(
+        rect,
+        i * math.pi / 2 + rotation,
+        math.pi / 4,
+        false,
+        ringPaint,
+      );
     }
 
-    drawEye(Offset(center.dx - eyeSpacing, eyeY));
-    drawEye(Offset(center.dx + eyeSpacing, eyeY));
+    // Orbital Part (small dot on ring)
+    final orbitalPos = Offset(
+      center.dx + radius * math.cos(rotation * 3),
+      center.dy + radius * 0.2 * math.sin(rotation * 3),
+    );
+    canvas.drawCircle(
+      orbitalPos,
+      4,
+      Paint()
+        ..color = Colors.white
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
+    );
 
-    // Draw Beak
-    final beakPath = Path()
-      ..moveTo(center.dx - 8, eyeY + 15)
-      ..lineTo(center.dx + 8, eyeY + 15)
-      ..lineTo(center.dx, eyeY + 25)
-      ..close();
-    canvas.drawPath(beakPath, beakPaint);
+    canvas.restore();
+  }
+
+  void _drawDigitalEyes(Canvas canvas, Offset center, double radius) {
+    if (state == MascotState.sleeping) {
+      final sleepingPaint = Paint()
+        ..color = Colors.white.withAlpha(100)
+        ..strokeWidth = 1
+        ..style = PaintingStyle.stroke;
+      canvas.drawLine(
+        center.translate(-10, -5),
+        center.translate(-2, -5),
+        sleepingPaint,
+      );
+      canvas.drawLine(
+        center.translate(2, -5),
+        center.translate(10, -5),
+        sleepingPaint,
+      );
+      return;
+    }
+
+    final eyePaint = Paint()
+      ..color = Colors.white
+      ..strokeWidth = 2
+      ..strokeCap = StrokeCap.round;
+
+    double eyeWidth = 12.0;
+    if (state == MascotState.amazed) eyeWidth = 18.0;
+    if (state == MascotState.sad) eyeWidth = 6.0;
+
+    // Horizontal digital slits
+    canvas.drawLine(
+      center.translate(-eyeWidth, -5),
+      center.translate(-2, -5),
+      eyePaint,
+    );
+    canvas.drawLine(
+      center.translate(2, -5),
+      center.translate(eyeWidth, -5),
+      eyePaint,
+    );
+
+    if (state == MascotState.thinking) {
+      // Subtle scanning effect
+      final scanLine = Paint()
+        ..color = Colors.cyanAccent.withAlpha(150)
+        ..strokeWidth = 1;
+      final y = -5 + 4 * math.sin(rotation * 5);
+      canvas.drawLine(
+        center.translate(-eyeWidth, y),
+        center.translate(eyeWidth, y),
+        scanLine,
+      );
+    }
   }
 
   @override
-  bool shouldRepaint(_MascotPainter oldDelegate) => true;
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+extension ColorExt on Color {
+  Color withValue(double value) {
+    final hsv = HSVColor.fromColor(this);
+    return hsv.withValue(value.clamp(0.0, 1.0)).toColor();
+  }
 }

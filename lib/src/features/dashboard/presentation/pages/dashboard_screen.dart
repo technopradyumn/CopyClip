@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 import 'dart:convert'; // Added for JSON decoding
 import 'dart:ui';
 
@@ -16,6 +17,8 @@ import 'package:provider/provider.dart';
 import 'package:copyclip/src/core/services/gamification_service.dart';
 import 'package:copyclip/src/core/common_widgets/mascot_character.dart';
 import 'package:copyclip/src/core/common_widgets/micro_animation.dart';
+import '../../../../core/theme/bloc/theme_bloc.dart';
+import '../../../../core/theme/app_colors.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import '../../../../core/widgets/ad_widget/banner_ad_widget.dart';
@@ -169,9 +172,47 @@ class _DashboardScreenState extends State<DashboardScreen>
   // State for View Mode
   bool _isGridView = false;
 
+  MascotState _dashboardMascotState = MascotState.idle;
+  Timer? _mascotTimer;
+
   @override
   void initState() {
     super.initState();
+    _startMascotMoodCycle();
+    _initData();
+  }
+
+  void _startMascotMoodCycle() {
+    _mascotTimer?.cancel();
+    _mascotTimer = Timer.periodic(const Duration(seconds: 8), (timer) {
+      if (mounted) {
+        setState(() {
+          // Cycle through interesting states, but mostly stay idle
+          final random = math.Random().nextInt(10);
+          if (random < 5) {
+            _dashboardMascotState = MascotState.idle;
+          } else if (random < 7) {
+            _dashboardMascotState = MascotState.thinking;
+          } else if (random < 8) {
+            _dashboardMascotState = MascotState.amazed;
+          } else {
+            _dashboardMascotState = MascotState.happy;
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _mascotTimer?.cancel();
+    _settingsAnimationController.dispose();
+    _onboardingController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  void _initData() {
     WidgetsBinding.instance.addObserver(this);
 
     _settingsAnimationController = AnimationController(
@@ -438,6 +479,112 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
+  void _showThemeColorPicker(ThemeData theme) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 20,
+              offset: const Offset(0, -5),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const MascotCharacter(size: 40, state: MascotState.happy),
+                const SizedBox(width: 12),
+                Text(
+                  "Choose Your Aura",
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              "Express yourself with a new theme color!",
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
+            ),
+            const SizedBox(height: 24),
+            GridView.count(
+              shrinkWrap: true,
+              crossAxisCount: 3,
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+              childAspectRatio: 1.2,
+              children: [
+                _buildColorOption(AppColors.auroraPink, "Aurora", theme),
+                _buildColorOption(AppColors.cosmicIndigo, "Cosmic", theme),
+                _buildColorOption(AppColors.nebulaViolet, "Nebula", theme),
+                _buildColorOption(AppColors.starlightTeal, "Starlight", theme),
+                _buildColorOption(AppColors.solarAmber, "Solar", theme),
+                _buildColorOption(AppColors.novaEmerald, "Nova", theme),
+              ],
+            ),
+            const SizedBox(height: 24),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildColorOption(Color color, String label, ThemeData theme) {
+    final isSelected = theme.primaryColor.value == color.value;
+    return GestureDetector(
+      onTap: () {
+        context.read<ThemeBloc>().add(ChangePrimaryColor(color));
+        Navigator.pop(context);
+        // Happy mascot animation feedback could be added here if we had a way to trigger it
+      },
+      child: Column(
+        children: [
+          Container(
+            width: 60,
+            height: 44,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(12),
+              border: isSelected
+                  ? Border.all(color: theme.colorScheme.onSurface, width: 3)
+                  : null,
+              boxShadow: [
+                BoxShadow(
+                  color: color.withValues(alpha: 0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: isSelected
+                ? const Icon(Icons.check, color: Colors.white)
+                : null,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: theme.textTheme.bodySmall?.copyWith(
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildGamificationHeader(ThemeData theme) {
     return Consumer<GamificationService>(
       builder: (context, service, _) {
@@ -448,7 +595,16 @@ class _DashboardScreenState extends State<DashboardScreen>
             children: [
               Row(
                 children: [
-                  const MascotCharacter(size: 80, state: MascotState.idle),
+                  MascotCharacter(
+                    size: 80,
+                    state: _dashboardMascotState,
+                    onTap: () {
+                      setState(() {
+                        _dashboardMascotState = MascotState.happy;
+                      });
+                      _showThemeColorPicker(theme);
+                    },
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
