@@ -12,6 +12,7 @@
   "clipboard": "Clipboard",
   "canvas": "Canvas",
   "save": "Save",
+  "create": "Create",
   "cancel": "Cancel",
   "delete": "Delete",
   "edit": "Edit",
@@ -247,5 +248,240 @@
   "byMood": "By Mood",
   "searchMemories": "Search memories...",
   "selectAll": "Select All",
-  "deleteSelected": "Delete Selected"
+  "deleteSelected": "Delete Selected",
+  "taskCompletedExclamation": "Task completed!",
+  "taskUncompletedExclamation": "Task uncompleted",
+  "clipboardUpdatedExclamation": "Clipboard updated!",
+  "clipboardSavedContent": "Clipboard saved: {content}",
+  "overview": "Overview",
+  "colorAurora": "Aurora",
+  "colorCosmic": "Cosmic",
+  "colorNebula": "Nebula",
+  "colorStarlight": "Starlight",
+  "colorSolar": "Solar",
+  "colorNova": "Nova",
+  "loadingStepLoading": "Loading...",
+  "loadingStepDatabase": "Setting up database...",
+  "loadingStepSystem": "Configuring system...",
+  "loadingStepReady": "Ready",
+  "productivityCompanion": "Your productivity companion",
+  "done": "Done",
+  "newNote": "New Note",
+  "changeColor": "Change Color",
+  "copyContent": "Copy Content",
+  "titleOptional": "Title (Optional)",
+  "exportAsPdf": "Export as PDF",
+  "taskDueNow": "Task Due Now",
+  "moveTaskToBinTitle": "Move Task to Recycle Bin?",
+  "restoreTaskLater": "You can restore this task later from settings.",
+  "newTask": "New Task",
+  "editTask": "Edit Task",
+  "undo": "Undo",
+  "redo": "Redo",
+  "category": "Category",
+  "categoryHint": "e.g. Work, Gym",
+  "whatNeedsToBeDone": "What needs to be done?",
+  "enterTaskDetails": "Enter task details...",
+  "setDueDate": "Set Due Date",
+  "dueDate": "Due Date",
+  "expenseTitle": "Expense",
+  "searchInCurrency": "Search in {currency}...",
+  "@searchInCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "sortAndFilter": "Sort & Filter",
+  "sortBy": "SORT BY",
+  "newestFirst": "Newest First",
+  "oldestFirst": "Oldest First",
+  "highestAmount": "Highest Amount",
+  "lowestAmount": "Lowest Amount",
+  "moreFilters": "More Filters...",
+  "filterExpenses": "Filter Expenses",
+  "transactionType": "Transaction Type",
+  "categories": "Categories",
+  "all": "All",
+  "income": "Income",
+  "expense": "Expense",
+  "reset": "Reset",
+  "apply": "Apply",
+  "newExpense": "New {currency}",
+  "@newExpense": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "errorLoadingData": "Error loading data.\n\n{error}",
+  "@errorLoadingData": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyQuote1": "The best way to predict the future is to create it.",
+  "dailyQuote2": "Wealth consists not in having great possessions, but in having few wants.",
+  "dailyQuote3": "Time is the ultimate currency.",
+  "dailyQuote4": "Success is not final, failure is not fatal.",
+  "dailyQuote5": "Focus on the solution, not the problem.",
+  "dailyQuote6": "Your network is your net worth.",
+  "moodHappy": "Happy",
+  "moodExcited": "Excited",
+  "moodNeutral": "Neutral",
+  "moodSad": "Sad",
+  "moodStressed": "Stressed",
+  "exportDate": "📅 {date}",
+  "@exportDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "exportMood": "Mood: {emoji} {mood}",
+  "@exportMood": {
+    "placeholders": {
+      "emoji": {
+        "type": "String"
+      },
+      "mood": {
+        "type": "String"
+      }
+    }
+  },
+  "exportTitle": "TITLE: {title}",
+  "@exportTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "exportTags": "\nTags: {tags}",
+  "@exportTags": {
+    "placeholders": {
+      "tags": {
+        "type": "String"
+      }
+    }
+  },
+  "instagram": "Instagram",
+  "facebook": "Facebook",
+  "tiktok": "TikTok",
+  "newSketch": "New Sketch",
+  "searchSketches": "Search sketches and folders...",
+  "noResultsFound": "No results found",
+  "noItems": "No items",
+  "noDrawingsYet": "No drawings yet",
+  "canvasIntro": "Unleash your creativity on the canvas!",
+  "newCanvas": "New Canvas",
+  "rename": "Rename",
+  "deleteFolder": "Delete Folder",
+  "deleteSketchesQuestion": "Delete Sketches?",
+  "deleteFolderConfirmation": "All sketches in this folder will be deleted permanently.",
+  "renameFolder": "Rename Folder",
+  "chooseColor": "Choose Color",
+  "deleteFolderQuestion": "Delete Folder?",
+  "searchClips": "Search clips...",
+  "clipboardEmpty": "Clipboard is empty",
+  "addItem": "Add Item",
+  "clipColor": "Clip Color",
+  "newClip": "New Clip",
+  "editClip": "Edit Clip",
+  "restoreClipLater": "You can restore this clip later.",
+  "upcomingEvents": "Upcoming Events",
+  "dataDistribution": "DATA DISTRIBUTION",
+  "taskProgress": "TASK PROGRESS",
+  "quickStats": "QUICK STATS",
+  "taskCompletion": "Task Completion",
+  "noItemsForDate": "No items for this date",
+  "enjoyFreeTime": "Enjoy your free time!",
+  "searchThisDay": "Search in this day...",
+  "finance": "Finance",
+  "permanentlyDelete": "Permanently Delete?",
+  "deleteSelectionConfirmation": "This will permanently delete {foldersCount} folders (and their sketches) and {sketchesCount} other sketches.\n\nThis cannot be undone.",
+  "@deleteSelectionConfirmation": {
+    "placeholders": {
+      "foldersCount": {
+        "type": "int"
+      },
+      "sketchesCount": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteForever": "Delete Forever",
+  "selectedCount": "{count} Selected",
+  "@selectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "canvasStats": "{notes} sketches • {folders} folders",
+  "@canvasStats": {
+    "placeholders": {
+      "notes": {
+        "type": "int"
+      },
+      "folders": {
+        "type": "int"
+      }
+    }
+  },
+  "sortItems": "Sort Items",
+  "sortNameAZ": "Name (A-Z)",
+  "sortNameZA": "Name (Z-A)",
+  "createFolder": "Create Folder",
+  "folderNameHint": "Folder name...",
+  "deleteSketchesConfirmation": "Delete {count} sketches? This cannot be undone.",
+  "@deleteSketchesConfirmation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noSketchesFound": "No sketches found",
+  "noSketchesFoundSub": "Try adjusting your search or creating a new sketch.",
+  "searchInFolder": "Search in {folder}...",
+  "@searchInFolder": {
+    "placeholders": {
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "sketchesCount": "{count} sketches",
+  "@sketchesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sortSketches": "Sort Sketches",
+  "calendarScreenTitle": "Calendar",
+  "dailyActivity": "Daily Activity",
+  "deleteItemQuestion": "Delete Item?",
+  "deleteItemConfirmation": "This will move the item to the recycle bin.",
+  "moveToBinItem": "Move to Bin?",
+  "moveToBinConfirmation": "You can restore it later.",
+  "selectedItems": "{count} Selected",
+  "@selectedItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recentClips": "Recent Clips",
+  "copied": "Copied!",
+  "copiedPlainText": "Copied plain text"
 }

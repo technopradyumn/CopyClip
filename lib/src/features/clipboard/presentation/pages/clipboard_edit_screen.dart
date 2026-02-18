@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill/quill_delta.dart';
@@ -447,7 +448,9 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
         centerTitle: false,
         titleSpacing: 0,
         title: AnimatedTopBarTitle(
-          title: _editingItem == null ? 'New Clip' : 'Edit Clip',
+          title: _editingItem == null
+              ? AppLocalizations.of(context)!.newClip
+              : AppLocalizations.of(context)!.editClip,
           icon: CupertinoIcons.doc_on_clipboard,
           iconHeroTag: 'clipboard_icon',
           titleHeroTag: 'clipboard_title',
@@ -456,19 +459,19 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
         actions: [
           IconButton(
             icon: Icon(CupertinoIcons.paintbrush, color: contrastColor),
-            tooltip: 'Clip Color',
+            tooltip: AppLocalizations.of(context)!.clipColor,
             onPressed: _showColorPicker,
           ),
           IconButton(
             icon: Icon(CupertinoIcons.doc_on_doc, color: contrastColor),
-            tooltip: 'Copy Content',
+            tooltip: AppLocalizations.of(context)!.copyContent,
             onPressed: () {
               Clipboard.setData(
                 ClipboardData(text: _quillController.document.toPlainText()),
               );
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: const Text("Copied plain text"),
+                  content: Text(AppLocalizations.of(context)!.copiedPlainText),
                   behavior: SnackBarBehavior.floating,
                   backgroundColor: contrastColor,
                 ),
@@ -506,7 +509,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                   } else {
                     PremiumLockDialog.show(
                       context,
-                      featureName: 'PDF Export',
+                      featureName: AppLocalizations.of(context)!.pdfExport,
                       onUnlockOnce: _exportToPdf,
                     );
                   }
@@ -516,9 +519,9 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                     showDialog(
                       context: context,
                       builder: (ctx) => GlassDialog(
-                        title: "Move to Bin?",
-                        content: "You can restore this clip later.",
-                        confirmText: "Move",
+                        title: AppLocalizations.of(context)!.moveToBinQuestion,
+                        content: AppLocalizations.of(context)!.restoreClipLater,
+                        confirmText: AppLocalizations.of(context)!.move,
                         isDestructive: true,
                         onConfirm: () {
                           Navigator.pop(ctx);
@@ -538,23 +541,23 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
             itemBuilder: (ctx) {
               final isPremium = context.read<PremiumBloc>().state.isPremium;
               return [
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'copy',
                   child: Row(
                     children: [
                       Icon(CupertinoIcons.doc_on_doc, size: 18),
                       SizedBox(width: 12),
-                      Text("Copy Content"),
+                      Text(AppLocalizations.of(context)!.copyContent),
                     ],
                   ),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'color',
                   child: Row(
                     children: [
                       Icon(CupertinoIcons.paintbrush, size: 18),
                       SizedBox(width: 12),
-                      Text("Clip Color"),
+                      Text(AppLocalizations.of(context)!.clipColor),
                     ],
                   ),
                 ),
@@ -564,7 +567,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                     children: [
                       const Icon(CupertinoIcons.share, size: 18),
                       const SizedBox(width: 12),
-                      const Text("Export as PDF"),
+                      Text(AppLocalizations.of(context)!.exportAsPdf),
                       if (!isPremium) ...[
                         const Spacer(),
                         const PremiumFeatureIcon(),
@@ -572,13 +575,16 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                     ],
                   ),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'delete',
                   child: Row(
                     children: [
                       Icon(CupertinoIcons.trash, size: 18, color: Colors.red),
                       SizedBox(width: 12),
-                      Text("Delete", style: TextStyle(color: Colors.red)),
+                      Text(
+                        AppLocalizations.of(context)!.delete,
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ],
                   ),
                 ),

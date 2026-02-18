@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../l10n/app_localizations.dart';
 
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
@@ -109,19 +110,28 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _sectionLabel(theme, "DATA DISTRIBUTION"),
+                    _sectionLabel(
+                      theme,
+                      AppLocalizations.of(context)!.dataDistribution,
+                    ),
                     const SizedBox(height: 12),
                     // ✅ Optimized Bar Graph
                     _buildAnimatedBarGraph(selectedEvents, onSurface, theme),
 
                     const SizedBox(height: 24),
-                    _sectionLabel(theme, "TASK PROGRESS"),
+                    _sectionLabel(
+                      theme,
+                      AppLocalizations.of(context)!.taskProgress,
+                    ),
                     const SizedBox(height: 12),
                     // ✅ Optimized Progress Section
                     _buildTodoProgressSection(selectedEvents, theme),
 
                     const SizedBox(height: 24),
-                    _sectionLabel(theme, "QUICK STATS"),
+                    _sectionLabel(
+                      theme,
+                      AppLocalizations.of(context)!.quickStats,
+                    ),
                     const SizedBox(height: 12),
                     // ✅ Optimized Stats Grid
                     _buildAnalyticsGrid(selectedEvents, onSurface, theme),
@@ -136,9 +146,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   Widget _buildHeader(ThemeData theme, Color onSurface) {
-    return const SeamlessHeader(
-      title: "Calendar",
-      subtitle: "Upcoming Events",
+    return SeamlessHeader(
+      title: AppLocalizations.of(context)!.calendarScreenTitle,
+      subtitle: AppLocalizations.of(context)!.upcomingEvents,
       icon: CupertinoIcons.calendar,
       iconColor: Colors.orangeAccent,
       heroTagPrefix: 'calendar',
@@ -384,7 +394,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Task Completion",
+                  AppLocalizations.of(context)!.taskCompletion,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: theme.colorScheme.onSurface,
@@ -462,7 +472,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       children: [
         Expanded(
           child: _statTile(
-            "Daily Activity",
+            AppLocalizations.of(context)!.dailyActivity,
             events.length.toString(),
             theme.colorScheme.primary,
             onSurface,
@@ -472,7 +482,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         const SizedBox(width: 12),
         Expanded(
           child: _statTile(
-            "Expenses",
+            AppLocalizations.of(context)!.expenses,
             "$currency${expenses.toStringAsFixed(0)}",
             Colors.redAccent,
             onSurface,

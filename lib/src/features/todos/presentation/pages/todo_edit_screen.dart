@@ -13,6 +13,7 @@ import 'package:copyclip/src/core/utils/widget_sync_service.dart';
 import 'package:copyclip/src/core/const/constant.dart';
 
 import '../../../../core/widgets/glass_dialog.dart';
+import '../../../../l10n/app_localizations.dart';
 
 // --- Snapshot Class for Undo/Redo ---
 class TodoFormState {
@@ -407,7 +408,10 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: Text('Cancel', style: theme.textTheme.bodyMedium),
+                      child: Text(
+                        AppLocalizations.of(context)!.cancel,
+                        style: theme.textTheme.bodyMedium,
+                      ),
                     ),
                     Text(
                       'Select Date & Time',
@@ -425,7 +429,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                         Navigator.pop(context);
                       },
                       child: Text(
-                        'Done',
+                        AppLocalizations.of(context)!.done,
                         style: TextStyle(
                           color: theme.colorScheme.primary,
                           fontWeight: FontWeight.bold,
@@ -464,9 +468,9 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
 
   void _saveTodo() {
     if (_taskController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Please enter a task')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.pleaseEnterTask)),
+      );
       return;
     }
 
@@ -534,7 +538,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
       )) {
         NotificationService().scheduleNotification(
           id: notifId,
-          title: 'Task Due Now',
+          title: AppLocalizations.of(context)!.taskDueNow,
           body: newTodo.task,
           scheduledDate: finalDate.isBefore(DateTime.now())
               ? DateTime.now().add(
@@ -560,9 +564,9 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Move Task to Recycle Bin?",
-        content: "You can restore this task later from settings.",
-        confirmText: "Move",
+        title: AppLocalizations.of(context)!.moveTaskToBinTitle,
+        content: AppLocalizations.of(context)!.restoreTaskLater,
+        confirmText: AppLocalizations.of(context)!.move,
         isDestructive: true,
         onConfirm: () {
           final todo = widget.todo!;
@@ -603,7 +607,9 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
       child: GlassScaffold(
         showBackArrow: true,
         title: AnimatedTopBarTitle(
-          title: widget.todo == null ? 'New Task' : 'Edit Task',
+          title: widget.todo == null
+              ? AppLocalizations.of(context)!.newTask
+              : AppLocalizations.of(context)!.editTask,
           icon: CupertinoIcons.checkmark_circle,
           iconHeroTag: 'todos_icon',
           titleHeroTag: 'todos_title',
@@ -618,7 +624,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                   ? colorScheme.onSurface
                   : colorScheme.onSurface.withValues(alpha: 0.3),
             ),
-            tooltip: 'Undo',
+            tooltip: AppLocalizations.of(context)!.undo,
           ),
           IconButton(
             onPressed: _redoStack.isNotEmpty ? _redo : null,
@@ -628,7 +634,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                   ? colorScheme.onSurface
                   : colorScheme.onSurface.withValues(alpha: 0.3),
             ),
-            tooltip: 'Redo',
+            tooltip: AppLocalizations.of(context)!.redo,
           ),
           if (widget.todo != null)
             PopupMenuButton<String>(
@@ -643,13 +649,16 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                 if (val == 'delete') _deleteTodo();
               },
               itemBuilder: (context) => [
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'delete',
                   child: Row(
                     children: [
                       Icon(CupertinoIcons.delete, size: 18, color: Colors.red),
                       SizedBox(width: 12),
-                      Text("Delete Task", style: TextStyle(color: Colors.red)),
+                      Text(
+                        AppLocalizations.of(context)!.deleteTask,
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ],
                   ),
                 ),
@@ -670,7 +679,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Category',
+                    AppLocalizations.of(context)!.category,
                     style: textTheme.bodySmall?.copyWith(
                       color: colorScheme.primary.withValues(alpha: 0.8),
                       fontSize: 14,
@@ -714,7 +723,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                               }
                             },
                           ),
-                          hintText: 'e.g. Work, Gym',
+                          hintText: AppLocalizations.of(context)!.categoryHint,
                           hintStyle: textTheme.bodyMedium?.copyWith(
                             color: colorScheme.onSurface.withValues(alpha: 0.3),
                           ),
@@ -726,7 +735,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                   const SizedBox(height: 24),
 
                   Text(
-                    'What needs to be done?',
+                    AppLocalizations.of(context)!.whatNeedsToBeDone,
                     style: textTheme.bodySmall?.copyWith(
                       color: colorScheme.primary.withValues(alpha: 0.8),
                       fontSize: 14,
@@ -752,7 +761,9 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                           ),
                           borderSide: BorderSide.none,
                         ),
-                        hintText: 'Enter task details...',
+                        hintText: AppLocalizations.of(
+                          context,
+                        )!.enterTaskDetails,
                         hintStyle: textTheme.bodyMedium?.copyWith(
                           color: colorScheme.onSurface.withValues(alpha: 0.3),
                         ),
@@ -782,8 +793,8 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                             children: [
                               Text(
                                 _selectedDate == null
-                                    ? 'Set Due Date'
-                                    : 'Due Date',
+                                    ? AppLocalizations.of(context)!.setDueDate
+                                    : AppLocalizations.of(context)!.dueDate,
                                 style: textTheme.bodyMedium?.copyWith(
                                   color: colorScheme.onSurface.withValues(
                                     alpha: 0.7,

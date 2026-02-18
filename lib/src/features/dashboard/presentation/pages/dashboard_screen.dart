@@ -498,7 +498,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   Widget _buildTopHeader(ThemeData theme) {
     return SeamlessHeader(
       title: AppLocalizations.of(context)!.clipboard,
-      subtitle: "Overview",
+      subtitle: AppLocalizations.of(context)!.overview,
       showBackButton: false,
       actions: [
         // View Toggle
@@ -594,12 +594,36 @@ class _DashboardScreenState extends State<DashboardScreen>
               crossAxisSpacing: 16,
               childAspectRatio: 1.2,
               children: [
-                _buildColorOption(AppColors.auroraPink, "Aurora", theme),
-                _buildColorOption(AppColors.cosmicIndigo, "Cosmic", theme),
-                _buildColorOption(AppColors.nebulaViolet, "Nebula", theme),
-                _buildColorOption(AppColors.starlightTeal, "Starlight", theme),
-                _buildColorOption(AppColors.solarAmber, "Solar", theme),
-                _buildColorOption(AppColors.novaEmerald, "Nova", theme),
+                _buildColorOption(
+                  AppColors.auroraPink,
+                  AppLocalizations.of(context)!.colorAurora,
+                  theme,
+                ),
+                _buildColorOption(
+                  AppColors.cosmicIndigo,
+                  AppLocalizations.of(context)!.colorCosmic,
+                  theme,
+                ),
+                _buildColorOption(
+                  AppColors.nebulaViolet,
+                  AppLocalizations.of(context)!.colorNebula,
+                  theme,
+                ),
+                _buildColorOption(
+                  AppColors.starlightTeal,
+                  AppLocalizations.of(context)!.colorStarlight,
+                  theme,
+                ),
+                _buildColorOption(
+                  AppColors.solarAmber,
+                  AppLocalizations.of(context)!.colorSolar,
+                  theme,
+                ),
+                _buildColorOption(
+                  AppColors.novaEmerald,
+                  AppLocalizations.of(context)!.colorNova,
+                  theme,
+                ),
               ],
             ),
             const SizedBox(height: 24),

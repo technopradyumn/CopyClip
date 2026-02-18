@@ -13,6 +13,7 @@ import '../widgets/canvas_sketch_card.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/widgets/search_header_field.dart';
 import 'package:copyclip/src/core/widgets/dynamic_background.dart';
+import '../../../../l10n/app_localizations.dart';
 
 // Sorting Enum
 enum CanvasSortOption { dateNewest, dateOldest, nameAZ, nameZA }
@@ -125,10 +126,12 @@ class _CanvasScreenState extends State<CanvasScreen>
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Permanently Delete?",
-        content:
-            "This will permanently delete ${_selectedFolderIds.length} folders (and their sketches) and ${_selectedNoteIds.length} other sketches.\n\nThis cannot be undone.",
-        confirmText: "Delete Forever",
+        title: AppLocalizations.of(context)!.permanentlyDelete,
+        content: AppLocalizations.of(context)!.deleteSelectionConfirmation(
+          _selectedFolderIds.length,
+          _selectedNoteIds.length,
+        ),
+        confirmText: AppLocalizations.of(context)!.deleteForever,
         isDestructive: true,
         onConfirm: () {
           final folderBox = Hive.box<CanvasFolder>(
@@ -212,7 +215,7 @@ class _CanvasScreenState extends State<CanvasScreen>
                       extra: {'folderId': defaultFolderId},
                     );
                   },
-                  label: const Text("New Sketch"),
+                  label: Text(AppLocalizations.of(context)!.newSketch),
                   icon: const Icon(CupertinoIcons.pencil),
                   backgroundColor: const Color(0xFF4DB6AC),
                   foregroundColor: Colors.white,
@@ -304,7 +307,11 @@ class _CanvasScreenState extends State<CanvasScreen>
                           if (items.isEmpty) {
                             return Center(
                               child: Text(
-                                _isSearching ? "No results found" : "No items",
+                                _isSearching
+                                    ? AppLocalizations.of(
+                                        context,
+                                      )!.noResultsFound
+                                    : AppLocalizations.of(context)!.noItems,
                                 style: theme.textTheme.bodyLarge?.copyWith(
                                   color: theme.colorScheme.onSurface.withValues(
                                     alpha: 0.5,
@@ -396,7 +403,7 @@ class _CanvasScreenState extends State<CanvasScreen>
     if (_isSelectionMode) {
       final count = _selectedFolderIds.length + _selectedNoteIds.length;
       return SeamlessHeader(
-        title: "$count Selected",
+        title: AppLocalizations.of(context)!.selectedCount(count),
         heroTagPrefix: 'canvas',
         showBackButton: true,
         onBackTap: _exitSelectionMode,
@@ -423,7 +430,7 @@ class _CanvasScreenState extends State<CanvasScreen>
           controller: _searchController,
           focusNode: _searchFocusNode,
           heroTag: 'search_bar_main',
-          hintText: "Search sketches and folders...",
+          hintText: AppLocalizations.of(context)!.searchSketches,
         ),
       );
     }
@@ -436,15 +443,17 @@ class _CanvasScreenState extends State<CanvasScreen>
         final totalNotes = CanvasDatabase().getTotalNotes();
         final totalFolders = CanvasDatabase().getAllFolders().length;
         return SeamlessHeader(
-          title: "Canvas",
-          subtitle: "$totalNotes sketches • $totalFolders folders",
+          title: AppLocalizations.of(context)!.canvas,
+          subtitle: AppLocalizations.of(
+            context,
+          )!.canvasStats(totalNotes, totalFolders),
           icon: CupertinoIcons.scribble,
           iconColor: const Color(0xFF4DB6AC),
           heroTagPrefix: 'canvas',
           actions: [
             PopupMenuButton<CanvasSortOption>(
               icon: const Icon(CupertinoIcons.slider_horizontal_3),
-              tooltip: 'Sort Items',
+              tooltip: AppLocalizations.of(context)!.sortItems,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -466,7 +475,7 @@ class _CanvasScreenState extends State<CanvasScreen>
                           ),
                           const SizedBox(width: 12),
                           Text(
-                            "Newest First",
+                            AppLocalizations.of(context)!.newestFirst,
                             style: TextStyle(
                               color: _currentSort == CanvasSortOption.dateNewest
                                   ? const Color(0xFF4DB6AC)
@@ -493,7 +502,7 @@ class _CanvasScreenState extends State<CanvasScreen>
                           ),
                           const SizedBox(width: 12),
                           Text(
-                            "Oldest First",
+                            AppLocalizations.of(context)!.oldestFirst,
                             style: TextStyle(
                               color: _currentSort == CanvasSortOption.dateOldest
                                   ? const Color(0xFF4DB6AC)
@@ -520,7 +529,7 @@ class _CanvasScreenState extends State<CanvasScreen>
                           ),
                           const SizedBox(width: 12),
                           Text(
-                            "Name (A-Z)",
+                            AppLocalizations.of(context)!.sortNameAZ,
                             style: TextStyle(
                               color: _currentSort == CanvasSortOption.nameAZ
                                   ? const Color(0xFF4DB6AC)
@@ -547,7 +556,7 @@ class _CanvasScreenState extends State<CanvasScreen>
                           ),
                           const SizedBox(width: 12),
                           Text(
-                            "Name (Z-A)",
+                            AppLocalizations.of(context)!.sortNameZA,
                             style: TextStyle(
                               color: _currentSort == CanvasSortOption.nameZA
                                   ? const Color(0xFF4DB6AC)
@@ -629,13 +638,15 @@ class _CanvasScreenState extends State<CanvasScreen>
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Create Folder'),
+        title: Text(AppLocalizations.of(context)!.createFolder),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: controller,
-              decoration: const InputDecoration(hintText: 'Folder name...'),
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.folderNameHint,
+              ),
               autofocus: true,
             ),
             const SizedBox(height: 16),
@@ -675,7 +686,7 @@ class _CanvasScreenState extends State<CanvasScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -690,7 +701,7 @@ class _CanvasScreenState extends State<CanvasScreen>
                 Navigator.pop(ctx);
               }
             },
-            child: const Text('Create'),
+            child: Text(AppLocalizations.of(context)!.create),
           ),
         ],
       ),

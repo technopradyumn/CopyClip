@@ -25,6 +25,7 @@ import '../../../../features/premium/presentation/widgets/premium_lock_dialog.da
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final Note? note;
@@ -187,7 +188,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                 child: TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    'Done',
+                    AppLocalizations.of(context)!.done,
                     style: TextStyle(
                       color: primaryColor,
                       fontSize: 16,
@@ -308,7 +309,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => GlassDialog(
           title: "Note Theme",
-          confirmText: "Save",
+          confirmText: AppLocalizations.of(context)!.save,
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -491,7 +492,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
         centerTitle: false,
         titleSpacing: 0,
         title: AnimatedTopBarTitle(
-          title: _editingNote == null ? 'New Note' : 'Edit Note',
+          title: _editingNote == null
+              ? AppLocalizations.of(context)!.newNote
+              : AppLocalizations.of(context)!.editNote,
           icon: CupertinoIcons.doc_text,
           iconHeroTag: 'notes_icon',
           titleHeroTag: 'notes_title',
@@ -500,19 +503,19 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
         actions: [
           IconButton(
             icon: Icon(CupertinoIcons.paintbrush, color: contrastColor),
-            tooltip: 'Change Color',
+            tooltip: AppLocalizations.of(context)!.changeColor,
             onPressed: _showColorPicker,
           ),
           IconButton(
             icon: Icon(CupertinoIcons.doc_on_doc, color: contrastColor),
-            tooltip: 'Copy Content',
+            tooltip: AppLocalizations.of(context)!.copyContent,
             onPressed: () {
               final cleanText = _getCleanPlainText();
               if (cleanText.isNotEmpty) {
                 Clipboard.setData(ClipboardData(text: cleanText));
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: const Text("Content copied"),
+                    content: Text(AppLocalizations.of(context)!.contentCopied),
                     behavior: SnackBarBehavior.floating,
                     backgroundColor: contrastColor,
                   ),
@@ -537,7 +540,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                     Clipboard.setData(ClipboardData(text: cleanText));
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: const Text("Content copied"),
+                        content: Text(
+                          AppLocalizations.of(context)!.contentCopied,
+                        ),
                         behavior: SnackBarBehavior.floating,
                         backgroundColor: contrastColor,
                       ),
@@ -561,9 +566,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                     showDialog(
                       context: context,
                       builder: (ctx) => GlassDialog(
-                        title: "Move to Bin?",
-                        content: "You can restore this note later.",
-                        confirmText: "Move",
+                        title: AppLocalizations.of(context)!.moveToBinQuestion,
+                        content: AppLocalizations.of(context)!.restoreNoteLater,
+                        confirmText: AppLocalizations.of(context)!.move,
                         isDestructive: true,
                         onConfirm: () {
                           Navigator.pop(ctx); // Close dialog
@@ -583,23 +588,23 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
             itemBuilder: (ctx) {
               final isPremium = ctx.read<PremiumBloc>().state.isPremium;
               return [
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'color',
                   child: Row(
                     children: [
                       Icon(CupertinoIcons.paintbrush, size: 18),
                       SizedBox(width: 12),
-                      Text("Change Color"),
+                      Text(AppLocalizations.of(context)!.changeColor),
                     ],
                   ),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'copy',
                   child: Row(
                     children: [
                       Icon(CupertinoIcons.doc_on_doc, size: 18),
                       SizedBox(width: 12),
-                      Text("Copy Content"),
+                      Text(AppLocalizations.of(context)!.copyContent),
                     ],
                   ),
                 ),
@@ -609,7 +614,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                     children: [
                       const Icon(CupertinoIcons.share, size: 18),
                       const SizedBox(width: 12),
-                      const Text("Export as PDF"),
+                      Text(AppLocalizations.of(context)!.exportAsPdf),
                       // Premium Star Icon
                       if (!isPremium) ...[
                         const Spacer(),
@@ -622,13 +627,16 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                     ],
                   ),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'delete',
                   child: Row(
                     children: [
                       Icon(CupertinoIcons.trash, size: 18, color: Colors.red),
                       SizedBox(width: 12),
-                      Text("Delete", style: TextStyle(color: Colors.red)),
+                      Text(
+                        AppLocalizations.of(context)!.delete,
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ],
                   ),
                 ),
@@ -669,7 +677,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                                 color: contrastColor,
                               ),
                               decoration: InputDecoration(
-                                hintText: 'Title (Optional)',
+                                hintText: AppLocalizations.of(
+                                  context,
+                                )!.titleOptional,
                                 border: InputBorder.none,
                                 isDense: true,
                                 hintStyle: TextStyle(

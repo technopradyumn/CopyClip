@@ -12,6 +12,7 @@ import '../widgets/canvas_sketch_card.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/widgets/search_header_field.dart';
 import '../../../../core/widgets/dynamic_background.dart';
+import '../../../../l10n/app_localizations.dart';
 
 // Sorting options for the folder view
 enum FolderSortOption { dateNewest, dateOldest, nameAZ, nameZA }
@@ -102,10 +103,11 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete Sketches?",
-        content:
-            "Delete ${_selectedNoteIds.length} sketches? This cannot be undone.",
-        confirmText: "Delete",
+        title: AppLocalizations.of(context)!.deleteSketchesQuestion,
+        content: AppLocalizations.of(
+          context,
+        )!.deleteSketchesConfirmation(_selectedNoteIds.length),
+        confirmText: AppLocalizations.of(context)!.delete,
         isDestructive: true,
         onConfirm: () {
           for (var id in _selectedNoteIds) {
@@ -180,7 +182,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
                 child: FloatingActionButton.extended(
                   onPressed: () => _createNewCanvas(context),
                   icon: const Icon(CupertinoIcons.add),
-                  label: const Text('New Sketch'),
+                  label: Text(AppLocalizations.of(context)!.newSketch),
                   backgroundColor: _folder.color,
                   foregroundColor: Colors.white,
                 ),
@@ -237,16 +239,20 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
                         return Center(
                           child: EmptyStateWidget(
                             message: _isSearching
-                                ? "No sketches found"
-                                : "No drawings yet",
+                                ? AppLocalizations.of(context)!.noSketchesFound
+                                : AppLocalizations.of(context)!.noDrawingsYet,
                             subMessage: _isSearching
-                                ? "Try adjusting your search or creating a new sketch."
-                                : "Unleash your creativity on the canvas!",
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.noSketchesFoundSub
+                                : AppLocalizations.of(context)!.canvasIntro,
                             assetPath: "assets/images/canvas_empty.svg",
                             onAction: _isSearching
                                 ? null
                                 : () => _createNewCanvas(context),
-                            actionLabel: _isSearching ? null : "New Canvas",
+                            actionLabel: _isSearching
+                                ? null
+                                : AppLocalizations.of(context)!.newCanvas,
                           ),
                         );
                       }
@@ -301,7 +307,9 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
   Widget _buildHeader(ThemeData theme, ColorScheme colorScheme) {
     if (_isSelectionMode) {
       return SeamlessHeader(
-        title: "${_selectedNoteIds.length} Selected",
+        title: AppLocalizations.of(
+          context,
+        )!.selectedCount(_selectedNoteIds.length),
         iconHeroTag: 'folder_${widget.folderId}',
         titleHeroTag: 'folder_name_${widget.folderId}',
         showBackButton: true,
@@ -330,7 +338,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
           controller: _searchController,
           focusNode: _searchFocusNode,
           heroTag: 'search_bar_folder',
-          hintText: "Search in ${_folder.name}...",
+          hintText: AppLocalizations.of(context)!.searchInFolder(_folder.name),
         ),
       );
     }
@@ -343,7 +351,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
         final count = CanvasDatabase().getNoteCount(widget.folderId);
         return SeamlessHeader(
           title: _folder.name,
-          subtitle: '$count sketches',
+          subtitle: AppLocalizations.of(context)!.sketchesCount(count),
           icon: CupertinoIcons.folder_fill,
           iconColor: _folder.color,
           iconHeroTag: 'folder_${widget.folderId}',
@@ -354,7 +362,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              tooltip: 'Sort Sketches',
+              tooltip: AppLocalizations.of(context)!.sortSketches,
               onSelected: (FolderSortOption result) {
                 setState(() => _currentSort = result);
               },
@@ -373,7 +381,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
                           ),
                           const SizedBox(width: 12),
                           Text(
-                            "Newest First",
+                            AppLocalizations.of(context)!.newestFirst,
                             style: TextStyle(
                               color: _currentSort == FolderSortOption.dateNewest
                                   ? theme.colorScheme.primary
@@ -400,7 +408,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
                           ),
                           const SizedBox(width: 12),
                           Text(
-                            "Oldest First",
+                            AppLocalizations.of(context)!.oldestFirst,
                             style: TextStyle(
                               color: _currentSort == FolderSortOption.dateOldest
                                   ? theme.colorScheme.primary
@@ -427,7 +435,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
                           ),
                           const SizedBox(width: 12),
                           Text(
-                            "Name (A-Z)",
+                            AppLocalizations.of(context)!.sortNameAZ,
                             style: TextStyle(
                               color: _currentSort == FolderSortOption.nameAZ
                                   ? theme.colorScheme.primary
@@ -454,7 +462,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
                           ),
                           const SizedBox(width: 12),
                           Text(
-                            "Name (Z-A)",
+                            AppLocalizations.of(context)!.sortNameZA,
                             style: TextStyle(
                               color: _currentSort == FolderSortOption.nameZA
                                   ? theme.colorScheme.primary
@@ -477,14 +485,17 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
             PopupMenuButton(
               icon: const Icon(CupertinoIcons.ellipsis_vertical),
               itemBuilder: (context) => [
-                const PopupMenuItem(value: 'rename', child: Text('Rename')),
-                const PopupMenuItem(
-                  value: 'color',
-                  child: Text('Change Color'),
+                PopupMenuItem(
+                  value: 'rename',
+                  child: Text(AppLocalizations.of(context)!.rename),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
+                  value: 'color',
+                  child: Text(AppLocalizations.of(context)!.changeColor),
+                ),
+                PopupMenuItem(
                   value: 'delete',
-                  child: Text('Delete Folder'),
+                  child: Text(AppLocalizations.of(context)!.deleteFolder),
                 ),
               ],
               onSelected: (value) {
@@ -514,10 +525,12 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Rename Folder'),
+        title: Text(AppLocalizations.of(context)!.renameFolder),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(hintText: 'Folder name...'),
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!.folderNameHint,
+          ),
           autofocus: true,
         ),
         actions: [
@@ -559,7 +572,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
       builder: (ctx) => AlertDialog(
         backgroundColor: theme.colorScheme.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text('Choose Color'),
+        title: Text(AppLocalizations.of(context)!.chooseColor),
         content: SingleChildScrollView(
           child: Wrap(
             spacing: 12,
@@ -595,7 +608,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
         ],
       ),
@@ -606,14 +619,12 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete Folder?'),
-        content: const Text(
-          'All sketches in this folder will be deleted permanently.',
-        ),
+        title: Text(AppLocalizations.of(context)!.deleteFolderQuestion),
+        content: Text(AppLocalizations.of(context)!.deleteFolderConfirmation),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -621,7 +632,10 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
               Navigator.pop(ctx); // Close dialog
               context.pop(); // Go back to main screen
             },
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+            child: Text(
+              AppLocalizations.of(context)!.delete,
+              style: TextStyle(color: Colors.red),
+            ),
           ),
         ],
       ),

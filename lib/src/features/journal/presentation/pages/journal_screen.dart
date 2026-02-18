@@ -53,21 +53,13 @@ class _JournalScreenState extends State<JournalScreen> {
   String _searchQuery = "";
   JournalSortOption _currentSort = JournalSortOption.custom;
 
-  // Daily Wisdom Quote
-  final List<String> _quotes = [
-    "The best way to predict the future is to create it.",
-    "Wealth consists not in having great possessions, but in having few wants.",
-    "Time is the ultimate currency.",
-    "Success is not final, failure is not fatal.",
-    "Focus on the solution, not the problem.",
-    "Your network is your net worth.",
-  ];
-  late String _dailyQuote;
+  // Daily Wisdom Quote Index
+  late int _dailyQuoteIndex;
 
   @override
   void initState() {
     super.initState();
-    _dailyQuote = _quotes[Random().nextInt(_quotes.length)];
+    _dailyQuoteIndex = Random().nextInt(6);
 
     // Ensure box is loaded before use
     _ensureBoxLoaded();
@@ -99,6 +91,25 @@ class _JournalScreenState extends State<JournalScreen> {
     _searchController.dispose();
     _filteredEntriesNotifier.dispose();
     super.dispose();
+  }
+
+  String _getDailyQuote(BuildContext context) {
+    if (!mounted) return "";
+    final loc = AppLocalizations.of(context);
+    if (loc == null) return "";
+
+    final quotes = [
+      loc.dailyQuote1,
+      loc.dailyQuote2,
+      loc.dailyQuote3,
+      loc.dailyQuote4,
+      loc.dailyQuote5,
+      loc.dailyQuote6,
+    ];
+
+    if (_dailyQuoteIndex >= quotes.length) _dailyQuoteIndex = 0;
+
+    return quotes[_dailyQuoteIndex];
   }
 
   // --- DATA LOGIC ---
@@ -183,7 +194,7 @@ class _JournalScreenState extends State<JournalScreen> {
         ? "\nTags: #${entry.tags.join(' #')}"
         : "";
 
-    return "📅 $dateStr\nMood: ${_getMoodEmoji(entry.mood)} ${entry.mood}\n\nTITLE: ${entry.title}\n--------------------------\n${body.trim()}\n$tagsStr";
+    return "${AppLocalizations.of(context)!.exportDate(dateStr)}\n${AppLocalizations.of(context)!.exportMood(_getMoodEmoji(entry.mood), entry.mood)}\n\n${AppLocalizations.of(context)!.exportTitle(entry.title)}\n--------------------------\n${body.trim()}${entry.tags.isNotEmpty ? AppLocalizations.of(context)!.exportTags(tagsStr) : ''}";
   }
 
   String _getMoodEmoji(String mood) {
@@ -368,7 +379,7 @@ class _JournalScreenState extends State<JournalScreen> {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            _dailyQuote,
+                            _getDailyQuote(context),
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: onSurfaceColor.withValues(alpha: 0.7),
                               fontStyle: FontStyle.italic,

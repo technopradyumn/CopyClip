@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/dynamic_background.dart';
@@ -296,7 +297,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
           // Removed setState onChanged; handled by listener
           style: TextStyle(color: onSurface, fontSize: 14),
           decoration: InputDecoration(
-            hintText: "Search in this day...",
+            hintText: AppLocalizations.of(context)!.searchThisDay,
             hintStyle: TextStyle(
               color: onSurface.withValues(alpha: 0.4),
               fontSize: 14,
@@ -336,9 +337,9 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
             child: FilterChip(
               label: Text(
                 filter == "Todo"
-                    ? "To-Dos"
+                    ? AppLocalizations.of(context)!.todos
                     : filter == "Expense"
-                    ? "Finance"
+                    ? AppLocalizations.of(context)!.finance
                     : filter,
                 style: TextStyle(
                   fontSize: 12,
@@ -376,8 +377,8 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
   Widget _buildEmptyState(Color onSurface) {
     return Center(
       child: EmptyStateWidget(
-        message: "No items for this date",
-        subMessage: "Enjoy your free time!",
+        message: AppLocalizations.of(context)!.noItemsForDate,
+        subMessage: AppLocalizations.of(context)!.enjoyFreeTime,
         assetPath: "assets/images/date_empty.svg",
       ),
     );
@@ -472,9 +473,9 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete Item?",
-        content: "This will move the item to the recycle bin.",
-        confirmText: "Delete",
+        title: AppLocalizations.of(context)!.deleteItemQuestion,
+        content: AppLocalizations.of(context)!.deleteItemConfirmation,
+        confirmText: AppLocalizations.of(context)!.delete,
         isDestructive: true,
         onConfirm: () {
           final dynamic item = res.argument;

@@ -237,7 +237,9 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
       switch (_selectedPlatform) {
         case SocialPlatformType.instagram:
           if (_mediaPaths.isNotEmpty) {
-            final mode = await _showShareModeDialog("Instagram");
+            final mode = await _showShareModeDialog(
+              AppLocalizations.of(context)!.instagram,
+            );
             if (mode == 'story') {
               response = await _appinioSocialShare.android
                   .shareToInstagramStory(
@@ -270,7 +272,9 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
         case SocialPlatformType.facebook:
           // Text already copied
           if (_mediaPaths.isNotEmpty) {
-            final mode = await _showShareModeDialog("Facebook");
+            final mode = await _showShareModeDialog(
+              AppLocalizations.of(context)!.facebook,
+            );
             if (mode == 'story') {
               response = await _appinioSocialShare.android.shareToFacebookStory(
                 "facebook_app_id",
@@ -354,8 +358,10 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('TikTok sharing requires a video/image'),
+              SnackBar(
+                content: Text(
+                  AppLocalizations.of(context)!.tiktokSharingRequiresVideoImage,
+                ),
               ),
             );
           }
@@ -365,12 +371,12 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
         default:
           if (_mediaPaths.length > 1) {
             response = await _appinioSocialShare.android.shareFilesToSystem(
-              "Share",
+              AppLocalizations.of(context)!.share,
               _mediaPaths,
             );
           } else {
             response = await _appinioSocialShare.android.shareToSystem(
-              "Share",
+              AppLocalizations.of(context)!.share,
               plainText,
               _mediaPaths.isNotEmpty ? _mediaPaths.first : null,
             );
@@ -383,9 +389,13 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
     } catch (e) {
       debugPrint("Error sharing: $e");
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Error sharing: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)!.errorSharing(e.toString()),
+            ),
+          ),
+        );
       }
     } finally {
       if (mounted) setState(() => _isSharing = false);
@@ -517,15 +527,12 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // ... Titles (Keep same)
-                          Hero(
-                            tag: 'social_post_title',
-                            child: Material(
-                              type: MaterialType.transparency,
-                              child: Text(
-                                'Social Post',
-                                style: theme.textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          Material(
+                            type: MaterialType.transparency,
+                            child: Text(
+                              AppLocalizations.of(context)!.socialPost,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),

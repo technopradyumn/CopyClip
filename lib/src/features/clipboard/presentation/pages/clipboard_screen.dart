@@ -7,6 +7,7 @@ import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:copyclip/src/core/const/constant.dart';
+import '../../../../l10n/app_localizations.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
@@ -181,9 +182,9 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Move to Bin?",
-        content: "You can restore it later.",
-        confirmText: "Move",
+        title: AppLocalizations.of(context)!.moveToBinItem,
+        content: AppLocalizations.of(context)!.moveToBinConfirmation,
+        confirmText: AppLocalizations.of(context)!.move,
         isDestructive: true,
         onConfirm: () {
           Navigator.pop(ctx);
@@ -215,9 +216,9 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete All?",
-        content: "Move all clips to Recycle Bin?",
-        confirmText: "Delete All",
+        title: AppLocalizations.of(context)!.deleteAllQuestion,
+        content: AppLocalizations.of(context)!.moveToRecycleBin,
+        confirmText: AppLocalizations.of(context)!.deleteAll,
         isDestructive: true,
         onConfirm: () {
           Navigator.pop(ctx);
@@ -323,7 +324,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
                     controller: _searchController,
                     style: theme.textTheme.bodyMedium,
                     decoration: InputDecoration(
-                      hintText: 'Search clips...',
+                      hintText: AppLocalizations.of(context)!.searchClips,
                       hintStyle: theme.textTheme.bodyMedium?.copyWith(
                         color: onSurfaceColor.withValues(alpha: 0.5),
                       ),
@@ -362,11 +363,15 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
                             hasScrollBody: false,
                             child: Center(
                               child: EmptyStateWidget(
-                                message: "Clipboard is empty",
+                                message: AppLocalizations.of(
+                                  context,
+                                )!.clipboardEmpty,
                                 subMessage: "Copied items will appear here.",
                                 assetPath: "assets/images/clipboard_empty.svg",
                                 onAction: _addClipboardItem,
-                                actionLabel: "Add Item",
+                                actionLabel: AppLocalizations.of(
+                                  context,
+                                )!.addItem,
                               ),
                             ),
                           );
@@ -498,7 +503,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
 
     if (_isSelectionMode) {
       return SeamlessHeader(
-        title: '${_selectedIds.length} Selected',
+        title: AppLocalizations.of(context)!.selectedItems(_selectedIds.length),
         heroTagPrefix: 'clipboard',
         showBackButton: true,
         onBackTap: () => setState(() {
@@ -519,8 +524,8 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
     }
 
     return SeamlessHeader(
-      title: "Clipboard",
-      subtitle: "Recent Clips",
+      title: AppLocalizations.of(context)!.clipboard,
+      subtitle: AppLocalizations.of(context)!.recentClips,
       icon: CupertinoIcons.doc_on_clipboard,
       iconColor: FeatureColors.clipboard,
       heroTagPrefix: 'clipboard',
@@ -535,7 +540,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
         // SORT MENU
         PopupMenuButton<ClipSortOption>(
           icon: Icon(CupertinoIcons.slider_horizontal_3, color: onSurfaceColor),
-          tooltip: 'Sort Clips',
+          tooltip: AppLocalizations.of(context)!.sortItems,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -560,7 +565,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Custom Order",
+                        AppLocalizations.of(context)!.customOrder,
                         style: TextStyle(
                           color: _currentSort == ClipSortOption.custom
                               ? FeatureColors.clipboard
@@ -586,7 +591,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Newest First",
+                        AppLocalizations.of(context)!.newestFirst,
                         style: TextStyle(
                           color: _currentSort == ClipSortOption.dateNewest
                               ? FeatureColors.clipboard
@@ -612,7 +617,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Oldest First",
+                        AppLocalizations.of(context)!.oldestFirst,
                         style: TextStyle(
                           color: _currentSort == ClipSortOption.dateOldest
                               ? FeatureColors.clipboard
@@ -664,8 +669,8 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
   void _copyToClipboard(ClipboardItem item) {
     Clipboard.setData(ClipboardData(text: _getCleanText(item.content)));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Copied!"),
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.copied),
         behavior: SnackBarBehavior.floating,
       ),
     );

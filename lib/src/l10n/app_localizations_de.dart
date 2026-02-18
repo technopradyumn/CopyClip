@@ -42,6 +42,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get save => 'Speichern';
 
   @override
+  String get create => 'Create';
+
+  @override
   String get cancel => 'Abbrechen';
 
   @override
@@ -768,4 +771,418 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get deleteSelected => 'Delete Selected';
+
+  @override
+  String get taskCompletedExclamation => 'Task completed!';
+
+  @override
+  String get taskUncompletedExclamation => 'Task uncompleted';
+
+  @override
+  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+
+  @override
+  String clipboardSavedContent(Object content) {
+    return 'Clipboard saved: $content';
+  }
+
+  @override
+  String get overview => 'Overview';
+
+  @override
+  String get colorAurora => 'Aurora';
+
+  @override
+  String get colorCosmic => 'Cosmic';
+
+  @override
+  String get colorNebula => 'Nebula';
+
+  @override
+  String get colorStarlight => 'Starlight';
+
+  @override
+  String get colorSolar => 'Solar';
+
+  @override
+  String get colorNova => 'Nova';
+
+  @override
+  String get loadingStepLoading => 'Loading...';
+
+  @override
+  String get loadingStepDatabase => 'Setting up database...';
+
+  @override
+  String get loadingStepSystem => 'Configuring system...';
+
+  @override
+  String get loadingStepReady => 'Ready';
+
+  @override
+  String get productivityCompanion => 'Your productivity companion';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get newNote => 'New Note';
+
+  @override
+  String get changeColor => 'Change Color';
+
+  @override
+  String get copyContent => 'Copy Content';
+
+  @override
+  String get titleOptional => 'Title (Optional)';
+
+  @override
+  String get exportAsPdf => 'Export as PDF';
+
+  @override
+  String get taskDueNow => 'Task Due Now';
+
+  @override
+  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+
+  @override
+  String get restoreTaskLater =>
+      'You can restore this task later from settings.';
+
+  @override
+  String get newTask => 'New Task';
+
+  @override
+  String get editTask => 'Edit Task';
+
+  @override
+  String get undo => 'Undo';
+
+  @override
+  String get redo => 'Redo';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get categoryHint => 'e.g. Work, Gym';
+
+  @override
+  String get whatNeedsToBeDone => 'What needs to be done?';
+
+  @override
+  String get enterTaskDetails => 'Enter task details...';
+
+  @override
+  String get setDueDate => 'Set Due Date';
+
+  @override
+  String get dueDate => 'Due Date';
+
+  @override
+  String get expenseTitle => 'Expense';
+
+  @override
+  String searchInCurrency(String currency) {
+    return 'Search in $currency...';
+  }
+
+  @override
+  String get sortAndFilter => 'Sort & Filter';
+
+  @override
+  String get sortBy => 'SORT BY';
+
+  @override
+  String get highestAmount => 'Highest Amount';
+
+  @override
+  String get lowestAmount => 'Lowest Amount';
+
+  @override
+  String get moreFilters => 'More Filters...';
+
+  @override
+  String get filterExpenses => 'Filter Expenses';
+
+  @override
+  String get transactionType => 'Transaction Type';
+
+  @override
+  String get categories => 'Categories';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get income => 'Income';
+
+  @override
+  String get expense => 'Expense';
+
+  @override
+  String get reset => 'Reset';
+
+  @override
+  String get apply => 'Apply';
+
+  @override
+  String newExpense(String currency) {
+    return 'New $currency';
+  }
+
+  @override
+  String errorLoadingData(String error) {
+    return 'Error loading data.\n\n$error';
+  }
+
+  @override
+  String get dailyQuote1 =>
+      'The best way to predict the future is to create it.';
+
+  @override
+  String get dailyQuote2 =>
+      'Wealth consists not in having great possessions, but in having few wants.';
+
+  @override
+  String get dailyQuote3 => 'Time is the ultimate currency.';
+
+  @override
+  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+
+  @override
+  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+
+  @override
+  String get dailyQuote6 => 'Your network is your net worth.';
+
+  @override
+  String get moodHappy => 'Happy';
+
+  @override
+  String get moodExcited => 'Excited';
+
+  @override
+  String get moodNeutral => 'Neutral';
+
+  @override
+  String get moodSad => 'Sad';
+
+  @override
+  String get moodStressed => 'Stressed';
+
+  @override
+  String exportDate(String date) {
+    return '📅 $date';
+  }
+
+  @override
+  String exportMood(String emoji, String mood) {
+    return 'Mood: $emoji $mood';
+  }
+
+  @override
+  String exportTitle(String title) {
+    return 'TITLE: $title';
+  }
+
+  @override
+  String exportTags(String tags) {
+    return '\nTags: $tags';
+  }
+
+  @override
+  String get instagram => 'Instagram';
+
+  @override
+  String get facebook => 'Facebook';
+
+  @override
+  String get tiktok => 'TikTok';
+
+  @override
+  String get newSketch => 'New Sketch';
+
+  @override
+  String get searchSketches => 'Search sketches and folders...';
+
+  @override
+  String get noResultsFound => 'No results found';
+
+  @override
+  String get noItems => 'No items';
+
+  @override
+  String get noDrawingsYet => 'No drawings yet';
+
+  @override
+  String get canvasIntro => 'Unleash your creativity on the canvas!';
+
+  @override
+  String get newCanvas => 'New Canvas';
+
+  @override
+  String get rename => 'Rename';
+
+  @override
+  String get deleteFolder => 'Delete Folder';
+
+  @override
+  String get deleteSketchesQuestion => 'Delete Sketches?';
+
+  @override
+  String get deleteFolderConfirmation =>
+      'All sketches in this folder will be deleted permanently.';
+
+  @override
+  String get renameFolder => 'Rename Folder';
+
+  @override
+  String get chooseColor => 'Choose Color';
+
+  @override
+  String get deleteFolderQuestion => 'Delete Folder?';
+
+  @override
+  String get searchClips => 'Search clips...';
+
+  @override
+  String get clipboardEmpty => 'Clipboard is empty';
+
+  @override
+  String get addItem => 'Add Item';
+
+  @override
+  String get clipColor => 'Clip Color';
+
+  @override
+  String get newClip => 'New Clip';
+
+  @override
+  String get editClip => 'Edit Clip';
+
+  @override
+  String get restoreClipLater => 'You can restore this clip later.';
+
+  @override
+  String get upcomingEvents => 'Upcoming Events';
+
+  @override
+  String get dataDistribution => 'DATA DISTRIBUTION';
+
+  @override
+  String get taskProgress => 'TASK PROGRESS';
+
+  @override
+  String get quickStats => 'QUICK STATS';
+
+  @override
+  String get taskCompletion => 'Task Completion';
+
+  @override
+  String get noItemsForDate => 'No items for this date';
+
+  @override
+  String get enjoyFreeTime => 'Enjoy your free time!';
+
+  @override
+  String get searchThisDay => 'Search in this day...';
+
+  @override
+  String get finance => 'Finance';
+
+  @override
+  String get permanentlyDelete => 'Permanently Delete?';
+
+  @override
+  String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
+    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+  }
+
+  @override
+  String get deleteForever => 'Delete Forever';
+
+  @override
+  String selectedCount(int count) {
+    return '$count Selected';
+  }
+
+  @override
+  String canvasStats(int notes, int folders) {
+    return '$notes sketches • $folders folders';
+  }
+
+  @override
+  String get sortItems => 'Sort Items';
+
+  @override
+  String get sortNameAZ => 'Name (A-Z)';
+
+  @override
+  String get sortNameZA => 'Name (Z-A)';
+
+  @override
+  String get createFolder => 'Create Folder';
+
+  @override
+  String get folderNameHint => 'Folder name...';
+
+  @override
+  String deleteSketchesConfirmation(int count) {
+    return 'Delete $count sketches? This cannot be undone.';
+  }
+
+  @override
+  String get noSketchesFound => 'No sketches found';
+
+  @override
+  String get noSketchesFoundSub =>
+      'Try adjusting your search or creating a new sketch.';
+
+  @override
+  String searchInFolder(String folder) {
+    return 'Search in $folder...';
+  }
+
+  @override
+  String sketchesCount(int count) {
+    return '$count sketches';
+  }
+
+  @override
+  String get sortSketches => 'Sort Sketches';
+
+  @override
+  String get calendarScreenTitle => 'Calendar';
+
+  @override
+  String get dailyActivity => 'Daily Activity';
+
+  @override
+  String get deleteItemQuestion => 'Delete Item?';
+
+  @override
+  String get deleteItemConfirmation =>
+      'This will move the item to the recycle bin.';
+
+  @override
+  String get moveToBinItem => 'Move to Bin?';
+
+  @override
+  String get moveToBinConfirmation => 'You can restore it later.';
+
+  @override
+  String selectedItems(int count) {
+    return '$count Selected';
+  }
+
+  @override
+  String get recentClips => 'Recent Clips';
+
+  @override
+  String get copied => 'Copied!';
+
+  @override
+  String get copiedPlainText => 'Copied plain text';
 }

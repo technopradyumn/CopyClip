@@ -5,76 +5,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-import 'app_localizations_af.dart';
-import 'app_localizations_am.dart';
-import 'app_localizations_ar.dart';
-import 'app_localizations_as.dart';
-import 'app_localizations_az.dart';
-import 'app_localizations_bg.dart';
-import 'app_localizations_bn.dart';
-import 'app_localizations_bs.dart';
-import 'app_localizations_cs.dart';
-import 'app_localizations_da.dart';
 import 'app_localizations_de.dart';
-import 'app_localizations_el.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
-import 'app_localizations_et.dart';
-import 'app_localizations_fa.dart';
-import 'app_localizations_fi.dart';
-import 'app_localizations_fil.dart';
 import 'app_localizations_fr.dart';
-import 'app_localizations_gu.dart';
-import 'app_localizations_he.dart';
 import 'app_localizations_hi.dart';
-import 'app_localizations_hr.dart';
-import 'app_localizations_hu.dart';
-import 'app_localizations_hy.dart';
-import 'app_localizations_id.dart';
-import 'app_localizations_it.dart';
-import 'app_localizations_ja.dart';
-import 'app_localizations_ka.dart';
-import 'app_localizations_kk.dart';
-import 'app_localizations_km.dart';
-import 'app_localizations_kn.dart';
-import 'app_localizations_ko.dart';
-import 'app_localizations_lo.dart';
-import 'app_localizations_lt.dart';
-import 'app_localizations_lv.dart';
-import 'app_localizations_mk.dart';
-import 'app_localizations_ml.dart';
-import 'app_localizations_mn.dart';
-import 'app_localizations_mr.dart';
-import 'app_localizations_ms.dart';
-import 'app_localizations_mt.dart';
-import 'app_localizations_my.dart';
-import 'app_localizations_ne.dart';
-import 'app_localizations_nl.dart';
-import 'app_localizations_no.dart';
-import 'app_localizations_or.dart';
-import 'app_localizations_pa.dart';
-import 'app_localizations_pl.dart';
-import 'app_localizations_pt.dart';
-import 'app_localizations_ro.dart';
-import 'app_localizations_ru.dart';
-import 'app_localizations_si.dart';
-import 'app_localizations_sk.dart';
-import 'app_localizations_sl.dart';
-import 'app_localizations_sq.dart';
-import 'app_localizations_sr.dart';
-import 'app_localizations_sv.dart';
-import 'app_localizations_sw.dart';
-import 'app_localizations_ta.dart';
-import 'app_localizations_te.dart';
-import 'app_localizations_th.dart';
-import 'app_localizations_tr.dart';
-import 'app_localizations_uk.dart';
-import 'app_localizations_ur.dart';
-import 'app_localizations_uz.dart';
-import 'app_localizations_vi.dart';
-import 'app_localizations_xh.dart';
 import 'app_localizations_zh.dart';
-import 'app_localizations_zu.dart';
 
 // ignore_for_file: type=lint
 
@@ -162,76 +98,12 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
-    Locale('af'),
-    Locale('am'),
-    Locale('ar'),
-    Locale('as'),
-    Locale('az'),
-    Locale('bg'),
-    Locale('bn'),
-    Locale('bs'),
-    Locale('cs'),
-    Locale('da'),
     Locale('de'),
-    Locale('el'),
     Locale('en'),
     Locale('es'),
-    Locale('et'),
-    Locale('fa'),
-    Locale('fi'),
-    Locale('fil'),
     Locale('fr'),
-    Locale('gu'),
-    Locale('he'),
     Locale('hi'),
-    Locale('hr'),
-    Locale('hu'),
-    Locale('hy'),
-    Locale('id'),
-    Locale('it'),
-    Locale('ja'),
-    Locale('ka'),
-    Locale('kk'),
-    Locale('km'),
-    Locale('kn'),
-    Locale('ko'),
-    Locale('lo'),
-    Locale('lt'),
-    Locale('lv'),
-    Locale('mk'),
-    Locale('ml'),
-    Locale('mn'),
-    Locale('mr'),
-    Locale('ms'),
-    Locale('mt'),
-    Locale('my'),
-    Locale('ne'),
-    Locale('nl'),
-    Locale('no'),
-    Locale('or'),
-    Locale('pa'),
-    Locale('pl'),
-    Locale('pt'),
-    Locale('ro'),
-    Locale('ru'),
-    Locale('si'),
-    Locale('sk'),
-    Locale('sl'),
-    Locale('sq'),
-    Locale('sr'),
-    Locale('sv'),
-    Locale('sw'),
-    Locale('ta'),
-    Locale('te'),
-    Locale('th'),
-    Locale('tr'),
-    Locale('uk'),
-    Locale('ur'),
-    Locale('uz'),
-    Locale('vi'),
-    Locale('xh'),
     Locale('zh'),
-    Locale('zu'),
   ];
 
   /// No description provided for @settings.
@@ -299,6 +171,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
 
   /// No description provided for @cancel.
   ///
@@ -1643,6 +1521,762 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete Selected'**
   String get deleteSelected;
+
+  /// No description provided for @taskCompletedExclamation.
+  ///
+  /// In en, this message translates to:
+  /// **'Task completed!'**
+  String get taskCompletedExclamation;
+
+  /// No description provided for @taskUncompletedExclamation.
+  ///
+  /// In en, this message translates to:
+  /// **'Task uncompleted'**
+  String get taskUncompletedExclamation;
+
+  /// No description provided for @clipboardUpdatedExclamation.
+  ///
+  /// In en, this message translates to:
+  /// **'Clipboard updated!'**
+  String get clipboardUpdatedExclamation;
+
+  /// No description provided for @clipboardSavedContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Clipboard saved: {content}'**
+  String clipboardSavedContent(Object content);
+
+  /// No description provided for @overview.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get overview;
+
+  /// No description provided for @colorAurora.
+  ///
+  /// In en, this message translates to:
+  /// **'Aurora'**
+  String get colorAurora;
+
+  /// No description provided for @colorCosmic.
+  ///
+  /// In en, this message translates to:
+  /// **'Cosmic'**
+  String get colorCosmic;
+
+  /// No description provided for @colorNebula.
+  ///
+  /// In en, this message translates to:
+  /// **'Nebula'**
+  String get colorNebula;
+
+  /// No description provided for @colorStarlight.
+  ///
+  /// In en, this message translates to:
+  /// **'Starlight'**
+  String get colorStarlight;
+
+  /// No description provided for @colorSolar.
+  ///
+  /// In en, this message translates to:
+  /// **'Solar'**
+  String get colorSolar;
+
+  /// No description provided for @colorNova.
+  ///
+  /// In en, this message translates to:
+  /// **'Nova'**
+  String get colorNova;
+
+  /// No description provided for @loadingStepLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loadingStepLoading;
+
+  /// No description provided for @loadingStepDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'Setting up database...'**
+  String get loadingStepDatabase;
+
+  /// No description provided for @loadingStepSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'Configuring system...'**
+  String get loadingStepSystem;
+
+  /// No description provided for @loadingStepReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get loadingStepReady;
+
+  /// No description provided for @productivityCompanion.
+  ///
+  /// In en, this message translates to:
+  /// **'Your productivity companion'**
+  String get productivityCompanion;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @newNote.
+  ///
+  /// In en, this message translates to:
+  /// **'New Note'**
+  String get newNote;
+
+  /// No description provided for @changeColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Color'**
+  String get changeColor;
+
+  /// No description provided for @copyContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Content'**
+  String get copyContent;
+
+  /// No description provided for @titleOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Title (Optional)'**
+  String get titleOptional;
+
+  /// No description provided for @exportAsPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Export as PDF'**
+  String get exportAsPdf;
+
+  /// No description provided for @taskDueNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Due Now'**
+  String get taskDueNow;
+
+  /// No description provided for @moveTaskToBinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Move Task to Recycle Bin?'**
+  String get moveTaskToBinTitle;
+
+  /// No description provided for @restoreTaskLater.
+  ///
+  /// In en, this message translates to:
+  /// **'You can restore this task later from settings.'**
+  String get restoreTaskLater;
+
+  /// No description provided for @newTask.
+  ///
+  /// In en, this message translates to:
+  /// **'New Task'**
+  String get newTask;
+
+  /// No description provided for @editTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Task'**
+  String get editTask;
+
+  /// No description provided for @undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// No description provided for @redo.
+  ///
+  /// In en, this message translates to:
+  /// **'Redo'**
+  String get redo;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @categoryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Work, Gym'**
+  String get categoryHint;
+
+  /// No description provided for @whatNeedsToBeDone.
+  ///
+  /// In en, this message translates to:
+  /// **'What needs to be done?'**
+  String get whatNeedsToBeDone;
+
+  /// No description provided for @enterTaskDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter task details...'**
+  String get enterTaskDetails;
+
+  /// No description provided for @setDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Due Date'**
+  String get setDueDate;
+
+  /// No description provided for @dueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due Date'**
+  String get dueDate;
+
+  /// No description provided for @expenseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get expenseTitle;
+
+  /// No description provided for @searchInCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Search in {currency}...'**
+  String searchInCurrency(String currency);
+
+  /// No description provided for @sortAndFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort & Filter'**
+  String get sortAndFilter;
+
+  /// No description provided for @sortBy.
+  ///
+  /// In en, this message translates to:
+  /// **'SORT BY'**
+  String get sortBy;
+
+  /// No description provided for @highestAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest Amount'**
+  String get highestAmount;
+
+  /// No description provided for @lowestAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest Amount'**
+  String get lowestAmount;
+
+  /// No description provided for @moreFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'More Filters...'**
+  String get moreFilters;
+
+  /// No description provided for @filterExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Expenses'**
+  String get filterExpenses;
+
+  /// No description provided for @transactionType.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Type'**
+  String get transactionType;
+
+  /// No description provided for @categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get categories;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @income.
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get income;
+
+  /// No description provided for @expense.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get expense;
+
+  /// No description provided for @reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// No description provided for @newExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'New {currency}'**
+  String newExpense(String currency);
+
+  /// No description provided for @errorLoadingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading data.\n\n{error}'**
+  String errorLoadingData(String error);
+
+  /// No description provided for @dailyQuote1.
+  ///
+  /// In en, this message translates to:
+  /// **'The best way to predict the future is to create it.'**
+  String get dailyQuote1;
+
+  /// No description provided for @dailyQuote2.
+  ///
+  /// In en, this message translates to:
+  /// **'Wealth consists not in having great possessions, but in having few wants.'**
+  String get dailyQuote2;
+
+  /// No description provided for @dailyQuote3.
+  ///
+  /// In en, this message translates to:
+  /// **'Time is the ultimate currency.'**
+  String get dailyQuote3;
+
+  /// No description provided for @dailyQuote4.
+  ///
+  /// In en, this message translates to:
+  /// **'Success is not final, failure is not fatal.'**
+  String get dailyQuote4;
+
+  /// No description provided for @dailyQuote5.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus on the solution, not the problem.'**
+  String get dailyQuote5;
+
+  /// No description provided for @dailyQuote6.
+  ///
+  /// In en, this message translates to:
+  /// **'Your network is your net worth.'**
+  String get dailyQuote6;
+
+  /// No description provided for @moodHappy.
+  ///
+  /// In en, this message translates to:
+  /// **'Happy'**
+  String get moodHappy;
+
+  /// No description provided for @moodExcited.
+  ///
+  /// In en, this message translates to:
+  /// **'Excited'**
+  String get moodExcited;
+
+  /// No description provided for @moodNeutral.
+  ///
+  /// In en, this message translates to:
+  /// **'Neutral'**
+  String get moodNeutral;
+
+  /// No description provided for @moodSad.
+  ///
+  /// In en, this message translates to:
+  /// **'Sad'**
+  String get moodSad;
+
+  /// No description provided for @moodStressed.
+  ///
+  /// In en, this message translates to:
+  /// **'Stressed'**
+  String get moodStressed;
+
+  /// No description provided for @exportDate.
+  ///
+  /// In en, this message translates to:
+  /// **'📅 {date}'**
+  String exportDate(String date);
+
+  /// No description provided for @exportMood.
+  ///
+  /// In en, this message translates to:
+  /// **'Mood: {emoji} {mood}'**
+  String exportMood(String emoji, String mood);
+
+  /// No description provided for @exportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'TITLE: {title}'**
+  String exportTitle(String title);
+
+  /// No description provided for @exportTags.
+  ///
+  /// In en, this message translates to:
+  /// **'\nTags: {tags}'**
+  String exportTags(String tags);
+
+  /// No description provided for @instagram.
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram'**
+  String get instagram;
+
+  /// No description provided for @facebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Facebook'**
+  String get facebook;
+
+  /// No description provided for @tiktok.
+  ///
+  /// In en, this message translates to:
+  /// **'TikTok'**
+  String get tiktok;
+
+  /// No description provided for @newSketch.
+  ///
+  /// In en, this message translates to:
+  /// **'New Sketch'**
+  String get newSketch;
+
+  /// No description provided for @searchSketches.
+  ///
+  /// In en, this message translates to:
+  /// **'Search sketches and folders...'**
+  String get searchSketches;
+
+  /// No description provided for @noResultsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
+  String get noResultsFound;
+
+  /// No description provided for @noItems.
+  ///
+  /// In en, this message translates to:
+  /// **'No items'**
+  String get noItems;
+
+  /// No description provided for @noDrawingsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No drawings yet'**
+  String get noDrawingsYet;
+
+  /// No description provided for @canvasIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Unleash your creativity on the canvas!'**
+  String get canvasIntro;
+
+  /// No description provided for @newCanvas.
+  ///
+  /// In en, this message translates to:
+  /// **'New Canvas'**
+  String get newCanvas;
+
+  /// No description provided for @rename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get rename;
+
+  /// No description provided for @deleteFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Folder'**
+  String get deleteFolder;
+
+  /// No description provided for @deleteSketchesQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Sketches?'**
+  String get deleteSketchesQuestion;
+
+  /// No description provided for @deleteFolderConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'All sketches in this folder will be deleted permanently.'**
+  String get deleteFolderConfirmation;
+
+  /// No description provided for @renameFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename Folder'**
+  String get renameFolder;
+
+  /// No description provided for @chooseColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Color'**
+  String get chooseColor;
+
+  /// No description provided for @deleteFolderQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Folder?'**
+  String get deleteFolderQuestion;
+
+  /// No description provided for @searchClips.
+  ///
+  /// In en, this message translates to:
+  /// **'Search clips...'**
+  String get searchClips;
+
+  /// No description provided for @clipboardEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Clipboard is empty'**
+  String get clipboardEmpty;
+
+  /// No description provided for @addItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Item'**
+  String get addItem;
+
+  /// No description provided for @clipColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Clip Color'**
+  String get clipColor;
+
+  /// No description provided for @newClip.
+  ///
+  /// In en, this message translates to:
+  /// **'New Clip'**
+  String get newClip;
+
+  /// No description provided for @editClip.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Clip'**
+  String get editClip;
+
+  /// No description provided for @restoreClipLater.
+  ///
+  /// In en, this message translates to:
+  /// **'You can restore this clip later.'**
+  String get restoreClipLater;
+
+  /// No description provided for @upcomingEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Events'**
+  String get upcomingEvents;
+
+  /// No description provided for @dataDistribution.
+  ///
+  /// In en, this message translates to:
+  /// **'DATA DISTRIBUTION'**
+  String get dataDistribution;
+
+  /// No description provided for @taskProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'TASK PROGRESS'**
+  String get taskProgress;
+
+  /// No description provided for @quickStats.
+  ///
+  /// In en, this message translates to:
+  /// **'QUICK STATS'**
+  String get quickStats;
+
+  /// No description provided for @taskCompletion.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Completion'**
+  String get taskCompletion;
+
+  /// No description provided for @noItemsForDate.
+  ///
+  /// In en, this message translates to:
+  /// **'No items for this date'**
+  String get noItemsForDate;
+
+  /// No description provided for @enjoyFreeTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Enjoy your free time!'**
+  String get enjoyFreeTime;
+
+  /// No description provided for @searchThisDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Search in this day...'**
+  String get searchThisDay;
+
+  /// No description provided for @finance.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
+  String get finance;
+
+  /// No description provided for @permanentlyDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanently Delete?'**
+  String get permanentlyDelete;
+
+  /// No description provided for @deleteSelectionConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently delete {foldersCount} folders (and their sketches) and {sketchesCount} other sketches.\n\nThis cannot be undone.'**
+  String deleteSelectionConfirmation(int foldersCount, int sketchesCount);
+
+  /// No description provided for @deleteForever.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Forever'**
+  String get deleteForever;
+
+  /// No description provided for @selectedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Selected'**
+  String selectedCount(int count);
+
+  /// No description provided for @canvasStats.
+  ///
+  /// In en, this message translates to:
+  /// **'{notes} sketches • {folders} folders'**
+  String canvasStats(int notes, int folders);
+
+  /// No description provided for @sortItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort Items'**
+  String get sortItems;
+
+  /// No description provided for @sortNameAZ.
+  ///
+  /// In en, this message translates to:
+  /// **'Name (A-Z)'**
+  String get sortNameAZ;
+
+  /// No description provided for @sortNameZA.
+  ///
+  /// In en, this message translates to:
+  /// **'Name (Z-A)'**
+  String get sortNameZA;
+
+  /// No description provided for @createFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Folder'**
+  String get createFolder;
+
+  /// No description provided for @folderNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Folder name...'**
+  String get folderNameHint;
+
+  /// No description provided for @deleteSketchesConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {count} sketches? This cannot be undone.'**
+  String deleteSketchesConfirmation(int count);
+
+  /// No description provided for @noSketchesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No sketches found'**
+  String get noSketchesFound;
+
+  /// No description provided for @noSketchesFoundSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your search or creating a new sketch.'**
+  String get noSketchesFoundSub;
+
+  /// No description provided for @searchInFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Search in {folder}...'**
+  String searchInFolder(String folder);
+
+  /// No description provided for @sketchesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sketches'**
+  String sketchesCount(int count);
+
+  /// No description provided for @sortSketches.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort Sketches'**
+  String get sortSketches;
+
+  /// No description provided for @calendarScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get calendarScreenTitle;
+
+  /// No description provided for @dailyActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Activity'**
+  String get dailyActivity;
+
+  /// No description provided for @deleteItemQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Item?'**
+  String get deleteItemQuestion;
+
+  /// No description provided for @deleteItemConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'This will move the item to the recycle bin.'**
+  String get deleteItemConfirmation;
+
+  /// No description provided for @moveToBinItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Move to Bin?'**
+  String get moveToBinItem;
+
+  /// No description provided for @moveToBinConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'You can restore it later.'**
+  String get moveToBinConfirmation;
+
+  /// No description provided for @selectedItems.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Selected'**
+  String selectedItems(int count);
+
+  /// No description provided for @recentClips.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Clips'**
+  String get recentClips;
+
+  /// No description provided for @copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied!'**
+  String get copied;
+
+  /// No description provided for @copiedPlainText.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied plain text'**
+  String get copiedPlainText;
 }
 
 class _AppLocalizationsDelegate
@@ -1656,76 +2290,12 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) => <String>[
-    'af',
-    'am',
-    'ar',
-    'as',
-    'az',
-    'bg',
-    'bn',
-    'bs',
-    'cs',
-    'da',
     'de',
-    'el',
     'en',
     'es',
-    'et',
-    'fa',
-    'fi',
-    'fil',
     'fr',
-    'gu',
-    'he',
     'hi',
-    'hr',
-    'hu',
-    'hy',
-    'id',
-    'it',
-    'ja',
-    'ka',
-    'kk',
-    'km',
-    'kn',
-    'ko',
-    'lo',
-    'lt',
-    'lv',
-    'mk',
-    'ml',
-    'mn',
-    'mr',
-    'ms',
-    'mt',
-    'my',
-    'ne',
-    'nl',
-    'no',
-    'or',
-    'pa',
-    'pl',
-    'pt',
-    'ro',
-    'ru',
-    'si',
-    'sk',
-    'sl',
-    'sq',
-    'sr',
-    'sv',
-    'sw',
-    'ta',
-    'te',
-    'th',
-    'tr',
-    'uk',
-    'ur',
-    'uz',
-    'vi',
-    'xh',
     'zh',
-    'zu',
   ].contains(locale.languageCode);
 
   @override
@@ -1735,146 +2305,18 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'af':
-      return AppLocalizationsAf();
-    case 'am':
-      return AppLocalizationsAm();
-    case 'ar':
-      return AppLocalizationsAr();
-    case 'as':
-      return AppLocalizationsAs();
-    case 'az':
-      return AppLocalizationsAz();
-    case 'bg':
-      return AppLocalizationsBg();
-    case 'bn':
-      return AppLocalizationsBn();
-    case 'bs':
-      return AppLocalizationsBs();
-    case 'cs':
-      return AppLocalizationsCs();
-    case 'da':
-      return AppLocalizationsDa();
     case 'de':
       return AppLocalizationsDe();
-    case 'el':
-      return AppLocalizationsEl();
     case 'en':
       return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
-    case 'et':
-      return AppLocalizationsEt();
-    case 'fa':
-      return AppLocalizationsFa();
-    case 'fi':
-      return AppLocalizationsFi();
-    case 'fil':
-      return AppLocalizationsFil();
     case 'fr':
       return AppLocalizationsFr();
-    case 'gu':
-      return AppLocalizationsGu();
-    case 'he':
-      return AppLocalizationsHe();
     case 'hi':
       return AppLocalizationsHi();
-    case 'hr':
-      return AppLocalizationsHr();
-    case 'hu':
-      return AppLocalizationsHu();
-    case 'hy':
-      return AppLocalizationsHy();
-    case 'id':
-      return AppLocalizationsId();
-    case 'it':
-      return AppLocalizationsIt();
-    case 'ja':
-      return AppLocalizationsJa();
-    case 'ka':
-      return AppLocalizationsKa();
-    case 'kk':
-      return AppLocalizationsKk();
-    case 'km':
-      return AppLocalizationsKm();
-    case 'kn':
-      return AppLocalizationsKn();
-    case 'ko':
-      return AppLocalizationsKo();
-    case 'lo':
-      return AppLocalizationsLo();
-    case 'lt':
-      return AppLocalizationsLt();
-    case 'lv':
-      return AppLocalizationsLv();
-    case 'mk':
-      return AppLocalizationsMk();
-    case 'ml':
-      return AppLocalizationsMl();
-    case 'mn':
-      return AppLocalizationsMn();
-    case 'mr':
-      return AppLocalizationsMr();
-    case 'ms':
-      return AppLocalizationsMs();
-    case 'mt':
-      return AppLocalizationsMt();
-    case 'my':
-      return AppLocalizationsMy();
-    case 'ne':
-      return AppLocalizationsNe();
-    case 'nl':
-      return AppLocalizationsNl();
-    case 'no':
-      return AppLocalizationsNo();
-    case 'or':
-      return AppLocalizationsOr();
-    case 'pa':
-      return AppLocalizationsPa();
-    case 'pl':
-      return AppLocalizationsPl();
-    case 'pt':
-      return AppLocalizationsPt();
-    case 'ro':
-      return AppLocalizationsRo();
-    case 'ru':
-      return AppLocalizationsRu();
-    case 'si':
-      return AppLocalizationsSi();
-    case 'sk':
-      return AppLocalizationsSk();
-    case 'sl':
-      return AppLocalizationsSl();
-    case 'sq':
-      return AppLocalizationsSq();
-    case 'sr':
-      return AppLocalizationsSr();
-    case 'sv':
-      return AppLocalizationsSv();
-    case 'sw':
-      return AppLocalizationsSw();
-    case 'ta':
-      return AppLocalizationsTa();
-    case 'te':
-      return AppLocalizationsTe();
-    case 'th':
-      return AppLocalizationsTh();
-    case 'tr':
-      return AppLocalizationsTr();
-    case 'uk':
-      return AppLocalizationsUk();
-    case 'ur':
-      return AppLocalizationsUr();
-    case 'uz':
-      return AppLocalizationsUz();
-    case 'vi':
-      return AppLocalizationsVi();
-    case 'xh':
-      return AppLocalizationsXh();
     case 'zh':
       return AppLocalizationsZh();
-    case 'zu':
-      return AppLocalizationsZu();
   }
 
   throw FlutterError(

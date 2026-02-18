@@ -44,7 +44,9 @@ import 'package:copyclip/src/features/notes/data/note_adapter.dart';
 import 'package:copyclip/src/features/todos/data/todo_adapter.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'package:copyclip/src/features/social_post/data/social_post_model.dart'; // Added
+import 'package:copyclip/src/core/const/languages.dart';
 import 'src/l10n/app_localizations.dart';
+
 import 'package:upgrader/upgrader.dart';
 import 'package:uuid/uuid.dart';
 
@@ -622,7 +624,11 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    target.isDone ? "Task completed!" : "Task uncompleted",
+                    target.isDone
+                        ? AppLocalizations.of(context)!.taskCompletedExclamation
+                        : AppLocalizations.of(
+                            context,
+                          )!.taskUncompletedExclamation,
                   ),
                   duration: const Duration(seconds: 1),
                 ),
@@ -708,8 +714,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         if (mounted) {
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Clipboard updated!"),
+            SnackBar(
+              content: Text(
+                AppLocalizations.of(context)!.clipboardUpdatedExclamation,
+              ),
               behavior: SnackBarBehavior.floating,
               duration: Duration(seconds: 1),
             ),
@@ -736,7 +744,11 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              "Clipboard saved: ${trimmedContent.length > 20 ? '${trimmedContent.substring(0, 20)}...' : trimmedContent}",
+              AppLocalizations.of(context)!.clipboardSavedContent(
+                trimmedContent.length > 20
+                    ? '${trimmedContent.substring(0, 20)}...'
+                    : trimmedContent,
+              ),
             ),
             behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.green,
@@ -806,7 +818,16 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
                 GlobalCupertinoLocalizations.delegate,
                 FlutterQuillLocalizations.delegate,
               ],
-              supportedLocales: AppLocalizations.supportedLocales,
+              supportedLocales: LanguageConstants.supportedLocales,
+              localeResolutionCallback: (locale, supportedLocales) {
+                for (var supportedLocale in supportedLocales) {
+                  if (supportedLocale.languageCode == locale?.languageCode) {
+                    return supportedLocale;
+                  }
+                }
+                return const Locale('en');
+              },
+
               builder: (context, child) {
                 return UpgradeAlert(
                   navigatorKey: router.routerDelegate.navigatorKey,

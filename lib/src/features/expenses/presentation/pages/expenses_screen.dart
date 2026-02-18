@@ -22,6 +22,7 @@ import 'package:copyclip/src/features/expenses/data/expense_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
+import '../../../../l10n/app_localizations.dart';
 
 // Widgets
 import '../widgets/expense_card.dart';
@@ -351,7 +352,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Text(
-                          "Error loading data.\n\n${snapshot.error}",
+                          AppLocalizations.of(
+                            context,
+                          )!.errorLoadingData(snapshot.error.toString()),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -402,7 +405,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
         elevation: 4,
         icon: Icon(CupertinoIcons.add, color: theme.colorScheme.onPrimary),
         label: Text(
-          "New $_selectedCurrency",
+          AppLocalizations.of(context)!.newExpense(_selectedCurrency),
           style: TextStyle(
             color: theme.colorScheme.onPrimary,
             fontWeight: FontWeight.bold,
@@ -436,7 +439,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 autofocus: true,
                 style: theme.textTheme.bodyLarge,
                 decoration: InputDecoration(
-                  hintText: "Search in $_selectedCurrency...",
+                  hintText: AppLocalizations.of(
+                    context,
+                  )!.searchInCurrency(_selectedCurrency),
                   hintStyle: TextStyle(
                     color: onSurfaceColor.withValues(alpha: 0.5),
                   ),
@@ -450,7 +455,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
     }
 
     return SeamlessHeader(
-      title: "Expense",
+      title: AppLocalizations.of(context)!.expenseTitle,
       subtitle: _getPeriodTitle(),
       icon: CupertinoIcons.money_dollar,
       iconColor: Colors.redAccent,
@@ -471,7 +476,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
               CupertinoIcons.slider_horizontal_3,
               color: onSurfaceColor,
             ),
-            tooltip: 'Sort & Filter',
+            tooltip: AppLocalizations.of(context)!.sortAndFilter,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -493,10 +498,10 @@ class _ExpensesScreenState extends State<ExpensesScreen>
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<dynamic>>[
               // SORTING SECTION
-              const PopupMenuItem<dynamic>(
+              PopupMenuItem<dynamic>(
                 enabled: false,
                 child: Text(
-                  'SORT BY',
+                  AppLocalizations.of(context)!.sortBy,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -517,7 +522,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      "Newest First",
+                      AppLocalizations.of(context)!.newestFirst,
                       style: TextStyle(
                         color: _currentSort == ExpenseSort.newest
                             ? FeatureColors.expenses
@@ -543,7 +548,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      "Oldest First",
+                      AppLocalizations.of(context)!.oldestFirst,
                       style: TextStyle(
                         color: _currentSort == ExpenseSort.oldest
                             ? FeatureColors.expenses
@@ -569,7 +574,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      "Highest Amount",
+                      AppLocalizations.of(context)!.highestAmount,
                       style: TextStyle(
                         color: _currentSort == ExpenseSort.amountHigh
                             ? FeatureColors.expenses
@@ -595,7 +600,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      "Lowest Amount",
+                      AppLocalizations.of(context)!.lowestAmount,
                       style: TextStyle(
                         color: _currentSort == ExpenseSort.amountLow
                             ? FeatureColors.expenses
@@ -615,7 +620,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                   children: [
                     Icon(CupertinoIcons.slider_horizontal_3, size: 18),
                     const SizedBox(width: 12),
-                    Text("More Filters..."),
+                    Text(AppLocalizations.of(context)!.moreFilters),
                   ],
                 ),
               ),
