@@ -541,7 +541,7 @@ class _HomeWidgetBottomSheetState extends State<HomeWidgetBottomSheet> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: theme.colorScheme.onSurface.withOpacity(0.2),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -550,10 +550,10 @@ class _HomeWidgetBottomSheetState extends State<HomeWidgetBottomSheet> {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: widget.featureColor.withOpacity(0.1),
+              color: widget.featureColor.withValues(alpha: 0.1),
               shape: BoxShape.circle,
               border: Border.all(
-                color: widget.featureColor.withOpacity(0.3),
+                color: widget.featureColor.withValues(alpha: 0.3),
                 width: 2,
               ),
             ),
@@ -581,7 +581,7 @@ class _HomeWidgetBottomSheetState extends State<HomeWidgetBottomSheet> {
               'Access your ${widget.featureTitle.toLowerCase()} directly from your home screen',
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.6),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
               ),
             ),
           ),
@@ -592,10 +592,10 @@ class _HomeWidgetBottomSheetState extends State<HomeWidgetBottomSheet> {
             margin: const EdgeInsets.symmetric(horizontal: 24),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: widget.featureColor.withOpacity(0.05),
+              color: widget.featureColor.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: widget.featureColor.withOpacity(0.2),
+                color: widget.featureColor.withValues(alpha: 0.2),
               ),
             ),
             child: Column(
@@ -690,7 +690,7 @@ class _HomeWidgetBottomSheetState extends State<HomeWidgetBottomSheet> {
           width: 24,
           height: 24,
           decoration: BoxDecoration(
-            color: widget.featureColor.withOpacity(0.2),
+            color: widget.featureColor.withValues(alpha: 0.2),
             shape: BoxShape.circle,
           ),
           child: Center(

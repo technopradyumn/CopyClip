@@ -1,27 +1,33 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:copyclip/src/core/router/app_router.dart';
+import 'package:copyclip/src/core/providers/locale_provider.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart'; // ✅ Added for .env
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart'; // ✅ Added for Ads
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
+import 'package:copyclip/src/core/widgets/premium_badge.dart';
+import 'package:copyclip/src/core/theme/background_design.dart';
+import 'package:copyclip/src/core/theme/bloc/theme_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:copyclip/src/core/widgets/background_painters.dart';
+import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 import 'package:copyclip/src/core/const/constant.dart';
+import 'package:copyclip/src/core/const/languages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../core/services/backup_service.dart';
 import '../../../../core/services/home_widget_service.dart';
-import '../../../../core/theme/theme_manager.dart';
 import '../../../clipboard/data/clipboard_model.dart';
 import '../../../expenses/data/expense_model.dart';
 import '../../../journal/data/journal_model.dart';
@@ -29,7 +35,7 @@ import '../../../notes/data/note_model.dart';
 import '../../../todos/data/todo_model.dart';
 import 'recycle_bin_screen.dart';
 import '../../../../features/premium/presentation/widgets/premium_lock_dialog.dart';
-import '../../../../features/premium/presentation/provider/premium_provider.dart';
+import '../../../../features/premium/presentation/bloc/premium_bloc.dart';
 
 enum SettingsSectionType {
   clipboard,
@@ -76,7 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen>
   final ValueNotifier<bool> _clipboardAutoSaveNotifier = ValueNotifier(false);
   final ValueNotifier<bool> _notificationEnabledNotifier = ValueNotifier(false);
 
-  late final List<SettingsSection> _sections;
+  // ✅ Remove late final - will be computed lazily
 
   // ✅ AD VARIABLES
   InterstitialAd? _interstitialAd;
@@ -85,8 +91,7 @@ class _SettingsScreenState extends State<SettingsScreen>
   // ✅ AD UNIT ID GETTER
   String get _interstitialAdUnitId {
     if (Platform.isAndroid) {
-      return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ??
-          '';
+      return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ?? '';
     }
     // else if (Platform.isIOS) {
     //   return dotenv.env['IOS_INTERSTITIAL_AD_UNIT_ID'] ??
@@ -106,7 +111,7 @@ class _SettingsScreenState extends State<SettingsScreen>
       duration: const Duration(seconds: 3),
     )..repeat();
 
-    _sections = _createSections();
+    // ✅ Remove _sections initialization - compute lazily in build
 
     _runAutoCleanup();
     _initPackageInfo();
@@ -138,6 +143,10 @@ class _SettingsScreenState extends State<SettingsScreen>
   // --- AD LOGIC ---
 
   void _loadInterstitialAd() {
+    // Check premium status via context
+    final isPremium = context.read<PremiumBloc>().state.isPremium;
+    if (isPremium) return;
+
     if (_isAdLoading) return;
     _isAdLoading = true;
 
@@ -161,6 +170,12 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   /// Shows the ad and executes the [onComplete] callback when the ad is closed.
   void _showInterstitialAd(VoidCallback onComplete) {
+    final isPremium = context.read<PremiumBloc>().state.isPremium;
+    if (isPremium) {
+      onComplete();
+      return;
+    }
+
     if (_interstitialAd == null) {
       debugPrint('⚠️ Ad not ready, proceeding with action...');
       onComplete(); // Proceed if ad failed to load
@@ -193,61 +208,62 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   // --- EXISTING LOGIC ---
 
-  List<SettingsSection> _createSections() {
-    return const [
+  List<SettingsSection> _createSections(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return [
       SettingsSection(
         type: SettingsSectionType.premium,
-        title: "Premium",
+        title: l10n.premium,
         builder: _buildPremiumSection,
       ),
       SettingsSection(
         type: SettingsSectionType.widgets,
-        title: "Home Screen Widgets",
+        title: l10n.homeScreenWidgets,
         builder: _buildWidgetsSection,
       ),
       SettingsSection(
         type: SettingsSectionType.clipboard,
-        title: "Clipboard",
+        title: l10n.clipboardTitle,
         builder: _buildClipboardSection,
       ),
       SettingsSection(
         type: SettingsSectionType.appearance,
-        title: "Appearance",
+        title: l10n.appearanceTitle,
         builder: _buildAppearanceSection,
       ),
       SettingsSection(
         type: SettingsSectionType.notifications,
-        title: "Notifications",
+        title: l10n.notificationsTitle,
         builder: _buildNotificationSection,
       ),
       SettingsSection(
         type: SettingsSectionType.recycleBin,
-        title: "Recycle Bin",
+        title: l10n.recycleBin,
         builder: _buildRecycleBinSection,
       ),
       SettingsSection(
         type: SettingsSectionType.dataBackup,
-        title: "Data & Backup",
+        title: l10n.dataBackup,
         builder: _buildDataBackupSection,
       ),
       SettingsSection(
         type: SettingsSectionType.feedback,
-        title: "Feedback & Support",
+        title: l10n.feedbackSupport,
         builder: _buildFeedbackSection,
       ),
       SettingsSection(
         type: SettingsSectionType.credits,
-        title: "Credits",
+        title: l10n.creditsTitle,
         builder: _buildCreditsSection,
       ),
       SettingsSection(
         type: SettingsSectionType.privacy,
-        title: "Privacy & Maintenance",
+        title: l10n.privacyMaintenance,
         builder: _buildPrivacySection,
       ),
       SettingsSection(
         type: SettingsSectionType.about,
-        title: "About",
+        title: l10n.aboutTitle,
         builder: _buildAboutSection,
       ),
       SettingsSection(type: SettingsSectionType.footer, builder: _buildFooter),
@@ -256,11 +272,12 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   Future<void> _initPackageInfo() async {
     final info = await PackageInfo.fromPlatform();
-    if (mounted)
+    if (mounted) {
       setState(() {
         _version = info.version;
         _buildNumber = info.buildNumber;
       });
+    }
   }
 
   Future<void> _loadAutoSaveSettings() async {
@@ -273,7 +290,8 @@ class _SettingsScreenState extends State<SettingsScreen>
     final settingsBox = Hive.box('settings');
     await settingsBox.put('clipboardAutoSave', value);
     _clipboardAutoSaveNotifier.value = value;
-    _showSnackBar(value ? "Auto-save enabled." : "Auto-save disabled.");
+    final l10n = AppLocalizations.of(context)!;
+    _showSnackBar(value ? l10n.autoSaveEnabled : l10n.autoSaveDisabled);
   }
 
   Future<void> _checkNotificationPermission() async {
@@ -323,7 +341,9 @@ class _SettingsScreenState extends State<SettingsScreen>
           } catch (e) {}
           return false;
         }).toList();
-        for (final item in toDelete) await (item as HiveObject).delete();
+        for (final item in toDelete) {
+          await (item as HiveObject).delete();
+        }
       }
     }
   }
@@ -337,16 +357,21 @@ class _SettingsScreenState extends State<SettingsScreen>
         return false;
       }
     }).length;
-    if (Hive.isBoxOpen('notes_box'))
+    if (Hive.isBoxOpen('notes_box')) {
       total += countDeleted(Hive.box<Note>('notes_box'));
-    if (Hive.isBoxOpen('todos_box'))
+    }
+    if (Hive.isBoxOpen('todos_box')) {
       total += countDeleted(Hive.box<Todo>('todos_box'));
-    if (Hive.isBoxOpen('expenses_box'))
+    }
+    if (Hive.isBoxOpen('expenses_box')) {
       total += countDeleted(Hive.box<Expense>('expenses_box'));
-    if (Hive.isBoxOpen('journal_box'))
+    }
+    if (Hive.isBoxOpen('journal_box')) {
       total += countDeleted(Hive.box<JournalEntry>('journal_box'));
-    if (Hive.isBoxOpen('clipboard_box'))
+    }
+    if (Hive.isBoxOpen('clipboard_box')) {
       total += countDeleted(Hive.box<ClipboardItem>('clipboard_box'));
+    }
     return total;
   }
 
@@ -362,15 +387,15 @@ class _SettingsScreenState extends State<SettingsScreen>
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: theme.colorScheme.surface.withOpacity(0.95),
+            color: theme.colorScheme.surface.withValues(alpha: 0.95),
             borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
             border: Border.all(
-              color: theme.dividerColor.withOpacity(0.1),
+              color: theme.dividerColor.withValues(alpha: 0.1),
               width: AppConstants.borderWidth,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -403,21 +428,25 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   // ✅ MODIFIED: Shows Ad before Export
   void _showExportDialog() {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Backup Data",
-        content: "Save a JSON file containing all your data?",
-        confirmText: "Export Now",
+        title: l10n.backupData,
+        content: l10n.saveJsonFile,
+        confirmText: l10n.exportNow,
         onConfirm: () {
           Navigator.pop(ctx);
           // ✅ TRIGGER AD HERE
           _showInterstitialAd(() async {
             try {
               await BackupService.createBackup(context);
-              _showSnackBar("Backup saved successfully!");
+              _showSnackBar(AppLocalizations.of(context)!.backupSaved);
             } catch (e) {
-              _showSnackBar("Export failed", isError: true);
+              _showSnackBar(
+                AppLocalizations.of(context)!.exportFailed,
+                isError: true,
+              );
             }
           });
         },
@@ -427,22 +456,26 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   // ✅ MODIFIED: Shows Ad before Import
   void _showImportDialog() {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Import Data",
-        content: "Merge a backup file with your current items?",
-        confirmText: "Select File",
+        title: l10n.importDataTitle,
+        content: l10n.mergeBackupFile,
+        confirmText: l10n.selectFile,
         onConfirm: () {
           Navigator.pop(ctx);
           // ✅ TRIGGER AD HERE
           _showInterstitialAd(() async {
             try {
               final count = await BackupService.restoreBackup(context);
-              _showSnackBar("Imported $count new items.");
+              _showSnackBar(AppLocalizations.of(context)!.importSuccess(count));
               setState(() {});
             } catch (e) {
-              _showSnackBar("Import failed", isError: true);
+              _showSnackBar(
+                AppLocalizations.of(context)!.importFailed,
+                isError: true,
+              );
             }
           });
         },
@@ -457,20 +490,102 @@ class _SettingsScreenState extends State<SettingsScreen>
         final success = await HomeWidgetService.pinWidget(id);
         if (mounted) {
           if (success) {
-            _showSnackBar("$title widget added to Home Screen!");
+            _showSnackBar(AppLocalizations.of(context)!.widgetAdded(title));
           } else {
             // Some devices don't support auto-pinning or user cancelled
             _showSnackBar(
-              "Widget request sent (check home screen)",
+              AppLocalizations.of(context)!.widgetRequestSent,
               isError: false,
             );
           }
         }
       } catch (e) {
         debugPrint('Widget Add Error: $e');
-        _showSnackBar("Failed to add widget", isError: true);
+        _showSnackBar(
+          AppLocalizations.of(context)!.widgetAddFailed,
+          isError: true,
+        );
       }
     });
+  }
+
+  // --- LANGUAGE SELECTOR ---
+  void _showLanguageSelector(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // Allow full height for many languages
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) {
+        return DraggableScrollableSheet(
+          initialChildSize: 0.7,
+          minChildSize: 0.5,
+          maxChildSize: 0.95,
+          expand: false,
+          builder: (context, scrollController) {
+            return Consumer<LocaleProvider>(
+              builder: (context, provider, _) {
+                final current = provider.locale;
+                return Column(
+                  children: [
+                    const SizedBox(height: 16),
+                    Text(
+                      AppLocalizations.of(context)!.language,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: ListView(
+                        controller: scrollController,
+                        children: [
+                          ListTile(
+                            title: Text(
+                              AppLocalizations.of(context)!.systemDefault,
+                            ),
+                            leading: const Icon(Icons.settings_system_daydream),
+                            trailing: current == null
+                                ? const Icon(Icons.check, color: Colors.blue)
+                                : null,
+                            onTap: () {
+                              provider.clearLocale();
+                              Navigator.pop(ctx);
+                            },
+                          ),
+                          ...LanguageConstants.supportedLanguages.entries.map((
+                            entry,
+                          ) {
+                            final code = entry.key;
+                            final name = entry.value['name']!;
+                            final flag = entry.value['flag']!;
+                            final isSelected = current?.languageCode == code;
+
+                            return ListTile(
+                              title: Text(name),
+                              leading: Text(
+                                flag,
+                                style: const TextStyle(fontSize: 24),
+                              ),
+                              trailing: isSelected
+                                  ? const Icon(Icons.check, color: Colors.blue)
+                                  : null,
+                              onTap: () {
+                                provider.setLocale(Locale(code));
+                                Navigator.pop(ctx);
+                              },
+                            );
+                          }),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        );
+      },
+    );
   }
 
   // --- SECTION BUILDERS (UNCHANGED) ---
@@ -526,55 +641,57 @@ class _SettingsScreenState extends State<SettingsScreen>
       },
     ];
 
-    return _SectionCard(
-      color: theme.colorScheme.primary,
-      child: SizedBox(
-        height: 100,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          itemCount: widgets.length,
-          separatorBuilder: (_, __) => const SizedBox(width: 12),
-          itemBuilder: (context, index) {
-            final item = widgets[index];
-            final color = item['color'] as Color;
-            return GestureDetector(
-              onTap: () => state._handleWidgetAdd(
-                item['id'] as String,
-                item['title'] as String,
-              ),
-              child: Container(
-                width: 70,
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(
-                    AppConstants.cornerRadius * 0.5,
-                  ),
-                  border: Border.all(
-                    color: color.withOpacity(0.3),
-                    width: AppConstants.borderWidth,
-                  ),
+    return PremiumBadge(
+      child: _SectionCard(
+        color: theme.colorScheme.primary,
+        child: SizedBox(
+          height: 100,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            itemCount: widgets.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            itemBuilder: (context, index) {
+              final item = widgets[index];
+              final color = item['color'] as Color;
+              return GestureDetector(
+                onTap: () => state._handleWidgetAdd(
+                  item['id'] as String,
+                  item['title'] as String,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(item['icon'] as IconData, color: color, size: 28),
-                    const SizedBox(height: 8),
-                    Text(
-                      item['title'] as String,
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                child: Container(
+                  width: 70,
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.cornerRadius * 0.5,
                     ),
-                  ],
+                    border: Border.all(
+                      color: color.withValues(alpha: 0.3),
+                      width: AppConstants.borderWidth,
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(item['icon'] as IconData, color: color, size: 28),
+                      const SizedBox(height: 8),
+                      Text(
+                        item['title'] as String,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -588,8 +705,8 @@ class _SettingsScreenState extends State<SettingsScreen>
       color: Colors.amber,
       child: ListTile(
         leading: const Icon(CupertinoIcons.star_fill, color: Colors.amber),
-        title: const Text("Premium Features"),
-        subtitle: const Text("Manage coins, ads, and premium status"),
+        title: Text(AppLocalizations.of(context)!.premiumFeatures),
+        subtitle: Text(AppLocalizations.of(context)!.manageCoinsAdsPremium),
         trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
         onTap: () => context.push(AppRouter.premium),
       ),
@@ -602,60 +719,58 @@ class _SettingsScreenState extends State<SettingsScreen>
   ) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-    final isPremium = Provider.of<PremiumProvider>(context).isPremium;
-    return _SectionCard(
-      color: primaryColor,
-      child: Stack(
-        children: [
-          ListTile(
-            leading: Icon(CupertinoIcons.doc_on_clipboard, color: primaryColor),
-            title: Text(
-              "Auto-save Clipboard",
-              style: theme.textTheme.bodyLarge,
-            ),
-            subtitle: Text(
-              "Automatically save copied items",
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.5),
+
+    return Builder(
+      builder: (context) {
+        final isPremium = context.select(
+          (PremiumBloc bloc) => bloc.state.isPremium,
+        );
+        return PremiumBadge(
+          child: _SectionCard(
+            color: primaryColor,
+            child: ListTile(
+              leading: Icon(
+                CupertinoIcons.doc_on_clipboard,
+                color: primaryColor,
               ),
-            ),
-            trailing: ValueListenableBuilder<bool>(
-              valueListenable: state._clipboardAutoSaveNotifier,
-              builder: (context, value, child) => Switch(
-                value: value,
-                onChanged: (newValue) {
-                  if (isPremium) {
-                    state._toggleAutoSave(newValue);
-                  } else {
-                    if (newValue) {
-                      // Trying to enable
-                      PremiumLockDialog.show(
-                        context,
-                        featureName: 'Auto-save Clipboard',
-                        onUnlockOnce: () => state._toggleAutoSave(true),
-                      );
+              title: Text(
+                "Auto-save Clipboard",
+                style: theme.textTheme.bodyLarge,
+              ),
+              subtitle: Text(
+                "Automatically save copied items",
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                ),
+              ),
+              trailing: ValueListenableBuilder<bool>(
+                valueListenable: state._clipboardAutoSaveNotifier,
+                builder: (context, value, child) => Switch(
+                  value: value,
+                  onChanged: (newValue) {
+                    if (isPremium) {
+                      state._toggleAutoSave(newValue);
                     } else {
-                      // Allowing disable without ad? Yes, usually safe.
-                      state._toggleAutoSave(false);
+                      if (newValue) {
+                        // Trying to enable
+                        PremiumLockDialog.show(
+                          context,
+                          featureName: 'Auto-save Clipboard',
+                          onUnlockOnce: () => state._toggleAutoSave(true),
+                        );
+                      } else {
+                        // Allowing disable without ad? Yes, usually safe.
+                        state._toggleAutoSave(false);
+                      }
                     }
-                  }
-                },
-                activeColor: primaryColor,
+                  },
+                  activeColor: primaryColor,
+                ),
               ),
             ),
           ),
-          if (!isPremium)
-            const Positioned(
-              top: 0,
-              right: 0,
-              child: Icon(
-                CupertinoIcons.lock_fill,
-                size: 14,
-                color: Colors.amber,
-              ),
-            ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -665,24 +780,126 @@ class _SettingsScreenState extends State<SettingsScreen>
   ) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-    final themeManager = Provider.of<ThemeManager>(context);
+
     return _SectionCard(
       color: primaryColor,
       child: Column(
         children: [
           ListTile(
+            leading: Icon(CupertinoIcons.globe, color: primaryColor),
+            title: Text(
+              AppLocalizations.of(context)!.language,
+              style: theme.textTheme.bodyLarge,
+            ),
+            subtitle: Consumer<LocaleProvider>(
+              builder: (context, provider, _) {
+                final locale = provider.locale;
+                if (locale == null) {
+                  return Text(
+                    AppLocalizations.of(context)!.systemDefault,
+                    style: theme.textTheme.bodySmall,
+                  );
+                }
+                final code = locale.languageCode;
+                final name =
+                    LanguageConstants.supportedLanguages[code]?['name'] ??
+                    code.toUpperCase();
+                return Text(name, style: theme.textTheme.bodySmall);
+              },
+            ),
+            trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
+            onTap: () => state._showLanguageSelector(context),
+          ),
+          const Divider(indent: 50),
+          ListTile(
             leading: Icon(CupertinoIcons.sun_max, color: primaryColor),
-            title: Text("Theme Mode", style: theme.textTheme.bodyLarge),
-            trailing: _ThemeDropdown(manager: themeManager),
+            title: Text(
+              AppLocalizations.of(context)!.themeMode,
+              style: theme.textTheme.bodyLarge,
+            ),
+            trailing: const _ThemeDropdown(),
           ),
           const Divider(indent: 50),
           ListTile(
             leading: Icon(CupertinoIcons.paintbrush, color: primaryColor),
-            title: Text("Accent Color", style: theme.textTheme.bodyLarge),
+            title: Text("Background Design", style: theme.textTheme.bodyLarge),
+            subtitle: Text(
+              "Choose from 10+ dynamic wallpapers",
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
+            ),
+            trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
+            onTap: () => context.push(AppRouter.backgroundPicker),
           ),
+          const SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: _ColorPicker(manager: themeManager),
+            child: GestureDetector(
+              onTap: () => context.push(AppRouter.backgroundPicker),
+              child: BlocBuilder<ThemeBloc, ThemeState>(
+                builder: (context, state) {
+                  return Container(
+                    height: 100,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: state.primaryColor.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: state.primaryColor.withValues(alpha: 0.2),
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Stack(
+                        children: [
+                          Positioned.fill(
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                return CustomPaint(
+                                  painter:
+                                      state.backgroundDesign ==
+                                          BackgroundDesign.none
+                                      ? null
+                                      : _getPainter(
+                                          state.backgroundDesign,
+                                          0.5,
+                                          state.primaryColor,
+                                          theme.brightness == Brightness.dark,
+                                        ),
+                                );
+                              },
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
+                              decoration: BoxDecoration(
+                                color: theme.colorScheme.surface.withValues(alpha: 
+                                  0.8,
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                _getDesignName(state.backgroundDesign),
+                                style: TextStyle(
+                                  color: state.primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
         ],
       ),
@@ -706,11 +923,14 @@ class _SettingsScreenState extends State<SettingsScreen>
                 : CupertinoIcons.bell_slash_fill,
             color: primaryColor,
           ),
-          title: Text("Push Notifications", style: theme.textTheme.bodyLarge),
+          title: Text(
+            AppLocalizations.of(context)!.pushNotifications,
+            style: theme.textTheme.bodyLarge,
+          ),
           subtitle: Text(
             isEnabled ? "Enabled" : "Disabled",
             style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.5),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
             ),
           ),
           trailing: Switch(
@@ -737,7 +957,7 @@ class _SettingsScreenState extends State<SettingsScreen>
         subtitle: Text(
           "${state._getTrashCount()} items • Auto-deletes in 30 days",
           style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurface.withOpacity(0.5),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
           ),
         ),
         trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
@@ -758,22 +978,24 @@ class _SettingsScreenState extends State<SettingsScreen>
   ) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-    return _SectionCard(
-      color: primaryColor,
-      child: Column(
-        children: [
-          ListTile(
-            leading: Icon(CupertinoIcons.cloud_upload, color: primaryColor),
-            title: Text("Export Data", style: theme.textTheme.bodyLarge),
-            onTap: state._showExportDialog,
-          ),
-          const Divider(indent: 50),
-          ListTile(
-            leading: Icon(CupertinoIcons.cloud_download, color: primaryColor),
-            title: Text("Import Data", style: theme.textTheme.bodyLarge),
-            onTap: state._showImportDialog,
-          ),
-        ],
+    return PremiumBadge(
+      child: _SectionCard(
+        color: primaryColor,
+        child: Column(
+          children: [
+            ListTile(
+              leading: Icon(CupertinoIcons.cloud_upload, color: primaryColor),
+              title: Text("Export Data", style: theme.textTheme.bodyLarge),
+              onTap: state._showExportDialog,
+            ),
+            const Divider(indent: 50),
+            ListTile(
+              leading: Icon(CupertinoIcons.cloud_download, color: primaryColor),
+              title: Text("Import Data", style: theme.textTheme.bodyLarge),
+              onTap: state._showImportDialog,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -786,17 +1008,41 @@ class _SettingsScreenState extends State<SettingsScreen>
     final primaryColor = theme.colorScheme.primary;
     return _SectionCard(
       color: primaryColor,
-      child: ListTile(
-        leading: Icon(CupertinoIcons.chat_bubble_2, color: primaryColor),
-        title: Text("Send Feedback", style: theme.textTheme.bodyLarge),
-        subtitle: Text(
-          "Help us improve",
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurface.withOpacity(0.5),
+      child: Column(
+        children: [
+          ListTile(
+            leading: Icon(CupertinoIcons.star, color: primaryColor),
+            title: Text("Rate App", style: theme.textTheme.bodyLarge),
+            subtitle: Text(
+              "Rate us on Play Store",
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
+            ),
+            trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
+            onTap: () async {
+              final url = Uri.parse(
+                "https://play.google.com/store/apps/details?id=com.technopradyumn.copyclip",
+              );
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url, mode: LaunchMode.externalApplication);
+              }
+            },
           ),
-        ),
-        trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
-        onTap: () => context.push(AppRouter.feedback),
+          const Divider(indent: 50),
+          ListTile(
+            leading: Icon(CupertinoIcons.chat_bubble_2, color: primaryColor),
+            title: Text("Send Feedback", style: theme.textTheme.bodyLarge),
+            subtitle: Text(
+              "Help us improve",
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
+            ),
+            trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
+            onTap: () => context.push(AppRouter.feedback),
+          ),
+        ],
       ),
     );
   }
@@ -839,20 +1085,26 @@ class _SettingsScreenState extends State<SettingsScreen>
       child: Column(
         children: [
           ListTile(
-            title: Text("Version", style: theme.textTheme.bodyLarge),
+            title: Text(
+              AppLocalizations.of(context)!.version,
+              style: theme.textTheme.bodyLarge,
+            ),
             trailing: Text(
               state._version,
               style: TextStyle(
-                color: theme.colorScheme.onSurface.withOpacity(0.4),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
               ),
             ),
           ),
           ListTile(
-            title: Text("Build Number", style: theme.textTheme.bodyLarge),
+            title: Text(
+              AppLocalizations.of(context)!.buildNumber,
+              style: theme.textTheme.bodyLarge,
+            ),
             trailing: Text(
               state._buildNumber,
               style: TextStyle(
-                color: theme.colorScheme.onSurface.withOpacity(0.4),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
               ),
             ),
           ),
@@ -883,12 +1135,9 @@ class _SettingsScreenState extends State<SettingsScreen>
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: onSurfaceColor.withOpacity(0.03),
-          borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 1.5),
-          border: Border.all(
-            color: onSurfaceColor.withOpacity(0.05),
-            width: AppConstants.borderWidth,
-          ),
+          color: onSurfaceColor.withValues(alpha: 0.03),
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: onSurfaceColor.withValues(alpha: 0.05), width: 1),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -896,13 +1145,13 @@ class _SettingsScreenState extends State<SettingsScreen>
             Icon(
               CupertinoIcons.sparkles,
               size: 12,
-              color: primaryColor.withOpacity(0.6),
+              color: primaryColor.withValues(alpha: 0.6),
             ),
             const SizedBox(width: 8),
             Text(
               "CRAFTED WITH EXCELLENCE",
               style: theme.textTheme.labelSmall?.copyWith(
-                color: onSurfaceColor.withOpacity(0.5),
+                color: onSurfaceColor.withValues(alpha: 0.5),
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.2,
               ),
@@ -920,48 +1169,51 @@ class _SettingsScreenState extends State<SettingsScreen>
     return GlassScaffold(
       title: null,
       showBackArrow: false,
-      body: Column(
-        children: [
-          SeamlessHeader(
-            title: "Settings",
-            subtitle: "Customize Your Experience",
-            icon: CupertinoIcons.settings,
-            iconColor: theme.colorScheme.primary,
-            heroTagPrefix: 'settings',
-          ),
-          Expanded(
-            child: CustomScrollView(
-              controller: _scrollController,
-              cacheExtent: 2000,
-              physics: const BouncingScrollPhysics(),
-              slivers: [
-                SliverPadding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      final section = _sections[index];
-                      return RepaintBoundary(
-                        key: ValueKey(section.type),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (section.title != null)
-                              _SectionHeader(
-                                title: section.title!,
-                                color: primaryColor,
-                              ),
-                            section.builder(context, this),
-                            const SizedBox(height: 24),
-                          ],
-                        ),
-                      );
-                    }, childCount: _sections.length),
-                  ),
-                ),
-              ],
+      body: DynamicBackground(
+        child: Column(
+          children: [
+            SeamlessHeader(
+              title: AppLocalizations.of(context)!.settings,
+              subtitle: AppLocalizations.of(context)!.settingsSubtitle,
+              icon: CupertinoIcons.settings,
+              iconColor: theme.colorScheme.primary,
+              heroTagPrefix: 'settings',
             ),
-          ),
-        ],
+            Expanded(
+              child: CustomScrollView(
+                controller: _scrollController,
+                cacheExtent: 2000,
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final sections = _createSections(context);
+                        final section = sections[index];
+                        return RepaintBoundary(
+                          key: ValueKey(section.type),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (section.title != null)
+                                _SectionHeader(
+                                  title: section.title!,
+                                  color: primaryColor,
+                                ),
+                              section.builder(context, this),
+                              const SizedBox(height: 24),
+                            ],
+                          ),
+                        );
+                      }, childCount: _createSections(context).length),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -998,13 +1250,13 @@ class _SectionCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
         border: Border.all(
           // ✅ FIX: Use dynamic border color based on theme/color
           color: isDark
-              ? Colors.white.withOpacity(0.1)
-              : color.withOpacity(0.3),
+              ? Colors.white.withValues(alpha: 0.1)
+              : color.withValues(alpha: 0.3),
           width: AppConstants.borderWidth,
         ),
       ),
@@ -1015,28 +1267,45 @@ class _SectionCard extends StatelessWidget {
 }
 
 class _ThemeDropdown extends StatelessWidget {
-  const _ThemeDropdown({required this.manager});
-  final ThemeManager manager;
+  const _ThemeDropdown();
+
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton<ThemeMode>(
-        value: manager.themeMode,
-        icon: const Icon(CupertinoIcons.chevron_down),
-        onChanged: (mode) => mode != null ? manager.setThemeMode(mode) : null,
-        items: const [
-          DropdownMenuItem(value: ThemeMode.system, child: Text("System")),
-          DropdownMenuItem(value: ThemeMode.light, child: Text("Light")),
-          DropdownMenuItem(value: ThemeMode.dark, child: Text("Dark")),
-        ],
-      ),
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        return DropdownButtonHideUnderline(
+          child: DropdownButton<ThemeMode>(
+            value: state.themeMode,
+            icon: const Icon(CupertinoIcons.chevron_down),
+            onChanged: (mode) {
+              if (mode != null) {
+                context.read<ThemeBloc>().add(ChangeThemeMode(mode));
+              }
+            },
+            items: [
+              DropdownMenuItem(
+                value: ThemeMode.system,
+                child: Text(AppLocalizations.of(context)!.system),
+              ),
+              DropdownMenuItem(
+                value: ThemeMode.light,
+                child: Text(AppLocalizations.of(context)!.light),
+              ),
+              DropdownMenuItem(
+                value: ThemeMode.dark,
+                child: Text(AppLocalizations.of(context)!.dark),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
 
 class _ColorPicker extends StatelessWidget {
-  const _ColorPicker({required this.manager});
-  final ThemeManager manager;
+  const _ColorPicker();
+
   static const _colors = [
     Colors.lightBlue,
     Colors.blueAccent,
@@ -1044,48 +1313,53 @@ class _ColorPicker extends StatelessWidget {
     Colors.purpleAccent,
     Colors.redAccent,
   ];
+
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: _colors
-          .map((color) => _ColorDot(color: color, manager: manager))
-          .toList(),
+      children: _colors.map((color) => _ColorDot(color: color)).toList(),
     );
   }
 }
 
 class _ColorDot extends StatelessWidget {
-  const _ColorDot({required this.color, required this.manager});
+  const _ColorDot({required this.color});
   final Color color;
-  final ThemeManager manager;
+
   @override
   Widget build(BuildContext context) {
-    final isSelected = manager.primaryColor.value == color.value;
-    return GestureDetector(
-      onTap: () => manager.setPrimaryColor(color),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        width: 34,
-        height: 34,
-        decoration: BoxDecoration(
-          color: color,
-          shape: BoxShape.circle,
-          border: isSelected
-              ? Border.all(color: Colors.white, width: 2.5)
-              : null,
-          boxShadow: isSelected
-              ? [BoxShadow(color: color.withOpacity(0.4), blurRadius: 10)]
-              : null,
-        ),
-        child: isSelected
-            ? const Icon(
-                CupertinoIcons.checkmark,
-                size: 18,
-                color: Colors.black,
-              )
-            : null,
-      ),
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      buildWhen: (previous, current) =>
+          previous.primaryColor != current.primaryColor,
+      builder: (context, state) {
+        final isSelected = state.primaryColor.toARGB32() == color.toARGB32();
+        return GestureDetector(
+          onTap: () => context.read<ThemeBloc>().add(ChangePrimaryColor(color)),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+              border: isSelected
+                  ? Border.all(color: Colors.white, width: 2.5)
+                  : null,
+              boxShadow: isSelected
+                  ? [BoxShadow(color: color.withValues(alpha: 0.4), blurRadius: 10)]
+                  : null,
+            ),
+            child: isSelected
+                ? const Icon(
+                    CupertinoIcons.checkmark,
+                    size: 18,
+                    color: Colors.black,
+                  )
+                : null,
+          ),
+        );
+      },
     );
   }
 }
@@ -1094,8 +1368,9 @@ class _CreditsContent extends StatelessWidget {
   const _CreditsContent();
   Future<void> _launchURL(BuildContext context, String url) async {
     final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri))
+    if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
 
   @override
@@ -1109,7 +1384,7 @@ class _CreditsContent extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 40,
-            backgroundColor: primaryColor.withOpacity(0.2),
+            backgroundColor: primaryColor.withValues(alpha: 0.2),
             child: Icon(
               CupertinoIcons.person_fill,
               size: 40,
@@ -1127,7 +1402,7 @@ class _CreditsContent extends StatelessWidget {
           Text(
             "Mobile App Developer",
             style: theme.textTheme.bodySmall?.copyWith(
-              color: onSurfaceColor.withOpacity(0.6),
+              color: onSurfaceColor.withValues(alpha: 0.6),
             ),
           ),
           const SizedBox(height: 6),
@@ -1142,7 +1417,7 @@ class _CreditsContent extends StatelessWidget {
           Text(
             "UI/UX Designer",
             style: theme.textTheme.bodySmall?.copyWith(
-              color: onSurfaceColor.withOpacity(0.6),
+              color: onSurfaceColor.withValues(alpha: 0.6),
             ),
           ),
           const SizedBox(height: 16),
@@ -1198,12 +1473,9 @@ class _SocialButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 0.5),
-          border: Border.all(
-            color: color.withOpacity(0.3),
-            width: AppConstants.borderWidth,
-          ),
+          color: color.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -1219,5 +1491,132 @@ class _SocialButton extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+String _getDesignName(BackgroundDesign design) {
+  switch (design) {
+    case BackgroundDesign.classicBubbles:
+      return "Bubbles";
+    case BackgroundDesign.floatingStars:
+      return "Stars";
+    case BackgroundDesign.meshGradient:
+      return "Mesh";
+    case BackgroundDesign.nebulaCloud:
+      return "Nebula";
+    case BackgroundDesign.particleFlow:
+      return "Particles";
+    case BackgroundDesign.geometricFloat:
+      return "Geometry";
+    case BackgroundDesign.snowfall:
+      return "Snow";
+    case BackgroundDesign.matrixRain:
+      return "Matrix";
+    case BackgroundDesign.waveMotion:
+      return "Waves";
+    case BackgroundDesign.bokehBlur:
+      return "Bokeh";
+    case BackgroundDesign.aurora:
+      return "Aurora";
+    case BackgroundDesign.magicalSpells:
+      return "Magic";
+    case BackgroundDesign.deepForest:
+      return "Forest";
+    case BackgroundDesign.none:
+      return "None";
+  }
+}
+
+CustomPainter _getPainter(
+  BackgroundDesign design,
+  double value,
+  Color color,
+  bool isDark,
+) {
+  switch (design) {
+    case BackgroundDesign.classicBubbles:
+      return BubblesPainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.floatingStars:
+      return StarsPainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.meshGradient:
+      return MeshPainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.nebulaCloud:
+      return NebulaPainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.particleFlow:
+      return ParticlePainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.geometricFloat:
+      return GeometricPainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.snowfall:
+      return SnowPainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.matrixRain:
+      return MatrixPainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.waveMotion:
+      return WavePainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.bokehBlur:
+      return BokehPainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.aurora:
+      return AuroraPainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.magicalSpells:
+      return MagicalPainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.deepForest:
+      return ForestPainter(
+        animationValue: value,
+        primaryColor: color,
+        isDark: isDark,
+      );
+    case BackgroundDesign.none:
+      return BubblesPainter(
+        animationValue: value,
+        primaryColor: Colors.transparent,
+        isDark: isDark,
+      );
   }
 }

@@ -39,10 +39,12 @@ void main() {
     if (!Hive.isAdapterRegistered(0)) Hive.registerAdapter(NoteAdapter());
     if (!Hive.isAdapterRegistered(2)) Hive.registerAdapter(TodoAdapter());
     if (!Hive.isAdapterRegistered(3)) Hive.registerAdapter(ExpenseAdapter());
-    if (!Hive.isAdapterRegistered(4))
+    if (!Hive.isAdapterRegistered(4)) {
       Hive.registerAdapter(JournalEntryAdapter());
-    if (!Hive.isAdapterRegistered(5))
+    }
+    if (!Hive.isAdapterRegistered(5)) {
       Hive.registerAdapter(ClipboardItemAdapter());
+    }
   });
 
   setUp(() async {

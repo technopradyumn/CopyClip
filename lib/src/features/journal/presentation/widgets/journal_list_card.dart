@@ -29,8 +29,9 @@ class JournalListCard extends StatelessWidget {
   Map<String, dynamic> _parseContent(String jsonSource) {
     if (jsonSource.isEmpty) return {"text": "No content", "imageUrl": null};
     try {
-      if (!jsonSource.startsWith('['))
+      if (!jsonSource.startsWith('[')) {
         return {"text": jsonSource, "imageUrl": null};
+      }
       final List<dynamic> delta = jsonDecode(jsonSource);
       String plainText = "";
       String? firstImageUrl;
@@ -85,9 +86,8 @@ class JournalListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final parsed = _parseContent(entry.content);
-    final String previewText = parsed['text'];
-    final String? imageUrl = parsed['imageUrl'];
 
     final design = JournalDesignRegistry.getDesign(entry.designId);
     final Color cardBaseColor =
@@ -104,52 +104,60 @@ class JournalListCard extends StatelessWidget {
       child: Hero(
         tag: 'journal_list_${entry.id}',
         child: Container(
-          height: 190,
-          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          // Outer container gives the shadow
+          constraints: const BoxConstraints(minHeight: 120, maxHeight: 180),
+          margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           decoration: BoxDecoration(
             color: Colors.transparent,
+            borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.15),
-                blurRadius: 10,
-                offset: const Offset(4, 6),
+                color: Colors.black.withValues(alpha: 0.08),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
               ),
             ],
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // 1. BINDING / SPINE (Left)
+              // 1. BINDING / SPINE (Left) - More subtle and unified
               _buildBinding(design, cardBaseColor),
 
               // 2. COVER / PAGE (Main)
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: cardBaseColor,
+                    color: isDark
+                        ? Color.alphaBlend(
+                            Colors.black.withValues(alpha: 0.2),
+                            cardBaseColor,
+                          )
+                        : cardBaseColor,
                     borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(8),
-                      bottomRight: Radius.circular(8),
+                      topRight: Radius.circular(16),
+                      bottomRight: Radius.circular(16),
                     ),
                     border: Border.all(
                       color: isSelected
                           ? primaryColor
-                          : Colors.black.withOpacity(0.05),
-                      width: isSelected ? 3.0 : 0.0,
+                          : (isDark
+                                ? Colors.white.withValues(alpha: 0.05)
+                                : Colors.black.withValues(alpha: 0.05)),
+                      width: isSelected ? 2.5 : 1.0,
                     ),
                   ),
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(8),
-                      bottomRight: Radius.circular(8),
+                      topRight: Radius.circular(16),
+                      bottomRight: Radius.circular(16),
                     ),
                     child: CustomPaint(
                       painter: design.painterBuilder(cardBaseColor),
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                        padding: const EdgeInsets.all(16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             // Date & Mood Header
                             Row(
@@ -157,25 +165,25 @@ class JournalListCard extends StatelessWidget {
                               children: [
                                 Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 6,
+                                    horizontal: 8,
+                                    vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: contentColor.withOpacity(0.08),
+                                    color: contentColor.withValues(alpha: 0.12),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
                                         DateFormat('dd').format(entry.date),
                                         style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                           color: contentColor,
-                                          height: 1.0,
+                                          height: 1.1,
                                         ),
                                       ),
-                                      const SizedBox(height: 2),
                                       Text(
                                         DateFormat(
                                           'MMM',
@@ -183,7 +191,9 @@ class JournalListCard extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w800,
-                                          color: contentColor.withOpacity(0.7),
+                                          color: contentColor.withValues(
+                                            alpha: 0.6,
+                                          ),
                                           letterSpacing: 0.5,
                                         ),
                                       ),
@@ -205,15 +215,14 @@ class JournalListCard extends StatelessWidget {
                                                   : "Untitled Entry",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
-                                              style: theme.textTheme.titleMedium
-                                                  ?.copyWith(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: contentColor,
-                                                    fontFamily:
-                                                        'Serif', // More book-like
-                                                  ),
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w800,
+                                                color: contentColor,
+                                              ),
                                             ),
                                           ),
+                                          const SizedBox(width: 4),
                                           Text(
                                             _getMoodEmoji(entry.mood),
                                             style: const TextStyle(
@@ -233,14 +242,14 @@ class JournalListCard extends StatelessWidget {
                                                 .toUpperCase(),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
-                                            style: theme.textTheme.labelSmall
-                                                ?.copyWith(
-                                                  fontSize: 9,
-                                                  color: contentColor
-                                                      .withOpacity(0.5),
-                                                  fontWeight: FontWeight.bold,
-                                                  letterSpacing: 0.5,
-                                                ),
+                                            style: TextStyle(
+                                              fontSize: 9,
+                                              color: contentColor.withValues(
+                                                alpha: 0.5,
+                                              ),
+                                              fontWeight: FontWeight.w900,
+                                              letterSpacing: 1.0,
+                                            ),
                                           ),
                                         ),
                                     ],
@@ -249,10 +258,9 @@ class JournalListCard extends StatelessWidget {
                                 _buildMenuButton(context, contentColor),
                               ],
                             ),
-                            const Spacer(),
-                            // Content Preview with visual improvement
+                            const SizedBox(height: 12),
+                            // Content Preview
                             Expanded(
-                              // Use expanded to fill remaining space
                               child: _buildContentPreview(
                                 parsed,
                                 contentColor,
@@ -267,26 +275,14 @@ class JournalListCard extends StatelessWidget {
                 ),
               ),
 
-              // 3. PAGE EDGE DEPTH (Right)
-              // Simulates the thickness of the book
+              // 3. PAGE EDGE DEPTH (Right) - More subtle
               Container(
-                width: 6,
+                width: 4,
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.grey[200]!,
-                      Colors.white,
-                      Colors.grey[400]!,
-                    ],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
+                  color: isDark ? Colors.grey[800] : Colors.grey[300],
                   borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(4),
-                    bottomRight: Radius.circular(4),
-                  ),
-                  border: Border(
-                    left: BorderSide(color: Colors.black12, width: 0.5),
+                    topRight: Radius.circular(8),
+                    bottomRight: Radius.circular(8),
                   ),
                 ),
                 child: CustomPaint(painter: PageEdgePainter()),
@@ -313,7 +309,7 @@ class JournalListCard extends StatelessWidget {
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: contentColor.withOpacity(0.8),
+                color: contentColor.withValues(alpha: 0.8),
                 height: 1.4,
                 fontStyle: FontStyle.italic,
               ),
@@ -337,7 +333,7 @@ class JournalListCard extends StatelessWidget {
         maxLines: 4,
         overflow: TextOverflow.ellipsis,
         style: theme.textTheme.bodyMedium?.copyWith(
-          color: contentColor.withOpacity(0.8),
+          color: contentColor.withValues(alpha: 0.8),
           height: 1.4,
           fontFamily: 'Serif', // Handwriting style preference
         ),
@@ -352,7 +348,7 @@ class JournalListCard extends StatelessWidget {
     } else if (design.id == 'composition' || design.id.contains('bound')) {
       return _buildHardcoverSpine(baseColor);
     } else if (design.id == 'legal_pad') {
-      return _buildTopBinding(baseColor); // Special case handling?
+      // return _buildTopBinding(baseColor); // Special case handling?
       // Actually legal pad is top bound, but card is row. We'll simulate side for consistency or adjust.
       // Let's stick to standard notebook binding for card row consistency.
       return _buildWireBinding(baseColor);
@@ -437,20 +433,11 @@ class JournalListCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTopBinding(Color baseColor) {
-    // For legal pad, usually red top. But we are vertical list.
-    // Let's just do a red strip on left to look like the margin strip
-    return Container(
-      width: 20,
-      color: const Color(0xFFD32F2F), // Legal pad red
-    );
-  }
-
   Widget _buildSoftcoverSpine(Color baseColor, Color? defaultColor) {
     // Just a fold
     final spineColor = defaultColor != null
-        ? defaultColor.withOpacity(0.9)
-        : baseColor.withOpacity(0.9);
+        ? defaultColor.withValues(alpha: 0.9)
+        : baseColor.withValues(alpha: 0.9);
 
     return Container(
       width: 16,
@@ -462,7 +449,7 @@ class JournalListCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withValues(alpha: 0.2),
             offset: const Offset(1, 0),
             blurRadius: 2,
           ),
@@ -479,7 +466,7 @@ class JournalListCard extends StatelessWidget {
         padding: EdgeInsets.zero,
         icon: Icon(
           Icons.more_horiz, // more subtle
-          color: color.withOpacity(0.6),
+          color: color.withValues(alpha: 0.6),
           size: 20,
         ),
         onSelected: (value) {

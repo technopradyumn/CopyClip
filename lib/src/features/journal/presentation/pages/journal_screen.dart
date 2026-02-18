@@ -16,7 +16,9 @@ import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:copyclip/src/core/utils/widget_sync_service.dart';
-import '../../../../core/router/app_router.dart';
+import 'package:copyclip/src/core/router/app_router.dart';
+import 'package:copyclip/src/core/widgets/dynamic_background.dart';
+import 'package:copyclip/src/core/widgets/empty_state_widget.dart'; // Added
 
 // Data
 import 'package:copyclip/src/features/journal/data/journal_model.dart';
@@ -120,10 +122,7 @@ class _JournalScreenState extends State<JournalScreen> {
             (e) =>
                 e.title.toLowerCase().contains(_searchQuery) ||
                 e.content.toLowerCase().contains(_searchQuery) ||
-                (e.tags != null &&
-                    e.tags!.any(
-                      (tag) => tag.toLowerCase().contains(_searchQuery),
-                    )),
+                (e.tags.any((tag) => tag.toLowerCase().contains(_searchQuery))),
           )
           .toList();
     }
@@ -179,8 +178,8 @@ class _JournalScreenState extends State<JournalScreen> {
     }
 
     final dateStr = DateFormat('EEEE, MMM dd, yyyy').format(entry.date);
-    final tagsStr = (entry.tags != null && entry.tags!.isNotEmpty)
-        ? "\nTags: #${entry.tags!.join(' #')}"
+    final tagsStr = (entry.tags.isNotEmpty)
+        ? "\nTags: #${entry.tags.join(' #')}"
         : "";
 
     return "📅 $dateStr\nMood: ${_getMoodEmoji(entry.mood)} ${entry.mood}\n\nTITLE: ${entry.title}\n--------------------------\n${body.trim()}\n$tagsStr";
@@ -214,6 +213,7 @@ class _JournalScreenState extends State<JournalScreen> {
   }
 
   void _shareEntry(JournalEntry entry) {
+    // ignore: deprecated_member_use
     Share.share(_formatJournalForExport(entry));
   }
 
@@ -282,10 +282,11 @@ class _JournalScreenState extends State<JournalScreen> {
 
   void _toggleSelection(String id) {
     setState(() {
-      if (_selectedIds.contains(id))
+      if (_selectedIds.contains(id)) {
         _selectedIds.remove(id);
-      else
+      } else {
         _selectedIds.add(id);
+      }
       if (_selectedIds.isEmpty) _isSelectionMode = false;
     });
   }
@@ -308,16 +309,17 @@ class _JournalScreenState extends State<JournalScreen> {
     final theme = Theme.of(context);
     final onSurfaceColor = theme.colorScheme.onSurface;
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: !_isSelectionMode,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
         if (_isSelectionMode) {
           setState(() {
             _isSelectionMode = false;
             _selectedIds.clear();
           });
-          return false;
+          return;
         }
-        return true;
       },
       child: GlassScaffold(
         title: null,
@@ -331,167 +333,170 @@ class _JournalScreenState extends State<JournalScreen> {
                   color: theme.colorScheme.onPrimary,
                 ),
               ),
-        body: Column(
-          children: [
-            _buildCustomTopBar(),
+        body: DynamicBackground(
+          child: Column(
+            children: [
+              _buildCustomTopBar(),
 
-            // Daily Quote (Static content, cheap to build)
-            if (!_isSelectionMode && _searchQuery.isEmpty)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
+              // Daily Quote (Static content, cheap to build)
+              if (!_isSelectionMode && _searchQuery.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: onSurfaceColor.withValues(alpha: 0.05),
+                      borderRadius: BorderRadius.circular(
+                        AppConstants.cornerRadius,
+                      ),
+                      border: Border.all(
+                        color: theme.dividerColor.withValues(alpha: 0.1),
+                        width: AppConstants.borderWidth,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          CupertinoIcons.lightbulb,
+                          color: Colors.amberAccent,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            _dailyQuote,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: onSurfaceColor.withValues(alpha: 0.7),
+                              fontStyle: FontStyle.italic,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
+                ),
+
+              // Search Bar (Static container)
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 16,
+                  left: 16,
+                  top: 0,
+                  bottom: 8,
+                ),
+                child: Container(
+                  height: 44,
                   decoration: BoxDecoration(
-                    color: onSurfaceColor.withOpacity(0.05),
+                    color: onSurfaceColor.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(
                       AppConstants.cornerRadius,
                     ),
                     border: Border.all(
-                      color: theme.dividerColor.withOpacity(0.1),
+                      color: theme.dividerColor.withValues(alpha: 0.1),
                       width: AppConstants.borderWidth,
                     ),
                   ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        CupertinoIcons.lightbulb,
-                        color: Colors.amberAccent,
+                  child: TextField(
+                    controller: _searchController,
+                    style: theme.textTheme.bodyMedium,
+                    decoration: InputDecoration(
+                      hintText: 'Search memories...',
+                      hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                        color: onSurfaceColor.withValues(alpha: 0.5),
+                      ),
+                      prefixIcon: Icon(
+                        CupertinoIcons.search,
+                        color: onSurfaceColor.withValues(alpha: 0.5),
                         size: 20,
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          _dailyQuote,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: onSurfaceColor.withOpacity(0.7),
-                            fontStyle: FontStyle.italic,
+                      suffixIcon: _searchController.text.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(
+                                CupertinoIcons.xmark_circle,
+                                size: 18,
+                              ),
+                              onPressed: _searchController.clear,
+                            )
+                          : null,
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Entry List
+              // ✅ OPTIMIZATION: Only this part rebuilds on data change
+              Expanded(
+                child: ValueListenableBuilder<List<JournalEntry>>(
+                  valueListenable: _filteredEntriesNotifier,
+                  builder: (context, entries, _) {
+                    if (entries.isEmpty) {
+                      return Center(
+                        child: EmptyStateWidget(
+                          message: "Start writing your story",
+                          subMessage:
+                              "Record your daily memories and feelings.",
+                          onAction: () => _openEditor(null),
+                          actionLabel: "Write Journal",
+                        ),
+                      );
+                    }
+
+                    // ✅ OPTIMIZATION: Grid View with Reorder support
+                    return ReorderableGridView.count(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 12,
+                      crossAxisSpacing: 12,
+                      childAspectRatio: 0.70, // Book-like aspect ratio
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+                      physics: const BouncingScrollPhysics(),
+                      // Custom Drag Feedback: Transparent bg + Scale up
+                      dragWidgetBuilder: (index, child) {
+                        return Material(
+                          color: Colors
+                              .transparent, // Remove default elevation color
+                          child: Transform.scale(
+                            scale: 1.1, // Increase size to indicate drag
+                            child: child,
                           ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-            // Search Bar (Static container)
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 16,
-                left: 16,
-                top: 0,
-                bottom: 8,
-              ),
-              child: Container(
-                height: 44,
-                decoration: BoxDecoration(
-                  color: onSurfaceColor.withOpacity(0.08),
-                  borderRadius: BorderRadius.circular(
-                    AppConstants.cornerRadius,
-                  ),
-                  border: Border.all(
-                    color: theme.dividerColor.withOpacity(0.1),
-                    width: AppConstants.borderWidth,
-                  ),
-                ),
-                child: TextField(
-                  controller: _searchController,
-                  style: theme.textTheme.bodyMedium,
-                  decoration: InputDecoration(
-                    hintText: 'Search memories...',
-                    hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                      color: onSurfaceColor.withOpacity(0.5),
-                    ),
-                    prefixIcon: Icon(
-                      CupertinoIcons.search,
-                      color: onSurfaceColor.withOpacity(0.5),
-                      size: 20,
-                    ),
-                    suffixIcon: _searchController.text.isNotEmpty
-                        ? IconButton(
-                            icon: const Icon(
-                              CupertinoIcons.xmark_circle,
-                              size: 18,
-                            ),
-                            onPressed: _searchController.clear,
-                          )
-                        : null,
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  ),
-                ),
-              ),
-            ),
-
-            // Entry List
-            // ✅ OPTIMIZATION: Only this part rebuilds on data change
-            Expanded(
-              child: ValueListenableBuilder<List<JournalEntry>>(
-                valueListenable: _filteredEntriesNotifier,
-                builder: (context, entries, _) {
-                  if (entries.isEmpty) {
-                    return Center(
-                      child: Text(
-                        "Start writing your story.",
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: onSurfaceColor.withOpacity(0.4),
-                        ),
-                      ),
+                        );
+                      },
+                      onReorder: _onReorder,
+                      children: entries.map((entry) {
+                        return Container(
+                          key: ValueKey(entry.id),
+                          child: JournalCard(
+                            entry: entry,
+                            isSelected: _selectedIds.contains(entry.id),
+                            onTap: () => _openEditor(entry),
+                            onLongPress: null, // Allow GridView drag
+                            onCopy: () => _copyEntry(entry),
+                            onShare: () => _shareEntry(entry),
+                            onDelete: () => _confirmDeleteEntry(entry),
+                            onColorChanged: (c) {
+                              entry.colorValue = c.toARGB32();
+                              entry.save();
+                            },
+                            onDesignChanged: (designId) {
+                              entry.designId = designId;
+                              entry.save();
+                              WidgetSyncService.syncJournal();
+                            },
+                          ),
+                        );
+                      }).toList(),
                     );
-                  }
-
-                  // ✅ OPTIMIZATION: Grid View with Reorder support
-                  return ReorderableGridView.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 12,
-                    crossAxisSpacing: 12,
-                    childAspectRatio: 0.70, // Book-like aspect ratio
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-                    physics: const BouncingScrollPhysics(),
-                    // Custom Drag Feedback: Transparent bg + Scale up
-                    dragWidgetBuilder: (index, child) {
-                      return Material(
-                        color: Colors
-                            .transparent, // Remove default elevation color
-                        child: Transform.scale(
-                          scale: 1.08, // Increase size to indicate drag
-                          child: child,
-                        ),
-                      );
-                    },
-                    onReorder: _onReorder,
-                    children: entries.map((entry) {
-                      return Container(
-                        key: ValueKey(entry.id),
-                        child: JournalCard(
-                          entry: entry,
-                          isSelected: _selectedIds.contains(entry.id),
-                          onTap: () => _openEditor(entry),
-                          onLongPress: null, // Allow GridView drag
-                          onCopy: () => _copyEntry(entry),
-                          onShare: () => _shareEntry(entry),
-                          onDelete: () => _confirmDeleteEntry(entry),
-                          onColorChanged: (c) {
-                            entry.colorValue = c.value;
-                            entry.save();
-                          },
-                          onDesignChanged: (designId) {
-                            entry.designId = designId;
-                            entry.save();
-                            WidgetSyncService.syncJournal();
-                          },
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -533,7 +538,7 @@ class _JournalScreenState extends State<JournalScreen> {
         IconButton(
           icon: Icon(
             CupertinoIcons.checkmark_circle,
-            color: onSurfaceColor.withOpacity(0.54),
+            color: onSurfaceColor.withValues(alpha: 0.54),
           ),
           onPressed: () => setState(() => _isSelectionMode = true),
         ),

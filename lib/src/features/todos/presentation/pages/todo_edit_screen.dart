@@ -380,7 +380,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
           height: 350,
           margin: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: theme.colorScheme.surface.withOpacity(0.95),
+            color: theme.colorScheme.surface.withValues(alpha: 0.95),
             borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
             border: Border.all(
               color: theme.dividerColor,
@@ -388,7 +388,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withValues(alpha: 0.5),
                 blurRadius: 20,
                 spreadRadius: 5,
               ),
@@ -640,7 +640,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
               CupertinoIcons.arrow_counterclockwise,
               color: _undoStack.length > 1
                   ? colorScheme.onSurface
-                  : colorScheme.onSurface.withOpacity(0.3),
+                  : colorScheme.onSurface.withValues(alpha: 0.3),
             ),
             tooltip: 'Undo',
           ),
@@ -650,7 +650,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
               CupertinoIcons.arrow_clockwise,
               color: _redoStack.isNotEmpty
                   ? colorScheme.onSurface
-                  : colorScheme.onSurface.withOpacity(0.3),
+                  : colorScheme.onSurface.withValues(alpha: 0.3),
             ),
             tooltip: 'Redo',
           ),
@@ -688,7 +688,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
               Text(
                 'Category',
                 style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.primary.withOpacity(0.8),
+                  color: colorScheme.primary.withValues(alpha: 0.8),
                   fontSize: 14,
                 ),
               ),
@@ -706,7 +706,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                       style: textTheme.bodyLarge,
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: colorScheme.onSurface.withOpacity(0.08),
+                        fillColor: colorScheme.onSurface.withValues(alpha: 0.08),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(
                             AppConstants.cornerRadius * 0.5,
@@ -718,7 +718,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                             _isDropdownOpen
                                 ? CupertinoIcons.chevron_up
                                 : CupertinoIcons.chevron_down,
-                            color: colorScheme.onSurface.withOpacity(0.54),
+                            color: colorScheme.onSurface.withValues(alpha: 0.54),
                           ),
                           onPressed: () {
                             if (_isDropdownOpen) {
@@ -730,7 +730,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                         ),
                         hintText: 'e.g. Work, Gym',
                         hintStyle: textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withOpacity(0.3),
+                          color: colorScheme.onSurface.withValues(alpha: 0.3),
                         ),
                       ),
                     ),
@@ -743,7 +743,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
               Text(
                 'What needs to be done?',
                 style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.primary.withOpacity(0.8),
+                  color: colorScheme.primary.withValues(alpha: 0.8),
                   fontSize: 14,
                 ),
               ),
@@ -760,7 +760,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: colorScheme.onSurface.withOpacity(0.08),
+                      fillColor: colorScheme.onSurface.withValues(alpha: 0.08),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
                           AppConstants.cornerRadius * 0.5,
@@ -769,7 +769,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                       ),
                       hintText: 'Enter task details...',
                       hintStyle: textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.3),
+                        color: colorScheme.onSurface.withValues(alpha: 0.3),
                       ),
                     ),
                   ),
@@ -788,7 +788,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                     Icon(
                       CupertinoIcons.calendar,
                       color: _selectedDate == null
-                          ? colorScheme.onSurface.withOpacity(0.54)
+                          ? colorScheme.onSurface.withValues(alpha: 0.54)
                           : colorScheme.error,
                     ),
                     const SizedBox(width: 16),
@@ -799,14 +799,14 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                           Text(
                             _selectedDate == null ? 'Set Due Date' : 'Due Date',
                             style: textTheme.bodyMedium?.copyWith(
-                              color: colorScheme.onSurface.withOpacity(0.7),
+                              color: colorScheme.onSurface.withValues(alpha: 0.7),
                             ),
                           ),
                           Text(
                             dateText,
                             style: TextStyle(
                               color: _selectedDate == null
-                                  ? colorScheme.onSurface.withOpacity(0.38)
+                                  ? colorScheme.onSurface.withValues(alpha: 0.38)
                                   : colorScheme.error,
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -825,9 +825,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                           _hasReminder = val;
                           if (val) {
                             // If turning ON and date is null, set to now
-                            if (_selectedDate == null) {
-                              _selectedDate = DateTime.now();
-                            }
+                            _selectedDate ??= DateTime.now();
                           } else {
                             // If turning OFF, strictly clear date? Or just keep it but disable flag?
                             // User request: "Default ON". So we keep date references mostly valid.
@@ -850,7 +848,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                   child: Text(
                     "We'll send you a notification at this time.",
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: colorScheme.onSurface.withOpacity(0.4),
+                      color: colorScheme.onSurface.withValues(alpha: 0.4),
                     ),
                   ),
                 ),
@@ -872,7 +870,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                           CupertinoIcons.repeat,
                           color: _repeatInterval != null
                               ? colorScheme.primary
-                              : colorScheme.onSurface.withOpacity(0.54),
+                              : colorScheme.onSurface.withValues(alpha: 0.54),
                         ),
                         const SizedBox(width: 16),
                         Expanded(
@@ -881,7 +879,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                             style: TextStyle(
                               color: _repeatInterval != null
                                   ? colorScheme.primary
-                                  : colorScheme.onSurface.withOpacity(0.7),
+                                  : colorScheme.onSurface.withValues(alpha: 0.7),
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
                             ),
@@ -907,13 +905,13 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                       ],
                     ),
                     if (_repeatInterval != null) ...[
-                      Divider(color: theme.dividerColor.withOpacity(0.2)),
+                      Divider(color: theme.dividerColor.withValues(alpha: 0.2)),
                       const SizedBox(height: 8),
                       // Dropdown
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         decoration: BoxDecoration(
-                          color: colorScheme.onSurface.withOpacity(0.05),
+                          color: colorScheme.onSurface.withValues(alpha: 0.05),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: DropdownButtonHideUnderline(
@@ -986,7 +984,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                                 decoration: BoxDecoration(
                                   color: isSelected
                                       ? colorScheme.primary
-                                      : colorScheme.onSurface.withOpacity(0.1),
+                                      : colorScheme.onSurface.withValues(alpha: 0.1),
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                     color: isSelected
@@ -1031,7 +1029,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                           : CupertinoIcons.circle,
                       color: _isDone
                           ? colorScheme.primary
-                          : colorScheme.onSurface.withOpacity(0.54),
+                          : colorScheme.onSurface.withValues(alpha: 0.54),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -1040,7 +1038,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                         style: TextStyle(
                           color: _isDone
                               ? colorScheme.primary
-                              : colorScheme.onSurface.withOpacity(0.7),
+                              : colorScheme.onSurface.withValues(alpha: 0.7),
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
                         ),

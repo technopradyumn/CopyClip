@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter/services.dart';
 import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -17,8 +16,9 @@ import '../../data/canvas_model.dart';
 import '../widgets/drawing_painter.dart';
 import '../../../../core/utils/widget_sync_service.dart';
 import '../../../../features/premium/presentation/widgets/premium_lock_dialog.dart';
-import '../../../../features/premium/presentation/provider/premium_provider.dart';
-import 'package:provider/provider.dart';
+import '../../../../features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/core/widgets/premium_badge.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum BrushShape {
   round,
@@ -69,7 +69,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   late TextEditingController _titleController;
   late CanvasNote _currentNote;
   List<DrawingStroke> _strokes = [];
-  List<DrawingStroke> _redoStack = [];
+  final List<DrawingStroke> _redoStack = [];
   List<CanvasText> _textElements = [];
 
   // Page management
@@ -86,7 +86,6 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
 
   // Hand / Interaction Mode
   bool _isHandMode = false;
-  PageScrollAxis _pageScrollAxis = PageScrollAxis.horizontal;
 
   // Visuals
   bool _showPageIndicator = false;
@@ -314,13 +313,15 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   }
 
   void _undo() {
-    if (_strokes.isNotEmpty)
+    if (_strokes.isNotEmpty) {
       setState(() => _redoStack.add(_strokes.removeLast()));
+    }
   }
 
   void _redo() {
-    if (_redoStack.isNotEmpty)
+    if (_redoStack.isNotEmpty) {
       setState(() => _strokes.add(_redoStack.removeLast()));
+    }
   }
 
   void _enableTextMode() {
@@ -342,7 +343,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
         id: DateTime.now().toString(),
         text: 'Type here...',
         position: Offset(centerX - 100, centerY - 50),
-        color: _selectedColor.value,
+        color: _selectedColor.toARGB32(),
         fontSize: 20.0,
         containerWidth: 200.0,
         containerHeight: 100.0,
@@ -381,10 +382,12 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
       );
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        _saveNote();
-        return true;
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          _saveNote();
+        }
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -435,7 +438,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.6),
+                          color: Colors.black.withValues(alpha: 0.6),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
@@ -498,7 +501,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               decoration: BoxDecoration(
                 color: const Color(
                   0xFF4DB6AC,
-                ).withOpacity(0.12), // Match SeamlessHeader style
+                ).withValues(alpha: 0.12), // Match SeamlessHeader style
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -534,7 +537,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                         isDense: true,
                         contentPadding: EdgeInsets.zero,
                         hintStyle: theme.textTheme.headlineMedium?.copyWith(
-                          color: colorScheme.onSurface.withOpacity(0.3),
+                          color: colorScheme.onSurface.withValues(alpha: 0.3),
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
                         ),
@@ -549,7 +552,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       'MMM d, h:mm a',
                     ).format(_currentNote.lastModified),
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: colorScheme.onSurface.withOpacity(0.5),
+                      color: colorScheme.onSurface.withValues(alpha: 0.5),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -603,15 +606,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             ),
             onSelected: (val) {
               switch (val) {
-                case 'scroll':
-                  _showScrollDirectionPicker(context);
-                  break;
                 case 'pdf':
-                  final provider = Provider.of<PremiumProvider>(
-                    context,
-                    listen: false,
-                  );
-                  if (provider.isPremium) {
+                  final isPremium = context.read<PremiumBloc>().state.isPremium;
+                  if (isPremium) {
                     _exportToPdf();
                   } else {
                     PremiumLockDialog.show(
@@ -630,21 +627,8 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               }
             },
             itemBuilder: (context) {
-              final isPremium = Provider.of<PremiumProvider>(
-                context,
-                listen: false,
-              ).isPremium;
+              final isPremium = context.read<PremiumBloc>().state.isPremium;
               return [
-                const PopupMenuItem(
-                  value: 'scroll',
-                  child: Row(
-                    children: [
-                      Icon(CupertinoIcons.hand_draw, size: 18),
-                      SizedBox(width: 12),
-                      Text("Scroll Direction"),
-                    ],
-                  ),
-                ),
                 const PopupMenuItem(
                   value: 'info',
                   child: Row(
@@ -664,11 +648,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       const Text("Export as PDF"),
                       if (!isPremium) ...[
                         const Spacer(),
-                        const Icon(
-                          CupertinoIcons.lock_fill,
-                          size: 14,
-                          color: Colors.amber,
-                        ),
+                        const PremiumFeatureIcon(),
                       ],
                     ],
                   ),
@@ -716,8 +696,8 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                   DrawingStroke(
                     points: [localPos.dx, localPos.dy],
                     color: _isErasing
-                        ? _currentNote.backgroundColor.value
-                        : _selectedColor.value,
+                        ? _currentNote.backgroundColor.toARGB32()
+                        : _selectedColor.toARGB32(),
                     strokeWidth: _isErasing ? _eraserSize : _strokeWidth,
                     penType: _brushShape.index,
                   ),
@@ -734,8 +714,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             if (renderBox != null) {
               final localPos = renderBox.globalToLocal(details.globalPosition);
               setState(() {
-                if (_strokes.isNotEmpty)
+                if (_strokes.isNotEmpty) {
                   _strokes.last.points.addAll([localPos.dx, localPos.dy]);
+                }
               });
             }
           }
@@ -758,7 +739,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 5,
                       offset: const Offset(0, 2),
                     ),
@@ -795,19 +776,17 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                           size: Size.infinite,
                         ),
                       ),
-                      ..._textElements
-                          .map(
-                            (text) => Positioned(
-                              left: text.position.dx,
-                              top: text.position.dy,
-                              child: _buildEditableText(
-                                text,
-                                _selectedTextId == text.id,
-                                colorScheme,
-                              ),
-                            ),
-                          )
-                          .toList(),
+                      ..._textElements.map(
+                        (text) => Positioned(
+                          left: text.position.dx,
+                          top: text.position.dy,
+                          child: _buildEditableText(
+                            text,
+                            _selectedTextId == text.id,
+                            colorScheme,
+                          ),
+                        ),
+                      ),
                       if (_isDrawingMode && !_isHandMode)
                         GestureDetector(
                           behavior: HitTestBehavior.opaque,
@@ -971,14 +950,14 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
         border: Border.all(
           color: isSelected
               ? colorScheme.primary
-              : colorScheme.outline.withOpacity(0.2),
+              : colorScheme.outline.withValues(alpha: 0.2),
           width: isSelected ? 2 : 1,
         ),
         borderRadius: BorderRadius.circular(8),
         boxShadow: isSelected
             ? [
                 BoxShadow(
-                  color: colorScheme.primary.withOpacity(0.2),
+                  color: colorScheme.primary.withValues(alpha: 0.2),
                   blurRadius: 4,
                   spreadRadius: 1,
                 ),
@@ -1016,34 +995,32 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     ),
 
                     // Text Elements
-                    ...textElementsToShow
-                        .map(
-                          (text) => Positioned(
-                            left: text.position.dx,
-                            top: text.position.dy,
-                            child: Container(
-                              width: text.containerWidth,
-                              height: text.containerHeight,
-                              child: Text(
-                                text.text,
-                                style: TextStyle(
-                                  color: Color(text.color),
-                                  fontSize: text.fontSize,
-                                  fontWeight: text.bold
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                                  fontStyle: text.italic
-                                      ? FontStyle.italic
-                                      : FontStyle.normal,
-                                  decoration: text.underline
-                                      ? TextDecoration.underline
-                                      : null,
-                                ),
-                              ),
+                    ...textElementsToShow.map(
+                      (text) => Positioned(
+                        left: text.position.dx,
+                        top: text.position.dy,
+                        child: SizedBox(
+                          width: text.containerWidth,
+                          height: text.containerHeight,
+                          child: Text(
+                            text.text,
+                            style: TextStyle(
+                              color: Color(text.color),
+                              fontSize: text.fontSize,
+                              fontWeight: text.bold
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                              fontStyle: text.italic
+                                  ? FontStyle.italic
+                                  : FontStyle.normal,
+                              decoration: text.underline
+                                  ? TextDecoration.underline
+                                  : null,
                             ),
                           ),
-                        )
-                        .toList(),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -1057,7 +1034,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             child: Container(
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.6),
+                color: Colors.black.withValues(alpha: 0.6),
                 shape: BoxShape.circle,
               ),
               child: Text(
@@ -1081,7 +1058,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                 child: Container(
                   padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    color: Colors.red.withOpacity(0.9),
+                    color: Colors.red.withValues(alpha: 0.9),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
@@ -1124,9 +1101,11 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               width: 20,
               height: 20,
               decoration: BoxDecoration(
-                color: colorScheme.surfaceVariant,
+                color: colorScheme.surfaceContainerHighest,
                 shape: BoxShape.circle,
-                border: Border.all(color: colorScheme.outline.withOpacity(0.2)),
+                border: Border.all(
+                  color: colorScheme.outline.withValues(alpha: 0.2),
+                ),
               ),
               child: Icon(
                 CupertinoIcons.plus,
@@ -1148,7 +1127,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
         border: Border(
-          top: BorderSide(color: colorScheme.outline.withOpacity(0.2)),
+          top: BorderSide(color: colorScheme.outline.withValues(alpha: 0.2)),
         ),
       ),
       child: Column(
@@ -1265,13 +1244,30 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       );
                     },
                     proxyDecorator: (child, index, animation) {
-                      return Material(
-                        elevation: 5,
-                        color: Colors.transparent,
-                        shadowColor: Colors.black26,
-                        borderRadius: BorderRadius.circular(
-                          AppConstants.cornerRadius,
-                        ),
+                      return AnimatedBuilder(
+                        animation: animation,
+                        builder: (BuildContext context, Widget? child) {
+                          final double animValue = Curves.easeInOut.transform(
+                            animation.value,
+                          );
+                          final double scale = ui.lerpDouble(
+                            1,
+                            1.1,
+                            animValue,
+                          )!;
+                          return Transform.scale(
+                            scale: scale,
+                            child: Material(
+                              elevation: 5,
+                              color: Colors.transparent,
+                              shadowColor: Colors.black26,
+                              borderRadius: BorderRadius.circular(
+                                AppConstants.cornerRadius,
+                              ),
+                              child: child,
+                            ),
+                          );
+                        },
                         child: child,
                       );
                     },
@@ -1305,10 +1301,10 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
         width: 100, // Match page preview width
         margin: const EdgeInsets.symmetric(horizontal: 6),
         decoration: BoxDecoration(
-          color: colorScheme.surfaceVariant.withOpacity(0.3),
+          color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: colorScheme.outline.withOpacity(0.5),
+            color: colorScheme.outline.withValues(alpha: 0.5),
             style: BorderStyle.solid,
             width: 1,
           ),
@@ -1356,10 +1352,10 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
           decoration: BoxDecoration(
             color: theme.cardColor,
             borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-            border: Border.all(color: Colors.grey.withOpacity(0.1)),
+            border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 blurRadius: 4,
                 offset: Offset(0, offset),
               ),
@@ -1385,9 +1381,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
     return GestureDetector(
       onTap: () {
         if (_isHandMode) return;
-        if (isSelected)
+        if (isSelected) {
           unfocus();
-        else {
+        } else {
           setState(() => _selectedTextId = text.id);
           focusNode.requestFocus();
         }
@@ -1410,7 +1406,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
             decoration: BoxDecoration(
               border: Border.all(
                 color: isSelected
-                    ? colorScheme.primary.withOpacity(0.8)
+                    ? colorScheme.primary.withValues(alpha: 0.8)
                     : Colors.transparent,
                 width: isSelected ? 2 : 1,
               ),
@@ -1631,7 +1627,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
           color: theme.cardColor,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 8,
               offset: const Offset(0, -2),
             ),
@@ -1663,8 +1659,9 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     _isHandMode = false;
                     _selectedTextId = null;
                     if (_brushShape == BrushShape.eraserHard ||
-                        _brushShape == BrushShape.eraserSoft)
+                        _brushShape == BrushShape.eraserSoft) {
                       _brushShape = BrushShape.pen;
+                    }
                   });
                 },
                 colorScheme,
@@ -1690,8 +1687,8 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                   color: (_isErasing && canEdit)
                       ? colorScheme.primary
                       : (canEdit
-                            ? colorScheme.onSurface.withOpacity(0.7)
-                            : colorScheme.onSurface.withOpacity(0.3)),
+                            ? colorScheme.onSurface.withValues(alpha: 0.7)
+                            : colorScheme.onSurface.withValues(alpha: 0.3)),
                 ),
               ),
               _buildToolButton(
@@ -1714,7 +1711,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                   margin: const EdgeInsets.symmetric(horizontal: 2),
                   decoration: BoxDecoration(
                     color: _showPageScroller
-                        ? colorScheme.primary.withOpacity(0.1)
+                        ? colorScheme.primary.withValues(alpha: 0.1)
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -1724,7 +1721,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     size: 20,
                     color: _showPageScroller
                         ? colorScheme.primary
-                        : colorScheme.onSurface.withOpacity(0.7),
+                        : colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                 ),
               ),
@@ -1732,7 +1729,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               Container(
                 width: 1,
                 height: 24,
-                color: colorScheme.outline.withOpacity(0.2),
+                color: colorScheme.outline.withValues(alpha: 0.2),
               ),
               SizedBox(width: 8),
               if (!_isErasing)
@@ -1747,8 +1744,8 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       margin: const EdgeInsets.symmetric(horizontal: 2),
                       decoration: BoxDecoration(
                         color: canEdit
-                            ? colorScheme.primary.withOpacity(0.1)
-                            : Colors.grey.withOpacity(0.1),
+                            ? colorScheme.primary.withValues(alpha: 0.1)
+                            : Colors.grey.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child:
@@ -1787,7 +1784,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                     margin: const EdgeInsets.symmetric(horizontal: 2),
                     decoration: BoxDecoration(
                       color: _showPenSizeSlider
-                          ? colorScheme.primary.withOpacity(0.1)
+                          ? colorScheme.primary.withValues(alpha: 0.1)
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -1796,7 +1793,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       size: 20,
                       color: _showPenSizeSlider
                           ? colorScheme.primary
-                          : colorScheme.onSurface.withOpacity(0.7),
+                          : colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
                 ),
@@ -1815,7 +1812,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       color: _selectedColor,
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: colorScheme.outline.withOpacity(0.3),
+                        color: colorScheme.outline.withValues(alpha: 0.3),
                         width: 1.5,
                       ),
                     ),
@@ -1836,7 +1833,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       color: _currentNote.backgroundColor,
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: colorScheme.outline.withOpacity(0.3),
+                        color: colorScheme.outline.withValues(alpha: 0.3),
                         width: 1.5,
                       ),
                     ),
@@ -2057,7 +2054,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
         border: Border(
-          top: BorderSide(color: colorScheme.outline.withOpacity(0.2)),
+          top: BorderSide(color: colorScheme.outline.withValues(alpha: 0.2)),
         ),
       ),
       child: Row(
@@ -2076,9 +2073,11 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               data: SliderTheme.of(context).copyWith(
                 trackHeight: 4,
                 activeTrackColor: colorScheme.primary,
-                inactiveTrackColor: colorScheme.onSurface.withOpacity(0.2),
+                inactiveTrackColor: colorScheme.onSurface.withValues(
+                  alpha: 0.2,
+                ),
                 thumbColor: colorScheme.primary,
-                overlayColor: colorScheme.primary.withOpacity(0.15),
+                overlayColor: colorScheme.primary.withValues(alpha: 0.15),
                 overlayShape: const RoundSliderOverlayShape(overlayRadius: 14),
                 thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
                 trackShape: const RoundedRectSliderTrackShape(),
@@ -2089,10 +2088,11 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                 max: _isErasing ? 50 : 15,
                 onChanged: (val) {
                   setState(() {
-                    if (_isErasing)
+                    if (_isErasing) {
                       _eraserSize = val;
-                    else
+                    } else {
                       _strokeWidth = val;
+                    }
                   });
                 },
               ),
@@ -2189,13 +2189,17 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                                 ),
                                 decoration: BoxDecoration(
                                   color: isSelected
-                                      ? colorScheme.primary.withOpacity(0.15)
+                                      ? colorScheme.primary.withValues(
+                                          alpha: 0.15,
+                                        )
                                       : colorScheme.surface,
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
                                     color: isSelected
                                         ? colorScheme.primary
-                                        : colorScheme.outline.withOpacity(0.3),
+                                        : colorScheme.outline.withValues(
+                                            alpha: 0.3,
+                                          ),
                                     width: isSelected ? 2 : 1,
                                   ),
                                 ),
@@ -2208,8 +2212,8 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                                       size: 28,
                                       color: isSelected
                                           ? colorScheme.primary
-                                          : colorScheme.onSurface.withOpacity(
-                                              0.7,
+                                          : colorScheme.onSurface.withValues(
+                                              alpha: 0.7,
                                             ),
                                     ),
                                     const SizedBox(height: 4),
@@ -2224,7 +2228,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                                           color: isSelected
                                               ? colorScheme.primary
                                               : colorScheme.onSurface
-                                                    .withOpacity(0.7),
+                                                    .withValues(alpha: 0.7),
                                         ),
                                         textAlign: TextAlign.center,
                                         maxLines: 2,
@@ -2264,7 +2268,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
         margin: const EdgeInsets.symmetric(horizontal: 2),
         decoration: BoxDecoration(
           color: isActive
-              ? colorScheme.primary.withOpacity(0.15)
+              ? colorScheme.primary.withValues(alpha: 0.15)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
@@ -2276,8 +2280,8 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               color: enabled
                   ? (isActive
                         ? colorScheme.primary
-                        : colorScheme.onSurface.withOpacity(0.7))
-                  : colorScheme.onSurface.withOpacity(0.3),
+                        : colorScheme.onSurface.withValues(alpha: 0.7))
+                  : colorScheme.onSurface.withValues(alpha: 0.3),
             ),
       ),
     );
@@ -2331,10 +2335,11 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                       child: const Text('Done'),
                       onPressed: () {
                         setState(() {
-                          if (isBackground)
+                          if (isBackground) {
                             _currentNote.backgroundColor = pickerColor;
-                          else
+                          } else {
                             _selectedColor = pickerColor;
+                          }
                         });
                         Navigator.pop(context);
                       },
@@ -2354,7 +2359,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: pickerColor.withOpacity(0.3),
+                      color: pickerColor.withValues(alpha: 0.3),
                       blurRadius: 12,
                       spreadRadius: 2,
                     ),
@@ -2442,7 +2447,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                                   boxShadow: isCurrentColor
                                       ? [
                                           BoxShadow(
-                                            color: color.withOpacity(0.4),
+                                            color: color.withValues(alpha: 0.4),
                                             blurRadius: 8,
                                             spreadRadius: 1,
                                           ),
@@ -2507,131 +2512,6 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  void _showOptionsMenu(
-    BuildContext context,
-    ThemeData theme,
-    ColorScheme colorScheme,
-  ) {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (BuildContext context) {
-        // Get provider inside the builder or capture it before
-        final provider = Provider.of<PremiumProvider>(context, listen: false);
-        final isPremium = provider.isPremium;
-
-        return CupertinoActionSheet(
-          title: const Text("Options"),
-          actions: <CupertinoActionSheetAction>[
-            CupertinoActionSheetAction(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Hand Scroll: ',
-                    style: TextStyle(color: theme.textTheme.bodyMedium?.color),
-                  ),
-                  Text(
-                    _pageScrollAxis == PageScrollAxis.horizontal
-                        ? 'Left/Right'
-                        : (_pageScrollAxis == PageScrollAxis.vertical
-                              ? 'Top/Bottom'
-                              : 'Off'),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-                _showScrollDirectionPicker(context);
-              },
-            ),
-            CupertinoActionSheetAction(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Export as PDF'),
-                  if (!isPremium) ...[
-                    const SizedBox(width: 8),
-                    const Icon(Icons.lock, size: 16, color: Colors.amber),
-                  ],
-                ],
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-                if (isPremium) {
-                  _exportToPdf();
-                } else {
-                  PremiumLockDialog.show(
-                    context,
-                    featureName: 'PDF Export',
-                    onUnlockOnce: _exportToPdf,
-                  );
-                }
-              },
-            ),
-            CupertinoActionSheetAction(
-              child: const Text('Note Info'),
-              onPressed: () {
-                Navigator.pop(context);
-                _showNoteInfo(theme);
-              },
-            ),
-            CupertinoActionSheetAction(
-              child: const Text(
-                'Clear All',
-                style: TextStyle(color: CupertinoColors.destructiveRed),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-                _showClearDialog(theme);
-              },
-            ),
-          ],
-          cancelButton: CupertinoActionSheetAction(
-            child: const Text('Cancel'),
-            onPressed: () => Navigator.pop(context),
-          ),
-        );
-      },
-    );
-  }
-
-  void _showScrollDirectionPicker(BuildContext context) {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (ctx) => CupertinoActionSheet(
-        title: const Text('Page Scroll Direction (Hand Mode)'),
-        actions: [
-          CupertinoActionSheetAction(
-            child: const Text('Horizontal (Left/Right)'),
-            onPressed: () {
-              setState(() => _pageScrollAxis = PageScrollAxis.horizontal);
-              Navigator.pop(ctx);
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: const Text('Vertical (Top/Bottom)'),
-            onPressed: () {
-              setState(() => _pageScrollAxis = PageScrollAxis.vertical);
-              Navigator.pop(ctx);
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: const Text('Off (Pan Only)'),
-            onPressed: () {
-              setState(() => _pageScrollAxis = PageScrollAxis.none);
-              Navigator.pop(ctx);
-            },
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          child: const Text('Cancel'),
-          onPressed: () => Navigator.pop(ctx),
         ),
       ),
     );
@@ -2748,17 +2628,17 @@ class _Eraser3DPainter extends CustomPainter {
 
     // Define Paints
     final paintMain = Paint()
-      ..color = color.withOpacity(0.9)
+      ..color = color.withValues(alpha: 0.9)
       ..style = PaintingStyle.fill;
 
     final paintDark = Paint()
       ..color = color
-          .withOpacity(0.5) // Shadow side
+          .withValues(alpha: 0.5) // Shadow side
       ..style = PaintingStyle.fill;
 
     final paintLight = Paint()
       ..color = color
-          .withOpacity(0.7) // Light side
+          .withValues(alpha: 0.7) // Light side
       ..style = PaintingStyle.fill;
 
     // Radius for rounded corners
@@ -2766,29 +2646,29 @@ class _Eraser3DPainter extends CustomPainter {
 
     // Calculate Inset Points for Bezier Curves
     // Top-Right Edge
-    final tr_start = pTop + vx * r;
-    final tr_end = pRight - vx * r;
+    final trStart = pTop + vx * r;
+    final trEnd = pRight - vx * r;
     // Right-Bottom Edge
-    final rb_start = pRight + vy * r;
-    final rb_end = pBottom - vy * r;
+    final rbStart = pRight + vy * r;
+    final rbEnd = pBottom - vy * r;
     // Bottom-Left Edge
-    final bl_start = pBottom - vx * r;
-    final bl_end = pLeft + vx * r;
+    final blStart = pBottom - vx * r;
+    final blEnd = pLeft + vx * r;
     // Left-Top Edge
-    final lt_start = pLeft - vy * r;
-    final lt_end = pTop + vy * r;
+    final ltStart = pLeft - vy * r;
+    final ltEnd = pTop + vy * r;
 
     // Top Face Path (Rounded)
     final pathTop = Path()
-      ..moveTo(tr_start.dx, tr_start.dy)
-      ..lineTo(tr_end.dx, tr_end.dy)
-      ..quadraticBezierTo(pRight.dx, pRight.dy, rb_start.dx, rb_start.dy)
-      ..lineTo(rb_end.dx, rb_end.dy)
-      ..quadraticBezierTo(pBottom.dx, pBottom.dy, bl_start.dx, bl_start.dy)
-      ..lineTo(bl_end.dx, bl_end.dy)
-      ..quadraticBezierTo(pLeft.dx, pLeft.dy, lt_start.dx, lt_start.dy)
-      ..lineTo(lt_end.dx, lt_end.dy)
-      ..quadraticBezierTo(pTop.dx, pTop.dy, tr_start.dx, tr_start.dy)
+      ..moveTo(trStart.dx, trStart.dy)
+      ..lineTo(trEnd.dx, trEnd.dy)
+      ..quadraticBezierTo(pRight.dx, pRight.dy, rbStart.dx, rbStart.dy)
+      ..lineTo(rbEnd.dx, rbEnd.dy)
+      ..quadraticBezierTo(pBottom.dx, pBottom.dy, blStart.dx, blStart.dy)
+      ..lineTo(blEnd.dx, blEnd.dy)
+      ..quadraticBezierTo(pLeft.dx, pLeft.dy, ltStart.dx, ltStart.dy)
+      ..lineTo(ltEnd.dx, ltEnd.dy)
+      ..quadraticBezierTo(pTop.dx, pTop.dy, trStart.dx, trStart.dy)
       ..close();
 
     // Right Face Path
@@ -2797,42 +2677,42 @@ class _Eraser3DPainter extends CustomPainter {
     // Let's split pBottom: Right Face takes the right half of the curve.
 
     final pathRight = Path()
-      ..moveTo(tr_end.dx, tr_end.dy)
-      ..quadraticBezierTo(pRight.dx, pRight.dy, rb_start.dx, rb_start.dy)
-      ..lineTo(rb_end.dx, rb_end.dy)
-      ..quadraticBezierTo(pBottom.dx, pBottom.dy, bl_start.dx, bl_start.dy)
+      ..moveTo(trEnd.dx, trEnd.dy)
+      ..quadraticBezierTo(pRight.dx, pRight.dy, rbStart.dx, rbStart.dy)
+      ..lineTo(rbEnd.dx, rbEnd.dy)
+      ..quadraticBezierTo(pBottom.dx, pBottom.dy, blStart.dx, blStart.dy)
       // Drop Down
-      ..lineTo(bl_start.dx, bl_start.dy + vz.dy)
+      ..lineTo(blStart.dx, blStart.dy + vz.dy)
       ..quadraticBezierTo(
         pBottom.dx,
         pBottom.dy + vz.dy,
-        rb_end.dx,
-        rb_end.dy + vz.dy,
+        rbEnd.dx,
+        rbEnd.dy + vz.dy,
       )
-      ..lineTo(rb_start.dx, rb_start.dy + vz.dy)
+      ..lineTo(rbStart.dx, rbStart.dy + vz.dy)
       ..quadraticBezierTo(
         pRight.dx,
         pRight.dy + vz.dy,
-        tr_end.dx,
-        tr_end.dy + vz.dy,
+        trEnd.dx,
+        trEnd.dy + vz.dy,
       )
       ..close();
 
     // Left Face Path
     // This connects from the Bottom Corner (bl_start) to the Left Corner area.
     final pathLeft = Path()
-      ..moveTo(bl_start.dx, bl_start.dy)
-      ..lineTo(bl_end.dx, bl_end.dy)
-      ..quadraticBezierTo(pLeft.dx, pLeft.dy, lt_start.dx, lt_start.dy)
+      ..moveTo(blStart.dx, blStart.dy)
+      ..lineTo(blEnd.dx, blEnd.dy)
+      ..quadraticBezierTo(pLeft.dx, pLeft.dy, ltStart.dx, ltStart.dy)
       // Drop Down
-      ..lineTo(lt_start.dx, lt_start.dy + vz.dy)
+      ..lineTo(ltStart.dx, ltStart.dy + vz.dy)
       ..quadraticBezierTo(
         pLeft.dx,
         pLeft.dy + vz.dy,
-        bl_end.dx,
-        bl_end.dy + vz.dy,
+        blEnd.dx,
+        blEnd.dy + vz.dy,
       )
-      ..lineTo(bl_start.dx, bl_start.dy + vz.dy)
+      ..lineTo(blStart.dx, blStart.dy + vz.dy)
       ..close();
 
     // Draw faces

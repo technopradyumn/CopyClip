@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
+import 'package:copyclip/src/core/widgets/empty_state_widget.dart'; // Added
 // import 'package:copyclip/src/core/widgets/glass_container.dart'; // ❌ REMOVED to prevent lag
 
 import '../../../clipboard/data/clipboard_model.dart';
@@ -209,8 +211,10 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
             if (mounted) {
               setState(() {}); // Refresh UI
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Recycle Bin cleared successfully"),
+                SnackBar(
+                  content: Text(
+                    AppLocalizations.of(context)!.recycleBinCleared,
+                  ),
                   behavior: SnackBarBehavior.floating,
                 ),
               );
@@ -234,7 +238,6 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final onSurface = theme.colorScheme.onSurface;
     final items = _getAllDeleted();
 
     return GlassScaffold(
@@ -286,23 +289,10 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
                 Expanded(
                   child: items.isEmpty
                       ? Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                CupertinoIcons.trash,
-                                size: 64,
-                                color: onSurface.withOpacity(0.3),
-                              ),
-                              const SizedBox(height: 16),
-                              Text(
-                                "Recycle Bin is empty",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: onSurface.withOpacity(0.6),
-                                ),
-                              ),
-                            ],
+                          child: EmptyStateWidget(
+                            message: "Recycle Bin is empty",
+                            subMessage: "Deleted items will appear here.",
+                            assetPath: "assets/images/recycle_bin_empty.svg",
                           ),
                         )
                       : ValueListenableBuilder(
@@ -373,7 +363,7 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
                                                     color: theme
                                                         .colorScheme
                                                         .surface
-                                                        .withOpacity(0.6),
+                                                        .withValues(alpha: 0.6),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                           AppConstants
@@ -381,7 +371,7 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
                                                         ),
                                                     border: Border.all(
                                                       color: theme.dividerColor
-                                                          .withOpacity(0.1),
+                                                          .withValues(alpha: 0.1),
                                                       width: AppConstants
                                                           .borderWidth,
                                                     ),
@@ -483,12 +473,12 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
           color: isSelected
-              ? theme.colorScheme.primary.withOpacity(0.2)
+              ? theme.colorScheme.primary.withValues(alpha: 0.2)
               : Colors.transparent,
           border: Border.all(
             color: isSelected
-                ? theme.colorScheme.primary.withOpacity(0.3)
-                : theme.colorScheme.outline.withOpacity(0.2),
+                ? theme.colorScheme.primary.withValues(alpha: 0.3)
+                : theme.colorScheme.outline.withValues(alpha: 0.2),
             width: AppConstants.borderWidth,
           ),
         ),

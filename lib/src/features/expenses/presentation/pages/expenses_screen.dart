@@ -15,9 +15,12 @@ import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/services/interstitial_ad_service.dart';
-
+import 'package:copyclip/src/core/widgets/empty_state_widget.dart'; // Added
+import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 // Data
 import 'package:copyclip/src/features/expenses/data/expense_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 
 // Widgets
 import '../widgets/expense_card.dart';
@@ -113,6 +116,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       _tabController.index = 0;
 
       // Show ad, then switch to analytics on completion
+      final isPremium = context.read<PremiumBloc>().state.isPremium;
       _adService.showAd(() {
         if (mounted) {
           setState(() {
@@ -120,7 +124,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
             _tabController.index = 1; // Switch to analytics tab
           });
         }
-      });
+      }, isPremium: isPremium);
     }
   }
 
@@ -143,10 +147,11 @@ class _ExpensesScreenState extends State<ExpensesScreen>
   void _loadSettings() {
     if (!Hive.isBoxOpen('settings')) return;
     final box = Hive.box('settings');
-    if (mounted)
+    if (mounted) {
       setState(
         () => _selectedCurrency = box.get('last_currency', defaultValue: '\$'),
       );
+    }
   }
 
   // ============ INTERSTITIAL AD FOR ANALYTICS TAB ============
@@ -280,10 +285,11 @@ class _ExpensesScreenState extends State<ExpensesScreen>
   // --- SELECTION LOGIC ---
   void _toggleSelection(String id) {
     setState(() {
-      if (_selectedIds.contains(id))
+      if (_selectedIds.contains(id)) {
         _selectedIds.remove(id);
-      else
+      } else {
         _selectedIds.add(id);
+      }
       if (_selectedIds.isEmpty) _isSelectionMode = false;
     });
   }
@@ -309,6 +315,11 @@ class _ExpensesScreenState extends State<ExpensesScreen>
     });
   }
 
+  // --- Navigation ---
+  void _openExpenseEditor(Expense? expense) {
+    context.push(AppRouter.expenseEdit, extra: expense);
+  }
+
   // --- UI BUILDERS ---
 
   @override
@@ -319,69 +330,73 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       title: null,
       // ✅ STRUCTURAL FIX: Use a Column like NotesScreen
       // This keeps the Header static and allows Hero animation to play instantly.
-      body: Column(
-        children: [
-          // 1. Static Header (Rendered immediately)
-          _buildTopBar(),
+      body: DynamicBackground(
+        child: Column(
+          children: [
+            // 1. Static Header (Rendered immediately)
+            _buildTopBar(),
 
-          // 2. Scrollable Content (Loads asynchronously)
-          Expanded(
-            child: FutureBuilder<Box<Expense>>(
-              future: _boxFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+            // 2. Scrollable Content (Loads asynchronously)
+            Expanded(
+              child: FutureBuilder<Box<Expense>>(
+                future: _boxFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text(
-                        "Error loading data.\n\n${snapshot.error}",
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  );
-                }
-
-                return ValueListenableBuilder<Box<Expense>>(
-                  valueListenable: snapshot.data!.listenable(),
-                  builder: (context, box, _) {
-                    final allExpenses = box.values.toList();
-                    final expenses = _applyFilters(allExpenses);
-
-                    return NestedScrollView(
-                      headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                        // ⚠️ NOTE: _buildTopBar removed from here
-                        SliverToBoxAdapter(child: _buildCurrencySelector()),
-                        SliverToBoxAdapter(
-                          child: _buildTotalBalance(allExpenses),
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Text(
+                          "Error loading data.\n\n${snapshot.error}",
+                          textAlign: TextAlign.center,
                         ),
-                        SliverToBoxAdapter(child: _buildCalendar(allExpenses)),
-                        SliverToBoxAdapter(child: const SizedBox(height: 10)),
-                        SliverToBoxAdapter(child: _buildPeriodSelector()),
-                        SliverToBoxAdapter(child: const SizedBox(height: 10)),
-                        SliverToBoxAdapter(child: _buildStyledTabBar()),
-                        SliverToBoxAdapter(child: const SizedBox(height: 10)),
-                      ],
-                      body: TabBarView(
-                        controller: _tabController,
-                        children: [
-                          _buildListTab(expenses),
-                          _buildAnalyticsTab(expenses),
-                        ],
                       ),
                     );
-                  },
-                );
-              },
+                  }
+
+                  return ValueListenableBuilder<Box<Expense>>(
+                    valueListenable: snapshot.data!.listenable(),
+                    builder: (context, box, _) {
+                      final allExpenses = box.values.toList();
+                      final expenses = _applyFilters(allExpenses);
+
+                      return NestedScrollView(
+                        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                          // ⚠️ NOTE: _buildTopBar removed from here
+                          SliverToBoxAdapter(child: _buildCurrencySelector()),
+                          SliverToBoxAdapter(
+                            child: _buildTotalBalance(allExpenses),
+                          ),
+                          SliverToBoxAdapter(
+                            child: _buildCalendar(allExpenses),
+                          ),
+                          SliverToBoxAdapter(child: const SizedBox(height: 10)),
+                          SliverToBoxAdapter(child: _buildPeriodSelector()),
+                          SliverToBoxAdapter(child: const SizedBox(height: 10)),
+                          SliverToBoxAdapter(child: _buildStyledTabBar()),
+                          SliverToBoxAdapter(child: const SizedBox(height: 10)),
+                        ],
+                        body: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            _buildListTab(expenses),
+                            _buildAnalyticsTab(expenses),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.push(AppRouter.expenseEdit),
+        onPressed: () => _openExpenseEditor(null),
         backgroundColor: FeatureColors.expenses,
         elevation: 4,
         icon: Icon(CupertinoIcons.add, color: theme.colorScheme.onPrimary),
@@ -421,7 +436,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 style: theme.textTheme.bodyLarge,
                 decoration: InputDecoration(
                   hintText: "Search in $_selectedCurrency...",
-                  hintStyle: TextStyle(color: onSurfaceColor.withOpacity(0.5)),
+                  hintStyle: TextStyle(color: onSurfaceColor.withValues(alpha: 0.5)),
                   border: InputBorder.none,
                 ),
               ),
@@ -661,7 +676,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                               backgroundColor: theme
                                   .colorScheme
                                   .surfaceContainerHighest
-                                  .withOpacity(0.5),
+                                  .withValues(alpha: 0.5),
                               labelStyle: TextStyle(
                                 color: tempType == t
                                     ? theme.colorScheme.onPrimary
@@ -706,7 +721,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                               backgroundColor: theme
                                   .colorScheme
                                   .surfaceContainerHighest
-                                  .withOpacity(0.5),
+                                  .withValues(alpha: 0.5),
                               labelStyle: TextStyle(
                                 color: tempCategory == c
                                     ? theme.colorScheme.onPrimary
@@ -794,7 +809,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 decoration: BoxDecoration(
                   color: isSelected
                       ? theme.colorScheme.primary
-                      : theme.colorScheme.surfaceContainerHighest.withOpacity(
+                      : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 
                           0.5,
                         ),
                   borderRadius: BorderRadius.circular(20),
@@ -825,9 +840,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       child: Container(
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: theme.colorScheme.surface.withOpacity(0.5),
+          color: theme.colorScheme.surface.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+          border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -900,9 +915,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
         decoration: BoxDecoration(
-          color: theme.colorScheme.surface.withOpacity(0.5),
+          color: theme.colorScheme.surface.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+          border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
         ),
         child: Column(
           children: [
@@ -934,9 +949,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
     return Container(
       margin: EdgeInsets.symmetric(horizontal: _kPadding),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface.withOpacity(0.5), // Fast transparency
+        color: theme.colorScheme.surface.withValues(alpha: 0.5), // Fast transparency
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+        border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
       ),
       child: TableCalendar(
         firstDay: DateTime.utc(2020, 10, 16),
@@ -953,8 +968,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
           }
         },
         onFormatChanged: (format) {
-          if (_calendarFormat != format)
+          if (_calendarFormat != format) {
             setState(() => _calendarFormat = format);
+          }
         },
         onPageChanged: (focusedDay) => _focusedDay = focusedDay,
         eventLoader: (day) =>
@@ -974,10 +990,10 @@ class _ExpensesScreenState extends State<ExpensesScreen>
           ),
           defaultTextStyle: TextStyle(color: theme.colorScheme.onSurface),
           weekendTextStyle: TextStyle(
-            color: theme.colorScheme.onSurface.withOpacity(0.7),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
           ),
           outsideTextStyle: TextStyle(
-            color: theme.colorScheme.onSurface.withOpacity(0.3),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.3),
           ),
         ),
         headerStyle: HeaderStyle(
@@ -1007,7 +1023,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       margin: EdgeInsets.symmetric(horizontal: _kPadding),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.4),
+        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(20),
       ),
       child: TabBar(
@@ -1017,7 +1033,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
           color: theme.colorScheme.primary,
           boxShadow: [
             BoxShadow(
-              color: theme.colorScheme.primary.withOpacity(0.3),
+              color: theme.colorScheme.primary.withValues(alpha: 0.3),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -1039,32 +1055,12 @@ class _ExpensesScreenState extends State<ExpensesScreen>
   Widget _buildListTab(List<Expense> expenses) {
     if (expenses.isEmpty) {
       return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.money_off,
-              size: 64,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              "No transactions for $_selectedCurrency",
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-              ),
-            ),
-            if (_currentPeriod != AnalysisPeriod.daily)
-              Text(
-                "in this ${_currentPeriod.name}",
-                style: TextStyle(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withOpacity(0.5),
-                  fontSize: 12,
-                ),
-              ),
-          ],
+        child: EmptyStateWidget(
+          message: "No expenses recorded",
+          subMessage: "Track your spending habits easily.",
+          assetPath: "assets/images/expenses_empty.svg",
+          onAction: () => _openExpenseEditor(null),
+          actionLabel: "Add Expense",
         ),
       );
     }
@@ -1084,7 +1080,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
               isSelected: _selectedIds.contains(expense.id),
               onTap: () => _isSelectionMode
                   ? _toggleSelection(expense.id)
-                  : context.push(AppRouter.expenseEdit, extra: expense),
+                  : _openExpenseEditor(expense),
               onLongPress: () => setState(() {
                 _isSelectionMode = true;
                 _selectedIds.add(expense.id);
@@ -1097,8 +1093,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
   }
 
   Widget _buildAnalyticsTab(List<Expense> expenses) {
-    if (expenses.isEmpty)
+    if (expenses.isEmpty) {
       return const Center(child: Text("No data for this period"));
+    }
 
     double totalIncome = 0;
     double totalExpense = 0;
@@ -1154,10 +1151,10 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.surface.withOpacity(0.5),
+                    color: theme.colorScheme.surface.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: theme.colorScheme.outline.withOpacity(0.2),
+                      color: theme.colorScheme.outline.withValues(alpha: 0.2),
                     ),
                   ),
                   child: Column(
@@ -1175,7 +1172,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                           Text(
                             "Limit: $_selectedCurrency${budgetLimit.toStringAsFixed(0)}",
                             style: TextStyle(
-                              color: theme.colorScheme.onSurface.withOpacity(
+                              color: theme.colorScheme.onSurface.withValues(alpha: 
                                 0.6,
                               ),
                             ),
@@ -1191,7 +1188,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                           value: budgetProgress,
                           minHeight: 12,
                           backgroundColor: theme.colorScheme.onSurface
-                              .withOpacity(0.1),
+                              .withValues(alpha: 0.1),
                           color: budgetProgress > 0.9
                               ? Colors.red
                               : (budgetProgress > 0.7
@@ -1316,10 +1313,10 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.surface.withOpacity(0.5),
+                          color: theme.colorScheme.surface.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: theme.colorScheme.outline.withOpacity(0.2),
+                            color: theme.colorScheme.outline.withValues(alpha: 0.2),
                           ),
                         ),
                         child: Column(
@@ -1385,7 +1382,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                                       decoration: BoxDecoration(
                                         color: _getColorForCategory(
                                           e.key,
-                                        ).withOpacity(0.2),
+                                        ).withValues(alpha: 0.2),
                                         borderRadius: BorderRadius.circular(
                                           AppConstants.cornerRadius,
                                         ),
@@ -1436,7 +1433,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                                               backgroundColor: theme
                                                   .colorScheme
                                                   .onSurface
-                                                  .withOpacity(0.05),
+                                                  .withValues(alpha: 0.05),
                                               color: _getColorForCategory(
                                                 e.key,
                                               ),
@@ -1492,9 +1489,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface.withOpacity(0.5),
+        color: theme.colorScheme.surface.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.colorScheme.outline.withOpacity(0.2)),
+        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
       ),
       child: Stack(
         children: [
@@ -1507,7 +1504,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 child: Icon(
                   CupertinoIcons.info,
                   size: 16,
-                  color: theme.colorScheme.onSurface.withOpacity(0.4),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
                 ),
               ),
             ),
@@ -1521,7 +1518,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 title,
                 style: TextStyle(
                   fontSize: 12,
-                  color: theme.colorScheme.onSurface.withOpacity(0.7),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
               ),
               const SizedBox(height: 4),
@@ -1556,12 +1553,16 @@ class _ExpensesScreenState extends State<ExpensesScreen>
         _currentPeriod == AnalysisPeriod.weekly) {
       // Mon-Sun
       // Default 0s
-      for (int i = 1; i <= 7; i++) data[i] = _BarData(0, 0);
+      for (int i = 1; i <= 7; i++) {
+        data[i] = _BarData(0, 0);
+      }
     } else if (_currentPeriod == AnalysisPeriod.monthly) {
       // We won't pre-fill 31 days to avoid clutter, only days with data or key intervals
     } else {
       // Jan-Dec
-      for (int i = 1; i <= 12; i++) data[i] = _BarData(0, 0);
+      for (int i = 1; i <= 12; i++) {
+        data[i] = _BarData(0, 0);
+      }
     }
 
     for (var e in expenses) {
@@ -1593,9 +1594,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       margin: EdgeInsets.symmetric(horizontal: 4),
       padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface.withOpacity(0.5),
+        color: theme.colorScheme.surface.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.colorScheme.outline.withOpacity(0.2)),
+        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
       ),
       child: BarChart(
         BarChartData(
@@ -1629,7 +1630,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 "Time Frame",
                 style: TextStyle(
                   fontSize: 10,
-                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -1639,7 +1640,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 reservedSize: 30,
                 getTitlesWidget: (value, meta) {
                   final style = TextStyle(
-                    color: theme.colorScheme.onSurface.withOpacity(0.6),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                     fontWeight: FontWeight.bold,
                     fontSize: 10,
                   );
@@ -1682,7 +1683,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 "Amount ($_selectedCurrency)",
                 style: TextStyle(
                   fontSize: 10,
-                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -1705,7 +1706,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
             drawVerticalLine: false,
             horizontalInterval: _calculateInterval(_calculateMaxY(data.values)),
             getDrawingHorizontalLine: (value) => FlLine(
-              color: theme.colorScheme.onSurface.withOpacity(0.05),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.05),
               strokeWidth: 1,
             ),
           ),
@@ -1717,7 +1718,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
               barRods: [
                 BarChartRodData(
                   toY: e.value.income,
-                  color: Colors.greenAccent.withOpacity(0.8),
+                  color: Colors.greenAccent.withValues(alpha: 0.8),
                   width: 8,
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(4),
@@ -1725,7 +1726,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 ),
                 BarChartRodData(
                   toY: e.value.expense,
-                  color: Colors.redAccent.withOpacity(0.8),
+                  color: Colors.redAccent.withValues(alpha: 0.8),
                   width: 8,
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(4),
@@ -1742,7 +1743,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
   Widget _leftTitleWidgets(double value, TitleMeta meta) {
     if (value == meta.min || value == meta.max) return const SizedBox.shrink();
     final style = TextStyle(
-      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
       fontSize: 10,
     );
     String text;
@@ -1784,7 +1785,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
         _currentPeriod == AnalysisPeriod.weekly) {
       // Daily/Weekly
       // Daily/Weekly
-      for (int i = 1; i <= 7; i++) data[i] = 0;
+      for (int i = 1; i <= 7; i++) {
+        data[i] = 0;
+      }
     } else if (_currentPeriod == AnalysisPeriod.monthly) {
       // Monthly
 
@@ -1792,24 +1795,27 @@ class _ExpensesScreenState extends State<ExpensesScreen>
     } else {
       // Yearly
       // Yearly
-      for (int i = 1; i <= 12; i++) data[i] = 0;
+      for (int i = 1; i <= 12; i++) {
+        data[i] = 0;
+      }
     }
 
     // Running Balance? Or Daily Net? Let's do Daily Net for simpler trend.
     for (var e in expenses) {
       int key;
-      if (_currentPeriod == AnalysisPeriod.yearly)
+      if (_currentPeriod == AnalysisPeriod.yearly) {
         key = e.date.month;
-      else if (_currentPeriod == AnalysisPeriod.monthly)
+      } else if (_currentPeriod == AnalysisPeriod.monthly)
         key = e.date.day;
       else
         key = e.date.weekday;
 
       double val = data[key] ?? 0;
-      if (e.isIncome)
+      if (e.isIncome) {
         val += e.amount;
-      else
+      } else {
         val -= e.amount;
+      }
       data[key] = val;
     }
 
@@ -1830,9 +1836,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       dotData: const FlDotData(show: true),
       belowBarData: BarAreaData(
         show: true,
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         gradient: LinearGradient(
-          colors: [color.withOpacity(0.3), color.withOpacity(0.0)],
+          colors: [color.withValues(alpha: 0.3), color.withValues(alpha: 0.0)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -1844,9 +1850,9 @@ class _ExpensesScreenState extends State<ExpensesScreen>
       margin: const EdgeInsets.symmetric(horizontal: 4),
       padding: const EdgeInsets.fromLTRB(16, 24, 24, 10),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface.withOpacity(0.5),
+        color: theme.colorScheme.surface.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.colorScheme.outline.withOpacity(0.2)),
+        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
       ),
       child: LineChart(
         LineChartData(
@@ -1860,7 +1866,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
             drawVerticalLine: false,
             horizontalInterval: _calculateInterval(_calculateMaxYSpots(spots)),
             getDrawingHorizontalLine: (value) => FlLine(
-              color: theme.colorScheme.onSurface.withOpacity(0.05),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.05),
               strokeWidth: 1,
             ),
           ),
@@ -1871,7 +1877,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 "Time",
                 style: TextStyle(
                   fontSize: 10,
-                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -1885,7 +1891,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                     child: Text(
                       val.toInt().toString(),
                       style: TextStyle(
-                        color: theme.colorScheme.onSurface.withOpacity(0.5),
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                         fontSize: 10,
                       ),
                     ),
@@ -1898,7 +1904,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
                 "Balance ($_selectedCurrency)",
                 style: TextStyle(
                   fontSize: 10,
-                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                   fontWeight: FontWeight.bold,
                 ),
               ),

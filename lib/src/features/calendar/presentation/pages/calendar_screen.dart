@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +9,7 @@ import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/const/constant.dart';
 import 'package:flutter/cupertino.dart';
+import '../../../../core/widgets/dynamic_background.dart';
 
 // Models
 import '../../../clipboard/data/clipboard_model.dart';
@@ -90,44 +90,46 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return GlassScaffold(
       showBackArrow: false,
       title: null,
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.only(bottom: 100),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            _buildHeader(theme, onSurface),
-            const SizedBox(height: 10),
-            _buildCalendarCard(theme, onSurface),
+      body: DynamicBackground(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.only(bottom: 100),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
+              _buildHeader(theme, onSurface),
+              const SizedBox(height: 10),
+              _buildCalendarCard(theme, onSurface),
 
-            const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _sectionLabel(theme, "DATA DISTRIBUTION"),
-                  const SizedBox(height: 12),
-                  // ✅ Optimized Bar Graph
-                  _buildAnimatedBarGraph(selectedEvents, onSurface, theme),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _sectionLabel(theme, "DATA DISTRIBUTION"),
+                    const SizedBox(height: 12),
+                    // ✅ Optimized Bar Graph
+                    _buildAnimatedBarGraph(selectedEvents, onSurface, theme),
 
-                  const SizedBox(height: 24),
-                  _sectionLabel(theme, "TASK PROGRESS"),
-                  const SizedBox(height: 12),
-                  // ✅ Optimized Progress Section
-                  _buildTodoProgressSection(selectedEvents, theme),
+                    const SizedBox(height: 24),
+                    _sectionLabel(theme, "TASK PROGRESS"),
+                    const SizedBox(height: 12),
+                    // ✅ Optimized Progress Section
+                    _buildTodoProgressSection(selectedEvents, theme),
 
-                  const SizedBox(height: 24),
-                  _sectionLabel(theme, "QUICK STATS"),
-                  const SizedBox(height: 12),
-                  // ✅ Optimized Stats Grid
-                  _buildAnalyticsGrid(selectedEvents, onSurface, theme),
-                ],
+                    const SizedBox(height: 24),
+                    _sectionLabel(theme, "QUICK STATS"),
+                    const SizedBox(height: 12),
+                    // ✅ Optimized Stats Grid
+                    _buildAnalyticsGrid(selectedEvents, onSurface, theme),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -149,17 +151,17 @@ class _CalendarScreenState extends State<CalendarScreen> {
       child: Container(
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
         decoration: BoxDecoration(
-          color: theme.colorScheme.surface.withOpacity(
+          color: theme.colorScheme.surface.withValues(alpha: 
             0.6,
           ), // Fast transparency
           borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
           border: Border.all(
-            color: theme.dividerColor.withOpacity(0.1),
+            color: theme.dividerColor.withValues(alpha: 0.1),
             width: AppConstants.borderWidth,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -200,7 +202,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: theme.colorScheme.primary.withOpacity(0.3),
+                  color: theme.colorScheme.primary.withValues(alpha: 0.3),
                   blurRadius: 8,
                   spreadRadius: 1,
                 ),
@@ -213,10 +215,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
             // Today
             todayDecoration: BoxDecoration(
-              color: theme.colorScheme.primary.withOpacity(0.15),
+              color: theme.colorScheme.primary.withValues(alpha: 0.15),
               shape: BoxShape.circle,
               border: Border.all(
-                color: theme.colorScheme.primary.withOpacity(0.5),
+                color: theme.colorScheme.primary.withValues(alpha: 0.5),
                 width: 1.5,
               ),
             ),
@@ -226,7 +228,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             ),
 
             defaultTextStyle: TextStyle(color: onSurface),
-            weekendTextStyle: TextStyle(color: onSurface.withOpacity(0.6)),
+            weekendTextStyle: TextStyle(color: onSurface.withValues(alpha: 0.6)),
             outsideDaysVisible: false,
           ),
           calendarBuilders: CalendarBuilders(
@@ -278,9 +280,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface.withOpacity(0.4),
+        color: theme.colorScheme.surface.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-        border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+        border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -311,7 +313,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w600,
-                  color: onSurface.withOpacity(0.6),
+                  color: onSurface.withValues(alpha: 0.6),
                 ),
               ),
             ],
@@ -330,9 +332,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface.withOpacity(0.4),
+        color: theme.colorScheme.surface.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-        border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+        border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
       ),
       child: Row(
         children: [
@@ -350,7 +352,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       return CircularProgressIndicator(
                         value: value,
                         strokeWidth: 6,
-                        backgroundColor: theme.colorScheme.primary.withOpacity(
+                        backgroundColor: theme.colorScheme.primary.withValues(alpha: 
                           0.1,
                         ),
                         valueColor: AlwaysStoppedAnimation<Color>(
@@ -392,7 +394,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   "$completed of ${todos.length} items done",
                   style: TextStyle(
                     fontSize: 12,
-                    color: theme.colorScheme.onSurface.withOpacity(0.5),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                   ),
                 ),
               ],
@@ -431,10 +433,28 @@ class _CalendarScreenState extends State<CalendarScreen> {
     Color onSurface,
     ThemeData theme,
   ) {
-    final expenses = events.whereType<Expense>().fold(
+    final expenseList = events.whereType<Expense>().toList();
+    final expenses = expenseList.fold(
       0.0,
       (sum, e) => sum + (e.isIncome ? 0 : e.amount),
     );
+
+    // Get the most common currency from the expenses, or default to '$'
+    String currency = '\$';
+    if (expenseList.isNotEmpty) {
+      final currencyMap = <String, int>{};
+      for (var expense in expenseList) {
+        if (!expense.isIncome) {
+          currencyMap[expense.currency] =
+              (currencyMap[expense.currency] ?? 0) + 1;
+        }
+      }
+      if (currencyMap.isNotEmpty) {
+        currency = currencyMap.entries
+            .reduce((a, b) => a.value > b.value ? a : b)
+            .key;
+      }
+    }
 
     return Row(
       children: [
@@ -451,7 +471,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         Expanded(
           child: _statTile(
             "Expenses",
-            "\$${expenses.toStringAsFixed(0)}",
+            "$currency${expenses.toStringAsFixed(0)}",
             Colors.redAccent,
             onSurface,
             theme,
@@ -472,10 +492,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface.withOpacity(0.4),
+        color: theme.colorScheme.surface.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
         border: Border.all(
-          color: theme.dividerColor.withOpacity(0.1),
+          color: theme.dividerColor.withValues(alpha: 0.1),
           width: AppConstants.borderWidth,
         ),
       ),
@@ -495,7 +515,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             label,
             style: TextStyle(
               fontSize: 12,
-              color: onSurface.withOpacity(0.5),
+              color: onSurface.withValues(alpha: 0.5),
               letterSpacing: 0.5,
             ),
           ),
@@ -532,7 +552,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   List<GlobalSearchResult> _mapEventsToResults(List<dynamic> events) {
     return events.map((e) {
-      if (e is Note)
+      if (e is Note) {
         return GlobalSearchResult(
           id: e.id,
           title: e.title,
@@ -541,7 +561,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
           route: AppRouter.noteEdit,
           argument: e,
         );
-      if (e is Todo)
+      }
+      if (e is Todo) {
         return GlobalSearchResult(
           id: e.id,
           title: e.task,
@@ -551,7 +572,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
           argument: e,
           isCompleted: e.isDone,
         );
-      if (e is Expense)
+      }
+      if (e is Expense) {
         return GlobalSearchResult(
           id: e.id,
           title: e.title,
@@ -560,7 +582,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
           route: AppRouter.expenseEdit,
           argument: e,
         );
-      if (e is JournalEntry)
+      }
+      if (e is JournalEntry) {
         return GlobalSearchResult(
           id: e.id,
           title: e.title,
@@ -569,6 +592,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           route: AppRouter.journalEdit,
           argument: e,
         );
+      }
       return GlobalSearchResult(
         id: e.id,
         title: e.content,

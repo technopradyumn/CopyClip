@@ -4,13 +4,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/widgets/glass_scaffold.dart';
 import '../../../../core/widgets/glass_dialog.dart';
-import '../../../../core/const/constant.dart';
+import '../../../../core/widgets/empty_state_widget.dart'; // Added
 import 'package:flutter/cupertino.dart';
 import '../../data/canvas_adapter.dart';
 import '../../data/canvas_model.dart';
 import '../widgets/canvas_sketch_card.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/widgets/search_header_field.dart';
+import '../../../../core/widgets/dynamic_background.dart';
 
 // Sorting options for the folder view
 enum FolderSortOption { dateNewest, dateOldest, nameAZ, nameZA }
@@ -140,6 +141,14 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
     });
   }
 
+  // --- Helper Methods ---
+  void _createNewCanvas(BuildContext context) {
+    context.push(
+      AppRouter.canvasEdit,
+      extra: {'noteId': null, 'folderId': widget.folderId},
+    );
+  }
+
   // --- UI Construction ---
 
   @override
@@ -147,17 +156,18 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: !_isSelectionMode && !_isSearching,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
         if (_isSelectionMode) {
           _exitSelectionMode();
-          return false;
+          return;
         }
         if (_isSearching) {
           _toggleSearch();
-          return false;
+          return;
         }
-        return true;
       },
       child: GlassScaffold(
         floatingActionButton: (_isSearching || _isSelectionMode)
@@ -168,132 +178,120 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
                   curve: const Interval(0.6, 1.0, curve: Curves.elasticOut),
                 ),
                 child: FloatingActionButton.extended(
-                  onPressed: () {
-                    context.push(
-                      AppRouter.canvasEdit,
-                      extra: {'noteId': null, 'folderId': widget.folderId},
-                    );
-                  },
+                  onPressed: () => _createNewCanvas(context),
                   icon: const Icon(CupertinoIcons.add),
                   label: const Text('New Sketch'),
                   backgroundColor: _folder.color,
                   foregroundColor: Colors.white,
                 ),
               ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              _buildHeader(theme, colorScheme),
+        body: DynamicBackground(
+          child: SafeArea(
+            child: Column(
+              children: [
+                _buildHeader(theme, colorScheme),
 
-              Expanded(
-                child: ValueListenableBuilder<Box<CanvasNote>>(
-                  valueListenable: Hive.box<CanvasNote>(
-                    CanvasDatabase.notesBoxName,
-                  ).listenable(),
-                  builder: (context, box, _) {
-                    // 1. Get Data
-                    List<CanvasNote> notes = CanvasDatabase().getNotesByFolder(
-                      widget.folderId,
-                    );
+                Expanded(
+                  child: ValueListenableBuilder<Box<CanvasNote>>(
+                    valueListenable: Hive.box<CanvasNote>(
+                      CanvasDatabase.notesBoxName,
+                    ).listenable(),
+                    builder: (context, box, _) {
+                      // 1. Get Data
+                      List<CanvasNote> notes = CanvasDatabase()
+                          .getNotesByFolder(widget.folderId);
 
-                    // 2. Filter (Search)
-                    if (_isSearching && _searchController.text.isNotEmpty) {
-                      final query = _searchController.text.toLowerCase();
-                      notes = notes
-                          .where((n) => n.title.toLowerCase().contains(query))
-                          .toList();
-                    }
+                      // 2. Filter (Search)
+                      if (_isSearching && _searchController.text.isNotEmpty) {
+                        final query = _searchController.text.toLowerCase();
+                        notes = notes
+                            .where((n) => n.title.toLowerCase().contains(query))
+                            .toList();
+                      }
 
-                    // 3. Sort
-                    if (_currentSort == FolderSortOption.dateNewest) {
-                      notes.sort(
-                        (a, b) => b.lastModified.compareTo(a.lastModified),
-                      );
-                    } else if (_currentSort == FolderSortOption.dateOldest) {
-                      notes.sort(
-                        (a, b) => a.lastModified.compareTo(b.lastModified),
-                      );
-                    } else if (_currentSort == FolderSortOption.nameAZ) {
-                      notes.sort(
-                        (a, b) => a.title.toLowerCase().compareTo(
-                          b.title.toLowerCase(),
-                        ),
-                      );
-                    } else if (_currentSort == FolderSortOption.nameZA) {
-                      notes.sort(
-                        (a, b) => b.title.toLowerCase().compareTo(
-                          a.title.toLowerCase(),
-                        ),
-                      );
-                    }
-
-                    // 4. Empty State
-                    if (notes.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              _isSearching
-                                  ? Icons.search_off
-                                  : Icons.note_outlined,
-                              size: 64,
-                              color: colorScheme.onSurface.withOpacity(0.2),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              _isSearching
-                                  ? 'No sketches found'
-                                  : 'No sketches yet',
-                              style: theme.textTheme.bodyLarge?.copyWith(
-                                color: colorScheme.onSurface.withOpacity(0.5),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-
-                    // 5. Grid View
-                    return GridView.builder(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      padding: const EdgeInsets.all(16),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.75,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
-                          ),
-                      itemCount: notes.length,
-                      itemBuilder: (context, index) {
-                        final note = notes[index];
-                        final isSelected = _selectedNoteIds.contains(note.id);
-
-                        return CanvasSketchCard(
-                          note: note,
-                          isSelected: isSelected,
-                          onLongPress: () {
-                            _enterSelectionMode();
-                            _toggleSelection(note.id);
-                          },
-                          onTap: () {
-                            if (_isSelectionMode) {
-                              _toggleSelection(note.id);
-                            } else {
-                              context.push(
-                                AppRouter.canvasEdit,
-                                extra: {'noteId': note.id},
-                              );
-                            }
-                          },
+                      // 3. Sort
+                      if (_currentSort == FolderSortOption.dateNewest) {
+                        notes.sort(
+                          (a, b) => b.lastModified.compareTo(a.lastModified),
                         );
-                      },
-                    );
-                  },
+                      } else if (_currentSort == FolderSortOption.dateOldest) {
+                        notes.sort(
+                          (a, b) => a.lastModified.compareTo(b.lastModified),
+                        );
+                      } else if (_currentSort == FolderSortOption.nameAZ) {
+                        notes.sort(
+                          (a, b) => a.title.toLowerCase().compareTo(
+                            b.title.toLowerCase(),
+                          ),
+                        );
+                      } else if (_currentSort == FolderSortOption.nameZA) {
+                        notes.sort(
+                          (a, b) => b.title.toLowerCase().compareTo(
+                            a.title.toLowerCase(),
+                          ),
+                        );
+                      }
+
+                      // 4. Empty State
+                      if (notes.isEmpty) {
+                        return Center(
+                          child: EmptyStateWidget(
+                            message: _isSearching
+                                ? "No sketches found"
+                                : "No drawings yet",
+                            subMessage: _isSearching
+                                ? "Try adjusting your search or creating a new sketch."
+                                : "Unleash your creativity on the canvas!",
+                            assetPath: "assets/images/canvas_empty.svg",
+                            onAction: _isSearching
+                                ? null
+                                : () => _createNewCanvas(context),
+                            actionLabel: _isSearching ? null : "New Canvas",
+                          ),
+                        );
+                      }
+
+                      // 5. Grid View
+                      return GridView.builder(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: const EdgeInsets.all(16),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.75,
+                              crossAxisSpacing: 12,
+                              mainAxisSpacing: 12,
+                            ),
+                        itemCount: notes.length,
+                        itemBuilder: (context, index) {
+                          final note = notes[index];
+                          final isSelected = _selectedNoteIds.contains(note.id);
+
+                          return CanvasSketchCard(
+                            note: note,
+                            isSelected: isSelected,
+                            onLongPress: () {
+                              _enterSelectionMode();
+                              _toggleSelection(note.id);
+                            },
+                            onTap: () {
+                              if (_isSelectionMode) {
+                                _toggleSelection(note.id);
+                              } else {
+                                context.push(
+                                  AppRouter.canvasEdit,
+                                  extra: {'noteId': note.id},
+                                );
+                              }
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -581,7 +579,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
                       decoration: BoxDecoration(
                         color: color,
                         shape: BoxShape.circle,
-                        border: _folder.color.value == color.value
+                        border: _folder.color.toARGB32() == color.toARGB32()
                             ? Border.all(
                                 width: 3,
                                 color: theme.colorScheme.onSurface,

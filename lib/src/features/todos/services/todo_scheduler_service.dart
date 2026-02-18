@@ -2,7 +2,7 @@ import 'package:copyclip/src/core/services/notification_service.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
-import 'package:timezone/timezone.dart' as tz; // Ensure timezone usage
+// Ensure timezone usage
 
 class TodoSchedulerService {
   static final TodoSchedulerService _instance =
@@ -264,7 +264,7 @@ class TodoSchedulerService {
 
   DateTime? _findNextValidDate(Todo todo, DateTime now) {
     // If daily, just make it today.
-    if (todo.repeatInterval == 'daily')
+    if (todo.repeatInterval == 'daily') {
       return DateTime(
         now.year,
         now.month,
@@ -272,6 +272,7 @@ class TodoSchedulerService {
         todo.dueDate?.hour ?? 9,
         todo.dueDate?.minute ?? 0,
       );
+    }
 
     // If weekly, find next valid weekday.
     if (todo.repeatInterval == 'weekly') {

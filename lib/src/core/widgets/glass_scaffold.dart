@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:copyclip/src/core/const/constant.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
-import 'ad_widget/banner_ad_widget.dart';
 
 class GlassScaffold extends StatelessWidget {
   final Widget body;
@@ -101,10 +99,10 @@ class GlassScaffold extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: isDark
-                          ? [Colors.white.withOpacity(0.05), Colors.transparent]
+                          ? [Colors.white.withValues(alpha: 0.05), Colors.transparent]
                           : [
-                              Colors.white.withOpacity(0.4),
-                              Colors.white.withOpacity(0.1),
+                              Colors.white.withValues(alpha: 0.4),
+                              Colors.white.withValues(alpha: 0.1),
                             ],
                     ),
                   ),
@@ -120,7 +118,7 @@ class GlassScaffold extends StatelessWidget {
                 child: Column(
                   children: [
                     Expanded(child: body),
-                    const BannerAdWidget(hideOnKeyboard: true),
+                    // const BannerAdWidget(hideOnKeyboard: true),
                   ],
                 ),
               ),

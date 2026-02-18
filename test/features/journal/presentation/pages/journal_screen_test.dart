@@ -22,8 +22,9 @@ void main() {
     // Hive Global Setup
     final tempDir = await Directory.systemTemp.createTemp();
     Hive.init(tempDir.path);
-    if (!Hive.isAdapterRegistered(4))
+    if (!Hive.isAdapterRegistered(4)) {
       Hive.registerAdapter(JournalEntryAdapter());
+    }
   });
 
   setUp(() async {

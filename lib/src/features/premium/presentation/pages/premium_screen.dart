@@ -2,9 +2,12 @@ import 'dart:ui';
 import 'package:copyclip/src/core/const/premium_constants.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
-import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_event.dart';
+import '../../../../l10n/app_localizations.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class PremiumScreen extends StatefulWidget {
@@ -15,149 +18,210 @@ class PremiumScreen extends StatefulWidget {
 }
 
 class _PremiumScreenState extends State<PremiumScreen> {
-  bool _isAdLoading = false;
+  // We rely on Bloc State
+
+  @override
+  void initState() {
+    super.initState();
+    // Preload ad if needed
+    context.read<PremiumBloc>().add(LoadRewardedAd());
+  }
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<PremiumProvider>(context);
-    final theme = Theme.of(context);
+    return BlocBuilder<PremiumBloc, PremiumState>(
+      builder: (context, state) {
+        final theme = Theme.of(context);
 
-    return GlassScaffold(
-      title: null,
-      showBackArrow: false,
-      body: Column(
-        children: [
-          SeamlessHeader(
-            title: "Premium Access",
-            subtitle: provider.isPremium ? "Active" : "Unlock Features",
-            icon: Icons.star,
-            iconColor: Colors.amber,
-            showBackButton: true,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  // 1. Coins & Watch Ad Card (Combined)
-                  _buildBalanceCard(context, provider),
-
-                  const SizedBox(height: 16),
-
-                  // 2. Buy Premium Action
-                  if (!provider.isPremium)
-                    _ActionGlassCard(
-                      title: "Buy Premium (7 Days)",
-                      subtitle: "Cost: ${PremiumConstants.premiumCost} Coins",
-                      icon: Icons.diamond_outlined,
-                      color: Colors.purpleAccent,
-                      isDisabled: provider.coins < PremiumConstants.premiumCost,
-                      onTap: () async {
-                        final success = await provider.buyPremium();
-                        if (context.mounted) {
-                          if (success) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Premium Activated for 7 days!"),
-                                backgroundColor: Colors.green,
-                              ),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Not enough coins!"),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
-                          }
-                        }
-                      },
-                    )
-                  else
-                    _GlassContainer(
-                      color: Colors.greenAccent.withOpacity(0.1),
-                      borderColor: Colors.greenAccent.withOpacity(0.3),
-                      child: Column(
-                        children: [
-                          const Icon(
-                            Icons.check_circle_outline,
-                            color: Colors.greenAccent,
-                            size: 40,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            "Premium Active",
-                            style: theme.textTheme.titleLarge?.copyWith(
-                              color: Colors.greenAccent,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            provider.premiumExpiryDate != null
-                                ? "Expires: ${DateFormat.yMMMd().format(provider.premiumExpiryDate!)}"
-                                : "Temporary Access",
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: theme.colorScheme.onSurface.withOpacity(
-                                0.7,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                  const SizedBox(height: 32),
-
-                  // 3. Categorized Features
-                  _SectionHeader(title: "Rich Text Editor"),
-                  _PremiumFeatureTile(
-                    icon: Icons.picture_as_pdf_outlined,
-                    title: "PDF Export",
-                    description: "Export your documents to PDF instantly",
-                  ),
-                  _PremiumFeatureTile(
-                    icon: Icons.print_outlined,
-                    title: "Print Documents",
-                    description: "Directly print your notes",
-                  ),
-                  _PremiumFeatureTile(
-                    icon: Icons.find_replace_outlined,
-                    title: "Advanced Search",
-                    description: "Search & Replace within your text",
-                  ),
-                  _PremiumFeatureTile(
-                    icon: Icons.perm_media_outlined,
-                    title: "Rich Media",
-                    description: "Insert Images, Videos, and Links",
-                  ),
-                  _PremiumFeatureTile(
-                    icon: Icons.palette_outlined,
-                    title: "Styling & Colors",
-                    description: "Custom text and background colors",
-                  ),
-
-                  const SizedBox(height: 32),
-                ],
+        return GlassScaffold(
+          title: null,
+          showBackArrow: false,
+          body: Column(
+            children: [
+              SeamlessHeader(
+                title: "Premium Access",
+                subtitle: state.isPremium
+                    ? "Premium Active until ${state.premiumExpiryDate != null ? DateFormat.yMMMd().format(state.premiumExpiryDate!) : '∞'}"
+                    : "Unlock All Features",
+                icon: Icons.star,
+                iconColor: Colors.amber,
+                showBackButton: true,
               ),
-            ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    children: [
+                      // 1. Coins & Watch Ad Card (Combined)
+                      // 1. Coins & Watch Ad Card (Combined) - ALWAYS VISIBLE
+                      _buildBalanceCard(context, state),
+
+                      const SizedBox(height: 16),
+
+                      // 2. Buy Premium Action
+                      if (!state.isPremium)
+                        _ActionGlassCard(
+                          title: "Buy Premium (7 Days)",
+                          subtitle:
+                              "Cost: ${PremiumConstants.premiumCost} Coins",
+                          icon: Icons.diamond_outlined,
+                          color: Colors.purpleAccent,
+                          isDisabled:
+                              state.coins < PremiumConstants.premiumCost,
+                          onTap: () {
+                            if (state.coins >= PremiumConstants.premiumCost) {
+                              context.read<PremiumBloc>().add(BuyPremium());
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    "Premium Activated for 7 days!",
+                                  ),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Not enough coins!"),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          },
+                        )
+                      else
+                        _GlassContainer(
+                          color: Colors.greenAccent.withValues(alpha: 0.1),
+                          borderColor: Colors.greenAccent.withValues(alpha: 0.3),
+                          child: Column(
+                            children: [
+                              const Icon(
+                                Icons.check_circle_outline,
+                                color: Colors.greenAccent,
+                                size: 40,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                "Premium Active",
+                                style: theme.textTheme.titleLarge?.copyWith(
+                                  color: Colors.greenAccent,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                state.premiumExpiryDate != null
+                                    ? "Expires: ${DateFormat.yMMMd().format(state.premiumExpiryDate!)}"
+                                    : "Temporary Access",
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: theme.colorScheme.onSurface
+                                      .withValues(alpha: 0.7),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                      const SizedBox(height: 32),
+
+                      // 3. Categorized Features
+                      const _SectionHeader(title: "Journal & Expression"),
+                      const _PremiumFeatureTile(
+                        icon: Icons.palette_outlined,
+                        title: "Artistic Designs",
+                        description: "Unlock 10+ unique journal card themes",
+                      ),
+                      const _PremiumFeatureTile(
+                        icon: Icons.auto_awesome,
+                        title: "Premium Layouts",
+                        description: "Exclusive ways to view your memories",
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      const _SectionHeader(title: "Calendar & Tools"),
+                      const _PremiumFeatureTile(
+                        icon: Icons.calendar_month,
+                        title: "Full Calendar",
+                        description: "Complete event management system",
+                      ),
+                      const _PremiumFeatureTile(
+                        icon: Icons.copy_all,
+                        title: "Clipboard Auto-save",
+                        description: "Background clipboard history capture",
+                      ),
+                      const _PremiumFeatureTile(
+                        icon: Icons.widgets_outlined,
+                        title: "Pro Widgets",
+                        description:
+                            "All features available on your home screen",
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      const _SectionHeader(title: "Data & Export"),
+                      const _PremiumFeatureTile(
+                        icon: Icons.cloud_done_outlined,
+                        title: "Advanced Backup",
+                        description: "Secure import/export of all data",
+                      ),
+                      const _PremiumFeatureTile(
+                        icon: Icons.picture_as_pdf_outlined,
+                        title: "PDF Export",
+                        description: "Export notes & journals to PDF",
+                      ),
+                      const _PremiumFeatureTile(
+                        icon: Icons.print_outlined,
+                        title: "Print Ready",
+                        description: "Direct printing support",
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      const _SectionHeader(title: "Rich Text Editor"),
+                      const _PremiumFeatureTile(
+                        icon: Icons.find_replace_outlined,
+                        title: "Advanced Search",
+                        description: "Search & Replace within your text",
+                      ),
+                      const _PremiumFeatureTile(
+                        icon: Icons.perm_media_outlined,
+                        title: "Rich Media",
+                        description: "Insert Images, Videos, and Links",
+                      ),
+                      const _PremiumFeatureTile(
+                        icon: Icons.format_paint_outlined,
+                        title: "Editor Styling",
+                        description: "Custom text and editor backgrounds",
+                      ),
+
+                      const SizedBox(height: 32),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildBalanceCard(BuildContext context, PremiumProvider provider) {
+  Widget _buildBalanceCard(BuildContext context, PremiumState state) {
+    // Ad State
+    final isLoading = state.isAdLoading;
+    final isReady = state.isAdReady;
+
     return _GlassContainer(
       gradient: LinearGradient(
         colors: [
-          Colors.amber.shade700.withOpacity(0.8),
-          Colors.amber.shade400.withOpacity(0.8),
+          Colors.amber.shade700.withValues(alpha: 0.8),
+          Colors.amber.shade400.withValues(alpha: 0.8),
         ],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
-      borderColor: Colors.amber.shade200.withOpacity(0.5),
+      borderColor: Colors.amber.shade200.withValues(alpha: 0.5),
       child: Column(
         children: [
           Row(
@@ -169,14 +233,14 @@ class _PremiumScreenState extends State<PremiumScreen> {
                   Text(
                     "Balance",
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "${provider.coins}",
+                    "${state.coins}",
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 36,
@@ -189,9 +253,9 @@ class _PremiumScreenState extends State<PremiumScreen> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white.withOpacity(0.3)),
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
                 ),
                 child: const Icon(
                   Icons.monetization_on_outlined,
@@ -205,25 +269,32 @@ class _PremiumScreenState extends State<PremiumScreen> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(
-              onPressed: _isAdLoading
+              onPressed: isLoading
                   ? null
-                  : () async {
-                      setState(() => _isAdLoading = true);
-                      await provider.showRewardedAd(
-                        onReward: (amount) {
-                          provider.addCoins(amount);
-                          if (mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("You earned $amount coins!"),
-                                behavior: SnackBarBehavior.floating,
-                                backgroundColor: Colors.green,
-                              ),
-                            );
-                          }
-                        },
-                      );
-                      if (mounted) setState(() => _isAdLoading = false);
+                  : () {
+                      if (!isReady) {
+                        context.read<PremiumBloc>().add(LoadRewardedAd());
+                      } else {
+                        context.read<PremiumBloc>().add(
+                          ShowRewardedAd(
+                            onReward: (amount) {
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.youEarnedCoins(amount),
+                                    ),
+                                    behavior: SnackBarBehavior.floating,
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        );
+                      }
                     },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
@@ -234,7 +305,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              icon: _isAdLoading
+              icon: isLoading
                   ? const SizedBox(
                       width: 16,
                       height: 16,
@@ -245,9 +316,11 @@ class _PremiumScreenState extends State<PremiumScreen> {
                     )
                   : const Icon(Icons.play_circle_fill),
               label: Text(
-                _isAdLoading
+                isLoading
                     ? "Loading Ad..."
-                    : "Watch Ad (+${PremiumConstants.rewardCoinAmount})",
+                    : (isReady
+                          ? "Watch Ad (+${PremiumConstants.rewardCoinAmount})"
+                          : "Load Ad"),
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
@@ -282,7 +355,7 @@ class _GlassContainer extends StatelessWidget {
           decoration: BoxDecoration(
             color:
                 color ??
-                (gradient == null ? Colors.white.withOpacity(0.05) : null),
+                (gradient == null ? Colors.white.withValues(alpha: 0.05) : null),
             gradient: gradient,
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
@@ -290,7 +363,7 @@ class _GlassContainer extends StatelessWidget {
                   borderColor ??
                   Theme.of(
                     context,
-                  ).colorScheme.outline.withOpacity(0.2), // Minimal & Visible
+                  ).colorScheme.outline.withValues(alpha: 0.2), // Minimal & Visible
               width: 1,
             ),
           ),
@@ -316,13 +389,13 @@ class _SectionHeader extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 20,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
             ),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Divider(
-              color: Theme.of(context).dividerColor.withOpacity(0.1),
+              color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
             ),
           ),
         ],
@@ -355,21 +428,21 @@ class _ActionGlassCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(24),
       child: _GlassContainer(
         color: isDisabled
-            ? Colors.grey.withOpacity(0.05)
-            : color.withOpacity(0.08),
-        borderColor: isDisabled ? Colors.transparent : color.withOpacity(0.2),
+            ? Colors.grey.withValues(alpha: 0.05)
+            : color.withValues(alpha: 0.08),
+        borderColor: isDisabled ? Colors.transparent : color.withValues(alpha: 0.2),
         child: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: isDisabled ? Colors.grey : color.withOpacity(0.8),
+                color: isDisabled ? Colors.grey : color.withValues(alpha: 0.8),
                 shape: BoxShape.circle,
                 boxShadow: isDisabled
                     ? null
                     : [
                         BoxShadow(
-                          color: color.withOpacity(0.4),
+                          color: color.withValues(alpha: 0.4),
                           blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
@@ -398,7 +471,7 @@ class _ActionGlassCard extends StatelessWidget {
                     style: TextStyle(
                       color: Theme.of(
                         context,
-                      ).colorScheme.onSurface.withOpacity(0.6),
+                      ).colorScheme.onSurface.withValues(alpha: 0.6),
                       fontSize: 12,
                     ),
                   ),
@@ -430,13 +503,13 @@ class _PremiumFeatureTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: _GlassContainer(
-        color: Theme.of(context).colorScheme.surface.withOpacity(0.4),
+        color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.4),
         child: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.amber.withOpacity(0.1),
+                color: Colors.amber.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, color: Colors.amber, size: 22),
@@ -481,7 +554,7 @@ class _PremiumFeatureTile extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(
                         context,
-                      ).colorScheme.onSurface.withOpacity(0.6),
+                      ).colorScheme.onSurface.withValues(alpha: 0.6),
                     ),
                   ),
                 ],

@@ -1,8 +1,9 @@
-import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:copyclip/src/core/const/constant.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PremiumBadge extends StatelessWidget {
   final Widget child;
@@ -15,19 +16,20 @@ class PremiumBadge extends StatelessWidget {
     if (!showBadge) return child;
 
     return Stack(
+      fit: StackFit.passthrough,
       children: [
         child,
         Positioned(
-          top: 0,
-          right: 0,
-          child: Consumer<PremiumProvider>(
-            builder: (context, provider, _) {
+          top: 4,
+          right: 4,
+          child: BlocBuilder<PremiumBloc, PremiumState>(
+            builder: (context, state) {
               // Optionally hide if user is already premium?
               // Prompt says: "add a premium badg on every premium features"
               // Usually badges are shown to indicate it IS a premium feature (locked), or just to mark it.
               // I will show a small crown icon.
 
-              if (provider.isPremium) {
+              if (state.isPremium) {
                 // Feature is unlocked, maybe show gold border or nothing?
                 // Let's show a "Premium" label or icon.
                 return const SizedBox(); // Hide badge if unlocked? Or maybe keep it?
@@ -46,7 +48,7 @@ class PremiumBadge extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
+                      color: Colors.black.withValues(alpha: 0.2),
                       blurRadius: 4,
                     ),
                   ],

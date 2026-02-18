@@ -26,7 +26,6 @@ class TodoCard extends StatelessWidget {
     if (todo.dueDate == null) return false;
     final now = DateTime.now();
     final todayStart = DateTime(now.year, now.month, now.day);
-    // User Request: "past day without time" -> Only highlight if STRICTLY before today
     return todo.dueDate!.isBefore(todayStart) && !todo.isDone;
   }
 
@@ -42,7 +41,6 @@ class TodoCard extends StatelessWidget {
     if (todo.dueDate == null) return false;
     final now = DateTime.now();
     final todayStart = DateTime(now.year, now.month, now.day);
-    // Future means strictly AFTER today (tomorrow onwards)
     return todo.dueDate!.isAfter(todayStart) && !_isDueToday;
   }
 
@@ -52,178 +50,94 @@ class TodoCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    // Adaptive color based on state
     final stateColor = _getTaskTextColor(colorScheme);
+    final backgroundColor = _getBackgroundColor(colorScheme);
+    final borderColor = _getBorderColor(colorScheme);
 
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
+      curve: Curves.easeOutQuart,
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 200),
-        opacity: isVisible ? 1.0 : 0.4,
+        opacity: isVisible ? 1.0 : 0.0,
         child: Container(
           height: isVisible ? null : 0,
           margin: isVisible
-              ? const EdgeInsets.only(bottom: 8)
+              ? const EdgeInsets.only(bottom: 12)
               : EdgeInsets.zero,
           child: GestureDetector(
             onTap: onTap,
             onLongPress: onLongPress,
-            child: Stack(
-              children: [
-                // ✅ OPTIMIZATION: Replaced GlassContainer with fast container
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 8,
+            child: Hero(
+              tag: 'todo_container_${todo.id}',
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOutCubic,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 12,
+                ),
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  borderRadius: BorderRadius.circular(
+                    AppConstants.cornerRadius,
                   ),
-                  decoration: BoxDecoration(
-                    color: _getBackgroundColor(
-                      colorScheme,
-                    ), // Original logic preserved
-                    borderRadius: BorderRadius.circular(
-                      AppConstants.cornerRadius,
-                    ),
-                    border: Border.all(
-                      color: _getBorderColor(
-                        colorScheme,
-                      ), // Original logic preserved
-                      width: AppConstants.borderWidth,
-                    ),
+                  border: Border.all(
+                    color: borderColor,
+                    width: AppConstants.borderWidth,
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: stateColor.withValues(alpha: 0.08),
+                      blurRadius: 15,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Material(
+                  type: MaterialType.transparency,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          if (!isSelected)
-                            GestureDetector(
-                              onTap: onToggleDone,
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 10),
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: _getCheckboxBorderColor(colorScheme),
-                                    width: 2,
-                                  ),
-                                  color: todo.isDone
-                                      ? colorScheme.primary
-                                      : Colors.transparent,
-                                ),
-                                child: todo.isDone
-                                    ? Icon(
-                                        CupertinoIcons.checkmark,
-                                        size: 14,
-                                        color: colorScheme.onPrimary,
-                                      )
-                                    : null,
-                              ),
-                            ),
+                          if (!isSelected) _buildCheckbox(colorScheme),
                           Expanded(
-                            child: Hero(
-                              tag: 'todo_task_${todo.id}',
-                              child: Material(
-                                type: MaterialType.transparency,
-                                child: Text(
-                                  todo.task,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: textTheme.bodyMedium?.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: todo.isDone
-                                        ? FontWeight.w400
-                                        : FontWeight.w500,
-                                    color: stateColor,
-                                    decoration: todo.isDone
-                                        ? TextDecoration.lineThrough
-                                        : TextDecoration.none,
-                                    decorationColor: colorScheme.onSurface
-                                        .withOpacity(0.38),
-                                    decorationThickness: 1.5,
-                                  ),
+                            child: Text(
+                              todo.task,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: textTheme.bodyMedium?.copyWith(
+                                fontSize: 16,
+                                fontWeight: todo.isDone
+                                    ? FontWeight.w400
+                                    : FontWeight.w600,
+                                color: stateColor.withValues(alpha: 
+                                  todo.isDone ? 0.6 : 1.0,
                                 ),
+                                decoration: todo.isDone
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none,
+                                decorationColor: stateColor.withValues(alpha: 0.4),
+                                decorationThickness: 2,
+                                height: 1.3,
                               ),
                             ),
                           ),
+                          if (isSelected)
+                            Icon(
+                              CupertinoIcons.check_mark_circled_solid,
+                              color: colorScheme.primary,
+                              size: 22,
+                            ),
                         ],
                       ),
-                      if (todo.dueDate != null)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 4, left: 20),
-                          child: Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.time,
-                                size: 12,
-                                color: stateColor,
-                              ),
-                              const SizedBox(width: 4),
-                              Expanded(
-                                child: Text(
-                                  DateFormat(
-                                    'MMM d, h:mm a',
-                                  ).format(todo.dueDate!),
-                                  style: TextStyle(
-                                    color: stateColor,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              if (todo.hasReminder)
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Icon(
-                                    CupertinoIcons.bell_fill,
-                                    size: 12,
-                                    // ✅ Fix: Blue only if Future
-                                    color: stateColor,
-                                  ),
-                                ),
-                              if (todo.repeatInterval != null)
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        CupertinoIcons.repeat,
-                                        size: 12,
-                                        color: stateColor,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        todo.repeatInterval![0].toUpperCase() +
-                                            todo.repeatInterval!.substring(1),
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w500,
-                                          color: stateColor,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
+                      if (todo.dueDate != null) _buildDueDateRow(stateColor),
                     ],
                   ),
                 ),
-                if (isSelected)
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: Icon(
-                      CupertinoIcons.checkmark_circle_fill,
-                      color: colorScheme.primary,
-                      size: 20,
-                    ),
-                  ),
-              ],
+              ),
             ),
           ),
         ),
@@ -231,40 +145,124 @@ class TodoCard extends StatelessWidget {
     );
   }
 
-  // --- Retained User Logic Helpers ---
+  Widget _buildCheckbox(ColorScheme colorScheme) {
+    return GestureDetector(
+      onTap: onToggleDone,
+      child: Container(
+        margin: const EdgeInsets.only(right: 14),
+        width: 24,
+        height: 24,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: _getCheckboxBorderColor(colorScheme),
+            width: 2.5,
+          ),
+          color: todo.isDone
+              ? _getTaskTextColor(colorScheme).withValues(alpha: 0.8)
+              : Colors.transparent,
+        ),
+        child: todo.isDone
+            ? const Icon(
+                CupertinoIcons.checkmark,
+                size: 15,
+                color: Colors.white,
+              )
+            : null,
+      ),
+    );
+  }
+
+  Widget _buildDueDateRow(Color stateColor) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8, left: 38),
+      child: Wrap(
+        spacing: 12,
+        runSpacing: 4,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                CupertinoIcons.calendar,
+                size: 13,
+                color: stateColor.withValues(alpha: 0.7),
+              ),
+              const SizedBox(width: 5),
+              Text(
+                DateFormat('MMM d • h:mm a').format(todo.dueDate!),
+                style: TextStyle(
+                  color: stateColor.withValues(alpha: 0.8),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.1,
+                ),
+              ),
+            ],
+          ),
+          if (todo.hasReminder)
+            Icon(
+              CupertinoIcons.bell_fill,
+              size: 13,
+              color: stateColor.withValues(alpha: 0.7),
+            ),
+          if (todo.repeatInterval != null)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  CupertinoIcons.repeat,
+                  size: 13,
+                  color: stateColor.withValues(alpha: 0.7),
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  todo.repeatInterval![0].toUpperCase() +
+                      todo.repeatInterval!.substring(1),
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: stateColor.withValues(alpha: 0.7),
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ),
+    );
+  }
+
   Color _getBorderColor(ColorScheme colorScheme) {
     if (isSelected) return colorScheme.primary;
-    if (todo.isDone) return colorScheme.outlineVariant.withOpacity(0.3);
-    if (_isOverdue) return colorScheme.error.withOpacity(0.4);
-    if (_isDueToday) return colorScheme.tertiary.withOpacity(0.4);
-    if (_isFuture)
-      return colorScheme.primary.withOpacity(0.4); // Blue for Future
-    return colorScheme.outlineVariant.withOpacity(0.5);
+    if (todo.isDone) return colorScheme.outlineVariant.withValues(alpha: 0.2);
+    if (_isOverdue) return colorScheme.error.withValues(alpha: 0.2);
+    if (_isDueToday) return colorScheme.tertiary.withValues(alpha: 0.2);
+    if (_isFuture) return colorScheme.primary.withValues(alpha: 0.2);
+    return colorScheme.outlineVariant.withValues(alpha: 0.2);
   }
 
   Color _getCheckboxBorderColor(ColorScheme colorScheme) {
-    if (todo.isDone) return colorScheme.primary;
+    if (todo.isDone) return _getTaskTextColor(colorScheme).withValues(alpha: 0.8);
     if (_isOverdue) return colorScheme.error;
     if (_isDueToday) return colorScheme.tertiary;
-    if (_isFuture) return colorScheme.primary; // Blue for Future
-    return colorScheme.onSurface.withOpacity(0.54);
+    if (_isFuture) return colorScheme.primary;
+    return colorScheme.onSurface.withValues(alpha: 0.4);
   }
 
   Color _getTaskTextColor(ColorScheme colorScheme) {
-    if (todo.isDone) return colorScheme.onSurface.withOpacity(0.5);
+    if (todo.isDone) return colorScheme.onSurface.withValues(alpha: 0.5);
     if (_isOverdue) return colorScheme.error;
     if (_isDueToday) return colorScheme.tertiary;
-    if (_isFuture) return colorScheme.primary; // Blue for Future
+    if (_isFuture) return colorScheme.primary;
     return colorScheme.onSurface;
   }
 
   Color _getBackgroundColor(ColorScheme colorScheme) {
-    // Opacity logic handled here instead of GlassContainer param
-    if (todo.isDone) return colorScheme.surfaceContainerLowest.withOpacity(0.6);
-    if (_isOverdue) return colorScheme.error.withOpacity(0.15);
-    if (_isDueToday) return colorScheme.tertiary.withOpacity(0.15);
-    if (_isFuture)
-      return colorScheme.primary.withOpacity(0.15); // Blue for Future
-    return colorScheme.surface.withOpacity(isSelected ? 0.3 : 0.12);
+    if (todo.isDone) return colorScheme.surfaceContainerHighest.withValues(alpha: 0.2);
+    if (_isOverdue) return colorScheme.error.withValues(alpha: 0.12);
+    if (_isDueToday) return colorScheme.tertiary.withValues(alpha: 0.12);
+    if (_isFuture) return colorScheme.primary.withValues(alpha: 0.12);
+    return colorScheme.surface.withValues(alpha: isSelected ? 0.4 : 0.2);
   }
 }

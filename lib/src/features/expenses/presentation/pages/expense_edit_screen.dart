@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 import 'package:copyclip/src/features/expenses/data/expense_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -206,7 +207,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
     super.dispose();
   }
 
-  Future<bool> _onWillPop() async {
+  Future<void> _handleClose() async {
     final currentState = ExpenseFormState(
       _titleController.text,
       _amountController.text,
@@ -216,7 +217,10 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
       _isIncome,
     );
 
-    if (currentState == _initialState) return true;
+    if (currentState == _initialState) {
+      if (mounted) Navigator.of(context).pop();
+      return;
+    }
 
     final result = await showDialog<String>(
       context: context,
@@ -230,13 +234,13 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
       ),
     );
 
+    if (!mounted) return;
+
     if (result == 'save') {
       await _save();
-      return true;
     } else if (result == 'discard') {
-      return true;
+      Navigator.of(context).pop();
     }
-    return false;
   }
 
   void _saveSnapshot({bool clearRedo = true}) {
@@ -548,10 +552,14 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
     final dividerColor = theme.dividerColor;
     final expenseColor = Colors.redAccent;
     final incomeColor = Colors.greenAccent;
-    final fillColor = onSurfaceColor.withOpacity(0.12);
+    final fillColor = onSurfaceColor.withValues(alpha: 0.12);
 
-    return WillPopScope(
-      onWillPop: _onWillPop,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        await _handleClose();
+      },
       child: GestureDetector(
         onTap: _unfocusAll,
         child: GlassScaffold(
@@ -564,7 +572,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                 Icons.undo,
                 color: _undoStack.length > 1
                     ? onSurfaceColor
-                    : onSurfaceColor.withOpacity(0.24),
+                    : onSurfaceColor.withValues(alpha: 0.24),
               ),
               tooltip: 'Undo',
             ),
@@ -574,7 +582,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                 Icons.redo,
                 color: _redoStack.isNotEmpty
                     ? onSurfaceColor
-                    : onSurfaceColor.withOpacity(0.24),
+                    : onSurfaceColor.withValues(alpha: 0.24),
               ),
               tooltip: 'Redo',
             ),
@@ -584,176 +592,141 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                 onPressed: _confirmDelete,
               ),
           ],
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Income/Expense Toggle
-                Center(
-                  child: CupertinoSlidingSegmentedControl<bool>(
-                    groupValue: _isIncome,
-                    thumbColor: _isIncome ? incomeColor : expenseColor,
-                    backgroundColor: onSurfaceColor.withOpacity(0.12),
-                    children: {
-                      false: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
-                        child: Text(
-                          "Expense",
-                          style: TextStyle(
-                            color: !_isIncome
-                                ? Colors.white
-                                : onSurfaceColor.withOpacity(0.54),
+          body: DynamicBackground(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Income/Expense Toggle
+                  Center(
+                    child: CupertinoSlidingSegmentedControl<bool>(
+                      groupValue: _isIncome,
+                      thumbColor: _isIncome ? incomeColor : expenseColor,
+                      backgroundColor: onSurfaceColor.withValues(alpha: 0.12),
+                      children: {
+                        false: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 10,
+                          ),
+                          child: Text(
+                            "Expense",
+                            style: TextStyle(
+                              color: !_isIncome
+                                  ? Colors.white
+                                  : onSurfaceColor.withValues(alpha: 0.54),
+                            ),
                           ),
                         ),
-                      ),
-                      true: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
-                        child: Text(
-                          "Income",
-                          style: TextStyle(
-                            color: _isIncome
-                                ? Colors.black
-                                : onSurfaceColor.withOpacity(0.54),
+                        true: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 10,
+                          ),
+                          child: Text(
+                            "Income",
+                            style: TextStyle(
+                              color: _isIncome
+                                  ? Colors.black
+                                  : onSurfaceColor.withValues(alpha: 0.54),
+                            ),
                           ),
                         ),
-                      ),
-                    },
-                    onValueChanged: (val) {
-                      if (val != null) {
-                        setState(() => _isIncome = val);
-                        _saveSnapshot();
-                      }
-                    },
-                  ),
-                ),
-                const SizedBox(height: 30),
-
-                // Amount Row
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      decoration: BoxDecoration(
-                        color: fillColor,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: _selectedCurrency,
-                          dropdownColor: theme.cardColor,
-                          icon: Icon(
-                            Icons.arrow_drop_down,
-                            color: onSurfaceColor.withOpacity(0.6),
-                          ),
-                          items: _currencies.map((c) {
-                            return DropdownMenuItem(
-                              value: c,
-                              child: Text(c, style: textTheme.headlineSmall),
-                            );
-                          }).toList(),
-                          onChanged: (val) {
-                            if (val != null) {
-                              setState(() => _selectedCurrency = val);
-                              _saveSnapshot();
-                            }
-                          },
-                        ),
-                      ),
+                      },
+                      onValueChanged: (val) {
+                        if (val != null) {
+                          setState(() => _isIncome = val);
+                          _saveSnapshot();
+                        }
+                      },
                     ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Hero(
-                        tag: 'expense_amount_$heroId',
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: TextField(
-                            controller: _amountController,
-                            focusNode: _amountFocusNode,
-                            keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true,
-                            ),
-                            style: textTheme.headlineLarge?.copyWith(
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                              color: _isIncome ? incomeColor : expenseColor,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: '0.00',
-                              hintStyle: textTheme.headlineLarge?.copyWith(
-                                color: onSurfaceColor.withOpacity(0.12),
-                              ),
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Divider(color: dividerColor),
-                const SizedBox(height: 24),
-
-                // Description
-                Text(
-                  "Description",
-                  style: textTheme.bodySmall?.copyWith(
-                    color: onSurfaceColor.withOpacity(0.7),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Hero(
-                  tag: 'expense_title_$heroId',
-                  child: Material(
-                    type: MaterialType.transparency,
-                    child: TextField(
-                      controller: _titleController,
-                      focusNode: _titleFocusNode,
-                      style: textTheme.bodyLarge?.copyWith(
-                        color: onSurfaceColor,
-                      ),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: fillColor,
-                        border: OutlineInputBorder(
+                  const SizedBox(height: 30),
+
+                  // Amount Row
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        decoration: BoxDecoration(
+                          color: fillColor,
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none,
                         ),
-                        hintText: 'What is this for?',
-                        hintStyle: textTheme.bodyLarge?.copyWith(
-                          color: onSurfaceColor.withOpacity(0.38),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: _selectedCurrency,
+                            dropdownColor: theme.cardColor,
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: onSurfaceColor.withValues(alpha: 0.6),
+                            ),
+                            items: _currencies.map((c) {
+                              return DropdownMenuItem(
+                                value: c,
+                                child: Text(c, style: textTheme.headlineSmall),
+                              );
+                            }).toList(),
+                            onChanged: (val) {
+                              if (val != null) {
+                                setState(() => _selectedCurrency = val);
+                                _saveSnapshot();
+                              }
+                            },
+                          ),
                         ),
                       ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Hero(
+                          tag: 'expense_amount_$heroId',
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: TextField(
+                              controller: _amountController,
+                              focusNode: _amountFocusNode,
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                    decimal: true,
+                                  ),
+                              style: textTheme.headlineLarge?.copyWith(
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                                color: _isIncome ? incomeColor : expenseColor,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: '0.00',
+                                hintStyle: textTheme.headlineLarge?.copyWith(
+                                  color: onSurfaceColor.withValues(alpha: 0.12),
+                                ),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(color: dividerColor),
+                  const SizedBox(height: 24),
+
+                  // Description
+                  Text(
+                    "Description",
+                    style: textTheme.bodySmall?.copyWith(
+                      color: onSurfaceColor.withValues(alpha: 0.7),
                     ),
                   ),
-                ),
-                const SizedBox(height: 24),
-
-                // Category
-                Text(
-                  "Category",
-                  style: textTheme.bodySmall?.copyWith(
-                    color: onSurfaceColor.withOpacity(0.7),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                CompositedTransformTarget(
-                  link: _layerLink,
-                  child: Hero(
-                    tag: 'expense_category_$heroId',
+                  const SizedBox(height: 8),
+                  Hero(
+                    tag: 'expense_title_$heroId',
                     child: Material(
                       type: MaterialType.transparency,
                       child: TextField(
-                        controller: _categoryController,
-                        focusNode: _categoryFocusNode,
+                        controller: _titleController,
+                        focusNode: _titleFocusNode,
                         style: textTheme.bodyLarge?.copyWith(
                           color: onSurfaceColor,
                         ),
@@ -764,108 +737,146 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide.none,
                           ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isDropdownOpen
-                                  ? Icons.arrow_drop_up
-                                  : Icons.arrow_drop_down,
-                              color: onSurfaceColor.withOpacity(0.6),
-                            ),
-                            onPressed: _isDropdownOpen
-                                ? _unfocusAll
-                                : () => _categoryFocusNode.requestFocus(),
-                          ),
-                          hintText: 'Select or type...',
+                          hintText: 'What is this for?',
                           hintStyle: textTheme.bodyLarge?.copyWith(
-                            color: onSurfaceColor.withOpacity(0.38),
+                            color: onSurfaceColor.withValues(alpha: 0.38),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                  const SizedBox(height: 24),
 
-                // Category Chips
-                const SizedBox(height: 12),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  child: Row(
-                    children: _categorySuggestions.map((cat) {
-                      final isSelected = _categoryController.text == cat;
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: ChoiceChip(
-                          label: Text(
-                            cat,
-                            style: TextStyle(
-                              color: isSelected
-                                  ? colorScheme.onPrimary
-                                  : onSurfaceColor.withOpacity(0.8),
+                  // Category
+                  Text(
+                    "Category",
+                    style: textTheme.bodySmall?.copyWith(
+                      color: onSurfaceColor.withValues(alpha: 0.7),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  CompositedTransformTarget(
+                    link: _layerLink,
+                    child: Hero(
+                      tag: 'expense_category_$heroId',
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: TextField(
+                          controller: _categoryController,
+                          focusNode: _categoryFocusNode,
+                          style: textTheme.bodyLarge?.copyWith(
+                            color: onSurfaceColor,
+                          ),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: fillColor,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isDropdownOpen
+                                    ? Icons.arrow_drop_up
+                                    : Icons.arrow_drop_down,
+                                color: onSurfaceColor.withValues(alpha: 0.6),
+                              ),
+                              onPressed: _isDropdownOpen
+                                  ? _unfocusAll
+                                  : () => _categoryFocusNode.requestFocus(),
+                            ),
+                            hintText: 'Select or type...',
+                            hintStyle: textTheme.bodyLarge?.copyWith(
+                              color: onSurfaceColor.withValues(alpha: 0.38),
                             ),
                           ),
-                          selected: isSelected,
-                          selectedColor: primaryColor,
-                          backgroundColor: fillColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: BorderSide.none,
-                          ),
-                          onSelected: (bool selected) {
-                            _categoryController.text = cat;
-                            _saveSnapshot();
-                          },
                         ),
-                      );
-                    }).toList(),
+                      ),
+                    ),
                   ),
-                ),
 
-                const SizedBox(height: 24),
-
-                // Date
-                Text(
-                  "Date",
-                  style: textTheme.bodySmall?.copyWith(
-                    color: onSurfaceColor.withOpacity(0.7),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Hero(
-                  tag: 'expense_date_$heroId',
-                  child: Material(
-                    type: MaterialType.transparency,
-                    child: GestureDetector(
-                      onTap: _pickDateTime,
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: fillColor,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.calendar_today,
-                              color: onSurfaceColor.withOpacity(0.6),
-                            ),
-                            const SizedBox(width: 16),
-                            Text(
-                              DateFormat(
-                                'MMM dd, yyyy • h:mm a',
-                              ).format(_selectedDate),
-                              style: textTheme.bodyLarge?.copyWith(
-                                color: onSurfaceColor,
+                  // Category Chips
+                  const SizedBox(height: 12),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    child: Row(
+                      children: _categorySuggestions.map((cat) {
+                        final isSelected = _categoryController.text == cat;
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: ChoiceChip(
+                            label: Text(
+                              cat,
+                              style: TextStyle(
+                                color: isSelected
+                                    ? colorScheme.onPrimary
+                                    : onSurfaceColor.withValues(alpha: 0.8),
                               ),
                             ),
-                          ],
+                            selected: isSelected,
+                            selectedColor: primaryColor,
+                            backgroundColor: fillColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              side: BorderSide.none,
+                            ),
+                            onSelected: (bool selected) {
+                              _categoryController.text = cat;
+                              _saveSnapshot();
+                            },
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // Date
+                  Text(
+                    "Date",
+                    style: textTheme.bodySmall?.copyWith(
+                      color: onSurfaceColor.withValues(alpha: 0.7),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Hero(
+                    tag: 'expense_date_$heroId',
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: GestureDetector(
+                        onTap: _pickDateTime,
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: fillColor,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_today,
+                                color: onSurfaceColor.withValues(alpha: 0.6),
+                              ),
+                              const SizedBox(width: 16),
+                              Text(
+                                DateFormat(
+                                  'MMM dd, yyyy • h:mm a',
+                                ).format(_selectedDate),
+                                style: textTheme.bodyLarge?.copyWith(
+                                  color: onSurfaceColor,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 80),
-              ],
+                  const SizedBox(height: 80),
+                ],
+              ),
             ),
           ),
           floatingActionButton: FloatingActionButton.extended(

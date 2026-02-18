@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:copyclip/src/features/canvas/data/canvas_model.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
 import 'package:copyclip/src/features/expenses/data/expense_model.dart';
@@ -37,7 +38,7 @@ class WidgetSyncService {
       await HomeWidget.updateWidget(androidName: 'CalendarWidgetProvider');
       await HomeWidget.updateWidget(androidName: 'CanvasWidgetProvider');
     } catch (e) {
-      print('Error updating widgets: $e');
+      debugPrint('Error updating widgets: $e');
     }
   }
 
@@ -100,7 +101,7 @@ class WidgetSyncService {
 
         // Truncate if too long
         if (contentText.length > 50) {
-          contentText = contentText.substring(0, 50) + '...';
+          contentText = '${contentText.substring(0, 50)}...';
         }
 
         return {
@@ -120,7 +121,7 @@ class WidgetSyncService {
       // Update specific widget
       await HomeWidget.updateWidget(androidName: 'NotesWidgetProvider');
     } catch (e) {
-      print('Error syncing notes: $e');
+      debugPrint('Error syncing notes: $e');
     }
   }
 
@@ -181,7 +182,7 @@ class WidgetSyncService {
 
       await HomeWidget.updateWidget(androidName: 'TodosWidgetProvider');
     } catch (e) {
-      print('Error syncing todos: $e');
+      debugPrint('Error syncing todos: $e');
     }
   }
 
@@ -266,7 +267,7 @@ class WidgetSyncService {
 
       await HomeWidget.updateWidget(androidName: 'ExpensesWidgetProvider');
     } catch (e) {
-      print('Error syncing finance: $e');
+      debugPrint('Error syncing finance: $e');
     }
   }
 
@@ -288,7 +289,7 @@ class WidgetSyncService {
           final lastJournal = activeEntries.last;
           lastEntry = lastJournal.date.toIso8601String();
         } catch (e) {
-          print('Error getting last entry: $e');
+          debugPrint('Error getting last entry: $e');
         }
       }
 
@@ -322,7 +323,7 @@ class WidgetSyncService {
 
       await HomeWidget.updateWidget(androidName: 'JournalWidgetProvider');
     } catch (e) {
-      print('Error syncing journal: $e');
+      debugPrint('Error syncing journal: $e');
     }
   }
 
@@ -432,7 +433,7 @@ class WidgetSyncService {
 
       await HomeWidget.updateWidget(androidName: 'ClipboardWidgetProvider');
     } catch (e) {
-      print('Error syncing clipboard: $e');
+      debugPrint('Error syncing clipboard: $e');
     }
   }
 
@@ -442,37 +443,6 @@ class WidgetSyncService {
       final now = DateTime.now();
       final dateKey = DateFormat('yyyy-MM-dd').format(now);
       List<Map<String, String>> events = [];
-
-      // Helper to add events
-      void addEvents<T>(
-        String boxName,
-        bool Function(T) filter,
-        String Function(T) titleMapper,
-        String Function(T) timeMapper,
-      ) async {
-        if (Hive.isBoxOpen(boxName)) {
-          final box = Hive.box<T>(boxName);
-          final items = box.values.where(filter).toList();
-          for (var item in items) {
-            events.add({
-              'title': titleMapper(item),
-              'time': timeMapper(item), // e.g., 'All Day' or specific time
-            });
-          }
-        } else {
-          // Try to open if closed (safety)
-          try {
-            final box = await Hive.openBox<T>(boxName);
-            final items = box.values.where(filter).toList();
-            for (var item in items) {
-              events.add({
-                'title': titleMapper(item),
-                'time': timeMapper(item),
-              });
-            }
-          } catch (_) {}
-        }
-      }
 
       // --- FETCH DATA (Mirroring CalendarScreen logic) ---
 
@@ -496,8 +466,9 @@ class WidgetSyncService {
       }
 
       // Todos (Due Today)
-      if (!Hive.isBoxOpen('todos_box'))
+      if (!Hive.isBoxOpen('todos_box')) {
         await Hive.openBox<Todo>('todos_box'); // correct box name
+      }
       final todosBox = Hive.box<Todo>('todos_box');
       final todos = todosBox.values.where(
         (t) =>
@@ -510,8 +481,9 @@ class WidgetSyncService {
       }
 
       // Expenses (Today)
-      if (!Hive.isBoxOpen('expenses_box'))
+      if (!Hive.isBoxOpen('expenses_box')) {
         await Hive.openBox<Expense>('expenses_box');
+      }
       final expBox = Hive.box<Expense>('expenses_box');
       final expenses = expBox.values.where(
         (e) =>
@@ -526,8 +498,9 @@ class WidgetSyncService {
       }
 
       // Journal (Today)
-      if (!Hive.isBoxOpen('journal_box'))
+      if (!Hive.isBoxOpen('journal_box')) {
         await Hive.openBox<JournalEntry>('journal_box');
+      }
       final journalBox = Hive.box<JournalEntry>('journal_box');
       final journals = journalBox.values.where(
         (j) =>
@@ -553,7 +526,7 @@ class WidgetSyncService {
 
       await HomeWidget.updateWidget(androidName: 'CalendarWidgetProvider');
     } catch (e) {
-      print('Error syncing calendar: $e');
+      debugPrint('Error syncing calendar: $e');
     }
   }
 
@@ -588,7 +561,7 @@ class WidgetSyncService {
       );
       await HomeWidget.updateWidget(androidName: 'CanvasWidgetProvider');
     } catch (e) {
-      print('Error syncing canvas: $e');
+      debugPrint('Error syncing canvas: $e');
     }
   }
 }

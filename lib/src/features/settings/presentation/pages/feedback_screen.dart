@@ -54,12 +54,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: theme.colorScheme.surface.withOpacity(0.95),
+            color: theme.colorScheme.surface.withValues(alpha: 0.95),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+            border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -163,7 +163,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   children: [
                     // Header Card - Replaced GlassContainer
                     _LightweightContainer(
-                      color: primaryColor.withOpacity(0.1),
+                      color: primaryColor.withValues(alpha: 0.1),
                       padding: const EdgeInsets.all(20),
                       child: Column(
                         children: [
@@ -185,7 +185,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           Text(
                             "Your feedback helps us improve CopyClip and provide you with a better experience.",
                             style: textTheme.bodyMedium?.copyWith(
-                              color: onSurfaceColor.withOpacity(0.7),
+                              color: onSurfaceColor.withValues(alpha: 0.7),
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -201,7 +201,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
                     // Dropdown - Replaced GlassContainer
                     _LightweightContainer(
-                      color: primaryColor.withOpacity(0.05),
+                      color: primaryColor.withValues(alpha: 0.05),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 4,
@@ -219,8 +219,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           ),
                           dropdownColor: theme.colorScheme.surface,
                           onChanged: (String? newValue) {
-                            if (newValue != null)
+                            if (newValue != null) {
                               setState(() => _selectedCategory = newValue);
+                            }
                           },
                           items: _categories.map<DropdownMenuItem<String>>((
                             String value,
@@ -232,7 +233,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                   Icon(
                                     _getCategoryIcon(value),
                                     size: 20,
-                                    color: primaryColor.withOpacity(0.7),
+                                    color: primaryColor.withValues(alpha: 0.7),
                                   ),
                                   const SizedBox(width: 12),
                                   Text(value),
@@ -252,7 +253,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
                     // Email Input - Replaced GlassContainer
                     _LightweightContainer(
-                      color: primaryColor.withOpacity(0.05),
+                      color: primaryColor.withValues(alpha: 0.05),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 4,
@@ -264,12 +265,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         decoration: InputDecoration(
                           hintText: "your.email@example.com",
                           hintStyle: TextStyle(
-                            color: onSurfaceColor.withOpacity(0.4),
+                            color: onSurfaceColor.withValues(alpha: 0.4),
                           ),
                           border: InputBorder.none,
                           prefixIcon: Icon(
                             Icons.email_outlined,
-                            color: primaryColor.withOpacity(0.7),
+                            color: primaryColor.withValues(alpha: 0.7),
                           ),
                         ),
                       ),
@@ -283,7 +284,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
                     // Text Area - Replaced GlassContainer
                     _LightweightContainer(
-                      color: primaryColor.withOpacity(0.05),
+                      color: primaryColor.withValues(alpha: 0.05),
                       padding: const EdgeInsets.all(16),
                       child: TextField(
                         controller: _feedbackController,
@@ -294,7 +295,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           counterText: "",
                           hintText: "Tell us what you think...",
                           hintStyle: TextStyle(
-                            color: onSurfaceColor.withOpacity(0.4),
+                            color: onSurfaceColor.withValues(alpha: 0.4),
                           ),
                           border: InputBorder.none,
                         ),
@@ -306,7 +307,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       child: Text(
                         "${_feedbackController.text.length}/1000 characters",
                         style: textTheme.bodySmall?.copyWith(
-                          color: onSurfaceColor.withOpacity(0.5),
+                          color: onSurfaceColor.withValues(alpha: 0.5),
                         ),
                       ),
                     ),
@@ -320,7 +321,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
                     // Info Help Card - Replaced GlassContainer
                     _LightweightContainer(
-                      color: Colors.blue.withOpacity(0.1),
+                      color: Colors.blue.withValues(alpha: 0.1),
                       padding: const EdgeInsets.all(16),
                       child: Row(
                         children: [
@@ -334,7 +335,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             child: Text(
                               "Your feedback will open in your default email app. Please ensure you tap 'Send' in that app to complete the submission.",
                               style: textTheme.bodySmall?.copyWith(
-                                color: onSurfaceColor.withOpacity(0.7),
+                                color: onSurfaceColor.withValues(alpha: 0.7),
                               ),
                             ),
                           ),
@@ -374,7 +375,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: primaryColor.withOpacity(0.3),
+              color: primaryColor.withValues(alpha: 0.3),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -436,7 +437,7 @@ class _LightweightContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: color, // Uses simple transparency
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.1), width: 0.5),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.1), width: 0.5),
       ),
       child: child,
     );

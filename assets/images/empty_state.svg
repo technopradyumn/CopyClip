@@ -1,0 +1,31 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Body -->
+  <path d="M100 180C100 180 60 160 40 100C20 40 60 20 80 20C100 20 140 40 160 100C180 160 140 180 100 180Z" fill="#FFE135"/>
+  <path d="M40 100C35 85 35 70 45 60" stroke="#E6C200" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Stem -->
+  <path d="M75 25L85 10L115 10L125 25" fill="#8B4513"/>
+  
+  <!-- Face (Confused/Searching) -->
+  <!-- Left Eye -->
+  <circle cx="75" cy="90" r="8" fill="white"/>
+  <circle cx="77" cy="90" r="3" fill="black"/>
+  
+  <!-- Right Eye (Squinting/Looking) -->
+  <circle cx="125" cy="90" r="8" fill="white"/>
+  <circle cx="123" cy="90" r="3" fill="black"/>
+  
+  <!-- Eyebrows (Confused) -->
+  <path d="M65 75C70 70 80 75 85 78" stroke="black" stroke-width="3" stroke-linecap="round"/>
+  <path d="M115 78C120 75 130 70 135 75" stroke="black" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Mouth (Wavy/Unsure) -->
+  <path d="M85 130C90 125 100 135 110 130" stroke="black" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Question Marks -->
+  <text x="140" y="60" font-family="Arial" font-size="40" fill="#6C63FF" transform="rotate(15 140 60)">?</text>
+  <text x="40" y="60" font-family="Arial" font-size="30" fill="#6C63FF" transform="rotate(-15 40 60)">?</text>
+
+  <!-- Shadow -->
+  <ellipse cx="100" cy="190" rx="60" ry="10" fill="black" fill-opacity="0.1"/>
+</svg>

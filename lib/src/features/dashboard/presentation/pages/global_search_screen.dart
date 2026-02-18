@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:copyclip/src/core/router/app_router.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
-import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import 'package:copyclip/src/core/widgets/dynamic_background.dart';
+import 'package:copyclip/src/core/services/lazy_box_loader.dart';
+import 'package:copyclip/src/core/widgets/empty_state_widget.dart'; // Added
 
 // Models
 import '../../../../core/app_content_palette.dart';
@@ -128,8 +129,8 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
         SearchResult Function(T) mapper,
       ) async {
         try {
-          if (!Hive.isBoxOpen(boxName)) return; // Skip if box not ready
-          final box = Hive.box<T>(boxName);
+          // Ensure box is loaded
+          final box = await LazyBoxLoader.getBox<T>(boxName);
 
           // Yield to UI thread to prevent freezing if box is huge
           if (box.length > 500) await Future.delayed(Duration.zero);
@@ -141,14 +142,14 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                   if (e == null) return false;
                   return (e as dynamic).isDeleted == false;
                 } catch (_) {
-                  return true; // Assume not deleted if field missing (backward compat)
+                  return true;
                 }
               })
               .map((e) {
                 try {
                   return mapper(e);
                 } catch (e) {
-                  return null; // Skip invalid items
+                  return null;
                 }
               })
               .whereType<SearchResult>()
@@ -157,7 +158,6 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           results.addAll(items);
         } catch (e) {
           debugPrint("⚠️ Partial Load Error in $boxName: $e");
-          // Do not crash app, just log and continue
         }
       }
 
@@ -247,82 +247,91 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     if (mounted) _isLoadingNotifier.value = loading;
   }
 
-  // --- FILTERING ENGINE (Optimized) ---
+  // --- FILTERING ENGINE ---
   Future<void> _applyFilters() async {
-    // ✅ Run filtering asynchronously to unblock UI
-    // For very large lists, we could perform this in a compute() isolate,
-    // but simple async yielding is usually enough for <10k items.
-
-    _setLoading(true); // Show spinner if filtering takes time
-
-    // Simulate slight delay to let UI breathe
-    await Future.delayed(Duration.zero);
-
-    List<SearchResult> filtered = List.of(_allData);
-    final queryLower = _query.toLowerCase().trim();
+    _setLoading(true);
 
     try {
-      // 1. Text Search
-      if (queryLower.isNotEmpty) {
-        filtered = filtered.where((item) {
-          final t = item.title.toLowerCase();
-          final s = item.subtitle.toLowerCase();
-          return t.contains(queryLower) || s.contains(queryLower);
-        }).toList();
-      }
+      final queryLower = _query.toLowerCase().trim();
+      final filterParams = {
+        'allData': _allData,
+        'queryLower': queryLower,
+        'selectedType': _selectedType,
+        'filterColor': _filterColor,
+        'dateRange': _dateRange,
+        'sortBy': _sortBy,
+      };
 
-      // 2. Type Filter
-      if (_selectedType != "All") {
-        filtered = filtered
-            .where((item) => item.type == _selectedType)
-            .toList();
-      }
+      // ✅ Runs on main thread to avoid HiveObject isolation issues
+      final filtered = _performFiltering(filterParams);
 
-      // 3. Color Filter
-      if (_filterColor != null) {
-        filtered = filtered
-            .where((item) => item.colorValue == _filterColor)
-            .toList();
-      }
-
-      // 4. Date Filter
-      if (_dateRange != "All Time") {
-        final now = DateTime.now();
-        if (_dateRange == "Today") {
-          filtered = filtered
-              .where(
-                (item) =>
-                    item.dateTime.year == now.year &&
-                    item.dateTime.month == now.month &&
-                    item.dateTime.day == now.day,
-              )
-              .toList();
-        } else if (_dateRange == "This Week") {
-          final lastWeek = now.subtract(const Duration(days: 7));
-          filtered = filtered
-              .where((item) => item.dateTime.isAfter(lastWeek))
-              .toList();
-        }
-      }
-
-      // 5. Sorting
-      if (_sortBy == "Newest") {
-        filtered.sort((a, b) => b.dateTime.compareTo(a.dateTime));
-      } else if (_sortBy == "Oldest") {
-        filtered.sort((a, b) => a.dateTime.compareTo(b.dateTime));
-      } else if (_sortBy == "A-Z") {
-        filtered.sort(
-          (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()),
-        );
-      }
-
-      // ✅ Update UI
       if (mounted) _filteredListNotifier.value = filtered;
     } catch (e) {
-      debugPrint("⚠️ Filtering Error: $e");
+      debugPrint("❌ Filtering Isolate Error: $e");
     } finally {
-      _setLoading(false);
+      if (mounted) _setLoading(false);
     }
+  }
+
+  static List<SearchResult> _performFiltering(Map<String, dynamic> params) {
+    final List<SearchResult> allData = params['allData'];
+    final String queryLower = params['queryLower'];
+    final String selectedType = params['selectedType'];
+    final int? filterColor = params['filterColor'];
+    final String dateRange = params['dateRange'];
+    final String sortBy = params['sortBy'];
+
+    List<SearchResult> filtered = List.from(allData);
+
+    // 1. Text Search
+    if (queryLower.isNotEmpty) {
+      filtered = filtered.where((item) {
+        final t = item.title.toLowerCase();
+        final s = item.subtitle.toLowerCase();
+        return t.contains(queryLower) || s.contains(queryLower);
+      }).toList();
+    }
+
+    // 2. Type Filter
+    if (selectedType != "All") {
+      filtered = filtered.where((item) => item.type == selectedType).toList();
+    }
+
+    // 3. Color Filter
+    if (filterColor != null) {
+      filtered = filtered
+          .where((item) => item.colorValue == filterColor)
+          .toList();
+    }
+
+    // 4. Date Filter
+    if (dateRange != "All Time") {
+      final now = DateTime.now();
+      filtered = filtered.where((item) {
+        if (dateRange == "Today") {
+          return item.dateTime.year == now.year &&
+              item.dateTime.month == now.month &&
+              item.dateTime.day == now.day;
+        } else if (dateRange == "This Week") {
+          final lastWeek = now.subtract(const Duration(days: 7));
+          return item.dateTime.isAfter(lastWeek);
+        }
+        return true;
+      }).toList();
+    }
+
+    // 5. Sorting
+    if (sortBy == "Newest") {
+      filtered.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+    } else if (sortBy == "Oldest") {
+      filtered.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+    } else if (sortBy == "A-Z") {
+      filtered.sort(
+        (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()),
+      );
+    }
+
+    return filtered;
   }
 
   // --- UI BUILDERS ---
@@ -333,89 +342,81 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     return GlassScaffold(
       showBackArrow: false,
       title: null,
-      body: Column(
-        children: [
-          const SizedBox(height: 8),
-          _buildIntegratedSearchBar(theme),
-          const SizedBox(height: 12),
-          _buildHorizontalFilterChips(theme),
-          const SizedBox(height: 8),
+      body: DynamicBackground(
+        child: Column(
+          children: [
+            const SizedBox(height: 8),
+            _buildIntegratedSearchBar(theme),
+            const SizedBox(height: 12),
+            _buildHorizontalFilterChips(theme),
+            const SizedBox(height: 8),
 
-          // ✅ LIST SECTION WITH LOADING STATE
-          Expanded(
-            child: ValueListenableBuilder<bool>(
-              valueListenable: _isLoadingNotifier,
-              builder: (context, isLoading, _) {
-                if (isLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+            // ✅ LIST SECTION WITH LOADING STATE
+            Expanded(
+              child: ValueListenableBuilder<bool>(
+                valueListenable: _isLoadingNotifier,
+                builder: (context, isLoading, _) {
+                  if (isLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                if (_errorMessage != null) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.error_outline,
-                          size: 48,
-                          color: Colors.redAccent,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          _errorMessage!,
-                          style: TextStyle(color: theme.hintColor),
-                        ),
-                        TextButton(
-                          onPressed: _loadAllData,
-                          child: const Text("Retry"),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-
-                return ValueListenableBuilder<List<SearchResult>>(
-                  valueListenable: _filteredListNotifier,
-                  builder: (context, filteredItems, _) {
-                    if (filteredItems.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.search_off_rounded,
-                              size: 64,
-                              color: theme.dividerColor,
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              "No results found",
-                              style: TextStyle(color: theme.hintColor),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-
-                    return ListView.separated(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
-                      physics: const BouncingScrollPhysics(),
-                      // ✅ PERFORMANCE: Reasonable cache extent
-                      cacheExtent: 500,
-                      itemCount: filteredItems.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 12),
-                      itemBuilder: (context, index) {
-                        return RepaintBoundary(
-                          child: _buildResultCard(filteredItems[index]),
-                        );
-                      },
+                  if (_errorMessage != null) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.error_outline,
+                            size: 48,
+                            color: Colors.redAccent,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            _errorMessage!,
+                            style: TextStyle(color: theme.hintColor),
+                          ),
+                          TextButton(
+                            onPressed: _loadAllData,
+                            child: const Text("Retry"),
+                          ),
+                        ],
+                      ),
                     );
-                  },
-                );
-              },
+                  }
+
+                  return ValueListenableBuilder<List<SearchResult>>(
+                    valueListenable: _filteredListNotifier,
+                    builder: (context, filteredItems, _) {
+                      if (filteredItems.isEmpty) {
+                        return Center(
+                          child: EmptyStateWidget(
+                            message: "No results found",
+                            subMessage: "Try adjusting your search or filters.",
+                            assetPath: "assets/images/search_empty.svg",
+                          ),
+                        );
+                      }
+
+                      return ListView.separated(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                        physics: const BouncingScrollPhysics(),
+                        // ✅ PERFORMANCE: Reasonable cache extent
+                        cacheExtent: 500,
+                        itemCount: filteredItems.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 12),
+                        itemBuilder: (context, index) {
+                          return RepaintBoundary(
+                            child: _buildResultCard(filteredItems[index]),
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -436,17 +437,18 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             child: Container(
               height: 48,
               decoration: BoxDecoration(
-                color: theme.colorScheme.onSurface.withOpacity(0.08),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+                border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
               ),
               child: TextField(
                 controller: _searchController,
-                autofocus: true,
-                style: theme.textTheme.bodyLarge,
-                // Listener handles updates via debouncer now
+                style: theme.textTheme.bodyMedium,
                 decoration: InputDecoration(
-                  hintText: "Search workspace...",
+                  hintText: "${AppLocalizations.of(context)!.search}...",
+                  hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
                   prefixIcon: Icon(
                     Icons.search_rounded,
                     color: theme.colorScheme.primary,
@@ -499,12 +501,12 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
               decoration: BoxDecoration(
                 color: isSelected
                     ? theme.colorScheme.primary
-                    : theme.colorScheme.onSurface.withOpacity(0.05),
+                    : theme.colorScheme.onSurface.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: isSelected
                       ? theme.colorScheme.primary
-                      : theme.colorScheme.onSurface.withOpacity(0.1),
+                      : theme.colorScheme.onSurface.withValues(alpha: 0.1),
                 ),
               ),
               child: Text(
@@ -516,7 +518,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                 style: TextStyle(
                   color: isSelected
                       ? Colors.white
-                      : theme.colorScheme.onSurface.withOpacity(0.7),
+                      : theme.colorScheme.onSurface.withValues(alpha: 0.7),
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                 ),
               ),
@@ -652,13 +654,13 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(right: 12),
                 child: CircleAvatar(
-                  backgroundColor: onSurface.withOpacity(0.1),
+                  backgroundColor: onSurface.withValues(alpha: 0.1),
                   child: Icon(
                     Icons.close,
                     size: 16,
                     color: _filterColor == null
                         ? primaryColor
-                        : onSurface.withOpacity(0.5),
+                        : onSurface.withValues(alpha: 0.5),
                   ),
                 ),
               ),
@@ -666,13 +668,13 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           }
 
           final color = myPalette[index - 1];
-          final isSelected = _filterColor == color.value;
+          final isSelected = _filterColor == color.toARGB32();
           final contrastColor = AppContentPalette.getContrastColor(color);
 
           return GestureDetector(
             onTap: () {
-              setSheetState(() => _filterColor = color.value);
-              setState(() => _filterColor = color.value);
+              setSheetState(() => _filterColor = color.toARGB32());
+              setState(() => _filterColor = color.toARGB32());
               _applyFilters();
             },
             child: Padding(
@@ -687,7 +689,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                   border: Border.all(
                     color: isSelected
                         ? primaryColor
-                        : onSurface.withOpacity(0.2),
+                        : onSurface.withValues(alpha: 0.2),
                     width: isSelected ? 2.5 : 1,
                   ),
                 ),
@@ -716,7 +718,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           onShare: () => _share(res),
           onDelete: () => _delete(res),
           onColorChanged: (c) {
-            (res.argument as Note).colorValue = c.value;
+            (res.argument as Note).colorValue = c.toARGB32();
             (res.argument as Note).save();
             setState(() {});
           },
@@ -773,7 +775,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           onShare: () => _share(res),
           onDelete: () => _delete(res),
           onColorChanged: (c) {
-            (res.argument as ClipboardItem).colorValue = c.value;
+            (res.argument as ClipboardItem).colorValue = c.toARGB32();
             (res.argument as ClipboardItem).save();
             setState(() {});
           },

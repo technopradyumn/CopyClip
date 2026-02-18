@@ -1,9 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import '../../../../l10n/app_localizations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/router/app_router.dart';
-import '../provider/premium_provider.dart';
+import '../bloc/premium_bloc.dart';
+import '../bloc/premium_event.dart';
+import '../bloc/premium_state.dart';
 
 class PremiumLockDialog {
   static void show(
@@ -32,17 +35,25 @@ class _GlassPremiumDialog extends StatefulWidget {
 }
 
 class _GlassPremiumDialogState extends State<_GlassPremiumDialog> {
-  bool _isLoadingAd = false;
+  // We rely on Bloc state now, but local loading state for interaction feedback is also okay.
+  // Actually, let's use Bloc state.
+
+  @override
+  void initState() {
+    super.initState();
+    // Preload if needed
+    context.read<PremiumBloc>().add(LoadRewardedAd());
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final primaryColor = Colors.amber; // Premium Gold
     final baseGlassColor = Color.alphaBlend(
-      primaryColor.withOpacity(0.1),
-      Colors.black.withOpacity(0.6),
+      primaryColor.withValues(alpha: 0.1),
+      Colors.black.withValues(alpha: 0.6),
     );
-    final borderColor = primaryColor.withOpacity(0.4);
+    final borderColor = primaryColor.withValues(alpha: 0.4);
     final textColor = Colors.white;
 
     return Dialog(
@@ -63,7 +74,7 @@ class _GlassPremiumDialogState extends State<_GlassPremiumDialog> {
                   border: Border.all(color: borderColor, width: 1),
                   boxShadow: [
                     BoxShadow(
-                      color: primaryColor.withOpacity(0.15),
+                      color: primaryColor.withValues(alpha: 0.15),
                       blurRadius: 25,
                       spreadRadius: -2,
                     ),
@@ -76,11 +87,11 @@ class _GlassPremiumDialogState extends State<_GlassPremiumDialog> {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: primaryColor.withOpacity(0.2),
+                        color: primaryColor.withValues(alpha: 0.2),
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: primaryColor.withOpacity(0.4),
+                            color: primaryColor.withValues(alpha: 0.4),
                             blurRadius: 15,
                             spreadRadius: 2,
                           ),
@@ -102,7 +113,7 @@ class _GlassPremiumDialogState extends State<_GlassPremiumDialog> {
                         fontWeight: FontWeight.bold,
                         shadows: [
                           Shadow(
-                            color: Colors.black.withOpacity(0.5),
+                            color: Colors.black.withValues(alpha: 0.5),
                             blurRadius: 4,
                           ),
                         ],
@@ -115,7 +126,7 @@ class _GlassPremiumDialogState extends State<_GlassPremiumDialog> {
                       "The '${widget.featureName}' feature is available for Premium users only.",
                       textAlign: TextAlign.center,
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: textColor.withOpacity(0.9),
+                        color: textColor.withValues(alpha: 0.9),
                         fontSize: 15,
                       ),
                     ),
@@ -125,32 +136,48 @@ class _GlassPremiumDialogState extends State<_GlassPremiumDialog> {
                     if (widget.onUnlockOnce != null)
                       SizedBox(
                         width: double.infinity,
-                        child: _GlassGradientButton(
-                          text: _isLoadingAd
-                              ? "Loading Ad..."
-                              : "Watch Ad to Use Once",
-                          icon: _isLoadingAd ? null : Icons.play_circle_fill,
-                          isLoading: _isLoadingAd,
-                          onPressed: _isLoadingAd
-                              ? null
-                              : () async {
-                                  setState(() => _isLoadingAd = true);
-                                  final provider = Provider.of<PremiumProvider>(
-                                    context,
-                                    listen: false,
-                                  );
+                        child: BlocBuilder<PremiumBloc, PremiumState>(
+                          builder: (context, state) {
+                            final isLoading = state.isAdLoading;
+                            final isReady = state.isAdReady;
 
-                                  // Wait for ad to be shown/completed
-                                  await provider.showRewardedAd(
-                                    onReward: (_) {
-                                      widget.onUnlockOnce?.call();
+                            // If loading, show loading.
+                            // If not ready and not loading, trigger load and show "Retry/Loading".
+
+                            return _GlassGradientButton(
+                              text: isLoading
+                                  ? "Loading Ad..."
+                                  : (isReady
+                                        ? "Watch Ad to Use Once"
+                                        : "Load Ad"),
+                              icon: isLoading ? null : Icons.play_circle_fill,
+                              isLoading: isLoading,
+                              onPressed: isLoading
+                                  ? null
+                                  : () {
+                                      if (!isReady) {
+                                        context.read<PremiumBloc>().add(
+                                          LoadRewardedAd(),
+                                        );
+                                      } else {
+                                        context.read<PremiumBloc>().add(
+                                          ShowRewardedAd(
+                                            onReward: (reward) {
+                                              widget.onUnlockOnce?.call();
+                                              // We can close dialog here if we want
+                                              // But usually ad covers screen.
+                                              // After ad closes, user sees this dialog again?
+                                              // We should probably close it automatically if success.
+                                              if (mounted) {
+                                                Navigator.pop(context);
+                                              }
+                                            },
+                                          ),
+                                        );
+                                      }
                                     },
-                                  );
-
-                                  if (mounted) {
-                                    Navigator.pop(context);
-                                  }
-                                },
+                            );
+                          },
                         ),
                       ),
 
@@ -166,13 +193,15 @@ class _GlassPremiumDialogState extends State<_GlassPremiumDialog> {
                         },
                         style: OutlinedButton.styleFrom(
                           foregroundColor: textColor,
-                          side: BorderSide(color: textColor.withOpacity(0.3)),
+                          side: BorderSide(color: textColor.withValues(alpha: 0.3)),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 14),
                         ),
-                        child: const Text("Unlock Permanently"),
+                        child: Text(
+                          AppLocalizations.of(context)!.unlockPermanently,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -182,7 +211,7 @@ class _GlassPremiumDialogState extends State<_GlassPremiumDialog> {
                       onPressed: () => Navigator.pop(context),
                       child: Text(
                         "Cancel",
-                        style: TextStyle(color: textColor.withOpacity(0.6)),
+                        style: TextStyle(color: textColor.withValues(alpha: 0.6)),
                       ),
                     ),
                   ],
@@ -201,7 +230,7 @@ class _GlassPremiumDialogState extends State<_GlassPremiumDialog> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Colors.white.withOpacity(0.15),
+                      Colors.white.withValues(alpha: 0.15),
                       Colors.transparent,
                       Colors.transparent,
                     ],
@@ -243,7 +272,7 @@ class _GlassGradientButton extends StatelessWidget {
         boxShadow: onPressed != null
             ? [
                 BoxShadow(
-                  color: Colors.amber.withOpacity(0.4),
+                  color: Colors.amber.withValues(alpha: 0.4),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),

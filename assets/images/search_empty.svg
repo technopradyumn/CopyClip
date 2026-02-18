@@ -1,0 +1,31 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Body -->
+  <path d="M100 180C100 180 60 160 40 100C20 40 60 20 80 20C100 20 140 40 160 100C180 160 140 180 100 180Z" fill="#FFE135"/>
+  
+  <!-- Stem -->
+  <path d="M75 25L85 10L115 10L125 25" fill="#8B4513"/>
+
+  <!-- Detective Hat (Deerstalker) -->
+  <path d="M50 30 C50 10 150 10 150 30 L160 40 L40 40 Z" fill="#8D6E63"/>
+  <path d="M40 40 Q100 20 160 40 L160 50 Q100 30 40 50 Z" fill="#5D4037"/>
+  <path d="M100 10 L100 15" stroke="#5D4037" stroke-width="2"/> <!-- Button -->
+  
+  <!-- Face (Searching/Intense) -->
+  <circle cx="75" cy="90" r="8" fill="white"/>
+  <circle cx="77" cy="90" r="3" fill="black"/> <!-- Left pupil looking right -->
+  
+  <!-- Magnifying Glass over right eye -->
+  <circle cx="125" cy="90" r="25" fill="#E1F5FE" fill-opacity="0.5" stroke="#5D4037" stroke-width="3"/>
+  <circle cx="125" cy="90" r="12" fill="none" stroke="black" stroke-width="1" stroke-opacity="0.3"/> <!-- Distortion effect -->
+  <circle cx="125" cy="90" r="10" fill="white"/> <!-- Eye behind glass -->
+  <circle cx="125" cy="90" r="5" fill="black"/> <!-- Enlarged pupil -->
+  
+  <!-- Magnifying Glass Handle -->
+  <rect x="145" y="105" width="10" height="40" fill="#3E2723" transform="rotate(-45 145 105)"/>
+  
+  <!-- Coat Collar/Cape -->
+  <path d="M60 140 Q100 160 140 140" fill="none" stroke="#8D6E63" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Shadow -->
+  <ellipse cx="100" cy="190" rx="60" ry="10" fill="black" fill-opacity="0.1"/>
+</svg>

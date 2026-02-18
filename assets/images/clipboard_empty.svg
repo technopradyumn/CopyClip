@@ -1,0 +1,26 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Body -->
+  <path d="M100 180C100 180 60 160 40 100C20 40 60 20 80 20C100 20 140 40 160 100C180 160 140 180 100 180Z" fill="#FFE135"/>
+  
+  <!-- Stem -->
+  <path d="M75 25L85 10L115 10L125 25" fill="#8B4513"/>
+  
+  <!-- Face (Neutral/Waiting) -->
+  <circle cx="75" cy="85" r="8" fill="white"/>
+  <circle cx="77" cy="85" r="3" fill="black"/>
+  <circle cx="125" cy="85" r="8" fill="white"/>
+  <circle cx="123" cy="85" r="3" fill="black"/>
+  <line x1="95" y1="110" x2="105" y2="110" stroke="black" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Clipboard -->
+  <rect x="60" y="100" width="80" height="80" fill="#D7CCC8" stroke="#8D6E63" stroke-width="2"/>
+  <rect x="85" y="95" width="30" height="10" fill="#90A4AE" stroke="#546E7A" stroke-width="1"/> <!-- Clip -->
+  <rect x="70" y="115" width="60" height="50" fill="white"/> <!-- Paper -->
+
+  <!-- Hands -->
+  <circle cx="55" cy="140" r="8" fill="#FFE135"/>
+  <circle cx="145" cy="140" r="8" fill="#FFE135"/>
+  
+  <!-- Shadow -->
+  <ellipse cx="100" cy="190" rx="60" ry="10" fill="black" fill-opacity="0.1"/>
+</svg>

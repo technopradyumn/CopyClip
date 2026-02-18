@@ -1,0 +1,30 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Body -->
+  <path d="M100 180C100 180 60 160 40 100C20 40 60 20 80 20C100 20 140 40 160 100C180 160 140 180 100 180Z" fill="#FFE135"/>
+  
+  <!-- Stem -->
+  <path d="M75 25L85 10L115 10L125 25" fill="#8B4513"/>
+  
+  <!-- Face (Creative/Artistic) -->
+  <path d="M75 80C80 75 90 80 95 85" stroke="black" stroke-width="2" stroke-linecap="round"/> <!-- Winking Left -->
+  <circle cx="125" cy="85" r="8" fill="white"/>
+  <circle cx="123" cy="85" r="3" fill="black"/>
+  <path d="M100 110C105 115 115 115 120 110" stroke="black" stroke-width="2" stroke-linecap="round"/> <!-- Smile -->
+  
+  <!-- Beret -->
+  <ellipse cx="110" cy="35" rx="40" ry="15" fill="#FF6B6B"/>
+  <rect x="105" y="20" width="10" height="5" fill="#FF6B6B"/>
+  
+  <!-- Palette -->
+  <path d="M40 130C30 130 30 160 50 160C70 160 80 140 70 130C60 120 40 130 40 130Z" fill="#D7CCC8" stroke="#8D6E63" stroke-width="1"/>
+  <circle cx="45" cy="140" r="3" fill="#FF0000"/>
+  <circle cx="55" cy="150" r="3" fill="#0000FF"/>
+  <circle cx="60" cy="135" r="3" fill="#00FF00"/>
+  
+  <!-- Paintbrush -->
+  <rect x="140" y="100" width="5" height="40" fill="#8D6E63" transform="rotate(-30 140 100)"/>
+  <path d="M135 90L145 95L150 85Z" fill="#333"/> <!-- Bristles -->
+
+  <!-- Shadow -->
+  <ellipse cx="100" cy="190" rx="60" ry="10" fill="black" fill-opacity="0.1"/>
+</svg>

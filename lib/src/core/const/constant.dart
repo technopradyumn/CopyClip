@@ -37,4 +37,7 @@ class FeatureColors {
 
   // Modern teal for canvas
   static const Color canvas = Color(0xFF26A69A);
+
+  // Deep Indigo for Social Post
+  static const Color socialPost = Color(0xFF3F51B5);
 }

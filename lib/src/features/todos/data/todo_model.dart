@@ -23,6 +23,9 @@ class Todo extends HiveObject {
   @HiveField(6)
   int sortIndex;
 
+  @HiveField(7)
+  int priority; // 0=Low, 1=Medium, 2=High
+
   @HiveField(10)
   bool isDeleted = false;
 
@@ -48,6 +51,7 @@ class Todo extends HiveObject {
     this.dueDate,
     this.hasReminder = false,
     this.sortIndex = 0,
+    this.priority = 1,
     this.isDeleted = false,
     this.deletedAt,
     this.repeatInterval,
@@ -64,6 +68,7 @@ class Todo extends HiveObject {
     'dueDate': dueDate?.toIso8601String(),
     'hasReminder': hasReminder,
     'sortIndex': sortIndex,
+    'priority': priority,
     'isDeleted': isDeleted,
     'deletedAt': deletedAt?.toIso8601String(),
     'repeatInterval': repeatInterval,
@@ -79,6 +84,7 @@ class Todo extends HiveObject {
     dueDate: json['dueDate'] != null ? DateTime.parse(json['dueDate']) : null,
     hasReminder: json['hasReminder'] ?? false,
     sortIndex: json['sortIndex'] ?? 0,
+    priority: json['priority'] ?? 1,
     isDeleted: json['isDeleted'] ?? false,
     deletedAt: json['deletedAt'] != null
         ? DateTime.parse(json['deletedAt'])

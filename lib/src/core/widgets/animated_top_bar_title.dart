@@ -43,38 +43,44 @@ class AnimatedTopBarTitle extends StatelessWidget {
               child: Icon(
                 icon,
                 size: iconSize,
-                color: effectiveColor.withOpacity(0.8),
+                color: effectiveColor.withValues(alpha: 0.8),
               ),
             )
           else
-            Icon(icon, size: iconSize, color: effectiveColor.withOpacity(0.8)),
+            Icon(icon, size: iconSize, color: effectiveColor.withValues(alpha: 0.8)),
           SizedBox(width: spacing),
         ],
         if (titleHeroTag != null)
-          Hero(
-            tag: titleHeroTag!,
-            child: Material(
-              type: MaterialType.transparency,
-              child: Text(
-                title,
-                style:
-                    textStyle ??
-                    theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: effectiveColor,
-                    ),
+          Flexible(
+            child: Hero(
+              tag: titleHeroTag!,
+              child: Material(
+                type: MaterialType.transparency,
+                child: Text(
+                  title,
+                  overflow: TextOverflow.ellipsis,
+                  style:
+                      textStyle ??
+                      theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: effectiveColor,
+                      ),
+                ),
               ),
             ),
           )
         else
-          Text(
-            title,
-            style:
-                textStyle ??
-                theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: effectiveColor,
-                ),
+          Flexible(
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              style:
+                  textStyle ??
+                  theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: effectiveColor,
+                  ),
+            ),
           ),
       ],
     );

@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -8,7 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import 'package:copyclip/src/core/widgets/empty_state_widget.dart'; // Added
 import 'package:copyclip/src/core/const/constant.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -201,39 +201,41 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
     return GlassScaffold(
       showBackArrow: false,
       title: null,
-      body: Column(
-        children: [
-          _buildTopBar(theme, onSurface),
-          _buildSearchBar(theme, onSurface),
-          _buildFilterChips(theme, onSurface),
+      body: DynamicBackground(
+        child: Column(
+          children: [
+            _buildTopBar(theme, onSurface),
+            _buildSearchBar(theme, onSurface),
+            _buildFilterChips(theme, onSurface),
 
-          // ✅ PERFORMANCE: ValueListenableBuilder
-          Expanded(
-            child: ValueListenableBuilder<List<GlobalSearchResult>>(
-              valueListenable: _filteredListNotifier,
-              builder: (context, displayItems, _) {
-                if (displayItems.isEmpty) {
-                  return _buildEmptyState(onSurface);
-                }
+            // ✅ PERFORMANCE: ValueListenableBuilder
+            Expanded(
+              child: ValueListenableBuilder<List<GlobalSearchResult>>(
+                valueListenable: _filteredListNotifier,
+                builder: (context, displayItems, _) {
+                  if (displayItems.isEmpty) {
+                    return _buildEmptyState(onSurface);
+                  }
 
-                return ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 100),
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: displayItems.length,
-                  // ✅ PERFORMANCE: Cache items ahead of scroll
-                  cacheExtent: 1000,
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
-                  itemBuilder: (context, index) {
-                    // ✅ PERFORMANCE: RepaintBoundary prevents lag
-                    return RepaintBoundary(
-                      child: _buildItemCard(displayItems[index]),
-                    );
-                  },
-                );
-              },
+                  return ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 100),
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: displayItems.length,
+                    // ✅ PERFORMANCE: Cache items ahead of scroll
+                    cacheExtent: 1000,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      // ✅ PERFORMANCE: RepaintBoundary prevents lag
+                      return RepaintBoundary(
+                        child: _buildItemCard(displayItems[index]),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -261,14 +263,17 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: onSurface.withOpacity(0.1),
+              color: onSurface.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(
                 AppConstants.cornerRadius * 0.75,
               ),
             ),
             child: Text(
               "${_allData.length} total",
-              style: TextStyle(fontSize: 11, color: onSurface.withOpacity(0.6)),
+              style: TextStyle(
+                fontSize: 11,
+                color: onSurface.withValues(alpha: 0.6),
+              ),
             ),
           ),
           const SizedBox(width: 8),
@@ -283,7 +288,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
       child: Container(
         height: 44,
         decoration: BoxDecoration(
-          color: onSurface.withOpacity(0.08),
+          color: onSurface.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 0.5),
         ),
         child: TextField(
@@ -293,7 +298,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
           decoration: InputDecoration(
             hintText: "Search in this day...",
             hintStyle: TextStyle(
-              color: onSurface.withOpacity(0.4),
+              color: onSurface.withValues(alpha: 0.4),
               fontSize: 14,
             ),
             prefixIcon: Icon(
@@ -340,7 +345,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                   color: isSelected
                       ? theme.colorScheme.primary
-                      : onSurface.withOpacity(0.8),
+                      : onSurface.withValues(alpha: 0.8),
                 ),
               ),
               selected: isSelected,
@@ -348,8 +353,8 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
                 setState(() => _selectedFilter = filter);
                 _applyFilters();
               },
-              backgroundColor: onSurface.withOpacity(0.06),
-              selectedColor: theme.colorScheme.primary.withOpacity(0.15),
+              backgroundColor: onSurface.withValues(alpha: 0.06),
+              selectedColor: theme.colorScheme.primary.withValues(alpha: 0.15),
               checkmarkColor: theme.colorScheme.primary,
               showCheckmark: true,
               pressElevation: 0,
@@ -357,7 +362,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
                 side: BorderSide(
                   color: isSelected
                       ? theme.colorScheme.primary
-                      : onSurface.withOpacity(0.12),
+                      : onSurface.withValues(alpha: 0.12),
                   width: 1,
                 ),
               ),
@@ -370,20 +375,10 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
 
   Widget _buildEmptyState(Color onSurface) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            CupertinoIcons.search,
-            size: 48,
-            color: onSurface.withOpacity(0.2),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            "No items found matching criteria",
-            style: TextStyle(color: onSurface.withOpacity(0.4)),
-          ),
-        ],
+      child: EmptyStateWidget(
+        message: "No items for this date",
+        subMessage: "Enjoy your free time!",
+        assetPath: "assets/images/date_empty.svg",
       ),
     );
   }
@@ -402,11 +397,12 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
           },
           onDelete: () => _deleteItem(res),
           onColorChanged: (c) {
-            res.argument.colorValue = c.value;
+            res.argument.colorValue = c.toARGB32();
             res.argument.save();
             _refreshData();
           },
           onCopy: () => Clipboard.setData(ClipboardData(text: res.subtitle)),
+          // ignore: deprecated_member_use
           onShare: () => Share.share(res.subtitle),
         );
       case 'Todo':
@@ -459,11 +455,12 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
           },
           onDelete: () => _deleteItem(res),
           onColorChanged: (c) {
-            res.argument.colorValue = c.value;
+            res.argument.colorValue = c.toARGB32();
             res.argument.save();
             _refreshData();
           },
           onCopy: () => Clipboard.setData(ClipboardData(text: res.title)),
+          // ignore: deprecated_member_use
           onShare: () => Share.share(res.title),
         );
       default:

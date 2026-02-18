@@ -1,16 +1,13 @@
 import 'dart:convert';
 
 import 'dart:math';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill/quill_delta.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:go_router/go_router.dart';
 import 'package:copyclip/src/core/const/constant.dart';
 
 import 'package:pdf/pdf.dart';
@@ -22,14 +19,14 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import '../../../../core/widgets/glass_scaffold.dart';
 import '../../../../core/widgets/glass_dialog.dart';
 import '../../../../core/widgets/glass_rich_text_editor.dart';
-import '../../../clipboard/presentation/pages/clipboard_edit_screen.dart';
 import '../../data/journal_model.dart';
 import '../../../../core/app_content_palette.dart';
 import '../../../../core/widgets/animated_top_bar_title.dart';
 import '../../../../core/utils/widget_sync_service.dart';
 import '../../../../features/premium/presentation/widgets/premium_lock_dialog.dart';
-import '../../../../features/premium/presentation/provider/premium_provider.dart';
-import 'package:provider/provider.dart';
+import '../../../../features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/core/widgets/premium_badge.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../designs/journal_page_registry.dart';
 import '../widgets/page_design_picker.dart';
@@ -53,13 +50,11 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   final ScrollController _editorScrollController = ScrollController();
 
   DateTime _selectedDate = DateTime.now();
-  late DateTime _initialDate;
+
   String _selectedMood = 'Neutral';
   bool _isFavorite = false;
 
   Color _scaffoldColor = AppContentPalette.palette.first;
-
-  String _initialContentJson = "";
 
   // Page Design
   String _selectedPageDesignId = 'ruled_wide';
@@ -252,8 +247,10 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? Theme.of(context).colorScheme.primary.withOpacity(0.2)
-                        : Colors.white.withOpacity(0.05),
+                        ? Theme.of(
+                            context,
+                          ).colorScheme.primary.withValues(alpha: 0.2)
+                        : Colors.white.withValues(alpha: 0.05),
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: isSelected
@@ -293,7 +290,8 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                   spacing: 12,
                   runSpacing: 12,
                   children: palette.map((color) {
-                    final isSelected = _scaffoldColor.value == color.value;
+                    final isSelected =
+                        _scaffoldColor.toARGB32() == color.toARGB32();
                     return GestureDetector(
                       onTap: () {
                         setState(() => _scaffoldColor = color);
@@ -375,18 +373,21 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       final attributes = op.attributes ?? {};
 
       pw.TextStyle style = const pw.TextStyle(fontSize: 16);
-      if (attributes['bold'] == true)
+      if (attributes['bold'] == true) {
         style = style.copyWith(fontWeight: pw.FontWeight.bold);
-      if (attributes['italic'] == true)
+      }
+      if (attributes['italic'] == true) {
         style = style.copyWith(fontStyle: pw.FontStyle.italic);
-      if (attributes['underline'] == true)
+      }
+      if (attributes['underline'] == true) {
         style = style.copyWith(decoration: pw.TextDecoration.underline);
+      }
 
       if (attributes['header'] != null) {
         final int level = attributes['header'] as int;
-        if (level == 1)
+        if (level == 1) {
           style = style.copyWith(fontSize: 28, fontWeight: pw.FontWeight.bold);
-        else if (level == 2)
+        } else if (level == 2)
           style = style.copyWith(fontSize: 24, fontWeight: pw.FontWeight.bold);
         else if (level == 3)
           style = style.copyWith(fontSize: 20, fontWeight: pw.FontWeight.bold);
@@ -529,7 +530,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       _resolvedEntry!.mood = _selectedMood;
       _resolvedEntry!.tags = tags;
       _resolvedEntry!.isFavorite = _isFavorite;
-      _resolvedEntry!.colorValue = _scaffoldColor.value;
+      _resolvedEntry!.colorValue = _scaffoldColor.toARGB32();
       _resolvedEntry!.pageDesignId = _selectedPageDesignId;
 
       if (_resolvedEntry!.isInBox) {
@@ -579,7 +580,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
         mood: _selectedMood,
         tags: tags,
         isFavorite: _isFavorite,
-        colorValue: _scaffoldColor.value,
+        colorValue: _scaffoldColor.toARGB32(),
         sortIndex: newSortIndex,
         pageDesignId: _selectedPageDesignId,
         designId: 'classic_ruled', // Default card design
@@ -621,11 +622,13 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       );
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        // Auto-save on back
-        _saveEntry();
-        return true;
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          // Auto-save on back
+          _saveEntry();
+        }
       },
       child: GlassScaffold(
         showBackArrow: true,
@@ -686,11 +689,8 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                   _showColorPicker();
                   break;
                 case 'pdf':
-                  final provider = Provider.of<PremiumProvider>(
-                    context,
-                    listen: false,
-                  );
-                  if (provider.isPremium) {
+                  final isPremium = context.read<PremiumBloc>().state.isPremium;
+                  if (isPremium) {
                     _exportToPdf();
                   } else {
                     PremiumLockDialog.show(
@@ -724,95 +724,91 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                   break;
               }
             },
-            itemBuilder: (ctx) => [
-              const PopupMenuItem(
-                value: 'design',
-                child: Row(
-                  children: [
-                    Icon(CupertinoIcons.layers, size: 18),
-                    SizedBox(width: 12),
-                    Text("Page Style"),
-                  ],
-                ),
-              ),
-              const PopupMenuItem(
-                value: 'mood',
-                child: Row(
-                  children: [
-                    Icon(CupertinoIcons.smiley, size: 18),
-                    SizedBox(width: 12),
-                    Text("Update Mood"),
-                  ],
-                ),
-              ),
-              const PopupMenuItem(
-                value: 'date',
-                child: Row(
-                  children: [
-                    Icon(CupertinoIcons.calendar, size: 18),
-                    SizedBox(width: 12),
-                    Text("Change Date"),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 'favorite',
-                child: Row(
-                  children: [
-                    Icon(
-                      _isFavorite
-                          ? CupertinoIcons.star_fill
-                          : CupertinoIcons.star,
-                      size: 18,
-                      color: _isFavorite ? Colors.amber : null,
-                    ),
-                    const SizedBox(width: 12),
-                    Text(_isFavorite ? "Unfavorite" : "Favorite"),
-                  ],
-                ),
-              ),
-              const PopupMenuItem(
-                value: 'color',
-                child: Row(
-                  children: [
-                    Icon(CupertinoIcons.paintbrush, size: 18),
-                    SizedBox(width: 12),
-                    Text("Page Color"),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 'pdf',
-                child: Row(
-                  children: [
-                    const Icon(CupertinoIcons.share, size: 18),
-                    const SizedBox(width: 12),
-                    const Text("Export as PDF"),
-                    if (!Provider.of<PremiumProvider>(
-                      context,
-                      listen: false,
-                    ).isPremium) ...[
-                      const Spacer(),
-                      const Icon(
-                        CupertinoIcons.lock_fill,
-                        size: 14,
-                        color: Colors.amber,
-                      ),
+            itemBuilder: (ctx) {
+              final isPremium = context.read<PremiumBloc>().state.isPremium;
+              return [
+                const PopupMenuItem(
+                  value: 'design',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.layers, size: 18),
+                      SizedBox(width: 12),
+                      Text("Page Style"),
                     ],
-                  ],
+                  ),
                 ),
-              ),
-              const PopupMenuItem(
-                value: 'delete',
-                child: Row(
-                  children: [
-                    Icon(CupertinoIcons.trash, size: 18, color: Colors.red),
-                    SizedBox(width: 12),
-                    Text("Delete", style: TextStyle(color: Colors.red)),
-                  ],
+                const PopupMenuItem(
+                  value: 'mood',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.smiley, size: 18),
+                      SizedBox(width: 12),
+                      Text("Update Mood"),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                const PopupMenuItem(
+                  value: 'date',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.calendar, size: 18),
+                      SizedBox(width: 12),
+                      Text("Change Date"),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 'favorite',
+                  child: Row(
+                    children: [
+                      Icon(
+                        _isFavorite
+                            ? CupertinoIcons.star_fill
+                            : CupertinoIcons.star,
+                        size: 18,
+                        color: _isFavorite ? Colors.amber : null,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(_isFavorite ? "Unfavorite" : "Favorite"),
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'color',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.paintbrush, size: 18),
+                      SizedBox(width: 12),
+                      Text("Page Color"),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 'pdf',
+                  child: Row(
+                    children: [
+                      const Icon(CupertinoIcons.share, size: 18),
+                      const SizedBox(width: 12),
+                      const Text("Export as PDF"),
+                      if (!isPremium) ...[
+                        const Spacer(),
+                        const PremiumFeatureIcon(),
+                      ],
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'delete',
+                  child: Row(
+                    children: [
+                      Icon(CupertinoIcons.trash, size: 18, color: Colors.red),
+                      SizedBox(width: 12),
+                      Text("Delete", style: TextStyle(color: Colors.red)),
+                    ],
+                  ),
+                ),
+              ];
+            },
           ),
         ],
 
@@ -826,7 +822,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                   // BACKGROUND LAYER - Stays Full Screen
                   // Because Scaffold is resizeToAvoidBottomInset: false
                   Positioned.fill(
-                    child: Container(
+                    child: SizedBox(
                       width: double.infinity,
                       height: double.infinity,
                       // Apply the selected page design painter
@@ -865,7 +861,9 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                                         vertical: 8,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: contrastColor.withOpacity(0.08),
+                                        color: contrastColor.withValues(
+                                          alpha: 0.08,
+                                        ),
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: Row(
@@ -874,8 +872,8 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                                           Icon(
                                             Icons.calendar_month,
                                             size: 14,
-                                            color: contrastColor.withOpacity(
-                                              0.7,
+                                            color: contrastColor.withValues(
+                                              alpha: 0.7,
                                             ),
                                           ),
                                           const SizedBox(width: 8),
@@ -902,10 +900,14 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                                   child: Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: contrastColor.withOpacity(0.08),
+                                      color: contrastColor.withValues(
+                                        alpha: 0.08,
+                                      ),
                                       shape: BoxShape.circle,
                                       border: Border.all(
-                                        color: contrastColor.withOpacity(0.1),
+                                        color: contrastColor.withValues(
+                                          alpha: 0.1,
+                                        ),
                                       ),
                                     ),
                                     child: Text(
@@ -931,7 +933,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                                 hintText: 'Entry Title',
                                 border: InputBorder.none,
                                 hintStyle: TextStyle(
-                                  color: contrastColor.withOpacity(0.25),
+                                  color: contrastColor.withValues(alpha: 0.25),
                                 ),
                               ),
                             ),
@@ -950,13 +952,13 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                                 border: InputBorder.none,
                                 isDense: true,
                                 hintStyle: TextStyle(
-                                  color: contrastColor.withOpacity(0.15),
+                                  color: contrastColor.withValues(alpha: 0.15),
                                 ),
                                 prefixIcon: Icon(
                                   Icons.local_offer_outlined,
                                   size: 14,
-                                  color: theme.colorScheme.primary.withOpacity(
-                                    0.6,
+                                  color: theme.colorScheme.primary.withValues(
+                                    alpha: 0.6,
                                   ),
                                 ),
                                 prefixIconConstraints: const BoxConstraints(
@@ -1018,21 +1020,21 @@ class JournalPaperPainter extends CustomPainter {
       ..shader = RadialGradient(
         center: Alignment.center,
         radius: 1.1,
-        colors: [Colors.transparent, Colors.brown.withOpacity(0.18)],
+        colors: [Colors.transparent, Colors.brown.withValues(alpha: 0.18)],
       ).createShader(Offset.zero & size);
 
     canvas.drawRect(Offset.zero & size, vignettePaint);
 
     final linePaint = Paint()
-      ..color = lineColor.withOpacity(0.25)
+      ..color = lineColor.withValues(alpha: 0.25)
       ..strokeWidth = 1.0;
 
     final marginPaint = Paint()
-      ..color = marginColor.withOpacity(0.35)
+      ..color = marginColor.withValues(alpha: 0.35)
       ..strokeWidth = 1.4;
 
     final holePaint = Paint()
-      ..color = Colors.black.withOpacity(0.08)
+      ..color = Colors.black.withValues(alpha: 0.08)
       ..style = PaintingStyle.fill;
 
     final rnd = Random(4);
@@ -1053,7 +1055,7 @@ class JournalPaperPainter extends CustomPainter {
     );
 
     final stainPaint = Paint()
-      ..color = Colors.brown.withOpacity(0.06)
+      ..color = Colors.brown.withValues(alpha: 0.06)
       ..style = PaintingStyle.fill;
 
     for (int i = 0; i < 6; i++) {
@@ -1076,7 +1078,7 @@ class JournalPaperPainter extends CustomPainter {
         canvas.drawCircle(
           Offset(holeX - 1, y - 1),
           10.5,
-          Paint()..color = Colors.white.withOpacity(0.25),
+          Paint()..color = Colors.white.withValues(alpha: 0.25),
         );
       }
     }

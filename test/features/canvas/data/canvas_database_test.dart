@@ -17,10 +17,12 @@ void main() {
 
   setUp(() async {
     // Reset singleton if possible, or just re-init
-    if (Hive.isBoxOpen('canvas_notes'))
+    if (Hive.isBoxOpen('canvas_notes')) {
       await Hive.box<CanvasNote>('canvas_notes').close();
-    if (Hive.isBoxOpen('canvas_folders'))
+    }
+    if (Hive.isBoxOpen('canvas_folders')) {
       await Hive.box<CanvasFolder>('canvas_folders').close();
+    }
 
     // Clear any existing boxes from disk
     await Hive.deleteBoxFromDisk('canvas_notes');

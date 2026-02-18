@@ -1,15 +1,12 @@
 import 'dart:convert';
 
-import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill/quill_delta.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -27,8 +24,9 @@ import '../../../../core/app_content_palette.dart';
 import '../../../../core/widgets/animated_top_bar_title.dart';
 import '../../../../core/utils/widget_sync_service.dart';
 import '../../../../features/premium/presentation/widgets/premium_lock_dialog.dart';
-import '../../../../features/premium/presentation/provider/premium_provider.dart';
-import 'package:provider/provider.dart';
+import '../../../../features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/core/widgets/premium_badge.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ClipboardEditScreen extends StatefulWidget {
   final ClipboardItem? item;
@@ -211,7 +209,8 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                   spacing: 12,
                   runSpacing: 12,
                   children: palette.map((color) {
-                    final isSelected = _scaffoldColor.value == color.value;
+                    final isSelected =
+                        _scaffoldColor.toARGB32() == color.toARGB32();
                     return GestureDetector(
                       onTap: () {
                         setState(() => _scaffoldColor = color);
@@ -226,7 +225,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                           border: Border.all(
                             color: isSelected
                                 ? Colors.white
-                                : Colors.white.withOpacity(0.3),
+                                : Colors.white.withValues(alpha: 0.3),
                             width: isSelected ? 3 : 1.5,
                           ),
                         ),
@@ -292,7 +291,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
       createdAt: _selectedDate,
       type: 'rich_text',
       sortIndex: newSortIndex,
-      colorValue: _scaffoldColor.value,
+      colorValue: _scaffoldColor.toARGB32(),
     );
 
     // Robust Save Logic
@@ -322,12 +321,15 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
       final attributes = op.attributes ?? {};
 
       pw.TextStyle style = const pw.TextStyle(fontSize: 16);
-      if (attributes['bold'] == true)
+      if (attributes['bold'] == true) {
         style = style.copyWith(fontWeight: pw.FontWeight.bold);
-      if (attributes['italic'] == true)
+      }
+      if (attributes['italic'] == true) {
         style = style.copyWith(fontStyle: pw.FontStyle.italic);
-      if (attributes['underline'] == true)
+      }
+      if (attributes['underline'] == true) {
         style = style.copyWith(decoration: pw.TextDecoration.underline);
+      }
       if (attributes['color'] != null) {
         style = style.copyWith(
           color: PdfColor.fromInt(
@@ -431,11 +433,13 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
       );
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        // Auto-save on back
-        _save();
-        return true;
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          // Auto-save on back
+          _save();
+        }
       },
       child: GlassScaffold(
         showBackArrow: true,
@@ -496,11 +500,8 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                   _showColorPicker();
                   break;
                 case 'pdf':
-                  final provider = Provider.of<PremiumProvider>(
-                    context,
-                    listen: false,
-                  );
-                  if (provider.isPremium) {
+                  final isPremium = context.read<PremiumBloc>().state.isPremium;
+                  if (isPremium) {
                     _exportToPdf();
                   } else {
                     PremiumLockDialog.show(
@@ -535,10 +536,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
               }
             },
             itemBuilder: (ctx) {
-              final isPremium = Provider.of<PremiumProvider>(
-                context,
-                listen: false,
-              ).isPremium;
+              final isPremium = context.read<PremiumBloc>().state.isPremium;
               return [
                 const PopupMenuItem(
                   value: 'copy',
@@ -569,11 +567,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                       const Text("Export as PDF"),
                       if (!isPremium) ...[
                         const Spacer(),
-                        const Icon(
-                          CupertinoIcons.lock_fill,
-                          size: 14,
-                          color: Colors.amber,
-                        ),
+                        const PremiumFeatureIcon(),
                       ],
                     ],
                   ),
@@ -603,7 +597,7 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                   Positioned.fill(
                     child: CustomPaint(
                       painter: CanvasGridPainter(
-                        color: contrastColor.withOpacity(0.08),
+                        color: contrastColor.withValues(alpha: 0.08),
                       ),
                     ),
                   ),
@@ -630,7 +624,9 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                                     vertical: 6,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: contrastColor.withOpacity(0.08),
+                                    color: contrastColor.withValues(
+                                      alpha: 0.08,
+                                    ),
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: Row(
@@ -639,7 +635,9 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
                                       Icon(
                                         Icons.access_time,
                                         size: 14,
-                                        color: contrastColor.withOpacity(0.7),
+                                        color: contrastColor.withValues(
+                                          alpha: 0.7,
+                                        ),
                                       ),
                                       const SizedBox(width: 8),
                                       Text(

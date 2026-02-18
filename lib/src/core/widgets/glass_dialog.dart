@@ -27,10 +27,10 @@ class GlassDialog extends StatelessWidget {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
     final baseGlassColor = Color.alphaBlend(
-      primaryColor.withOpacity(0.15),
-      Colors.black.withOpacity(0.6),
+      primaryColor.withValues(alpha: 0.15),
+      Colors.black.withValues(alpha: 0.6),
     );
-    final borderColor = primaryColor.withOpacity(0.3);
+    final borderColor = primaryColor.withValues(alpha: 0.3);
     final textColor = Colors.white;
 
     return Dialog(
@@ -55,7 +55,7 @@ class GlassDialog extends StatelessWidget {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: primaryColor.withOpacity(0.1),
+                      color: primaryColor.withValues(alpha: 0.1),
                       blurRadius: 20,
                       spreadRadius: -5,
                     ),
@@ -74,7 +74,7 @@ class GlassDialog extends StatelessWidget {
                         color: textColor,
                         shadows: [
                           Shadow(
-                            color: Colors.black.withOpacity(0.5),
+                            color: Colors.black.withValues(alpha: 0.5),
                             blurRadius: 10,
                             offset: const Offset(0, 2),
                           ),
@@ -89,7 +89,7 @@ class GlassDialog extends StatelessWidget {
                         content,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontSize: 16,
-                          color: textColor.withOpacity(0.85),
+                          color: textColor.withValues(alpha: 0.85),
                           height: 1.5,
                         ),
                       )
@@ -105,7 +105,7 @@ class GlassDialog extends StatelessWidget {
                           child: Text(
                             cancelText,
                             style: TextStyle(
-                              color: textColor.withOpacity(0.6),
+                              color: textColor.withValues(alpha: 0.6),
                               fontSize: 16,
                             ),
                           ),
@@ -139,8 +139,8 @@ class GlassDialog extends StatelessWidget {
                       end: Alignment.bottomRight,
                       stops: const [0.0, 0.4, 1.0],
                       colors: [
-                        Colors.white.withOpacity(0.15),
-                        Colors.white.withOpacity(0.0),
+                        Colors.white.withValues(alpha: 0.15),
+                        Colors.white.withValues(alpha: 0.0),
                         Colors.transparent,
                       ],
                     ),
@@ -157,16 +157,16 @@ class GlassDialog extends StatelessWidget {
                     AppConstants.cornerRadius,
                   ),
                   border: Border.all(
-                    color: primaryColor.withOpacity(0.2),
+                    color: primaryColor.withValues(alpha: 0.2),
                     width: AppConstants.borderWidth + 0.3,
                   ),
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      primaryColor.withOpacity(0.4),
+                      primaryColor.withValues(alpha: 0.4),
                       Colors.transparent,
-                      Colors.black.withOpacity(0.2),
+                      Colors.black.withValues(alpha: 0.2),
                     ],
                   ),
                 ),
@@ -200,16 +200,16 @@ class _GlassButton extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [color.withOpacity(0.4), color.withOpacity(0.2)],
+            colors: [color.withValues(alpha: 0.4), color.withValues(alpha: 0.2)],
           ),
           borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 0.5),
           border: Border.all(
-            color: color.withOpacity(0.6),
+            color: color.withValues(alpha: 0.6),
             width: AppConstants.borderWidth,
           ),
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.2),
+              color: color.withValues(alpha: 0.2),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),
@@ -222,7 +222,7 @@ class _GlassButton extends StatelessWidget {
             fontWeight: FontWeight.bold,
             shadows: [
               Shadow(
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withValues(alpha: 0.5),
                 blurRadius: 2,
                 offset: const Offset(0, 1),
               ),

@@ -5,6 +5,7 @@ import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'package:copyclip/src/features/expenses/data/expense_model.dart';
 import 'package:copyclip/src/features/journal/data/journal_model.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
+import 'package:copyclip/src/features/social_post/data/social_post_model.dart'; // Added
 import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
 
 /// \u2705 PERFORMANCE OPTIMIZATION: Lazy Box Loader
@@ -69,7 +70,7 @@ class LazyBoxLoader {
     }
   }
 
-  /// Load all remaining boxes  
+  /// Load all remaining boxes
   static Future<void> loadAllBoxes() async {
     debugPrint('\u{1F4E6} Loading all feature boxes...');
     try {
@@ -79,6 +80,7 @@ class LazyBoxLoader {
         getBox<Expense>('expenses_box'),
         getBox<JournalEntry>('journal_box'),
         getBox<ClipboardItem>('clipboard_box'),
+        getBox<SocialPost>('social_posts_box'), // Added
         CanvasDatabase().init(),
       ]);
       debugPrint('\u2705 All boxes loaded');

@@ -75,7 +75,7 @@ class SeamlessHeader extends StatelessWidget {
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: (iconColor ?? theme.colorScheme.primary)
-                          .withOpacity(0.12),
+                          .withValues(alpha: 0.12),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -119,7 +119,7 @@ class SeamlessHeader extends StatelessWidget {
                           Text(
                             subtitle!,
                             style: theme.textTheme.bodySmall?.copyWith(
-                              color: onSurface.withOpacity(0.5),
+                              color: onSurface.withValues(alpha: 0.5),
                               fontWeight: FontWeight.w500,
                               fontSize: AppConstants.headerSubtitleSize,
                             ),
@@ -141,7 +141,7 @@ class SeamlessHeader extends StatelessWidget {
           Divider(
             height: 1,
             thickness: 1,
-            color: theme.dividerColor.withOpacity(0.1),
+            color: theme.dividerColor.withValues(alpha: 0.1),
           ),
       ],
     );

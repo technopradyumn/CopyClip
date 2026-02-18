@@ -1,8 +1,10 @@
 import 'dart:io';
-import 'dart:ui'; // Required for View.of(context)
+// Required for View.of(context)
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:provider/provider.dart';
+import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart';
 
 class BannerAdWidget extends StatefulWidget {
   final bool hideOnKeyboard;
@@ -20,10 +22,8 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   // ✅ TEST ID FALLBACK (Standard Google Test Banner ID)
   // This ensures ads show up even if .env is missing or invalid
   String get _adUnitId {
-
     if (Platform.isAndroid) {
-      return dotenv.env['ANDROID_BANNER_AD_UNIT_ID'] ??
-          ''; // Test ID
+      return dotenv.env['ANDROID_BANNER_AD_UNIT_ID'] ?? ''; // Test ID
     }
     // else if (Platform.isIOS) {
     //   return dotenv.env['IOS_BANNER_AD_UNIT_ID'] ??
@@ -75,14 +75,13 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // Check Premium Status using Provider
+    final isPremium = context.watch<PremiumProvider>().isPremium;
+    if (isPremium) return const SizedBox.shrink();
+
     // 1. Check if Keyboard is visible
     if (widget.hideOnKeyboard) {
-      // ✅ FIX: Use View.of(context).viewInsets.bottom
-      // This checks the physical screen insets (raw window), bypassing the
-      // Scaffold's resizing logic. It will detect the keyboard even if
-      // resizeToAvoidBottomInset is true.
       final bottomInset = View.of(context).viewInsets.bottom;
-
       if (bottomInset > 0) return const SizedBox.shrink();
     }
 
@@ -98,7 +97,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
         color: Colors.transparent,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: const Offset(0, -2),
           ),

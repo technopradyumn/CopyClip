@@ -1,0 +1,16 @@
+enum BackgroundDesign {
+  classicBubbles,
+  floatingStars,
+  meshGradient,
+  nebulaCloud,
+  particleFlow,
+  geometricFloat,
+  snowfall,
+  matrixRain,
+  waveMotion,
+  bokehBlur,
+  aurora,
+  magicalSpells,
+  deepForest,
+  none,
+}

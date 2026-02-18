@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -18,7 +17,6 @@ import '../../features/clipboard/data/clipboard_model.dart';
 import '../../features/canvas/data/canvas_model.dart';
 
 class BackupService {
-
   // ==============================================================================
   // SECTION 1: CANVAS SERIALIZATION HELPERS (Complex Object Mapping)
   // ==============================================================================
@@ -28,7 +26,7 @@ class BackupService {
       'id': folder.id,
       'name': folder.name,
       'parentFolderId': folder.parentFolderId,
-      'color': folder.color.value,
+      'color': folder.color.toARGB32(),
       'createdAt': folder.createdAt.toIso8601String(),
       'lastModified': folder.lastModified.toIso8601String(),
       'isDeleted': folder.isDeleted,
@@ -46,7 +44,9 @@ class BackupService {
       createdAt: DateTime.parse(map['createdAt']),
       lastModified: DateTime.parse(map['lastModified']),
       isDeleted: map['isDeleted'] ?? false,
-      deletedAt: map['deletedAt'] != null ? DateTime.parse(map['deletedAt']) : null,
+      deletedAt: map['deletedAt'] != null
+          ? DateTime.parse(map['deletedAt'])
+          : null,
       sortIndex: map['sortIndex'] ?? 0,
     );
   }
@@ -63,33 +63,45 @@ class BackupService {
       'isDeleted': note.isDeleted,
       'deletedAt': note.deletedAt?.toIso8601String(),
       'thumbnailPath': note.thumbnailPath,
-      'backgroundColor': note.backgroundColor.value,
+      'backgroundColor': note.backgroundColor.toARGB32(),
       'horizontalScroll': note.horizontalScroll,
       // Nested Page Serialization
-      'pages': note.pages.map((p) => {
-        // Serialize Strokes
-        'strokes': p.strokes.map((s) => {
-          'points': s.points,
-          'color': s.color,
-          'strokeWidth': s.strokeWidth,
-          'createdAt': s.createdAt.toIso8601String(),
-          'penType': s.penType,
-        }).toList(),
-        // Serialize Text Elements
-        'textElements': p.textElements.map((t) => {
-          'id': t.id,
-          'text': t.text,
-          'dx': t.position.dx, // Deconstruct Offset
-          'dy': t.position.dy, // Deconstruct Offset
-          'color': t.color,
-          'fontSize': t.fontSize,
-          'containerWidth': t.containerWidth,
-          'containerHeight': t.containerHeight,
-          'bold': t.bold,
-          'italic': t.italic,
-          'underline': t.underline,
-        }).toList(),
-      }).toList(),
+      'pages': note.pages
+          .map(
+            (p) => {
+              // Serialize Strokes
+              'strokes': p.strokes
+                  .map(
+                    (s) => {
+                      'points': s.points,
+                      'color': s.color,
+                      'strokeWidth': s.strokeWidth,
+                      'createdAt': s.createdAt.toIso8601String(),
+                      'penType': s.penType,
+                    },
+                  )
+                  .toList(),
+              // Serialize Text Elements
+              'textElements': p.textElements
+                  .map(
+                    (t) => {
+                      'id': t.id,
+                      'text': t.text,
+                      'dx': t.position.dx, // Deconstruct Offset
+                      'dy': t.position.dy, // Deconstruct Offset
+                      'color': t.color,
+                      'fontSize': t.fontSize,
+                      'containerWidth': t.containerWidth,
+                      'containerHeight': t.containerHeight,
+                      'bold': t.bold,
+                      'italic': t.italic,
+                      'underline': t.underline,
+                    },
+                  )
+                  .toList(),
+            },
+          )
+          .toList(),
     };
   }
 
@@ -111,7 +123,10 @@ class BackupService {
         return CanvasText(
           id: tMap['id'],
           text: tMap['text'],
-          position: Offset((tMap['dx'] as num).toDouble(), (tMap['dy'] as num).toDouble()), // Reconstruct Offset
+          position: Offset(
+            (tMap['dx'] as num).toDouble(),
+            (tMap['dy'] as num).toDouble(),
+          ), // Reconstruct Offset
           color: tMap['color'],
           fontSize: (tMap['fontSize'] as num).toDouble(),
           containerWidth: (tMap['containerWidth'] as num).toDouble(),
@@ -135,7 +150,9 @@ class BackupService {
       lastModified: DateTime.parse(map['lastModified']),
       isFavorite: map['isFavorite'] ?? false,
       isDeleted: map['isDeleted'] ?? false,
-      deletedAt: map['deletedAt'] != null ? DateTime.parse(map['deletedAt']) : null,
+      deletedAt: map['deletedAt'] != null
+          ? DateTime.parse(map['deletedAt'])
+          : null,
       thumbnailPath: map['thumbnailPath'],
       backgroundColor: Color(map['backgroundColor']),
       horizontalScroll: map['horizontalScroll'] ?? false,
@@ -158,7 +175,9 @@ class BackupService {
             final String path = insert['image'].toString();
 
             // Skip if already base64 or a network URL
-            if (path.startsWith('http') || path.startsWith('data:image')) continue;
+            if (path.startsWith('http') || path.startsWith('data:image')) {
+              continue;
+            }
 
             final file = File(path);
             if (await file.exists()) {
@@ -196,7 +215,8 @@ class BackupService {
               final base64Data = imageVal.split(',').last;
               final bytes = base64Decode(base64Data);
 
-              final fileName = 'img_${DateTime.now().microsecondsSinceEpoch}.png';
+              final fileName =
+                  'img_${DateTime.now().microsecondsSinceEpoch}.png';
               final file = File('${imagesDir.path}/$fileName');
               await file.writeAsBytes(bytes);
 
@@ -242,23 +262,39 @@ class BackupService {
 
       // 3. Process Canvas (Complex serialization)
       // Ensure boxes are open
-      if (!Hive.isBoxOpen('canvas_notes')) await Hive.openBox<CanvasNote>('canvas_notes');
-      if (!Hive.isBoxOpen('canvas_folders')) await Hive.openBox<CanvasFolder>('canvas_folders');
+      if (!Hive.isBoxOpen('canvas_notes')) {
+        await Hive.openBox<CanvasNote>('canvas_notes');
+      }
+      if (!Hive.isBoxOpen('canvas_folders')) {
+        await Hive.openBox<CanvasFolder>('canvas_folders');
+      }
 
-      final canvasNotesList = Hive.box<CanvasNote>('canvas_notes')
-          .values.map((n) => _canvasNoteToMap(n)).toList();
+      final canvasNotesList = Hive.box<CanvasNote>(
+        'canvas_notes',
+      ).values.map((n) => _canvasNoteToMap(n)).toList();
 
-      final canvasFoldersList = Hive.box<CanvasFolder>('canvas_folders')
-          .values.map((f) => _canvasFolderToMap(f)).toList();
+      final canvasFoldersList = Hive.box<CanvasFolder>(
+        'canvas_folders',
+      ).values.map((f) => _canvasFolderToMap(f)).toList();
 
       // 4. Assemble Final JSON Data
       final Map<String, dynamic> backupData = {
         'version': 1.4,
         'timestamp': DateTime.now().toIso8601String(),
         // Simple Hive Boxes
-        'todos': Hive.isBoxOpen('todos_box') ? Hive.box<Todo>('todos_box').values.map((e) => e.toJson()).toList() : [],
-        'expenses': Hive.isBoxOpen('expenses_box') ? Hive.box<Expense>('expenses_box').values.map((e) => e.toJson()).toList() : [],
-        'clipboard': Hive.isBoxOpen('clipboard_box') ? Hive.box<ClipboardItem>('clipboard_box').values.map((e) => e.toJson()).toList() : [],
+        'todos': Hive.isBoxOpen('todos_box')
+            ? Hive.box<Todo>('todos_box').values.map((e) => e.toJson()).toList()
+            : [],
+        'expenses': Hive.isBoxOpen('expenses_box')
+            ? Hive.box<Expense>(
+                'expenses_box',
+              ).values.map((e) => e.toJson()).toList()
+            : [],
+        'clipboard': Hive.isBoxOpen('clipboard_box')
+            ? Hive.box<ClipboardItem>(
+                'clipboard_box',
+              ).values.map((e) => e.toJson()).toList()
+            : [],
         // Processed Lists
         'notes': notesList,
         'journal': journalList,
@@ -277,12 +313,16 @@ class BackupService {
 
       // 6. Share File
       if (await file.exists()) {
-        await Share.shareXFiles([XFile(file.path)], text: 'CopyClip Full Backup (v1.4)');
+        await Share.shareXFiles([
+          XFile(file.path),
+        ], text: 'CopyClip Full Backup (v1.4)');
       }
     } catch (e) {
       debugPrint("Global Backup Error: $e");
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Backup Failed: $e")));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Backup Failed: $e")));
       }
       rethrow;
     }
@@ -312,7 +352,9 @@ class BackupService {
         if (!Hive.isBoxOpen('notes_box')) await Hive.openBox<Note>('notes_box');
         final box = Hive.box<Note>('notes_box');
         for (var itemMap in data['notes']) {
-          itemMap['content'] = await _processContentForImport(itemMap['content']);
+          itemMap['content'] = await _processContentForImport(
+            itemMap['content'],
+          );
           final note = Note.fromJson(itemMap);
           if (!box.containsKey(note.id)) {
             await box.put(note.id, note);
@@ -323,10 +365,14 @@ class BackupService {
 
       // 3. Restore Journal (with Image Processing)
       if (data.containsKey('journal')) {
-        if (!Hive.isBoxOpen('journal_box')) await Hive.openBox<JournalEntry>('journal_box');
+        if (!Hive.isBoxOpen('journal_box')) {
+          await Hive.openBox<JournalEntry>('journal_box');
+        }
         final box = Hive.box<JournalEntry>('journal_box');
         for (var itemMap in data['journal']) {
-          itemMap['content'] = await _processContentForImport(itemMap['content']);
+          itemMap['content'] = await _processContentForImport(
+            itemMap['content'],
+          );
           final entry = JournalEntry.fromJson(itemMap);
           if (!box.containsKey(entry.id)) {
             await box.put(entry.id, entry);
@@ -341,31 +387,46 @@ class BackupService {
         final box = Hive.box<Todo>('todos_box');
         for (var itemMap in data['todos']) {
           final obj = Todo.fromJson(itemMap);
-          if (!box.containsKey(obj.id)) { await box.put(obj.id, obj); addedCount++; }
+          if (!box.containsKey(obj.id)) {
+            await box.put(obj.id, obj);
+            addedCount++;
+          }
         }
       }
 
       if (data.containsKey('expenses')) {
-        if (!Hive.isBoxOpen('expenses_box')) await Hive.openBox<Expense>('expenses_box');
+        if (!Hive.isBoxOpen('expenses_box')) {
+          await Hive.openBox<Expense>('expenses_box');
+        }
         final box = Hive.box<Expense>('expenses_box');
         for (var itemMap in data['expenses']) {
           final obj = Expense.fromJson(itemMap);
-          if (!box.containsKey(obj.id)) { await box.put(obj.id, obj); addedCount++; }
+          if (!box.containsKey(obj.id)) {
+            await box.put(obj.id, obj);
+            addedCount++;
+          }
         }
       }
 
       if (data.containsKey('clipboard')) {
-        if (!Hive.isBoxOpen('clipboard_box')) await Hive.openBox<ClipboardItem>('clipboard_box');
+        if (!Hive.isBoxOpen('clipboard_box')) {
+          await Hive.openBox<ClipboardItem>('clipboard_box');
+        }
         final box = Hive.box<ClipboardItem>('clipboard_box');
         for (var itemMap in data['clipboard']) {
           final obj = ClipboardItem.fromJson(itemMap);
-          if (!box.containsKey(obj.id)) { await box.put(obj.id, obj); addedCount++; }
+          if (!box.containsKey(obj.id)) {
+            await box.put(obj.id, obj);
+            addedCount++;
+          }
         }
       }
 
       // 5. Restore Canvas Folders
       if (data.containsKey('canvas_folders')) {
-        if (!Hive.isBoxOpen('canvas_folders')) await Hive.openBox<CanvasFolder>('canvas_folders');
+        if (!Hive.isBoxOpen('canvas_folders')) {
+          await Hive.openBox<CanvasFolder>('canvas_folders');
+        }
         final box = Hive.box<CanvasFolder>('canvas_folders');
         for (var itemMap in data['canvas_folders']) {
           final folder = _mapToCanvasFolder(itemMap);
@@ -378,7 +439,9 @@ class BackupService {
 
       // 6. Restore Canvas Notes
       if (data.containsKey('canvas_notes')) {
-        if (!Hive.isBoxOpen('canvas_notes')) await Hive.openBox<CanvasNote>('canvas_notes');
+        if (!Hive.isBoxOpen('canvas_notes')) {
+          await Hive.openBox<CanvasNote>('canvas_notes');
+        }
         final box = Hive.box<CanvasNote>('canvas_notes');
         for (var itemMap in data['canvas_notes']) {
           final note = _mapToCanvasNote(itemMap);
@@ -393,7 +456,9 @@ class BackupService {
     } catch (e) {
       debugPrint("Global Restore Error: $e");
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Restore Failed: $e")));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Restore Failed: $e")));
       }
       rethrow;
     }

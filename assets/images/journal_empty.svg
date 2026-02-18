@@ -1,0 +1,24 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Body -->
+  <path d="M100 180C100 180 60 160 40 100C20 40 60 20 80 20C100 20 140 40 160 100C180 160 140 180 100 180Z" fill="#FFE135"/>
+  
+  <!-- Stem -->
+  <path d="M75 25L85 10L115 10L125 25" fill="#8B4513"/>
+  
+  <!-- Face (Calm/Writing) -->
+  <path d="M70 90Q75 95 80 90" stroke="black" stroke-width="2" stroke-linecap="round"/>
+  <path d="M120 90Q125 95 130 90" stroke="black" stroke-width="2" stroke-linecap="round"/>
+  <path d="M95 110Q100 115 105 110" stroke="black" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Diary Book -->
+  <rect x="60" y="110" width="80" height="70" rx="4" fill="#FF6B6B" stroke="#C44D56" stroke-width="2"/>
+  <rect x="95" y="140" width="10" height="15" fill="#FFD93D"/> <!-- Lock -->
+  <path d="M65 110L65 180" stroke="#C44D56" stroke-width="2"/> <!-- Spine -->
+
+  <!-- Hands holding book -->
+  <circle cx="55" cy="140" r="8" fill="#FFE135"/>
+  <circle cx="145" cy="140" r="8" fill="#FFE135"/>
+  
+  <!-- Shadow -->
+  <ellipse cx="100" cy="190" rx="60" ry="10" fill="black" fill-opacity="0.1"/>
+</svg>

@@ -32,14 +32,15 @@ class ClipboardCard extends StatelessWidget {
   Map<String, dynamic> _parseContent(String jsonSource) {
     if (jsonSource.isEmpty) return {"text": "No content", "imageUrl": null};
     try {
-      if (!jsonSource.startsWith('['))
-        return {"text": jsonSource, "imageUrl": null};
+      if (!jsonSource.startsWith('[')) {
+        return {"text": jsonSource.trim(), "imageUrl": null};
+      }
       final List<dynamic> delta = jsonDecode(jsonSource);
       String plainText = "";
       String? firstImageUrl;
 
       for (var op in delta) {
-        if (op.containsKey('insert')) {
+        if (op is Map && op.containsKey('insert')) {
           final insertData = op['insert'];
           if (insertData is String) {
             plainText += insertData;
@@ -50,9 +51,17 @@ class ClipboardCard extends StatelessWidget {
           }
         }
       }
-      return {"text": plainText.trim(), "imageUrl": firstImageUrl};
+      final String trimmed = plainText.trim();
+      return {
+        "text": trimmed.isEmpty ? "Empty content" : trimmed,
+        "imageUrl": firstImageUrl,
+      };
     } catch (e) {
-      return {"text": jsonSource, "imageUrl": null};
+      final trimmed = jsonSource.trim();
+      return {
+        "text": trimmed.isEmpty ? "Empty content" : trimmed,
+        "imageUrl": null,
+      };
     }
   }
 
@@ -63,7 +72,7 @@ class ClipboardCard extends StatelessWidget {
       case 'phone':
         return CupertinoIcons.phone;
       default:
-        return CupertinoIcons.doc_text;
+        return CupertinoIcons.doc_on_clipboard;
     }
   }
 
@@ -82,19 +91,20 @@ class ClipboardCard extends StatelessWidget {
       clipThemeColor,
     );
 
-    // ✅ OPTIMIZATION: High-performance Decoration (Replaces GlassContainer)
+    // ✅ 2026 UI: Premium Glass Glass Decoration
     final decoration = BoxDecoration(
-      color: clipThemeColor.withOpacity(isSelected ? 0.6 : 0.65),
+      color: clipThemeColor.withValues(alpha: isSelected ? 0.35 : 0.45),
       borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
       border: Border.all(
-        color: Colors.black.withOpacity(0.2),
+        color: contentColor.withValues(alpha: 0.12),
         width: AppConstants.borderWidth,
       ),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.05),
-          blurRadius: 10,
-          offset: const Offset(0, 4),
+          color: clipThemeColor.withValues(alpha: isSelected ? 0.3 : 0.2),
+          blurRadius: 25,
+          offset: const Offset(0, 10),
+          spreadRadius: -2,
         ),
       ],
     );
@@ -106,106 +116,157 @@ class ClipboardCard extends StatelessWidget {
         tag: 'clip_bg_${item.id}',
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOutCubic,
           transform: isSelected
-              ? Matrix4.identity().scaled(0.98)
+              ? Matrix4.identity().scaled(0.96)
               : Matrix4.identity(),
-          margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(16),
-          decoration: decoration, // Using the fast decoration
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // margin: const EdgeInsets.only(bottom: 16), // Handled by parent
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+            child: Container(
+              padding: const EdgeInsets.all(14),
+              decoration: decoration,
+              child: Stack(
                 children: [
-                  Row(
-                    children: [
-                      Icon(
-                        _getTypeIconData(item.type),
-                        color: contentColor.withOpacity(0.5),
-                        size: 20,
+                  // Subtle Radial Glow
+                  Positioned(
+                    right: -20,
+                    top: -20,
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(
+                          colors: [
+                            contentColor.withValues(alpha: 0.05),
+                            Colors.transparent,
+                          ],
+                        ),
                       ),
-                      const SizedBox(width: 8),
+                    ),
+                  ),
+
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                  color: contentColor.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Icon(
+                                  _getTypeIconData(item.type),
+                                  color: contentColor.withValues(alpha: 0.7),
+                                  size: 16,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Material(
+                                type: MaterialType.transparency,
+                                child: Text(
+                                  DateFormat(
+                                    'MMM dd • h:mm a',
+                                  ).format(item.createdAt),
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: contentColor.withValues(alpha: 0.5),
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 0.2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          AnimatedScale(
+                            duration: const Duration(milliseconds: 300),
+                            scale: isSelected ? 1.2 : 1.0,
+                            child: Icon(
+                              isSelected
+                                  ? CupertinoIcons.check_mark_circled_solid
+                                  : CupertinoIcons.circle,
+                              size: 20,
+                              color: isSelected
+                                  ? theme.colorScheme.primary
+                                  : contentColor.withValues(alpha: 0.2),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 14),
+                      if (imageUrl != null)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 12.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              AppConstants.cornerRadius * 0.5,
+                            ),
+                            child: Image.file(
+                              File(imageUrl),
+                              height: 140,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       Material(
                         type: MaterialType.transparency,
                         child: Text(
-                          DateFormat('MMM dd, h:mm a').format(item.createdAt),
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: contentColor.withOpacity(0.5),
+                          previewText,
+                          maxLines: imageUrl != null ? 2 : 4,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: contentColor,
+                            height: 1.4,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          _QuickColorPicker(
+                            onColorSelected: onColorChanged,
+                            currentColor: clipThemeColor,
+                          ),
+                          const Spacer(),
+                          IgnorePointer(
+                            ignoring: isSelected,
+                            child: Row(
+                              children: [
+                                _smallBtn(
+                                  CupertinoIcons.doc_on_doc,
+                                  onCopy,
+                                  contentColor,
+                                ),
+                                const SizedBox(width: 4),
+                                _smallBtn(
+                                  CupertinoIcons.share,
+                                  onShare,
+                                  contentColor,
+                                ),
+                                const SizedBox(width: 4),
+                                _smallBtn(
+                                  CupertinoIcons.trash,
+                                  onDelete,
+                                  Colors.redAccent.withValues(alpha: 0.8),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                  Icon(
-                    isSelected
-                        ? CupertinoIcons.checkmark_circle_fill
-                        : CupertinoIcons.circle,
-                    size: 20,
-                    color: isSelected
-                        ? theme.colorScheme.primary
-                        : contentColor.withOpacity(0.2),
-                  ),
                 ],
               ),
-              const SizedBox(height: 12),
-              if (imageUrl != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                      AppConstants.cornerRadius * 0.5,
-                    ),
-                    child: Image.file(
-                      File(imageUrl),
-                      height: 120,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
-                    ),
-                  ),
-                ),
-              Material(
-                type: MaterialType.transparency,
-                child: Text(
-                  previewText,
-                  maxLines: imageUrl != null ? 2 : 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: contentColor,
-                    height: 1.3,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  _QuickColorPicker(
-                    onColorSelected: onColorChanged,
-                    currentColor: clipThemeColor,
-                  ),
-                  const Spacer(),
-                  IgnorePointer(
-                    ignoring: isSelected,
-                    child: Row(
-                      children: [
-                        _smallBtn(
-                          CupertinoIcons.doc_on_doc,
-                          onCopy,
-                          contentColor,
-                        ),
-                        _smallBtn(CupertinoIcons.share, onShare, contentColor),
-                        _smallBtn(
-                          CupertinoIcons.trash,
-                          onDelete,
-                          Colors.redAccent,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -213,10 +274,18 @@ class ClipboardCard extends StatelessWidget {
   }
 
   Widget _smallBtn(IconData icon, VoidCallback onPressed, Color color) {
-    return IconButton(
-      visualDensity: VisualDensity.compact,
-      icon: Icon(icon, size: 18, color: color.withOpacity(0.6)),
-      onPressed: onPressed,
+    return Container(
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.05),
+        shape: BoxShape.circle,
+      ),
+      child: IconButton(
+        visualDensity: VisualDensity.compact,
+        padding: const EdgeInsets.all(8),
+        constraints: const BoxConstraints(),
+        icon: Icon(icon, size: 14, color: color.withValues(alpha: 0.8)),
+        onPressed: onPressed,
+      ),
     );
   }
 }
@@ -236,7 +305,7 @@ class _QuickColorPicker extends StatelessWidget {
 
     return Row(
       children: palette.map((color) {
-        final isSelected = currentColor.value == color.value;
+        final isSelected = currentColor.toARGB32() == color.toARGB32();
         final contrastColor = AppContentPalette.getContrastColor(color);
         final primaryColor = theme.colorScheme.primary;
 
@@ -245,22 +314,29 @@ class _QuickColorPicker extends StatelessWidget {
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             margin: const EdgeInsets.only(right: 6),
-            width: 24,
-            height: 24,
+            width: 22,
+            height: 22,
             decoration: BoxDecoration(
               color: color,
               shape: BoxShape.circle,
+              boxShadow: isSelected
+                  ? [
+                      BoxShadow(
+                        color: color.withValues(alpha: 0.4),
+                        blurRadius: 8,
+                        spreadRadius: 1,
+                      ),
+                    ]
+                  : null,
               border: Border.all(
                 color: isSelected
                     ? primaryColor
-                    : contrastColor.withOpacity(0.2),
-                width: isSelected
-                    ? AppConstants.selectedBorderWidth
-                    : AppConstants.borderWidth,
+                    : contrastColor.withValues(alpha: 0.15),
+                width: isSelected ? 2.5 : 1.5,
               ),
             ),
             child: isSelected
-                ? Icon(CupertinoIcons.checkmark, size: 14, color: contrastColor)
+                ? Icon(CupertinoIcons.checkmark, size: 12, color: contrastColor)
                 : null,
           ),
         );

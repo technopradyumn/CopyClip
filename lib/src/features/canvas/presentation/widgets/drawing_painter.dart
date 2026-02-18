@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'dart:math';
 import '../../data/canvas_model.dart';
 import '../pages/canvas_edit_screen.dart';
@@ -85,8 +84,8 @@ class DrawingPainter extends CustomPainter {
         opacityMultiplier = 0.8;
     }
 
-    paint.color = paint.color.withOpacity(
-      paint.color.opacity * opacityMultiplier,
+    paint.color = paint.color.withValues(
+      alpha: paint.color.opacity * opacityMultiplier,
     );
     // Bristles are thinner than the main stroke width
     paint.strokeWidth = max(1.0, stroke.strokeWidth / (hairs / 2));
@@ -160,26 +159,26 @@ class DrawingPainter extends CustomPainter {
         density = 15;
         scatterRadius = 1.0;
         drawDots = true;
-        paint.color = paint.color.withOpacity(0.3);
+        paint.color = paint.color.withValues(alpha: 0.3);
         break;
       case BrushShape.sprayPaint:
         density = 40;
         scatterRadius = 1.5;
         drawDots = true;
-        paint.color = paint.color.withOpacity(0.8);
+        paint.color = paint.color.withValues(alpha: 0.8);
         break;
       case BrushShape.charcoal:
         density = 5;
         scatterRadius = 0.5;
         drawDots = false; // Jittered lines
-        paint.color = paint.color.withOpacity(0.6);
+        paint.color = paint.color.withValues(alpha: 0.6);
         break;
       case BrushShape.crayon:
       default:
         density = 3;
         scatterRadius = 0.3;
         drawDots = false;
-        paint.color = paint.color.withOpacity(0.9);
+        paint.color = paint.color.withValues(alpha: 0.9);
         break;
     }
 
@@ -236,21 +235,20 @@ class DrawingPainter extends CustomPainter {
     paint.style = PaintingStyle.fill;
 
     double angleOffset = 0; // The angle of the flat tip
-    double tipWidthRatio = 0.2; // How thin the flat side is
 
     switch (shape) {
       case BrushShape.highlighter:
-        paint.color = paint.color.withOpacity(0.4);
+        paint.color = paint.color.withValues(alpha: 0.4);
         paint.blendMode = BlendMode.srcOver; // Highlighters layer
         angleOffset = pi / 4; // 45 degrees
         break;
       case BrushShape.marker:
-        paint.color = paint.color.withOpacity(0.7);
+        paint.color = paint.color.withValues(alpha: 0.7);
         angleOffset = 0;
         break;
       case BrushShape.fountainPen:
         angleOffset = pi / 3; // 60 degrees
-        tipWidthRatio = 0.1;
+        // tipWidthRatio = 0.1;
         break;
       default:
         angleOffset = pi / 4;
@@ -313,19 +311,19 @@ class DrawingPainter extends CustomPainter {
 
     if (shape == BrushShape.neonBrush || shape == BrushShape.glowPen) {
       // 1. Draw outer glow (Blurred)
-      paint.color = Color(stroke.color).withOpacity(0.5);
+      paint.color = Color(stroke.color).withValues(alpha: 0.5);
       paint.strokeWidth = stroke.strokeWidth * 3;
       paint.maskFilter = MaskFilter.blur(BlurStyle.normal, stroke.strokeWidth);
       canvas.drawPath(path, paint);
 
       // 2. Draw inner core (White/Bright)
       paint.maskFilter = null;
-      paint.color = Colors.white.withOpacity(0.9);
+      paint.color = Colors.white.withValues(alpha: 0.9);
       paint.strokeWidth = stroke.strokeWidth / 1.5;
       canvas.drawPath(path, paint);
     } else if (shape == BrushShape.watercolorBrush) {
       // Low opacity, high blur, overlapping strokes
-      paint.color = paint.color.withOpacity(0.3);
+      paint.color = paint.color.withValues(alpha: 0.3);
       paint.maskFilter = MaskFilter.blur(
         BlurStyle.normal,
         stroke.strokeWidth / 2,
@@ -340,7 +338,7 @@ class DrawingPainter extends CustomPainter {
       }
     } else if (shape == BrushShape.glitchBrush) {
       final random = Random(stroke.points.hashCode);
-      paint.color = paint.color.withOpacity(0.8);
+      paint.color = paint.color.withValues(alpha: 0.8);
 
       for (int i = 0; i < stroke.points.length - 2; i += 2) {
         if (random.nextDouble() > 0.7) {
@@ -354,7 +352,7 @@ class DrawingPainter extends CustomPainter {
                 Colors.red,
                 Colors.blue,
                 Colors.green,
-              ][random.nextInt(3)].withOpacity(0.6),
+              ][random.nextInt(3)].withValues(alpha: 0.6),
           );
         } else {
           canvas.drawLine(
@@ -366,7 +364,7 @@ class DrawingPainter extends CustomPainter {
       }
     } else if (shape == BrushShape.blurBrush) {
       paint.maskFilter = MaskFilter.blur(BlurStyle.normal, stroke.strokeWidth);
-      paint.color = paint.color.withOpacity(0.5);
+      paint.color = paint.color.withValues(alpha: 0.5);
       canvas.drawPath(path, paint);
     }
   }

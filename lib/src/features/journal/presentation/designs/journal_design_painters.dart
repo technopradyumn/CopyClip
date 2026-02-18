@@ -25,12 +25,12 @@ class RuledPaperPainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.blue.withOpacity(0.1)
+      ..color = Colors.blue.withValues(alpha: 0.1)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
 
     final redLine = Paint()
-      ..color = Colors.red.withOpacity(0.1)
+      ..color = Colors.red.withValues(alpha: 0.1)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
 
@@ -51,7 +51,7 @@ class GridPaperPainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.05)
+      ..color = Colors.black.withValues(alpha: 0.05)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
 
@@ -72,7 +72,7 @@ class DotGridPainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.15)
+      ..color = Colors.black.withValues(alpha: 0.15)
       ..style = PaintingStyle.fill;
 
     const step = 20.0;
@@ -92,14 +92,14 @@ class VintagePaperPainter extends DesignPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..shader = RadialGradient(
-        colors: [Colors.brown.withOpacity(0.05), Colors.brown.withOpacity(0.2)],
+        colors: [Colors.brown.withValues(alpha: 0.05), Colors.brown.withValues(alpha: 0.2)],
         radius: 1.5,
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), paint);
 
     // Add some "stains"
-    final stainPaint = Paint()..color = Colors.brown.withOpacity(0.1);
+    final stainPaint = Paint()..color = Colors.brown.withValues(alpha: 0.1);
     canvas.drawCircle(
       Offset(size.width * 0.8, size.height * 0.2),
       30,
@@ -120,7 +120,7 @@ class BlueprintPainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.1)
+      ..color = Colors.white.withValues(alpha: 0.1)
       ..strokeWidth = 1;
 
     const step = 25.0;
@@ -133,7 +133,7 @@ class BlueprintPainter extends DesignPainter {
 
     // Crosshairs
     final crossPaint = Paint()
-      ..color = Colors.white.withOpacity(0.2)
+      ..color = Colors.white.withValues(alpha: 0.2)
       ..strokeWidth = 2;
     canvas.drawLine(
       Offset(size.width / 2 - 10, size.height / 2),
@@ -156,7 +156,7 @@ class SpiralNotebookPainter extends DesignPainter {
   void paint(Canvas canvas, Size size) {
     // Notebook lines
     final linePaint = Paint()
-      ..color = Colors.grey.withOpacity(0.3)
+      ..color = Colors.grey.withValues(alpha: 0.3)
       ..strokeWidth = 1;
 
     for (double y = 40; y < size.height; y += 25) {
@@ -196,7 +196,7 @@ class CompositionBookPainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final random = Random(42);
-    final paint = Paint()..color = Colors.white.withOpacity(0.15);
+    final paint = Paint()..color = Colors.white.withValues(alpha: 0.15);
 
     for (int i = 0; i < 200; i++) {
       double x = random.nextDouble() * size.width;
@@ -240,9 +240,9 @@ class LeatherTexturePainter extends DesignPainter {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          Colors.black.withOpacity(0.2),
+          Colors.black.withValues(alpha: 0.2),
           Colors.transparent,
-          Colors.white.withOpacity(0.1),
+          Colors.white.withValues(alpha: 0.1),
         ],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
@@ -250,7 +250,7 @@ class LeatherTexturePainter extends DesignPainter {
 
     // Stitching
     final stitchPaint = Paint()
-      ..color = const Color(0xFFD4AF37).withOpacity(0.6)
+      ..color = const Color(0xFFD4AF37).withValues(alpha: 0.6)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 
@@ -284,7 +284,7 @@ class CanvasTexturePainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.grey.withOpacity(0.1)
+      ..color = Colors.grey.withValues(alpha: 0.1)
       ..strokeWidth = 1;
 
     // Hatching
@@ -301,7 +301,7 @@ class LegalPadPainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final linePaint = Paint()
-      ..color = Colors.cyan.withOpacity(0.3)
+      ..color = Colors.cyan.withValues(alpha: 0.3)
       ..strokeWidth = 1;
 
     for (double y = 50; y < size.height; y += 30) {
@@ -309,7 +309,7 @@ class LegalPadPainter extends DesignPainter {
     }
 
     final marginPaint = Paint()
-      ..color = Colors.red.withOpacity(0.3)
+      ..color = Colors.red.withValues(alpha: 0.3)
       ..strokeWidth = 2;
 
     canvas.drawLine(Offset(50, 0), Offset(50, size.height), marginPaint);
@@ -324,7 +324,7 @@ class DarkModePainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.05)
+      ..color = Colors.white.withValues(alpha: 0.05)
       ..style = PaintingStyle.fill;
 
     final r = Random(123);
@@ -344,13 +344,13 @@ class PastelGeometricPainter extends DesignPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..style = PaintingStyle.fill;
 
-    paint.color = Colors.pinkAccent.withOpacity(0.05);
+    paint.color = Colors.pinkAccent.withValues(alpha: 0.05);
     canvas.drawCircle(Offset(size.width, 0), 100, paint);
 
-    paint.color = Colors.blueAccent.withOpacity(0.05);
+    paint.color = Colors.blueAccent.withValues(alpha: 0.05);
     canvas.drawCircle(Offset(0, size.height), 80, paint);
 
-    paint.color = Colors.amberAccent.withOpacity(0.05);
+    paint.color = Colors.amberAccent.withValues(alpha: 0.05);
     canvas.drawRect(
       Rect.fromLTWH(size.width * 0.4, size.height * 0.2, 50, 50),
       paint,
@@ -367,10 +367,10 @@ class WatercolorPainter extends DesignPainter {
     final paint = Paint()
       ..shader = SweepGradient(
         colors: [
-          Colors.blue.withOpacity(0.1),
-          Colors.purple.withOpacity(0.1),
-          Colors.pink.withOpacity(0.1),
-          Colors.blue.withOpacity(0.1),
+          Colors.blue.withValues(alpha: 0.1),
+          Colors.purple.withValues(alpha: 0.1),
+          Colors.pink.withValues(alpha: 0.1),
+          Colors.blue.withValues(alpha: 0.1),
         ],
         center: Alignment.center,
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
@@ -392,12 +392,12 @@ class StarryNightPainter extends DesignPainter {
       double x = random.nextDouble() * size.width;
       double y = random.nextDouble() * size.height;
       double opacity = random.nextDouble() * 0.4 + 0.1;
-      paint.color = Colors.white.withOpacity(opacity);
+      paint.color = Colors.white.withValues(alpha: opacity);
       canvas.drawCircle(Offset(x, y), random.nextDouble() * 1.5, paint);
     }
 
     // Moon
-    paint.color = Colors.yellowAccent.withOpacity(0.1);
+    paint.color = Colors.yellowAccent.withValues(alpha: 0.1);
     canvas.drawCircle(Offset(size.width - 30, 30), 15, paint);
   }
 }
@@ -409,7 +409,7 @@ class GeometricModernPainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.03)
+      ..color = Colors.black.withValues(alpha: 0.03)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
 
@@ -433,12 +433,12 @@ class CircuitBoardPainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.greenAccent.withOpacity(0.2)
+      ..color = Colors.greenAccent.withValues(alpha: 0.2)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
     final dotPaint = Paint()
-      ..color = Colors.greenAccent.withOpacity(0.2)
+      ..color = Colors.greenAccent.withValues(alpha: 0.2)
       ..style = PaintingStyle.fill;
 
     // Simple procedural circuits
@@ -457,7 +457,7 @@ class WoodGrainPainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.brown.withOpacity(0.1)
+      ..color = Colors.brown.withValues(alpha: 0.1)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
 
@@ -480,7 +480,7 @@ class MarbleTexturePainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.grey.withOpacity(0.1)
+      ..color = Colors.grey.withValues(alpha: 0.1)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
 
@@ -507,7 +507,7 @@ class CorkBoardPainter extends DesignPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = Colors.brown.withOpacity(0.15);
+    final paint = Paint()..color = Colors.brown.withValues(alpha: 0.15);
     final r = Random(77);
 
     for (int i = 0; i < 500; i++) {
@@ -525,7 +525,7 @@ class CrumpledPaperPainter extends DesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.05)
+      ..color = Colors.black.withValues(alpha: 0.05)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 

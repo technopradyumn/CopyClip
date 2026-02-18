@@ -146,6 +146,14 @@ class _DashboardScreenState extends State<DashboardScreen>
       AppRouter.canvas,
       'Draw and sketch freely',
     ),
+    'social_post': FeatureItem(
+      'social_post',
+      'Social Post',
+      CupertinoIcons.share_up,
+      FeatureColors.socialPost,
+      AppRouter.socialPost,
+      'Create engaging social media content',
+    ),
   };
 
   late final List<OnboardingContent> _onboardingData;
@@ -395,8 +403,8 @@ class _DashboardScreenState extends State<DashboardScreen>
         const SizedBox(width: 8),
         IconButton(
           style: IconButton.styleFrom(
-            backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
-            highlightColor: theme.colorScheme.primary.withOpacity(0.2),
+            backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.1),
+            highlightColor: theme.colorScheme.primary.withValues(alpha: 0.2),
           ),
           icon: Icon(CupertinoIcons.search, color: theme.colorScheme.primary),
           onPressed: () => context.push(AppRouter.globalSearch),
@@ -409,7 +417,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               tag: 'settings_icon',
               child: Icon(
                 CupertinoIcons.settings,
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
           ),
@@ -465,12 +473,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
         border: Border.all(
-          color: theme.colorScheme.outline.withOpacity(0.08),
+          color: theme.colorScheme.outline.withValues(alpha: 0.08),
           width: AppConstants.borderWidth,
         ),
         boxShadow: [
           BoxShadow(
-            color: baseColor.withOpacity(0.05),
+            color: baseColor.withValues(alpha: 0.05),
             blurRadius: 20,
             offset: const Offset(0, 8),
             spreadRadius: 0,
@@ -502,7 +510,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     height: 52,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [baseColor.withOpacity(0.8), baseColor],
+                        colors: [baseColor.withValues(alpha: 0.8), baseColor],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -511,7 +519,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: baseColor.withOpacity(0.3),
+                          color: baseColor.withValues(alpha: 0.3),
                           blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
@@ -545,7 +553,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurface.withOpacity(0.5),
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.5,
+                          ),
                           fontSize: 13,
                         ),
                       ),
@@ -557,7 +567,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 const SizedBox(width: 4),
                 Icon(
                   CupertinoIcons.bars,
-                  color: theme.colorScheme.onSurface.withOpacity(0.2),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
                 ),
               ],
             ),
@@ -569,8 +579,8 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   Widget _buildActionButton(String id, Color baseColor, ThemeData theme) {
     final style = IconButton.styleFrom(
-      backgroundColor: baseColor.withOpacity(0.1),
-      highlightColor: baseColor.withOpacity(0.2),
+      backgroundColor: baseColor.withValues(alpha: 0.1),
+      highlightColor: baseColor.withValues(alpha: 0.2),
       padding: const EdgeInsets.all(8),
       minimumSize: const Size(36, 36),
     );
@@ -688,12 +698,12 @@ class _DashboardScreenState extends State<DashboardScreen>
             color: theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
             border: Border.all(
-              color: theme.colorScheme.outline.withOpacity(0.08),
+              color: theme.colorScheme.outline.withValues(alpha: 0.08),
               width: AppConstants.borderWidth,
             ),
             boxShadow: [
               BoxShadow(
-                color: baseColor.withOpacity(0.05),
+                color: baseColor.withValues(alpha: 0.05),
                 blurRadius: 15,
                 offset: const Offset(0, 6),
               ),
@@ -725,7 +735,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                         height: isSmall ? 40 : 52,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [baseColor.withOpacity(0.8), baseColor],
+                            colors: [
+                              baseColor.withValues(alpha: 0.8),
+                              baseColor,
+                            ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
@@ -734,7 +747,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: baseColor.withOpacity(0.3),
+                              color: baseColor.withValues(alpha: 0.3),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),
@@ -769,7 +782,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurface.withOpacity(0.5),
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.5,
+                          ),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -903,7 +918,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  currentData.color.withOpacity(0.15),
+                  currentData.color.withValues(alpha: 0.15),
                   theme.scaffoldBackgroundColor,
                 ],
               ),
@@ -919,8 +934,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                     child: TextButton(
                       onPressed: _completeOnboarding,
                       style: TextButton.styleFrom(
-                        foregroundColor: theme.colorScheme.onSurface
-                            .withOpacity(0.6),
+                        foregroundColor: theme.colorScheme.onSurface.withValues(
+                          alpha: 0.6,
+                        ),
                       ),
                       child: const Text('Skip'),
                     ),
@@ -957,8 +973,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                             decoration: BoxDecoration(
                               color: _onboardingStep == index
                                   ? currentData.color
-                                  : theme.colorScheme.onSurface.withOpacity(
-                                      0.1,
+                                  : theme.colorScheme.onSurface.withValues(
+                                      alpha: 0.1,
                                     ),
                               borderRadius: BorderRadius.circular(4),
                             ),
@@ -1009,7 +1025,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                                 backgroundColor: currentData.color,
                                 foregroundColor: Colors.white,
                                 elevation: 8,
-                                shadowColor: currentData.color.withOpacity(0.4),
+                                shadowColor: currentData.color.withValues(
+                                  alpha: 0.4,
+                                ),
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 32,
                                   vertical: 16,
@@ -1076,15 +1094,15 @@ class _DashboardScreenState extends State<DashboardScreen>
                 child: Container(
                   padding: const EdgeInsets.all(40),
                   decoration: BoxDecoration(
-                    color: content.color.withOpacity(0.1),
+                    color: content.color.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: content.color.withOpacity(0.2),
+                      color: content.color.withValues(alpha: 0.2),
                       width: 2,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: content.color.withOpacity(0.2),
+                        color: content.color.withValues(alpha: 0.2),
                         blurRadius: 30,
                         spreadRadius: 5,
                       ),
@@ -1135,7 +1153,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             child: Text(
               content.description,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 height: 1.5,
               ),
               textAlign: TextAlign.center,

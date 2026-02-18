@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:copyclip/src/core/services/notification_service.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
@@ -279,8 +278,6 @@ class _TodosScreenState extends State<TodosScreen>
 
     // 2. Grouping & Sorting - WITH "TODAY RELEVANCE" FILTER
     // User Request: "Share only today's task in the todo screen"
-    final now = DateTime.now();
-    final todayStart = DateTime(now.year, now.month, now.day);
 
     Map<String, List<Todo>> grouped = {};
     for (var todo in filteredTodos) {
@@ -540,10 +537,11 @@ class _TodosScreenState extends State<TodosScreen>
 
   void _toggleSelection(String id) {
     setState(() {
-      if (_selectedTodoIds.contains(id))
+      if (_selectedTodoIds.contains(id)) {
         _selectedTodoIds.remove(id);
-      else
+      } else {
         _selectedTodoIds.add(id);
+      }
       if (_selectedTodoIds.isEmpty) _isSelectionMode = false;
     });
   }
@@ -558,9 +556,13 @@ class _TodosScreenState extends State<TodosScreen>
 
     setState(() {
       if (allSelected) {
-        for (var t in categoryTodos) _selectedTodoIds.remove(t.id);
+        for (var t in categoryTodos) {
+          _selectedTodoIds.remove(t.id);
+        }
       } else {
-        for (var t in categoryTodos) _selectedTodoIds.add(t.id);
+        for (var t in categoryTodos) {
+          _selectedTodoIds.add(t.id);
+        }
       }
       if (_selectedTodoIds.isEmpty) _isSelectionMode = false;
     });
@@ -584,21 +586,23 @@ class _TodosScreenState extends State<TodosScreen>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: !_isSelectionMode && _quickAddCategory == null,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
         if (_isSelectionMode) {
           setState(() {
             _isSelectionMode = false;
             _selectedTodoIds.clear();
           });
-          return false;
+          return;
         }
         if (_quickAddCategory != null) {
           _cancelQuickAdd();
-          return false;
+          return;
         }
-        return true;
       },
+
       child: GlassScaffold(
         title: null,
         floatingActionButton: _isSelectionMode
@@ -619,12 +623,12 @@ class _TodosScreenState extends State<TodosScreen>
               child: Container(
                 height: 44,
                 decoration: BoxDecoration(
-                  color: colorScheme.onSurface.withOpacity(0.08),
+                  color: colorScheme.onSurface.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(
                     AppConstants.cornerRadius * 0.75,
                   ),
                   border: Border.all(
-                    color: theme.dividerColor.withOpacity(0.1),
+                    color: theme.dividerColor.withValues(alpha: 0.1),
                     width: AppConstants.borderWidth,
                   ),
                 ),
@@ -634,11 +638,11 @@ class _TodosScreenState extends State<TodosScreen>
                   decoration: InputDecoration(
                     hintText: 'Search tasks...',
                     hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurface.withOpacity(0.5),
+                      color: colorScheme.onSurface.withValues(alpha: 0.5),
                     ),
                     prefixIcon: Icon(
                       CupertinoIcons.search,
-                      color: colorScheme.onSurface.withOpacity(0.5),
+                      color: colorScheme.onSurface.withValues(alpha: 0.5),
                       size: 20,
                     ),
                     suffixIcon: _searchController.text.isNotEmpty
@@ -648,7 +652,9 @@ class _TodosScreenState extends State<TodosScreen>
                             },
                             child: Icon(
                               CupertinoIcons.xmark,
-                              color: colorScheme.onSurface.withOpacity(0.5),
+                              color: colorScheme.onSurface.withValues(
+                                alpha: 0.5,
+                              ),
                               size: 18,
                             ),
                           )
@@ -684,7 +690,7 @@ class _TodosScreenState extends State<TodosScreen>
                         child: Text(
                           "No tasks found.",
                           style: theme.textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurface.withOpacity(0.4),
+                            color: colorScheme.onSurface.withValues(alpha: 0.4),
                           ),
                         ),
                       );
@@ -820,7 +826,7 @@ class _TodosScreenState extends State<TodosScreen>
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 0.5),
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
             width: AppConstants.borderWidth * 1.5,
           ),
         ),
@@ -859,12 +865,12 @@ class _TodosScreenState extends State<TodosScreen>
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           margin: const EdgeInsets.only(bottom: 4, top: 4),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(
               AppConstants.cornerRadius * 0.5,
             ),
             border: Border.all(
-              color: Theme.of(context).dividerColor.withOpacity(0.05),
+              color: Theme.of(context).dividerColor.withValues(alpha: 0.05),
               width: AppConstants.borderWidth,
             ),
           ),
@@ -872,7 +878,9 @@ class _TodosScreenState extends State<TodosScreen>
             children: [
               Icon(
                 CupertinoIcons.add,
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                color: Theme.of(
+                  context,
+                ).colorScheme.primary.withValues(alpha: 0.8),
               ),
               const SizedBox(width: 12),
               Text(
@@ -880,7 +888,7 @@ class _TodosScreenState extends State<TodosScreen>
                 style: TextStyle(
                   color: Theme.of(
                     context,
-                  ).colorScheme.onSurface.withOpacity(0.6),
+                  ).colorScheme.onSurface.withValues(alpha: 0.6),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -898,7 +906,7 @@ class _TodosScreenState extends State<TodosScreen>
               child: Divider(
                 color: Theme.of(
                   context,
-                ).colorScheme.outlineVariant.withOpacity(0.3),
+                ).colorScheme.outlineVariant.withValues(alpha: 0.3),
                 thickness: 1,
               ),
             ),
@@ -909,7 +917,7 @@ class _TodosScreenState extends State<TodosScreen>
                 style: TextStyle(
                   color: Theme.of(
                     context,
-                  ).colorScheme.onSurface.withOpacity(0.5),
+                  ).colorScheme.onSurface.withValues(alpha: 0.5),
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
@@ -919,7 +927,7 @@ class _TodosScreenState extends State<TodosScreen>
               child: Divider(
                 color: Theme.of(
                   context,
-                ).colorScheme.outlineVariant.withOpacity(0.3),
+                ).colorScheme.outlineVariant.withValues(alpha: 0.3),
                 thickness: 1,
               ),
             ),
@@ -974,9 +982,9 @@ class _TodosScreenState extends State<TodosScreen>
 
     return GestureDetector(
       onTap: () {
-        if (_isSelectionMode)
+        if (_isSelectionMode) {
           _toggleCategorySelection(item.category);
-        else {
+        } else {
           setState(
             () => _categoryExpansionState[item.category] = !item.isExpanded,
           );
@@ -993,7 +1001,7 @@ class _TodosScreenState extends State<TodosScreen>
               duration: const Duration(milliseconds: 200),
               child: Icon(
                 CupertinoIcons.chevron_right,
-                color: colorScheme.onSurface.withOpacity(0.7),
+                color: colorScheme.onSurface.withValues(alpha: 0.7),
                 size: 20,
               ),
             ),
@@ -1004,7 +1012,7 @@ class _TodosScreenState extends State<TodosScreen>
                 style: TextStyle(
                   color: item.isExpanded
                       ? colorScheme.primary
-                      : colorScheme.onSurface.withOpacity(0.7),
+                      : colorScheme.onSurface.withValues(alpha: 0.7),
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
                   fontSize: 13,
@@ -1020,13 +1028,13 @@ class _TodosScreenState extends State<TodosScreen>
                           : CupertinoIcons.circle),
                 color: (allSelected || someSelected)
                     ? colorScheme.primary
-                    : colorScheme.onSurface.withOpacity(0.38),
+                    : colorScheme.onSurface.withValues(alpha: 0.38),
                 size: 20,
               )
             else
               Container(
                 decoration: BoxDecoration(
-                  color: colorScheme.onSurface.withOpacity(0.05),
+                  color: colorScheme.onSurface.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 padding: const EdgeInsets.symmetric(
@@ -1036,7 +1044,7 @@ class _TodosScreenState extends State<TodosScreen>
                 child: Text(
                   '${item.count}/${item.total}',
                   style: TextStyle(
-                    color: colorScheme.onSurface.withOpacity(0.5),
+                    color: colorScheme.onSurface.withValues(alpha: 0.5),
                     fontSize: 11,
                   ),
                 ),
@@ -1240,44 +1248,6 @@ class _TodosScreenState extends State<TodosScreen>
           ],
         ),
       ],
-    );
-  }
-
-  Widget _buildSortOption(TodoSortOption option, String label) {
-    final selected = _currentSort == option;
-    final theme = Theme.of(context);
-    return InkWell(
-      onTap: () {
-        setState(() => _currentSort = option);
-        _generateList();
-        Navigator.pop(context);
-      },
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        child: Row(
-          children: [
-            Icon(
-              selected
-                  ? CupertinoIcons.check_mark_circled_solid
-                  : CupertinoIcons.circle,
-              color: selected
-                  ? theme.colorScheme.primary
-                  : theme.iconTheme.color?.withOpacity(0.5),
-            ),
-            const SizedBox(width: 12),
-            Text(
-              label,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                color: selected
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.onSurface,
-                fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

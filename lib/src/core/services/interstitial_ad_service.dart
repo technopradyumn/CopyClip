@@ -80,7 +80,11 @@ class InterstitialAdService {
 
   /// Show the ad and execute the callback after ad is dismissed
   /// If ad is not ready, callback is executed immediately
-  void showAd(VoidCallback onComplete) {
+  void showAd(VoidCallback onComplete, {bool isPremium = false}) {
+    if (isPremium) {
+      onComplete();
+      return;
+    }
     if (_interstitialAd == null) {
       debugPrint('⚠️ Ad not ready, proceeding with action...');
       onComplete(); // Proceed if ad failed to load
@@ -128,7 +132,7 @@ class InterstitialAdService {
           onComplete();
         },
       );
-      ad.show(onUserEarnedReward: (ad, reward) => null);
+      ad.show(onUserEarnedReward: (ad, reward) {});
     }
   }
 

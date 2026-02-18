@@ -1,121 +1,173 @@
 import 'package:copyclip/src/core/services/notification_service.dart';
-import 'package:copyclip/src/features/expenses/services/expense_notification_handler.dart';
-import 'package:copyclip/src/features/journal/services/journal_notification_handler.dart';
-import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart';
-import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
-import 'package:copyclip/src/core/services/lazy_box_loader.dart';
+import 'package:copyclip/src/core/services/time_zone_service.dart';
+import 'package:flutter/material.dart';
+
+enum NotificationType {
+  morningRoutine,
+  middayProductivity,
+  eveningPlanning,
+  nightRoutine,
+  featureSpecific,
+  contextual,
+}
 
 class NotificationEngine {
   static final NotificationEngine _instance = NotificationEngine._internal();
-
   factory NotificationEngine() => _instance;
-
   NotificationEngine._internal();
 
-  /// Called by Background Worker daily at ~7:30 AM
+  final NotificationService _notificationService = NotificationService();
+  final TimeZoneService _timeZoneService = TimeZoneService();
+
+  Future<void> initialize() async {
+    await _timeZoneService.initialize();
+    await _notificationService.init();
+    await _scheduleDailyRoutine();
+  }
+
+  // Schedule all daily notifications adjusted to local time
+  Future<void> _scheduleDailyRoutine() async {
+    // 1. Morning Routine (7:00 AM)
+    await _scheduleDaily(
+      id: 1001,
+      title: "Good Morning! 🌅",
+      body: "Check your todos for today and start fresh!",
+      hour: 7,
+      minute: 0,
+    );
+
+    // 2. Quick Clipboard Review (8:00 AM)
+    await _scheduleDaily(
+      id: 1002,
+      title: "Clipboard Review 📋",
+      body: "Quick check: 3 items from yesterday might need action.",
+      hour: 8,
+      minute: 0,
+      channelId: 'clipboard',
+    );
+
+    // 3. Journal Prompt (8:30 AM)
+    await _scheduleDaily(
+      id: 1003,
+      title: "Daily Journal 📔",
+      body: "How are you feeling today? Take a moment to reflect.",
+      hour: 8,
+      minute: 30,
+      channelId: 'journal',
+    );
+
+    // 4. Lunch Break / Expenses (12:30 PM)
+    await _scheduleDaily(
+      id: 1004,
+      title: "Lunch Break & Budget 🍽️",
+      body: "Enjoy your meal! Don't forget to log your lunch expense.",
+      hour: 12,
+      minute: 30,
+      channelId: 'expenses',
+    );
+
+    // 5. Afternoon Todos (1:30 PM)
+    await _scheduleDaily(
+      id: 1005,
+      title: "Afternoon Focus 🚀",
+      body: "Keep the momentum going! Check your remaining tasks.",
+      hour: 13,
+      minute: 30,
+    );
+
+    // 6. Evening Wrap-up (6:00 PM)
+    await _scheduleDaily(
+      id: 1006,
+      title: "Wrap Up 🌇",
+      body: "Save important clipboard items before the day ends.",
+      hour: 18,
+      minute: 0,
+      channelId: 'clipboard',
+    );
+
+    // 7. Expense Update (7:00 PM)
+    await _scheduleDaily(
+      id: 1007,
+      title: "Expense Tracker 💰",
+      body: "Update your tracker with today's spending.",
+      hour: 19,
+      minute: 0,
+      channelId: 'expenses',
+    );
+
+    // 8. Tomorrow Planning (8:00 PM)
+    await _scheduleDaily(
+      id: 1008,
+      title: "Plan Tomorrow 🌙",
+      body: "A productive tomorrow starts tonight. Plan your tasks.",
+      hour: 20,
+      minute: 0,
+    );
+
+    // 9. Evening Reflection (9:00 PM)
+    await _scheduleDaily(
+      id: 1009,
+      title: "Evening Reflection ✍️",
+      body: "Reflect on your day. What went well?",
+      hour: 21,
+      minute: 0,
+      channelId: 'journal',
+    );
+
+    // 10. Goodnight (10:00 PM)
+    await _scheduleDaily(
+      id: 1010,
+      title: "Goodnight! 😴",
+      body: "Rest well. See your calendar preview for tomorrow.",
+      hour: 22,
+      minute: 0,
+      channelId: 'calendar',
+    );
+  }
+
+  Future<void> _scheduleDaily({
+    required int id,
+    required String title,
+    required String body,
+    required int hour,
+    required int minute,
+    String channelId = 'todos',
+  }) async {
+    // Convert target local time (e.g. 7:00 AM) to the appropriate Schedule
+    // Since NotificationService.scheduleDailyNotification takes TimeOfDay
+    // and handles the daily recurrence logic internally using flutter_local_notifications matchDateTimeComponents,
+    // we just pass the TimeOfDay.
+    // TimeZoneService ensures we are in the correct local zone.
+
+    await _notificationService.scheduleDailyNotification(
+      id: id,
+      title: title,
+      body: body,
+      time: TimeOfDay(hour: hour, minute: minute),
+      channelId: channelId,
+    );
+  }
+
   Future<void> triggerMorningBriefing() async {
-    debugPrint('🌅 Triggering Morning Briefing...');
-    try {
-      final todos = await TodoSchedulerService().getPendingTodosForToday();
-      final count = todos.length;
-
-      if (count > 0) {
-        // Construct a nice message
-        // "Good Morning! You have 5 tasks today including 'Buy groceries'..."
-        final firstTask = todos.first.task;
-        String body = "You have $count tasks scheduled for today.";
-        if (count == 1) {
-          body = "Here is your focus for today: $firstTask";
-        } else {
-          body = "Top priority: $firstTask. Plus ${count - 1} others.";
-        }
-
-        await NotificationService().showInstantNotification(
-          id: 8888, // Fixed ID for briefing to replace previous
-          title: "☀️ Today's Plan",
-          body: body,
-          channelId: 'todos',
-          payload: "dashboard", // Open dashboard
-        );
-      }
-    } catch (e) {
-      debugPrint("❌ Morning Briefing Failed: $e");
-    }
+    await _notificationService.showInstantNotification(
+      id: 777,
+      title: "Good Morning! ☀️",
+      body: "Ready to conquer your tasks today?",
+      channelId: "todos",
+    );
   }
 
-  /// Called by Background Worker daily at ~8:00 PM
   Future<void> triggerEveningCheck() async {
-    debugPrint('🌙 Triggering Evening Check...');
-
-    // 1. Task Check for Evening Planning
-    try {
-      final todos = await TodoSchedulerService().getPendingTodosForToday();
-      final count = todos.length;
-
-      String title = "🌙 Evening Wrap-Up";
-      String body = "Time to plan for tomorrow!";
-
-      if (count > 0) {
-        body =
-            "You have $count pending tasks. Finish them up and plan for tomorrow!";
-      }
-
-      await NotificationService().showInstantNotification(
-        id: 8890,
-        title: title,
-        body: body,
-        channelId: 'todos',
-        payload: "dashboard",
-      );
-    } catch (e) {
-      debugPrint("Warning: Evening task check failed: $e");
-    }
-
-    // 2. Run other handlers
-    await Future.wait([
-      JournalNotificationHandler().checkAndNotify(),
-      ExpenseNotificationHandler().checkAndNotify(),
-    ]);
+    await _notificationService.showInstantNotification(
+      id: 888,
+      title: "Evening Check 🌙",
+      body: "Almost done for the day! Check any remaining tasks.",
+      channelId: "todos",
+    );
   }
 
-  /// Called weekly (e.g., Sunday evening)
-  Future<void> triggerWeeklyReport() async {
-    // Placeholder for weekly summary
-    debugPrint('📅 Weekly report trigger (Not implemented yet)');
-  }
-
-  /// Called on app startup to welcome new users
-  Future<void> checkAndTriggerWelcome() async {
-    try {
-      // Ensure box is open (should be by main.dart, but safe check)
-      if (!Hive.isBoxOpen('settings')) {
-        await LazyBoxLoader.getBox('settings');
-      }
-      final box = Hive.box('settings');
-
-      final bool hasSeenWelcome = box.get(
-        'has_seen_welcome',
-        defaultValue: false,
-      );
-
-      if (!hasSeenWelcome) {
-        debugPrint(
-          '👋 First time user detected. Sending welcome notification...',
-        );
-        await NotificationService().showInstantNotification(
-          id: 8899,
-          title: "👋 Welcome to CopyClip!",
-          body:
-              "We're glad you're here. Tap to set up your first task or explore the dashboard.",
-          channelId: 'todos', // Use high priority channel
-          payload: "dashboard",
-        );
-
-        await box.put('has_seen_welcome', true);
-      }
-    } catch (e) {
-      debugPrint("❌ Welcome notification failed: $e");
-    }
+  // Called from main.dart on startup or cold start
+  void checkAndTriggerWelcome() {
+    // Logic to check if it's the very first launch, etc.
   }
 }

@@ -1,77 +1,46 @@
-
 import 'package:flutter/material.dart';
+import 'emotion.dart';
 
-// Define your color palette as abstract properties
-abstract class AppColors {
-  // Primary and accent colors
-  Color get primary;
-  Color get secondary;
+class AppColors {
+  // Light Theme Text
+  static const Color textPrimary = Color(0xFF1F2937); // Dark Blue-Grey
+  static const Color textSecondary = Color(0xFF6B7280); // Cool Grey
 
-  // Surface and background colors
-  Color get surface;
-  Color get background;
-  Color get onSurface;
-  Color get onBackground;
+  // Dark Theme Text
+  static const Color textLight = Color(0xFFF3F4F6); // Light Grey
 
-  // Special purpose colors
-  Color get destructive;
-  Color get glassBackground;
+  // Dark Theme Backgrounds
+  static const Color surfaceDark = Color(0xFF1F2937); // Dark Grey Surface
+  static const Color backgroundDark = Color(0xFF111827); // Darker Background
 
-  // Text colors
-  Color get textPrimary;
-  Color get textSecondary;
-}
+  // Glassmorphism (inferred)
+  static const Color glassBackground = Color(
+    0x1FFFFFFF,
+  ); // White with low opacity
+  static const Color glassBorder = Color(
+    0x3FFFFFFF,
+  ); // White with higher opacity
 
-// Concrete implementation for the light theme
-class LightThemeColors implements AppColors {
-  @override
-  Color get primary => const Color(0xFF6200EE);
-  @override
-  Color get secondary => const Color(0xFF03DAC6);
+  static Color getEmotionColor(Emotion emotion) {
+    switch (emotion) {
+      case Emotion.happy:
+        return Colors.yellow;
+      case Emotion.sad:
+        return Colors.blue;
+      case Emotion.angry:
+        return Colors.red;
+      case Emotion.anxious:
+        return Colors.orange;
+      case Emotion.neutral:
+        return Colors.grey;
+      case Emotion.excited:
+        return Colors.pink;
+      case Emotion.calm:
+        return Colors.green;
+    }
+  }
 
-  @override
-  Color get surface => Colors.white;
-  @override
-  Color get background => const Color(0xFFF2F2F7);
-  @override
-  Color get onSurface => Colors.black87;
-  @override
-  Color get onBackground => Colors.black;
-
-  @override
-  Color get destructive => Colors.red;
-  @override
-  Color get glassBackground => Colors.white.withOpacity(0.6);
-
-  @override
-  Color get textPrimary => Colors.black87;
-  @override
-  Color get textSecondary => Colors.black54;
-}
-
-// Concrete implementation for the dark theme
-class DarkThemeColors implements AppColors {
-  @override
-  Color get primary => const Color(0xFFBB86FC);
-  @override
-  Color get secondary => const Color(0xFF03DAC6);
-
-  @override
-  Color get surface => const Color(0xFF121212);
-  @override
-  Color get background => const Color(0xFF1C1C1E);
-  @override
-  Color get onSurface => Colors.white;
-  @override
-  Color get onBackground => Colors.white;
-
-  @override
-  Color get destructive => Colors.redAccent;
-  @override
-  Color get glassBackground => Colors.black.withOpacity(0.5);
-
-  @override
-  Color get textPrimary => Colors.white;
-  @override
-  Color get textSecondary => Colors.white70;
+  // Primary/Secondary placeholders if needed by other files not yet analyzed,
+  // but app_theme.dart takes primary as argument, so might not be needed here static-ly
+  // unless referenced elsewhere. For now, sticking to what triggered errors.
 }

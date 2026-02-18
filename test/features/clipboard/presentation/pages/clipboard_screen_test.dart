@@ -20,8 +20,9 @@ void main() {
     final tempDir = await Directory.systemTemp.createTemp();
     Hive.init(tempDir.path);
 
-    if (!Hive.isAdapterRegistered(5))
+    if (!Hive.isAdapterRegistered(5)) {
       Hive.registerAdapter(ClipboardItemAdapter());
+    }
   });
 
   setUp(() async {

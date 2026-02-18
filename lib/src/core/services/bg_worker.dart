@@ -50,8 +50,9 @@ void callbackDispatcher() {
         case kTaskCheckMissedTodos:
         case Workmanager.iOSBackgroundTask:
           // Ensure box for todos is open for this specific service
-          if (!Hive.isBoxOpen('todos_box'))
+          if (!Hive.isBoxOpen('todos_box')) {
             await Hive.openBox<Todo>('todos_box');
+          }
           await TodoSchedulerService().handleMissedRecurrences();
           break;
       }

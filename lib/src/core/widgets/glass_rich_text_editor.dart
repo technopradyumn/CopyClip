@@ -1,5 +1,3 @@
-import 'dart:io' show File;
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -7,23 +5,25 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill/quill_delta.dart';
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:file_picker/file_picker.dart';
+
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:speech_to_text/speech_to_text.dart';
-import 'package:speech_to_text/speech_recognition_result.dart';
+
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/features/premium/presentation/widgets/premium_lock_dialog.dart';
-import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'timestamp_embed.dart'; // Full color picker
+import '../theme/background_design.dart';
+import '../theme/bloc/theme_bloc.dart';
+import 'background_painters.dart';
 
 class GlassRichTextEditor extends StatefulWidget {
   final QuillController controller;
@@ -43,10 +43,10 @@ class GlassRichTextEditor extends StatefulWidget {
   State<GlassRichTextEditor> createState() => _GlassRichTextEditorState();
 }
 
-class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
+class _GlassRichTextEditorState extends State<GlassRichTextEditor>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _starController;
   String? _expandedDropdown;
-
-  int _currentMatchIndex = -1;
 
   final List<String> _fontFamilies = [
     'Sans Serif',
@@ -94,21 +94,31 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     {'label': 'Heading 3', 'value': 3},
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    _starController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 20),
+    )..repeat();
+    widget.controller.addListener(_onControllerChange);
+    widget.focusNode.addListener(_onFocusChange);
+  }
+
+  @override
+  void dispose() {
+    _starController.dispose();
+    widget.controller.removeListener(_onControllerChange);
+    widget.focusNode.removeListener(_onFocusChange);
+    _findController.dispose();
+    _replaceController.dispose();
+    super.dispose();
+  }
+
   bool _showEmojiPicker = false;
   bool _showSearchReplace = false;
   final TextEditingController _findController = TextEditingController();
   final TextEditingController _replaceController = TextEditingController();
-
-  final SpeechToText _speechToText = SpeechToText();
-  bool _speechEnabled = false;
-
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(_onControllerChange);
-    widget.focusNode.addListener(_onFocusChange);
-    _initSpeech();
-  }
 
   void _onFocusChange() {
     if (widget.focusNode.hasFocus) {
@@ -145,20 +155,6 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
         }
       }
     });
-  }
-
-  void _initSpeech() async {
-    _speechEnabled = await _speechToText.initialize();
-    setState(() {});
-  }
-
-  @override
-  void dispose() {
-    widget.controller.removeListener(_onControllerChange);
-    widget.focusNode.removeListener(_onFocusChange);
-    _findController.dispose();
-    _replaceController.dispose();
-    super.dispose();
   }
 
   void _onControllerChange() {
@@ -601,42 +597,6 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     }
   }
 
-  Future<void> _insertFile() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result != null && result.files.isNotEmpty) {
-      final filePath = result.files.first.path!;
-      final fileName = result.files.first.name;
-
-      // Get current cursor position
-      final index = widget.controller.selection.baseOffset;
-
-      // 1. Insert the text (the filename)
-      widget.controller.replaceText(index, 0, fileName, null);
-
-      // 2. Apply the link attribute to the EXACT range of the filename
-      // Using formatText is more stable than formatSelection for programmatic links
-      widget.controller.formatText(
-        index,
-        fileName.length,
-        Attribute.fromKeyValue('link', 'file://$filePath'),
-      );
-
-      // 3. Move cursor to the end of the filename and add a space
-      // This "breaks" the link format so the user can continue typing normally
-      widget.controller.updateSelection(
-        TextSelection.collapsed(offset: index + fileName.length),
-        ChangeSource.local,
-      );
-
-      // Insert a space to separate the link from next text
-      widget.controller.replaceText(index + fileName.length, 0, ' ', null);
-      widget.controller.updateSelection(
-        TextSelection.collapsed(offset: index + fileName.length + 1),
-        ChangeSource.local,
-      );
-    }
-  }
-
   Future<void> _insertImage() async {
     final picker = ImagePicker();
     final image = await picker.pickImage(source: ImageSource.gallery);
@@ -699,7 +659,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     final currentStart = sel.start;
     for (int i = 0; i < matches.length; i++) {
       if (currentStart == matches[i]) {
-        _currentMatchIndex = i;
+        // _currentMatchIndex = i; // Unused
         return i;
       }
     }
@@ -725,7 +685,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
       ),
       ChangeSource.local,
     );
-    _currentMatchIndex = nextIndex;
+    // _currentMatchIndex = nextIndex;
   }
 
   void _findPrevious() {
@@ -743,7 +703,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
       ),
       ChangeSource.local,
     );
-    _currentMatchIndex = prevIndex;
+    // _currentMatchIndex = prevIndex;
   }
 
   void _replace() {
@@ -776,15 +736,6 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
       const TextSelection.collapsed(offset: 0),
       ChangeSource.local,
     );
-  }
-
-  void _startVoiceTyping() => _speechToText.listen(onResult: _onSpeechResult);
-
-  void _stopVoiceTyping() => _speechToText.stop();
-
-  void _onSpeechResult(SpeechRecognitionResult result) {
-    final index = widget.controller.selection.baseOffset;
-    widget.controller.replaceText(index, 0, result.recognizedWords, null);
   }
 
   Future<void> _exportToPdf() async {
@@ -998,7 +949,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
         defaultTextStyle.style.copyWith(
           fontSize: 18,
           height: 1.5,
-          color: contrastColor.withOpacity(0.4), // ✅ Adaptive Placeholder
+          color: contrastColor.withValues(alpha: 0.4), // ✅ Adaptive Placeholder
         ),
         const HorizontalSpacing(0, 0),
         VerticalSpacing.zero,
@@ -1019,7 +970,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
       ),
       quote: DefaultTextBlockStyle(
         TextStyle(
-          color: contrastColor.withOpacity(0.7), // ✅ Adaptive Quote
+          color: contrastColor.withValues(alpha: 0.7), // ✅ Adaptive Quote
           fontSize: 16,
           fontStyle: FontStyle.italic,
         ),
@@ -1030,7 +981,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
           border: Border(
             left: BorderSide(
               width: 4,
-              color: contrastColor.withOpacity(0.3), // ✅ Adaptive
+              color: contrastColor.withValues(alpha: 0.3), // ✅ Adaptive
             ),
           ),
         ),
@@ -1058,57 +1009,86 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
     return Column(
       children: [
         Expanded(
-          child: Container(
-            color: Colors.transparent,
-            child: QuillEditor(
-              controller: widget.controller,
-              focusNode: widget.focusNode,
-              scrollController: widget.scrollController,
-              config: QuillEditorConfig(
-                placeholder: "Write here...",
-                padding: const EdgeInsets.fromLTRB(24, 10, 24, 100),
-                autoFocus: false,
-                expands: false,
-                scrollable: true,
-                scrollPhysics: const BouncingScrollPhysics(),
-                enableInteractiveSelection: true,
-                showCursor: true,
-                // Enable context menu for copy, paste, select all on long press
-                contextMenuBuilder: (context, rawEditorState) {
-                  return AdaptiveTextSelectionToolbar.buttonItems(
-                    anchors: rawEditorState.contextMenuAnchors,
-                    buttonItems: rawEditorState.contextMenuButtonItems,
-                  );
-                },
-                embedBuilders: [
-                  ...FlutterQuillEmbeds.editorBuilders(),
-                  TimeStampEmbedBuilder(),
+          child: BlocBuilder<ThemeBloc, ThemeState>(
+            builder: (context, state) {
+              return Stack(
+                children: [
+                  // Premium Stars Background Layer
+                  if (state.backgroundDesign == BackgroundDesign.floatingStars)
+                    Positioned.fill(
+                      child: RepaintBoundary(
+                        child: AnimatedBuilder(
+                          animation: _starController,
+                          builder: (context, _) {
+                            return CustomPaint(
+                              painter: StarsPainter(
+                                animationValue: _starController.value,
+                                primaryColor: state.primaryColor,
+                                isDark: state.themeMode == ThemeMode.dark,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+
+                  // Main Editor
+                  Positioned.fill(
+                    child: QuillEditor(
+                      controller: widget.controller,
+                      focusNode: widget.focusNode,
+                      scrollController: widget.scrollController,
+                      config: QuillEditorConfig(
+                        placeholder: "Write here...",
+                        padding: const EdgeInsets.fromLTRB(24, 10, 24, 100),
+                        autoFocus: false,
+                        expands: false,
+                        scrollable: true,
+                        scrollPhysics: const BouncingScrollPhysics(),
+                        enableInteractiveSelection: true,
+                        showCursor: true,
+                        // Enable context menu for copy, paste, select all on long press
+                        contextMenuBuilder: (context, rawEditorState) {
+                          return AdaptiveTextSelectionToolbar.buttonItems(
+                            anchors: rawEditorState.contextMenuAnchors,
+                            buttonItems: rawEditorState.contextMenuButtonItems,
+                          );
+                        },
+                        embedBuilders: [
+                          ...FlutterQuillEmbeds.editorBuilders(),
+                          TimeStampEmbedBuilder(),
+                        ],
+                        customStyles: customStyles,
+                        onLaunchUrl: (url) async {
+                          final uri = Uri.tryParse(url);
+                          if (uri != null && await canLaunchUrl(uri)) {
+                            await launchUrl(
+                              uri,
+                              mode: LaunchMode.externalApplication,
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ),
                 ],
-                customStyles: customStyles,
-                onLaunchUrl: (url) async {
-                  if (url == null) return;
-                  final uri = Uri.tryParse(url);
-                  if (uri != null && await canLaunchUrl(uri)) {
-                    await launchUrl(uri, mode: LaunchMode.externalApplication);
-                  }
-                },
-              ),
-            ),
+              );
+            },
           ),
         ),
         SizedBox(height: 5),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
           decoration: BoxDecoration(
-            color: colorScheme.surface.withOpacity(0.95),
+            color: colorScheme.surface.withValues(alpha: 0.95),
             borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
             border: Border.all(
-              color: colorScheme.primary.withOpacity(0.2),
+              color: colorScheme.primary.withValues(alpha: 0.2),
               width: AppConstants.borderWidth,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.12),
+                color: Colors.black.withValues(alpha: 0.12),
                 blurRadius: 20,
                 offset: const Offset(0, -6),
               ),
@@ -1430,8 +1410,9 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                       isPremiumFeature: true,
                       isSelected: () {
                         final sel = widget.controller.selection;
-                        if (sel.isCollapsed || sel.start >= sel.end)
+                        if (sel.isCollapsed || sel.start >= sel.end) {
                           return false;
+                        }
                         final selectedText = widget.controller.document
                             .getPlainText(sel.start, sel.end - sel.start);
                         if (selectedText.isEmpty) return false;
@@ -1450,8 +1431,9 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                       isPremiumFeature: true,
                       isSelected: () {
                         final sel = widget.controller.selection;
-                        if (sel.isCollapsed || sel.start >= sel.end)
+                        if (sel.isCollapsed || sel.start >= sel.end) {
                           return false;
+                        }
                         final selectedText = widget.controller.document
                             .getPlainText(sel.start, sel.end - sel.start);
                         if (selectedText.isEmpty) return false;
@@ -1494,7 +1476,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                     color: colorScheme.surface,
                     border: Border(
                       top: BorderSide(
-                        color: colorScheme.primary.withOpacity(0.2),
+                        color: colorScheme.primary.withValues(alpha: 0.2),
                       ),
                     ),
                   ),
@@ -1627,7 +1609,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
   Widget _buildDivider() => Container(
     width: 1,
     height: 24,
-    color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
   );
 
   Widget _buildDropdownButton({
@@ -1644,12 +1626,12 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         decoration: BoxDecoration(
           color: isExpanded
-              ? colorScheme.primary.withOpacity(0.1)
+              ? colorScheme.primary.withValues(alpha: 0.1)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(6),
           border: Border.all(
             color: isExpanded
-                ? colorScheme.primary.withOpacity(0.3)
+                ? colorScheme.primary.withValues(alpha: 0.3)
                 : Colors.transparent,
           ),
         ),
@@ -1712,7 +1694,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                 ),
                 decoration: BoxDecoration(
                   color: selected
-                      ? colorScheme.primary.withOpacity(0.1)
+                      ? colorScheme.primary.withValues(alpha: 0.1)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(6),
                 ),
@@ -1757,7 +1739,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                 ),
                 decoration: BoxDecoration(
                   color: selected
-                      ? colorScheme.primary.withOpacity(0.1)
+                      ? colorScheme.primary.withValues(alpha: 0.1)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(6),
                 ),
@@ -1814,7 +1796,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                 ),
                 decoration: BoxDecoration(
                   color: selected
-                      ? colorScheme.primary.withOpacity(0.1)
+                      ? colorScheme.primary.withValues(alpha: 0.1)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(6),
                 ),
@@ -1864,7 +1846,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                 ),
                 decoration: BoxDecoration(
                   color: selected
-                      ? colorScheme.primary.withOpacity(0.1)
+                      ? colorScheme.primary.withValues(alpha: 0.1)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(6),
                 ),
@@ -1904,19 +1886,19 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
   }) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Consumer<PremiumProvider>(
-      builder: (context, premiumProvider, _) {
-        final isLocked = isPremiumFeature && !premiumProvider.isPremium;
+    return BlocBuilder<PremiumBloc, PremiumState>(
+      builder: (context, state) {
+        final isLocked = isPremiumFeature && !state.isPremium;
 
         // Determine final icon color
         final Color effectiveIconColor = isDisabled
-            ? colorScheme.onSurface.withOpacity(0.3)
+            ? colorScheme.onSurface.withValues(alpha: 0.3)
             : (iconColor ?? // Use custom color if provided
                   (isSelected
                       ? colorScheme.primary
                       : isLocked
-                      ? colorScheme.onSurface.withOpacity(0.4)
-                      : colorScheme.onSurface.withOpacity(0.7)));
+                      ? colorScheme.onSurface.withValues(alpha: 0.4)
+                      : colorScheme.onSurface.withValues(alpha: 0.7)));
 
         return Tooltip(
           message: isLocked ? "$tooltip (Premium)" : tooltip,
@@ -1943,14 +1925,14 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor> {
                   margin: const EdgeInsets.symmetric(horizontal: 2),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? colorScheme.primary.withOpacity(0.15)
+                        ? colorScheme.primary.withValues(alpha: 0.15)
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(
                       AppConstants.cornerRadius * 0.4,
                     ),
                     border: Border.all(
                       color: isSelected
-                          ? colorScheme.primary.withOpacity(0.4)
+                          ? colorScheme.primary.withValues(alpha: 0.4)
                           : Colors.transparent,
                       width: AppConstants.borderWidth,
                     ),

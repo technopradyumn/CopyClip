@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ui';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
@@ -15,8 +15,9 @@ import 'package:share_plus/share_plus.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import 'package:copyclip/src/core/widgets/empty_state_widget.dart'; // Added
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
-
+import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 // Data
 import '../../data/clipboard_model.dart';
 
@@ -158,16 +159,21 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
   }
 
   String _getCleanText(String content) {
-    if (!content.startsWith('[')) return content;
+    if (content.trim().isEmpty) return "Empty content";
+    if (!content.trim().startsWith('[')) return content.trim();
     try {
       final List<dynamic> delta = jsonDecode(content);
       String plainText = "";
       for (var op in delta) {
-        if (op is Map && op['insert'] is String) plainText += op['insert'];
+        if (op is Map && op.containsKey('insert')) {
+          final insertData = op['insert'];
+          if (insertData is String) plainText += insertData;
+        }
       }
-      return plainText.trim();
+      final String trimmed = plainText.trim();
+      return trimmed.isEmpty ? "Empty content" : trimmed;
     } catch (_) {
-      return content;
+      return content.trim();
     }
   }
 
@@ -234,12 +240,17 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
     context.push(AppRouter.clipboardEdit, extra: item);
   }
 
+  void _addClipboardItem() {
+    context.push(AppRouter.clipboardEdit);
+  }
+
   void _toggleSelection(String id) {
     setState(() {
-      if (_selectedIds.contains(id))
+      if (_selectedIds.contains(id)) {
         _selectedIds.remove(id);
-      else
+      } else {
         _selectedIds.add(id);
+      }
       if (_selectedIds.isEmpty) _isSelectionMode = false;
     });
   }
@@ -262,18 +273,19 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
     final theme = Theme.of(context);
     final onSurfaceColor = theme.colorScheme.onSurface;
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: !_isSelectionMode,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
         if (_isSelectionMode) {
           setState(() {
             _isSelectionMode = false;
             _selectedIds.clear();
           });
-          return false;
         }
-        return true;
       },
       child: GlassScaffold(
+        showBackArrow: false,
         title: null,
         floatingActionButton: _isSelectionMode
             ? null
@@ -285,179 +297,196 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
                   color: theme.colorScheme.onPrimary,
                 ),
               ),
-        body: Column(
-          children: [
-            _buildCustomTopBar(),
-
-            // Search Bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Container(
-                height: 44,
-                decoration: BoxDecoration(
-                  color: onSurfaceColor.withOpacity(0.08),
-                  borderRadius: BorderRadius.circular(
-                    AppConstants.cornerRadius,
-                  ),
-                  border: Border.all(
-                    color: theme.dividerColor.withOpacity(0.1),
-                    width: AppConstants.borderWidth,
-                  ),
+        body: DynamicBackground(
+          child: Column(
+            children: [
+              _buildCustomTopBar(),
+              // Search Bar
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
                 ),
-                child: TextField(
-                  controller: _searchController,
-                  style: theme.textTheme.bodyMedium,
-                  decoration: InputDecoration(
-                    hintText: 'Search clips...',
-                    hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                      color: onSurfaceColor.withOpacity(0.5),
+                child: Container(
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: onSurfaceColor.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.cornerRadius,
                     ),
-                    prefixIcon: Icon(
-                      CupertinoIcons.search,
-                      color: onSurfaceColor.withOpacity(0.5),
-                      size: 20,
+                    border: Border.all(
+                      color: theme.dividerColor.withValues(alpha: 0.1),
+                      width: AppConstants.borderWidth,
                     ),
-                    suffixIcon: _searchController.text.isNotEmpty
-                        ? GestureDetector(
-                            onTap: () {
-                              _searchController.clear();
-                            },
-                            child: Icon(
-                              CupertinoIcons.xmark_circle,
-                              color: onSurfaceColor.withOpacity(0.5),
-                              size: 18,
-                            ),
-                          )
-                        : null,
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                  ),
+                  child: TextField(
+                    controller: _searchController,
+                    style: theme.textTheme.bodyMedium,
+                    decoration: InputDecoration(
+                      hintText: 'Search clips...',
+                      hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                        color: onSurfaceColor.withValues(alpha: 0.5),
+                      ),
+                      prefixIcon: Icon(
+                        CupertinoIcons.search,
+                        color: onSurfaceColor.withValues(alpha: 0.5),
+                        size: 20,
+                      ),
+                      suffixIcon: _searchController.text.isNotEmpty
+                          ? GestureDetector(
+                              onTap: () => _searchController.clear(),
+                              child: Icon(
+                                CupertinoIcons.xmark_circle,
+                                color: onSurfaceColor.withValues(alpha: 0.5),
+                                size: 18,
+                              ),
+                            )
+                          : null,
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            // List
-            Expanded(
-              child: ValueListenableBuilder<List<ClipboardItem>>(
-                valueListenable: _filteredClipsNotifier,
-                builder: (context, items, _) {
-                  if (items.isEmpty) {
-                    return Center(
-                      child: Text(
-                        "No items found.",
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: onSurfaceColor.withOpacity(0.4),
-                        ),
-                      ),
-                    );
-                  }
-
-                  // ✅ LOGIC: Reorder only if Custom Sort + No Search + Not Selecting
-                  final canReorder =
-                      _currentSort == ClipSortOption.custom &&
-                      _searchQuery.isEmpty &&
-                      !_isSelectionMode;
-
-                  if (canReorder) {
-                    return ReorderableListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-                      itemCount: items.length,
-                      onReorder: _onReorder,
-                      proxyDecorator: (child, index, animation) =>
-                          AnimatedBuilder(
-                            animation: animation,
-                            builder: (_, __) => Transform.scale(
-                              scale: 1.05,
-                              child: Material(
-                                color: Colors.transparent,
-                                child: child,
+              // 3. Main List
+              Expanded(
+                child: CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  slivers: [
+                    ValueListenableBuilder<List<ClipboardItem>>(
+                      valueListenable: _filteredClipsNotifier,
+                      builder: (context, items, _) {
+                        if (items.isEmpty) {
+                          return SliverFillRemaining(
+                            hasScrollBody: false,
+                            child: Center(
+                              child: EmptyStateWidget(
+                                message: "Clipboard is empty",
+                                subMessage: "Copied items will appear here.",
+                                assetPath: "assets/images/clipboard_empty.svg",
+                                onAction: _addClipboardItem,
+                                actionLabel: "Add Item",
                               ),
                             ),
-                          ),
-                      itemBuilder: (context, index) {
-                        final item = items[index];
-                        return ReorderableDelayedDragStartListener(
-                          key: ValueKey(item.id),
-                          index: index,
-                          enabled: canReorder,
-                          child: ClipboardCard(
-                            item: item,
-                            isSelected: _selectedIds.contains(item.id),
-                            onTap: () => _openEditor(item),
-                            onLongPress: null, // Allow drag
-                            onCopy: () {
-                              Clipboard.setData(
-                                ClipboardData(
-                                  text: _getCleanText(item.content),
-                                ),
+                          );
+                        }
+
+                        final canReorder =
+                            _currentSort == ClipSortOption.custom &&
+                            _searchQuery.isEmpty &&
+                            !_isSelectionMode;
+
+                        if (canReorder) {
+                          return SliverReorderableList(
+                            itemCount: items.length,
+                            onReorder: _onReorder,
+                            proxyDecorator: (child, index, animation) {
+                              return AnimatedBuilder(
+                                animation: animation,
+                                builder: (BuildContext context, Widget? child) {
+                                  final double animValue = Curves.easeInOut
+                                      .transform(animation.value);
+                                  final double scale = ui.lerpDouble(
+                                    1,
+                                    1.1,
+                                    animValue,
+                                  )!;
+                                  return Transform.scale(
+                                    scale: scale,
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      elevation: 10,
+                                      shadowColor: Colors.black45,
+                                      child: child,
+                                    ),
+                                  );
+                                },
+                                child: child,
                               );
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Copied!"),
-                                  behavior: SnackBarBehavior.floating,
+                            },
+                            itemBuilder: (context, index) {
+                              final item = items[index];
+                              return ReorderableDelayedDragStartListener(
+                                key: ValueKey(item.id),
+                                index: index,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 4,
+                                  ),
+                                  child: RepaintBoundary(
+                                    child: ClipboardCard(
+                                      item: item,
+                                      isSelected: _selectedIds.contains(
+                                        item.id,
+                                      ),
+                                      onTap: () => _openEditor(item),
+                                      onLongPress: null,
+                                      onCopy: () => _copyToClipboard(item),
+                                      // ignore: deprecated_member_use
+                                      onShare: () => Share.share(
+                                        _getCleanText(item.content),
+                                      ),
+                                      onDelete: () => _confirmDelete(item),
+                                      onColorChanged: (newColor) {
+                                        item.colorValue = newColor.toARGB32();
+                                        item.save();
+                                      },
+                                    ),
+                                  ),
                                 ),
                               );
                             },
-                            onShare: () =>
-                                Share.share(_getCleanText(item.content)),
-                            onDelete: () => _confirmDelete(item),
-                            onColorChanged: (newColor) {
-                              item.colorValue = newColor.value;
-                              item.save();
-                            },
-                          ),
-                        );
+                          );
+                        } else {
+                          return SliverPadding(
+                            padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+                            sliver: SliverList(
+                              delegate: SliverChildBuilderDelegate((
+                                context,
+                                index,
+                              ) {
+                                final item = items[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 16),
+                                  child: RepaintBoundary(
+                                    child: ClipboardCard(
+                                      key: ValueKey(item.id),
+                                      item: item,
+                                      isSelected: _selectedIds.contains(
+                                        item.id,
+                                      ),
+                                      onTap: () => _openEditor(item),
+                                      onLongPress: () => setState(() {
+                                        _isSelectionMode = true;
+                                        _selectedIds.add(item.id);
+                                      }),
+                                      onCopy: () => _copyToClipboard(item),
+                                      // ignore: deprecated_member_use
+                                      onShare: () => Share.share(
+                                        _getCleanText(item.content),
+                                      ),
+
+                                      onDelete: () => _confirmDelete(item),
+                                      onColorChanged: (newColor) {
+                                        item.colorValue = newColor.toARGB32();
+                                        item.save();
+                                      },
+                                    ),
+                                  ),
+                                );
+                              }, childCount: items.length),
+                            ),
+                          );
+                        }
                       },
-                    );
-                  } else {
-                    // ✅ PERFORMANCE: Standard ListView for Search/Other sorts
-                    return ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-                      itemCount: items.length,
-                      cacheExtent: 1000,
-                      itemBuilder: (context, index) {
-                        final item = items[index];
-                        return RepaintBoundary(
-                          child: ClipboardCard(
-                            key: ValueKey(item.id),
-                            item: item,
-                            isSelected: _selectedIds.contains(item.id),
-                            onTap: () => _openEditor(item),
-                            onLongPress: () => setState(() {
-                              _isSelectionMode = true;
-                              _selectedIds.add(item.id);
-                            }),
-                            onCopy: () {
-                              Clipboard.setData(
-                                ClipboardData(
-                                  text: _getCleanText(item.content),
-                                ),
-                              );
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Copied!"),
-                                  behavior: SnackBarBehavior.floating,
-                                ),
-                              );
-                            },
-                            onShare: () =>
-                                Share.share(_getCleanText(item.content)),
-                            onDelete: () => _confirmDelete(item),
-                            onColorChanged: (newColor) {
-                              item.colorValue = newColor.value;
-                              item.save();
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  }
-                },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -499,7 +528,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
         IconButton(
           icon: Icon(
             CupertinoIcons.checkmark_circle,
-            color: onSurfaceColor.withOpacity(0.54),
+            color: onSurfaceColor.withValues(alpha: 0.54),
           ),
           onPressed: () => setState(() => _isSelectionMode = true),
         ),
@@ -629,6 +658,16 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
           onPressed: _deleteAll,
         ),
       ],
+    );
+  }
+
+  void _copyToClipboard(ClipboardItem item) {
+    Clipboard.setData(ClipboardData(text: _getCleanText(item.content)));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Copied!"),
+        behavior: SnackBarBehavior.floating,
+      ),
     );
   }
 }

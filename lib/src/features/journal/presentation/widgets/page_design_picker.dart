@@ -68,13 +68,13 @@ class PageDesignPickerSheet extends StatelessWidget {
                       border: Border.all(
                         color: isSelected
                             ? theme.colorScheme.primary
-                            : theme.dividerColor.withOpacity(0.2),
+                            : theme.dividerColor.withValues(alpha: 0.2),
                         width: isSelected ? 2 : 1,
                       ),
                       boxShadow: [
                         if (isSelected)
                           BoxShadow(
-                            color: theme.colorScheme.primary.withOpacity(0.2),
+                            color: theme.colorScheme.primary.withValues(alpha: 0.2),
                             blurRadius: 8,
                           ),
                       ],
@@ -100,7 +100,7 @@ class PageDesignPickerSheet extends StatelessWidget {
                                 vertical: 6,
                               ),
                               decoration: BoxDecoration(
-                                color: theme.colorScheme.surface.withOpacity(
+                                color: theme.colorScheme.surface.withValues(alpha: 
                                   0.85,
                                 ),
                                 borderRadius: BorderRadius.circular(20),

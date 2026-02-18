@@ -30,12 +30,12 @@ class SearchHeaderField extends StatelessWidget {
         child: Container(
           height: 48,
           decoration: BoxDecoration(
-            color: onSurface.withOpacity(0.08),
+            color: onSurface.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(
               AppConstants.cornerRadius * 0.75,
             ),
             border: Border.all(
-              color: theme.dividerColor.withOpacity(0.1),
+              color: theme.dividerColor.withValues(alpha: 0.1),
               width: AppConstants.borderWidth,
             ),
           ),
@@ -47,11 +47,11 @@ class SearchHeaderField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                color: onSurface.withOpacity(0.5),
+                color: onSurface.withValues(alpha: 0.5),
               ),
               prefixIcon: Icon(
                 CupertinoIcons.search,
-                color: onSurface.withOpacity(0.5),
+                color: onSurface.withValues(alpha: 0.5),
                 size: 20,
               ),
               suffixIcon: ValueListenableBuilder<TextEditingValue>(

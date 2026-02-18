@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/calendar/presentation/pages/calendar_screen.dart';
 import '../../features/calendar/presentation/pages/date_detail_screen.dart';
 import '../../features/canvas/presentation/pages/canvas_folder_screen.dart';
-import '../../features/canvas/presentation/pages/canvs_screen.dart';
+import '../../features/canvas/presentation/pages/canvas_screen.dart';
 import '../../features/clipboard/data/clipboard_model.dart';
 import '../../features/clipboard/presentation/pages/clipboard_edit_screen.dart';
 import '../../features/dashboard/presentation/pages/dashboard_screen.dart';
@@ -20,6 +20,7 @@ import '../../features/settings/presentation/pages/feedback_screen.dart';
 import '../../features/settings/presentation/pages/privacy_policy_screen.dart';
 import '../../features/settings/presentation/pages/recycle_bin_screen.dart';
 import '../../features/settings/presentation/pages/settings_screen.dart';
+import '../../features/settings/presentation/pages/background_picker_screen.dart';
 import '../../features/todos/data/todo_model.dart';
 import '../../features/todos/presentation/pages/todo_edit_screen.dart';
 import '../../features/todos/presentation/pages/todos_screen.dart';
@@ -27,6 +28,9 @@ import '../../features/expenses/presentation/pages/expenses_screen.dart';
 import '../../features/journal/presentation/pages/journal_screen.dart';
 import '../../features/clipboard/presentation/pages/clipboard_screen.dart';
 import '../../features/premium/presentation/pages/premium_screen.dart';
+import 'package:copyclip/src/features/social_post/presentation/pages/social_post_tabs_screen.dart'; // Update import
+import 'package:copyclip/src/features/social_post/presentation/pages/social_post_screen.dart'; // Editor
+import 'package:copyclip/src/features/social_post/data/social_post_model.dart'; // Model
 
 class AppRouter {
   static const String root = '/';
@@ -57,8 +61,12 @@ class AppRouter {
   static const String recycleBin = "settings/recycle-bin";
   static const String privacyPolicy = "/settings/privacy-policy";
   static const String feedback = "/settings/feedback";
+  static const String backgroundPicker = "/settings/background-picker";
 
   static const String globalSearch = "/global-search";
+  static const String socialPost = '/social-post';
+  static const String socialPostEdit =
+      '/social-post/edit'; // New route // Added
 
   static const String premium = "/premium";
 }
@@ -182,9 +190,7 @@ List<GoRoute> getAuthRoutes() {
         }
 
         // Deep Link Support
-        if (noteId == null) {
-          noteId = state.uri.queryParameters['id'];
-        }
+        noteId ??= state.uri.queryParameters['id'];
 
         return CanvasEditScreen(noteId: noteId, folderId: folderId);
       },
@@ -208,10 +214,25 @@ List<GoRoute> getAuthRoutes() {
       path: AppRouter.feedback,
       builder: (context, state) => const FeedbackScreen(),
     ),
+    GoRoute(
+      path: AppRouter.backgroundPicker,
+      builder: (context, state) => const BackgroundPickerScreen(),
+    ),
 
     GoRoute(
       path: AppRouter.globalSearch,
       builder: (context, state) => const GlobalSearchScreen(),
+    ),
+    GoRoute(
+      path: AppRouter.socialPost,
+      builder: (context, state) => const SocialPostTabsScreen(),
+    ),
+    GoRoute(
+      path: AppRouter.socialPostEdit,
+      builder: (context, state) {
+        final post = state.extra as SocialPost?;
+        return SocialPostScreen(postToEdit: post);
+      },
     ),
   ];
 }

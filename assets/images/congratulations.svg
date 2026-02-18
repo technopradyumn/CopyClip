@@ -1,0 +1,37 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Confetti Background -->
+  <circle cx="30" cy="40" r="5" fill="#FF6B6B"/>
+  <rect x="160" y="30" width="8" height="8" fill="#4ECDC4" transform="rotate(20 160 30)"/>
+  <path d="M20 160L30 170L20 180" stroke="#FFE66D" stroke-width="3"/>
+  <circle cx="170" cy="150" r="4" fill="#FF6B6B"/>
+  <rect x="50" y="20" width="6" height="12" fill="#1A535C" transform="rotate(-15 50 20)"/>
+  
+  <!-- Body -->
+  <path d="M100 170C100 170 60 150 40 90C20 30 60 10 80 10C100 10 140 30 160 90C180 150 140 170 100 170Z" fill="#FFE135"/>
+  
+  <!-- Stem -->
+  <path d="M75 15L85 0L115 0L125 15" fill="#8B4513"/>
+  
+  <!-- Face (Happy) -->
+  <!-- Eyes (Closed Happy) -->
+  <path d="M70 80C75 75 85 75 90 80" stroke="black" stroke-width="3" stroke-linecap="round"/>
+  <path d="M110 80C115 75 125 75 130 80" stroke="black" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Mouth (Big Smile) -->
+  <path d="M70 110C70 110 90 140 130 110" stroke="black" stroke-width="3" stroke-linecap="round" fill="white"/>
+  
+  <!-- Cheeks -->
+  <circle cx="65" cy="100" r="6" fill="#FF6B6B" fill-opacity="0.6"/>
+  <circle cx="135" cy="100" r="6" fill="#FF6B6B" fill-opacity="0.6"/>
+  
+  <!-- Arms (Raised) -->
+  <path d="M40 90C20 70 30 50 40 40" stroke="#FFE135" stroke-width="12" stroke-linecap="round"/>
+  <path d="M160 90C180 70 170 50 160 40" stroke="#FFE135" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Hands -->
+  <circle cx="40" cy="40" r="10" fill="#FFE135"/>
+  <circle cx="160" cy="40" r="10" fill="#FFE135"/>
+
+  <!-- Shadow -->
+  <ellipse cx="100" cy="180" rx="60" ry="10" fill="black" fill-opacity="0.1"/>
+</svg>

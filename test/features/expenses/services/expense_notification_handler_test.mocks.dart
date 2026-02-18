@@ -6,6 +6,7 @@
 import 'dart:async' as _i5;
 
 import 'package:copyclip/src/core/services/notification_service.dart' as _i4;
+import 'package:flutter/material.dart' as _i6;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -143,6 +144,30 @@ class MockNotificationService extends _i1.Mock
             #scheduledDate: scheduledDate,
             #channelId: channelId,
             #payload: payload,
+          },
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> scheduleDailyNotification({
+    required int? id,
+    required String? title,
+    required String? body,
+    required _i6.TimeOfDay? time,
+    String? channelId = 'todos',
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #scheduleDailyNotification,
+          [],
+          {
+            #id: id,
+            #title: title,
+            #body: body,
+            #time: time,
+            #channelId: channelId,
           },
         ),
         returnValue: _i5.Future<void>.value(),

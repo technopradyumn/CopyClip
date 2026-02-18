@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:copyclip/src/features/canvas/presentation/pages/canvs_screen.dart';
+import 'package:copyclip/src/features/canvas/presentation/pages/canvas_screen.dart';
 import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
 import 'package:copyclip/src/features/canvas/data/canvas_model.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
@@ -19,16 +19,21 @@ void main() {
     final tempDir = await Directory.systemTemp.createTemp();
     Hive.init(tempDir.path);
 
-    if (!Hive.isAdapterRegistered(10))
+    if (!Hive.isAdapterRegistered(10)) {
       Hive.registerAdapter(DrawingStrokeAdapter());
-    if (!Hive.isAdapterRegistered(11))
+    }
+    if (!Hive.isAdapterRegistered(11)) {
       Hive.registerAdapter(CanvasTextAdapter());
-    if (!Hive.isAdapterRegistered(12))
+    }
+    if (!Hive.isAdapterRegistered(12)) {
       Hive.registerAdapter(CanvasFolderAdapter());
-    if (!Hive.isAdapterRegistered(14))
+    }
+    if (!Hive.isAdapterRegistered(14)) {
       Hive.registerAdapter(CanvasPageAdapter());
-    if (!Hive.isAdapterRegistered(15))
+    }
+    if (!Hive.isAdapterRegistered(15)) {
       Hive.registerAdapter(CanvasNoteAdapter());
+    }
   });
 
   setUp(() async {

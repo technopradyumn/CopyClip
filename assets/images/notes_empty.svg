@@ -1,0 +1,31 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Body -->
+  <path d="M100 180C100 180 60 160 40 100C20 40 60 20 80 20C100 20 140 40 160 100C180 160 140 180 100 180Z" fill="#FFE135"/>
+  
+  <!-- Stem -->
+  <path d="M75 25L85 10L115 10L125 25" fill="#8B4513"/>
+  
+  <!-- Face (Thinking) -->
+  <circle cx="75" cy="85" r="8" fill="white"/>
+  <circle cx="77" cy="83" r="3" fill="black"/>
+  <circle cx="125" cy="85" r="8" fill="white"/>
+  <circle cx="123" cy="83" r="3" fill="black"/>
+  <path d="M90 110C95 105 105 105 110 110" stroke="black" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Thought Bubble -->
+  <path d="M150 40C150 40 160 20 180 30C200 40 190 60 180 65C170 70 160 60 150 40Z" fill="white" stroke="#ccc" stroke-width="2"/>
+  <circle cx="145" cy="65" r="4" fill="white" stroke="#ccc" stroke-width="1"/>
+  <circle cx="140" cy="75" r="2" fill="white" stroke="#ccc" stroke-width="1"/>
+  
+  <!-- Notepad -->
+  <rect x="60" y="120" width="80" height="60" rx="4" fill="#F0F0F0" stroke="#999" stroke-width="2"/>
+  <line x1="70" y1="135" x2="130" y2="135" stroke="#ddd" stroke-width="2"/>
+  <line x1="70" y1="150" x2="130" y2="150" stroke="#ddd" stroke-width="2"/>
+  <line x1="70" y1="165" x2="110" y2="165" stroke="#ddd" stroke-width="2"/>
+
+  <!-- Hand scratching head -->
+  <path d="M140 100C150 80 160 90 150 100" stroke="#FFE135" stroke-width="10" stroke-linecap="round"/>
+  
+  <!-- Shadow -->
+  <ellipse cx="100" cy="190" rx="60" ry="10" fill="black" fill-opacity="0.1"/>
+</svg>

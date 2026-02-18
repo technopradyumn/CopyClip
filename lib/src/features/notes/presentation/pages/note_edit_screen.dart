@@ -1,17 +1,13 @@
 import 'dart:convert';
 
-import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill/quill_delta.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:go_router/go_router.dart';
 
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
@@ -53,10 +49,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
   Note? _editingNote;
 
   Color _scaffoldColor = AppContentPalette.palette.first;
-  late Color _initialColor;
-
-  String _initialTitle = "";
-  String _initialContentJson = "";
 
   bool _isLoading = true;
 
@@ -95,9 +87,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
         _scaffoldColor = AppContentPalette.palette.first;
       }
 
-      _initialColor = _scaffoldColor;
-      _initialTitle = _titleController.text;
-
       // Apply dynamic default color if creating a new note
       if (_editingNote == null &&
           _scaffoldColor == AppContentPalette.palette.first) {
@@ -105,7 +94,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
           final defaultColor = AppContentPalette.getDefaultColor(context);
           if (_scaffoldColor != defaultColor) {
             _scaffoldColor = defaultColor;
-            _initialColor = defaultColor;
           }
         }
       }
@@ -170,9 +158,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
     _quillController = QuillController(
       document: doc,
       selection: const TextSelection.collapsed(offset: 0),
-    );
-    _initialContentJson = jsonEncode(
-      _quillController.document.toDelta().toJson(),
     );
   }
 
@@ -257,7 +242,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       _editingNote!.title = title;
       _editingNote!.content = contentJson;
       _editingNote!.updatedAt = _selectedDate;
-      _editingNote!.colorValue = _scaffoldColor.value;
+      _editingNote!.colorValue = _scaffoldColor.toARGB32();
 
       if (_editingNote!.isInBox) {
         _editingNote!.save();
@@ -304,7 +289,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
         title: title,
         content: contentJson,
         updatedAt: _selectedDate,
-        colorValue: _scaffoldColor.value,
+        colorValue: _scaffoldColor.toARGB32(),
         sortIndex: newSortIndex,
       );
       _notesBox.put(newNote.id, newNote);
@@ -331,7 +316,8 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                   spacing: 12,
                   runSpacing: 12,
                   children: palette.map((color) {
-                    final isSelected = _scaffoldColor.value == color.value;
+                    final isSelected =
+                        _scaffoldColor.toARGB32() == color.toARGB32();
                     return GestureDetector(
                       onTap: () {
                         setState(() => _scaffoldColor = color);
@@ -403,12 +389,15 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       final attributes = op.attributes ?? {};
 
       pw.TextStyle style = const pw.TextStyle(fontSize: 16);
-      if (attributes['bold'] == true)
+      if (attributes['bold'] == true) {
         style = style.copyWith(fontWeight: pw.FontWeight.bold);
-      if (attributes['italic'] == true)
+      }
+      if (attributes['italic'] == true) {
         style = style.copyWith(fontStyle: pw.FontStyle.italic);
-      if (attributes['underline'] == true)
+      }
+      if (attributes['underline'] == true) {
         style = style.copyWith(decoration: pw.TextDecoration.underline);
+      }
 
       if (text.contains('\n')) {
         final parts = text.split('\n');
@@ -476,10 +465,6 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
         ThemeData.estimateBrightnessForColor(_scaffoldColor) == Brightness.dark;
     final contrastColor = isColorDark ? Colors.white : Colors.black87;
 
-    final heroTag = _editingNote != null
-        ? 'note_background_${_editingNote!.id}'
-        : 'new_note_hero';
-
     if (_isLoading) {
       return Scaffold(
         backgroundColor: theme.scaffoldBackgroundColor,
@@ -492,11 +477,15 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
       );
     }
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
         // Auto-save on back
         _saveNote();
-        return true;
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
       },
       child: GlassScaffold(
         showBackArrow: true,
@@ -538,6 +527,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
             ),
+            color: theme.colorScheme.surface, // Ensure visibility against glass
             onSelected: (val) {
               switch (val) {
                 case 'color':
@@ -623,13 +613,14 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                     const Icon(CupertinoIcons.share, size: 18),
                     const SizedBox(width: 12),
                     const Text("Export as PDF"),
+                    // Premium Star Icon
                     if (!Provider.of<PremiumProvider>(
                       context,
                       listen: false,
                     ).isPremium) ...[
                       const Spacer(),
                       const Icon(
-                        CupertinoIcons.lock_fill,
+                        CupertinoIcons.star_fill, // Changed to Star
                         size: 14,
                         color: Colors.amber,
                       ),
@@ -653,7 +644,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
 
         body: SafeArea(
           child: Hero(
-            tag: heroTag,
+            tag: _editingNote != null
+                ? 'note_background_${_editingNote!.id}' // Matches NoteCard
+                : 'new_note_hero',
             child: Material(
               type: MaterialType.transparency,
               child: Stack(
@@ -661,7 +654,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                   Positioned.fill(
                     child: CustomPaint(
                       painter: CanvasGridPainter(
-                        color: contrastColor.withOpacity(0.08),
+                        color: contrastColor.withValues(alpha: 0.08),
                       ),
                     ),
                   ),
@@ -685,7 +678,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                                 border: InputBorder.none,
                                 isDense: true,
                                 hintStyle: TextStyle(
-                                  color: contrastColor.withOpacity(0.3),
+                                  color: contrastColor.withValues(alpha: 0.3),
                                 ),
                               ),
                             ),
@@ -708,7 +701,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                                     vertical: 6,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: contrastColor.withOpacity(0.1),
+                                    color: contrastColor.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: Text(
@@ -716,7 +709,9 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                                       'MMM dd, yyyy  •  hh:mm a',
                                     ).format(_selectedDate),
                                     style: TextStyle(
-                                      color: contrastColor.withOpacity(0.8),
+                                      color: contrastColor.withValues(
+                                        alpha: 0.8,
+                                      ),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 11,
                                     ),

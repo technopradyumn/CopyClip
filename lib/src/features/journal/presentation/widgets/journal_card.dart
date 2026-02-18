@@ -35,8 +35,9 @@ class JournalCard extends StatelessWidget {
   Map<String, dynamic> _parseContent(String jsonSource) {
     if (jsonSource.isEmpty) return {"text": "No content", "imageUrl": null};
     try {
-      if (!jsonSource.startsWith('['))
+      if (!jsonSource.startsWith('[')) {
         return {"text": jsonSource, "imageUrl": null};
+      }
       final List<dynamic> delta = jsonDecode(jsonSource);
       String plainText = "";
       String? firstImageUrl;
@@ -111,8 +112,8 @@ class JournalCard extends StatelessWidget {
 
     // Asymmetric Radius: Spine (Left) small, Open (Right) large
     final borderRadius = const BorderRadius.only(
-      topLeft: const Radius.circular(4),
-      bottomLeft: const Radius.circular(4),
+      topLeft: Radius.circular(4),
+      bottomLeft: Radius.circular(4),
       topRight: Radius.circular(AppConstants.cornerRadius),
       bottomRight: Radius.circular(AppConstants.cornerRadius),
     );
@@ -134,15 +135,15 @@ class JournalCard extends StatelessWidget {
               color: isSelected
                   ? primaryColor
                   : (theme.brightness == Brightness.dark
-                        ? Colors.white.withOpacity(0.1)
-                        : Colors.black.withOpacity(0.1)),
+                        ? Colors.white.withValues(alpha: 0.1)
+                        : Colors.black.withValues(alpha: 0.1)),
               width: isSelected
                   ? AppConstants.selectedBorderWidth
                   : AppConstants.borderWidth,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 6,
                 offset: const Offset(2, 4), // Slight offset
               ),
@@ -170,7 +171,7 @@ class JournalCard extends StatelessWidget {
                               ).format(entry.date).toUpperCase(),
                               style: theme.textTheme.labelSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: contentColor.withOpacity(0.7),
+                                color: contentColor.withValues(alpha: 0.7),
                               ),
                             ),
                             const SizedBox(height: 2),
@@ -186,7 +187,7 @@ class JournalCard extends StatelessWidget {
                           child: PopupMenuButton<String>(
                             icon: Icon(
                               CupertinoIcons.ellipsis_vertical,
-                              color: contentColor.withOpacity(0.6),
+                              color: contentColor.withValues(alpha: 0.6),
                               size: 20,
                             ),
                             onSelected: (value) {
@@ -299,7 +300,7 @@ class JournalCard extends StatelessWidget {
                         maxLines: 8,
                         overflow: TextOverflow.fade,
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: contentColor.withOpacity(0.85),
+                          color: contentColor.withValues(alpha: 0.85),
                           height: 1.3,
                           fontSize: 11,
                         ),
@@ -307,7 +308,7 @@ class JournalCard extends StatelessWidget {
                     ),
 
                     // TAGS (If space permits, or mini version)
-                    if (entry.tags != null && entry.tags!.isNotEmpty)
+                    if (entry.tags.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 6),
                         child: Row(
@@ -315,17 +316,17 @@ class JournalCard extends StatelessWidget {
                             Icon(
                               CupertinoIcons.tag,
                               size: 12,
-                              color: contentColor.withOpacity(0.5),
+                              color: contentColor.withValues(alpha: 0.5),
                             ),
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
-                                entry.tags!.join(", "),
+                                entry.tags.join(", "),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   fontSize: 10,
-                                  color: contentColor.withOpacity(0.6),
+                                  color: contentColor.withValues(alpha: 0.6),
                                 ),
                               ),
                             ),

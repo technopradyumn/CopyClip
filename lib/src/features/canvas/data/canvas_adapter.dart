@@ -188,7 +188,7 @@ class CanvasNoteAdapter extends TypeAdapter<CanvasNote> {
       ..writeByte(10)
       ..write(obj.thumbnailPath)
       ..writeByte(11)
-      ..write(obj.backgroundColor.value)
+      ..write(obj.backgroundColor.toARGB32())
       ..writeByte(12)
       ..write(obj.horizontalScroll);
   }
@@ -230,7 +230,7 @@ class CanvasFolderAdapter extends TypeAdapter<CanvasFolder> {
       ..writeByte(2)
       ..write(obj.parentFolderId)
       ..writeByte(3)
-      ..write(obj.color.value)
+      ..write(obj.color.toARGB32())
       ..writeByte(4)
       ..write(obj.createdAt)
       ..writeByte(5)
@@ -260,16 +260,21 @@ class CanvasDatabase {
 
   Future<void> init() async {
     // Register all adapters
-    if (!Hive.isAdapterRegistered(10))
+    if (!Hive.isAdapterRegistered(10)) {
       Hive.registerAdapter(DrawingStrokeAdapter());
-    if (!Hive.isAdapterRegistered(11))
+    }
+    if (!Hive.isAdapterRegistered(11)) {
       Hive.registerAdapter(CanvasTextAdapter());
-    if (!Hive.isAdapterRegistered(12))
+    }
+    if (!Hive.isAdapterRegistered(12)) {
       Hive.registerAdapter(CanvasFolderAdapter());
-    if (!Hive.isAdapterRegistered(14))
+    }
+    if (!Hive.isAdapterRegistered(14)) {
       Hive.registerAdapter(CanvasPageAdapter());
-    if (!Hive.isAdapterRegistered(15))
+    }
+    if (!Hive.isAdapterRegistered(15)) {
       Hive.registerAdapter(CanvasNoteAdapter());
+    }
 
     _notesBox = await Hive.openBox<CanvasNote>(notesBoxName);
     _foldersBox = await Hive.openBox<CanvasFolder>(foldersBoxName);

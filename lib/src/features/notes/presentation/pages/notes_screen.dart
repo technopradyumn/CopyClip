@@ -1,6 +1,9 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
+// Removed unused import: note_edit_screen.dart
+import '../../../../l10n/app_localizations.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +16,8 @@ import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
-
+import 'package:copyclip/src/core/widgets/dynamic_background.dart';
+import 'package:copyclip/src/core/widgets/empty_state_widget.dart'; // Added
 // Data
 import '../../data/note_model.dart';
 
@@ -158,8 +162,8 @@ class _NotesScreenState extends State<NotesScreen> {
       Clipboard.setData(ClipboardData(text: note.content));
     }
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Content copied"),
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.contentCopied),
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -172,6 +176,7 @@ class _NotesScreenState extends State<NotesScreen> {
       for (var op in delta) {
         if (op is Map && op['insert'] is String) clean += op['insert'];
       }
+      // ignore: deprecated_member_use
       Share.share(clean.trim());
     } catch (_) {
       Share.share(note.content);
@@ -182,9 +187,9 @@ class _NotesScreenState extends State<NotesScreen> {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Move to Bin?",
-        content: "You can restore this note later.",
-        confirmText: "Move",
+        title: AppLocalizations.of(context)!.moveToBinQuestion,
+        content: AppLocalizations.of(context)!.restoreNoteLater,
+        confirmText: AppLocalizations.of(context)!.move,
         isDestructive: true,
         onConfirm: () {
           Navigator.pop(ctx);
@@ -216,9 +221,9 @@ class _NotesScreenState extends State<NotesScreen> {
     showDialog(
       context: context,
       builder: (ctx) => GlassDialog(
-        title: "Delete All?",
-        content: "Move all notes to Recycle Bin?",
-        confirmText: "Delete All",
+        title: AppLocalizations.of(context)!.deleteAllQuestion,
+        content: AppLocalizations.of(context)!.moveToRecycleBin,
+        confirmText: AppLocalizations.of(context)!.deleteAll,
         isDestructive: true,
         onConfirm: () {
           Navigator.pop(ctx);
@@ -243,10 +248,11 @@ class _NotesScreenState extends State<NotesScreen> {
 
   void _toggleSelection(String id) {
     setState(() {
-      if (_selectedNoteIds.contains(id))
+      if (_selectedNoteIds.contains(id)) {
         _selectedNoteIds.remove(id);
-      else
+      } else {
         _selectedNoteIds.add(id);
+      }
       if (_selectedNoteIds.isEmpty) _isSelectionMode = false;
     });
   }
@@ -268,18 +274,20 @@ class _NotesScreenState extends State<NotesScreen> {
     final theme = Theme.of(context);
     final onSurfaceColor = theme.colorScheme.onSurface;
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: !_isSelectionMode,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
         if (_isSelectionMode) {
           setState(() {
             _isSelectionMode = false;
             _selectedNoteIds.clear();
           });
-          return false;
+          return;
         }
-        return true;
       },
       child: GlassScaffold(
+        showBackArrow: false,
         title: null,
         floatingActionButton: _isSelectionMode
             ? null
@@ -291,152 +299,190 @@ class _NotesScreenState extends State<NotesScreen> {
                   color: theme.colorScheme.onPrimary,
                 ),
               ),
-        body: Column(
-          children: [
-            _buildCustomTopBar(),
-
-            // Search Bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Container(
-                height: 48,
-                decoration: BoxDecoration(
-                  color: onSurfaceColor.withOpacity(0.08),
-                  borderRadius: BorderRadius.circular(
-                    AppConstants.cornerRadius * 0.75,
-                  ),
-                  border: Border.all(
-                    color: theme.dividerColor.withOpacity(0.1),
-                    width: AppConstants.borderWidth,
-                  ),
+        body: DynamicBackground(
+          child: Column(
+            children: [
+              _buildCustomTopBar(),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
                 ),
-                child: TextField(
-                  controller: _searchController,
-                  style: theme.textTheme.bodyMedium,
-                  decoration: InputDecoration(
-                    hintText: 'Search notes...',
-                    hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                      color: onSurfaceColor.withOpacity(0.5),
+                child: Container(
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: onSurfaceColor.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.cornerRadius * 0.75,
                     ),
-                    prefixIcon: Icon(
-                      CupertinoIcons.search,
-                      color: onSurfaceColor.withOpacity(0.5),
-                      size: 20,
+                    border: Border.all(
+                      color: theme.dividerColor.withValues(alpha: 0.1),
+                      width: AppConstants.borderWidth,
                     ),
-                    suffixIcon: _searchController.text.isNotEmpty
-                        ? GestureDetector(
-                            onTap: () {
-                              _searchController.clear();
-                            },
-                            child: Icon(
-                              CupertinoIcons.xmark,
-                              color: onSurfaceColor.withOpacity(0.5),
-                              size: 18,
-                            ),
-                          )
-                        : null,
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12),
                   ),
-                ),
-              ),
-            ),
-
-            // Note List
-            Expanded(
-              child: ValueListenableBuilder<List<Note>>(
-                valueListenable: _filteredNotesNotifier,
-                builder: (context, notes, _) {
-                  if (notes.isEmpty) {
-                    return Center(
-                      child: Text(
-                        "No notes found.",
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: onSurfaceColor.withOpacity(0.4),
-                        ),
+                  child: TextField(
+                    controller: _searchController,
+                    style: theme.textTheme.bodyMedium,
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.searchNotes,
+                      hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                        color: onSurfaceColor.withValues(alpha: 0.5),
                       ),
-                    );
-                  }
-
-                  // ✅ LOGIC: Only allow dragging if Custom Sort + No Search
-                  final canReorder =
-                      _currentSort == NoteSortOption.custom &&
-                      _searchQuery.isEmpty;
-
-                  if (canReorder) {
-                    // 1. REORDERABLE LIST (For Drag & Drop)
-                    // We use buildDefaultDragHandles: true so long-press works naturally
-                    return ReorderableListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-                      itemCount: notes.length,
-                      onReorder: _onReorder,
-                      proxyDecorator: (child, index, animation) =>
-                          AnimatedBuilder(
-                            animation: animation,
-                            builder: (_, __) => Transform.scale(
-                              scale: 1.05,
-                              child: Material(
-                                color: Colors.transparent,
-                                child: child,
+                      prefixIcon: Icon(
+                        CupertinoIcons.search,
+                        color: onSurfaceColor.withValues(alpha: 0.5),
+                        size: 20,
+                      ),
+                      suffixIcon: _searchController.text.isNotEmpty
+                          ? GestureDetector(
+                              onTap: () => _searchController.clear(),
+                              child: Icon(
+                                CupertinoIcons.xmark,
+                                color: onSurfaceColor.withValues(alpha: 0.5),
+                                size: 18,
                               ),
-                            ),
-                          ),
-                      itemBuilder: (context, index) {
-                        final note = notes[index];
-                        return NoteCard(
-                          key: ValueKey(note.id),
-                          note: note,
-                          isSelected: _selectedNoteIds.contains(note.id),
-                          onTap: () => _openNoteEditor(note),
-                          // ✅ IMPORTANT: Pass null to onLongPress so the List handles the Drag!
-                          onLongPress: null,
-                          onCopy: () => _copyNote(note),
-                          onShare: () => _shareNote(note),
-                          onDelete: () => _confirmDeleteNote(note),
-                          onColorChanged: (c) {
-                            note.colorValue = c.value;
-                            note.save();
-                          },
-                        );
-                      },
-                    );
-                  } else {
-                    // 2. STANDARD LIST (High Performance for Search/Date Sort)
-                    return ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-                      itemCount: notes.length,
-                      cacheExtent: 1000,
-                      itemBuilder: (context, index) {
-                        final note = notes[index];
-                        return RepaintBoundary(
-                          child: NoteCard(
-                            key: ValueKey(note.id),
-                            note: note,
-                            isSelected: _selectedNoteIds.contains(note.id),
-                            onTap: () => _openNoteEditor(note),
-                            // ✅ Restore Selection Mode on long press when NOT reordering
-                            onLongPress: () => setState(() {
-                              _isSelectionMode = true;
-                              _selectedNoteIds.add(note.id);
-                            }),
-                            onCopy: () => _copyNote(note),
-                            onShare: () => _shareNote(note),
-                            onDelete: () => _confirmDeleteNote(note),
-                            onColorChanged: (c) {
-                              note.colorValue = c.value;
-                              note.save();
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  }
-                },
+                            )
+                          : null,
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
+              Expanded(
+                child: CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  slivers: [
+                    // 3. Note List
+                    ValueListenableBuilder<List<Note>>(
+                      valueListenable: _filteredNotesNotifier,
+                      builder: (context, notes, _) {
+                        if (notes.isEmpty) {
+                          return SliverFillRemaining(
+                            hasScrollBody: false,
+                            child: EmptyStateWidget(
+                              message: AppLocalizations.of(
+                                context,
+                              )!.noNotesFound,
+                              subMessage: AppLocalizations.of(
+                                context,
+                              )!.captureThoughts,
+                              onAction: () => _openNoteEditor(null),
+                              actionLabel: AppLocalizations.of(
+                                context,
+                              )!.createNote,
+                            ),
+                          );
+                        }
+
+                        final canReorder =
+                            _currentSort == NoteSortOption.custom &&
+                            _searchQuery.isEmpty &&
+                            !_isSelectionMode;
+
+                        if (canReorder) {
+                          return SliverReorderableList(
+                            itemCount: notes.length,
+                            onReorder: _onReorder,
+                            proxyDecorator: (child, index, animation) {
+                              return AnimatedBuilder(
+                                animation: animation,
+                                builder: (BuildContext context, Widget? child) {
+                                  final double animValue = Curves.easeInOut
+                                      .transform(animation.value);
+                                  final double scale = ui.lerpDouble(
+                                    1,
+                                    1.1,
+                                    animValue,
+                                  )!;
+                                  return Transform.scale(
+                                    scale: scale,
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      elevation: 10,
+                                      shadowColor: Colors.black45,
+                                      child: child,
+                                    ),
+                                  );
+                                },
+                                child: child,
+                              );
+                            },
+                            itemBuilder: (context, index) {
+                              final note = notes[index];
+                              return ReorderableDelayedDragStartListener(
+                                key: ValueKey(note.id),
+                                index: index,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 4,
+                                  ),
+                                  child: RepaintBoundary(
+                                    child: NoteCard(
+                                      note: note,
+                                      isSelected: _selectedNoteIds.contains(
+                                        note.id,
+                                      ),
+                                      onTap: () => _openNoteEditor(note),
+                                      onLongPress: null,
+                                      onCopy: () => _copyNote(note),
+                                      onShare: () => _shareNote(note),
+                                      onDelete: () => _confirmDeleteNote(note),
+                                      onColorChanged: (c) {
+                                        note.colorValue = c.toARGB32();
+                                        note.save();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        } else {
+                          return SliverPadding(
+                            padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+                            sliver: SliverList(
+                              delegate: SliverChildBuilderDelegate((
+                                context,
+                                index,
+                              ) {
+                                final note = notes[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: RepaintBoundary(
+                                    child: NoteCard(
+                                      key: ValueKey(note.id),
+                                      note: note,
+                                      isSelected: _selectedNoteIds.contains(
+                                        note.id,
+                                      ),
+                                      onTap: () => _openNoteEditor(note),
+                                      onLongPress: () => setState(() {
+                                        _isSelectionMode = true;
+                                        _selectedNoteIds.add(note.id);
+                                      }),
+                                      onCopy: () => _copyNote(note),
+                                      onShare: () => _shareNote(note),
+                                      onDelete: () => _confirmDeleteNote(note),
+                                      onColorChanged: (c) {
+                                        note.colorValue = c.toARGB32();
+                                        note.save();
+                                      },
+                                    ),
+                                  ),
+                                );
+                              }, childCount: notes.length),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -448,7 +494,8 @@ class _NotesScreenState extends State<NotesScreen> {
 
     if (_isSelectionMode) {
       return SeamlessHeader(
-        title: '${_selectedNoteIds.length} Selected',
+        title:
+            '${_selectedNoteIds.length} ${AppLocalizations.of(context)!.selected}',
         heroTagPrefix: 'notes',
         showBackButton: true,
         onBackTap: () => setState(() {
@@ -469,8 +516,8 @@ class _NotesScreenState extends State<NotesScreen> {
     }
 
     return SeamlessHeader(
-      title: "Notes",
-      subtitle: "My Thoughts",
+      title: AppLocalizations.of(context)!.notes,
+      subtitle: AppLocalizations.of(context)!.myThoughts,
       icon: CupertinoIcons.doc_text,
       iconColor: FeatureColors.notes,
       heroTagPrefix: 'notes',
@@ -478,7 +525,7 @@ class _NotesScreenState extends State<NotesScreen> {
         IconButton(
           icon: Icon(
             CupertinoIcons.checkmark_circle,
-            color: onSurfaceColor.withOpacity(0.6),
+            color: onSurfaceColor.withValues(alpha: 0.6),
           ),
           onPressed: () => setState(() => _isSelectionMode = true),
         ),
@@ -510,7 +557,7 @@ class _NotesScreenState extends State<NotesScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Custom Order",
+                        AppLocalizations.of(context)!.customOrder,
                         style: TextStyle(
                           color: _currentSort == NoteSortOption.custom
                               ? FeatureColors.notes
@@ -536,7 +583,7 @@ class _NotesScreenState extends State<NotesScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Newest First",
+                        AppLocalizations.of(context)!.newestFirst,
                         style: TextStyle(
                           color: _currentSort == NoteSortOption.dateNewest
                               ? FeatureColors.notes
@@ -562,7 +609,7 @@ class _NotesScreenState extends State<NotesScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Oldest First",
+                        AppLocalizations.of(context)!.oldestFirst,
                         style: TextStyle(
                           color: _currentSort == NoteSortOption.dateOldest
                               ? FeatureColors.notes
@@ -588,7 +635,7 @@ class _NotesScreenState extends State<NotesScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Title: A-Z",
+                        AppLocalizations.of(context)!.titleAZ,
                         style: TextStyle(
                           color: _currentSort == NoteSortOption.titleAZ
                               ? FeatureColors.notes
@@ -614,7 +661,7 @@ class _NotesScreenState extends State<NotesScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "Title: Z-A",
+                        AppLocalizations.of(context)!.titleZA,
                         style: TextStyle(
                           color: _currentSort == NoteSortOption.titleZA
                               ? FeatureColors.notes

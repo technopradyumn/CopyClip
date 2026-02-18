@@ -4,14 +4,18 @@ import 'dart:convert';
 import 'package:copyclip/src/core/services/home_widget_service.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:copyclip/src/core/utils/widget_sync_service.dart';
-import 'package:copyclip/src/core/services/bg_worker.dart'; // ✅ NEW IMPORT
-import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart'; // ✅ NEW IMPORT
-import 'package:copyclip/src/core/services/notification_engine.dart'; // ✅ NEW IMPORT
+import 'package:copyclip/src/core/providers/locale_provider.dart';
+import 'package:copyclip/src/core/services/bg_worker.dart';
+import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart';
+import 'package:copyclip/src/core/services/notification_engine.dart';
 import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart';
+// import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart'; // 🗑️ REMOVED
 import 'package:flutter/services.dart';
+import 'package:copyclip/src/core/theme/bloc/theme_bloc.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_event.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -22,9 +26,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/router/main_router.dart';
+import 'package:copyclip/src/core/services/app_update_service.dart';
+
 import 'package:copyclip/src/core/services/notification_service.dart';
 import 'package:copyclip/src/core/theme/app_theme.dart';
-import 'package:copyclip/src/core/theme/theme_manager.dart';
+
 import 'package:copyclip/src/features/clipboard/data/clipboard_adapter.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
 import 'package:copyclip/src/features/expenses/data/expense_adapter.dart';
@@ -35,8 +41,10 @@ import 'package:copyclip/src/features/notes/data/note_adapter.dart';
 
 import 'package:copyclip/src/features/todos/data/todo_adapter.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
+import 'package:copyclip/src/features/social_post/data/social_post_model.dart'; // Added
 import 'src/l10n/app_localizations.dart';
 import 'package:upgrader/upgrader.dart';
+import 'package:uuid/uuid.dart';
 
 // ============================================
 // ✅ ENHANCED BACKGROUND CALLBACK FOR WIDGETS
@@ -76,7 +84,12 @@ Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
 
 class RateUpgraderMessages extends UpgraderMessages {
   @override
-  String get buttonTitleIgnore => 'Rate App';
+  String? message(UpgraderMessage messageKey) {
+    if (messageKey == UpgraderMessage.buttonTitleIgnore) {
+      return 'Rate App';
+    }
+    return super.message(messageKey);
+  }
 }
 
 // --- APP STATE MANAGER ---
@@ -112,11 +125,16 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeManager()),
-        ChangeNotifierProvider(create: (_) => PremiumProvider()),
         ChangeNotifierProvider.value(value: initState),
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
       ],
-      child: const LoadingApp(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => ThemeBloc()..add(LoadTheme())),
+          BlocProvider(create: (_) => PremiumBloc()..add(LoadPremiumData())),
+        ],
+        child: const LoadingApp(),
+      ),
     ),
   );
 
@@ -140,9 +158,11 @@ Future<void> _initializeApp(AppInitializationState state) async {
     await MobileAds.instance.updateRequestConfiguration(
       RequestConfiguration(testDeviceIds: ["144FE4F3F00EAB19BA87344D34904C8B"]),
     );
-    await MobileAds.instance.initialize().catchError((e) {
+    try {
+      await MobileAds.instance.initialize();
+    } catch (e) {
       debugPrint('❌ Ad initialization error: $e');
-    });
+    }
 
     // Step 2: Hive setup
     state.updateProgress('Setting up database...', 0.4);
@@ -153,6 +173,7 @@ Future<void> _initializeApp(AppInitializationState state) async {
     Hive.registerAdapter(ExpenseAdapter());
     Hive.registerAdapter(JournalEntryAdapter());
     Hive.registerAdapter(ClipboardItemAdapter());
+    Hive.registerAdapter(SocialPostAdapter()); // Added
     await CanvasDatabase().init();
 
     // Step 3: System setup
@@ -196,6 +217,14 @@ Future<void> _initializeApp(AppInitializationState state) async {
     TodoSchedulerService().handleMissedRecurrences().catchError(
       (e) => debugPrint("Healing error: $e"),
     );
+
+    // ✅ NEW: Initialize App Update Service
+    try {
+      debugPrint('Initializing AppUpdateService...');
+      await AppUpdateService.instance.checkForUpdate();
+    } catch (e) {
+      debugPrint('Error initializing AppUpdateService: $e');
+    }
 
     state.complete();
     debugPrint("✅ App initialization complete");
@@ -246,20 +275,14 @@ Future<void> _initializeBackgroundTasks() async {
     // ✅ NEW: Reschedule daily briefing to ensure it's set
     await BackgroundWorker.rescheduleDailyBriefing();
 
+    // ✅ NEW: Initialize Smart Notification Engine (Timezone aware)
+    await NotificationEngine().initialize();
+
     // ✅ NEW: Welcome Notification for first-time users
     // This is fired slightly after startup
     Future.delayed(const Duration(seconds: 2), () {
       NotificationEngine().checkAndTriggerWelcome();
     });
-
-    // ✅ NEW: Schedule Daily Planning Notification (9 PM)
-    await NotificationService().scheduleDailyNotification(
-      id: 9999, // Fixed ID for daily planning
-      title: 'Plan Your Tomorrow 🌙',
-      body:
-          'Take a moment to organize your tasks for the next day.\nA little planning tonight makes a productive tomorrow!',
-      time: const TimeOfDay(hour: 21, minute: 0),
-    );
   } catch (e) {
     debugPrint("❌ Widget data init error: $e");
   }
@@ -458,12 +481,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         final box = Hive.box<Todo>('todos_box');
         try {
           Todo? todo = box.get(todoId);
-          if (todo == null) todo = box.values.firstWhere((t) => t.id == todoId);
-          if (todo != null) {
-            await TodoSchedulerService().completeTodo(todo);
-            debugPrint("✅ Todo marked done from notification: ${todo.task}");
-          }
-        } catch (e) {
+          todo ??= box.values.firstWhere((t) => t.id == todoId);
+          await TodoSchedulerService().completeTodo(todo);
+          debugPrint("✅ Todo marked done from notification: ${todo.task}");
+                } catch (e) {
           debugPrint("❌ Failed to process action: $e");
         }
         return;
@@ -481,9 +502,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       Todo? todo;
       try {
         todo = box.get(payload);
-        if (todo == null) {
-          todo = box.values.firstWhere((t) => t.id == payload);
-        }
+        todo ??= box.values.firstWhere((t) => t.id == payload);
       } catch (e) {
         // Payload might not be a Todo ID
       }
@@ -551,9 +570,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     if (call.method == 'navigateTo') {
       final dynamic args = call.arguments;
       String? route;
-      if (args is String)
+      if (args is String) {
         route = args;
-      else if (args is Map)
+      } else if (args is Map)
         route = args['route'];
       if (route != null && mounted) {
         router.push(route);
@@ -627,7 +646,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   Future<void> _checkClipboard() async {
     try {
       if (!mounted) return;
-      // ... same logic ...
+
       final settingsBox = Hive.box('settings');
       final bool autoSave = settingsBox.get(
         'clipboardAutoSave',
@@ -637,30 +656,46 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       if (!autoSave) return;
 
       final ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
-      if (data == null || data.text == null || data.text!.trim().isEmpty)
-        return;
+      if (data == null || data.text == null) return;
 
-      final String newContent = data.text!.trim();
+      final String rawContent = data.text!;
+      final String trimmedContent = rawContent.trim();
+
+      if (trimmedContent.isEmpty) return;
+
       // Ensure box is open
       if (!Hive.isBoxOpen('clipboard_box')) {
         await Hive.openBox<ClipboardItem>('clipboard_box');
       }
       final clipboardBox = Hive.box<ClipboardItem>('clipboard_box');
 
-      // ✅ DEDUPLICATION Logic (Smart Bump):
-      // 1. Check if content exists (ignoring formatting).
-      // 2. If it exists, UPDATE its timestamp to now(). This "bumps" it to the top.
-      // 3. This preserves custom colors/properties but marks it as "fresh".
-      final existingItems = clipboardBox.values
-          .where((item) => _getPlainText(item.content) == newContent)
-          .toList();
+      // ✅ DEDUPLICATION & BUMPING Logic (Refined):
+      // Find ALL items that match this content (trimmed)
+      final matchingItems =
+          clipboardBox.values
+              .where((item) => _getPlainText(item.content) == trimmedContent)
+              .toList()
+            ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
-      if (existingItems.isNotEmpty) {
-        for (var item in existingItems) {
-          item.createdAt = DateTime.now(); // Bump to top
-          await item.save();
+      if (matchingItems.isNotEmpty) {
+        // Keep the most recent one, delete the rest if any
+        final keptItem = matchingItems.first;
+
+        // Delete older duplicates if they exist
+        if (matchingItems.length > 1) {
+          for (int i = 1; i < matchingItems.length; i++) {
+            await matchingItems[i].delete();
+          }
+          debugPrint(
+            '🗑️ Deleted ${matchingItems.length - 1} extra duplicates',
+          );
         }
-        debugPrint('⬆️ Bumped ${existingItems.length} existing item(s) to top');
+
+        // Bump the kept item to top
+        keptItem.createdAt = DateTime.now();
+        await keptItem.save();
+
+        debugPrint('⬆️ Bumped existing item to top');
 
         if (mounted) {
           ScaffoldMessenger.of(context).clearSnackBars();
@@ -673,25 +708,27 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
           );
         }
         await WidgetSyncService.syncClipboard();
-        return; // ✅ Stop here, don't add a duplicate
+        return;
       }
 
-      // Add to Hive
+      // Add as NEW item
+      // Use UUID + timestamp for guaranteed uniqueness
+      final uuid = const Uuid();
       final newItem = ClipboardItem(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        content: newContent,
+        id: uuid.v4(),
+        content: trimmedContent,
         createdAt: DateTime.now(),
         type: 'text',
       );
 
-      await clipboardBox.add(newItem);
+      await clipboardBox.put(newItem.id, newItem);
 
       if (mounted) {
-        ScaffoldMessenger.of(context).clearSnackBars(); // Prevent stacking
+        ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              "Clipboard saved: ${newContent.length > 20 ? '${newContent.substring(0, 20)}...' : newContent}",
+              "Clipboard saved: ${trimmedContent.length > 20 ? '${trimmedContent.substring(0, 20)}...' : trimmedContent}",
             ),
             behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.green,
@@ -702,11 +739,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       }
 
       debugPrint('✅ Auto-saved clipboard item: ${newItem.id}');
-
-      // Sync Widgets
       await WidgetSyncService.syncClipboard();
     } catch (e) {
-      // debugPrint('❌ Clipboard check failed: $e'); // Reduce noise
+      debugPrint('❌ Clipboard check error: $e');
     }
   }
 
@@ -734,37 +769,48 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    final themeManager = Provider.of<ThemeManager>(context);
-    return ScreenUtilInit(
-      designSize: const Size(390, 844),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return MaterialApp.router(
-          title: 'CopyClip',
-          debugShowCheckedModeBanner: false,
-          themeMode: themeManager.themeMode,
-          theme: AppTheme.lightTheme(themeManager.primaryColor),
-          darkTheme: AppTheme.darkTheme(themeManager.primaryColor),
-          routerConfig: router,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            FlutterQuillLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
+    // OLD: final themeManager = Provider.of<ThemeManager>(context);
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, themeState) {
+        final localeProvider = Provider.of<LocaleProvider>(context);
+        return ScreenUtilInit(
+          designSize: const Size(390, 844),
+          minTextAdapt: true,
+          splitScreenMode: true,
           builder: (context, child) {
-            return UpgradeAlert(
-              upgrader: Upgrader(
-                debugLogging: false,
-                messages: RateUpgraderMessages(),
-                durationUntilAlertAgain: const Duration(
-                  days: 0,
-                ), // Alert every time
-              ),
-              child: child ?? const SizedBox(),
+            return MaterialApp.router(
+              title: 'CopyClip',
+              debugShowCheckedModeBanner: false,
+
+              // ✅ Locale Support
+              locale: localeProvider.locale,
+
+              // ✅ Updated Theme Usage from BLoC State
+              themeMode: themeState.themeMode,
+              theme: AppTheme.lightTheme(themeState.primaryColor),
+              darkTheme: AppTheme.darkTheme(themeState.primaryColor),
+
+              routerConfig: router,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                FlutterQuillLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              builder: (context, child) {
+                return UpgradeAlert(
+                  navigatorKey: router.routerDelegate.navigatorKey,
+                  upgrader: Upgrader(
+                    debugLogging: true,
+                    debugDisplayAlways: true,
+                    messages: RateUpgraderMessages(),
+                    durationUntilAlertAgain: const Duration(days: 0),
+                  ),
+                  child: child ?? const SizedBox(),
+                );
+              },
             );
           },
         );

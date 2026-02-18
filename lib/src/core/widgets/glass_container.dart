@@ -1,6 +1,3 @@
-import 'dart:ui';
-import 'package:flutter/material.dart';
-
 import 'package:flutter/material.dart';
 
 class GlassContainer extends StatelessWidget {
@@ -54,7 +51,7 @@ class GlassContainer extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadius),
             // ✅ HIGH PERFORMANCE BORDER: Adds a subtle shine
             border: Border.all(
-              color: outlineColor.withOpacity(0.15),
+              color: outlineColor.withValues(alpha: 0.15),
               width: borderWidth,
             ),
             // ✅ HIGH PERFORMANCE GLASS: Uses gradients instead of Blur
@@ -62,16 +59,18 @@ class GlassContainer extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                baseColor.withOpacity(opacity + 0.1), // Top-left shine
-                baseColor.withOpacity(opacity),       // Main body transparency
-                baseColor.withOpacity(opacity - 0.05 < 0 ? 0 : opacity - 0.05), // Bottom fade
+                baseColor.withValues(alpha: opacity + 0.1), // Top-left shine
+                baseColor.withValues(alpha: opacity), // Main body transparency
+                baseColor.withValues(
+                  alpha: opacity - 0.05 < 0 ? 0 : opacity - 0.05,
+                ), // Bottom fade
               ],
               stops: const [0.0, 0.4, 1.0],
             ),
             boxShadow: [
               // Subtle shadow to lift it off the background
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),

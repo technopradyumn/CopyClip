@@ -26,106 +26,143 @@ class CanvasSketchCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       onLongPress: onLongPress,
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface.withOpacity(0.12),
-              borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-              border: Border.all(
-                color: theme.colorScheme.onSurface.withOpacity(0.12),
-                width: AppConstants.borderWidth,
-              ),
+      child: Hero(
+        tag: 'canvas_card_${note.id}',
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOutCubic,
+          transform: isSelected
+              ? Matrix4.identity().scaled(0.96)
+              : Matrix4.identity(),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface.withValues(alpha: 
+              isSelected ? 0.4 : 0.6,
             ),
-            child: Column(
+            borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+            border: Border.all(
+              color: isSelected
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.onSurface.withValues(alpha: 0.12),
+              width: isSelected ? 2.5 : AppConstants.borderWidth,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: (isSelected ? theme.colorScheme.primary : Colors.black)
+                    .withValues(alpha: isSelected ? 0.2 : 0.05),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+            child: Stack(
               children: [
-                // Preview Area
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: note.backgroundColor,
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(AppConstants.cornerRadius - 1),
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(AppConstants.cornerRadius - 1),
-                      ),
-                      child: CustomPaint(
-                        painter: DrawingPreviewPainter(firstPage.strokes),
-                      ),
-                    ),
-                  ),
-                ),
-                // Info Area
-                Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 10,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          note.title,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
+                Column(
+                  children: [
+                    // Preview Area (Paper Aspect Ratio)
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: note.backgroundColor,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: theme.colorScheme.onSurface.withValues(alpha: 
+                                0.05,
+                              ),
+                              width: 1,
+                            ),
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
-                        const Spacer(),
-                        Row(
+                        child: CustomPaint(
+                          painter: DrawingPreviewPainter(firstPage.strokes),
+                        ),
+                      ),
+                    ),
+                    // Info Area
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 12,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              DateFormat('MMM d').format(note.lastModified),
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                color: theme.colorScheme.onSurface.withOpacity(
-                                  0.4,
-                                ),
+                              note.title.isNotEmpty
+                                  ? note.title
+                                  : "Untitled Sketch",
+                              style: theme.textTheme.titleSmall?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 13,
+                                letterSpacing: -0.2,
                               ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            if (note.isFavorite)
-                              const Icon(
-                                CupertinoIcons.star_fill,
-                                size: 14,
-                                color: Colors.amberAccent,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  DateFormat(
+                                    'MMM d, yyyy',
+                                  ).format(note.lastModified),
+                                  style: theme.textTheme.labelSmall?.copyWith(
+                                    color: theme.colorScheme.onSurface
+                                        .withValues(alpha: 0.5),
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                if (note.isFavorite)
+                                  const Icon(
+                                    CupertinoIcons.star_fill,
+                                    size: 14,
+                                    color: Colors.amberAccent,
+                                  ),
+                              ],
+                            ),
                           ],
                         ),
-                      ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                // Selection Checkmark Overlay
+                if (isSelected)
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: theme.colorScheme.primary.withValues(alpha: 0.4),
+                            blurRadius: 8,
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        CupertinoIcons.checkmark,
+                        size: 16,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
-
-          // Selection Checkmark Overlay
-          if (isSelected)
-            Positioned(
-              top: 8,
-              left: 8,
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.primary,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  CupertinoIcons.checkmark_alt,
-                  size: 16,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-        ],
+        ),
       ),
     );
   }
@@ -171,15 +208,12 @@ class DrawingPreviewPainter extends CustomPainter {
     final drawingWidth = maxX - minX;
     final drawingHeight = maxY - minY;
 
-    // 2. Calculate Scale to Fit
-    // Ensure we don't divide by zero
     if (drawingWidth <= 0 || drawingHeight <= 0) return;
 
     final scaleX = size.width / drawingWidth;
     final scaleY = size.height / drawingHeight;
     final scale = scaleX < scaleY ? scaleX : scaleY;
 
-    // 3. Center the drawing
     final dx = (size.width - (drawingWidth * scale)) / 2;
     final dy = (size.height - (drawingHeight * scale)) / 2;
 
@@ -192,14 +226,10 @@ class DrawingPreviewPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
-    // Draw ALL strokes, not just 15
     for (var stroke in strokes) {
       paint
         ..color = Color(stroke.color)
         ..strokeWidth = stroke.strokeWidth;
-
-      // Optimization: If stroke width is very small after scaling, ensure visibility?
-      // Actually standard painting is fine.
 
       final path = Path();
       if (stroke.points.length >= 2) {

@@ -24,7 +24,7 @@ class RuledWidePainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.2)
+      ..color = Colors.black.withValues(alpha: 0.2)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
 
@@ -34,7 +34,7 @@ class RuledWidePainter extends PageDesignPainter {
 
     // Margin
     final marginPaint = Paint()
-      ..color = Colors.red.withOpacity(0.1)
+      ..color = Colors.red.withValues(alpha: 0.1)
       ..strokeWidth = 1;
     canvas.drawLine(Offset(40, 0), Offset(40, size.height), marginPaint);
   }
@@ -46,7 +46,7 @@ class RuledCollegePainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.blueAccent.withOpacity(0.2)
+      ..color = Colors.blueAccent.withValues(alpha: 0.2)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
 
@@ -55,7 +55,7 @@ class RuledCollegePainter extends PageDesignPainter {
     }
     // Margin
     final marginPaint = Paint()
-      ..color = Colors.red.withOpacity(0.1)
+      ..color = Colors.red.withValues(alpha: 0.1)
       ..strokeWidth = 1;
     canvas.drawLine(Offset(40, 0), Offset(40, size.height), marginPaint);
   }
@@ -67,7 +67,7 @@ class GridPagePainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.15)
+      ..color = Colors.black.withValues(alpha: 0.15)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
 
@@ -87,7 +87,7 @@ class DotGridPagePainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.25)
+      ..color = Colors.black.withValues(alpha: 0.25)
       ..style = PaintingStyle.fill;
 
     const step = 25.0;
@@ -105,7 +105,7 @@ class IsometricDotsPainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.1)
+      ..color = Colors.black.withValues(alpha: 0.1)
       ..style = PaintingStyle.fill;
 
     const step = 30.0;
@@ -125,11 +125,11 @@ class CrumpledPagePainter extends PageDesignPainter {
   void paint(Canvas canvas, Size size) {
     // Background texture
     final bgPaint = Paint()
-      ..color = Colors.grey.withOpacity(0.1)
+      ..color = Colors.grey.withValues(alpha: 0.1)
       ..style = PaintingStyle.fill;
 
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.08)
+      ..color = Colors.black.withValues(alpha: 0.08)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
@@ -191,7 +191,7 @@ class WatercolorPagePainter extends PageDesignPainter {
 
       final paint = Paint()
         ..shader = RadialGradient(
-          colors: [color.withOpacity(0.15), color.withOpacity(0.0)],
+          colors: [color.withValues(alpha: 0.15), color.withValues(alpha: 0.0)],
           stops: const [0.2, 1.0],
         ).createShader(Rect.fromCircle(center: center, radius: radius));
 
@@ -211,13 +211,13 @@ class NightSkyPagePainter extends PageDesignPainter {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Color(0xFF0F172A).withOpacity(0.2),
-          Color(0xFF1E293B).withOpacity(0.05),
+          Color(0xFF0F172A).withValues(alpha: 0.2),
+          Color(0xFF1E293B).withValues(alpha: 0.05),
         ],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), bg);
 
-    final starPaint = Paint()..color = Colors.white.withOpacity(0.4);
+    final starPaint = Paint()..color = Colors.white.withValues(alpha: 0.4);
     final r = Random(999);
 
     // Stars
@@ -233,7 +233,7 @@ class NightSkyPagePainter extends PageDesignPainter {
     }
 
     // Moon
-    final moonPaint = Paint()..color = Colors.yellow[100]!.withOpacity(0.3);
+    final moonPaint = Paint()..color = Colors.yellow[100]!.withValues(alpha: 0.3);
     canvas.drawCircle(
       Offset(size.width * 0.85, size.height * 0.1),
       30,
@@ -252,10 +252,10 @@ class GalaxyPagePainter extends PageDesignPainter {
       ..shader = SweepGradient(
         center: Alignment.center,
         colors: [
-          Colors.deepPurple.withOpacity(0.2),
-          Colors.pink.withOpacity(0.2),
-          Colors.blue.withOpacity(0.2),
-          Colors.deepPurple.withOpacity(0.2),
+          Colors.deepPurple.withValues(alpha: 0.2),
+          Colors.pink.withValues(alpha: 0.2),
+          Colors.blue.withValues(alpha: 0.2),
+          Colors.deepPurple.withValues(alpha: 0.2),
         ],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), paint);
@@ -264,12 +264,12 @@ class GalaxyPagePainter extends PageDesignPainter {
     final glow = Paint()
       ..shader = RadialGradient(
         radius: 0.6,
-        colors: [Colors.purpleAccent.withOpacity(0.2), Colors.transparent],
+        colors: [Colors.purpleAccent.withValues(alpha: 0.2), Colors.transparent],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), glow);
 
     // Stars
-    final starPaint = Paint()..color = Colors.white.withOpacity(0.5);
+    final starPaint = Paint()..color = Colors.white.withValues(alpha: 0.5);
     final r = Random(444);
     for (int i = 0; i < 80; i++) {
       canvas.drawCircle(
@@ -291,10 +291,10 @@ class SunsetPagePainter extends PageDesignPainter {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Colors.orange.withOpacity(0.3),
-          Colors.deepOrange.withOpacity(0.2),
-          Colors.purple.withOpacity(0.2),
-          Colors.indigo.withOpacity(0.2),
+          Colors.orange.withValues(alpha: 0.3),
+          Colors.deepOrange.withValues(alpha: 0.2),
+          Colors.purple.withValues(alpha: 0.2),
+          Colors.indigo.withValues(alpha: 0.2),
         ],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), paint);
@@ -304,8 +304,8 @@ class SunsetPagePainter extends PageDesignPainter {
       ..shader =
           RadialGradient(
             colors: [
-              Colors.yellow.withOpacity(0.4),
-              Colors.orange.withOpacity(0.0),
+              Colors.yellow.withValues(alpha: 0.4),
+              Colors.orange.withValues(alpha: 0.0),
             ],
           ).createShader(
             Rect.fromCircle(
@@ -328,9 +328,9 @@ class ForestPagePainter extends PageDesignPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..style = PaintingStyle.fill
-      ..color = Colors.green.withOpacity(0.2);
+      ..color = Colors.green.withValues(alpha: 0.2);
 
-    final backTree = Paint()..color = Colors.green[800]!.withOpacity(0.15);
+    final backTree = Paint()..color = Colors.green[800]!.withValues(alpha: 0.15);
 
     final path = Path();
     // Background trees
@@ -364,12 +364,12 @@ class BeachPagePainter extends PageDesignPainter {
       ..shader = LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomRight,
-        colors: [Colors.cyan.withOpacity(0.1), Colors.blue.withOpacity(0.2)],
+        colors: [Colors.cyan.withValues(alpha: 0.1), Colors.blue.withValues(alpha: 0.2)],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), water);
 
     // Sand Curve
-    final sand = Paint()..color = Colors.amber[200]!.withOpacity(0.3);
+    final sand = Paint()..color = Colors.amber[200]!.withValues(alpha: 0.3);
     final path = Path();
     path.moveTo(0, size.height);
     path.lineTo(size.width, size.height);
@@ -385,7 +385,7 @@ class BeachPagePainter extends PageDesignPainter {
 
     // Foam line
     final foam = Paint()
-      ..color = Colors.white.withOpacity(0.3)
+      ..color = Colors.white.withValues(alpha: 0.3)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3;
     final foamPath = Path();
@@ -408,9 +408,9 @@ class SoftGradientPainter extends PageDesignPainter {
     final paint = Paint()
       ..shader = RadialGradient(
         colors: [
-          Colors.cyanAccent.withOpacity(0.05),
-          Colors.pinkAccent.withOpacity(0.05),
-          Colors.white.withOpacity(0.0),
+          Colors.cyanAccent.withValues(alpha: 0.05),
+          Colors.pinkAccent.withValues(alpha: 0.05),
+          Colors.white.withValues(alpha: 0.0),
         ],
         radius: 1.0,
         center: Alignment.center,
@@ -427,7 +427,7 @@ class GeometricShapesPainter extends PageDesignPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..color = Colors.black.withOpacity(0.05)
+      ..color = Colors.black.withValues(alpha: 0.05)
       ..strokeWidth = 1;
     final r = Random(99);
 
@@ -454,7 +454,7 @@ class AbstractCurvesPainter extends PageDesignPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..color = Colors.teal.withOpacity(0.05)
+      ..color = Colors.teal.withValues(alpha: 0.05)
       ..strokeWidth = 2;
     final path = Path();
     path.moveTo(0, size.height * 0.2);
@@ -490,7 +490,7 @@ class MusicPagePainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final linePaint = Paint()
-      ..color = Colors.black.withOpacity(0.1)
+      ..color = Colors.black.withValues(alpha: 0.1)
       ..strokeWidth = 1;
 
     // Staff lines
@@ -512,11 +512,11 @@ class ChecklistPagePainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final linePaint = Paint()
-      ..color = Colors.black.withOpacity(0.2)
+      ..color = Colors.black.withValues(alpha: 0.2)
       ..strokeWidth = 1;
     final boxPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..color = Colors.black.withOpacity(0.3)
+      ..color = Colors.black.withValues(alpha: 0.3)
       ..strokeWidth = 1.5;
 
     for (double y = 60; y < size.height; y += 30) {
@@ -532,7 +532,7 @@ class TrianglesPagePainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.indigo.withOpacity(0.03)
+      ..color = Colors.indigo.withValues(alpha: 0.03)
       ..style = PaintingStyle.fill;
     final r = Random(33);
     for (int i = 0; i < 30; i++) {
@@ -554,7 +554,7 @@ class HexagonPagePainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.amber.withOpacity(0.05)
+      ..color = Colors.amber.withValues(alpha: 0.05)
       ..style = PaintingStyle.stroke;
 
     // Just drawing a few big ones for style
@@ -569,10 +569,11 @@ class HexagonPagePainter extends PageDesignPainter {
         double angle = (pi / 3) * k;
         double x = cx + sizeR * cos(angle);
         double y = cy + sizeR * sin(angle);
-        if (k == 0)
+        if (k == 0) {
           p.moveTo(x, y);
-        else
+        } else {
           p.lineTo(x, y);
+        }
       }
       p.close();
       canvas.drawPath(p, paint);
@@ -588,7 +589,7 @@ class BlueprintPagePainter extends PageDesignPainter {
     // Usually blueprint is white lines on blue, but if user picks this, they likely set bg blue.
     // So we draw white grid.
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.3)
+      ..color = Colors.white.withValues(alpha: 0.3)
       ..strokeWidth = 1;
     const step = 20.0;
     for (double x = 0; x < size.width; x += step) {
@@ -606,7 +607,7 @@ class CornellPagePainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.2)
+      ..color = Colors.black.withValues(alpha: 0.2)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
 
@@ -617,7 +618,7 @@ class CornellPagePainter extends PageDesignPainter {
 
     // Cue Column (Left)
     final cuePaint = Paint()
-      ..color = Colors.red.withOpacity(0.3)
+      ..color = Colors.red.withValues(alpha: 0.3)
       ..strokeWidth = 1.5;
     canvas.drawLine(
       Offset(size.width * 0.3, 0),
@@ -641,7 +642,7 @@ class StoryboardPagePainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.15)
+      ..color = Colors.black.withValues(alpha: 0.15)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
@@ -657,7 +658,7 @@ class StoryboardPagePainter extends PageDesignPainter {
 
       // Lines below
       final linePaint = Paint()
-        ..color = Colors.black.withOpacity(0.1)
+        ..color = Colors.black.withValues(alpha: 0.1)
         ..strokeWidth = 1;
       canvas.drawLine(
         Offset(margin, y + boxH + 15),
@@ -690,10 +691,10 @@ class HandwritingPagePainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final solid = Paint()
-      ..color = Colors.black.withOpacity(0.2)
+      ..color = Colors.black.withValues(alpha: 0.2)
       ..strokeWidth = 1.0;
     final dashed = Paint()
-      ..color = Colors.blue.withOpacity(0.2)
+      ..color = Colors.blue.withValues(alpha: 0.2)
       ..strokeWidth = 1.0;
 
     const lineHeight = 60.0;
@@ -725,7 +726,7 @@ class EngineeringGridPainter extends PageDesignPainter {
   void paint(Canvas canvas, Size size) {
     // Minor Grid
     final minor = Paint()
-      ..color = Colors.green.withOpacity(0.1)
+      ..color = Colors.green.withValues(alpha: 0.1)
       ..strokeWidth = 0.5;
     for (double x = 0; x < size.width; x += 10) {
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), minor);
@@ -736,7 +737,7 @@ class EngineeringGridPainter extends PageDesignPainter {
 
     // Major Grid
     final major = Paint()
-      ..color = Colors.green.withOpacity(0.25)
+      ..color = Colors.green.withValues(alpha: 0.25)
       ..strokeWidth = 1.0;
     for (double x = 0; x < size.width; x += 50) {
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), major);
@@ -753,16 +754,16 @@ class CodeEditorPainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     // Line Numbers bg
-    final gutterPaint = Paint()..color = Colors.black.withOpacity(0.05);
+    final gutterPaint = Paint()..color = Colors.black.withValues(alpha: 0.05);
     canvas.drawRect(Rect.fromLTWH(0, 0, 40, size.height), gutterPaint);
 
     // Separator
-    final linePaint = Paint()..color = Colors.grey.withOpacity(0.2);
+    final linePaint = Paint()..color = Colors.grey.withValues(alpha: 0.2);
     canvas.drawLine(Offset(40, 0), Offset(40, size.height), linePaint);
 
     // Line Hints
     final contentPaint = Paint()
-      ..color = Colors.grey.withOpacity(0.05)
+      ..color = Colors.grey.withValues(alpha: 0.05)
       ..strokeWidth = 1;
     for (double y = 12; y < size.height; y += 24) {
       canvas.drawLine(Offset(45, y), Offset(size.width, y), contentPaint);
@@ -776,7 +777,7 @@ class DiamondGridPainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.1)
+      ..color = Colors.black.withValues(alpha: 0.1)
       ..strokeWidth = 1.0;
 
     const spacing = 30.0;
@@ -807,11 +808,11 @@ class ConfettiPainter extends PageDesignPainter {
     final r = Random(777);
     final paint = Paint()..style = PaintingStyle.fill;
     final colors = [
-      Colors.red.withOpacity(0.15),
-      Colors.blue.withOpacity(0.15),
-      Colors.green.withOpacity(0.15),
-      Colors.yellow.withOpacity(0.15),
-      Colors.purple.withOpacity(0.15),
+      Colors.red.withValues(alpha: 0.15),
+      Colors.blue.withValues(alpha: 0.15),
+      Colors.green.withValues(alpha: 0.15),
+      Colors.yellow.withValues(alpha: 0.15),
+      Colors.purple.withValues(alpha: 0.15),
     ];
 
     for (int i = 0; i < 100; i++) {
@@ -831,11 +832,11 @@ class BambooPainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.green.withOpacity(0.1)
+      ..color = Colors.green.withValues(alpha: 0.1)
       ..strokeWidth = 8
       ..strokeCap = StrokeCap.round;
     final detail = Paint()
-      ..color = Colors.green.withOpacity(0.2)
+      ..color = Colors.green.withValues(alpha: 0.2)
       ..strokeWidth = 1;
     final r = Random(12);
 
@@ -855,7 +856,7 @@ class CrossGridPainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.2)
+      ..color = Colors.black.withValues(alpha: 0.2)
       ..strokeWidth = 1.5
       ..strokeCap = StrokeCap.round;
     const step = 40.0;
@@ -875,7 +876,7 @@ class RainyDayPainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.blueGrey.withOpacity(0.2)
+      ..color = Colors.blueGrey.withValues(alpha: 0.2)
       ..strokeWidth = 1.5
       ..strokeCap = StrokeCap.round;
     final r = Random(420);
@@ -894,27 +895,29 @@ class GrandStaffPainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.2)
+      ..color = Colors.black.withValues(alpha: 0.2)
       ..strokeWidth = 1.0;
 
     // Groups of 5 lines, spaced, then another group
     double y = 80;
     while (y < size.height - 100) {
       // Treble
-      for (int i = 0; i < 5; i++)
+      for (int i = 0; i < 5; i++) {
         canvas.drawLine(
           Offset(0, y + i * 8),
           Offset(size.width, y + i * 8),
           paint,
         );
+      }
       // Bass
       double bassY = y + 80;
-      for (int i = 0; i < 5; i++)
+      for (int i = 0; i < 5; i++) {
         canvas.drawLine(
           Offset(0, bassY + i * 8),
           Offset(size.width, bassY + i * 8),
           paint,
         );
+      }
 
       // Bar line connecting them at start
       canvas.drawLine(Offset(20, y), Offset(20, bassY + 4 * 8), paint);
@@ -930,7 +933,7 @@ class DottedLinePainter extends PageDesignPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.2)
+      ..color = Colors.black.withValues(alpha: 0.2)
       ..strokeWidth = 1.0;
     for (double y = 40; y < size.height; y += 40) {
       for (double x = 0; x < size.width; x += 6) {
@@ -938,7 +941,7 @@ class DottedLinePainter extends PageDesignPainter {
       }
     }
     final margin = Paint()
-      ..color = Colors.red.withOpacity(0.1)
+      ..color = Colors.red.withValues(alpha: 0.1)
       ..strokeWidth = 1;
     canvas.drawLine(Offset(40, 0), Offset(40, size.height), margin);
   }

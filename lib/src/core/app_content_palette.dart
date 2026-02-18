@@ -13,7 +13,7 @@ class AppContentPalette {
   /// Provides a color from its integer value for Hive storage.
   static Color getColorFromValue(int value) {
     return palette.firstWhere(
-      (color) => color.value == value,
+      (color) => color.toARGB32() == value,
       orElse: () => const Color(0xFFF2F2F7),
     );
   }

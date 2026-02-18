@@ -1,0 +1,32 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Body -->
+  <path d="M100 180C100 180 60 160 40 100C20 40 60 20 80 20C100 20 140 40 160 100C180 160 140 180 100 180Z" fill="#FFE135"/>
+  <path d="M40 100C35 85 35 70 45 60" stroke="#E6C200" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Stem -->
+  <path d="M75 25L85 10L115 10L125 25" fill="#8B4513"/>
+  
+  <!-- Face (Focused) -->
+  <circle cx="75" cy="90" r="8" fill="white"/>
+  <circle cx="77" cy="90" r="3" fill="black"/>
+  <circle cx="125" cy="90" r="8" fill="white"/>
+  <circle cx="123" cy="90" r="3" fill="black"/>
+  
+  <!-- Pencil -->
+  <rect x="140" y="60" width="10" height="60" fill="#FFA500" transform="rotate(30 140 60)"/>
+  <path d="M135 112L140 120L148 115" fill="#333"/>
+
+  <!-- Checklist Paper -->
+  <rect x="50" y="110" width="60" height="70" rx="5" fill="white" stroke="#ccc" stroke-width="2"/>
+  <line x1="60" y1="130" x2="100" y2="130" stroke="#ccc" stroke-width="2"/>
+  <line x1="60" y1="150" x2="100" y2="150" stroke="#ccc" stroke-width="2"/>
+  <rect x="55" y="125" width="8" height="8" fill="none" stroke="#4ECDC4" stroke-width="2"/>
+  <rect x="55" y="145" width="8" height="8" fill="none" stroke="#4ECDC4" stroke-width="2"/>
+  
+  <!-- Hands -->
+  <circle cx="45" cy="120" r="8" fill="#FFE135"/>
+  <circle cx="155" cy="100" r="8" fill="#FFE135"/>
+
+  <!-- Shadow -->
+  <ellipse cx="100" cy="190" rx="60" ry="10" fill="black" fill-opacity="0.1"/>
+</svg>
