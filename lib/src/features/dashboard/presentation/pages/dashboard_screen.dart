@@ -179,6 +179,10 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   void initState() {
     super.initState();
+    _settingsAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
     _startMascotMoodCycle();
     _initHive();
     _adService.loadAd();
