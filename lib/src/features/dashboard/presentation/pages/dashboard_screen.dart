@@ -11,6 +11,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/services/interstitial_ad_service.dart';
 import 'package:copyclip/src/core/const/constant.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:copyclip/src/core/services/gamification_service.dart';
+import 'package:copyclip/src/core/common_widgets/mascot_character.dart';
+import 'package:copyclip/src/core/common_widgets/micro_animation.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import '../../../../core/widgets/ad_widget/banner_ad_widget.dart';
 import '../../../notes/data/note_model.dart';
@@ -21,7 +27,6 @@ import '../../../expenses/data/expense_model.dart';
 import '../../../canvas/data/canvas_adapter.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FeatureItem {
   final String id;
@@ -433,6 +438,88 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
+  Widget _buildGamificationHeader(ThemeData theme) {
+    return Consumer<GamificationService>(
+      builder: (context, service, _) {
+        final model = service.model;
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const MascotCharacter(size: 80, state: MascotState.idle),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Level ${model.level}',
+                          style: theme.textTheme.displaySmall?.copyWith(
+                            fontSize: 20,
+                            color: theme.colorScheme.primary,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: LinearProgressIndicator(
+                            value: model.progressToNextLevel,
+                            minHeight: 12,
+                            backgroundColor: theme.colorScheme.primary
+                                .withOpacity(0.1),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              theme.colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '${model.xp} / ${model.xpToNextLevel} XP to Level ${model.level + 1}',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurface.withOpacity(0.6),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  _buildStreakIndicator(model.streak, theme),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildStreakIndicator(int streak, ThemeData theme) {
+    return Column(
+      children: [
+        Icon(
+              CupertinoIcons.flame_fill,
+              color: streak > 0 ? Colors.orange : Colors.grey.withOpacity(0.5),
+              size: 32,
+            )
+            .animate(onPlay: (controller) => controller.repeat(reverse: true))
+            .scale(
+              begin: const Offset(1, 1),
+              end: const Offset(1.1, 1.1),
+              duration: 1.seconds,
+            ),
+        Text(
+          '$streak',
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: streak > 0 ? Colors.orange : Colors.grey,
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildListTile(int index, ThemeData theme) {
     if (index >= _order.length) return const SizedBox.shrink();
     final String id = _order[index];
@@ -469,111 +556,115 @@ class _DashboardScreenState extends State<DashboardScreen>
         break;
     }
 
-    return Container(
+    return MicroAnimation(
       key: ValueKey(id),
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-        border: Border.all(
-          color: theme.colorScheme.outline.withValues(alpha: 0.08),
-          width: AppConstants.borderWidth,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: baseColor.withValues(alpha: 0.05),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-        child: InkWell(
+      type: AnimationType.slide,
+      delay: Duration(milliseconds: index * 50),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-          onTap: () {
-            if (id == 'calendar') {
-              final isPremium = context.read<PremiumBloc>().state.isPremium;
-              _adService.showAd(() {
+          border: Border.all(
+            color: theme.colorScheme.outline.withValues(alpha: 0.08),
+            width: AppConstants.borderWidth,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: baseColor.withValues(alpha: 0.05),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+            onTap: () {
+              if (id == 'calendar') {
+                final isPremium = context.read<PremiumBloc>().state.isPremium;
+                _adService.showAd(() {
+                  context.push(item.route);
+                }, isPremium: isPremium);
+              } else {
                 context.push(item.route);
-              }, isPremium: isPremium);
-            } else {
-              context.push(item.route);
-            }
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Hero(
-                  tag: '${id}_icon',
-                  child: Container(
-                    width: 52,
-                    height: 52,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [baseColor.withValues(alpha: 0.8), baseColor],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(
-                        AppConstants.cornerRadius * 0.75,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: baseColor.withValues(alpha: 0.3),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Hero(
+                    tag: '${id}_icon',
+                    child: Container(
+                      width: 52,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [baseColor.withValues(alpha: 0.8), baseColor],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                         ),
-                      ],
+                        borderRadius: BorderRadius.circular(
+                          AppConstants.cornerRadius * 0.75,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: baseColor.withValues(alpha: 0.3),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Icon(item.icon, color: Colors.white, size: 24),
                     ),
-                    child: Icon(item.icon, color: Colors.white, size: 24),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Hero(
-                        tag: '${id}_title',
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: Text(
-                            item.title,
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Hero(
+                          tag: '${id}_title',
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: Text(
+                              item.title,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        preview ?? item.description,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurface.withValues(
-                            alpha: 0.5,
+                        const SizedBox(height: 4),
+                        Text(
+                          preview ?? item.description,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.onSurface.withValues(
+                              alpha: 0.5,
+                            ),
+                            fontSize: 13,
                           ),
-                          fontSize: 13,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                _buildActionButton(id, baseColor, theme),
-                const SizedBox(width: 4),
-                Icon(
-                  CupertinoIcons.bars,
-                  color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
-                ),
-              ],
+                  const SizedBox(width: 8),
+                  _buildActionButton(id, baseColor, theme),
+                  const SizedBox(width: 4),
+                  Icon(
+                    CupertinoIcons.bars,
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -844,6 +935,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 children: [
                   const SizedBox(height: 16),
                   _buildTopHeader(theme),
+                  _buildGamificationHeader(theme),
                   Expanded(
                     child: LayoutBuilder(
                       builder: (context, constraints) {

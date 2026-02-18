@@ -640,8 +640,8 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
         body: SafeArea(
           child: Hero(
             tag: _editingNote != null
-                ? 'note_background_${_editingNote!.id}' // Matches NoteCard
-                : 'new_note_hero',
+                ? 'note_bg_${_editingNote!.id}' // Matches NoteCard
+                : 'note_new_hero',
             child: Material(
               type: MaterialType.transparency,
               child: Stack(

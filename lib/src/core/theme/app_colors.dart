@@ -40,7 +40,11 @@ class AppColors {
     }
   }
 
-  // Primary/Secondary placeholders if needed by other files not yet analyzed,
-  // but app_theme.dart takes primary as argument, so might not be needed here static-ly
-  // unless referenced elsewhere. For now, sticking to what triggered errors.
+  // Gamification Palette (Duolingo-inspired)
+  static const Color duoGreen = Color(0xFF58CC02);
+  static const Color duoBlue = Color(0xFF1CB0F6);
+  static const Color duoOrange = Color(0xFFFF9600);
+  static const Color duoYellow = Color(0xFFFFC800);
+  static const Color duoRed = Color(0xFFFF4B4B);
+  static const Color duoPink = Color(0xFFCE82FF);
 }

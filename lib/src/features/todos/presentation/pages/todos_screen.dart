@@ -12,6 +12,10 @@ import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:provider/provider.dart';
+import 'package:copyclip/src/core/services/gamification_service.dart';
+import 'package:copyclip/src/core/common_widgets/mascot_character.dart';
+import 'package:copyclip/src/core/common_widgets/micro_animation.dart';
 
 import '../../../../core/router/app_router.dart';
 import '../../../../core/widgets/glass_dialog.dart';
@@ -445,23 +449,73 @@ class _TodosScreenState extends State<TodosScreen>
     // ✅ REFACTORED: Use Central Scheduler Service
     final result = await TodoSchedulerService().completeTodo(todo);
 
+    final theme = Theme.of(context);
     // Feedback for Next Instance
     if (result != null && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            "Next task scheduled for ${DateFormat('MMM d').format(result.dueDate!)}",
+      // Award XP
+      final gamification = context.read<GamificationService>();
+      await gamification.addXp(10);
+      await gamification.recordActivity();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: theme.colorScheme.primary,
+            content: Row(
+              children: [
+                const MascotCharacter(size: 40, state: MascotState.happy),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Great job!",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "You earned 10 XP! Next task: ${DateFormat('MMM d').format(result.dueDate!)}",
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            duration: const Duration(seconds: 3),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
-          duration: const Duration(seconds: 2),
-          action: SnackBarAction(
-            label: "VIEW",
-            onPressed: () {
-              // Optional: Scroll to it or highlight it?
-              // For now just close snackbar
-            },
+        );
+      }
+    } else if (todo.isDone && mounted) {
+      // Award XP for single tasks too
+      final gamification = context.read<GamificationService>();
+      await gamification.addXp(10);
+      await gamification.recordActivity();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: theme.colorScheme.primary,
+            content: Row(
+              children: [
+                const MascotCharacter(size: 40, state: MascotState.happy),
+                const SizedBox(width: 12),
+                const Text("Task completed! +10 XP"),
+              ],
+            ),
+            duration: const Duration(seconds: 2),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
 
     _refreshTodos();
@@ -812,14 +866,10 @@ class _TodosScreenState extends State<TodosScreen>
 
   Widget _buildListItem(ListItem item, int index, bool canReorder) {
     if (item is HeaderItem) {
-      return Container(
-        key: ValueKey('header_${item.category}'),
-        child: _buildHeader(item),
-      );
+      return Container(child: _buildHeader(item));
     } else if (item is QuickInputItem) {
       // ✅ QUICK INPUT Field
       return Container(
-        key: ValueKey('quick_input_${item.category}'),
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         margin: const EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
@@ -853,7 +903,6 @@ class _TodosScreenState extends State<TodosScreen>
     } else if (item is QuickAddItem) {
       // ✅ QUICK ADD TILE
       return GestureDetector(
-        key: ValueKey('quick_add_${item.category}'),
         onTap: () {
           setState(() {
             _quickAddCategory = item.category;
@@ -898,7 +947,6 @@ class _TodosScreenState extends State<TodosScreen>
       );
     } else if (item is DividerItem) {
       return Container(
-        key: ValueKey('divider_$index'),
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Row(
           children: [
@@ -936,20 +984,23 @@ class _TodosScreenState extends State<TodosScreen>
       );
     } else if (item is TodoItemWrapper) {
       final widget = Container(
-        key: ValueKey(item.todo.id),
-        child: TodoCard(
-          todo: item.todo,
-          isSelected: _selectedTodoIds.contains(item.todo.id),
-          onTap: () => _isSelectionMode
-              ? _toggleSelection(item.todo.id)
-              : _openTodoEditor(item.todo),
-          onLongPress: !canReorder
-              ? () => setState(() {
-                  _isSelectionMode = true;
-                  _selectedTodoIds.add(item.todo.id);
-                })
-              : null,
-          onToggleDone: () => _toggleTodoDone(item.todo),
+        child: MicroAnimation(
+          type: AnimationType.scale,
+          delay: Duration(milliseconds: index * 30),
+          child: TodoCard(
+            todo: item.todo,
+            isSelected: _selectedTodoIds.contains(item.todo.id),
+            onTap: () => _isSelectionMode
+                ? _toggleSelection(item.todo.id)
+                : _openTodoEditor(item.todo),
+            onLongPress: !canReorder
+                ? () => setState(() {
+                    _isSelectionMode = true;
+                    _selectedTodoIds.add(item.todo.id);
+                  })
+                : null,
+            onToggleDone: () => _toggleTodoDone(item.todo),
+          ),
         ),
       );
 

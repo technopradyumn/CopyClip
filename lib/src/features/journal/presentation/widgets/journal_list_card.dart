@@ -102,7 +102,7 @@ class JournalListCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Hero(
-        tag: 'journal_list_${entry.id}',
+        tag: 'journal_bg_${entry.id}',
         child: Container(
           constraints: const BoxConstraints(minHeight: 120, maxHeight: 180),
           margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),

@@ -30,6 +30,8 @@ import 'package:copyclip/src/core/services/app_update_service.dart';
 
 import 'package:copyclip/src/core/services/notification_service.dart';
 import 'package:copyclip/src/core/theme/app_theme.dart';
+import 'package:copyclip/src/core/services/gamification_service.dart';
+import 'package:copyclip/src/core/models/gamification_model.dart';
 
 import 'package:copyclip/src/features/clipboard/data/clipboard_adapter.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
@@ -127,6 +129,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider.value(value: initState),
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider(create: (_) => GamificationService()..init()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -174,6 +177,7 @@ Future<void> _initializeApp(AppInitializationState state) async {
     Hive.registerAdapter(JournalEntryAdapter());
     Hive.registerAdapter(ClipboardItemAdapter());
     Hive.registerAdapter(SocialPostAdapter()); // Added
+    Hive.registerAdapter(GamificationModelAdapter()); // Added
     await CanvasDatabase().init();
 
     // Step 3: System setup

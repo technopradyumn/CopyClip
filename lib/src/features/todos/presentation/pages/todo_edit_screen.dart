@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import '../../../../core/widgets/animated_top_bar_title.dart';
 import 'package:copyclip/src/core/utils/widget_sync_service.dart';
 import 'package:copyclip/src/core/const/constant.dart';
 
@@ -596,42 +597,17 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
       );
     }
 
-    String dateText = 'Set Due Date';
-    if (_selectedDate != null) {
-      dateText = DateFormat('EEE, MMM d • h:mm a').format(_selectedDate!);
-    } else {
-      dateText = 'Today • ${DateFormat('h:mm a').format(DateTime.now())}';
-    }
-
     return GestureDetector(
       onTap: _unfocusAll,
       behavior: HitTestBehavior.opaque,
       child: GlassScaffold(
         showBackArrow: true,
-        title: Row(
-          children: [
-            const Hero(
-              tag: 'todos_icon',
-              child: Icon(
-                CupertinoIcons.list_bullet_indent,
-                size: 22,
-                color: Colors.blueAccent,
-              ),
-            ),
-            const SizedBox(width: 8),
-            Hero(
-              tag: 'todos_title',
-              child: Material(
-                type: MaterialType.transparency,
-                child: Text(
-                  widget.todo == null ? 'New Task' : 'Edit Task',
-                  style: textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ],
+        title: AnimatedTopBarTitle(
+          title: widget.todo == null ? 'New Task' : 'Edit Task',
+          icon: CupertinoIcons.checkmark_circle,
+          iconHeroTag: 'todos_icon',
+          titleHeroTag: 'todos_title',
+          color: colorScheme.onSurface,
         ),
         actions: [
           IconButton(
@@ -680,386 +656,420 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
               ],
             ),
         ],
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Category',
-                style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.primary.withValues(alpha: 0.8),
-                  fontSize: 14,
-                ),
+        body: Hero(
+          tag: 'todo_bg_${widget.todo?.id ?? "new"}',
+          child: Material(
+            type: MaterialType.transparency,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.only(
+                left: 16.0,
+                right: 16.0,
+                bottom: 16,
               ),
-              const SizedBox(height: 8),
-
-              CompositedTransformTarget(
-                link: _layerLink,
-                child: Hero(
-                  tag: 'todo_category_${widget.todo?.id ?? "new"}',
-                  child: Material(
-                    type: MaterialType.transparency,
-                    child: TextField(
-                      controller: _categoryController,
-                      focusNode: _categoryFocusNode,
-                      style: textTheme.bodyLarge,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: colorScheme.onSurface.withValues(alpha: 0.08),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            AppConstants.cornerRadius * 0.5,
-                          ),
-                          borderSide: BorderSide.none,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _isDropdownOpen
-                                ? CupertinoIcons.chevron_up
-                                : CupertinoIcons.chevron_down,
-                            color: colorScheme.onSurface.withValues(alpha: 0.54),
-                          ),
-                          onPressed: () {
-                            if (_isDropdownOpen) {
-                              _categoryFocusNode.unfocus();
-                            } else {
-                              _categoryFocusNode.requestFocus();
-                            }
-                          },
-                        ),
-                        hintText: 'e.g. Work, Gym',
-                        hintStyle: textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withValues(alpha: 0.3),
-                        ),
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Category',
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colorScheme.primary.withValues(alpha: 0.8),
+                      fontSize: 14,
                     ),
                   ),
-                ),
-              ),
+                  const SizedBox(height: 8),
 
-              const SizedBox(height: 24),
-
-              Text(
-                'What needs to be done?',
-                style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.primary.withValues(alpha: 0.8),
-                  fontSize: 14,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Hero(
-                tag: 'todo_task_${widget.todo?.id ?? "new"}',
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: TextField(
-                    controller: _taskController,
-                    focusNode: _taskFocusNode,
-                    style: textTheme.bodyLarge?.copyWith(fontSize: 18),
-                    maxLines: 4,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: colorScheme.onSurface.withValues(alpha: 0.08),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          AppConstants.cornerRadius * 0.5,
-                        ),
-                        borderSide: BorderSide.none,
-                      ),
-                      hintText: 'Enter task details...',
-                      hintStyle: textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withValues(alpha: 0.3),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              // Date & Reminder Container
-              GlassContainer(
-                onTap: _pickDateTime,
-                padding: const EdgeInsets.all(16),
-                opacity: _selectedDate != null ? 0.15 : 0.08,
-                child: Row(
-                  children: [
-                    Icon(
-                      CupertinoIcons.calendar,
-                      color: _selectedDate == null
-                          ? colorScheme.onSurface.withValues(alpha: 0.54)
-                          : colorScheme.error,
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _selectedDate == null ? 'Set Due Date' : 'Due Date',
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: colorScheme.onSurface.withValues(alpha: 0.7),
+                  CompositedTransformTarget(
+                    link: _layerLink,
+                    child: Hero(
+                      tag: 'todo_category_${widget.todo?.id ?? "new"}',
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: TextField(
+                          controller: _categoryController,
+                          focusNode: _categoryFocusNode,
+                          style: textTheme.bodyLarge,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: colorScheme.onSurface.withValues(
+                              alpha: 0.08,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                AppConstants.cornerRadius * 0.5,
+                              ),
+                              borderSide: BorderSide.none,
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isDropdownOpen
+                                    ? CupertinoIcons.chevron_up
+                                    : CupertinoIcons.chevron_down,
+                                color: colorScheme.onSurface.withValues(
+                                  alpha: 0.54,
+                                ),
+                              ),
+                              onPressed: () {
+                                if (_isDropdownOpen) {
+                                  _categoryFocusNode.unfocus();
+                                } else {
+                                  _categoryFocusNode.requestFocus();
+                                }
+                              },
+                            ),
+                            hintText: 'e.g. Work, Gym',
+                            hintStyle: textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onSurface.withValues(
+                                alpha: 0.3,
+                              ),
                             ),
                           ),
-                          Text(
-                            dateText,
-                            style: TextStyle(
-                              color: _selectedDate == null
-                                  ? colorScheme.onSurface.withValues(alpha: 0.38)
-                                  : colorScheme.error,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                    Switch(
-                      value: _hasReminder,
-                      activeColor: colorScheme.primary,
-                      onChanged: (val) {
-                        _unfocusAll();
-                        _saveSnapshot();
-                        setState(() {
-                          _hasReminder = val;
-                          if (val) {
-                            // If turning ON and date is null, set to now
-                            _selectedDate ??= DateTime.now();
-                          } else {
-                            // If turning OFF, strictly clear date? Or just keep it but disable flag?
-                            // User request: "Default ON". So we keep date references mostly valid.
-                            // But for UI consistency, if OFF, we can keep date null or just hide it.
-                            // keeping standard behavior:
-                            _selectedDate = null;
-                          }
-                        });
-                        _saveSnapshot();
-                        if (val) _pickDateTime();
-                      },
-                    ),
-                  ],
-                ),
-              ),
+                  ),
 
-              if (_hasReminder && _selectedDate != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, left: 12),
-                  child: Text(
-                    "We'll send you a notification at this time.",
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: colorScheme.onSurface.withValues(alpha: 0.4),
+                  const SizedBox(height: 24),
+
+                  Text(
+                    'What needs to be done?',
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colorScheme.primary.withValues(alpha: 0.8),
+                      fontSize: 14,
                     ),
                   ),
-                ),
+                  const SizedBox(height: 8),
+                  Hero(
+                    tag: 'todo_task_${widget.todo?.id ?? "new"}',
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: TextField(
+                        controller: _taskController,
+                        focusNode: _taskFocusNode,
+                        style: textTheme.bodyLarge?.copyWith(fontSize: 18),
+                        maxLines: 4,
+                        textCapitalization: TextCapitalization.sentences,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: colorScheme.onSurface.withValues(
+                            alpha: 0.08,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppConstants.cornerRadius * 0.5,
+                            ),
+                            borderSide: BorderSide.none,
+                          ),
+                          hintText: 'Enter task details...',
+                          hintStyle: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.onSurface.withValues(alpha: 0.3),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
 
-              const SizedBox(height: 16),
+                  const SizedBox(height: 24),
 
-              // --- REPEAT UI TOGGLE ---
-              GlassContainer(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                opacity: _repeatInterval != null ? 0.15 : 0.08,
-                child: Column(
-                  children: [
-                    Row(
+                  // Date & Reminder Container
+                  GlassContainer(
+                    onTap: _pickDateTime,
+                    padding: const EdgeInsets.all(16),
+                    opacity: _selectedDate != null ? 0.15 : 0.08,
+                    child: Row(
                       children: [
                         Icon(
-                          CupertinoIcons.repeat,
-                          color: _repeatInterval != null
+                          CupertinoIcons.calendar,
+                          color: _selectedDate == null
+                              ? colorScheme.onSurface.withValues(alpha: 0.54)
+                              : colorScheme.error,
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _selectedDate == null
+                                    ? 'Set Due Date'
+                                    : 'Due Date',
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: colorScheme.onSurface.withValues(
+                                    alpha: 0.7,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                DateFormat(
+                                  'MMM d, yyyy h:mm a',
+                                ).format(_selectedDate ?? DateTime.now()),
+                                style: TextStyle(
+                                  color: _selectedDate == null
+                                      ? colorScheme.onSurface.withValues(
+                                          alpha: 0.38,
+                                        )
+                                      : colorScheme.error,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Switch(
+                          value: _hasReminder,
+                          activeColor: colorScheme.primary,
+                          onChanged: (val) {
+                            _unfocusAll();
+                            _saveSnapshot();
+                            setState(() {
+                              _hasReminder = val;
+                              if (val) {
+                                _selectedDate ??= DateTime.now();
+                              } else {
+                                _selectedDate = null;
+                              }
+                            });
+                            _saveSnapshot();
+                            if (val) _pickDateTime();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  if (_hasReminder && _selectedDate != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, left: 12),
+                      child: Text(
+                        "We'll send you a notification at this time.",
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurface.withValues(alpha: 0.4),
+                        ),
+                      ),
+                    ),
+
+                  const SizedBox(height: 16),
+
+                  // --- REPEAT UI TOGGLE ---
+                  GlassContainer(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    opacity: _repeatInterval != null ? 0.15 : 0.08,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              CupertinoIcons.repeat,
+                              color: _repeatInterval != null
+                                  ? colorScheme.primary
+                                  : colorScheme.onSurface.withValues(
+                                      alpha: 0.54,
+                                    ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Text(
+                                'Repeat Task',
+                                style: TextStyle(
+                                  color: _repeatInterval != null
+                                      ? colorScheme.primary
+                                      : colorScheme.onSurface.withValues(
+                                          alpha: 0.7,
+                                        ),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                            Switch(
+                              value: _repeatInterval != null,
+                              activeColor: colorScheme.primary,
+                              onChanged: (val) {
+                                _unfocusAll();
+                                _saveSnapshot();
+                                setState(() {
+                                  _repeatInterval = val ? 'daily' : null;
+                                  if (val &&
+                                      (_repeatDays == null ||
+                                          _repeatDays!.isEmpty)) {
+                                    _repeatDays = [];
+                                  }
+                                });
+                                _saveSnapshot();
+                              },
+                            ),
+                          ],
+                        ),
+                        if (_repeatInterval != null) ...[
+                          Divider(
+                            color: theme.dividerColor.withValues(alpha: 0.2),
+                          ),
+                          const SizedBox(height: 8),
+                          // Dropdown
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            decoration: BoxDecoration(
+                              color: colorScheme.onSurface.withValues(
+                                alpha: 0.05,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: _repeatInterval,
+                                isExpanded: true,
+                                dropdownColor: theme.cardColor,
+                                items:
+                                    [
+                                          'daily',
+                                          'weekly',
+                                          'monthly',
+                                          'yearly',
+                                          'custom',
+                                        ]
+                                        .map(
+                                          (e) => DropdownMenuItem(
+                                            value: e,
+                                            child: Text(
+                                              e[0].toUpperCase() +
+                                                  e.substring(1),
+                                              style: theme.textTheme.bodyMedium,
+                                            ),
+                                          ),
+                                        )
+                                        .toList(),
+                                onChanged: (val) {
+                                  setState(() {
+                                    _repeatInterval = val;
+                                  });
+                                  _saveSnapshot();
+                                },
+                              ),
+                            ),
+                          ),
+                          if (_repeatInterval == 'custom') ...[
+                            const SizedBox(height: 12),
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              alignment: WrapAlignment.center,
+                              children: List.generate(7, (index) {
+                                final dayIndex = index + 1;
+                                final isSelected =
+                                    _repeatDays?.contains(dayIndex) ?? false;
+                                final dayName = [
+                                  'M',
+                                  'T',
+                                  'W',
+                                  'T',
+                                  'F',
+                                  'S',
+                                  'S',
+                                ][index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _repeatDays ??= [];
+                                      if (isSelected) {
+                                        _repeatDays!.remove(dayIndex);
+                                      } else {
+                                        _repeatDays!.add(dayIndex);
+                                      }
+                                    });
+                                    _saveSnapshot();
+                                  },
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 200),
+                                    width: 36,
+                                    height: 36,
+                                    decoration: BoxDecoration(
+                                      color: isSelected
+                                          ? colorScheme.primary
+                                          : colorScheme.onSurface.withValues(
+                                              alpha: 0.1,
+                                            ),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: isSelected
+                                            ? colorScheme.primary
+                                            : Colors.transparent,
+                                      ),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      dayName,
+                                      style: TextStyle(
+                                        color: isSelected
+                                            ? colorScheme.onPrimary
+                                            : colorScheme.onSurface,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                            ),
+                          ],
+                        ],
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // --- COMPLETION TOGGLE ---
+                  GlassContainer(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    opacity: _isDone ? 0.2 : 0.08,
+                    child: Row(
+                      children: [
+                        Icon(
+                          _isDone
+                              ? CupertinoIcons.check_mark_circled_solid
+                              : CupertinoIcons.circle,
+                          color: _isDone
                               ? colorScheme.primary
                               : colorScheme.onSurface.withValues(alpha: 0.54),
                         ),
                         const SizedBox(width: 16),
                         Expanded(
                           child: Text(
-                            'Repeat Task',
+                            _isDone ? 'Completed' : 'Mark as Completed',
                             style: TextStyle(
-                              color: _repeatInterval != null
+                              color: _isDone
                                   ? colorScheme.primary
-                                  : colorScheme.onSurface.withValues(alpha: 0.7),
+                                  : colorScheme.onSurface.withValues(
+                                      alpha: 0.7,
+                                    ),
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
                             ),
                           ),
                         ),
                         Switch(
-                          value: _repeatInterval != null,
+                          value: _isDone,
                           activeColor: colorScheme.primary,
                           onChanged: (val) {
                             _unfocusAll();
                             _saveSnapshot();
-                            setState(() {
-                              _repeatInterval = val ? 'daily' : null;
-                              if (val &&
-                                  (_repeatDays == null ||
-                                      _repeatDays!.isEmpty)) {
-                                _repeatDays = [];
-                              }
-                            });
+                            setState(() => _isDone = val);
                             _saveSnapshot();
                           },
                         ),
                       ],
                     ),
-                    if (_repeatInterval != null) ...[
-                      Divider(color: theme.dividerColor.withValues(alpha: 0.2)),
-                      const SizedBox(height: 8),
-                      // Dropdown
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        decoration: BoxDecoration(
-                          color: colorScheme.onSurface.withValues(alpha: 0.05),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: _repeatInterval,
-                            isExpanded: true,
-                            dropdownColor: theme.cardColor,
-                            items:
-                                [
-                                      'daily',
-                                      'weekly',
-                                      'monthly',
-                                      'yearly',
-                                      'custom',
-                                    ]
-                                    .map(
-                                      (e) => DropdownMenuItem(
-                                        value: e,
-                                        child: Text(
-                                          e[0].toUpperCase() + e.substring(1),
-                                          style: theme.textTheme.bodyMedium,
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                            onChanged: (val) {
-                              setState(() {
-                                _repeatInterval = val;
-                              });
-                              _saveSnapshot();
-                            },
-                          ),
-                        ),
-                      ),
-                      if (_repeatInterval == 'custom') ...[
-                        const SizedBox(height: 12),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          alignment: WrapAlignment.center,
-                          children: List.generate(7, (index) {
-                            final dayIndex = index + 1;
-                            final isSelected =
-                                _repeatDays?.contains(dayIndex) ?? false;
-                            final dayName = [
-                              'M',
-                              'T',
-                              'W',
-                              'T',
-                              'F',
-                              'S',
-                              'S',
-                            ][index];
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _repeatDays ??= [];
-                                  if (isSelected) {
-                                    _repeatDays!.remove(dayIndex);
-                                  } else {
-                                    _repeatDays!.add(dayIndex);
-                                  }
-                                });
-                                _saveSnapshot();
-                              },
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 200),
-                                width: 36,
-                                height: 36,
-                                decoration: BoxDecoration(
-                                  color: isSelected
-                                      ? colorScheme.primary
-                                      : colorScheme.onSurface.withValues(alpha: 0.1),
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: isSelected
-                                        ? colorScheme.primary
-                                        : Colors.transparent,
-                                  ),
-                                ),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  dayName,
-                                  style: TextStyle(
-                                    color: isSelected
-                                        ? colorScheme.onPrimary
-                                        : colorScheme.onSurface,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
-                        ),
-                      ],
-                    ],
-                  ],
-                ),
+                  ),
+
+                  const SizedBox(height: 80),
+                ],
               ),
-
-              const SizedBox(height: 16),
-
-              // --- COMPLETION TOGGLE ---
-              GlassContainer(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                opacity: _isDone ? 0.2 : 0.08,
-                child: Row(
-                  children: [
-                    Icon(
-                      _isDone
-                          ? CupertinoIcons.check_mark_circled_solid
-                          : CupertinoIcons.circle,
-                      color: _isDone
-                          ? colorScheme.primary
-                          : colorScheme.onSurface.withValues(alpha: 0.54),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Text(
-                        _isDone ? 'Completed' : 'Mark as Completed',
-                        style: TextStyle(
-                          color: _isDone
-                              ? colorScheme.primary
-                              : colorScheme.onSurface.withValues(alpha: 0.7),
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    Switch(
-                      value: _isDone,
-                      activeColor: colorScheme.primary,
-                      onChanged: (val) {
-                        _unfocusAll();
-                        _saveSnapshot();
-                        setState(() => _isDone = val);
-                        _saveSnapshot();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 80),
-            ],
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(

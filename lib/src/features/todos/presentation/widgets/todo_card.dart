@@ -69,7 +69,7 @@ class TodoCard extends StatelessWidget {
             onTap: onTap,
             onLongPress: onLongPress,
             child: Hero(
-              tag: 'todo_container_${todo.id}',
+              tag: 'todo_bg_${todo.id}',
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeOutCubic,
@@ -113,13 +113,15 @@ class TodoCard extends StatelessWidget {
                                 fontWeight: todo.isDone
                                     ? FontWeight.w400
                                     : FontWeight.w600,
-                                color: stateColor.withValues(alpha: 
-                                  todo.isDone ? 0.6 : 1.0,
+                                color: stateColor.withValues(
+                                  alpha: todo.isDone ? 0.6 : 1.0,
                                 ),
                                 decoration: todo.isDone
                                     ? TextDecoration.lineThrough
                                     : TextDecoration.none,
-                                decorationColor: stateColor.withValues(alpha: 0.4),
+                                decorationColor: stateColor.withValues(
+                                  alpha: 0.4,
+                                ),
                                 decorationThickness: 2,
                                 height: 1.3,
                               ),
@@ -243,7 +245,8 @@ class TodoCard extends StatelessWidget {
   }
 
   Color _getCheckboxBorderColor(ColorScheme colorScheme) {
-    if (todo.isDone) return _getTaskTextColor(colorScheme).withValues(alpha: 0.8);
+    if (todo.isDone)
+      return _getTaskTextColor(colorScheme).withValues(alpha: 0.8);
     if (_isOverdue) return colorScheme.error;
     if (_isDueToday) return colorScheme.tertiary;
     if (_isFuture) return colorScheme.primary;
@@ -259,7 +262,8 @@ class TodoCard extends StatelessWidget {
   }
 
   Color _getBackgroundColor(ColorScheme colorScheme) {
-    if (todo.isDone) return colorScheme.surfaceContainerHighest.withValues(alpha: 0.2);
+    if (todo.isDone)
+      return colorScheme.surfaceContainerHighest.withValues(alpha: 0.2);
     if (_isOverdue) return colorScheme.error.withValues(alpha: 0.12);
     if (_isDueToday) return colorScheme.tertiary.withValues(alpha: 0.12);
     if (_isFuture) return colorScheme.primary.withValues(alpha: 0.12);

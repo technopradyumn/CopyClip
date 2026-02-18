@@ -287,7 +287,6 @@ class SocialPostListWidgetState extends State<SocialPostListWidget> {
         : theme.cardColor;
 
     return Card(
-      key: ValueKey(post.id),
       margin: EdgeInsets.only(bottom: 12.h),
       elevation: isSelected ? 4 : 2,
       color: backgroundColor,

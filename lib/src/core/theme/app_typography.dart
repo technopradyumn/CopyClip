@@ -4,17 +4,17 @@ import 'app_colors.dart';
 
 class AppTypography {
   static TextTheme get lightTextTheme => TextTheme(
-    displayLarge: GoogleFonts.outfit(
+    displayLarge: GoogleFonts.fredoka(
       fontSize: 32,
       fontWeight: FontWeight.bold,
       color: AppColors.textPrimary,
     ),
-    displayMedium: GoogleFonts.outfit(
+    displayMedium: GoogleFonts.fredoka(
       fontSize: 28,
       fontWeight: FontWeight.w600,
       color: AppColors.textPrimary,
     ),
-    displaySmall: GoogleFonts.outfit(
+    displaySmall: GoogleFonts.fredoka(
       fontSize: 24,
       fontWeight: FontWeight.w600,
       color: AppColors.textPrimary,
@@ -42,17 +42,17 @@ class AppTypography {
   );
 
   static TextTheme get darkTextTheme => TextTheme(
-    displayLarge: GoogleFonts.outfit(
+    displayLarge: GoogleFonts.fredoka(
       fontSize: 32,
       fontWeight: FontWeight.bold,
       color: AppColors.textLight,
     ),
-    displayMedium: GoogleFonts.outfit(
+    displayMedium: GoogleFonts.fredoka(
       fontSize: 28,
       fontWeight: FontWeight.w600,
       color: AppColors.textLight,
     ),
-    displaySmall: GoogleFonts.outfit(
+    displaySmall: GoogleFonts.fredoka(
       fontSize: 24,
       fontWeight: FontWeight.w600,
       color: AppColors.textLight,

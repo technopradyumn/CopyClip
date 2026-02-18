@@ -100,7 +100,7 @@ class NoteCard extends StatelessWidget {
       onTap: onTap,
       onLongPress: onLongPress,
       child: Hero(
-        tag: 'note_background_${note.id}',
+        tag: 'note_bg_${note.id}',
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOutCubic,
