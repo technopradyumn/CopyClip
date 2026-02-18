@@ -439,7 +439,9 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
               decoration: BoxDecoration(
                 color: theme.colorScheme.onSurface.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
+                border: Border.all(
+                  color: theme.dividerColor.withValues(alpha: 0.1),
+                ),
               ),
               child: TextField(
                 controller: _searchController,

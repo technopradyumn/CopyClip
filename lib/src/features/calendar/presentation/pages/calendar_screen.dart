@@ -151,8 +151,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
       child: Container(
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
         decoration: BoxDecoration(
-          color: theme.colorScheme.surface.withValues(alpha: 
-            0.6,
+          color: theme.colorScheme.surface.withValues(
+            alpha: 0.6,
           ), // Fast transparency
           borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
           border: Border.all(
@@ -228,7 +228,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
             ),
 
             defaultTextStyle: TextStyle(color: onSurface),
-            weekendTextStyle: TextStyle(color: onSurface.withValues(alpha: 0.6)),
+            weekendTextStyle: TextStyle(
+              color: onSurface.withValues(alpha: 0.6),
+            ),
             outsideDaysVisible: false,
           ),
           calendarBuilders: CalendarBuilders(
@@ -352,8 +354,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       return CircularProgressIndicator(
                         value: value,
                         strokeWidth: 6,
-                        backgroundColor: theme.colorScheme.primary.withValues(alpha: 
-                          0.1,
+                        backgroundColor: theme.colorScheme.primary.withValues(
+                          alpha: 0.1,
                         ),
                         valueColor: AlwaysStoppedAnimation<Color>(
                           theme.colorScheme.primary,

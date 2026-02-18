@@ -878,8 +878,8 @@ class _SettingsScreenState extends State<SettingsScreen>
                                 vertical: 6,
                               ),
                               decoration: BoxDecoration(
-                                color: theme.colorScheme.surface.withValues(alpha: 
-                                  0.8,
+                                color: theme.colorScheme.surface.withValues(
+                                  alpha: 0.8,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -1137,7 +1137,10 @@ class _SettingsScreenState extends State<SettingsScreen>
         decoration: BoxDecoration(
           color: onSurfaceColor.withValues(alpha: 0.03),
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: onSurfaceColor.withValues(alpha: 0.05), width: 1),
+          border: Border.all(
+            color: onSurfaceColor.withValues(alpha: 0.05),
+            width: 1,
+          ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -1347,7 +1350,12 @@ class _ColorDot extends StatelessWidget {
                   ? Border.all(color: Colors.white, width: 2.5)
                   : null,
               boxShadow: isSelected
-                  ? [BoxShadow(color: color.withValues(alpha: 0.4), blurRadius: 10)]
+                  ? [
+                      BoxShadow(
+                        color: color.withValues(alpha: 0.4),
+                        blurRadius: 10,
+                      ),
+                    ]
                   : null,
             ),
             child: isSelected

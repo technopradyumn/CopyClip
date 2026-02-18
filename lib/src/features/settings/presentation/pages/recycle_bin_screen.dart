@@ -371,7 +371,9 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
                                                         ),
                                                     border: Border.all(
                                                       color: theme.dividerColor
-                                                          .withValues(alpha: 0.1),
+                                                          .withValues(
+                                                            alpha: 0.1,
+                                                          ),
                                                       width: AppConstants
                                                           .borderWidth,
                                                     ),

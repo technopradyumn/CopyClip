@@ -112,21 +112,18 @@ class ExpenseCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Hero(
-                              tag: 'expense_title_${expense.id}',
-                              child: Material(
-                                type: MaterialType.transparency,
-                                child: Text(
-                                  expense.title.isNotEmpty
-                                      ? expense.title
-                                      : "Untitled",
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: theme.textTheme.titleSmall?.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 15,
-                                    letterSpacing: -0.3,
-                                  ),
+                            Material(
+                              type: MaterialType.transparency,
+                              child: Text(
+                                expense.title.isNotEmpty
+                                    ? expense.title
+                                    : "Untitled",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: theme.textTheme.titleSmall?.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                  letterSpacing: -0.3,
                                 ),
                               ),
                             ),
@@ -151,18 +148,15 @@ class ExpenseCard extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Hero(
-                            tag: 'expense_amount_${expense.id}',
-                            child: Material(
-                              type: MaterialType.transparency,
-                              child: Text(
-                                "$sign${expense.currency}${expense.amount.toStringAsFixed(2)}",
-                                style: theme.textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 16,
-                                  color: accentColor,
-                                  letterSpacing: -0.5,
-                                ),
+                          Material(
+                            type: MaterialType.transparency,
+                            child: Text(
+                              "$sign${expense.currency}${expense.amount.toStringAsFixed(2)}",
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16,
+                                color: accentColor,
+                                letterSpacing: -0.5,
                               ),
                             ),
                           ),

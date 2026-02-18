@@ -92,7 +92,9 @@ class _PremiumScreenState extends State<PremiumScreen> {
                       else
                         _GlassContainer(
                           color: Colors.greenAccent.withValues(alpha: 0.1),
-                          borderColor: Colors.greenAccent.withValues(alpha: 0.3),
+                          borderColor: Colors.greenAccent.withValues(
+                            alpha: 0.3,
+                          ),
                           child: Column(
                             children: [
                               const Icon(
@@ -114,8 +116,9 @@ class _PremiumScreenState extends State<PremiumScreen> {
                                     ? "Expires: ${DateFormat.yMMMd().format(state.premiumExpiryDate!)}"
                                     : "Temporary Access",
                                 style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: theme.colorScheme.onSurface
-                                      .withValues(alpha: 0.7),
+                                  color: theme.colorScheme.onSurface.withValues(
+                                    alpha: 0.7,
+                                  ),
                                 ),
                               ),
                             ],
@@ -255,7 +258,9 @@ class _PremiumScreenState extends State<PremiumScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.3),
+                  ),
                 ),
                 child: const Icon(
                   Icons.monetization_on_outlined,
@@ -355,15 +360,17 @@ class _GlassContainer extends StatelessWidget {
           decoration: BoxDecoration(
             color:
                 color ??
-                (gradient == null ? Colors.white.withValues(alpha: 0.05) : null),
+                (gradient == null
+                    ? Colors.white.withValues(alpha: 0.05)
+                    : null),
             gradient: gradient,
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
               color:
                   borderColor ??
-                  Theme.of(
-                    context,
-                  ).colorScheme.outline.withValues(alpha: 0.2), // Minimal & Visible
+                  Theme.of(context).colorScheme.outline.withValues(
+                    alpha: 0.2,
+                  ), // Minimal & Visible
               width: 1,
             ),
           ),
@@ -389,7 +396,9 @@ class _SectionHeader extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 20,
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.8),
             ),
           ),
           const SizedBox(width: 12),
@@ -430,7 +439,9 @@ class _ActionGlassCard extends StatelessWidget {
         color: isDisabled
             ? Colors.grey.withValues(alpha: 0.05)
             : color.withValues(alpha: 0.08),
-        borderColor: isDisabled ? Colors.transparent : color.withValues(alpha: 0.2),
+        borderColor: isDisabled
+            ? Colors.transparent
+            : color.withValues(alpha: 0.2),
         child: Row(
           children: [
             Container(

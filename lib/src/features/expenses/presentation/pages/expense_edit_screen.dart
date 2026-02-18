@@ -703,34 +703,28 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                           ),
                           const SizedBox(width: 16),
                           Expanded(
-                            child: Hero(
-                              tag: 'expense_amount_$heroId',
-                              child: Material(
-                                type: MaterialType.transparency,
-                                child: TextField(
-                                  controller: _amountController,
-                                  focusNode: _amountFocusNode,
-                                  keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                        decimal: true,
-                                      ),
-                                  style: textTheme.headlineLarge?.copyWith(
-                                    fontSize: 40,
-                                    fontWeight: FontWeight.bold,
-                                    color: _isIncome
-                                        ? incomeColor
-                                        : expenseColor,
+                            child: Material(
+                              type: MaterialType.transparency,
+                              child: TextField(
+                                controller: _amountController,
+                                focusNode: _amountFocusNode,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                      decimal: true,
+                                    ),
+                                style: textTheme.headlineLarge?.copyWith(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold,
+                                  color: _isIncome ? incomeColor : expenseColor,
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: '0.00',
+                                  hintStyle: textTheme.headlineLarge?.copyWith(
+                                    color: onSurfaceColor.withValues(
+                                      alpha: 0.12,
+                                    ),
                                   ),
-                                  decoration: InputDecoration(
-                                    hintText: '0.00',
-                                    hintStyle: textTheme.headlineLarge
-                                        ?.copyWith(
-                                          color: onSurfaceColor.withValues(
-                                            alpha: 0.12,
-                                          ),
-                                        ),
-                                    border: InputBorder.none,
-                                  ),
+                                  border: InputBorder.none,
                                 ),
                               ),
                             ),
@@ -748,27 +742,24 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Hero(
-                        tag: 'expense_title_$heroId',
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: TextField(
-                            controller: _titleController,
-                            focusNode: _titleFocusNode,
-                            style: textTheme.bodyLarge?.copyWith(
-                              color: onSurfaceColor,
+                      Material(
+                        type: MaterialType.transparency,
+                        child: TextField(
+                          controller: _titleController,
+                          focusNode: _titleFocusNode,
+                          style: textTheme.bodyLarge?.copyWith(
+                            color: onSurfaceColor,
+                          ),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: fillColor,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
                             ),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: fillColor,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide.none,
-                              ),
-                              hintText: 'What is this for?',
-                              hintStyle: textTheme.bodyLarge?.copyWith(
-                                color: onSurfaceColor.withValues(alpha: 0.38),
-                              ),
+                            hintText: 'What is this for?',
+                            hintStyle: textTheme.bodyLarge?.copyWith(
+                              color: onSurfaceColor.withValues(alpha: 0.38),
                             ),
                           ),
                         ),
@@ -785,40 +776,35 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                       const SizedBox(height: 8),
                       CompositedTransformTarget(
                         link: _layerLink,
-                        child: Hero(
-                          tag: 'expense_category_$heroId',
-                          child: Material(
-                            type: MaterialType.transparency,
-                            child: TextField(
-                              controller: _categoryController,
-                              focusNode: _categoryFocusNode,
-                              style: textTheme.bodyLarge?.copyWith(
-                                color: onSurfaceColor,
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: TextField(
+                            controller: _categoryController,
+                            focusNode: _categoryFocusNode,
+                            style: textTheme.bodyLarge?.copyWith(
+                              color: onSurfaceColor,
+                            ),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: fillColor,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide.none,
                               ),
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: fillColor,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide.none,
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _isDropdownOpen
+                                      ? Icons.arrow_drop_up
+                                      : Icons.arrow_drop_down,
+                                  color: onSurfaceColor.withValues(alpha: 0.6),
                                 ),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    _isDropdownOpen
-                                        ? Icons.arrow_drop_up
-                                        : Icons.arrow_drop_down,
-                                    color: onSurfaceColor.withValues(
-                                      alpha: 0.6,
-                                    ),
-                                  ),
-                                  onPressed: _isDropdownOpen
-                                      ? _unfocusAll
-                                      : () => _categoryFocusNode.requestFocus(),
-                                ),
-                                hintText: 'Select or type...',
-                                hintStyle: textTheme.bodyLarge?.copyWith(
-                                  color: onSurfaceColor.withValues(alpha: 0.38),
-                                ),
+                                onPressed: _isDropdownOpen
+                                    ? _unfocusAll
+                                    : () => _categoryFocusNode.requestFocus(),
+                              ),
+                              hintText: 'Select or type...',
+                              hintStyle: textTheme.bodyLarge?.copyWith(
+                                color: onSurfaceColor.withValues(alpha: 0.38),
                               ),
                             ),
                           ),
@@ -871,37 +857,32 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Hero(
-                        tag: 'expense_date_$heroId',
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: GestureDetector(
-                            onTap: _pickDateTime,
-                            child: Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: fillColor,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.calendar_today,
-                                    color: onSurfaceColor.withValues(
-                                      alpha: 0.6,
-                                    ),
+                      Material(
+                        type: MaterialType.transparency,
+                        child: GestureDetector(
+                          onTap: _pickDateTime,
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: fillColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.calendar_today,
+                                  color: onSurfaceColor.withValues(alpha: 0.6),
+                                ),
+                                const SizedBox(width: 16),
+                                Text(
+                                  DateFormat(
+                                    'MMM dd, yyyy • h:mm a',
+                                  ).format(_selectedDate),
+                                  style: textTheme.bodyLarge?.copyWith(
+                                    color: onSurfaceColor,
                                   ),
-                                  const SizedBox(width: 16),
-                                  Text(
-                                    DateFormat(
-                                      'MMM dd, yyyy • h:mm a',
-                                    ).format(_selectedDate),
-                                    style: textTheme.bodyLarge?.copyWith(
-                                      color: onSurfaceColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

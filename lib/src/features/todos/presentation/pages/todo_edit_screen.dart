@@ -680,48 +680,43 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
 
                   CompositedTransformTarget(
                     link: _layerLink,
-                    child: Hero(
-                      tag: 'todo_category_${widget.todo?.id ?? "new"}',
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: TextField(
-                          controller: _categoryController,
-                          focusNode: _categoryFocusNode,
-                          style: textTheme.bodyLarge,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: colorScheme.onSurface.withValues(
-                              alpha: 0.08,
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: TextField(
+                        controller: _categoryController,
+                        focusNode: _categoryFocusNode,
+                        style: textTheme.bodyLarge,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: colorScheme.onSurface.withValues(
+                            alpha: 0.08,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppConstants.cornerRadius * 0.5,
                             ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                AppConstants.cornerRadius * 0.5,
-                              ),
-                              borderSide: BorderSide.none,
-                            ),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _isDropdownOpen
-                                    ? CupertinoIcons.chevron_up
-                                    : CupertinoIcons.chevron_down,
-                                color: colorScheme.onSurface.withValues(
-                                  alpha: 0.54,
-                                ),
-                              ),
-                              onPressed: () {
-                                if (_isDropdownOpen) {
-                                  _categoryFocusNode.unfocus();
-                                } else {
-                                  _categoryFocusNode.requestFocus();
-                                }
-                              },
-                            ),
-                            hintText: 'e.g. Work, Gym',
-                            hintStyle: textTheme.bodyMedium?.copyWith(
+                            borderSide: BorderSide.none,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isDropdownOpen
+                                  ? CupertinoIcons.chevron_up
+                                  : CupertinoIcons.chevron_down,
                               color: colorScheme.onSurface.withValues(
-                                alpha: 0.3,
+                                alpha: 0.54,
                               ),
                             ),
+                            onPressed: () {
+                              if (_isDropdownOpen) {
+                                _categoryFocusNode.unfocus();
+                              } else {
+                                _categoryFocusNode.requestFocus();
+                              }
+                            },
+                          ),
+                          hintText: 'e.g. Work, Gym',
+                          hintStyle: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.onSurface.withValues(alpha: 0.3),
                           ),
                         ),
                       ),
@@ -738,31 +733,28 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Hero(
-                    tag: 'todo_task_${widget.todo?.id ?? "new"}',
-                    child: Material(
-                      type: MaterialType.transparency,
-                      child: TextField(
-                        controller: _taskController,
-                        focusNode: _taskFocusNode,
-                        style: textTheme.bodyLarge?.copyWith(fontSize: 18),
-                        maxLines: 4,
-                        textCapitalization: TextCapitalization.sentences,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: colorScheme.onSurface.withValues(
-                            alpha: 0.08,
+                  Material(
+                    type: MaterialType.transparency,
+                    child: TextField(
+                      controller: _taskController,
+                      focusNode: _taskFocusNode,
+                      style: textTheme.bodyLarge?.copyWith(fontSize: 18),
+                      maxLines: 4,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: colorScheme.onSurface.withValues(
+                          alpha: 0.08,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            AppConstants.cornerRadius * 0.5,
                           ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              AppConstants.cornerRadius * 0.5,
-                            ),
-                            borderSide: BorderSide.none,
-                          ),
-                          hintText: 'Enter task details...',
-                          hintStyle: textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurface.withValues(alpha: 0.3),
-                          ),
+                          borderSide: BorderSide.none,
+                        ),
+                        hintText: 'Enter task details...',
+                        hintStyle: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurface.withValues(alpha: 0.3),
                         ),
                       ),
                     ),
