@@ -143,101 +143,46 @@ void main() async {
     ),
   );
 
-  try {
-    await _initializeApp(initState);
-  } catch (e) {
-    debugPrint("❌ Fatal initialization error: $e");
-  }
+  // ✅ OPTIMIZATION: Fire and forget init while app launches
+  _initializeApp(initState);
 }
 
 Future<void> _initializeApp(AppInitializationState state) async {
   try {
-    // Step 1: Basic services
-    state.updateProgress('Loading...', 0.2);
+    // Step 1: Basic services (Critical only)
     await dotenv.load(fileName: ".env").catchError((_) => null);
 
-    // ✅ OPTIMIZATION: Initialize Home Widget Service
-    await HomeWidgetService.initialize();
-
-    // ✅ Initialize AdMob early with Test Device configuration
-    await MobileAds.instance.updateRequestConfiguration(
-      RequestConfiguration(testDeviceIds: ["144FE4F3F00EAB19BA87344D34904C8B"]),
-    );
-    try {
-      await MobileAds.instance.initialize();
-    } catch (e) {
-      debugPrint('❌ Ad initialization error: $e');
-    }
-
-    // Step 2: Hive setup
-    state.updateProgress('Setting up database...', 0.4);
+    // Step 2: Hive setup (Critical)
     await Hive.initFlutter();
+    _registerAdapters();
 
-    Hive.registerAdapter(NoteAdapter());
-    Hive.registerAdapter(TodoAdapter());
-    Hive.registerAdapter(ExpenseAdapter());
-    Hive.registerAdapter(JournalEntryAdapter());
-    Hive.registerAdapter(ClipboardItemAdapter());
-    Hive.registerAdapter(SocialPostAdapter()); // Added
-    Hive.registerAdapter(GamificationModelAdapter()); // Added
-    await CanvasDatabase().init();
-
-    // Step 3: System setup
-    state.updateProgress('Configuring system...', 0.55);
-
-    // ✅ CHANGE 2: Register background callback for widgets
-    HomeWidget.registerBackgroundCallback(homeWidgetBackgroundCallback);
-    HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
-    debugPrint('✅ Widget background callback registered');
-
+    // Step 3: Critical System setup
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
-    // Step 4: Open only critical boxes for faster startup
-    state.updateProgress('Loading...', 0.6);
+    // Step 4: Open ONLY critical boxes for UI
+    // Grouping awaits for parallelism
     await Future.wait([
       _openBoxSafely('settings'),
       _openBoxSafely('theme_box'),
+      CanvasDatabase().init(),
     ]);
 
-    // ✅ OPTIMIZATION: Defer notification service init
-    NotificationService().init().catchError(
-      (e) => debugPrint('Notification init error: $e'),
-    );
-
-    // ✅ OPTIMIZATION: Lazy load feature boxes - they'll open when needed
-    // This significantly improves startup time
-
-    // ✅ OPTIMIZATION: Defer background tasks to post-init
-    state.updateProgress('Ready', 0.9);
-    _initializeBackgroundTasks().catchError(
-      (e) => debugPrint('Background task error: $e'),
-    );
-
-    // ✅ NEW: Initialize Background Worker for Todos
-    // We do this here (after Hive) so it can register tasks safely
-    await BackgroundWorker.initialize();
-    await BackgroundWorker.registerPeriodicTask();
-
-    // ✅ NEW: Healing check on startup
-    // Run once immediately to fix any missed schedules while app was dead
-    TodoSchedulerService().handleMissedRecurrences().catchError(
-      (e) => debugPrint("Healing error: $e"),
-    );
-
-    // ✅ NEW: Initialize App Update Service
-    try {
-      debugPrint('Initializing AppUpdateService...');
-      await AppUpdateService.instance.checkForUpdate();
-    } catch (e) {
-      debugPrint('Error initializing AppUpdateService: $e');
-    }
-
     state.complete();
-    debugPrint("✅ App initialization complete");
+    debugPrint("✅ Critical initialization complete");
   } catch (e, stackTrace) {
     debugPrint("❌ Initialization error: $e\n$stackTrace");
-    state.complete();
+    state.complete(); // Ensure app loads even on error
   }
+}
+
+void _registerAdapters() {
+  Hive.registerAdapter(NoteAdapter());
+  Hive.registerAdapter(TodoAdapter());
+  Hive.registerAdapter(ExpenseAdapter());
+  Hive.registerAdapter(JournalEntryAdapter());
+  Hive.registerAdapter(ClipboardItemAdapter());
+  Hive.registerAdapter(SocialPostAdapter());
+  Hive.registerAdapter(GamificationModelAdapter());
 }
 
 /// Helper to safely open a Hive box.
@@ -427,14 +372,69 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
   /// ✅ OPTIMIZATION: Initialize ads and preload boxes after first frame
   Future<void> _postFrameInitialization() async {
-    debugPrint('🚀 Post-frame initialization...');
+    debugPrint('🚀 Post-frame initialization STARTED');
 
-    // Preload common boxes in background
-    LazyBoxLoader.preloadCommonBoxes().catchError((e) {
+    // 1. Initialize Home Widget Service & Callbacks
+    try {
+      if (!isIntegrationTesting) {
+        await HomeWidgetService.initialize();
+        HomeWidget.registerBackgroundCallback(homeWidgetBackgroundCallback);
+        HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
+      }
+    } catch (e) {
+      debugPrint('⚠️ HomeWidget init error: $e');
+    }
+
+    // 2. Preload common boxes in background
+    try {
+      await LazyBoxLoader.preloadCommonBoxes();
+    } catch (e) {
       debugPrint('⚠️ Box preload error: $e');
-    });
+    }
 
-    debugPrint('✅ Post-frame initialization complete');
+    // 3. Notifications & Background Workers
+    try {
+      NotificationService().init();
+      await BackgroundWorker.initialize();
+      await BackgroundWorker.registerPeriodicTask();
+    } catch (e) {
+      debugPrint('⚠️ Background worker error: $e');
+    }
+
+    // 4. Healing check
+    try {
+      await TodoSchedulerService().handleMissedRecurrences();
+    } catch (e) {
+      debugPrint("Healing error: $e");
+    }
+
+    // 5. Defer background tasks
+    try {
+      await _initializeBackgroundTasks();
+    } catch (e) {
+      debugPrint('Background task error: $e');
+    }
+
+    // 6. Ads
+    try {
+      await MobileAds.instance.updateRequestConfiguration(
+        RequestConfiguration(
+          testDeviceIds: ["144FE4F3F00EAB19BA87344D34904C8B"],
+        ),
+      );
+      await MobileAds.instance.initialize();
+    } catch (e) {
+      debugPrint('❌ Ad init error: $e');
+    }
+
+    // 7. Check for Updates
+    try {
+      await AppUpdateService.instance.checkForUpdate();
+    } catch (e) {
+      debugPrint('Update check error: $e');
+    }
+
+    debugPrint('✅ Post-frame initialization COMPLETE');
   }
 
   // ✅ CHANGE 8: NEW - Setup widget interaction listener

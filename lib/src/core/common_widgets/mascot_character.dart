@@ -36,6 +36,7 @@ class _MascotCharacterState extends State<MascotCharacter>
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 3000),
@@ -48,51 +49,39 @@ class _MascotCharacterState extends State<MascotCharacter>
 
     _driftAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween(
-          begin: 0.0,
-          end: -15.0,
-        ).chain(CurveTween(curve: Curves.easeInOutSine)),
+        tween: Tween(begin: 0.0, end: -15.0)
+            .chain(CurveTween(curve: Curves.easeInOutSine)),
         weight: 50,
       ),
       TweenSequenceItem(
-        tween: Tween(
-          begin: -15.0,
-          end: 0.0,
-        ).chain(CurveTween(curve: Curves.easeInOutSine)),
+        tween: Tween(begin: -15.0, end: 0.0)
+            .chain(CurveTween(curve: Curves.easeInOutSine)),
         weight: 50,
       ),
     ]).animate(_controller);
 
     _pulseAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween(
-          begin: 1.0,
-          end: 1.08,
-        ).chain(CurveTween(curve: Curves.easeInOut)),
+        tween: Tween(begin: 1.0, end: 1.08)
+            .chain(CurveTween(curve: Curves.easeInOut)),
         weight: 50,
       ),
       TweenSequenceItem(
-        tween: Tween(
-          begin: 1.08,
-          end: 1.0,
-        ).chain(CurveTween(curve: Curves.easeInOut)),
+        tween: Tween(begin: 1.08, end: 1.0)
+            .chain(CurveTween(curve: Curves.easeInOut)),
         weight: 50,
       ),
     ]).animate(_controller);
 
     _interactionPulse = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween(
-          begin: 1.0,
-          end: 1.5,
-        ).chain(CurveTween(curve: Curves.easeOutCubic)),
+        tween: Tween(begin: 1.0, end: 1.5)
+            .chain(CurveTween(curve: Curves.easeOutCubic)),
         weight: 30,
       ),
       TweenSequenceItem(
-        tween: Tween(
-          begin: 1.5,
-          end: 1.0,
-        ).chain(CurveTween(curve: Curves.elasticOut)),
+        tween: Tween(begin: 1.5, end: 1.0)
+            .chain(CurveTween(curve: Curves.elasticOut)),
         weight: 70,
       ),
     ]).animate(_interactionController);
@@ -104,17 +93,13 @@ class _MascotCharacterState extends State<MascotCharacter>
 
     _orbitalTiltAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween(
-          begin: -0.2,
-          end: 0.2,
-        ).chain(CurveTween(curve: Curves.easeInOutSine)),
+        tween: Tween(begin: -0.2, end: 0.2)
+            .chain(CurveTween(curve: Curves.easeInOutSine)),
         weight: 50,
       ),
       TweenSequenceItem(
-        tween: Tween(
-          begin: 0.2,
-          end: -0.2,
-        ).chain(CurveTween(curve: Curves.easeInOutSine)),
+        tween: Tween(begin: 0.2, end: -0.2)
+            .chain(CurveTween(curve: Curves.easeInOutSine)),
         weight: 50,
       ),
     ]).animate(_controller);
@@ -171,7 +156,9 @@ class _MascotCharacterState extends State<MascotCharacter>
       child: AnimatedBuilder(
         animation: Listenable.merge([_controller, _interactionController]),
         builder: (context, child) {
-          final totalPulse = _pulseAnimation.value * _interactionPulse.value;
+          final totalPulse =
+              _pulseAnimation.value * _interactionPulse.value;
+
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -190,7 +177,6 @@ class _MascotCharacterState extends State<MascotCharacter>
                 ),
               ),
               const SizedBox(height: 10),
-              // Dynamic Shadow
               Transform.scale(
                 scale: 1.0 - (_driftAnimation.value / -60),
                 child: Container(
@@ -237,76 +223,141 @@ class _AuraEntityPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final coreRadius = size.width * 0.25 * pulse;
+    final radius = size.width * 0.28 * pulse;
 
-    // Draw Aura Glow
+    // Glow
     final glowPaint = Paint()
       ..shader = RadialGradient(
-        colors: [auraColor.withAlpha(60), Colors.transparent],
-      ).createShader(Rect.fromCircle(center: center, radius: size.width * 0.5));
+        colors: [
+          auraColor.withOpacity(0.35),
+          auraColor.withOpacity(0.05),
+          Colors.transparent,
+        ],
+      ).createShader(
+          Rect.fromCircle(center: center, radius: size.width * 0.5));
+
     canvas.drawCircle(center, size.width * 0.5, glowPaint);
 
-    // Draw Orbital Ring
     _drawOrbitalRing(canvas, center, size.width * 0.45);
-
-    // Draw the Faceted Core
-    _drawFacetedCore(canvas, center, coreRadius);
-
-    // Draw Digital Pulse Eyes
-    _drawDigitalEyes(canvas, center, coreRadius);
+    _drawHead(canvas, center, radius);
+    _drawEyes(canvas, center, radius);
+    _drawMouth(canvas, center, radius);
   }
 
-  void _drawFacetedCore(Canvas canvas, Offset center, double radius) {
-    final path = Path();
-    final points = 6;
-    final angleStep = (2 * math.pi) / points;
-
-    // Base shape (Hexagonal Gem)
-    for (int i = 0; i < points; i++) {
-      final angle = i * angleStep + interactionValue * math.pi;
-      final x = center.dx + radius * math.cos(angle);
-      final y = center.dy + radius * math.sin(angle);
-      if (i == 0)
-        path.moveTo(x, y);
-      else
-        path.lineTo(x, y);
-    }
-    path.close();
-
-    final corePaint = Paint()
-      ..shader = LinearGradient(
-        colors: [auraColor, auraColor.withAlpha(150), auraColor.withValue(0.9)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
+  void _drawHead(Canvas canvas, Offset center, double radius) {
+    final paint = Paint()
+      ..shader = RadialGradient(
+        colors: [
+          auraColor.withOpacity(0.95),
+          auraColor.withOpacity(0.75),
+          auraColor.withOpacity(0.6),
+        ],
+        center: Alignment.topLeft,
       ).createShader(Rect.fromCircle(center: center, radius: radius));
 
-    canvas.drawPath(path, corePaint);
+    canvas.drawCircle(center, radius, paint);
 
-    // Facet lines for high-end look
-    final linePaint = Paint()
-      ..color = Colors.white.withAlpha(100)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5;
+    final highlight = Paint()
+      ..color = Colors.white.withOpacity(0.2)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
 
-    for (int i = 0; i < points; i++) {
-      final angle = i * angleStep + interactionValue * math.pi;
-      canvas.drawLine(
-        center,
-        Offset(
-          center.dx + radius * math.cos(angle),
-          center.dy + radius * math.sin(angle),
-        ),
-        linePaint,
-      );
+    canvas.drawCircle(
+        center.translate(-radius * 0.3, -radius * 0.3),
+        radius * 0.4,
+        highlight);
+  }
+
+  void _drawEyes(Canvas canvas, Offset center, double radius) {
+    final eyeOffsetX = radius * 0.45;
+    final eyeOffsetY = radius * -0.1;
+    final eyeRadius = radius * 0.18;
+
+    final white = Paint()..color = Colors.white;
+    final pupil = Paint()..color = Colors.black;
+
+    Offset left = center.translate(-eyeOffsetX, eyeOffsetY);
+    Offset right = center.translate(eyeOffsetX, eyeOffsetY);
+
+    if (state == MascotState.sleeping) {
+      final sleep = Paint()
+        ..color = Colors.white
+        ..strokeWidth = 3
+        ..strokeCap = StrokeCap.round;
+
+      canvas.drawLine(left.translate(-8, 0), left.translate(8, 0), sleep);
+      canvas.drawLine(right.translate(-8, 0), right.translate(8, 0), sleep);
+      return;
+    }
+
+    canvas.drawCircle(left, eyeRadius, white);
+    canvas.drawCircle(right, eyeRadius, white);
+
+    double shift = 0;
+    if (state == MascotState.thinking) {
+      shift = 4 * math.sin(rotation * 3);
+    }
+
+    canvas.drawCircle(left.translate(shift, 0), eyeRadius * 0.5, pupil);
+    canvas.drawCircle(right.translate(shift, 0), eyeRadius * 0.5, pupil);
+  }
+
+  void _drawMouth(Canvas canvas, Offset center, double radius) {
+    final mouthPaint = Paint()
+      ..color = Colors.white
+      ..strokeWidth = 4
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke;
+
+    final mouthY = center.dy + radius * 0.35;
+
+    switch (state) {
+      case MascotState.happy:
+        canvas.drawArc(
+            Rect.fromCenter(
+                center: Offset(center.dx, mouthY),
+                width: radius * 1.2,
+                height: radius * 0.8),
+            0,
+            math.pi,
+            false,
+            mouthPaint);
+        break;
+
+      case MascotState.sad:
+        canvas.drawArc(
+            Rect.fromCenter(
+                center: Offset(center.dx, mouthY + 10),
+                width: radius * 1.2,
+                height: radius * 0.8),
+            math.pi,
+            math.pi,
+            false,
+            mouthPaint);
+        break;
+
+      case MascotState.amazed:
+        canvas.drawCircle(
+            Offset(center.dx, mouthY), radius * 0.25, mouthPaint);
+        break;
+
+      default:
+        canvas.drawArc(
+            Rect.fromCenter(
+                center: Offset(center.dx, mouthY),
+                width: radius,
+                height: radius * 0.6),
+            0,
+            math.pi,
+            false,
+            mouthPaint);
     }
   }
 
   void _drawOrbitalRing(Canvas canvas, Offset center, double radius) {
     final ringPaint = Paint()
-      ..color = auraColor.withAlpha(180)
+      ..color = auraColor.withOpacity(0.8)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3
-      ..strokeCap = StrokeCap.round;
+      ..strokeWidth = 3;
 
     final rect = Rect.fromCenter(
       center: center,
@@ -316,99 +367,12 @@ class _AuraEntityPainter extends CustomPainter {
 
     canvas.save();
     canvas.translate(center.dx, center.dy);
-    canvas.rotate(
-      tilt + (state == MascotState.happy ? rotation * 2 : rotation),
-    );
+    canvas.rotate(tilt + rotation);
     canvas.translate(-center.dx, -center.dy);
-
-    // Draw segmented ring for "tech" feel
-    for (int i = 0; i < 4; i++) {
-      canvas.drawArc(
-        rect,
-        i * math.pi / 2 + rotation,
-        math.pi / 4,
-        false,
-        ringPaint,
-      );
-    }
-
-    // Orbital Part (small dot on ring)
-    final orbitalPos = Offset(
-      center.dx + radius * math.cos(rotation * 3),
-      center.dy + radius * 0.2 * math.sin(rotation * 3),
-    );
-    canvas.drawCircle(
-      orbitalPos,
-      4,
-      Paint()
-        ..color = Colors.white
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
-    );
-
+    canvas.drawArc(rect, 0, math.pi * 2, false, ringPaint);
     canvas.restore();
-  }
-
-  void _drawDigitalEyes(Canvas canvas, Offset center, double radius) {
-    if (state == MascotState.sleeping) {
-      final sleepingPaint = Paint()
-        ..color = Colors.white.withAlpha(100)
-        ..strokeWidth = 1
-        ..style = PaintingStyle.stroke;
-      canvas.drawLine(
-        center.translate(-10, -5),
-        center.translate(-2, -5),
-        sleepingPaint,
-      );
-      canvas.drawLine(
-        center.translate(2, -5),
-        center.translate(10, -5),
-        sleepingPaint,
-      );
-      return;
-    }
-
-    final eyePaint = Paint()
-      ..color = Colors.white
-      ..strokeWidth = 2
-      ..strokeCap = StrokeCap.round;
-
-    double eyeWidth = 12.0;
-    if (state == MascotState.amazed) eyeWidth = 18.0;
-    if (state == MascotState.sad) eyeWidth = 6.0;
-
-    // Horizontal digital slits
-    canvas.drawLine(
-      center.translate(-eyeWidth, -5),
-      center.translate(-2, -5),
-      eyePaint,
-    );
-    canvas.drawLine(
-      center.translate(2, -5),
-      center.translate(eyeWidth, -5),
-      eyePaint,
-    );
-
-    if (state == MascotState.thinking) {
-      // Subtle scanning effect
-      final scanLine = Paint()
-        ..color = Colors.cyanAccent.withAlpha(150)
-        ..strokeWidth = 1;
-      final y = -5 + 4 * math.sin(rotation * 5);
-      canvas.drawLine(
-        center.translate(-eyeWidth, y),
-        center.translate(eyeWidth, y),
-        scanLine,
-      );
-    }
   }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => true;
-}
-
-extension ColorExt on Color {
-  Color withValue(double value) {
-    final hsv = HSVColor.fromColor(this);
-    return hsv.withValue(value.clamp(0.0, 1.0)).toColor();
-  }
 }

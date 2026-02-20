@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
-
 class GlassScaffold extends StatelessWidget {
   final Widget body;
   final Widget? floatingActionButton;
@@ -16,6 +15,7 @@ class GlassScaffold extends StatelessWidget {
   final bool resizeToAvoidBottomInset;
   final bool centerTitle;
   final double? titleSpacing;
+  final Widget? leading;
 
   const GlassScaffold({
     super.key,
@@ -29,6 +29,7 @@ class GlassScaffold extends StatelessWidget {
     this.resizeToAvoidBottomInset = true,
     this.centerTitle = true,
     this.titleSpacing,
+    this.leading,
   });
 
   @override
@@ -56,22 +57,24 @@ class GlassScaffold extends StatelessWidget {
                 centerTitle: centerTitle,
                 titleSpacing: titleSpacing,
                 systemOverlayStyle: overlayStyle,
-                leading: showBackArrow
-                    ? IconButton(
-                        icon: Icon(
-                          CupertinoIcons.back,
-                          size: 20,
-                          color: contentColor,
-                        ),
-                        onPressed: () {
-                          if (context.canPop()) {
-                            context.pop();
-                          } else {
-                            context.go('/');
-                          }
-                        },
-                      )
-                    : null,
+                leading:
+                    leading ??
+                    (showBackArrow
+                        ? IconButton(
+                            icon: Icon(
+                              CupertinoIcons.back,
+                              size: 20,
+                              color: contentColor,
+                            ),
+                            onPressed: () {
+                              if (context.canPop()) {
+                                context.pop();
+                              } else {
+                                context.go('/');
+                              }
+                            },
+                          )
+                        : null),
                 title: title is Widget
                     ? title as Widget
                     : Text(
@@ -99,7 +102,10 @@ class GlassScaffold extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: isDark
-                          ? [Colors.white.withValues(alpha: 0.05), Colors.transparent]
+                          ? [
+                              Colors.white.withValues(alpha: 0.05),
+                              Colors.transparent,
+                            ]
                           : [
                               Colors.white.withValues(alpha: 0.4),
                               Colors.white.withValues(alpha: 0.1),

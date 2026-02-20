@@ -20,7 +20,8 @@ import 'package:copyclip/src/core/common_widgets/micro_animation.dart';
 import '../../../../core/theme/bloc/theme_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:copyclip/src/core/widgets/seamless_header.dart';
+
+import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/widgets/ad_widget/banner_ad_widget.dart';
 import '../../../notes/data/note_model.dart';
@@ -101,72 +102,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   int _onboardingStep = 0;
   final PageController _onboardingController = PageController();
 
-  late Map<String, FeatureItem> _features; /*
-    'notes': FeatureItem(
-      'notes',
-      'Notes',
-      CupertinoIcons.doc_text,
-      FeatureColors.notes,
-      AppRouter.notes,
-      'Create and manage your notes',
-    ),
-    'todos': FeatureItem(
-      'todos',
-      'To-Dos',
-      CupertinoIcons.checkmark_circle,
-      FeatureColors.todos,
-      AppRouter.todos,
-      'Keep track of your tasks',
-    ),
-    'expenses': FeatureItem(
-      'expenses',
-      'Expense',
-      CupertinoIcons.money_dollar,
-      FeatureColors.expenses,
-      AppRouter.expenses,
-      'Monitor your expenses',
-    ),
-    'journal': FeatureItem(
-      'journal',
-      'Journal',
-      CupertinoIcons.book,
-      FeatureColors.journal,
-      AppRouter.journal,
-      'Write down your thoughts',
-    ),
-    'calendar': FeatureItem(
-      'calendar',
-      'Calendar',
-      CupertinoIcons.calendar,
-      FeatureColors.calendar,
-      AppRouter.calendar,
-      'Organize your schedule',
-    ),
-    'clipboard': FeatureItem(
-      'clipboard',
-      'Clipboard',
-      CupertinoIcons.doc_on_clipboard,
-      FeatureColors.clipboard,
-      AppRouter.clipboard,
-      'Access your clipboard history',
-    ),
-    'canvas': FeatureItem(
-      'canvas',
-      'Canvas',
-      CupertinoIcons.scribble,
-      FeatureColors.canvas,
-      AppRouter.canvas,
-      'Draw and sketch freely',
-    ),
-    'social_post': FeatureItem(
-      'social_post',
-      'Social Post',
-      CupertinoIcons.share_up,
-      FeatureColors.socialPost,
-      AppRouter.socialPost,
-      'Create engaging social media content',
-    ),
-  */
+  late Map<String, FeatureItem> _features;
 
   late List<OnboardingContent> _onboardingData;
 
@@ -198,6 +134,14 @@ class _DashboardScreenState extends State<DashboardScreen>
     final l10n = AppLocalizations.of(context)!;
 
     _features = {
+      'social_post': FeatureItem(
+        'social_post',
+        l10n.featuresSocialPost,
+        CupertinoIcons.share_up,
+        FeatureColors.socialPost,
+        AppRouter.socialPost,
+        l10n.featuresSocialPostDesc,
+      ),
       'notes': FeatureItem(
         'notes',
         l10n.notes,
@@ -253,14 +197,6 @@ class _DashboardScreenState extends State<DashboardScreen>
         FeatureColors.canvas,
         AppRouter.canvas,
         l10n.featuresCanvasDesc,
-      ),
-      'social_post': FeatureItem(
-        'social_post',
-        l10n.featuresSocialPost,
-        CupertinoIcons.share_up,
-        FeatureColors.socialPost,
-        AppRouter.socialPost,
-        l10n.featuresSocialPostDesc,
       ),
     };
 
@@ -493,57 +429,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   void _completeOnboarding() {
     Hive.box('settings').put('has_seen_onboarding', true);
     setState(() => _showOnboarding = false);
-  }
-
-  Widget _buildTopHeader(ThemeData theme) {
-    return SeamlessHeader(
-      title: AppLocalizations.of(context)!.clipboard,
-      subtitle: AppLocalizations.of(context)!.overview,
-      showBackButton: false,
-      actions: [
-        // View Toggle
-        IconButton(
-          icon: Icon(
-            _isGridView
-                ? CupertinoIcons.list_bullet
-                : CupertinoIcons.square_grid_2x2,
-            color: theme.colorScheme.primary,
-          ),
-          onPressed: () {
-            setState(() {
-              _isGridView = !_isGridView;
-            });
-            _saveViewPreference(_isGridView);
-          },
-        ),
-        const SizedBox(width: 8),
-        IconButton(
-          style: IconButton.styleFrom(
-            backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.1),
-            highlightColor: theme.colorScheme.primary.withValues(alpha: 0.2),
-          ),
-          icon: Icon(CupertinoIcons.search, color: theme.colorScheme.primary),
-          onPressed: () => context.push(AppRouter.globalSearch),
-        ),
-        const SizedBox(width: 8),
-        IconButton(
-          icon: RotationTransition(
-            turns: _settingsAnimationController,
-            child: Hero(
-              tag: 'settings_icon',
-              child: Icon(
-                CupertinoIcons.settings,
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-              ),
-            ),
-          ),
-          onPressed: () {
-            _settingsAnimationController.forward(from: 0.0);
-            context.push(AppRouter.settings);
-          },
-        ),
-      ],
-    );
   }
 
   void _showThemeColorPicker(ThemeData theme) {
@@ -803,114 +688,119 @@ class _DashboardScreenState extends State<DashboardScreen>
         break;
     }
 
-    return MicroAnimation(
+    return _KeepAliveTile(
       key: ValueKey(id),
-      type: AnimationType.slide,
-      delay: Duration(milliseconds: index * 50),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
-          borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-          border: Border.all(
-            color: theme.colorScheme.outline.withValues(alpha: 0.08),
-            width: AppConstants.borderWidth,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: baseColor.withValues(alpha: 0.05),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-              spreadRadius: 0,
-            ),
-          ],
-        ),
-        child: Material(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-          child: InkWell(
+      child: MicroAnimation(
+        type: AnimationType.slide,
+        delay: Duration(milliseconds: index * 50),
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-            onTap: () {
-              if (id == 'calendar') {
-                final isPremium = context.read<PremiumBloc>().state.isPremium;
-                _adService.showAd(() {
+            border: Border.all(
+              color: theme.colorScheme.outline.withValues(alpha: 0.08),
+              width: AppConstants.borderWidth,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: baseColor.withValues(alpha: 0.15),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
+                spreadRadius: 0,
+              ),
+            ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+              onTap: () {
+                if (id == 'calendar') {
+                  final isPremium = context.read<PremiumBloc>().state.isPremium;
+                  _adService.showAd(() {
+                    context.push(item.route);
+                  }, isPremium: isPremium);
+                } else {
                   context.push(item.route);
-                }, isPremium: isPremium);
-              } else {
-                context.push(item.route);
-              }
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Hero(
-                    tag: '${id}_icon',
-                    child: Container(
-                      width: 52,
-                      height: 52,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [baseColor.withValues(alpha: 0.8), baseColor],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          AppConstants.cornerRadius * 0.75,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: baseColor.withValues(alpha: 0.3),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Hero(
+                      tag: '${id}_icon',
+                      child: Container(
+                        width: 52,
+                        height: 52,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              baseColor.withValues(alpha: 0.8),
+                              baseColor,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
                           ),
-                        ],
+                          borderRadius: BorderRadius.circular(
+                            AppConstants.cornerRadius * 0.75,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: baseColor.withValues(alpha: 0.3),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Icon(item.icon, color: Colors.white, size: 24),
                       ),
-                      child: Icon(item.icon, color: Colors.white, size: 24),
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Hero(
-                          tag: '${id}_title',
-                          child: Material(
-                            type: MaterialType.transparency,
-                            child: Text(
-                              item.title,
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Hero(
+                            tag: '${id}_title',
+                            child: Material(
+                              type: MaterialType.transparency,
+                              child: Text(
+                                item.title,
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          preview ?? item.description,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurface.withValues(
-                              alpha: 0.5,
+                          const SizedBox(height: 4),
+                          Text(
+                            preview ?? item.description,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: theme.colorScheme.onSurface.withValues(
+                                alpha: 0.5,
+                              ),
+                              fontSize: 13,
                             ),
-                            fontSize: 13,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  _buildActionButton(id, baseColor, theme),
-                  const SizedBox(width: 4),
-                  Icon(
-                    CupertinoIcons.bars,
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    _buildActionButton(id, baseColor, theme),
+                    const SizedBox(width: 4),
+                    Icon(
+                      CupertinoIcons.bars,
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -941,10 +831,28 @@ class _DashboardScreenState extends State<DashboardScreen>
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: const Text('Copied to clipboard!'),
+                      backgroundColor: baseColor.withValues(alpha: 0.9),
+                      content: Row(
+                        children: [
+                          const MascotCharacter(
+                            size: 36,
+                            state: MascotState.happy,
+                          ),
+                          const SizedBox(width: 12),
+                          const Expanded(
+                            child: Text(
+                              'Copied to clipboard!',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                       duration: const Duration(seconds: 2),
                     ),
@@ -1030,137 +938,137 @@ class _DashboardScreenState extends State<DashboardScreen>
         break;
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // Dynamic sizing for grid content
-        final isSmall = constraints.maxWidth < 150;
+    return _KeepAliveTile(
+      key: ValueKey(id),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // Dynamic sizing for grid content
+          final isSmall = constraints.maxWidth < 150;
 
-        return Container(
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-            border: Border.all(
-              color: theme.colorScheme.outline.withValues(alpha: 0.08),
-              width: AppConstants.borderWidth,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: baseColor.withValues(alpha: 0.05),
-                blurRadius: 15,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-          child: Material(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-            child: InkWell(
+          return Container(
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface,
               borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
-              onTap: () {
-                if (id == 'calendar') {
-                  final isPremium = context.read<PremiumBloc>().state.isPremium;
-                  _adService.showAd(() {
+              border: Border.all(
+                color: theme.colorScheme.outline.withValues(alpha: 0.08),
+                width: AppConstants.borderWidth,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: baseColor.withValues(alpha: 0.15),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+                onTap: () {
+                  if (id == 'calendar') {
+                    final isPremium = context
+                        .read<PremiumBloc>()
+                        .state
+                        .isPremium;
+                    _adService.showAd(() {
+                      context.push(item.route);
+                    }, isPremium: isPremium);
+                  } else {
                     context.push(item.route);
-                  }, isPremium: isPremium);
-                } else {
-                  context.push(item.route);
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Hero(
-                      tag: '${id}_icon',
-                      child: Container(
-                        width: isSmall ? 40 : 52,
-                        height: isSmall ? 40 : 52,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              baseColor.withValues(alpha: 0.8),
-                              baseColor,
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Hero(
+                        tag: '${id}_icon',
+                        child: Container(
+                          width: isSmall ? 40 : 52,
+                          height: isSmall ? 40 : 52,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                baseColor.withValues(alpha: 0.8),
+                                baseColor,
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(
+                              AppConstants.cornerRadius * 0.75,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: baseColor.withValues(alpha: 0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
                             ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
                           ),
-                          borderRadius: BorderRadius.circular(
-                            AppConstants.cornerRadius * 0.75,
+                          alignment: Alignment.center,
+                          child: Icon(
+                            item.icon,
+                            color: Colors.white,
+                            size: isSmall ? 20 : 26,
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: baseColor.withValues(alpha: 0.3),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            item.title,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: isSmall ? 13 : 15,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          // Premium Tag for Calendar
+                          if (id == 'calendar') ...[
+                            SizedBox(width: 4),
+                            BlocBuilder<PremiumBloc, PremiumState>(
+                              builder: (context, state) {
+                                if (!state.isPremium) {
+                                  return Icon(
+                                    CupertinoIcons.star_fill,
+                                    color: Colors.amber,
+                                    size: 14,
+                                  );
+                                }
+                                return SizedBox.shrink();
+                              },
                             ),
                           ],
-                        ),
-                        alignment: Alignment.center,
-                        child: Icon(
-                          item.icon,
-                          color: Colors.white,
-                          size: isSmall ? 20 : 26,
-                        ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Hero(
-                          tag: '${id}_title',
-                          child: Material(
-                            type: MaterialType.transparency,
-                            child: Text(
-                              item.title,
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                fontSize: isSmall ? 13 : 15,
-                              ),
-                              textAlign: TextAlign.center,
+                      if (!isSmall && preview != null) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          preview,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurface.withValues(
+                              alpha: 0.5,
                             ),
                           ),
+                          textAlign: TextAlign.center,
                         ),
-                        // Premium Tag for Calendar
-                        if (id == 'calendar') ...[
-                          SizedBox(width: 4),
-                          BlocBuilder<PremiumBloc, PremiumState>(
-                            builder: (context, state) {
-                              if (!state.isPremium) {
-                                return Icon(
-                                  CupertinoIcons.star_fill,
-                                  color: Colors.amber,
-                                  size: 14,
-                                );
-                              }
-                              return SizedBox.shrink();
-                            },
-                          ),
-                        ],
                       ],
-                    ),
-                    if (!isSmall && preview != null) ...[
-                      const SizedBox(height: 4),
-                      Text(
-                        preview,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurface.withValues(
-                            alpha: 0.5,
-                          ),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
                     ],
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -1172,99 +1080,160 @@ class _DashboardScreenState extends State<DashboardScreen>
       return _buildOnboardingScreen();
     }
 
-    return Scaffold(
+    return GlassScaffold(
+      leading: Padding(
+        padding: EdgeInsets.only(left: 16),
+        child: Image.asset('assets/logo/copyclip_logo.png'),
+      ),
       backgroundColor: theme.scaffoldBackgroundColor,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Dashboard",
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          Text(
+            AppLocalizations.of(context)!.overview,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(
+            _isGridView
+                ? CupertinoIcons.list_bullet
+                : CupertinoIcons.square_grid_2x2,
+            color: theme.colorScheme.primary,
+          ),
+          onPressed: () {
+            setState(() {
+              _isGridView = !_isGridView;
+            });
+            _saveViewPreference(_isGridView);
+          },
+        ),
+        const SizedBox(width: 8),
+        IconButton(
+          style: IconButton.styleFrom(
+            backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.1),
+            highlightColor: theme.colorScheme.primary.withValues(alpha: 0.2),
+          ),
+          icon: Icon(CupertinoIcons.search, color: theme.colorScheme.primary),
+          onPressed: () => context.push(AppRouter.globalSearch),
+        ),
+        const SizedBox(width: 8),
+        IconButton(
+          icon: RotationTransition(
+            turns: _settingsAnimationController,
+            child: Hero(
+              tag: 'settings_icon',
+              child: Icon(
+                CupertinoIcons.settings,
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
+            ),
+          ),
+          onPressed: () {
+            _settingsAnimationController.forward(from: 0.0);
+            context.push(AppRouter.settings);
+          },
+        ),
+        const SizedBox(width: 16),
+      ],
       body: !_boxesOpened
           ? const Center(child: CircularProgressIndicator())
-          : SafeArea(
-              bottom: false,
-              child: Column(
-                children: [
-                  const SizedBox(height: 16),
-                  _buildTopHeader(theme),
-                  _buildGamificationHeader(theme),
-                  Expanded(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        // Responsive Logic:
-                        // If width > 600 (Tablet/Desktop), enforce Grid behavior regardless of toggle?
-                        // USER REQUEST: "automatic adjustable according to device ... grid automatically in real time"
-                        // So, if width is large, show Grid. If small, use Toggle preference.
+          : Column(
+              children: [
+                _buildGamificationHeader(theme),
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      // Responsive Logic:
+                      // If width > 600 (Tablet/Desktop), enforce Grid behavior regardless of toggle?
+                      // USER REQUEST: "automatic adjustable according to device ... grid automatically in real time"
+                      // So, if width is large, show Grid. If small, use Toggle preference.
 
-                        final bool forceGrid = constraints.maxWidth > 600;
-                        final bool showGrid = forceGrid || _isGridView;
+                      final bool forceGrid = constraints.maxWidth > 600;
+                      final bool showGrid = forceGrid || _isGridView;
 
-                        if (showGrid) {
-                          // Grid View
-                          final int crossAxisCount =
-                              (constraints.maxWidth / 160).floor().clamp(2, 6);
+                      if (showGrid) {
+                        // Grid View
+                        final int crossAxisCount = (constraints.maxWidth / 160)
+                            .floor()
+                            .clamp(2, 6);
 
-                          return GridView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 100),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: crossAxisCount,
-                                  crossAxisSpacing: 16,
-                                  mainAxisSpacing: 16,
-                                  childAspectRatio: 1.0, // Square tiles
-                                ),
-                            itemCount: _order.length,
-                            itemBuilder: (context, index) =>
-                                _buildGridTile(index, theme),
-                          );
-                        } else {
-                          // List View (Reorderable)
-                          return ReorderableListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 100),
-                            itemCount: _order.length,
-                            proxyDecorator: (child, index, animation) {
-                              return AnimatedBuilder(
-                                animation: animation,
-                                builder: (BuildContext context, Widget? child) {
-                                  final double animValue = Curves.easeInOut
-                                      .transform(animation.value);
-                                  final double scale = lerpDouble(
-                                    1,
-                                    1.05,
-                                    animValue,
-                                  )!;
-                                  return Transform.scale(
-                                    scale: scale,
-                                    child: Material(
-                                      elevation: 12,
-                                      color: Colors.transparent,
-                                      shadowColor: Colors.black26,
-                                      borderRadius: BorderRadius.circular(
-                                        AppConstants.cornerRadius,
-                                      ),
-                                      child: child,
+                        return GridView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 100),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: crossAxisCount,
+                                crossAxisSpacing: 16,
+                                mainAxisSpacing: 16,
+                                childAspectRatio: 1.0, // Square tiles
+                              ),
+                          itemCount: _order.length,
+                          itemBuilder: (context, index) =>
+                              _buildGridTile(index, theme),
+                        );
+                      } else {
+                        // List View (Reorderable)
+                        return ReorderableListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 100),
+                          itemCount: _order.length,
+                          proxyDecorator: (child, index, animation) {
+                            return AnimatedBuilder(
+                              animation: animation,
+                              builder: (BuildContext context, Widget? child) {
+                                final double animValue = Curves.easeInOut
+                                    .transform(animation.value);
+                                final double scale = lerpDouble(
+                                  1,
+                                  1.05,
+                                  animValue,
+                                )!;
+                                return Transform.scale(
+                                  scale: scale,
+                                  child: Material(
+                                    elevation: 12,
+                                    color: Colors.transparent,
+                                    shadowColor: Colors.black26,
+                                    borderRadius: BorderRadius.circular(
+                                      AppConstants.cornerRadius,
                                     ),
-                                  );
-                                },
-                                child: child,
-                              );
-                            },
-                            onReorder: (oldIndex, newIndex) {
-                              if (newIndex > oldIndex) newIndex -= 1;
-                              setState(() {
-                                final item = _order.removeAt(oldIndex);
-                                _order.insert(newIndex, item);
-                                _saveOrder();
-                              });
-                              HapticFeedback.lightImpact();
-                            },
-                            itemBuilder: (context, index) =>
-                                _buildListTile(index, theme),
-                          );
-                        }
-                      },
-                    ),
+                                    child: child,
+                                  ),
+                                );
+                              },
+                              child: child,
+                            );
+                          },
+                          onReorder: (oldIndex, newIndex) {
+                            if (newIndex > oldIndex) newIndex -= 1;
+                            setState(() {
+                              final item = _order.removeAt(oldIndex);
+                              _order.insert(newIndex, item);
+                              _saveOrder();
+                            });
+                            HapticFeedback.lightImpact();
+                          },
+                          itemBuilder: (context, index) =>
+                              _buildListTile(index, theme),
+                        );
+                      }
+                    },
                   ),
-                  const BannerAdWidget(),
-                ],
-              ),
+                ),
+                const BannerAdWidget(),
+              ],
             ),
     );
   }
@@ -1528,5 +1497,25 @@ class _DashboardScreenState extends State<DashboardScreen>
         ],
       ),
     );
+  }
+}
+
+class _KeepAliveTile extends StatefulWidget {
+  final Widget child;
+  const _KeepAliveTile({super.key, required this.child});
+
+  @override
+  State<_KeepAliveTile> createState() => _KeepAliveTileState();
+}
+
+class _KeepAliveTileState extends State<_KeepAliveTile>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return widget.child;
   }
 }

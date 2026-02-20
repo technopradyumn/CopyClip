@@ -461,11 +461,10 @@ class _TodosScreenState extends State<TodosScreen>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor: theme.colorScheme.primary,
             content: Row(
               children: [
-                const MascotCharacter(size: 40, state: MascotState.happy),
-                const SizedBox(width: 12),
+                const MascotCharacter(size: 44, state: MascotState.happy),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -473,25 +472,29 @@ class _TodosScreenState extends State<TodosScreen>
                     children: [
                       Text(
                         AppLocalizations.of(context)!.greatJob,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                       Text(
                         AppLocalizations.of(context)!.youEarnedXPNextTask(
                           10,
                           DateFormat('MMM d').format(result.dueDate!),
                         ),
-                        style: const TextStyle(fontSize: 12),
+                        style: TextStyle(
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.8,
+                          ),
+                          fontSize: 13,
+                        ),
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-            duration: const Duration(seconds: 3),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            duration: const Duration(seconds: 4),
           ),
         );
       }
@@ -504,19 +507,22 @@ class _TodosScreenState extends State<TodosScreen>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor: theme.colorScheme.primary,
             content: Row(
               children: [
-                const MascotCharacter(size: 40, state: MascotState.happy),
-                const SizedBox(width: 12),
-                Text(AppLocalizations.of(context)!.taskCompletedXP(10)),
+                const MascotCharacter(size: 44, state: MascotState.happy),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    AppLocalizations.of(context)!.taskCompletedXP(10),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
               ],
             ),
-            duration: const Duration(seconds: 2),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            duration: const Duration(seconds: 3),
           ),
         );
       }

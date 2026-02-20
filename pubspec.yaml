@@ -141,6 +141,7 @@ dev_dependencies:
   mockito: ^5.4.5
   bloc_test: ^10.0.0
   flutter_launcher_icons: ^0.14.4
+  translator: ^1.0.4+1
 
 flutter_launcher_icons:
   android: "ic_launcher"

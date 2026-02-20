@@ -245,6 +245,8 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
 
     return SeamlessHeader(
       title: AppLocalizations.of(context)!.socialPosts,
+      icon: CupertinoIcons.share_up,
+      iconColor: FeatureColors.socialPost,
       heroTagPrefix: 'social_post', // Match Dashboard tile
       showBackButton: true,
       onBackTap: () => context.pop(),

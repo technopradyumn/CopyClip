@@ -16,6 +16,8 @@ def sync_arb_files(source_file, target_dir):
             # Identify missing keys
             missing_keys = source_keys - set(target_data.keys())
             
+            print(f"DEBUG {filename}: Source keys: {len(source_keys)}, Target keys: {len(target_data.keys())}, Missing: {len(missing_keys)}")
+            
             if missing_keys:
                 print(f"Syncing {filename}: Adding {len(missing_keys)} missing keys.")
                 for key in missing_keys:

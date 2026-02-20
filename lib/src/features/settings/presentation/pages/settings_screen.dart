@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/providers/locale_provider.dart';
+import 'package:copyclip/src/core/common_widgets/mascot_character.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -388,15 +389,15 @@ class _SettingsScreenState extends State<SettingsScreen>
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: theme.colorScheme.surface.withValues(alpha: 0.95),
+            color: color.withValues(alpha: 0.9),
             borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
             border: Border.all(
-              color: theme.dividerColor.withValues(alpha: 0.1),
+              color: color.withValues(alpha: 0.3),
               width: AppConstants.borderWidth,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
+                color: Colors.black.withValues(alpha: 0.2),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -414,8 +415,8 @@ class _SettingsScreenState extends State<SettingsScreen>
               Expanded(
                 child: Text(
                   message,
-                  style: TextStyle(
-                    color: theme.colorScheme.onSurface,
+                  style: const TextStyle(
+                    color: Colors.white,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -515,74 +516,18 @@ class _SettingsScreenState extends State<SettingsScreen>
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Allow full height for many languages
+      useSafeArea: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (ctx) {
         return DraggableScrollableSheet(
-          initialChildSize: 0.7,
+          initialChildSize: 0.8,
           minChildSize: 0.5,
           maxChildSize: 0.95,
           expand: false,
           builder: (context, scrollController) {
-            return Consumer<LocaleProvider>(
-              builder: (context, provider, _) {
-                final current = provider.locale;
-                return Column(
-                  children: [
-                    const SizedBox(height: 16),
-                    Text(
-                      AppLocalizations.of(context)!.language,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: 16),
-                    Expanded(
-                      child: ListView(
-                        controller: scrollController,
-                        children: [
-                          ListTile(
-                            title: Text(
-                              AppLocalizations.of(context)!.systemDefault,
-                            ),
-                            leading: const Icon(Icons.settings_system_daydream),
-                            trailing: current == null
-                                ? const Icon(Icons.check, color: Colors.blue)
-                                : null,
-                            onTap: () {
-                              provider.clearLocale();
-                              Navigator.pop(ctx);
-                            },
-                          ),
-                          ...LanguageConstants.supportedLanguages.entries.map((
-                            entry,
-                          ) {
-                            final code = entry.key;
-                            final name = entry.value['name']!;
-                            final flag = entry.value['flag']!;
-                            final isSelected = current?.languageCode == code;
-
-                            return ListTile(
-                              title: Text(name),
-                              leading: Text(
-                                flag,
-                                style: const TextStyle(fontSize: 24),
-                              ),
-                              trailing: isSelected
-                                  ? const Icon(Icons.check, color: Colors.blue)
-                                  : null,
-                              onTap: () {
-                                provider.setLocale(Locale(code));
-                                Navigator.pop(ctx);
-                              },
-                            );
-                          }),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              },
-            );
+            return _LanguageSelectorContent(scrollController: scrollController);
           },
         );
       },
@@ -703,14 +648,55 @@ class _SettingsScreenState extends State<SettingsScreen>
     BuildContext context,
     _SettingsScreenState state,
   ) {
-    return _SectionCard(
-      color: Colors.amber,
-      child: ListTile(
-        leading: const Icon(CupertinoIcons.star_fill, color: Colors.amber),
-        title: Text(AppLocalizations.of(context)!.premiumFeatures),
-        subtitle: Text(AppLocalizations.of(context)!.manageCoinsAdsPremium),
-        trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
-        onTap: () => context.push(AppRouter.premium),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.amber.shade700, Colors.amber.shade300],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.amber.withValues(alpha: 0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 8,
+          ),
+          leading: const Icon(
+            CupertinoIcons.star_circle_fill,
+            color: Colors.white,
+          ),
+          title: Text(
+            AppLocalizations.of(context)!.premiumFeatures,
+            style: const TextStyle(
+              color: Colors.black87,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          subtitle: Text(
+            AppLocalizations.of(context)!.manageCoinsAdsPremium,
+            style: TextStyle(
+              color: Colors.black87.withValues(alpha: 0.7),
+              fontSize: 13,
+            ),
+          ),
+          trailing: const Icon(
+            CupertinoIcons.chevron_forward,
+            color: Colors.black54,
+          ),
+          onTap: () => context.push(AppRouter.premium),
+        ),
       ),
     );
   }
@@ -1630,5 +1616,128 @@ CustomPainter _getPainter(
         primaryColor: Colors.transparent,
         isDark: isDark,
       );
+  }
+}
+
+class _LanguageSelectorContent extends StatefulWidget {
+  final ScrollController scrollController;
+
+  const _LanguageSelectorContent({required this.scrollController});
+
+  @override
+  State<_LanguageSelectorContent> createState() =>
+      _LanguageSelectorContentState();
+}
+
+class _LanguageSelectorContentState extends State<_LanguageSelectorContent> {
+  String _searchQuery = '';
+  late List<MapEntry<String, Map<String, String>>> _filteredLanguages;
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredLanguages = LanguageConstants.supportedLanguages.entries.toList();
+  }
+
+  void _filterLanguages(String query) {
+    setState(() {
+      _searchQuery = query;
+      if (query.isEmpty) {
+        _filteredLanguages = LanguageConstants.supportedLanguages.entries
+            .toList();
+      } else {
+        _filteredLanguages = LanguageConstants.supportedLanguages.entries.where(
+          (entry) {
+            final name = entry.value['name']!.toLowerCase();
+            final code = entry.key.toLowerCase();
+            final q = query.toLowerCase();
+            return name.contains(q) || code.contains(q);
+          },
+        ).toList();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<LocaleProvider>(
+      builder: (context, provider, _) {
+        final current = provider.locale;
+        return Column(
+          children: [
+            const SizedBox(height: 16),
+            Text(
+              AppLocalizations.of(context)!.language,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.search,
+                  prefixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                ),
+                onChanged: _filterLanguages,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: ListView(
+                controller: widget.scrollController,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                children: [
+                  if (_searchQuery.isEmpty) ...[
+                    ListTile(
+                      title: Text(AppLocalizations.of(context)!.systemDefault),
+                      leading: const Icon(Icons.settings_system_daydream),
+                      trailing: current == null
+                          ? const Icon(Icons.check, color: Colors.blue)
+                          : null,
+                      onTap: () {
+                        provider.clearLocale();
+                        Navigator.pop(context);
+                      },
+                    ),
+                    const Divider(),
+                  ],
+                  ..._filteredLanguages.map((entry) {
+                    final code = entry.key;
+                    final name = entry.value['name']!;
+                    final flag = entry.value['flag']!;
+                    final isSelected = current?.languageCode == code;
+
+                    return ListTile(
+                      title: Text(name),
+                      leading: Text(flag, style: const TextStyle(fontSize: 24)),
+                      trailing: isSelected
+                          ? const Icon(Icons.check, color: Colors.blue)
+                          : null,
+                      onTap: () {
+                        provider.setLocale(Locale(code));
+                        Navigator.pop(context);
+                      },
+                    );
+                  }),
+                  if (_filteredLanguages.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.noResultsFound,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

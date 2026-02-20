@@ -1,14 +1,16 @@
 import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:copyclip/src/core/common_widgets/mascot_character.dart';
 import 'package:copyclip/src/core/const/premium_constants.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_event.dart';
-import '../../../../l10n/app_localizations.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class PremiumScreen extends StatefulWidget {
   const PremiumScreen({super.key});
@@ -74,23 +76,63 @@ class _PremiumScreenState extends State<PremiumScreen> {
                               context.read<PremiumBloc>().add(BuyPremium());
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text(
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.premiumActivated,
+                                  backgroundColor: Colors.black.withValues(
+                                    alpha: 0.9,
                                   ),
-                                  backgroundColor: Colors.green,
+                                  content: Row(
+                                    children: [
+                                      const MascotCharacter(
+                                        size: 40,
+                                        state: MascotState.happy,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.premiumActivated,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
                                 ),
                               );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text(
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.notEnoughCoins,
+                                  backgroundColor: Colors.red.shade900,
+                                  content: Row(
+                                    children: [
+                                      const MascotCharacter(
+                                        size: 40,
+                                        state: MascotState.sad,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.notEnoughCoins,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  backgroundColor: Colors.red,
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
                                 ),
                               );
                             }
@@ -98,26 +140,32 @@ class _PremiumScreenState extends State<PremiumScreen> {
                         )
                       else
                         _GlassContainer(
-                          color: Colors.greenAccent.withValues(alpha: 0.1),
+                          color: Colors.greenAccent.withValues(alpha: 0.15),
                           borderColor: Colors.greenAccent.withValues(
                             alpha: 0.3,
                           ),
                           child: Column(
                             children: [
-                              const Icon(
-                                Icons.check_circle_outline,
-                                color: Colors.greenAccent,
-                                size: 40,
-                              ),
-                              const SizedBox(height: 8),
+                              const MascotCharacter(
+                                    size: 100,
+                                    state: MascotState.happy,
+                                  )
+                                  .animate()
+                                  .scale(
+                                    duration: 600.ms,
+                                    curve: Curves.elasticOut,
+                                  )
+                                  .shimmer(delay: 800.ms, duration: 1.seconds),
+                              const SizedBox(height: 16),
                               Text(
                                 AppLocalizations.of(context)!.premiumActive,
-                                style: theme.textTheme.titleLarge?.copyWith(
+                                style: theme.textTheme.headlineSmall?.copyWith(
                                   color: Colors.greenAccent,
                                   fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.2,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              const SizedBox(height: 8),
                               Text(
                                 state.premiumExpiryDate != null
                                     ? "${AppLocalizations.of(context)!.expires} ${DateFormat.yMMMd().format(state.premiumExpiryDate!)}"
@@ -130,6 +178,30 @@ class _PremiumScreenState extends State<PremiumScreen> {
                                   ),
                                 ),
                               ),
+                              const SizedBox(height: 16),
+                              Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.greenAccent.withValues(
+                                        alpha: 0.2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: const Text(
+                                      "CONGRATULATIONS!",
+                                      style: TextStyle(
+                                        color: Colors.greenAccent,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  )
+                                  .animate()
+                                  .fadeIn(delay: 400.ms)
+                                  .slideY(begin: 1),
                             ],
                           ),
                         ),
@@ -324,13 +396,32 @@ class _PremiumScreenState extends State<PremiumScreen> {
                               if (mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text(
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.youEarnedCoins(amount),
+                                    backgroundColor: Colors.amber.shade800
+                                        .withValues(alpha: 0.9),
+                                    content: Row(
+                                      children: [
+                                        const MascotCharacter(
+                                          size: 40,
+                                          state: MascotState.amazed,
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: Text(
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.youEarnedCoins(amount),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     behavior: SnackBarBehavior.floating,
-                                    backgroundColor: Colors.green,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
                                   ),
                                 );
                               }
@@ -551,19 +642,30 @@ class _PremiumFeatureTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Determine mascot state based on title hash for variety
+    final mascotState = title.length % 3 == 0
+        ? MascotState.thinking
+        : (title.length % 2 == 0 ? MascotState.happy : MascotState.amazed);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: _GlassContainer(
         color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.4),
         child: Row(
           children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.amber.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, color: Colors.amber, size: 22),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.amber.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                MascotCharacter(size: 45, state: mascotState),
+              ],
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -580,23 +682,25 @@ class _PremiumFeatureTile extends StatelessWidget {
                       const SizedBox(width: 8),
                       // Badge
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: const Text(
-                          "PRO",
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: const Text(
+                              "PRO",
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          )
+                          .animate(onPlay: (c) => c.repeat())
+                          .shimmer(duration: 2.seconds),
                     ],
                   ),
                   const SizedBox(height: 4),
@@ -611,9 +715,14 @@ class _PremiumFeatureTile extends StatelessWidget {
                 ],
               ),
             ),
+            Icon(
+              Icons.check_circle,
+              color: Colors.amber.withValues(alpha: 0.2),
+              size: 16,
+            ),
           ],
         ),
-      ),
+      ).animate().fadeIn(duration: 400.ms).slideX(begin: 0.1),
     );
   }
 }
