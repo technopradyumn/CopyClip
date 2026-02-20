@@ -50,36 +50,13 @@ void main() {
         }
       }
 
-      // Check for strict "untranslated" errors where key exists but value is empty/null
+      // Check for strict "untranslated" errors where key exists but value is empty/null (rare in valid JSON but possible)
+      // If we see explicit nulls, fill them.
       for (var key in map.keys) {
         if (map[key] == null && sourceMap.containsKey(key)) {
           map[key] = sourceMap[key];
           updated = true;
         }
-      }
-
-      // Analyze translation run
-      int actualTranslations = 0;
-      int totalKeys = sourceMap.length; // Approximate check based on source
-      // Use map keys intersection with source to be accurate about what we have
-      for (var key in map.keys) {
-        if (key.startsWith('@')) continue;
-        // If the value is different from source, we count it as translated.
-        // This accepts that "OK" -> "OK" might be counted as untranslated,
-        // but for 90% threshold it's fine.
-        if (sourceMap.containsKey(key) && map[key] != sourceMap[key]) {
-          actualTranslations++;
-        }
-      }
-
-      double ratio = totalKeys > 0 ? actualTranslations / totalKeys : 0.0;
-      if (ratio < 0.1) {
-        // Threshold: 10% translated
-        print(
-          '[WARNING] Language ${file.path.split(Platform.pathSeparator).last} seems untranslated (Only ${(ratio * 100).toStringAsFixed(1)}% different from English). Suggest removing from UI.',
-        );
-      } else {
-        // print('[INFO] ${file.path.split(Platform.pathSeparator).last} is ${(ratio * 100).toStringAsFixed(1)}% translated.');
       }
 
       if (updated) {
