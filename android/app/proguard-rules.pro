@@ -2,6 +2,14 @@
 -keep class com.google.android.gms.ads.** { *; }
 -keep class com.google.ads.mediation.** { *; }
 
+# ML Kit Text Recognition — keep all models so they aren't stripped
+-keep class com.google.mlkit.** { *; }
+-keep class com.google.android.gms.internal.mlkit_vision_text_latin.** { *; }
+-keep class com.google.android.gms.internal.mlkit_vision_text_common.** { *; }
+-keep class com.google.android.gms.internal.mlkit_vision_text.** { *; }
+-dontwarn com.google.mlkit.**
+
+
 # Flutter wrapper
 -keep class io.flutter.app.** { *; }
 -keep class io.flutter.plugin.**  { *; }

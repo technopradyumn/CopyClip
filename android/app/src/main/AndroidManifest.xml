@@ -105,6 +105,11 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="${ADMOB_APP_ID}"/>
 
+        <!-- ML Kit: bundle text recognition models in APK (prevents NoClassDefFoundError) -->
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr,ocr_hindi" />
+
         <receiver
             android:name="es.antonborri.home_widget.HomeWidgetProvider"
             android:exported="true">
