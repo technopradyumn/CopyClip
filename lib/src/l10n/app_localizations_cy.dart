@@ -1379,4 +1379,7 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get ok => 'iawn';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

@@ -1382,6 +1382,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ok => 'DE ACUERDO';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Spanish Castilian, as used in Latin America and the Caribbean (`es_419`).

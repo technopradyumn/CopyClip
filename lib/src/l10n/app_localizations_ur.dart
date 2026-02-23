@@ -1365,6 +1365,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Urdu, as used in Pakistan (`ur_PK`).

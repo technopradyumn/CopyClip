@@ -1371,6 +1371,9 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Czech, as used in the Czechia Czech Republic (`cs_CZ`).

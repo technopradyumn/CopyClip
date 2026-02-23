@@ -1365,6 +1365,9 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Slovenian, as used in Slovenia (`sl_SI`).

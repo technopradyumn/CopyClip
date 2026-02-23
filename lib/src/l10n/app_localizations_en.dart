@@ -1365,6 +1365,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).

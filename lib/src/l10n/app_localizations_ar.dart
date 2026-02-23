@@ -1371,6 +1371,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get ok => 'نعم';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Arabic, as used in the United Arab Emirates (`ar_AE`).

@@ -1365,6 +1365,9 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Indonesian, as used in Indonesia (`id_ID`).

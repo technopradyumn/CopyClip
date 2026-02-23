@@ -1365,6 +1365,9 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Thai, as used in Thailand (`th_TH`).

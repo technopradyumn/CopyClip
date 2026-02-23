@@ -1365,6 +1365,9 @@ class AppLocalizationsSq extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Albanian, as used in Albania (`sq_AL`).

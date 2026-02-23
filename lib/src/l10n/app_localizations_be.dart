@@ -1373,6 +1373,9 @@ class AppLocalizationsBe extends AppLocalizations {
 
   @override
   String get ok => 'добра';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Belarusian, as used in Belarus (`be_BY`).

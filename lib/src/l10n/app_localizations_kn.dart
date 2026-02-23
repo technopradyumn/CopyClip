@@ -1365,6 +1365,9 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Kannada, as used in India (`kn_IN`).

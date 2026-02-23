@@ -1365,6 +1365,9 @@ class AppLocalizationsLt extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Lithuanian, as used in Lithuania (`lt_LT`).

@@ -1373,6 +1373,9 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get ok => 'باشه';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Persian, as used in Islamic Republic of Iran (`fa_IR`).

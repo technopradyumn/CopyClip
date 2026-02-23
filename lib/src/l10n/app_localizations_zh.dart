@@ -1341,6 +1341,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get ok => '确定';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).

@@ -1375,6 +1375,9 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Finnish, as used in Finland (`fi_FI`).

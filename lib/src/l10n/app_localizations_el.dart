@@ -1392,6 +1392,9 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get ok => 'ΕΝΤΑΞΕΙ';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Modern Greek, as used in Greece (`el_GR`).

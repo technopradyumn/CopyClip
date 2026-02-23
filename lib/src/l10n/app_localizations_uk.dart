@@ -1365,6 +1365,9 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Ukrainian, as used in Ukraine (`uk_UA`).

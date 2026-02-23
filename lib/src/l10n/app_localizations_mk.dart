@@ -1365,6 +1365,9 @@ class AppLocalizationsMk extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Macedonian, as used in North Macedonia (`mk_MK`).

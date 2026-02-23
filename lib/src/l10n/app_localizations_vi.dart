@@ -1365,6 +1365,9 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Vietnamese, as used in Viet Nam (`vi_VN`).

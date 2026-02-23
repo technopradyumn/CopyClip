@@ -1365,6 +1365,9 @@ class AppLocalizationsLv extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Latvian, as used in Latvia (`lv_LV`).

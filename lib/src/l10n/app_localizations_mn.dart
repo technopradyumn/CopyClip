@@ -1365,6 +1365,9 @@ class AppLocalizationsMn extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Mongolian, as used in Mongolia (`mn_MN`).

@@ -1365,6 +1365,9 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Khmer Central Khmer, as used in Cambodia (`km_KH`).

@@ -1375,6 +1375,9 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Bosnian, as used in Bosnia and Herzegovina (`bs_BA`).

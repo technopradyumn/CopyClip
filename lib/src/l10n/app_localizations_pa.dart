@@ -1365,6 +1365,9 @@ class AppLocalizationsPa extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Panjabi Punjabi, as used in India (`pa_IN`).

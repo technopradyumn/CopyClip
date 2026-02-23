@@ -530,5 +530,6 @@
   "savingsRate": "Savings Rate",
   "healthScore": "Health Score",
   "healthScoreExplanation": "This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)",
-  "ok": "OK"
+  "ok": "OK",
+  "bulkImport": "Bulk Import"
 }

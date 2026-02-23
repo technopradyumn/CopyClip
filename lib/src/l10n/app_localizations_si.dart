@@ -1365,6 +1365,9 @@ class AppLocalizationsSi extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Sinhala Sinhalese, as used in Sri Lanka (`si_LK`).

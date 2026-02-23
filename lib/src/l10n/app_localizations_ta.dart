@@ -1365,6 +1365,9 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Tamil, as used in India (`ta_IN`).

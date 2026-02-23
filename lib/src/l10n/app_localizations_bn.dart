@@ -1375,6 +1375,9 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get ok => 'ঠিক আছে';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Bengali Bangla, as used in Bangladesh (`bn_BD`).

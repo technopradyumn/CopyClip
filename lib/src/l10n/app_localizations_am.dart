@@ -1356,6 +1356,9 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get ok => 'እሺ';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Amharic, as used in Ethiopia (`am_ET`).

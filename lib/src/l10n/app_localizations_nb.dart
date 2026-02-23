@@ -1365,6 +1365,9 @@ class AppLocalizationsNb extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Norwegian Bokmål, as used in Norway (`nb_NO`).

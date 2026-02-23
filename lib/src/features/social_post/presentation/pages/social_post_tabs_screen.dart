@@ -5,6 +5,7 @@ import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:copyclip/src/features/social_post/data/social_post_model.dart';
@@ -167,6 +168,43 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
               // Header
               _buildHeader(context),
 
+              // Bulk Import Tile
+              if (!_isSelectionMode)
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 8.h,
+                  ),
+                  child: Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.add_photo_alternate_outlined,
+                        color: FeatureColors.socialPost,
+                        size: 28.sp,
+                      ),
+                      title: Text(
+                        AppLocalizations.of(context)!.bulkImport,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.sp,
+                        ),
+                      ),
+                      subtitle: Text(
+                        "Import multiple posts from URL",
+                        style: TextStyle(fontSize: 12.sp),
+                      ),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () {
+                        context.push(AppRouter.socialPostBulkImport);
+                      },
+                    ),
+                  ),
+                ),
+
               // Tabs (only show if NOT in selection mode? Or keep them disabled?)
               // UX: Usually tabs hide or disable during selection. Let's hide them or keep them but disabled.
               // Hiding them gives more space.
@@ -256,9 +294,24 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
           onSelected: (value) {
             if (value == 'delete_all') {
               _deleteAllPosts(context);
+            } else if (value == 'bulk_import') {
+              context.push(AppRouter.socialPostBulkImport);
             }
           },
           itemBuilder: (context) => [
+            PopupMenuItem(
+              value: 'bulk_import',
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.add_photo_alternate_outlined,
+                    color: theme.colorScheme.primary,
+                  ),
+                  SizedBox(width: 8),
+                  Text(AppLocalizations.of(context)!.bulkImport),
+                ],
+              ),
+            ),
             PopupMenuItem(
               value: 'delete_all',
               child: Row(

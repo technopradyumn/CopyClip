@@ -1365,6 +1365,9 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Hebrew, as used in Israel (`he_IL`).

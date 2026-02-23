@@ -1381,6 +1381,9 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get ok => 'добре';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Bulgarian, as used in Bulgaria (`bg_BG`).

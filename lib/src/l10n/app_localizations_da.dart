@@ -1373,6 +1373,9 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Danish, as used in Denmark (`da_DK`).

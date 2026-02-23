@@ -1365,6 +1365,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Turkish, as used in Turkey (`tr_TR`).

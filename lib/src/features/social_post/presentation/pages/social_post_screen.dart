@@ -10,14 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart'; // For legacy post migration
-import 'package:appinio_social_share_plus/appinio_social_share_plus.dart';
-
 import 'package:image_picker/image_picker.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../../l10n/app_localizations.dart';
+import 'package:copyclip/src/l10n/app_localizations.dart';
+import 'package:copyclip/src/core/services/social_share_service.dart';
 
 class SocialPostScreen extends StatefulWidget {
   final SocialPost? postToEdit;
@@ -32,8 +31,6 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
   late TextEditingController _controller;
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
-  final AppinioSocialSharePlus _appinioSocialShare = AppinioSocialSharePlus();
-
   SocialPlatformType _selectedPlatform = SocialPlatformType.generic;
   final List<String> _mediaPaths = [];
   bool _isSharing = false;
@@ -195,233 +192,53 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
   Future<void> _shareContent() async {
     final String plainText = _controller.text.trim();
     if (plainText.isEmpty && _mediaPaths.isEmpty) {
-      // Keep error/validation snackbars as they are critical
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(AppLocalizations.of(context)!.pleaseAddContent)),
       );
       return;
     }
 
-    // Auto-Copy Text
-    if (plainText.isNotEmpty) {
-      await Clipboard.setData(ClipboardData(text: plainText));
-      // Removed "Text copied" snackbar as requested
-    }
-
     setState(() => _isSharing = true);
-    // ... rest of share logic
-    debugPrint(
-      "Attempting to share. Platform: $_selectedPlatform, Text length: ${plainText.length}, Media count: ${_mediaPaths.length}",
-    );
-
-    // Debug: Check files
-    for (var path in _mediaPaths) {
-      final file = File(path);
-      if (!file.existsSync()) {
-        debugPrint("ERROR: File does not exist: $path");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              AppLocalizations.of(context)!.fileNotFoundError(path),
-            ),
-          ),
-        );
-        setState(() => _isSharing = false);
-        return;
-      }
-    }
 
     try {
-      String response = "Shared";
-
-      switch (_selectedPlatform) {
-        case SocialPlatformType.instagram:
-          if (_mediaPaths.isNotEmpty) {
-            final mode = await _showShareModeDialog(
-              AppLocalizations.of(context)!.instagram,
-            );
-            if (mode == 'story') {
-              response = await _appinioSocialShare.android
-                  .shareToInstagramStory(
-                    "instagram_app_id", // Replace with actual ID
-                    stickerImage: _mediaPaths.first,
-                  );
-            } else if (mode == 'feed') {
-              if (_mediaPaths.length > 1) {
-                // shareFilesToInstagramFeed(List<String> imagePaths)
-                response = await _appinioSocialShare.android
-                    .shareFilesToInstagramFeed(_mediaPaths);
-              } else {
-                // shareToInstagramFeed(String message, String? filePath)
-                response = await _appinioSocialShare.android
-                    .shareToInstagramFeed(plainText, _mediaPaths.first);
-              }
-            } else {
-              // shareToInstagramDirect(String appId, String message)
-              response = await _appinioSocialShare.android
-                  .shareToInstagramDirect("instagram_app_id", plainText);
-            }
-          } else {
-            response = await _appinioSocialShare.android.shareToInstagramDirect(
-              "instagram_app_id",
-              plainText,
-            );
-          }
-          break;
-
-        case SocialPlatformType.facebook:
-          // Text already copied
-          if (_mediaPaths.isNotEmpty) {
-            final mode = await _showShareModeDialog(
-              AppLocalizations.of(context)!.facebook,
-            );
-            if (mode == 'story') {
-              response = await _appinioSocialShare.android.shareToFacebookStory(
-                "facebook_app_id",
-                stickerImage: _mediaPaths.first,
-              );
-            } else {
-              final files = _mediaPaths.map((path) => XFile(path)).toList();
-              // ignore: deprecated_member_use
-              await Share.shareXFiles(files, text: plainText);
-              response = AppLocalizations.of(context)!.checkFacebookApp;
-            }
-          } else {
-            // System share fallback
-            // ignore: deprecated_member_use
-            await Share.share(plainText);
-            response = AppLocalizations.of(context)!.systemShare;
-          }
-          break;
-
-        // ... (Other cases same but without individual clipboard logic if any was there)
-        // I will just copy the rest of switch cases, reusing existing logic.
-        // Actually, since I am replacing a huge chunk, I should just assume generic behavior for others as currently implemented
-        // But I need to be careful not to delete them if I use `ReplaceFileContent`.
-        // The tool replaces the *TargetContent*.
-        // I should target `_savePost` down to `build`.
-
-        case SocialPlatformType.whatsapp:
-          if (_mediaPaths.length > 1) {
-            response = await _appinioSocialShare.android.shareFilesToWhatsapp(
-              _mediaPaths,
-            );
-          } else if (_mediaPaths.isNotEmpty) {
-            response = await _appinioSocialShare.android.shareToWhatsapp(
-              plainText,
-              _mediaPaths.first,
-            );
-          } else {
-            response = await _appinioSocialShare.android.shareToWhatsapp(
-              plainText,
-              null,
-            );
-          }
-          break;
-
-        case SocialPlatformType.telegram:
-          if (_mediaPaths.length > 1) {
-            response = await _appinioSocialShare.android.shareFilesToTelegram(
-              _mediaPaths,
-            );
-          } else if (_mediaPaths.isNotEmpty) {
-            response = await _appinioSocialShare.android.shareToTelegram(
-              plainText,
-              _mediaPaths.first,
-            );
-          } else {
-            response = await _appinioSocialShare.android.shareToTelegram(
-              plainText,
-              null,
-            );
-          }
-          break;
-
-        case SocialPlatformType.twitter:
-          response = await _appinioSocialShare.android.shareToTwitter(
-            plainText,
-            filePath: _mediaPaths.isNotEmpty ? _mediaPaths.first : null,
+      // Explicitly copy to clipboard on "Post" click as requested
+      if (plainText.isNotEmpty) {
+        await Clipboard.setData(ClipboardData(text: plainText));
+      }
+      // Create a temporary SocialPost object for the service
+      final post =
+          widget.postToEdit ??
+          SocialPost(
+            id: const Uuid().v4(),
+            content: _controller.text,
+            mediaPaths: List.from(_mediaPaths),
+            platformIndex: _selectedPlatform.index,
+            isFavorite: _isFavorite,
+            isDraft: false,
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
           );
-          break;
 
-        case SocialPlatformType.linkedin:
-          response = await _appinioSocialShare.android.shareToLinkedinFeed(
-            plainText,
-            _mediaPaths.isNotEmpty ? _mediaPaths.first : null,
-          );
-          break;
-
-        case SocialPlatformType.tiktok:
-          if (_mediaPaths.isNotEmpty) {
-            response = await _appinioSocialShare.android.shareToTiktokStatus(
-              _mediaPaths,
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  AppLocalizations.of(context)!.tiktokSharingRequiresVideoImage,
-                ),
-              ),
-            );
-          }
-          break;
-
-        case SocialPlatformType.pinterest:
-        default:
-          if (_mediaPaths.length > 1) {
-            response = await _appinioSocialShare.android.shareFilesToSystem(
-              AppLocalizations.of(context)!.share,
-              _mediaPaths,
-            );
-          } else {
-            response = await _appinioSocialShare.android.shareToSystem(
-              AppLocalizations.of(context)!.share,
-              plainText,
-              _mediaPaths.isNotEmpty ? _mediaPaths.first : null,
-            );
-          }
-          break;
+      // If we are editing a post, update its values before sharing
+      if (widget.postToEdit != null) {
+        post.content = _controller.text;
+        post.mediaPaths = List.from(_mediaPaths);
+        post.platformIndex = _selectedPlatform.index;
+        post.isFavorite = _isFavorite;
       }
 
-      debugPrint("Share response: $response");
-      await _savePost(isDraft: false, shouldPop: true); // Auto save and pop
+      await SocialShareService().sharePost(context: context, post: post);
+
+      // Auto save after sharing (but do not pop, as requested)
+      await _savePost(isDraft: false, shouldPop: false);
     } catch (e) {
       debugPrint("Error sharing: $e");
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              AppLocalizations.of(context)!.errorSharing(e.toString()),
-            ),
-          ),
-        );
-      }
     } finally {
       if (mounted) setState(() => _isSharing = false);
     }
   }
 
-  Future<String?> _showShareModeDialog(String platform) {
-    return showModalBottomSheet<String>(
-      context: context,
-      builder: (context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            title: Text(AppLocalizations.of(context)!.shareToStory(platform)),
-            leading: const Icon(Icons.history_edu),
-            onTap: () => Navigator.pop(context, 'story'),
-          ),
-          ListTile(
-            title: Text(AppLocalizations.of(context)!.shareToFeed(platform)),
-            leading: const Icon(Icons.feed),
-            onTap: () => Navigator.pop(context, 'feed'),
-          ),
-        ],
-      ),
-    );
-  }
+  // Removed _showShareModeDialog as it is now in SocialShareService
 
   void _showPlatformSelector() {
     showModalBottomSheet(

@@ -1365,6 +1365,9 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Malay, as used in Malaysia (`ms_MY`).

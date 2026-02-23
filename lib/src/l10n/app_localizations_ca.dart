@@ -1388,6 +1388,9 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get ok => 'D\'\'acord';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Catalan Valencian, as used in Spain (`ca_ES`).

@@ -1,6 +1,11 @@
 import 'dart:convert';
 import 'dart:ui' as ui;
 
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:go_router/go_router.dart';
+import 'package:copyclip/src/core/router/app_router.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:copyclip/src/features/social_post/data/social_post_model.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'package:copyclip/src/features/social_post/presentation/widgets/social_platform_selector.dart';
@@ -8,11 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:timeago/timeago.dart' as timeago;
-import 'package:go_router/go_router.dart';
-import 'package:copyclip/src/core/router/app_router.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 
 class SocialPostListWidget extends StatefulWidget {
   final String filter; // 'all', 'favorites', 'drafts'
@@ -28,7 +28,8 @@ class SocialPostListWidget extends StatefulWidget {
   State<SocialPostListWidget> createState() => SocialPostListWidgetState();
 }
 
-class SocialPostListWidgetState extends State<SocialPostListWidget> {
+class SocialPostListWidgetState extends State<SocialPostListWidget>
+    with AutomaticKeepAliveClientMixin {
   late Future<Box<SocialPost>> _boxFuture;
   late Future<Box> _settingsBoxFuture;
 
@@ -42,6 +43,7 @@ class SocialPostListWidgetState extends State<SocialPostListWidget> {
     super.initState();
     _boxFuture = LazyBoxLoader.getBox<SocialPost>('social_posts_box');
     _settingsBoxFuture = LazyBoxLoader.getBox('settings');
+    debugPrint("SocialPostListWidget init: ${widget.filter}");
   }
 
   // --- Public Methods for Parent ---
@@ -115,7 +117,11 @@ class SocialPostListWidgetState extends State<SocialPostListWidget> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return FutureBuilder(
       future: Future.wait([_boxFuture, _settingsBoxFuture]),
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {

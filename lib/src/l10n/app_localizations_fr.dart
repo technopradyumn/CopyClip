@@ -1397,6 +1397,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get ok => 'D\'\'ACCORD';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for French, as used in Canada (`fr_CA`).

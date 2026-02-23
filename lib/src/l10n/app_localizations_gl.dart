@@ -1380,6 +1380,9 @@ class AppLocalizationsGl extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Galician, as used in Spain (`gl_ES`).

@@ -2868,6 +2868,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'OK'**
   String get ok;
+
+  /// No description provided for @bulkImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulk Import'**
+  String get bulkImport;
 }
 
 class _AppLocalizationsDelegate

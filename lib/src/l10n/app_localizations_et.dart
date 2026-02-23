@@ -1372,6 +1372,9 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Estonian, as used in Estonia (`et_EE`).

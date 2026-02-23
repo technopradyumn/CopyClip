@@ -1365,6 +1365,9 @@ class AppLocalizationsKy extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Kirghiz Kyrgyz, as used in Kyrgyzstan (`ky_KG`).

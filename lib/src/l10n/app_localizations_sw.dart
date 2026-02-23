@@ -1365,6 +1365,9 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Swahili, as used in Kenya (`sw_KE`).

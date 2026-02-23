@@ -1365,6 +1365,9 @@ class AppLocalizationsZu extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Zulu, as used in South Africa (`zu_ZA`).

@@ -1365,6 +1365,9 @@ class AppLocalizationsHy extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Armenian, as used in Armenia (`hy_AM`).

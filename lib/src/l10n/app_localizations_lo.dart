@@ -1365,6 +1365,9 @@ class AppLocalizationsLo extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Lao, as used in the Lao People's Democratic Republic (`lo_LA`).

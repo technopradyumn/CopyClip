@@ -57,6 +57,8 @@ dependencies:
   path: ^1.9.1
   google_maps_flutter: ^2.12.3
   http: ^1.1.0
+  html: ^0.15.5
+  google_mlkit_text_recognition: ^0.14.0
   provider: any
   syncfusion_flutter_datepicker: ^29.1.41
   flutter_screenutil: any
@@ -122,6 +124,7 @@ dependencies:
   video_thumbnail: ^0.5.6
   appinio_social_share_plus: ^0.4.1
   timeago: ^3.7.1
+  cached_network_image: ^3.4.1
 
 
 dev_dependencies:

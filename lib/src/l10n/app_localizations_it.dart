@@ -1365,6 +1365,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Italian, as used in Switzerland (`it_CH`).

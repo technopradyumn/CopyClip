@@ -1365,6 +1365,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Russian, as used in Russian Federation (`ru_RU`).

@@ -1365,6 +1365,9 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Polish, as used in Poland (`pl_PL`).

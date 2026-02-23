@@ -1370,6 +1370,9 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Gujarati, as used in India (`gu_IN`).

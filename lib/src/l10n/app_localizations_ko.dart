@@ -1365,6 +1365,9 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Korean, as used in Republic of Korea (`ko_KR`).

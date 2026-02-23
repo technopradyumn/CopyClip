@@ -1383,4 +1383,7 @@ class AppLocalizationsEu extends AppLocalizations {
 
   @override
   String get ok => 'Ados';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

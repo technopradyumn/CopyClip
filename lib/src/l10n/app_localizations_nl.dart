@@ -1365,6 +1365,9 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Dutch Flemish, as used in Belgium (`nl_BE`).

@@ -1365,6 +1365,9 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Icelandic, as used in Iceland (`is_IS`).

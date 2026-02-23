@@ -1365,6 +1365,9 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Telugu, as used in India (`te_IN`).

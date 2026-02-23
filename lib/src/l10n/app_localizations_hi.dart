@@ -1372,6 +1372,9 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get ok => 'ठीक';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Hindi, as used in India (`hi_IN`).

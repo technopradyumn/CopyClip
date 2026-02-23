@@ -1376,6 +1376,9 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Azerbaijani, as used in Azerbaijan (`az_AZ`).
