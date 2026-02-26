@@ -23,7 +23,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../core/widgets/ad_widget/banner_ad_widget.dart';
+
 import '../../../notes/data/note_model.dart';
 import '../../../todos/data/todo_model.dart';
 import '../../../journal/data/journal_model.dart';
@@ -1232,7 +1232,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                     },
                   ),
                 ),
-                const BannerAdWidget(),
               ],
             ),
     );

@@ -168,7 +168,8 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
               // Header
               _buildHeader(context),
 
-              // Bulk Import Tile
+              // Bulk Import Tile (Temporarily Disabled per User Request)
+              /*
               if (!_isSelectionMode)
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -204,6 +205,7 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
                     ),
                   ),
                 ),
+              */
 
               // Tabs (only show if NOT in selection mode? Or keep them disabled?)
               // UX: Usually tabs hide or disable during selection. Let's hide them or keep them but disabled.
@@ -294,11 +296,15 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
           onSelected: (value) {
             if (value == 'delete_all') {
               _deleteAllPosts(context);
-            } else if (value == 'bulk_import') {
+            }
+            /*
+            else if (value == 'bulk_import') {
               context.push(AppRouter.socialPostBulkImport);
             }
+            */
           },
           itemBuilder: (context) => [
+            /*
             PopupMenuItem(
               value: 'bulk_import',
               child: Row(
@@ -312,6 +318,7 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
                 ],
               ),
             ),
+            */
             PopupMenuItem(
               value: 'delete_all',
               child: Row(

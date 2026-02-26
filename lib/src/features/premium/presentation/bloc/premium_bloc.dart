@@ -101,7 +101,8 @@ class PremiumBloc extends Bloc<PremiumEvent, PremiumState> {
 
   String get _rewardedAdUnitId {
     if (Platform.isAndroid) {
-      return dotenv.env['ANDROID_REWARDED_AD_UNIT_ID'] ?? '';
+      return dotenv.env['ANDROID_REWARDED_AD_UNIT_ID'] ??
+          'ca-app-pub-3940256099942544/5224354917';
     }
     return '';
   }
@@ -131,21 +132,29 @@ class PremiumBloc extends Bloc<PremiumEvent, PremiumState> {
       adUnitId: unitId,
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) => completer.complete(ad),
+        onAdLoaded: (ad) {
+          if (!completer.isCompleted) completer.complete(ad);
+        },
         onAdFailedToLoad: (error) {
-          if (error.message.toLowerCase().contains("format")) {
-            // Fallback attempt handled below?
-            // For simplicity in Bloc, let's bubble error or try fallback here.
-            completer.completeError(error);
-          } else {
-            completer.complete(null);
+          if (!completer.isCompleted) {
+            if (error.message.toLowerCase().contains("format")) {
+              completer.completeError(error);
+            } else {
+              completer.complete(null);
+            }
           }
         },
       ),
     );
 
     try {
-      final ad = await completer.future;
+      final ad = await completer.future.timeout(
+        const Duration(seconds: 15),
+        onTimeout: () {
+          if (!completer.isCompleted) completer.complete(null);
+          return null;
+        },
+      );
       if (ad != null) {
         _ad = ad;
         emit(state.copyWith(isAdLoading: false, isAdReady: true));
@@ -179,23 +188,37 @@ class PremiumBloc extends Bloc<PremiumEvent, PremiumState> {
       adUnitId: unitId,
       request: const AdRequest(),
       rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
-        onAdLoaded: (ad) => completer.complete(ad),
-        onAdFailedToLoad: (error) => completer.complete(null),
+        onAdLoaded: (ad) {
+          if (!completer.isCompleted) completer.complete(ad);
+        },
+        onAdFailedToLoad: (error) {
+          if (!completer.isCompleted) completer.complete(null);
+        },
       ),
     );
 
-    final ad = await completer.future;
-    if (ad != null) {
-      _ad = ad;
-      emit(state.copyWith(isAdLoading: false, isAdReady: true));
-    } else {
+    try {
+      final ad = await completer.future.timeout(
+        const Duration(seconds: 15),
+        onTimeout: () {
+          if (!completer.isCompleted) completer.complete(null);
+          return null;
+        },
+      );
+      if (ad != null) {
+        _ad = ad;
+        emit(state.copyWith(isAdLoading: false, isAdReady: true));
+      } else {
+        emit(state.copyWith(isAdLoading: false, isAdReady: false));
+        // Final retry with delay
+        Future.delayed(const Duration(seconds: 10), () {
+          if (!isClosed && !state.isAdReady) {
+            add(LoadRewardedAd());
+          }
+        });
+      }
+    } catch (e) {
       emit(state.copyWith(isAdLoading: false, isAdReady: false));
-      // Final retry with delay
-      Future.delayed(const Duration(seconds: 10), () {
-        if (!isClosed && !state.isAdReady) {
-          add(LoadRewardedAd());
-        }
-      });
     }
   }
 
@@ -204,57 +227,63 @@ class PremiumBloc extends Bloc<PremiumEvent, PremiumState> {
     Emitter<PremiumState> emit,
   ) async {
     if (_ad == null) {
-      // Proactively try to load and show
       if (!state.isAdLoading) {
         add(LoadRewardedAd());
       }
       return;
     }
 
-    if (_ad is RewardedAd) {
-      final ad = _ad as RewardedAd;
+    // Immediately mark as not ready and clear _ad to prevent double submissions
+    final adToBlock = _ad;
+    _ad = null;
+    emit(state.copyWith(isAdReady: false, isAdLoading: false));
+
+    if (adToBlock is RewardedAd) {
+      final ad = adToBlock;
       ad.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (ad) {
           ad.dispose();
-          _ad = null;
-          add(const RewardedAdStatusChanged(isReady: false, isLoading: false));
           add(LoadRewardedAd()); // Preload next
         },
         onAdFailedToShowFullScreenContent: (ad, error) {
           ad.dispose();
-          _ad = null;
-          add(const RewardedAdStatusChanged(isReady: false, isLoading: false));
           add(LoadRewardedAd());
         },
       );
-      ad.show(
-        onUserEarnedReward: (ad, reward) {
-          event.onReward(PremiumConstants.rewardCoinAmount);
-          add(AddCoins(PremiumConstants.rewardCoinAmount));
-        },
-      );
-    } else if (_ad is RewardedInterstitialAd) {
-      final ad = _ad as RewardedInterstitialAd;
+      try {
+        await ad.show(
+          onUserEarnedReward: (ad, reward) {
+            event.onReward(PremiumConstants.rewardCoinAmount);
+            add(AddCoins(PremiumConstants.rewardCoinAmount));
+          },
+        );
+      } catch (e) {
+        ad.dispose();
+        add(LoadRewardedAd());
+      }
+    } else if (adToBlock is RewardedInterstitialAd) {
+      final ad = adToBlock;
       ad.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (ad) {
           ad.dispose();
-          _ad = null;
-          add(const RewardedAdStatusChanged(isReady: false, isLoading: false));
-          add(LoadRewardedAd());
+          add(LoadRewardedAd()); // Preload next
         },
         onAdFailedToShowFullScreenContent: (ad, error) {
           ad.dispose();
-          _ad = null;
-          add(const RewardedAdStatusChanged(isReady: false, isLoading: false));
           add(LoadRewardedAd());
         },
       );
-      ad.show(
-        onUserEarnedReward: (ad, reward) {
-          event.onReward(PremiumConstants.rewardCoinAmount);
-          add(AddCoins(PremiumConstants.rewardCoinAmount));
-        },
-      );
+      try {
+        await ad.show(
+          onUserEarnedReward: (ad, reward) {
+            event.onReward(PremiumConstants.rewardCoinAmount);
+            add(AddCoins(PremiumConstants.rewardCoinAmount));
+          },
+        );
+      } catch (e) {
+        ad.dispose();
+        add(LoadRewardedAd());
+      }
     }
   }
 }

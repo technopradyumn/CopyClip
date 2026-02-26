@@ -24,7 +24,8 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   // This ensures ads show up even if .env is missing or invalid
   String get _adUnitId {
     if (Platform.isAndroid) {
-      return dotenv.env['ANDROID_BANNER_AD_UNIT_ID'] ?? ''; // Test ID
+      return dotenv.env['ANDROID_BANNER_AD_UNIT_ID'] ??
+          'ca-app-pub-3940256099942544/6300978111'; // Test ID
     }
     // else if (Platform.isIOS) {
     //   return dotenv.env['IOS_BANNER_AD_UNIT_ID'] ??

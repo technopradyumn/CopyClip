@@ -21,7 +21,8 @@ class InterstitialAdService {
   /// Get the appropriate ad unit ID based on platform
   String get _interstitialAdUnitId {
     if (Platform.isAndroid) {
-      return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ?? '';
+      return dotenv.env['ANDROID_INTERSTITIAL_AD_UNIT_ID'] ??
+          'ca-app-pub-3940256099942544/1033173712';
     }
     return '';
   }
