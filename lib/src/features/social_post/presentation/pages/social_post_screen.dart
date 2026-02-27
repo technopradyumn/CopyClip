@@ -37,6 +37,8 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
   bool _isFavorite = false;
   bool _allowPop = false;
 
+  SocialPost? _editingPost;
+
   @override
   void initState() {
     super.initState();
@@ -44,8 +46,9 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
   }
 
   void _initializeEditor() {
-    if (widget.postToEdit != null) {
-      final post = widget.postToEdit!;
+    _editingPost = widget.postToEdit;
+    if (_editingPost != null) {
+      final post = _editingPost!;
       _selectedPlatform = post.platform;
       _mediaPaths.addAll(post.mediaPaths);
       _isFavorite = post.isFavorite;
@@ -139,9 +142,7 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
     final now = DateTime.now();
 
     // Don't save empty new drafts
-    if (widget.postToEdit == null &&
-        content.trim().isEmpty &&
-        _mediaPaths.isEmpty) {
+    if (_editingPost == null && content.trim().isEmpty && _mediaPaths.isEmpty) {
       if (shouldPop && mounted) {
         setState(() => _allowPop = true);
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -151,13 +152,13 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
       return;
     }
 
-    if (widget.postToEdit != null) {
-      final post = widget.postToEdit!;
+    if (_editingPost != null) {
+      final post = _editingPost!;
       post.content = content;
       post.mediaPaths = List.from(_mediaPaths);
       post.platformIndex = _selectedPlatform.index;
       post.isFavorite = _isFavorite;
-      post.isDraft = isDraft;
+      post.isDraft = isDraft ? post.isDraft : false;
       post.updatedAt = now;
       await post.save();
     } else {
@@ -172,6 +173,11 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
         updatedAt: now,
       );
       await box.put(newPost.id, newPost);
+      if (mounted) {
+        setState(() {
+          _editingPost = newPost;
+        });
+      }
     }
 
     if (mounted) {
@@ -205,32 +211,14 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
       if (plainText.isNotEmpty) {
         await Clipboard.setData(ClipboardData(text: plainText));
       }
-      // Create a temporary SocialPost object for the service
-      final post =
-          widget.postToEdit ??
-          SocialPost(
-            id: const Uuid().v4(),
-            content: _controller.text,
-            mediaPaths: List.from(_mediaPaths),
-            platformIndex: _selectedPlatform.index,
-            isFavorite: _isFavorite,
-            isDraft: false,
-            createdAt: DateTime.now(),
-            updatedAt: DateTime.now(),
-          );
 
-      // If we are editing a post, update its values before sharing
-      if (widget.postToEdit != null) {
-        post.content = _controller.text;
-        post.mediaPaths = List.from(_mediaPaths);
-        post.platformIndex = _selectedPlatform.index;
-        post.isFavorite = _isFavorite;
-      }
-
-      await SocialShareService().sharePost(context: context, post: post);
-
-      // Auto save after sharing (but do not pop, as requested)
+      // Auto save before sharing to ensure _editingPost is created/updated
       await _savePost(isDraft: false, shouldPop: false);
+
+      await SocialShareService().sharePost(
+        context: context,
+        post: _editingPost!,
+      );
     } catch (e) {
       debugPrint("Error sharing: $e");
     } finally {

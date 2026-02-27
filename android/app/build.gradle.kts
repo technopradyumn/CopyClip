@@ -38,7 +38,7 @@ android {
         applicationId = "com.technopradyumn.copyclip"
         minSdk = 24
         targetSdk = flutter.targetSdkVersion
-        versionCode = 22
+        versionCode = 23
         versionName = "1.4.0"
         multiDexEnabled = true
     }
@@ -98,8 +98,4 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.1.0"))
     implementation("com.google.firebase:firebase-analytics")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
-
-    // ML Kit non-Latin text recognition models (Latin is bundled by the Flutter plugin automatically)
-    implementation("com.google.mlkit:text-recognition-devanagari:16.0.1")
-    implementation("com.google.mlkit:text-recognition-chinese:16.0.1")
 }

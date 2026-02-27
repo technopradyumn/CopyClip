@@ -22,6 +22,7 @@ import '../../../../core/theme/app_colors.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 import '../../../../l10n/app_localizations.dart';
 
 import '../../../notes/data/note_model.dart';
@@ -1147,7 +1148,8 @@ class _DashboardScreenState extends State<DashboardScreen>
         ),
         const SizedBox(width: 16),
       ],
-      body: !_boxesOpened
+      body: DynamicBackground(
+        child: !_boxesOpened
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
@@ -1234,6 +1236,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ),
               ],
             ),
+      ),
     );
   }
 

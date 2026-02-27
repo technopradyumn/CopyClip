@@ -31,7 +31,6 @@ import '../../features/premium/presentation/pages/premium_screen.dart';
 import 'package:copyclip/src/features/social_post/presentation/pages/social_post_tabs_screen.dart'; // Update import
 import 'package:copyclip/src/features/social_post/presentation/pages/social_post_screen.dart'; // Editor
 import 'package:copyclip/src/features/social_post/data/social_post_model.dart'; // Model
-import 'package:copyclip/src/features/social_post/presentation/pages/bulk_import_screen.dart';
 
 class AppRouter {
   static const String root = '/';
@@ -68,8 +67,6 @@ class AppRouter {
   static const String socialPost = '/social-post';
   static const String socialPostEdit =
       '/social-post/edit'; // New route // Added
-  static const String socialPostBulkImport = '/social-post/bulk-import';
-
   static const String premium = "/premium";
 }
 
@@ -235,10 +232,6 @@ List<GoRoute> getAuthRoutes() {
         final post = state.extra as SocialPost?;
         return SocialPostScreen(postToEdit: post);
       },
-    ),
-    GoRoute(
-      path: AppRouter.socialPostBulkImport,
-      builder: (context, state) => const BulkImportScreen(),
     ),
   ];
 }

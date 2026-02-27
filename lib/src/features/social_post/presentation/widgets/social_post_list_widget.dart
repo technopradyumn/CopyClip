@@ -30,20 +30,88 @@ class SocialPostListWidget extends StatefulWidget {
 
 class SocialPostListWidgetState extends State<SocialPostListWidget>
     with AutomaticKeepAliveClientMixin {
-  late Future<Box<SocialPost>> _boxFuture;
-  late Future<Box> _settingsBoxFuture;
+  Box<SocialPost>? _postsBox;
+  Box? _settingsBox;
+  bool _isLoading = true;
 
   // Selection State
   bool _isSelectionMode = false;
   final Set<String> _selectedIds = {};
-  List<SocialPost> _currentPosts = []; // Keep track for selectAll
+
+  // Cached posts — only recomputed when the Hive box changes
+  List<SocialPost> _currentPosts = [];
 
   @override
   void initState() {
     super.initState();
-    _boxFuture = LazyBoxLoader.getBox<SocialPost>('social_posts_box');
-    _settingsBoxFuture = LazyBoxLoader.getBox('settings');
+    _initBoxes();
     debugPrint("SocialPostListWidget init: ${widget.filter}");
+  }
+
+  Future<void> _initBoxes() async {
+    _postsBox = await LazyBoxLoader.getBox<SocialPost>('social_posts_box');
+    _settingsBox = await LazyBoxLoader.getBox('settings');
+    _postsBox!.listenable().addListener(_onBoxChanged);
+    _recomputePosts();
+    if (mounted) setState(() => _isLoading = false);
+  }
+
+  @override
+  void dispose() {
+    _postsBox?.listenable().removeListener(_onBoxChanged);
+    super.dispose();
+  }
+
+  void _onBoxChanged() {
+    _recomputePosts();
+    if (mounted) setState(() {});
+  }
+
+  void _recomputePosts() {
+    if (_postsBox == null || _settingsBox == null) return;
+
+    List<SocialPost> posts = _postsBox!.values.toList();
+
+    // 1. FILTERING
+    if (widget.filter == 'favorites') {
+      posts = posts.where((p) => p.isFavorite).toList();
+    } else if (widget.filter == 'drafts') {
+      posts = posts.where((p) => p.isDraft).toList();
+    }
+
+    // 2. SORTING (Custom Order for 'all', UpdatedAt for others)
+    if (widget.filter == 'all') {
+      final List<String>? savedOrder = _settingsBox!
+          .get('social_posts_order', defaultValue: <String>[])
+          ?.cast<String>();
+
+      if (savedOrder != null && savedOrder.isNotEmpty) {
+        final orderMap = {
+          for (var i = 0; i < savedOrder.length; i++) savedOrder[i]: i,
+        };
+
+        posts.sort((a, b) {
+          final indexA = orderMap[a.id];
+          final indexB = orderMap[b.id];
+
+          if (indexA != null && indexB != null) {
+            return indexA.compareTo(indexB);
+          } else if (indexA != null) {
+            return -1;
+          } else if (indexB != null) {
+            return 1;
+          } else {
+            return b.updatedAt.compareTo(a.updatedAt);
+          }
+        });
+      } else {
+        posts.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+      }
+    } else {
+      posts.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+    }
+
+    _currentPosts = posts;
   }
 
   // --- Public Methods for Parent ---
@@ -67,16 +135,15 @@ class SocialPostListWidgetState extends State<SocialPostListWidget>
   }
 
   Future<void> deleteSelected() async {
-    final box = await _boxFuture;
+    if (_postsBox == null) return;
     final idsToDelete = _selectedIds.toList();
 
     // Delete from Hive
-    await box.deleteAll(idsToDelete);
+    await _postsBox!.deleteAll(idsToDelete);
 
     // Also remove from order list if applicable
-    if (widget.filter == 'all') {
-      final settingsBox = await _settingsBoxFuture;
-      final List<String>? savedOrder = settingsBox
+    if (widget.filter == 'all' && _settingsBox != null) {
+      final List<String>? savedOrder = _settingsBox!
           .get('social_posts_order', defaultValue: <String>[])
           ?.cast<String>();
 
@@ -84,17 +151,11 @@ class SocialPostListWidgetState extends State<SocialPostListWidget>
         final newOrder = savedOrder
             .where((id) => !idsToDelete.contains(id))
             .toList();
-        await settingsBox.put('social_posts_order', newOrder);
+        await _settingsBox!.put('social_posts_order', newOrder);
       }
     }
 
     deselectAll();
-
-    if (mounted) {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text('${idsToDelete.length} posts deleted')),
-      // );
-    }
   }
 
   void _notifySelectionChanged() {
@@ -122,141 +183,74 @@ class SocialPostListWidgetState extends State<SocialPostListWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return FutureBuilder(
-      future: Future.wait([_boxFuture, _settingsBoxFuture]),
-      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
 
-        if (snapshot.hasError) {
-          return Center(
-            child: Text(
-              AppLocalizations.of(context)!.error(snapshot.error.toString()),
-            ),
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (_currentPosts.isEmpty) {
+      return _buildEmptyState();
+    }
+
+    // Only allow reordering if NOT in selection mode and filter is 'all'
+    final canReorder = widget.filter == 'all' && !_isSelectionMode;
+
+    if (canReorder) {
+      return ReorderableListView.builder(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+        itemCount: _currentPosts.length,
+        proxyDecorator: (child, index, animation) {
+          return AnimatedBuilder(
+            animation: animation,
+            builder: (BuildContext context, Widget? child) {
+              final double animValue = Curves.easeInOut.transform(
+                animation.value,
+              );
+              final double scale = ui.lerpDouble(1, 1.1, animValue)!;
+              return Transform.scale(
+                scale: scale,
+                child: Material(
+                  color: Colors.transparent,
+                  elevation: 10,
+                  shadowColor: Colors.black45,
+                  child: child,
+                ),
+              );
+            },
+            child: child,
           );
-        }
+        },
+        onReorder: (oldIndex, newIndex) {
+          if (newIndex > oldIndex) newIndex -= 1;
+          setState(() {
+            final item = _currentPosts.removeAt(oldIndex);
+            _currentPosts.insert(newIndex, item);
+          });
 
-        final postsBox = snapshot.data![0] as Box<SocialPost>;
-        final settingsBox = snapshot.data![1] as Box;
-
-        return ValueListenableBuilder(
-          valueListenable: postsBox.listenable(),
-          builder: (context, Box<SocialPost> box, _) {
-            // Get all posts first
-            List<SocialPost> posts = box.values.toList();
-
-            // 1. FILTERING
-            if (widget.filter == 'favorites') {
-              posts = posts.where((p) => p.isFavorite).toList();
-            } else if (widget.filter == 'drafts') {
-              posts = posts.where((p) => p.isDraft).toList();
-            }
-
-            // 2. SORTING (Custom Order for 'all', UpdatedAt for others)
-            if (widget.filter == 'all') {
-              final List<String>? savedOrder = settingsBox
-                  .get('social_posts_order', defaultValue: <String>[])
-                  ?.cast<String>();
-
-              if (savedOrder != null && savedOrder.isNotEmpty) {
-                // Create a map for O(1) lookups of index
-                final orderMap = {
-                  for (var i = 0; i < savedOrder.length; i++) savedOrder[i]: i,
-                };
-
-                posts.sort((a, b) {
-                  final indexA = orderMap[a.id];
-                  final indexB = orderMap[b.id];
-
-                  if (indexA != null && indexB != null) {
-                    return indexA.compareTo(indexB);
-                  } else if (indexA != null) {
-                    return -1; // A exists in order, so it comes first
-                  } else if (indexB != null) {
-                    return 1; // B exists in order
-                  } else {
-                    // Both new? Sort by date descending
-                    return b.updatedAt.compareTo(a.updatedAt);
-                  }
-                });
-              } else {
-                // Default: Newest first
-                posts.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
-              }
-            } else {
-              // Favorites/Drafts always sorted by update time
-              posts.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
-            }
-
-            _currentPosts = posts; // Update local ref
-
-            if (posts.isEmpty) {
-              return _buildEmptyState();
-            }
-
-            // 3. REORDERABLE LIST
-            // Only allow reordering if NOT in selection mode and filter is 'all'
-            final canReorder = widget.filter == 'all' && !_isSelectionMode;
-
-            if (canReorder) {
-              return ReorderableListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                itemCount: posts.length,
-                proxyDecorator: (child, index, animation) {
-                  return AnimatedBuilder(
-                    animation: animation,
-                    builder: (BuildContext context, Widget? child) {
-                      final double animValue = Curves.easeInOut.transform(
-                        animation.value,
-                      );
-                      final double scale = ui.lerpDouble(1, 1.1, animValue)!;
-                      return Transform.scale(
-                        scale: scale,
-                        child: Material(
-                          color: Colors.transparent,
-                          elevation: 10,
-                          shadowColor: Colors.black45,
-                          child: child,
-                        ),
-                      );
-                    },
-                    child: child,
-                  );
-                },
-                onReorder: (oldIndex, newIndex) {
-                  if (newIndex > oldIndex) newIndex -= 1;
-                  final item = posts.removeAt(oldIndex);
-                  posts.insert(newIndex, item);
-
-                  // Save new order
-                  final newOrderIds = posts.map((p) => p.id).toList();
-                  settingsBox.put('social_posts_order', newOrderIds);
-                },
-                itemBuilder: (context, index) {
-                  final post = posts[index];
-                  return ReorderableDelayedDragStartListener(
-                    key: ValueKey(post.id),
-                    index: index,
-                    child: _buildPostCard(context, post),
-                  );
-                },
-              );
-            } else {
-              // Standard List when reordering disabled (e.g. selection mode or other tabs)
-              return ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                itemCount: posts.length,
-                itemBuilder: (context, index) {
-                  final post = posts[index];
-                  return _buildPostCard(context, post);
-                },
-              );
-            }
-          },
-        );
-      },
-    );
+          // Save new order
+          final newOrderIds = _currentPosts.map((p) => p.id).toList();
+          _settingsBox?.put('social_posts_order', newOrderIds);
+        },
+        itemBuilder: (context, index) {
+          final post = _currentPosts[index];
+          return ReorderableDelayedDragStartListener(
+            key: ValueKey(post.id),
+            index: index,
+            child: _buildPostCard(context, post),
+          );
+        },
+      );
+    } else {
+      // Standard List when reordering disabled (e.g. selection mode or other tabs)
+      return ListView.builder(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+        itemCount: _currentPosts.length,
+        itemBuilder: (context, index) {
+          final post = _currentPosts[index];
+          return _buildPostCard(context, post);
+        },
+      );
+    }
   }
 
   Widget _buildEmptyState() {
@@ -351,8 +345,6 @@ class SocialPostListWidgetState extends State<SocialPostListWidget>
                       size: 20.sp,
                     ),
                     onPressed: () {
-                      // Dont allow favorite toggle in selection mode to avoid confusion?
-                      // Or just let it happen. Let's block it in selection mode for cleaner UX.
                       if (_isSelectionMode) {
                         _toggleSelection(post.id);
                         return;
@@ -394,7 +386,6 @@ class SocialPostListWidgetState extends State<SocialPostListWidget>
               ),
               SizedBox(height: 8.h),
               // Hero Animation on content preview
-              // Matches the tag in SocialPostScreen (which we will add next)
               Hero(
                 tag: 'post_content_${post.id}',
                 child: Material(

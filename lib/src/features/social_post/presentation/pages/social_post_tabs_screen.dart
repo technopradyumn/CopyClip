@@ -51,7 +51,6 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
       // Exit selection mode when switching tabs
       _exitSelectionMode();
     }
-    setState(() {}); // Rebuild to update keys/actions if needed
   }
 
   GlobalKey<SocialPostListWidgetState> _getCurrentKey() {
@@ -168,45 +167,6 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
               // Header
               _buildHeader(context),
 
-              // Bulk Import Tile (Temporarily Disabled per User Request)
-              /*
-              if (!_isSelectionMode)
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 8.h,
-                  ),
-                  child: Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.add_photo_alternate_outlined,
-                        color: FeatureColors.socialPost,
-                        size: 28.sp,
-                      ),
-                      title: Text(
-                        AppLocalizations.of(context)!.bulkImport,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.sp,
-                        ),
-                      ),
-                      subtitle: Text(
-                        "Import multiple posts from URL",
-                        style: TextStyle(fontSize: 12.sp),
-                      ),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () {
-                        context.push(AppRouter.socialPostBulkImport);
-                      },
-                    ),
-                  ),
-                ),
-              */
-
               // Tabs (only show if NOT in selection mode? Or keep them disabled?)
               // UX: Usually tabs hide or disable during selection. Let's hide them or keep them but disabled.
               // Hiding them gives more space.
@@ -297,28 +257,8 @@ class _SocialPostTabsScreenState extends State<SocialPostTabsScreen>
             if (value == 'delete_all') {
               _deleteAllPosts(context);
             }
-            /*
-            else if (value == 'bulk_import') {
-              context.push(AppRouter.socialPostBulkImport);
-            }
-            */
           },
           itemBuilder: (context) => [
-            /*
-            PopupMenuItem(
-              value: 'bulk_import',
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.add_photo_alternate_outlined,
-                    color: theme.colorScheme.primary,
-                  ),
-                  SizedBox(width: 8),
-                  Text(AppLocalizations.of(context)!.bulkImport),
-                ],
-              ),
-            ),
-            */
             PopupMenuItem(
               value: 'delete_all',
               child: Row(
