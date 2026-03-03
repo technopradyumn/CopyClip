@@ -262,7 +262,9 @@ class _BackgroundPickerScreenState extends State<BackgroundPickerScreen>
                         child: Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: theme.colorScheme.surface.withValues(alpha: 0.8),
+                            color: theme.colorScheme.surface.withValues(
+                              alpha: 0.8,
+                            ),
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: theme.dividerColor.withValues(alpha: 0.1),
@@ -423,8 +425,8 @@ class _BackgroundPickerScreenState extends State<BackgroundPickerScreen>
                         _getDesignDescription(_selectedDesign),
                         textAlign: TextAlign.center,
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 
-                            0.6,
+                          color: theme.textTheme.bodyMedium?.color?.withValues(
+                            alpha: 0.6,
                           ),
                         ),
                       ),

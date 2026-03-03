@@ -35,8 +35,8 @@ class CanvasSketchCard extends StatelessWidget {
               ? Matrix4.identity().scaled(0.96)
               : Matrix4.identity(),
           decoration: BoxDecoration(
-            color: theme.colorScheme.surface.withValues(alpha: 
-              isSelected ? 0.4 : 0.6,
+            color: theme.colorScheme.surface.withValues(
+              alpha: isSelected ? 0.4 : 0.6,
             ),
             borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
             border: Border.all(
@@ -69,8 +69,8 @@ class CanvasSketchCard extends StatelessWidget {
                           color: note.backgroundColor,
                           border: Border(
                             bottom: BorderSide(
-                              color: theme.colorScheme.onSurface.withValues(alpha: 
-                                0.05,
+                              color: theme.colorScheme.onSurface.withValues(
+                                alpha: 0.05,
                               ),
                               width: 1,
                             ),
@@ -147,7 +147,9 @@ class CanvasSketchCard extends StatelessWidget {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: theme.colorScheme.primary.withValues(alpha: 0.4),
+                            color: theme.colorScheme.primary.withValues(
+                              alpha: 0.4,
+                            ),
                             blurRadius: 8,
                           ),
                         ],

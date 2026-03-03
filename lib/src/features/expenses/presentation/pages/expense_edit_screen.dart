@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:async';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/dynamic_background.dart';
@@ -720,6 +721,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                             child: Material(
                               type: MaterialType.transparency,
                               child: TextField(
+                                selectionControls: CustomSelectionControls(),
                                 controller: _amountController,
                                 focusNode: _amountFocusNode,
                                 keyboardType:
@@ -759,6 +761,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                       Material(
                         type: MaterialType.transparency,
                         child: TextField(
+                          selectionControls: CustomSelectionControls(),
                           controller: _titleController,
                           focusNode: _titleFocusNode,
                           style: textTheme.bodyLarge?.copyWith(
@@ -795,6 +798,7 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
                         child: Material(
                           type: MaterialType.transparency,
                           child: TextField(
+                            selectionControls: CustomSelectionControls(),
                             controller: _categoryController,
                             focusNode: _categoryFocusNode,
                             style: textTheme.bodyLarge?.copyWith(

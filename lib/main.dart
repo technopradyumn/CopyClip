@@ -829,7 +829,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
               },
 
               builder: (context, child) {
-                return UpgradeAlert(
+                // Ensure text selection uses our CustomSelectionControls globally
+                final upgradedChild = UpgradeAlert(
                   navigatorKey: router.routerDelegate.navigatorKey,
                   upgrader: Upgrader(
                     debugLogging: true,
@@ -839,6 +840,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
                   ),
                   child: child ?? const SizedBox(),
                 );
+
+                return upgradedChild;
               },
             );
           },

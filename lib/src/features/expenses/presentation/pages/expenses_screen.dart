@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -435,6 +436,7 @@ class _ExpensesScreenState extends State<ExpensesScreen>
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: TextField(
+                selectionControls: CustomSelectionControls(),
                 controller: _searchController,
                 autofocus: true,
                 style: theme.textTheme.bodyLarge,

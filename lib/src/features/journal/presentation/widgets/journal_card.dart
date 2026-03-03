@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:copyclip/src/features/journal/presentation/designs/journal_design_registry.dart'; // Registry
+import 'package:copyclip/src/features/journal/presentation/designs/journal_design_registry.dart';
+import 'package:copyclip/src/features/journal/presentation/designs/journal_moods.dart';
 import 'package:copyclip/src/features/journal/presentation/widgets/design_picker_sheet.dart'; // Picker
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -61,20 +62,7 @@ class JournalCard extends StatelessWidget {
   }
 
   String _getMoodEmoji(String mood) {
-    switch (mood) {
-      case 'Happy':
-        return '😊';
-      case 'Excited':
-        return '🤩';
-      case 'Neutral':
-        return '😐';
-      case 'Sad':
-        return '😔';
-      case 'Stressed':
-        return '😫';
-      default:
-        return '😐';
-    }
+    return JournalMoods.getEmoji(mood);
   }
 
   void _showDesignPicker(BuildContext context) {
@@ -174,10 +162,10 @@ class JournalCard extends StatelessWidget {
                                 color: contentColor.withValues(alpha: 0.7),
                               ),
                             ),
-                            const SizedBox(height: 2),
+                            const SizedBox(height: 4),
                             Text(
                               _getMoodEmoji(entry.mood),
-                              style: const TextStyle(fontSize: 16),
+                              style: const TextStyle(fontSize: 22),
                             ),
                           ],
                         ),

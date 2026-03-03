@@ -94,7 +94,9 @@ class StarsPainter extends BaseBackgroundPainter {
           0.5;
 
       final paint = Paint()
-        ..color = Colors.white.withValues(alpha: twinkle * (isDark ? 0.7 : 0.4));
+        ..color = Colors.white.withValues(
+          alpha: twinkle * (isDark ? 0.7 : 0.4),
+        );
       canvas.drawCircle(Offset(x, y), starSize, paint);
 
       if (random.nextDouble() > 0.92) {
@@ -386,8 +388,8 @@ class WavePainter extends BaseBackgroundPainter {
       final offset = i * size.height * 0.08;
       final t = animationValue * 1.5 * math.pi + i * 0.5;
 
-      paint.color = primaryColor.withValues(alpha: 
-        isDark ? (0.1 + i * 0.05) : (0.05 + i * 0.03),
+      paint.color = primaryColor.withValues(
+        alpha: isDark ? (0.1 + i * 0.05) : (0.05 + i * 0.03),
       );
 
       path.moveTo(0, size.height);

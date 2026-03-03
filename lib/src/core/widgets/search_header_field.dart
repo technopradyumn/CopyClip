@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../const/constant.dart';
@@ -40,6 +41,7 @@ class SearchHeaderField extends StatelessWidget {
             ),
           ),
           child: TextField(
+            selectionControls: CustomSelectionControls(),
             controller: controller,
             focusNode: focusNode,
             autofocus: true,

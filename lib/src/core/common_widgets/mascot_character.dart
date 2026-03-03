@@ -49,39 +49,51 @@ class _MascotCharacterState extends State<MascotCharacter>
 
     _driftAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween(begin: 0.0, end: -15.0)
-            .chain(CurveTween(curve: Curves.easeInOutSine)),
+        tween: Tween(
+          begin: 0.0,
+          end: -15.0,
+        ).chain(CurveTween(curve: Curves.easeInOutSine)),
         weight: 50,
       ),
       TweenSequenceItem(
-        tween: Tween(begin: -15.0, end: 0.0)
-            .chain(CurveTween(curve: Curves.easeInOutSine)),
+        tween: Tween(
+          begin: -15.0,
+          end: 0.0,
+        ).chain(CurveTween(curve: Curves.easeInOutSine)),
         weight: 50,
       ),
     ]).animate(_controller);
 
     _pulseAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween(begin: 1.0, end: 1.08)
-            .chain(CurveTween(curve: Curves.easeInOut)),
+        tween: Tween(
+          begin: 1.0,
+          end: 1.08,
+        ).chain(CurveTween(curve: Curves.easeInOut)),
         weight: 50,
       ),
       TweenSequenceItem(
-        tween: Tween(begin: 1.08, end: 1.0)
-            .chain(CurveTween(curve: Curves.easeInOut)),
+        tween: Tween(
+          begin: 1.08,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeInOut)),
         weight: 50,
       ),
     ]).animate(_controller);
 
     _interactionPulse = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween(begin: 1.0, end: 1.5)
-            .chain(CurveTween(curve: Curves.easeOutCubic)),
+        tween: Tween(
+          begin: 1.0,
+          end: 1.5,
+        ).chain(CurveTween(curve: Curves.easeOutCubic)),
         weight: 30,
       ),
       TweenSequenceItem(
-        tween: Tween(begin: 1.5, end: 1.0)
-            .chain(CurveTween(curve: Curves.elasticOut)),
+        tween: Tween(
+          begin: 1.5,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.elasticOut)),
         weight: 70,
       ),
     ]).animate(_interactionController);
@@ -93,13 +105,17 @@ class _MascotCharacterState extends State<MascotCharacter>
 
     _orbitalTiltAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween(begin: -0.2, end: 0.2)
-            .chain(CurveTween(curve: Curves.easeInOutSine)),
+        tween: Tween(
+          begin: -0.2,
+          end: 0.2,
+        ).chain(CurveTween(curve: Curves.easeInOutSine)),
         weight: 50,
       ),
       TweenSequenceItem(
-        tween: Tween(begin: 0.2, end: -0.2)
-            .chain(CurveTween(curve: Curves.easeInOutSine)),
+        tween: Tween(
+          begin: 0.2,
+          end: -0.2,
+        ).chain(CurveTween(curve: Curves.easeInOutSine)),
         weight: 50,
       ),
     ]).animate(_controller);
@@ -156,8 +172,7 @@ class _MascotCharacterState extends State<MascotCharacter>
       child: AnimatedBuilder(
         animation: Listenable.merge([_controller, _interactionController]),
         builder: (context, child) {
-          final totalPulse =
-              _pulseAnimation.value * _interactionPulse.value;
+          final totalPulse = _pulseAnimation.value * _interactionPulse.value;
 
           return Column(
             mainAxisSize: MainAxisSize.min,
@@ -233,8 +248,7 @@ class _AuraEntityPainter extends CustomPainter {
           auraColor.withOpacity(0.05),
           Colors.transparent,
         ],
-      ).createShader(
-          Rect.fromCircle(center: center, radius: size.width * 0.5));
+      ).createShader(Rect.fromCircle(center: center, radius: size.width * 0.5));
 
     canvas.drawCircle(center, size.width * 0.5, glowPaint);
 
@@ -262,9 +276,10 @@ class _AuraEntityPainter extends CustomPainter {
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
 
     canvas.drawCircle(
-        center.translate(-radius * 0.3, -radius * 0.3),
-        radius * 0.4,
-        highlight);
+      center.translate(-radius * 0.3, -radius * 0.3),
+      radius * 0.4,
+      highlight,
+    );
   }
 
   void _drawEyes(Canvas canvas, Offset center, double radius) {
@@ -313,43 +328,48 @@ class _AuraEntityPainter extends CustomPainter {
     switch (state) {
       case MascotState.happy:
         canvas.drawArc(
-            Rect.fromCenter(
-                center: Offset(center.dx, mouthY),
-                width: radius * 1.2,
-                height: radius * 0.8),
-            0,
-            math.pi,
-            false,
-            mouthPaint);
+          Rect.fromCenter(
+            center: Offset(center.dx, mouthY),
+            width: radius * 1.2,
+            height: radius * 0.8,
+          ),
+          0,
+          math.pi,
+          false,
+          mouthPaint,
+        );
         break;
 
       case MascotState.sad:
         canvas.drawArc(
-            Rect.fromCenter(
-                center: Offset(center.dx, mouthY + 10),
-                width: radius * 1.2,
-                height: radius * 0.8),
-            math.pi,
-            math.pi,
-            false,
-            mouthPaint);
+          Rect.fromCenter(
+            center: Offset(center.dx, mouthY + 10),
+            width: radius * 1.2,
+            height: radius * 0.8,
+          ),
+          math.pi,
+          math.pi,
+          false,
+          mouthPaint,
+        );
         break;
 
       case MascotState.amazed:
-        canvas.drawCircle(
-            Offset(center.dx, mouthY), radius * 0.25, mouthPaint);
+        canvas.drawCircle(Offset(center.dx, mouthY), radius * 0.25, mouthPaint);
         break;
 
       default:
         canvas.drawArc(
-            Rect.fromCenter(
-                center: Offset(center.dx, mouthY),
-                width: radius,
-                height: radius * 0.6),
-            0,
-            math.pi,
-            false,
-            mouthPaint);
+          Rect.fromCenter(
+            center: Offset(center.dx, mouthY),
+            width: radius,
+            height: radius * 0.6,
+          ),
+          0,
+          math.pi,
+          false,
+          mouthPaint,
+        );
     }
   }
 

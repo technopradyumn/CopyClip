@@ -96,7 +96,9 @@ class CanvasFolderCard extends StatelessWidget {
                     Text(
                       "$count ${count == 1 ? 'sketch' : 'sketches'}",
                       style: theme.textTheme.labelSmall?.copyWith(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: 0.6,
+                        ),
                         fontWeight: FontWeight.w600,
                         letterSpacing: 0.2,
                       ),
@@ -117,7 +119,9 @@ class CanvasFolderCard extends StatelessWidget {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: theme.colorScheme.primary.withValues(alpha: 0.4),
+                          color: theme.colorScheme.primary.withValues(
+                            alpha: 0.4,
+                          ),
                           blurRadius: 8,
                         ),
                       ],

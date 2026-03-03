@@ -1150,92 +1150,91 @@ class _DashboardScreenState extends State<DashboardScreen>
       ],
       body: DynamicBackground(
         child: !_boxesOpened
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                _buildGamificationHeader(theme),
-                Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      // Responsive Logic:
-                      // If width > 600 (Tablet/Desktop), enforce Grid behavior regardless of toggle?
-                      // USER REQUEST: "automatic adjustable according to device ... grid automatically in real time"
-                      // So, if width is large, show Grid. If small, use Toggle preference.
+            ? const Center(child: CircularProgressIndicator())
+            : Column(
+                children: [
+                  _buildGamificationHeader(theme),
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        // Responsive Logic:
+                        // If width > 600 (Tablet/Desktop), enforce Grid behavior regardless of toggle?
+                        // USER REQUEST: "automatic adjustable according to device ... grid automatically in real time"
+                        // So, if width is large, show Grid. If small, use Toggle preference.
 
-                      final bool forceGrid = constraints.maxWidth > 600;
-                      final bool showGrid = forceGrid || _isGridView;
+                        final bool forceGrid = constraints.maxWidth > 600;
+                        final bool showGrid = forceGrid || _isGridView;
 
-                      if (showGrid) {
-                        // Grid View
-                        final int crossAxisCount = (constraints.maxWidth / 160)
-                            .floor()
-                            .clamp(2, 6);
+                        if (showGrid) {
+                          // Grid View
+                          final int crossAxisCount =
+                              (constraints.maxWidth / 160).floor().clamp(2, 6);
 
-                        return GridView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 100),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: crossAxisCount,
-                                crossAxisSpacing: 16,
-                                mainAxisSpacing: 16,
-                                childAspectRatio: 1.0, // Square tiles
-                              ),
-                          itemCount: _order.length,
-                          itemBuilder: (context, index) =>
-                              _buildGridTile(index, theme),
-                        );
-                      } else {
-                        // List View (Reorderable)
-                        return ReorderableListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 100),
-                          itemCount: _order.length,
-                          proxyDecorator: (child, index, animation) {
-                            return AnimatedBuilder(
-                              animation: animation,
-                              builder: (BuildContext context, Widget? child) {
-                                final double animValue = Curves.easeInOut
-                                    .transform(animation.value);
-                                final double scale = lerpDouble(
-                                  1,
-                                  1.05,
-                                  animValue,
-                                )!;
-                                return Transform.scale(
-                                  scale: scale,
-                                  child: Material(
-                                    elevation: 12,
-                                    color: Colors.transparent,
-                                    shadowColor: Colors.black26,
-                                    borderRadius: BorderRadius.circular(
-                                      AppConstants.cornerRadius,
+                          return GridView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 100),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: crossAxisCount,
+                                  crossAxisSpacing: 16,
+                                  mainAxisSpacing: 16,
+                                  childAspectRatio: 1.0, // Square tiles
+                                ),
+                            itemCount: _order.length,
+                            itemBuilder: (context, index) =>
+                                _buildGridTile(index, theme),
+                          );
+                        } else {
+                          // List View (Reorderable)
+                          return ReorderableListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 100),
+                            itemCount: _order.length,
+                            proxyDecorator: (child, index, animation) {
+                              return AnimatedBuilder(
+                                animation: animation,
+                                builder: (BuildContext context, Widget? child) {
+                                  final double animValue = Curves.easeInOut
+                                      .transform(animation.value);
+                                  final double scale = lerpDouble(
+                                    1,
+                                    1.05,
+                                    animValue,
+                                  )!;
+                                  return Transform.scale(
+                                    scale: scale,
+                                    child: Material(
+                                      elevation: 12,
+                                      color: Colors.transparent,
+                                      shadowColor: Colors.black26,
+                                      borderRadius: BorderRadius.circular(
+                                        AppConstants.cornerRadius,
+                                      ),
+                                      child: child,
                                     ),
-                                    child: child,
-                                  ),
-                                );
-                              },
-                              child: child,
-                            );
-                          },
-                          onReorder: (oldIndex, newIndex) {
-                            if (newIndex > oldIndex) newIndex -= 1;
-                            setState(() {
-                              final item = _order.removeAt(oldIndex);
-                              _order.insert(newIndex, item);
-                              _saveOrder();
-                            });
-                            HapticFeedback.lightImpact();
-                          },
-                          itemBuilder: (context, index) =>
-                              _buildListTile(index, theme),
-                        );
-                      }
-                    },
+                                  );
+                                },
+                                child: child,
+                              );
+                            },
+                            onReorder: (oldIndex, newIndex) {
+                              if (newIndex > oldIndex) newIndex -= 1;
+                              setState(() {
+                                final item = _order.removeAt(oldIndex);
+                                _order.insert(newIndex, item);
+                                _saveOrder();
+                              });
+                              HapticFeedback.lightImpact();
+                            },
+                            itemBuilder: (context, index) =>
+                                _buildListTile(index, theme),
+                          );
+                        }
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
       ),
     );
   }

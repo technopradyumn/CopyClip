@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:convert';
 
 import 'dart:math';
@@ -29,6 +30,7 @@ import 'package:copyclip/src/core/widgets/premium_badge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../designs/journal_page_registry.dart';
+import '../designs/journal_moods.dart';
 import '../widgets/page_design_picker.dart';
 
 class JournalEditScreen extends StatefulWidget {
@@ -62,15 +64,8 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   // Resolved Entry (from widget or ID)
   JournalEntry? _resolvedEntry;
 
-  final Map<String, String> _moodMap = {
-    'Happy': '😊',
-    'Excited': '🤩',
-    'Neutral': '😐',
-    'Sad': '😔',
-    'Stressed': '😫',
-    'Angry': '😡',
-    'Cool': '😎',
-    'Love': '😍',
+  Map<String, String> get _moodMap => {
+    for (var mood in JournalMoods.allMoods) mood: JournalMoods.getEmoji(mood),
   };
 
   bool _isLoading = true;
@@ -922,6 +917,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
                             child: TextField(
+                              selectionControls: CustomSelectionControls(),
                               controller: _titleController,
                               style: TextStyle(
                                 fontSize: 24,
@@ -941,6 +937,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 24),
                             child: TextField(
+                              selectionControls: CustomSelectionControls(),
                               controller: _tagsController,
                               style: TextStyle(
                                 color: theme.colorScheme.primary,

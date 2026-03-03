@@ -301,10 +301,7 @@ class HomeWidgetService {
           });
         } catch (e) {
           debugPrint('Error processing clip: $e');
-          recentClips.add({
-            'text': 'Clipboard item',
-            'type': 'text',
-          });
+          recentClips.add({'text': 'Clipboard item', 'type': 'text'});
         }
       }
 
@@ -412,14 +409,17 @@ class HomeWidgetService {
           debugPrint('✅ Widget pin request sent successfully');
           return true;
         } else {
-          debugPrint('ℹ️ Widget pin request not supported or cancelled. User can add manually.');
+          debugPrint(
+            'ℹ️ Widget pin request not supported or cancelled. User can add manually.',
+          );
         }
       }
 
       // If pin request fails or is not supported, user can still add widget manually
-      debugPrint('✅ Widget data updated. User can now add widget from launcher.');
+      debugPrint(
+        '✅ Widget data updated. User can now add widget from launcher.',
+      );
       return true;
-
     } catch (e) {
       debugPrint('❌ Error pinning widget: $e');
       // Still return true so user sees instructions
@@ -622,11 +622,17 @@ class _HomeWidgetBottomSheetState extends State<HomeWidgetBottomSheet> {
                 const SizedBox(height: 12),
                 _buildInstruction('1', 'Long press on your home screen'),
                 const SizedBox(height: 8),
-                _buildInstruction('2', Platform.isAndroid ? 'Tap "Widgets"' : 'Tap the + button'),
+                _buildInstruction(
+                  '2',
+                  Platform.isAndroid ? 'Tap "Widgets"' : 'Tap the + button',
+                ),
                 const SizedBox(height: 8),
                 _buildInstruction('3', 'Find "CopyClip" in the list'),
                 const SizedBox(height: 8),
-                _buildInstruction('4', 'Drag ${widget.featureTitle} widget to home screen'),
+                _buildInstruction(
+                  '4',
+                  'Drag ${widget.featureTitle} widget to home screen',
+                ),
               ],
             ),
           ),
@@ -663,13 +669,13 @@ class _HomeWidgetBottomSheetState extends State<HomeWidgetBottomSheet> {
                     ),
                     child: _isLoading
                         ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
-                      ),
-                    )
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
                         : const Text('Prepare Widget'),
                   ),
                 ),
@@ -705,24 +711,19 @@ class _HomeWidgetBottomSheetState extends State<HomeWidgetBottomSheet> {
           ),
         ),
         const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            text,
-            style: const TextStyle(fontSize: 13),
-          ),
-        ),
+        Expanded(child: Text(text, style: const TextStyle(fontSize: 13))),
       ],
     );
   }
 }
 
 void showWidgetBottomSheet(
-    BuildContext context,
-    String featureId,
-    String featureTitle,
-    IconData featureIcon,
-    Color featureColor,
-    ) {
+  BuildContext context,
+  String featureId,
+  String featureTitle,
+  IconData featureIcon,
+  Color featureColor,
+) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,

@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
@@ -523,6 +524,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
                   child: Material(
                     type: MaterialType.transparency,
                     child: TextField(
+                      selectionControls: CustomSelectionControls(),
                       controller: _titleController,
                       style: theme.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.w900,
@@ -1415,6 +1417,7 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
               ),
             ),
             child: TextField(
+              selectionControls: CustomSelectionControls(),
               focusNode: focusNode,
               controller: TextEditingController(text: text.text)
                 ..selection = TextSelection.collapsed(offset: text.text.length),

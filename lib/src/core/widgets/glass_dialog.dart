@@ -200,7 +200,10 @@ class _GlassButton extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [color.withValues(alpha: 0.4), color.withValues(alpha: 0.2)],
+            colors: [
+              color.withValues(alpha: 0.4),
+              color.withValues(alpha: 0.2),
+            ],
           ),
           borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 0.5),
           border: Border.all(

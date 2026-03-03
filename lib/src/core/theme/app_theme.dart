@@ -19,6 +19,13 @@ class AppTheme {
       useMaterial3: true,
       textTheme: AppTypography.lightTextTheme,
 
+      // Modern Sleek Cursors & Selection Pins
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: primaryColor,
+        selectionColor: primaryColor.withValues(alpha: 0.3),
+        selectionHandleColor: primaryColor,
+      ),
+
       // Card Theme with 2026 feel
       cardTheme: CardThemeData(
         elevation: 8,
@@ -82,6 +89,13 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.backgroundDark,
       useMaterial3: true,
       textTheme: AppTypography.darkTextTheme,
+
+      // Modern Sleek Cursors & Selection Pins
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: primaryColor,
+        selectionColor: primaryColor.withValues(alpha: 0.3),
+        selectionHandleColor: primaryColor,
+      ),
 
       // Card Theme
       cardTheme: const CardThemeData(

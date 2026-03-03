@@ -29,16 +29,26 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
   void write(BinaryWriter writer, Expense obj) {
     writer
       ..writeByte(10) // Writing 10 fields total
-      ..writeByte(0)..write(obj.id)
-      ..writeByte(1)..write(obj.title)
-      ..writeByte(2)..write(obj.amount)
-      ..writeByte(3)..write(obj.currency)
-      ..writeByte(4)..write(obj.date)
-      ..writeByte(5)..write(obj.category)
-      ..writeByte(6)..write(obj.isIncome)
-      ..writeByte(7)..write(obj.sortIndex)
-      ..writeByte(10)..write(obj.isDeleted)
-      ..writeByte(11)..write(obj.deletedAt);
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.title)
+      ..writeByte(2)
+      ..write(obj.amount)
+      ..writeByte(3)
+      ..write(obj.currency)
+      ..writeByte(4)
+      ..write(obj.date)
+      ..writeByte(5)
+      ..write(obj.category)
+      ..writeByte(6)
+      ..write(obj.isIncome)
+      ..writeByte(7)
+      ..write(obj.sortIndex)
+      ..writeByte(10)
+      ..write(obj.isDeleted)
+      ..writeByte(11)
+      ..write(obj.deletedAt);
   }
 
   @override
@@ -47,7 +57,7 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is ExpenseAdapter &&
-              runtimeType == other.runtimeType &&
-              typeId == other.typeId;
+      other is ExpenseAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

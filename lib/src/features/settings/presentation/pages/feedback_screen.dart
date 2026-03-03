@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
@@ -56,7 +57,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           decoration: BoxDecoration(
             color: theme.colorScheme.surface.withValues(alpha: 0.95),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
+            border: Border.all(
+              color: theme.dividerColor.withValues(alpha: 0.1),
+            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.1),
@@ -259,6 +262,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         vertical: 4,
                       ),
                       child: TextField(
+                        selectionControls: CustomSelectionControls(),
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         style: textTheme.bodyLarge,
@@ -287,6 +291,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       color: primaryColor.withValues(alpha: 0.05),
                       padding: const EdgeInsets.all(16),
                       child: TextField(
+                        selectionControls: CustomSelectionControls(),
                         controller: _feedbackController,
                         maxLines: 8,
                         maxLength: 1000,
@@ -437,7 +442,10 @@ class _LightweightContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: color, // Uses simple transparency
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.1), width: 0.5),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.1),
+          width: 0.5,
+        ),
       ),
       child: child,
     );

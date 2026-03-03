@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:io';
 import 'dart:convert';
 
@@ -431,6 +432,7 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
                         ),
                       ),
                       child: TextField(
+                        selectionControls: CustomSelectionControls(),
                         controller: _controller,
                         focusNode: _focusNode,
                         scrollController: _scrollController,

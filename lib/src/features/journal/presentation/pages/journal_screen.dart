@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ import 'package:copyclip/src/features/journal/data/journal_model.dart';
 
 // Widgets
 import '../widgets/journal_card.dart';
+import '../designs/journal_moods.dart';
 
 enum JournalSortOption { custom, dateNewest, dateOldest, mood }
 
@@ -55,6 +57,9 @@ class _JournalScreenState extends State<JournalScreen> {
 
   // Daily Wisdom Quote Index
   late int _dailyQuoteIndex;
+
+  // Reorder Guard
+  bool _isReorderingInternal = false;
 
   @override
   void initState() {
@@ -116,6 +121,8 @@ class _JournalScreenState extends State<JournalScreen> {
 
   void _refreshEntries() {
     if (!Hive.isBoxOpen('journal_box')) return;
+    if (_isReorderingInternal) return; // Prevent loop during reorder save
+
     final box = Hive.box<JournalEntry>('journal_box');
 
     // Get all non-deleted entries
@@ -162,7 +169,10 @@ class _JournalScreenState extends State<JournalScreen> {
   // --- ACTIONS ---
 
   void _onReorder(int oldIndex, int newIndex) {
-    if (newIndex > oldIndex) newIndex -= 1;
+    if (_searchQuery.isNotEmpty || _currentSort != JournalSortOption.custom) {
+      // Reordering is only stable when viewing all items in custom sort
+      return;
+    }
 
     final currentList = List<JournalEntry>.from(_filteredEntriesNotifier.value);
     final item = currentList.removeAt(oldIndex);
@@ -171,11 +181,20 @@ class _JournalScreenState extends State<JournalScreen> {
     // Update UI immediately (Smoothness)
     _filteredEntriesNotifier.value = currentList;
 
-    // Update DB in background (Don't await)
-    for (int i = 0; i < currentList.length; i++) {
-      currentList[i].sortIndex = i;
-      currentList[i].save();
-    }
+    // Update DB in background
+    _isReorderingInternal = true;
+    Future.microtask(() async {
+      try {
+        for (int i = 0; i < currentList.length; i++) {
+          currentList[i].sortIndex = i;
+          await currentList[i].save();
+        }
+      } finally {
+        _isReorderingInternal = false;
+        // Final refresh to ensure sync
+        _refreshEntries();
+      }
+    });
   }
 
   String _formatJournalForExport(JournalEntry entry) {
@@ -198,20 +217,7 @@ class _JournalScreenState extends State<JournalScreen> {
   }
 
   String _getMoodEmoji(String mood) {
-    switch (mood) {
-      case 'Happy':
-        return '😊';
-      case 'Excited':
-        return '🤩';
-      case 'Neutral':
-        return '😐';
-      case 'Sad':
-        return '😔';
-      case 'Stressed':
-        return '😫';
-      default:
-        return '😐';
-    }
+    return JournalMoods.getEmoji(mood);
   }
 
   void _copyEntry(JournalEntry entry) {
@@ -414,6 +420,7 @@ class _JournalScreenState extends State<JournalScreen> {
                     ),
                   ),
                   child: TextField(
+                    selectionControls: CustomSelectionControls(),
                     controller: _searchController,
                     style: theme.textTheme.bodyMedium,
                     decoration: InputDecoration(

@@ -5,7 +5,5 @@ import 'app_router.dart';
 final GoRouter router = GoRouter(
   navigatorKey: navigatorKey,
   initialLocation: '/',
-  routes: [
-    ...getAuthRoutes(),
-  ],
+  routes: [...getAuthRoutes()],
 );

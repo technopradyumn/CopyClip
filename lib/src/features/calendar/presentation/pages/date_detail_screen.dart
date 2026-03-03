@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -293,6 +294,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
           borderRadius: BorderRadius.circular(AppConstants.cornerRadius * 0.5),
         ),
         child: TextField(
+          selectionControls: CustomSelectionControls(),
           controller: _searchController,
           // Removed setState onChanged; handled by listener
           style: TextStyle(color: onSurface, fontSize: 14),

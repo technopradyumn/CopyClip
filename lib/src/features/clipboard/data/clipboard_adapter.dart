@@ -28,14 +28,22 @@ class ClipboardItemAdapter extends TypeAdapter<ClipboardItem> {
   void write(BinaryWriter writer, ClipboardItem obj) {
     writer
       ..writeByte(8) // Increased count from 6 to 8
-      ..writeByte(0)..write(obj.id)
-      ..writeByte(1)..write(obj.content)
-      ..writeByte(2)..write(obj.createdAt)
-      ..writeByte(3)..write(obj.type)
-      ..writeByte(4)..write(obj.sortIndex)
-      ..writeByte(5)..write(obj.colorValue)
-    // ADD THESE TWO LINES:
-      ..writeByte(10)..write(obj.isDeleted)
-      ..writeByte(11)..write(obj.deletedAt);
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.content)
+      ..writeByte(2)
+      ..write(obj.createdAt)
+      ..writeByte(3)
+      ..write(obj.type)
+      ..writeByte(4)
+      ..write(obj.sortIndex)
+      ..writeByte(5)
+      ..write(obj.colorValue)
+      // ADD THESE TWO LINES:
+      ..writeByte(10)
+      ..write(obj.isDeleted)
+      ..writeByte(11)
+      ..write(obj.deletedAt);
   }
 }

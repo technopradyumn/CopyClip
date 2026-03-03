@@ -1,6 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:io';
 import 'package:flutter/material.dart'; // ✅ Added for TimeOfDay
@@ -20,6 +21,17 @@ class NotificationService {
 
   Future<void> init() async {
     tz.initializeTimeZones();
+
+    // ✅ NEW: Fetch device's true local timezone and set it for the app
+    try {
+      final timeZoneName = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(timeZoneName.toString()));
+      debugPrint('🌍 Local timezone set to: $timeZoneName');
+    } catch (e) {
+      debugPrint(
+        '⚠️ Could not get accurate local timezone, falling back to default: $e',
+      );
+    }
 
     if (Platform.isAndroid) {
       final androidImplementation =

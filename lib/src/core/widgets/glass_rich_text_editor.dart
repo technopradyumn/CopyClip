@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -547,10 +548,12 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor>
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
+                selectionControls: CustomSelectionControls(),
                 controller: textController,
                 decoration: const InputDecoration(labelText: 'Display Text'),
               ),
               TextField(
+                selectionControls: CustomSelectionControls(),
                 controller: urlController,
                 decoration: const InputDecoration(
                   labelText: 'URL (e.g. https://...)',
@@ -1047,10 +1050,23 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor>
                         scrollPhysics: const BouncingScrollPhysics(),
                         enableInteractiveSelection: true,
                         showCursor: true,
+                        // ✅ Custom pin-shaped selection handles via the correct Quill API
+                        textSelectionControls: CustomSelectionControls(),
                         // Enable context menu for copy, paste, select all on long press
+                        // Toolbar floats just above the cursor with padding.
                         contextMenuBuilder: (context, rawEditorState) {
+                          final defaultAnchors =
+                              rawEditorState.contextMenuAnchors;
+                          const double verticalPadding = 20.0;
+                          final Offset cursorAnchor = Offset(
+                            defaultAnchors.primaryAnchor.dx,
+                            defaultAnchors.primaryAnchor.dy - verticalPadding,
+                          );
                           return AdaptiveTextSelectionToolbar.buttonItems(
-                            anchors: rawEditorState.contextMenuAnchors,
+                            anchors: TextSelectionToolbarAnchors(
+                              primaryAnchor: cursorAnchor,
+                              secondaryAnchor: defaultAnchors.secondaryAnchor,
+                            ),
                             buttonItems: rawEditorState.contextMenuButtonItems,
                           );
                         },
@@ -1505,6 +1521,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor>
                       children: [
                         const SizedBox(height: 6),
                         TextField(
+                          selectionControls: CustomSelectionControls(),
                           controller: _findController,
                           decoration: const InputDecoration(
                             labelText: 'Find',
@@ -1517,6 +1534,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor>
                         ),
                         const SizedBox(height: 12),
                         TextField(
+                          selectionControls: CustomSelectionControls(),
                           controller: _replaceController,
                           decoration: const InputDecoration(
                             labelText: 'Replace with',

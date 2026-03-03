@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -671,6 +672,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
                             child: TextField(
+                              selectionControls: CustomSelectionControls(),
                               controller: _titleController,
                               style: theme.textTheme.headlineSmall?.copyWith(
                                 fontWeight: FontWeight.bold,

@@ -205,90 +205,29 @@ class TodoSchedulerService {
     final now = DateTime.now();
     final todayStart = DateTime(now.year, now.month, now.day);
 
-    List<Todo> toProcess = [];
-
-    // Find generic repeatable tasks that are DONE but their "next instance"
-    // is ALSO in the past? Or find tasks that missed their window?
-    // Actually, usually we care about the "Latest Active Instance".
-
-    // Scenario: User has "Daily Workout".
-    // Completed on Monday. Next created for Tuesday.
-    // User doesn't open app until Friday.
-    // Tuesday's task is "Overdue".
-
-    // Strategy:
-    // If a repeatable task is OVERDUE by more than X time, we might want to:
-    // 1. Keep it as overdue (so they see they missed it).
-    // 2. OR Auto-fail it and create today's? (User didn't ask for auto-fail).
-    // User asked: "If user misses a day: System adjusts intelligently, No duplicate clutter, Next valid schedule is created"
-
     for (var todo in box.values) {
       if (todo.isDeleted) continue;
 
       // If it's a repeatable task instance...
       if (todo.repeatInterval != null && !todo.isDone && todo.dueDate != null) {
-        // Check if it is SEVERELY overdue (e.g. 2 days ago)
-        if (todo.dueDate!.isBefore(
-          todayStart.subtract(const Duration(days: 1)),
-        )) {
-          // It's stale.
+        // User requested that uncompleted repeated tasks from previous days
+        // should no longer be treated as repeating to avoid duplication clutter.
+        if (todo.dueDate!.isBefore(todayStart)) {
           debugPrint(
-            '🧹 Found stale repeated task: ${todo.task} due ${todo.dueDate}',
+            '🧹 Found overdue repeated task: ${todo.task}. Removing repeat status.',
           );
 
-          // "Complete" it via system or jump date?
-          // Move date to Today (Catch up)?
-          // Or mark as missed?
+          todo.repeatInterval = null;
+          todo.repeatDays = null;
+          todo.nextInstanceId = null;
 
-          // Simplest "No Clutter" approach:
-          // Move the Due Date to TODAY so the user sees it immediately as "Today's Task".
-          // We don't mark the previous days as 'done' or 'failed', we just shift the goalpost.
-
-          // Wait, if it's daily, and I missed 3 days, do I want 3 tasks? No ("No duplicate clutter").
-          // Do I want 1 task due 3 days ago? No.
-          // I want to see "Workout (Today)".
-
-          // Action: Update Due Date to Today (or Next Valid Date).
-          DateTime? nextValid = _findNextValidDate(todo, now);
-          if (nextValid != null && nextValid != todo.dueDate) {
-            todo.dueDate = nextValid;
-            // Reschedule notification
-            await _updateNotifications(todo);
-            await todo.save();
-            debugPrint('📅 Auto-shifted stale task to $nextValid');
-          }
+          // Reschedule notification (will cancel if in past)
+          await _updateNotifications(todo);
+          await todo.save();
+          debugPrint('📅 Removed repeat from stale task');
         }
       }
     }
-  }
-
-  DateTime? _findNextValidDate(Todo todo, DateTime now) {
-    // If daily, just make it today.
-    if (todo.repeatInterval == 'daily') {
-      return DateTime(
-        now.year,
-        now.month,
-        now.day,
-        todo.dueDate?.hour ?? 9,
-        todo.dueDate?.minute ?? 0,
-      );
-    }
-
-    // If weekly, find next valid weekday.
-    if (todo.repeatInterval == 'weekly') {
-      // e.g. Due last Monday. Today is Friday. Next valid is Next Monday.
-      // Or keep it "Last Monday" until they check it off?
-      // User request: "Next valid schedule is created".
-      // If I missed Monday, and it's Friday, I probably want to see it for NEXT Monday?
-      // Or do I want to do it today (Friday) because I missed it?
-      // Let's assume 'Catch Up' isn't the goal, 'Staying on Schedule' is.
-      // So move to next occurrence.
-      return _calculateNextDate('weekly', todo.dueDate!, null);
-      // Note: this might need a loop if it's been WEEKS.
-      // For now, let's just create next instance from NOW.
-    }
-
-    return _calculateNextDate(todo.repeatInterval!, now, todo.repeatDays);
   }
 
   // --- Helpers for NotificationEngine ---

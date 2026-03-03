@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:convert';
 import 'dart:ui' as ui;
 // Removed unused import: note_edit_screen.dart
@@ -321,6 +322,7 @@ class _NotesScreenState extends State<NotesScreen> {
                     ),
                   ),
                   child: TextField(
+                    selectionControls: CustomSelectionControls(),
                     controller: _searchController,
                     style: theme.textTheme.bodyMedium,
                     decoration: InputDecoration(

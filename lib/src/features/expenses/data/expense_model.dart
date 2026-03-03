@@ -70,6 +70,8 @@ class Expense extends HiveObject {
     isIncome: json['isIncome'] ?? false,
     sortIndex: json['sortIndex'] ?? 0,
     isDeleted: json['isDeleted'] ?? false,
-    deletedAt: json['deletedAt'] != null ? DateTime.parse(json['deletedAt']) : null,
+    deletedAt: json['deletedAt'] != null
+        ? DateTime.parse(json['deletedAt'])
+        : null,
   );
 }

@@ -34,7 +34,11 @@ class TimeStampEmbedBuilder extends EmbedBuilder {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.access_time_rounded, size: 14, color: isDark ? Colors.white70 : Colors.black87),
+          Icon(
+            Icons.access_time_rounded,
+            size: 14,
+            color: isDark ? Colors.white70 : Colors.black87,
+          ),
           const SizedBox(width: 6),
           Text(
             embedContext.node.value.data as String,

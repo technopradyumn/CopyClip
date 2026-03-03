@@ -27,14 +27,22 @@ class NoteAdapter extends TypeAdapter<Note> {
   void write(BinaryWriter writer, Note obj) {
     writer
       ..writeByte(8) // Updated count to include all fields (0 through 7)
-      ..writeByte(0)..write(obj.id)
-      ..writeByte(1)..write(obj.title)
-      ..writeByte(2)..write(obj.content)
-      ..writeByte(3)..write(obj.updatedAt)
-      ..writeByte(4)..write(obj.colorValue)
-      ..writeByte(5)..write(obj.sortIndex)
-      ..writeByte(6)..write(obj.isDeleted)
-      ..writeByte(7)..write(obj.deletedAt);
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.title)
+      ..writeByte(2)
+      ..write(obj.content)
+      ..writeByte(3)
+      ..write(obj.updatedAt)
+      ..writeByte(4)
+      ..write(obj.colorValue)
+      ..writeByte(5)
+      ..write(obj.sortIndex)
+      ..writeByte(6)
+      ..write(obj.isDeleted)
+      ..writeByte(7)
+      ..write(obj.deletedAt);
   }
 
   @override
@@ -43,7 +51,7 @@ class NoteAdapter extends TypeAdapter<Note> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is NoteAdapter &&
-              runtimeType == other.runtimeType &&
-              typeId == other.typeId;
+      other is NoteAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

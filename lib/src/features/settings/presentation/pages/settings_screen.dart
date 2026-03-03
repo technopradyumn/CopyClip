@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -1674,6 +1675,7 @@ class _LanguageSelectorContentState extends State<_LanguageSelectorContent> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
+                selectionControls: CustomSelectionControls(),
                 decoration: InputDecoration(
                   hintText: AppLocalizations.of(context)!.search,
                   prefixIcon: const Icon(Icons.search),

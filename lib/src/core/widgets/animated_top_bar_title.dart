@@ -47,7 +47,11 @@ class AnimatedTopBarTitle extends StatelessWidget {
               ),
             )
           else
-            Icon(icon, size: iconSize, color: effectiveColor.withValues(alpha: 0.8)),
+            Icon(
+              icon,
+              size: iconSize,
+              color: effectiveColor.withValues(alpha: 0.8),
+            ),
           SizedBox(width: spacing),
         ],
         if (titleHeroTag != null)

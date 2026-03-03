@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -527,6 +528,7 @@ class _CanvasFolderScreenState extends State<CanvasFolderScreen>
       builder: (ctx) => AlertDialog(
         title: Text(AppLocalizations.of(context)!.renameFolder),
         content: TextField(
+          selectionControls: CustomSelectionControls(),
           controller: controller,
           decoration: InputDecoration(
             hintText: AppLocalizations.of(context)!.folderNameHint,

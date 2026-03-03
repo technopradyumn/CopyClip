@@ -193,7 +193,9 @@ class _GlassPremiumDialogState extends State<_GlassPremiumDialog> {
                         },
                         style: OutlinedButton.styleFrom(
                           foregroundColor: textColor,
-                          side: BorderSide(color: textColor.withValues(alpha: 0.3)),
+                          side: BorderSide(
+                            color: textColor.withValues(alpha: 0.3),
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -211,7 +213,9 @@ class _GlassPremiumDialogState extends State<_GlassPremiumDialog> {
                       onPressed: () => Navigator.pop(context),
                       child: Text(
                         "Cancel",
-                        style: TextStyle(color: textColor.withValues(alpha: 0.6)),
+                        style: TextStyle(
+                          color: textColor.withValues(alpha: 0.6),
+                        ),
                       ),
                     ),
                   ],

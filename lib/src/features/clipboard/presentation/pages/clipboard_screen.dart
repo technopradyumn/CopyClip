@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ui' as ui;
@@ -321,6 +322,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
                     ),
                   ),
                   child: TextField(
+                    selectionControls: CustomSelectionControls(),
                     controller: _searchController,
                     style: theme.textTheme.bodyMedium,
                     decoration: InputDecoration(

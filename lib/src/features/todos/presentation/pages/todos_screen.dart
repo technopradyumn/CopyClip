@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'package:copyclip/src/core/services/notification_service.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
@@ -697,6 +698,7 @@ class _TodosScreenState extends State<TodosScreen>
                   ),
                 ),
                 child: TextField(
+                  selectionControls: CustomSelectionControls(),
                   controller: _searchController,
                   style: theme.textTheme.bodyMedium,
                   decoration: InputDecoration(
@@ -891,6 +893,7 @@ class _TodosScreenState extends State<TodosScreen>
           ),
         ),
         child: TextField(
+          selectionControls: CustomSelectionControls(),
           controller: _quickAddController,
           focusNode: _quickAddFocus,
           autofocus: true,

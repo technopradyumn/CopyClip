@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:async';
 import 'package:copyclip/src/core/services/notification_service.dart';
 import 'package:copyclip/src/core/widgets/glass_container.dart';
@@ -168,8 +169,9 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
 
     // ✅ DEFAULT: Notifications ON for new tasks
     if (_editingTodo == null) {
+      // Use timezone-aware local time for absolute precision
       final now = DateTime.now();
-      // Set to 8 PM today
+      // Set to 8 PM today in the user's exact local timezone
       DateTime targetDate = DateTime(now.year, now.month, now.day, 20, 0);
 
       // If 8 PM has passed, schedule for tomorrow 8 PM
@@ -692,6 +694,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                     child: Material(
                       type: MaterialType.transparency,
                       child: TextField(
+                        selectionControls: CustomSelectionControls(),
                         controller: _categoryController,
                         focusNode: _categoryFocusNode,
                         style: textTheme.bodyLarge,
@@ -745,6 +748,7 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
                   Material(
                     type: MaterialType.transparency,
                     child: TextField(
+                      selectionControls: CustomSelectionControls(),
                       controller: _taskController,
                       focusNode: _taskFocusNode,
                       style: textTheme.bodyLarge?.copyWith(fontSize: 18),

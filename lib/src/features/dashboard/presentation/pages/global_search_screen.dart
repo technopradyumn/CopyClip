@@ -1,3 +1,4 @@
+import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -444,6 +445,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                 ),
               ),
               child: TextField(
+                selectionControls: CustomSelectionControls(),
                 controller: _searchController,
                 style: theme.textTheme.bodyMedium,
                 decoration: InputDecoration(
