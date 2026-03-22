@@ -44,3 +44,21 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .env
+
+# Android signing (sensitive)
+android/key.properties
+*.keystore
+*.jks
+*.p12
+
+# iOS signing (sensitive)
+ios/Certificates/
+ios/Profiles/
+*.mobileprovision
+
+# Environment variables (sensitive)
+.env
+.env.local
+.env.production
+.env.*.local
+
