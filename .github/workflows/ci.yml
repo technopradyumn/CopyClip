@@ -42,12 +42,13 @@ jobs:
 
       - name: L10n drift check
         run: |
-          if git diff --exit-code lib/src/l10n; then
-            echo "✓ Localization files are up-to-date"
-          else
-            echo "✗ L10n files changed; run 'flutter gen-l10n' and commit"
+          git diff --exit-code lib/src/l10n
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "✓ Localization files are up-to-date"
+          } else {
+            Write-Host "✗ L10n files changed; run 'flutter gen-l10n' and commit"
             exit 1
-          fi
+          }
 
       - name: Run analyzer
         run: flutter analyze
