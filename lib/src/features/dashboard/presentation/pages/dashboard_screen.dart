@@ -135,14 +135,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     final l10n = AppLocalizations.of(context)!;
 
     _features = {
-      'social_post': FeatureItem(
-        'social_post',
-        l10n.featuresSocialPost,
-        CupertinoIcons.share_up,
-        FeatureColors.socialPost,
-        AppRouter.socialPost,
-        l10n.featuresSocialPostDesc,
-      ),
       'notes': FeatureItem(
         'notes',
         l10n.notes,
@@ -159,13 +151,13 @@ class _DashboardScreenState extends State<DashboardScreen>
         AppRouter.todos,
         l10n.featuresTodosDesc,
       ),
-      'expenses': FeatureItem(
-        'expenses',
-        l10n.expenses,
-        CupertinoIcons.money_dollar,
-        FeatureColors.expenses,
-        AppRouter.expenses,
-        l10n.featuresExpensesDesc,
+      'clipboard': FeatureItem(
+        'clipboard',
+        l10n.clipboard,
+        CupertinoIcons.doc_on_clipboard,
+        FeatureColors.clipboard,
+        AppRouter.clipboard,
+        l10n.featuresClipboardDesc,
       ),
       'journal': FeatureItem(
         'journal',
@@ -175,6 +167,14 @@ class _DashboardScreenState extends State<DashboardScreen>
         AppRouter.journal,
         l10n.featuresJournalDesc,
       ),
+      'expenses': FeatureItem(
+        'expenses',
+        l10n.expenses,
+        CupertinoIcons.money_dollar,
+        FeatureColors.expenses,
+        AppRouter.expenses,
+        l10n.featuresExpensesDesc,
+      ),
       'calendar': FeatureItem(
         'calendar',
         l10n.calendar,
@@ -183,14 +183,6 @@ class _DashboardScreenState extends State<DashboardScreen>
         AppRouter.calendar,
         l10n.featuresCalendarDesc,
       ),
-      'clipboard': FeatureItem(
-        'clipboard',
-        l10n.clipboard,
-        CupertinoIcons.doc_on_clipboard,
-        FeatureColors.clipboard,
-        AppRouter.clipboard,
-        l10n.featuresClipboardDesc,
-      ),
       'canvas': FeatureItem(
         'canvas',
         l10n.canvas,
@@ -198,6 +190,14 @@ class _DashboardScreenState extends State<DashboardScreen>
         FeatureColors.canvas,
         AppRouter.canvas,
         l10n.featuresCanvasDesc,
+      ),
+      'social_post': FeatureItem(
+        'social_post',
+        l10n.featuresSocialPost,
+        CupertinoIcons.share_up,
+        FeatureColors.socialPost,
+        AppRouter.socialPost,
+        l10n.featuresSocialPostDesc,
       ),
     };
 
@@ -573,7 +573,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               Row(
                 children: [
                   MascotCharacter(
-                    size: 80,
+                    size: 60,
                     state: _dashboardMascotState,
                     onTap: () {
                       setState(() {
@@ -582,7 +582,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       _showThemeColorPicker(theme);
                     },
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 5),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -599,7 +599,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                           borderRadius: BorderRadius.circular(10),
                           child: LinearProgressIndicator(
                             value: model.progressToNextLevel,
-                            minHeight: 12,
+                            minHeight: 6,
                             backgroundColor: theme.colorScheme.primary
                                 .withOpacity(0.1),
                             valueColor: AlwaysStoppedAnimation<Color>(
