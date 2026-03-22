@@ -9,969 +9,968 @@ class AppLocalizationsTa extends AppLocalizations {
   AppLocalizationsTa([String locale = 'ta']) : super(locale);
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'அமைப்புகள்';
 
   @override
-  String get language => 'Language';
+  String get language => 'மொழி';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'இயல்புநிலை';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'குறிப்புகள்';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'பணிகள்';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'செலவுகள்';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'டைரி';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'நாட்காட்டி';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'கிளிப்போர்டு';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'கேன்வாஸ்';
 
   @override
-  String get save => 'Save';
+  String get save => 'சேமி';
 
   @override
-  String get create => 'Create';
+  String get create => 'உருவாக்கு';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'ரத்துசெய்';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'அழி';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'திருத்து';
 
   @override
-  String get share => 'Share';
+  String get share => 'பகிர்';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'நகலெடு';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'சேமிக்கப்படாத மாற்றங்கள்';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'அழிப்பதை உறுதிப்படுத்து';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'நிராகரி';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'பதிவை உருவாக்கு';
 
   @override
-  String get post => 'Post';
+  String get post => 'பதிவு';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'பதிவேற்றப்படுகிறது';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'உங்கள் மனதில் உதிப்பது என்ன?';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'படங்களைத் தேர்ந்தெடு';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'வீடியோவைத் தேர்ந்தெடு';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'கேமரா';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'கேலரி';
 
   @override
-  String get search => 'Search';
+  String get search => 'தேடு';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'பணியை உள்ளிடவும்';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'பணியை அழி';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'பொருட்களைத் தேர்ந்தெடு';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'அனைத்தையும் அழி';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'பிழை: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'வரிசைப்படுத்துதல் \'அனைத்துப் பதிவுகள்\' என்பதில் மட்டுமே கிடைக்கும்';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'பதிவை அழி';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'பதிவு அழிக்கப்பட்டது';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'பிரீமியம் அம்சங்கள்';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'நாணயங்கள், விளம்பரங்கள் மற்றும் பிரீமியம் நிலையை நிர்வகிக்கவும்';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'தீம் முறை';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'நிறம்';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'பின்னணி வடிவமைப்பு';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'அறிவிப்புகள்';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'மறுசுழற்சி பெட்டி';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'தரவை ஏற்றுமதி செய்';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'தரவை இறக்குமதி செய்';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'செயலியை மதிப்பிடுக';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'கருத்தைப் பகிரவும்';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'தனியுரிமைக் கொள்கை';
 
   @override
-  String get version => 'Version';
+  String get version => 'பதிப்பு';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'பில்ட் எண்';
 
   @override
-  String get system => 'System';
+  String get system => 'சிஸ்டம்';
 
   @override
-  String get light => 'Light';
+  String get light => 'லைட்';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'டார்க்';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'பொருள் மீட்டெடுக்கப்பட்டது';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared =>
+      'மறுசுழற்சி பெட்டி வெற்றிகரமாக சுத்தப்படுத்தப்பட்டது';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'அனைத்துப் பதிவுகளும் அழிக்கப்பட்டன';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'புதிய பதிவு';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
+      'கிளிப்போர்டுக்கு நகலெடுக்கப்பட்டது (Facebook கொள்கை)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'TikTok பகிர்வுக்கு வீடியோ/படம் தேவை';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'பகிர்வதில் பிழை: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return '$platform ஸ்டோரியில் பகிர்';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return '$platform ஃபீடில் பகிர்';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'நிரந்தரமாக அன்லாக் செய்';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'போதுமான நாணயங்கள் இல்லை!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'நீங்கள் $amount நாணயங்களை வென்றீர்கள்!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'நகலெடுக்கப்பட்டது';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'தேதி மற்றும் நேரத்தைத் தேர்ந்தெடு';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'இந்தப் பதிவை உறுதிப்படியாக அழிக்க வேண்டுமா?';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'சமூகப் பதிவுகள்';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'நாணயங்களைப் பெற விளம்பரத்தைப் பாருங்கள்';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'பிரீமியம் அன்லாக் செய்யப்பட்டது';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'விளம்பரங்களை அகற்று';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'வரம்பற்ற கிளவுட் சேமிப்பு';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'குறிப்பை அழி';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'குறிப்பைப் பகிர்';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'குறிப்பைத் திருத்து';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'குறிப்புகளைத் தேடு...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'குறிப்புகள் ஏதும் இல்லை';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts =>
+      'உங்கள் எண்ணங்களை உடனுக்குடன் பதிவு செய்யுங்கள்.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'குறிப்பை உருவாக்கு';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'தனிப்பயன் வரிசை';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'புதியவை முதலில்';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'பழையவை முதலில்';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'தலைப்பு: A-Z';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'தலைப்பு: Z-A';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'அனைத்தையும் அழிக்க வேண்டுமா?';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin =>
+      'அனைத்துக் குறிப்புகளையும் மறுசுழற்சி பெட்டிக்கு நகர்த்த வேண்டுமா?';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'பெட்டிக்கு நகர்த்தவா?';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'இக்குறிப்பை பின்னர் மீட்டெடுக்கலாம்.';
 
   @override
-  String get move => 'Move';
+  String get move => 'நகர்த்து';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'எனது எண்ணங்கள்';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'தேர்வு செய்யப்பட்டது';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'உள்ளடக்கம் இல்லை';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'தலைப்பற்றது';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers =>
+      '10+ டைனமிக் வால்பேப்பர்களில் இருந்து தேர்வு செய்யவும்';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'தரவு காப்புப்பிரதி';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile =>
+      'உங்கள் தரவு அனைத்தையும் கொண்ட JSON கோப்பைச் சேமிக்கவா?';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'இப்போதே ஏற்றுமதி செய்';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'தரவை இறக்குமதி செய்';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'காப்புப்பிரதி கோப்பைத் தற்போதைய பொருட்களுடன் இணைக்கவா?';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'கோப்பைத் தேர்ந்தெடு';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'காப்புப்பிரதி வெற்றிகரமாகச் சேமிக்கப்பட்டது!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'ஏற்றுமதி தோல்வியடைந்தது.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count பொருட்கள் வெற்றிகரமாக மீட்டெடுக்கப்பட்டன!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'இறக்குமதி தோல்வியடைந்தது.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'விட்ஜெட் $widget முகப்புத் திரையில் சேர்க்கப்பட்டது!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'விட்ஜெட் கோரிக்கை அனுப்பப்பட்டது. முகப்புத் திரையைச் சரிபார்க்கவும்.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'விட்ஜெட்டைச் சேர்ப்பதில் தோல்வி';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'தானியங்கி சேமிப்பு இயக்கப்பட்டது.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'தானியங்கி சேமிப்பு முடக்கப்பட்டது.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'முகப்புத் திரை விட்ஜெட்கள்';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'அறிவிப்புகள்';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'தரவு மற்றும் காப்புப்பிரதி';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'கருத்து மற்றும் ஆதரவு';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'நன்றி';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'தனியுரிமை மற்றும் பராமரிப்பு';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'செயலி பற்றி';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'பிரீமியம்';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'தோற்றம்';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'கிளிப்போர்டு';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'உங்கள் அனுபவத்தைத் தனிப்பயனாக்குங்கள்';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'CopyClip-க்கு வரவேற்கிறோம்';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'உங்கள் சிறந்த உற்பத்தித் துணை. உங்கள் நாளை நிர்வகிக்கத் தேவையான கருவிகளுடன் உங்களைத் தயார்படுத்துவோம்.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'ஸ்மார்ட் குறிப்புகள்';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'சிறந்த உரை வடிவமைப்புடன் எண்ணங்களை உடனுக்குடன் பதிவு செய்யுங்கள். உங்கள் சிந்தனைகளை ஒழுங்குபடுத்துங்கள்.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'பணி மேலாண்மை';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'உங்கள் வேலைகளில் கவனமாக இருங்கள். பணிப் பட்டியல்களை உருவாக்கி, குறிக்கோள்களை அடையுங்கள்.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'செலவு கண்காணிப்பு';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'நிதிப் பொறுப்பை ஏறுங்கள். உங்கள் வரவு செலவுகளை எளிதாகக் கண்காணித்து புரிந்துகொள்ளுங்கள்.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'தனிப்பட்ட டைரி';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'உங்கள் நாளை நினைவுறுத்துங்கள். நினைவுகள், உணர்வுகள் மற்றும் அனுபவங்களை எழுத ஒரு தனிப்பட்ட இடம்.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'நாட்காட்டி மற்றும் நிகழ்வுகள்';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'எந்த தருணத்தையும் தவறவிடாதீர்கள். உங்கள் நேர திட்டமிடலை ஒழுங்குபடுத்திக் கொள்ளுங்கள்.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'கிளிப்போர்டு மேலாளர்';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'ஒருமுறை நகலெடுத்து எங்கும் ஒட்டவும். உங்கள் கிளிப்போர்டு வரலாற்றை எப்போது வேண்டுமானாலும் அணுகலாம்.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'படைப்புத் திறன்';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'உங்கள் படைப்பாற்றலை வெளிப்படுத்துங்கள். டிஜிட்டல் கேன்வாஸில் உங்கள் யோசனைகளை வரையுங்கள்.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'குறிப்புகளை உருவாக்கி நிர்வகிக்கவும்';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'பணிகளைக் கண்காணிக்கவும்';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'செலவுகளைக் கண்காணிக்கவும்';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'சிந்தனைகளை எழுதவும்';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'திட்டங்களை ஒழுங்குபடுத்தவும்';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'கிளிப்போர்டு வரலாற்றை அணுகவும்';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'சுதந்திரமாக வரையவும்';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'சமூகப் பதிவு';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'சிறந்த சமூக ஊடக உள்ளடக்கங்களை உருவாக்குங்கள்';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'உங்களுக்கான தீம் தேர்வு செய்யுங்கள்';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme =>
+      'புதிய தீம் நிறத்தில் உங்களை வெளிப்படுத்துங்கள்!';
 
   @override
-  String get level => 'Level';
+  String get level => 'நிலை';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'அடுத்த நிலைக்குத் தேவையான XP';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'வரவிருக்கும் நிகழ்வுகளைச் சரிபார்க்கவும்';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'புதிய வரைபடத்தைத் தொடங்கவும்';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'இந்த மாதம் பரிவர்த்தனைகள் ஏதுமில்லை';
 
   @override
   String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
+    return 'இந்த மாதம் $count பரிவர்த்தனைகள்';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'தானியங்கி கிளிப்போர்டு சேமிப்பு';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'நகலெடுத்தவற்றைத் தானாகவே சேமிக்கும்';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'அனுமதி நிரந்தரமாக மறுக்கப்பட்டது. அமைப்புகளில் மாற்றவும்.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'அறிவிப்புகள் இயக்கப்பட்டது!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'அமைப்புகளுக்குத் திருப்பிவிடப்படுகிறது...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'பிரீமியம் அணுகல்';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'பிரீமியம் செயல்படும் காலம்';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'அனைத்து அம்சங்களையும் அன்லாக் செய்';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'பிரீமியம் வாங்கு (7 நாட்கள்)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'விலை: $cost நாணயங்கள்';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => '7 நாட்களுக்கு பிரீமியம் இயக்கப்பட்டது!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'பிரீமியம் செயலில் உள்ளது';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'முடிவடையும் காலம்:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'தற்காலிக அணுகல்';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'டைரி மற்றும் வெளிப்பாடு';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'கலைநயமிக்க வடிவமைப்புகள்';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      '10+ தனித்துவமான டைரி கார்டு தீம்களைப் பெறுங்கள்';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'பிரீமியம் தளவமைப்புகள்';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc => 'நினைவுகளைப் பார்க்கச் சிறந்த வழிகள்';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'நாட்காட்டி மற்றும் கருவிகள்';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'முழுமையான நாட்காட்டி';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'முழுமையான நிகழ்வு மேலாண்மை அமைப்பு';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc =>
+      'பின்னணியில் கிளிப்போர்டு வரலாற்றைச் சேமித்தல்';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'புரோ விட்ஜெட்கள்';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'முகப்புத் திரையிலேயே அனைத்து அம்சங்களும்';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'தரவு மற்றும் ஏற்றுமதி';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'மேம்பட்ட காப்புப்பிரதி';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'பாதுகாப்பான இறக்குமதி/ஏற்றுமதி';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'PDF ஏற்றுமதி';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'குறிப்புகளை PDF ஆக ஏற்றுமதி செய்';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'அச்சடிக்கத் தயார்';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'நேரடி அச்சிடும் வசதி';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'மேம்பட்ட உரை திருத்தி';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'மேம்பட்ட தேடல்';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'உரைக்குள் தேடி மாற்றும் வசதி';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'ரிச் மீடியா';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'படங்கள், வீடியோக்கள் மற்றும் இணைப்புகளைச் சேர்';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'எடிட்டர் ஸ்டைலிங்';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'தனிப்பயன் உரை மற்றும் பின்னணிகள்';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'இருப்பு';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'விளம்பரம் ஏற்றப்படுகிறது...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'விளம்பரத்தைப் பார் (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'விளம்பரத்தை ஏற்று';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'தரவை JSON கோப்பாகச் சேமி';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'காப்புப்பிரதியை இதில் இணைக்கவும்';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied => 'அறிவிப்பு அனுமதி மறுக்கப்பட்டது.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'புதிய பணியைத் தட்டச்சு செய்க...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'பணியைச் சேர்';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'முடிக்கப்பட்டது';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'அற்புதம்!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return '$amount XP பெற்றுள்ளீர்கள்! அடுத்த பணி: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'பணி முடிந்தது! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'அனைத்துப் பணிகளையும் மறுசுழற்சி பெட்டிக்கு நகர்த்தவா?';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'அனைத்துப் பதிவுகளையும் அழி';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'நிச்சயமாக அனைத்துச் சமூகப் பதிவுகளையும் அழிக்க வேண்டுமா? இதை மாற்ற முடியாது.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'அனைத்துப் பதிவுகள்';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'விருப்பமானவை';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'வரைவுகள்';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'விருப்பமானவை எதுவும் இல்லை';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'வரைவுகள் எதுவும் இல்லை';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'சமூகப் பயணத்தைத் தொடங்குங்கள்!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'வரைவு';
 
   @override
   String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
+    return '$count இணைப்புகள்';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent => 'பகிர உள்ளடக்கத்தைச் சேர்க்கவும்';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'பிழை: $path-ல் கோப்பு இல்லை';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'Facebook செயலியைச் சரிபார்க்கவும்';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'சிஸ்டம் ஷேர்';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'சமூகப் பதிவு';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'விருப்பமானது';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'வரைவைச் சேமி';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'பதிவு நகலெடுக்கப்பட்டது';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'அனைத்துப் பதிவுகளையும் மறுசுழற்சி பெட்டிக்கு நகர்த்தவா?';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'உங்கள் கதையை எழுதத் தொடங்குங்கள்';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'உங்கள் தினசரி நினைவுகளைப் பதிவு செய்யுங்கள்.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'டைரி எழுது';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'எனது நினைவுகள்';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'டைரியை வரிசைப்படுத்து';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'உணர்வுகள் வாரியாக';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'நினைவுகளைத் தேடு...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'அனைத்தையும் தேர்ந்தெடு';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'தேர்ந்தெடுத்ததை அழி';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'பணி முடிந்தது!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'பணி முடியவில்லை';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'கிளிப்போர்டு புதுப்பிக்கப்பட்டது!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'கிளிப்போர்டில் சேமிக்கப்பட்டது: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'மேலோட்டம்';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'அரோரா';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'காஸ்மிக்';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'நெபுலா';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'ஸ்டார்லைட்';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'சோலார்';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'நோவா';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'ஏற்றப்படுகிறது...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'தரவுத்தளம் அமைக்கப்படுகிறது...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'அமைப்புச் சரிசெய்யப்படுகிறது...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'தயார்';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'உங்கள் சிறந்த உற்பத்தித் துணை';
 
   @override
-  String get done => 'Done';
+  String get done => 'முடிந்தது';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'புதிய குறிப்பு';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'நிறத்தை மாற்று';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'உள்ளடக்கத்தை நகலெடு';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'தலைப்பு (தேவைப்பட்டால்)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'PDF ஆக ஏற்றுமதி செய்';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'பணி முடிக்க வேண்டிய நேரம்';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'பணியை பெட்டிக்கு நகர்த்தவா?';
 
   @override
-  String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+  String get restoreTaskLater => 'இதை பின்னர் அமைப்புகளில் மீட்டெடுக்கலாம்.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'புதிய பணி';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'பணியைத் திருத்து';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'பின்செல்லு';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'முன்செல்லு';
 
   @override
-  String get category => 'Category';
+  String get category => 'வகை';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'உதாரணமாக: அலுவலகம், உடற்பயிற்சிக் கூடம்';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'என்ன செய்ய வேண்டும்?';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'பணி விவரங்களை உள்ளிடவும்...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'தேதியை நிர்ணயி';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'கடைசி தேதி';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'செலவுகள்';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return '$currency-ல் தேடு...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'வரிசைப்படுத்து & வடிகட்டு';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'இதன்படி வரிசைப்படுத்து';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'அதிகபட்சத் தொகை';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'குறைந்தபட்சத் தொகை';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'கூடுதல் வடிகட்டிகள்...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'செலவுகளை வடிகட்டு';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'பரிவர்த்தனை வகை';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'வகைகள்';
 
   @override
-  String get all => 'All';
+  String get all => 'அனைத்தும்';
 
   @override
-  String get income => 'Income';
+  String get income => 'வரவு';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'செலவு';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'மீட்டமை';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'செலுத்து';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'புதிய $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'தரவை ஏற்றுவதில் பிழை.\n\n$error';
   }
 
   @override
   String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+      'எதிர்காலத்தைக் கணிக்கச் சிறந்த வழி அதை உருவாக்குவதே.';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'செல்வம் என்பது அதிக உடைமைகளைக் கொண்டிருப்பதல்ல, குறைந்த ஆசைகளைக் கொண்டிருப்பதே.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'நேரமே மிகச்சிறந்த நாணயம்.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'வெற்றி முடிவல்ல, தோல்வி மரணமல்ல.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'தீர்வில் கவனம் செலுத்துங்கள், சிக்கலில் அல்ல.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'உங்கள் நெட்வொர்க் தான் உங்கள் மொத்த மதிப்பு.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'மகிழ்ச்சி';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'உற்சாகம்';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'சாதாரண நிலை';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'சோகம்';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'மன அழுத்தம்';
 
   @override
   String exportDate(String date) {
@@ -980,17 +979,17 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'உணர்வு: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'தலைப்பு: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nகுறிச்சொற்கள்: $tags';
   }
 
   @override
@@ -1003,371 +1002,370 @@ class AppLocalizationsTa extends AppLocalizations {
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'புதிய வரைபடம்';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'வரைபடங்களைத் தேடு...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'முடிவுகள் ஏதுமில்லை';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'பொருட்கள் ஏதுமில்லை';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'வரைபடங்கள் ஏதுமில்லை';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'உங்கள் படைப்பாற்றலை வெளிப்படுத்துங்கள்!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'புதிய கேன்வாஸ்';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'பெயர் மாற்று';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'கோப்புறையை அழி';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'வரைபடங்களை அழிக்கவா?';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'இந்தக் கோப்புறையிலுள்ள அனைத்தும் நிரந்தரமாக அழிக்கப்படும்.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'கோப்புறைப் பெயரை மாற்று';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'நிறத்தைத் தேர்ந்தெடு';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'கோப்புறையை அழிக்கவா?';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'கிளிப்களைத் தேடு...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'கிளிப்போர்டு காலியாக உள்ளது';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'சேர்க்கவும்';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'கிளிப்பின் நிறம்';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'புதிய கிளிப்';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'கிளிப்பைத் திருத்து';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'இதை பின்னர் மீட்டெடுக்கலாம்.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'வரவிருக்கும் நிகழ்வுகள்';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'தரவுப் பகிர்வு';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'பணி முன்னேற்றம்';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'புள்ளிவிவரங்கள்';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'பணி நிறைவு';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'இந்தத் தேதியில் பொருட்கள் ஏதுமில்லை';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'ஓய்வு நேரத்தை மகிழுங்கள்!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'இந்த நாளில் தேடு...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'நிதி';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'நிரந்தரமாக அழிக்கவா?';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return '$foldersCount கோப்புறைகள் மற்றும் $sketchesCount வரைபடங்களை நிரந்தரமாக அழிக்கும். இதை மாற்ற முடியாது.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'நிரந்தரமாக அழி';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count தேர்வு செய்யப்பட்டது';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes வரைபடங்கள் • $folders கோப்புறைகள்';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'பொருட்களை வரிசைப்படுத்து';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'பெயர் (A-Z)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'பெயர் (Z-A)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'கோப்புறையை உருவாக்கு';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'கோப்புறை பெயர்...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return '$count வரைபடங்களை அழிக்கவா? இதை மாற்ற முடியாது.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'வரைபடங்கள் ஏதுமில்லை';
 
   @override
-  String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+  String get noSketchesFoundSub => 'வேறு வார்த்தைகளில் தேடிப் பார்க்கவும்.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return '$folder-ல் தேடு...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count வரைபடங்கள்';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'வரைபடங்களை வரிசைப்படுத்து';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'நாட்காட்டி';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'தினசரி செயல்பாடு';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'பொருளை அழிக்கவா?';
 
   @override
   String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+      'இது பொருளை மறுசுழற்சி பெட்டிக்கு நகர்த்தும்.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'பெட்டிக்கு நகர்த்தவா?';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'இதை பின்னர் மீட்டெடுக்கலாம்.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count தேர்வு செய்யப்பட்டது';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'சமீபத்திய கிளிப்கள்';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'நகலெடுக்கப்பட்டது!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'வெற்று உரை நகலெடுக்கப்பட்டது';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'தீம்';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'சரியாக இப்போது';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return '$count நிமிடங்களுக்கு முன்';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return '$count மணிநேரங்களுக்கு முன்';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return '$count நாட்களுக்கு முன்';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'பணிகள் ஏதுமில்லை.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'பணிகளைத் தேடு...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'பணி நினைவூட்டல்';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'தலைப்பற்ற குறிப்பு';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'தினசரி பதிவு';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'கிளிப்போர்டு வரலாறு';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'இதை மீண்டும் கொண்டுவர முடியாது.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'பெட்டியைச் சுத்தப்படுத்தவா?';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return '$count பொருட்களும் நிரந்தரமாக அழிக்கப்படும்.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'பெட்டியைச் சுத்தப்படுத்து';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'மறுசுழற்சி பெட்டி காலியாக உள்ளது';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'அழிக்கப்பட்ட பொருட்கள் இங்கே தோன்றும்.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'காலி';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'சமீபத்திய';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'வகை: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'பொதுவான';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'பரிவர்த்தனையைச் சேமிக்க வேண்டுமா?';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'தலைப்பு மற்றும் தொகையை நிரப்பவும்';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'தவறான தொகை வடிவம்';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'பரிவர்த்தனையை பெட்டிக்கு நகர்த்தவா?';
 
   @override
-  String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+  String get restoreTransactionLater => 'இதை பின்னர் மீட்டெடுக்கலாம்.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'புதிய பரிவர்த்தனை';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'இது எதற்காக?';
 
   @override
-  String get description => 'Description';
+  String get description => 'விளக்கம்';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'தினசரி';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'வாராந்திர';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'மாதாந்திர';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'ஆண்டுவாரியாக';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'மொத்த வரவு';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'மொத்த செலவு';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'பகுப்பாய்வு';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'பரிவர்த்தனைகள்';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'இந்தக் காலத்தில் செலவுகள் ஏதுமில்லை.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'நிகர இருப்பு';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'முக்கிய வகைகள்';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'செலவுப் போக்கு';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'நுண்ணறிவுகள்';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'செலவுகள் ஏதும் பதிவு செய்யப்படவில்லை';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits =>
+      'உங்கள் செலவுப் பழக்கத்தை எளிதாகக் கண்காணிக்கவும்.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'செலவைச் சேர்';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'இந்தக் காலத்தில் தரவு ஏதுமில்லை';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'பட்ஜெட்';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'செலவிடப்பட்டது';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'வரம்பு';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'பட்ஜெட்டை விட அதிகம்!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return '$percent% மீதமுள்ளது';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'சேமிப்பு விகிதம்';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'ஆரோக்கிய மதிப்பெண்';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'இது உங்கள் சேமிப்பு விகிதத்தைப் பொறுத்தது.\n\n• > 50% சேமிப்பு = மிகச்சிறப்பு (100)\n• 0% சேமிப்பு = சராசரி (50)\n• செலவு > வரவு = மோசம் (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'சரி';
 
   @override
-  String get bulkImport => 'Bulk Import';
+  String get bulkImport => 'மொத்தமாக இறக்குமதி செய்';
 }
 
 /// The translations for Tamil, as used in India (`ta_IN`).
@@ -1375,969 +1373,968 @@ class AppLocalizationsTaIn extends AppLocalizationsTa {
   AppLocalizationsTaIn() : super('ta_IN');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'அமைப்புகள்';
 
   @override
-  String get language => 'Language';
+  String get language => 'மொழி';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'இயல்புநிலை';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'குறிப்புகள்';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'பணிகள்';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'செலவுகள்';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'டைரி';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'நாட்காட்டி';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'கிளிப்போர்டு';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'கேன்வாஸ்';
 
   @override
-  String get save => 'Save';
+  String get save => 'சேமி';
 
   @override
-  String get create => 'Create';
+  String get create => 'உருவாக்கு';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'ரத்துசெய்';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'அழி';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'திருத்து';
 
   @override
-  String get share => 'Share';
+  String get share => 'பகிர்';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'நகலெடு';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'சேமிக்கப்படாத மாற்றங்கள்';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'அழிப்பதை உறுதிப்படுத்து';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'நிராகரி';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'பதிவை உருவாக்கு';
 
   @override
-  String get post => 'Post';
+  String get post => 'பதிவு';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'பதிவேற்றப்படுகிறது';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'உங்கள் மனதில் உதிப்பது என்ன?';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'படங்களைத் தேர்ந்தெடு';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'வீடியோவைத் தேர்ந்தெடு';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'கேமரா';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'கேலரி';
 
   @override
-  String get search => 'Search';
+  String get search => 'தேடு';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'பணியை உள்ளிடவும்';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'பணியை அழி';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'பொருட்களைத் தேர்ந்தெடு';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'அனைத்தையும் அழி';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'பிழை: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'வரிசைப்படுத்துதல் \'அனைத்துப் பதிவுகள்\' என்பதில் மட்டுமே கிடைக்கும்';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'பதிவை அழி';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'பதிவு அழிக்கப்பட்டது';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'பிரீமியம் அம்சங்கள்';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'நாணயங்கள், விளம்பரங்கள் மற்றும் பிரீமியம் நிலையை நிர்வகிக்கவும்';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'தீம் முறை';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'நிறம்';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'பின்னணி வடிவமைப்பு';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'அறிவிப்புகள்';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'மறுசுழற்சி பெட்டி';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'தரவை ஏற்றுமதி செய்';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'தரவை இறக்குமதி செய்';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'செயலியை மதிப்பிடுக';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'கருத்தைப் பகிரவும்';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'தனியுரிமைக் கொள்கை';
 
   @override
-  String get version => 'Version';
+  String get version => 'பதிப்பு';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'பில்ட் எண்';
 
   @override
-  String get system => 'System';
+  String get system => 'சிஸ்டம்';
 
   @override
-  String get light => 'Light';
+  String get light => 'லைட்';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'டார்க்';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'பொருள் மீட்டெடுக்கப்பட்டது';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared =>
+      'மறுசுழற்சி பெட்டி வெற்றிகரமாக சுத்தப்படுத்தப்பட்டது';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'அனைத்துப் பதிவுகளும் அழிக்கப்பட்டன';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'புதிய பதிவு';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
+      'கிளிப்போர்டுக்கு நகலெடுக்கப்பட்டது (Facebook கொள்கை)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'TikTok பகிர்வுக்கு வீடியோ/படம் தேவை';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'பகிர்வதில் பிழை: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return '$platform ஸ்டோரியில் பகிர்';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return '$platform ஃபீடில் பகிர்';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'நிரந்தரமாக அன்லாக் செய்';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'போதுமான நாணயங்கள் இல்லை!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'நீங்கள் $amount நாணயங்களை வென்றீர்கள்!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'நகலெடுக்கப்பட்டது';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'தேதி மற்றும் நேரத்தைத் தேர்ந்தெடு';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'இந்தப் பதிவை உறுதிப்படியாக அழிக்க வேண்டுமா?';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'சமூகப் பதிவுகள்';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'நாணயங்களைப் பெற விளம்பரத்தைப் பாருங்கள்';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'பிரீமியம் அன்லாக் செய்யப்பட்டது';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'விளம்பரங்களை அகற்று';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'வரம்பற்ற கிளவுட் சேமிப்பு';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'குறிப்பை அழி';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'குறிப்பைப் பகிர்';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'குறிப்பைத் திருத்து';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'குறிப்புகளைத் தேடு...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'குறிப்புகள் ஏதும் இல்லை';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts =>
+      'உங்கள் எண்ணங்களை உடனுக்குடன் பதிவு செய்யுங்கள்.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'குறிப்பை உருவாக்கு';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'தனிப்பயன் வரிசை';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'புதியவை முதலில்';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'பழையவை முதலில்';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'தலைப்பு: A-Z';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'தலைப்பு: Z-A';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'அனைத்தையும் அழிக்க வேண்டுமா?';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin =>
+      'அனைத்துக் குறிப்புகளையும் மறுசுழற்சி பெட்டிக்கு நகர்த்த வேண்டுமா?';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'பெட்டிக்கு நகர்த்தவா?';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'இக்குறிப்பை பின்னர் மீட்டெடுக்கலாம்.';
 
   @override
-  String get move => 'Move';
+  String get move => 'நகர்த்து';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'எனது எண்ணங்கள்';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'தேர்வு செய்யப்பட்டது';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'உள்ளடக்கம் இல்லை';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'தலைப்பற்றது';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers =>
+      '10+ டைனமிக் வால்பேப்பர்களில் இருந்து தேர்வு செய்யவும்';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'தரவு காப்புப்பிரதி';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile =>
+      'உங்கள் தரவு அனைத்தையும் கொண்ட JSON கோப்பைச் சேமிக்கவா?';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'இப்போதே ஏற்றுமதி செய்';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'தரவை இறக்குமதி செய்';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'காப்புப்பிரதி கோப்பைத் தற்போதைய பொருட்களுடன் இணைக்கவா?';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'கோப்பைத் தேர்ந்தெடு';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'காப்புப்பிரதி வெற்றிகரமாகச் சேமிக்கப்பட்டது!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'ஏற்றுமதி தோல்வியடைந்தது.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count பொருட்கள் வெற்றிகரமாக மீட்டெடுக்கப்பட்டன!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'இறக்குமதி தோல்வியடைந்தது.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'விட்ஜெட் $widget முகப்புத் திரையில் சேர்க்கப்பட்டது!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'விட்ஜெட் கோரிக்கை அனுப்பப்பட்டது. முகப்புத் திரையைச் சரிபார்க்கவும்.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'விட்ஜெட்டைச் சேர்ப்பதில் தோல்வி';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'தானியங்கி சேமிப்பு இயக்கப்பட்டது.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'தானியங்கி சேமிப்பு முடக்கப்பட்டது.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'முகப்புத் திரை விட்ஜெட்கள்';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'அறிவிப்புகள்';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'தரவு மற்றும் காப்புப்பிரதி';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'கருத்து மற்றும் ஆதரவு';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'நன்றி';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'தனியுரிமை மற்றும் பராமரிப்பு';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'செயலி பற்றி';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'பிரீமியம்';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'தோற்றம்';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'கிளிப்போர்டு';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'உங்கள் அனுபவத்தைத் தனிப்பயனாக்குங்கள்';
 
   @override
   String get welcomeTitle => 'Welcome to CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'உங்கள் சிறந்த உற்பத்தித் துணை. உங்கள் நாளை நிர்வகிக்கத் தேவையான கருவிகளுடன் உங்களைத் தயார்படுத்துவோம்.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'ஸ்மார்ட் குறிப்புகள்';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'சிறந்த உரை வடிவமைப்புடன் எண்ணங்களை உடனுக்குடன் பதிவு செய்யுங்கள். உங்கள் சிந்தனைகளை ஒழுங்குபடுத்துங்கள்.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'பணி மேலாண்மை';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'உங்கள் வேலைகளில் கவனமாக இருங்கள். பணிப் பட்டியல்களை உருவாக்கி, குறிக்கோள்களை அடையுங்கள்.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'செலவு கண்காணிப்பு';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'நிதிப் பொறுப்பை ஏறுங்கள். உங்கள் வரவு செலவுகளை எளிதாகக் கண்காணித்து புரிந்துகொள்ளுங்கள்.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'தனிப்பட்ட டைரி';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'உங்கள் நாளை நினைவுறுத்துங்கள். நினைவுகள், உணர்வுகள் மற்றும் அனுபவங்களை எழுத ஒரு தனிப்பட்ட இடம்.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'நாட்காட்டி மற்றும் நிகழ்வுகள்';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'எந்த தருணத்தையும் தவறவிடாதீர்கள். உங்கள் நேர திட்டமிடலை ஒழுங்குபடுத்திக் கொள்ளுங்கள்.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'கிளிப்போர்டு மேலாளர்';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'ஒருமுறை நகலெடுத்து எங்கும் ஒட்டவும். உங்கள் கிளிப்போர்டு வரலாற்றை எப்போது வேண்டுமானாலும் அணுகலாம்.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'படைப்புத் திறன்';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'உங்கள் படைப்பாற்றலை வெளிப்படுத்துங்கள். டிஜிட்டல் கேன்வாஸில் உங்கள் யோசனைகளை வரையுங்கள்.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'குறிப்புகளை உருவாக்கி நிர்வகிக்கவும்';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'பணிகளைக் கண்காணிக்கவும்';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'செலவுகளைக் கண்காணிக்கவும்';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'சிந்தனைகளை எழுதவும்';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'திட்டங்களை ஒழுங்குபடுத்தவும்';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'கிளிப்போர்டு வரலாற்றை அணுகவும்';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'சுதந்திரமாக வரையவும்';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'சமூகப் பதிவு';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'சிறந்த சமூக ஊடக உள்ளடக்கங்களை உருவாக்குங்கள்';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'உங்களுக்கான தீம் தேர்வு செய்யுங்கள்';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme =>
+      'புதிய தீம் நிறத்தில் உங்களை வெளிப்படுத்துங்கள்!';
 
   @override
-  String get level => 'Level';
+  String get level => 'நிலை';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'அடுத்த நிலைக்குத் தேவையான XP';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'வரவிருக்கும் நிகழ்வுகளைச் சரிபார்க்கவும்';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'புதிய வரைபடத்தைத் தொடங்கவும்';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'இந்த மாதம் பரிவர்த்தனைகள் ஏதுமில்லை';
 
   @override
   String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
+    return 'இந்த மாதம் $count பரிவர்த்தனைகள்';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'தானியங்கி கிளிப்போர்டு சேமிப்பு';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'நகலெடுத்தவற்றைத் தானாகவே சேமிக்கும்';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'அனுமதி நிரந்தரமாக மறுக்கப்பட்டது. அமைப்புகளில் மாற்றவும்.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'அறிவிப்புகள் இயக்கப்பட்டது!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'அமைப்புகளுக்குத் திருப்பிவிடப்படுகிறது...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'பிரீமியம் அணுகல்';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'பிரீமியம் செயல்படும் காலம்';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'அனைத்து அம்சங்களையும் அன்லாக் செய்';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'பிரீமியம் வாங்கு (7 நாட்கள்)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'விலை: $cost நாணயங்கள்';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => '7 நாட்களுக்கு பிரீமியம் இயக்கப்பட்டது!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'பிரீமியம் செயலில் உள்ளது';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'முடிவடையும் காலம்:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'தற்காலிக அணுகல்';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'டைரி மற்றும் வெளிப்பாடு';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'கலைநயமிக்க வடிவமைப்புகள்';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      '10+ தனித்துவமான டைரி கார்டு தீம்களைப் பெறுங்கள்';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'பிரீமியம் தளவமைப்புகள்';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc => 'நினைவுகளைப் பார்க்கச் சிறந்த வழிகள்';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'நாட்காட்டி மற்றும் கருவிகள்';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'முழுமையான நாட்காட்டி';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'முழுமையான நிகழ்வு மேலாண்மை அமைப்பு';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc =>
+      'பின்னணியில் கிளிப்போர்டு வரலாற்றைச் சேமித்தல்';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'புரோ விட்ஜெட்கள்';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'முகப்புத் திரையிலேயே அனைத்து அம்சங்களும்';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'தரவு மற்றும் ஏற்றுமதி';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'மேம்பட்ட காப்புப்பிரதி';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'பாதுகாப்பான இறக்குமதி/ஏற்றுமதி';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'PDF ஏற்றுமதி';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'குறிப்புகளை PDF ஆக ஏற்றுமதி செய்';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'அச்சடிக்கத் தயார்';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'நேரடி அச்சிடும் வசதி';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'மேம்பட்ட உரை திருத்தி';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'மேம்பட்ட தேடல்';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'உரைக்குள் தேடி மாற்றும் வசதி';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'ரிச் மீடியா';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'படங்கள், வீடியோக்கள் மற்றும் இணைப்புகளைச் சேர்';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'எடிட்டர் ஸ்டைலிங்';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'தனிப்பயன் உரை மற்றும் பின்னணிகள்';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'இருப்பு';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'விளம்பரம் ஏற்றப்படுகிறது...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'விளம்பரத்தைப் பார் (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'விளம்பரத்தை ஏற்று';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'தரவை JSON கோப்பாகச் சேமி';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'காப்புப்பிரதியை இதில் இணைக்கவும்';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied => 'அறிவிப்பு அனுமதி மறுக்கப்பட்டது.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'புதிய பணியைத் தட்டச்சு செய்க...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'பணியைச் சேர்';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'முடிக்கப்பட்டது';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'அற்புதம்!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return '$amount XP பெற்றுள்ளீர்கள்! அடுத்த பணி: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'பணி முடிந்தது! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'அனைத்துப் பணிகளையும் மறுசுழற்சி பெட்டிக்கு நகர்த்தவா?';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'அனைத்துப் பதிவுகளையும் அழி';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'நிச்சயமாக அனைத்துச் சமூகப் பதிவுகளையும் அழிக்க வேண்டுமா? இதை மாற்ற முடியாது.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'அனைத்துப் பதிவுகள்';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'விருப்பமானவை';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'வரைவுகள்';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'விருப்பமானவை எதுவும் இல்லை';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'வரைவுகள் எதுவும் இல்லை';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'சமூகப் பயணத்தைத் தொடங்குங்கள்!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'வரைவு';
 
   @override
   String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
+    return '$count இணைப்புகள்';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent => 'பகிர உள்ளடக்கத்தைச் சேர்க்கவும்';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'பிழை: $path-ல் கோப்பு இல்லை';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'Facebook செயலியைச் சரிபார்க்கவும்';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'சிஸ்டம் ஷேர்';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'சமூகப் பதிவு';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'விருப்பமானது';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'வரைவைச் சேமி';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'பதிவு நகலெடுக்கப்பட்டது';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'அனைத்துப் பதிவுகளையும் மறுசுழற்சி பெட்டிக்கு நகர்த்தவா?';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'உங்கள் கதையை எழுதத் தொடங்குங்கள்';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'உங்கள் தினசரி நினைவுகளைப் பதிவு செய்யுங்கள்.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'டைரி எழுது';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'எனது நினைவுகள்';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'டைரியை வரிசைப்படுத்து';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'உணர்வுகள் வாரியாக';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'நினைவுகளைத் தேடு...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'அனைத்தையும் தேர்ந்தெடு';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'தேர்ந்தெடுத்ததை அழி';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'பணி முடிந்தது!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'பணி முடியவில்லை';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'கிளிப்போர்டு புதுப்பிக்கப்பட்டது!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'கிளிப்போர்டில் சேமிக்கப்பட்டது: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'மேலோட்டம்';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'அரோரா';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'காஸ்மிக்';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'நெபுலா';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'ஸ்டார்லைட்';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'சோலார்';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'நோவா';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'ஏற்றப்படுகிறது...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'தரவுத்தளம் அமைக்கப்படுகிறது...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'அமைப்புச் சரிசெய்யப்படுகிறது...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'தயார்';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'உங்கள் சிறந்த உற்பத்தித் துணை';
 
   @override
-  String get done => 'Done';
+  String get done => 'முடிந்தது';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'புதிய குறிப்பு';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'நிறத்தை மாற்று';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'உள்ளடக்கத்தை நகலெடு';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'தலைப்பு (தேவைப்பட்டால்)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'PDF ஆக ஏற்றுமதி செய்';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'பணி முடிக்க வேண்டிய நேரம்';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'பணியை பெட்டிக்கு நகர்த்தவா?';
 
   @override
-  String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+  String get restoreTaskLater => 'இதை பின்னர் அமைப்புகளில் மீட்டெடுக்கலாம்.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'புதிய பணி';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'பணியைத் திருத்து';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'பின்செல்லு';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'முன்செல்லு';
 
   @override
-  String get category => 'Category';
+  String get category => 'வகை';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'உதாரணமாக: அலுவலகம், உடற்பயிற்சிக் கூடம்';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'என்ன செய்ய வேண்டும்?';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'பணி விவரங்களை உள்ளிடவும்...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'தேதியை நிர்ணயி';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'கடைசி தேதி';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'செலவுகள்';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return '$currency-ல் தேடு...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'வரிசைப்படுத்து & வடிகட்டு';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'இதன்படி வரிசைப்படுத்து';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'அதிகபட்சத் தொகை';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'குறைந்தபட்சத் தொகை';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'கூடுதல் வடிகட்டிகள்...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'செலவுகளை வடிகட்டு';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'பரிவர்த்தனை வகை';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'வகைகள்';
 
   @override
-  String get all => 'All';
+  String get all => 'அனைத்தும்';
 
   @override
-  String get income => 'Income';
+  String get income => 'வரவு';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'செலவு';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'மீட்டமை';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'செலுத்து';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'புதிய $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'தரவை ஏற்றுவதில் பிழை.\n\n$error';
   }
 
   @override
   String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+      'எதிர்காலத்தைக் கணிக்கச் சிறந்த வழி அதை உருவாக்குவதே.';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'செல்வம் என்பது அதிக உடைமைகளைக் கொண்டிருப்பதல்ல, குறைந்த ஆசைகளைக் கொண்டிருப்பதே.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'நேரமே மிகச்சிறந்த நாணயம்.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'வெற்றி முடிவல்ல, தோல்வி மரணமல்ல.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'தீர்வில் கவனம் செலுத்துங்கள், சிக்கலில் அல்ல.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'உங்கள் நெட்வொர்க் தான் உங்கள் மொத்த மதிப்பு.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'மகிழ்ச்சி';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'உற்சாகம்';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'சாதாரண நிலை';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'சோகம்';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'மன அழுத்தம்';
 
   @override
   String exportDate(String date) {
@@ -2346,17 +2343,17 @@ class AppLocalizationsTaIn extends AppLocalizationsTa {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'உணர்வு: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'தலைப்பு: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nகுறிச்சொற்கள்: $tags';
   }
 
   @override
@@ -2369,366 +2366,368 @@ class AppLocalizationsTaIn extends AppLocalizationsTa {
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'புதிய வரைபடம்';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'வரைபடங்களைத் தேடு...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'முடிவுகள் ஏதுமில்லை';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'பொருட்கள் ஏதுமில்லை';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'வரைபடங்கள் ஏதுமில்லை';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'உங்கள் படைப்பாற்றலை வெளிப்படுத்துங்கள்!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'புதிய கேன்வாஸ்';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'பெயர் மாற்று';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'கோப்புறையை அழி';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'வரைபடங்களை அழிக்கவா?';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'இந்தக் கோப்புறையிலுள்ள அனைத்தும் நிரந்தரமாக அழிக்கப்படும்.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'கோப்புறைப் பெயரை மாற்று';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'நிறத்தைத் தேர்ந்தெடு';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'கோப்புறையை அழிக்கவா?';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'கிளிப்களைத் தேடு...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'கிளிப்போர்டு காலியாக உள்ளது';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'சேர்க்கவும்';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'கிளிப்பின் நிறம்';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'புதிய கிளிப்';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'கிளிப்பைத் திருத்து';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'இதை பின்னர் மீட்டெடுக்கலாம்.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'வரவிருக்கும் நிகழ்வுகள்';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'தரவுப் பகிர்வு';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'பணி முன்னேற்றம்';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'புள்ளிவிவரங்கள்';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'பணி நிறைவு';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'இந்தத் தேதியில் பொருட்கள் ஏதுமில்லை';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'ஓய்வு நேரத்தை மகிழுங்கள்!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'இந்த நாளில் தேடு...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'நிதி';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'நிரந்தரமாக அழிக்கவா?';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return '$foldersCount கோப்புறைகள் மற்றும் $sketchesCount வரைபடங்களை நிரந்தரமாக அழிக்கும். இதை மாற்ற முடியாது.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'நிரந்தரமாக அழி';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count தேர்வு செய்யப்பட்டது';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes வரைபடங்கள் • $folders கோப்புறைகள்';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'பொருட்களை வரிசைப்படுத்து';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'பெயர் (A-Z)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'பெயர் (Z-A)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'கோப்புறையை உருவாக்கு';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'கோப்புறை பெயர்...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return '$count வரைபடங்களை அழிக்கவா? இதை மாற்ற முடியாது.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'வரைபடங்கள் ஏதுமில்லை';
 
   @override
-  String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+  String get noSketchesFoundSub => 'வேறு வார்த்தைகளில் தேடிப் பார்க்கவும்.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return '$folder-ல் தேடு...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count வரைபடங்கள்';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'வரைபடங்களை வரிசைப்படுத்து';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'நாட்காட்டி';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'தினசரி செயல்பாடு';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'பொருளை அழிக்கவா?';
 
   @override
   String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+      'இது பொருளை மறுசுழற்சி பெட்டிக்கு நகர்த்தும்.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'பெட்டிக்கு நகர்த்தவா?';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'இதை பின்னர் மீட்டெடுக்கலாம்.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count தேர்வு செய்யப்பட்டது';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'சமீபத்திய கிளிப்கள்';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'நகலெடுக்கப்பட்டது!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'வெற்று உரை நகலெடுக்கப்பட்டது';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'தீம்';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'சரியாக இப்போது';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return '$count நிமிடங்களுக்கு முன்';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return '$count மணிநேரங்களுக்கு முன்';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return '$count நாட்களுக்கு முன்';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'பணிகள் ஏதுமில்லை.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'பணிகளைத் தேடு...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'பணி நினைவூட்டல்';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'தலைப்பற்ற குறிப்பு';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'தினசரி பதிவு';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'கிளிப்போர்டு வரலாறு';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'இதை மீண்டும் கொண்டுவர முடியாது.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'பெட்டியைச் சுத்தப்படுத்தவா?';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return '$count பொருட்களும் நிரந்தரமாக அழிக்கப்படும்.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'பெட்டியைச் சுத்தப்படுத்து';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'மறுசுழற்சி பெட்டி காலியாக உள்ளது';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'அழிக்கப்பட்ட பொருட்கள் இங்கே தோன்றும்.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'காலி';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'சமீபத்திய';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'வகை: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'பொதுவான';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'பரிவர்த்தனையைச் சேமிக்க வேண்டுமா?';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'தலைப்பு மற்றும் தொகையை நிரப்பவும்';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'தவறான தொகை வடிவம்';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'பரிவர்த்தனையை பெட்டிக்கு நகர்த்தவா?';
 
   @override
-  String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+  String get restoreTransactionLater => 'இதை பின்னர் மீட்டெடுக்கலாம்.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'புதிய பரிவர்த்தனை';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'இது எதற்காக?';
 
   @override
-  String get description => 'Description';
+  String get description => 'விளக்கம்';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'தினசரி';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'வாராந்திர';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'மாதாந்திர';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'ஆண்டுவாரியாக';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'மொத்த வரவு';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'மொத்த செலவு';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'பகுப்பாய்வு';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'பரிவர்த்தனைகள்';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'இந்தக் காலத்தில் செலவுகள் ஏதுமில்லை.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'நிகர இருப்பு';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'முக்கிய வகைகள்';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'செலவுப் போக்கு';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'நுண்ணறிவுகள்';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'செலவுகள் ஏதும் பதிவு செய்யப்படவில்லை';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits =>
+      'உங்கள் செலவுப் பழக்கத்தை எளிதாகக் கண்காணிக்கவும்.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'செலவைச் சேர்';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'இந்தக் காலத்தில் தரவு ஏதுமில்லை';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'பட்ஜெட்';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'செலவிடப்பட்டது';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'வரம்பு';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'பட்ஜெட்டை விட அதிகம்!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return '$percent% மீதமுள்ளது';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'சேமிப்பு விகிதம்';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'ஆரோக்கிய மதிப்பெண்';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'இது உங்கள் சேமிப்பு விகிதத்தைப் பொறுத்தது.\n\n• > 50% சேமிப்பு = மிகச்சிறப்பு (100)\n• 0% சேமிப்பு = சராசரி (50)\n• செலவு > வரவு = மோசம் (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'சரி';
+
+  @override
+  String get bulkImport => 'மொத்தமாக இறக்குமதி செய்';
 }

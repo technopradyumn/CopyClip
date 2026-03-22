@@ -9,786 +9,790 @@ class AppLocalizationsHy extends AppLocalizations {
   AppLocalizationsHy([String locale = 'hy']) : super(locale);
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Կարգավորումներ';
 
   @override
-  String get language => 'Language';
+  String get language => 'Լեզու';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'Համակարգային լռելյայն';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'Նշումներ';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'Անելիքներ';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'Ծախսեր';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'Օրագիր';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'Օրացույց';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'Բուֆեր';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'Կտավ';
 
   @override
-  String get save => 'Save';
+  String get save => 'Պահպանել';
 
   @override
-  String get create => 'Create';
+  String get create => 'Ստեղծել';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Չեղարկել';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Ջնջել';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'Խմբագրել';
 
   @override
-  String get share => 'Share';
+  String get share => 'Կիսվել';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'Պատճենել';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'Չպահպանված փոփոխություններ';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'Հաստատել ջնջումը';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'Չեղարկել';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'Ստեղծել հրապարակում';
 
   @override
-  String get post => 'Post';
+  String get post => 'Հրապարակել';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'Հրապարակումը՝';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'Ի՞նչ կա ձեր մտքում:';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'Ընտրել նկարներ';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'Ընտրել տեսանյութ';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'Տեսախցիկ';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'Պատկերասրահ';
 
   @override
-  String get search => 'Search';
+  String get search => 'Որոնել';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'Մուտքագրեք առաջադրանքը';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'Ջնջել առաջադրանքը';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'Ընտրել տարրեր';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'Ջնջել բոլորը';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'Սխալ՝ $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'Դասավորումը հասանելի է միայն «Բոլոր հրապարակումներում»';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'Ջնջել հրապարակումը';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'Հրապարակումը ջնջված է';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'Պրեմիում հնարավորություններ';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'Կառավարել մետաղադրամները, գովազդը և պրեմիում կարգավիճակը';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'Թեմայի ռեժիմ';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'Շեշտադրման գույն';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'Ֆոնի դիզայն';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'Push ծանուցումներ';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'Աղբաման';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'Արտահանել տվյալները';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'Ներմուծել տվյալները';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'Գնահատել հավելվածը';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'Ուղարկել հետադարձ կապ';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'Գաղտնիության քաղաքականություն';
 
   @override
-  String get version => 'Version';
+  String get version => 'Տարբերակ';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'Build համարը';
 
   @override
-  String get system => 'System';
+  String get system => 'Համակարգային';
 
   @override
-  String get light => 'Light';
+  String get light => 'Լուսավոր';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Մուգ';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'Տարրը վերականգնված է';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'Աղբամանը հաջողությամբ դատարկվեց';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'Բոլոր հրապարակումները ջնջված են';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'Նոր հրապարակում';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
+      'Տեքստը պատճենված է բուֆերում (Facebook-ի քաղաքականություն)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'TikTok-ով կիսվելու համար անհրաժեշտ է տեսանյութ/նկար';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'Կիսվելու սխալ՝ $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'Կիսվել $platform Story-ում';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'Կիսվել $platform Feed-ում';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'Ապակողպել ընդմիշտ';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'Բավարար մետաղադրամներ չկան:';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'Դուք վաստակեցիք $amount մետաղադրամ:';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'Բովանդակությունը պատճենված է';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'Ընտրել ամսաթիվը և ժամը';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'Վստա՞հ եք, որ ցանկանում եք ջնջել այս հրապարակումը:';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'Սոցիալական հրապարակումներ';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins =>
+      'Դիտեք գովազդ մետաղադրամներ վաստակելու համար';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'Պրեմիումն ապակողպված է';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'Հեռացնել գովազդը';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'Անսահմանափակ ամպային պահեստ';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'Ջնջել նշումը';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'Կիսվել նշումով';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'Խմբագրել նշումը';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'Որոնել նշումներ...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'Նշումներ չեն գտնվել';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'Ակնթարթորեն գրանցեք ձեր մտքերը:';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'Ստեղծել նշում';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'Անհատական կարգ';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'Նորերը սկզբում';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'Հիները սկզբում';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'Վերնագիր՝ Ա-Ֆ';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'Վերնագիր՝ Ֆ-Ա';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'Ջնջե՞լ բոլորը';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'Տեղափոխե՞լ բոլոր նշումները աղբաման:';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'Տեղափոխե՞լ աղբաման:';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater =>
+      'Դուք կարող եք վերականգնել այս նշումը ավելի ուշ:';
 
   @override
-  String get move => 'Move';
+  String get move => 'Տեղափոխել';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'Իմ մտքերը';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'Ընտրված է';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'Բովանդակություն չկա';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'Անվերնագիր';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'Ընտրեք 10+ դինամիկ պաստառներից';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'Տվյալների պահպանում';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile =>
+      'Պահպանե՞լ JSON ֆայլը, որը պարունակում է ձեր բոլոր տվյալները:';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'Արտահանել հիմա';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'Ներմուծել տվյալները';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'Միավորե՞լ պահուստային ֆայլը ձեր ընթացիկ տարրերի հետ:';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'Ընտրել ֆայլ';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'Պահուստային պատճենը հաջողությամբ պահպանվեց:';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'Արտահանումը ձախողվեց:';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count տարր հաջողությամբ վերականգնվեց:';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'Ներմուծումը ձախողվեց:';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'Վիդջեթը ավելացված է հիմնական էկրանին:';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'Վիդջեթի հարցումն ուղարկված է: Խնդրում ենք ստուգել ձեր հիմնական էկրանը:';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'Չհաջողվեց ավելացնել վիդջեթը';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'Ավտոմատ պահպանումը միացված է:';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'Ավտոմատ պահպանումը անջատված է:';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'Հիմնական էկրանի վիդջեթներ';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'Ծանուցումներ';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'Տվյալներ և Պահուստավորում';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'Հետադարձ կապ և Աջակցություն';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'Հեղինակներ';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'Գաղտնիություն և Սպասարկում';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'Մասին';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'Պրեմիում';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'Արտաքին տեսք';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'Բուֆեր';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'Անհատականացրեք ձեր փորձը';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'Բարի գալուստ CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'Ձեր լավագույն արտադրողականության ուղեկիցը: Եկեք կարգավորենք հզոր գործիքներ՝ ձեր օրը կառավարելու համար:';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'Խելացի նշումներ';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'Ակնթարթորեն գրանցեք գաղափարները տեքստի հարուստ ձևաչափմամբ: Կազմակերպեք ձեր մտքերը և երբեք բաց մի թողեք հիանալի գաղափար:';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'Առաջադրանքների կառավարում';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'Մնացեք խաղի մեջ: Ստեղծեք անելիքների ցուցակներ, սահմանեք առաջնահերթություններ և հասեք ձեր նպատակներին քայլ առ քայլ:';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'Ծախսերի հետևում';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'Վերահսկեք ձեր ֆինանսները: Հեշտությամբ հետևեք եկամուտներին և ծախսերին՝ ձեր ծախսային սովորությունները հասկանալու համար:';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'Անձնական օրագիր';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'Մտորեք ձեր օրվա մասին: Մասնավոր տարածք ձեր հիշողությունները, զգացմունքները և ամենօրյա փորձառությունները գրի առնելու համար:';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'Օրացույց և Իրադարձություններ';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'Երբեք բաց մի թողեք ոչ մի պահ: Կազմակերպեք ձեր ժամանակացույցը և հետևեք կարևոր գալիք իրադարձություններին:';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'Բուֆերի կառավարիչ';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'Պատճենեք մեկ անգամ, տեղադրեք ցանկացած տեղ: Մուտք գործեք ձեր բուֆերի պատմություն՝ նախկինում պատճենված հատվածները վերականգնելու համար:';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'Ստեղծագործական կտավ';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'Սանձազերծեք ձեր ստեղծագործական ունակությունները: Նկարեք, էսքիզներ արեք և վիզուալացրեք ձեր գաղափարները թվային կտավի վրա:';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'Ստեղծեք և կառավարեք ձեր նշումները';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'Հետևեք ձեր առաջադրանքներին';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'Վերահսկեք ձեր ծախսերը';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'Գրի առեք ձեր մտքերը';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'Կազմակերպեք ձեր ժամանակացույցը';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'Մուտք գործեք բուֆերի պատմություն';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'Նկարեք և էսքիզներ արեք ազատորեն';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'Սոցիալական հրապարակում';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'Ստեղծեք գրավիչ սոցիալական մեդիա բովանդակություն';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'Ընտրեք ձեր աուրան';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'Արտահայտվեք թեմայի նոր գույնով:';
 
   @override
-  String get level => 'Level';
+  String get level => 'Մակարդակ';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP մինչև հաջորդ մակարդակ';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'Ստուգել գալիք իրադարձությունները';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'Սկսել նոր էսքիզ';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'Այս ամիս գործարքներ չկան';
 
   @override
   String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
+    return '$count գործարք այս ամիս';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'Բուֆերի ավտոմատ պահպանում';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc =>
+      'Ավտոմատ կերպով պահպանել պատճենված տարրերը';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'Թույլտվությունը վերջնականապես մերժված է: Խնդրում ենք միացնել Կարգավորումներում:';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'Ծանուցումները միացված են:';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'Վերահասցեավորում դեպի կարգավորումներ՝ ծանուցումներն անջատելու համար...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'Պրեմիում մուցք';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'Պրեմիումը ակտիվ է մինչև';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'Ապակողպել բոլոր հնարավորությունները';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'Գնել Պրեմիում (7 օր)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'Արժեքը՝ $cost մետաղադրամ';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'Պրեմիումը ակտիվացված է 7 օրով:';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'Պրեմիումը ակտիվ է';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'Լրանում է՝';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'Ժամանակավոր մուտք';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'Օրագիր և արտահայտում';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'Գեղարվեստական դիզայն';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'Ապակողպեք 10+ եզակի օրագրի քարտերի թեմաներ';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'Պրեմիում դասավորություններ';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc =>
+      'Ձեր հիշողությունները դիտելու բացառիկ եղանակներ';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'Օրացույց և Գործիքներ';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'Լրիվ օրացույց';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc =>
+      'Իրադարձությունների կառավարման ամբողջական համակարգ';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'Բուֆերի պատմության ֆոնային ձայնագրում';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'Pro վիդջեթներ';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc =>
+      'Բոլոր հնարավորությունները հասանելի են ձեր հիմնական էկրանին';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'Տվյալներ և Արտահանում';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'Ընդլայնված պահուստավորում';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc =>
+      'Բոլոր տվյալների անվտանգ ներմուծում/արտահանում';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'PDF արտահանում';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'Արտահանել նշումներն ու օրագրերը PDF ձևաչափով';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'Պատրաստ է տպագրության';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'Ուղղակի տպագրության աջակցություն';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'Հարուստ տեքստային խմբագիր';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'Ընդլայնված որոնում';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'Որոնել և փոխարինել ձեր տեքստում';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'Հարուստ մեդիա';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'Տեղադրել նկարներ, տեսանյութեր և հղումներ';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'Խմբագրի ոճավորում';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'Անհատական տեքստի և խմբագրի ֆոն';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'Հաշվեկշիռ';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'Գովազդը բեռնվում է...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'Դիտել գովազդ (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'Բեռնել գովազդը';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'Պահպանել ձեր տվյալների JSON ֆայլը';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'Միավորել պահուստային ֆայլը CopyClip-ի հետ';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied =>
+      'Ծանուցումների թույլտվությունը մերժված է:';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'Գրեք նոր առաջադրանք...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'Ավելացնել առաջադրանք';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'Ավարտված է';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'Հիանալի աշխատանք:';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'Դուք վաստակեցիք $amount XP: Հաջորդ առաջադրանքը՝ $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'Առաջադրանքն ավարտված է: +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'Տեղափոխե՞լ բոլոր ակտիվ առաջադրանքները աղբաման:';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'Ջնջել բոլոր հրապարակումները';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'Վստա՞հ եք, որ ցանկանում եք ջնջել ԲՈԼՈՐ սոցիալական հրապարակումները: Սա հնարավոր չէ չեղարկել:';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'Բոլոր հրապարակումները';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'Ֆավորիտներ';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'Սևագրեր';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'Դեռ ֆավորիտներ չկան';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'Դեռ սևագրեր չկան';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'Սկսեք ձեր սոցիալական ճանապարհորդությունը:';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'Սևագիր';
 
   @override
   String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
+    return '$count կցորդ';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent =>
+      'Խնդրում ենք ավելացնել որոշակի բովանդակություն կամ մեդիա կիսվելու համար';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'Սխալ՝ ֆայլը չի գտնվել $path հասցեում';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'Ստուգեք Facebook հավելվածը';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'Համակարգային կիսվել';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'Սոցիալական հրապարակում';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'Ֆավորիտ';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'Պահպանել սևագիրը';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'Գրառումը պատճենված է';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'Տեղափոխե՞լ բոլոր ակտիվ գրառումները աղբաման:';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'Սկսեք գրել ձեր պատմությունը';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories =>
+      'Գրանցեք ձեր ամենօրյա հիշողություններն ու զգացմունքները:';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'Գրել օրագիր';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'Իմ հիշողությունները';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'Տեսակավորել օրագիրը';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'Ըստ տրամադրության';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'Որոնել հիշողություններ...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'Ընտրել բոլորը';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'Ջնջել ընտրվածները';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'Առաջադրանքն ավարտված է:';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'Առաջադրանքը թերի է';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'Բուֆերը թարմացված է:';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'Բուֆերը պահպանված է՝ $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'Ակնարկ';
 
   @override
   String get colorAurora => 'Aurora';
@@ -809,169 +813,169 @@ class AppLocalizationsHy extends AppLocalizations {
   String get colorNova => 'Nova';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'Բեռնում...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'Տվյալների բազայի կարգավորում...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'Համակարգի կոնֆիգուրացում...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'Պատրաստ է';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'Ձեր արտադրողականության ուղեկիցը';
 
   @override
-  String get done => 'Done';
+  String get done => 'Պատրաստ է';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'Նոր նշում';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'Փոխել գույնը';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'Պատճենել բովանդակությունը';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'Վերնագիր (ըստ ցանկության)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'Արտահանել որպես PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'Առաջադրանքն այս պահին է';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'Տեղափոխե՞լ առաջադրանքը աղբաման:';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'Դուք կարող եք վերականգնել այս առաջադրանքը ավելի ուշ կարգավորումներից:';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'Նոր առաջադրանք';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'Խմբագրել առաջադրանքը';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'Հետադարձել';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'Կրկնել';
 
   @override
-  String get category => 'Category';
+  String get category => 'Կատեգորիա';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'օրինակ՝ Աշխատանք, Մարզասրահ';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'Ի՞նչ է պետք անել:';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'Մուտքագրեք առաջադրանքի մանրամասները...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'Սահմանել վերջնաժամկետ';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'Վերջնաժամկետ';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'Ծախսեր';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'Որոնել $currency-ով...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'Տեսակավորել և Ֆիլտրել';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'ՏԵՍԱԿԱՎՈՐԵԼ ԸՍՏ';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'Ամենաբարձր գումարը';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'Ամենացածր գումարը';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'Այլ ֆիլտրեր...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'Ֆիլտրել ծախսերը';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'Գործարքի տեսակ';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'Կատեգորիաներ';
 
   @override
-  String get all => 'All';
+  String get all => 'Բոլորը';
 
   @override
-  String get income => 'Income';
+  String get income => 'Եկամուտ';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'Ծախս';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'Վերակայել';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'Կիրառել';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'Նոր $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'Տվյալների բեռնման սխալ:\n\n$error';
   }
 
   @override
   String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+      'Ապագան կանխատեսելու լավագույն միջոցը այն ստեղծելն է:';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'Հարստությունը մեծ ունեցվածք ունենալու մեջ չէ, այլ քիչ կարիքներ ունենալու:';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'Ժամանակը գերագույն արժույթն է:';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'Հաջողությունը վերջնական չէ, ձախողումը մահացու չէ:';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'Կենտրոնացեք լուծման վրա, այլ ոչ թե խնդրի:';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'Ձեր կապերը ձեր զուտ արժեքն են:';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'Ուրախ';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'Ոգևորված';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'Չեզոք';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'Տխուր';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'Սթրեսային';
 
   @override
   String exportDate(String date) {
@@ -980,17 +984,17 @@ class AppLocalizationsHy extends AppLocalizations {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'Տրամադրություն՝ $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'ՎԵՐՆԱԳԻՐ՝ $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nՊիտակներ՝ $tags';
   }
 
   @override
@@ -1003,368 +1007,372 @@ class AppLocalizationsHy extends AppLocalizations {
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'Նոր էսքիզ';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'Որոնել էսքիզներ և թղթապանակներ...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'Արդյունքներ չեն գտնվել';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'Տարրեր չկան';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'Դեռ նկարներ չկան';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro =>
+      'Սանձազերծեք ձեր ստեղծագործական ունակությունները կտավի վրա:';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'Նոր կտավ';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'Վերանվանել';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'Ջնջել թղթապանակը';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'Ջնջե՞լ էսքիզները';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'Այս թղթապանակի բոլոր էսքիզները վերջնականապես կջնջվեն:';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'Վերանվանել թղթապանակը';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'Ընտրել գույնը';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'Ջնջե՞լ թղթապանակը';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'Որոնել հատվածներ...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'Բուֆերը դատարկ է';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'Ավելացնել տարր';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'Հատվածի գույնը';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'Նոր հատված';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'Խմբագրել հատվածը';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater =>
+      'Դուք կարող եք վերականգնել այս հատվածը ավելի ուշ:';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'Գալիք իրադարձություններ';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'ՏՎՅԱԼՆԵՐԻ ԲԱՇԽՈՒՄ';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'ԱՌԱՋԱԴՐԱՆՔՆԵՐԻ ԸՆԹԱՑՔԸ';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'ԱՐԱԳ ՎԻՃԱԿԱԳՐՈՒԹՅՈՒՆ';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'Առաջադրանքների կատարում';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'Այս ամսաթվի համար տարրեր չկան';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'Վայելեք ձեր ազատ ժամանակը:';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'Որոնել այս օրվա մեջ...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'Ֆինանսներ';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'Ջնջե՞լ վերջնականապես';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'Սա վերջնականապես կջնջի $foldersCount թղթապանակ (և դրանց էսքիզները) և $sketchesCount այլ էսքիզներ:\n\nՍա հնարավոր չէ չեղարկել:';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'Ջնջել ընդմիշտ';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count ընտրված է';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes էսքիզ • $folders թղթապանակ';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'Տեսակավորել տարրերը';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'Անուն (Ա-Ֆ)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'Անուն (Ֆ-Ա)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'Ստեղծել թղթապանակ';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'Թղթապանակի անունը...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'Ջնջե՞լ $count էսքիզ: Սա հնարավոր չէ չեղարկել:';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'Էսքիզներ չեն գտնվել';
 
   @override
   String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+      'Փորձեք կարգավորել որոնումը կամ ստեղծել նոր էսքիզ:';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'Որոնել $folder-ում...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count էսքիզ';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'Տեսակավորել էսքիզները';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'Օրացույց';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'Ամենօրյա գործունեություն';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'Ջնջե՞լ տարրը';
 
   @override
-  String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+  String get deleteItemConfirmation => 'Սա կտեղափոխի տարրը աղբաման:';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'Տեղափոխե՞լ աղբաման:';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation =>
+      'Դուք կարող եք վերականգնել այն ավելի ուշ:';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count ընտրված է';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'Վերջին հատվածները';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'Պատճենված է:';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'Պատճենված է սովորական տեքստը';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'Հատվածի թեման';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Հենց նոր';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return '$countր առաջ';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return '$countժ առաջ';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return '$countօր առաջ';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'Առաջադրանքներ չեն գտնվել:';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'Որոնել առաջադրանքներ...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'Հիշեցում առաջադրանքի մասին';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'Անվերնագիր նշում';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'Ամենօրյա գրառում';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'Բուֆերի պատմություն';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent =>
+      'Այս գործողությունը հնարավոր չէ չեղարկել:';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'Դատարկե՞լ աղբամանը';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'Բոլոր $count տարրերը վերջնականապես կջնջվեն:';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'Դատարկել աղբամանը';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'Աղբամանը դատարկ է';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'Ջնջված տարրերը կհայտնվեն այստեղ:';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'Դատարկ';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Վերջին';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'Կատեգորիա՝ $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'Ընդհանուր';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'Ցանկանու՞մ եք պահպանել այս գործարքը:';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'Խնդրում ենք լրացնել վերնագիրը և գումարը';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'Գումարի անվավեր ձևաչափ';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'Տեղափոխե՞լ գործարքը աղբաման:';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'Դուք կարող եք վերականգնել այս գործարքը ավելի ուշ կարգավորումներից:';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'Նոր գործարք';
 
   @override
   String get whatIsThisFor => 'What is this for?';
 
   @override
-  String get description => 'Description';
+  String get description => 'Նկարագրություն';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'Օրական';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Շաբաթական';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'Ամսական';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'Տարեկան';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'Ընդհանուր եկամուտ';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'Ընդհանուր ծախս';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'Վերլուծություն';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'Գործարքներ';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'Այս ժամանակահատվածի համար ծախսեր չեն գտնվել:';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'Զուտ հաշվեկշիռ';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'Հիմնական կատեգորիաներ';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'Ծախսերի միտումը';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'Խորհուրդներ';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'Ծախսեր չեն գրանցվել';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits =>
+      'Հեշտությամբ հետևեք ձեր ծախսային սովորություններին:';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'Ավելացնել ծախս';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'Այս ժամանակահատվածի համար տվյալներ չկան';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'Բյուջե';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'Ծախսված է';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'Սահմանաչափ';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'Բյուջեն գերազանցված է:';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return 'մնացել է $percent%';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'Խնայողության չափը';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'Առողջության միավոր';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'Այս միավորը հիմնված է ձեր խնայողության չափի վրա:\n\n• > 50% խնայված = Գերազանց (100)\n• 0% խնայված = Միջին (50)\n• Ծախսերը > Եկամուտները = Վատ (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'Լավ';
 
   @override
   String get bulkImport => 'Bulk Import';
@@ -1375,786 +1383,790 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   AppLocalizationsHyAm() : super('hy_AM');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Կարգավորումներ';
 
   @override
-  String get language => 'Language';
+  String get language => 'Լեզու';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'Համակարգային լռելյայն';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'Նշումներ';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'Անելիքներ';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'Ծախսեր';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'Օրագիր';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'Օրացույց';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'Բուֆեր';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'Կտավ';
 
   @override
-  String get save => 'Save';
+  String get save => 'Պահպանել';
 
   @override
-  String get create => 'Create';
+  String get create => 'Ստեղծել';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Չեղարկել';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Ջնջել';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'Խմբագրել';
 
   @override
-  String get share => 'Share';
+  String get share => 'Կիսվել';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'Պատճենել';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'Չպահպանված փոփոխություններ';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'Հաստատել ջնջումը';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'Չեղարկել';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'Ստեղծել հրապարակում';
 
   @override
-  String get post => 'Post';
+  String get post => 'Հրապարակել';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'Հրապարակումը՝';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'Ի՞նչ կա ձեր մտքում:';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'Ընտրել նկարներ';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'Ընտրել տեսանյութ';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'Տեսախցիկ';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'Պատկերասրահ';
 
   @override
-  String get search => 'Search';
+  String get search => 'Որոնել';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'Մուտքագրեք առաջադրանքը';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'Ջնջել առաջադրանքը';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'Ընտրել տարրեր';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'Ջնջել բոլորը';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'Սխալ՝ $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'Դասավորումը հասանելի է միայն «Բոլոր հրապարակումներում»';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'Ջնջել հրապարակումը';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'Հրապարակումը ջնջված է';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'Պրեմիում հնարավորություններ';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'Կառավարել մետաղադրամները, գովազդը և պրեմիում կարգավիճակը';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'Թեմայի ռեժիմ';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'Շեշտադրման գույն';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'Ֆոնի դիզայն';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'Push ծանուցումներ';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'Աղբաման';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'Արտահանել տվյալները';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'Ներմուծել տվյալները';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'Գնահատել հավելվածը';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'Ուղարկել հետադարձ կապ';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'Գաղտնիության քաղաքականություն';
 
   @override
-  String get version => 'Version';
+  String get version => 'Տարբերակ';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'Build համարը';
 
   @override
-  String get system => 'System';
+  String get system => 'Համակարգային';
 
   @override
-  String get light => 'Light';
+  String get light => 'Լուսավոր';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Մուգ';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'Տարրը վերականգնված է';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'Աղբամանը հաջողությամբ դատարկվեց';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'Բոլոր հրապարակումները ջնջված են';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'Նոր հրապարակում';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
+      'Տեքստը պատճենված է բուֆերում (Facebook-ի քաղաքականություն)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'TikTok-ով կիսվելու համար անհրաժեշտ է տեսանյութ/նկար';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'Կիսվելու սխալ՝ $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'Կիսվել $platform Story-ում';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'Կիսվել $platform Feed-ում';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'Ապակողպել ընդմիշտ';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'Բավարար մետաղադրամներ չկան:';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'Դուք վաստակեցիք $amount մետաղադրամ:';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'Բովանդակությունը պատճենված է';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'Ընտրել ամսաթիվը և ժամը';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'Վստա՞հ եք, որ ցանկանում եք ջնջել այս հրապարակումը:';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'Սոցիալական հրապարակումներ';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins =>
+      'Դիտեք գովազդ մետաղադրամներ վաստակելու համար';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'Պրեմիումն ապակողպված է';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'Հեռացնել գովազդը';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'Անսահմանափակ ամպային պահեստ';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'Ջնջել նշումը';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'Կիսվել նշումով';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'Խմբագրել նշումը';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'Որոնել նշումներ...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'Նշումներ չեն գտնվել';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'Ակնթարթորեն գրանցեք ձեր մտքերը:';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'Ստեղծել նշում';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'Անհատական կարգ';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'Նորերը սկզբում';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'Հիները սկզբում';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'Վերնագիր՝ Ա-Ֆ';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'Վերնագիր՝ Ֆ-Ա';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'Ջնջե՞լ բոլորը';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'Տեղափոխե՞լ բոլոր նշումները աղբաման:';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'Տեղափոխե՞լ աղբաման:';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater =>
+      'Դուք կարող եք վերականգնել այս նշումը ավելի ուշ:';
 
   @override
-  String get move => 'Move';
+  String get move => 'Տեղափոխել';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'Իմ մտքերը';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'Ընտրված է';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'Բովանդակություն չկա';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'Անվերնագիր';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'Ընտրեք 10+ դինամիկ պաստառներից';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'Տվյալների պահպանում';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile =>
+      'Պահպանե՞լ JSON ֆայլը, որը պարունակում է ձեր բոլոր տվյալները:';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'Արտահանել հիմա';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'Ներմուծել տվյալները';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'Միավորե՞լ պահուստային ֆայլը ձեր ընթացիկ տարրերի հետ:';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'Ընտրել ֆայլ';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'Պահուստային պատճենը հաջողությամբ պահպանվեց:';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'Արտահանումը ձախողվեց:';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count տարր հաջողությամբ վերականգնվեց:';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'Ներմուծումը ձախողվեց:';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'Վիդջեթը ավելացված է հիմնական էկրանին:';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'Վիդջեթի հարցումն ուղարկված է: Խնդրում ենք ստուգել ձեր հիմնական էկրանը:';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'Չհաջողվեց ավելացնել վիդջեթը';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'Ավտոմատ պահպանումը միացված է:';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'Ավտոմատ պահպանումը անջատված է:';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'Հիմնական էկրանի վիդջեթներ';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'Ծանուցումներ';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'Տվյալներ և Պահուստավորում';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'Հետադարձ կապ և Աջակցություն';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'Հեղինակներ';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'Գաղտնիություն և Սպասարկում';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'Մասին';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'Պրեմիում';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'Արտաքին տեսք';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'Բուֆեր';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'Անհատականացրեք ձեր փորձը';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'Բարի գալուստ CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'Ձեր լավագույն արտադրողականության ուղեկիցը: Եկեք կարգավորենք հզոր գործիքներ՝ ձեր օրը կառավարելու համար:';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'Խելացի նշումներ';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'Ակնթարթորեն գրանցեք գաղափարները տեքստի հարուստ ձևաչափմամբ: Կազմակերպեք ձեր մտքերը և երբեք բաց մի թողեք հիանալի գաղափար:';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'Առաջադրանքների կառավարում';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'Մնացեք խաղի մեջ: Ստեղծեք անելիքների ցուցակներ, սահմանեք առաջնահերթություններ և հասեք ձեր նպատակներին քայլ առ քայլ:';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'Ծախսերի հետևում';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'Վերահսկեք ձեր ֆինանսները: Հեշտությամբ հետևեք եկամուտներին և ծախսերին՝ ձեր ծախսային սովորությունները հասկանալու համար:';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'Անձնական օրագիր';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'Մտորեք ձեր օրվա մասին: Մասնավոր տարածք ձեր հիշողությունները, զգացմունքները և ամենօրյա փորձառությունները գրի առնելու համար:';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'Օրացույց և Իրադարձություններ';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'Երբեք բաց մի թողեք ոչ մի պահ: Կազմակերպեք ձեր ժամանակացույցը և հետևեք կարևոր գալիք իրադարձություններին:';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'Բուֆերի կառավարիչ';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'Պատճենեք մեկ անգամ, տեղադրեք ցանկացած տեղ: Մուտք գործեք ձեր բուֆերի պատմություն՝ նախկինում պատճենված հատվածները վերականգնելու համար:';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'Ստեղծագործական կտավ';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'Սանձազերծեք ձեր ստեղծագործական ունակությունները: Նկարեք, էսքիզներ արեք և վիզուալացրեք ձեր գաղափարները թվային կտավի վրա:';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'Ստեղծեք և կառավարեք ձեր նշումները';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'Հետևեք ձեր առաջադրանքներին';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'Վերահսկեք ձեր ծախսերը';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'Գրի առեք ձեր մտքերը';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'Կազմակերպեք ձեր ժամանակացույցը';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'Մուտք գործեք բուֆերի պատմություն';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'Նկարեք և էսքիզներ արեք ազատորեն';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'Սոցիալական հրապարակում';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'Ստեղծեք գրավիչ սոցիալական մեդիա բովանդակություն';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'Ընտրեք ձեր աուրան';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'Արտահայտվեք թեմայի նոր գույնով:';
 
   @override
-  String get level => 'Level';
+  String get level => 'Մակարդակ';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP մինչև հաջորդ մակարդակ';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'Ստուգել գալիք իրադարձությունները';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'Սկսել նոր էսքիզ';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'Այս ամիս գործարքներ չկան';
 
   @override
   String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
+    return '$count գործարք այս ամիս';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'Բուֆերի ավտոմատ պահպանում';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc =>
+      'Ավտոմատ կերպով պահպանել պատճենված տարրերը';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'Թույլտվությունը վերջնականապես մերժված է: Խնդրում ենք միացնել Կարգավորումներում:';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'Ծանուցումները միացված են:';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'Վերահասցեավորում դեպի կարգավորումներ՝ ծանուցումներն անջատելու համար...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'Պրեմիում մուտք';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'Պրեմիումը ակտիվ է մինչև';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'Ապակողպել բոլոր հնարավորությունները';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'Գնել Պրեմիում (7 օր)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'Արժեքը՝ $cost մետաղադրամ';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'Պրեմիումը ակտիվացված է 7 օրով:';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'Պրեմիումը ակտիվ է';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'Լրանում է՝';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'Ժամանակավոր մուտք';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'Օրագիր և արտահայտում';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'Գեղարվեստական դիզայն';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'Ապակողպեք 10+ եզակի օրագրի քարտերի թեմաներ';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'Պրեմիում դասավորություններ';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc =>
+      'Ձեր հիշողությունները դիտելու բացառիկ եղանակներ';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'Օրացույց և Գործիքներ';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'Լրիվ օրացույց';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc =>
+      'Իրադարձությունների կառավարման ամբողջական համակարգ';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'Բուֆերի պատմության ֆոնային ձայնագրում';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'Pro վիդջեթներ';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc =>
+      'Բոլոր հնարավորությունները հասանելի են ձեր հիմնական էկրանին';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'Տվյալներ և Արտահանում';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'Ընդլայնված պահուստավորում';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc =>
+      'Բոլոր տվյալների անվտանգ ներմուծում/արտահանում';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'PDF արտահանում';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'Արտահանել նշումներն ու օրագրերը PDF ձևաչափով';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'Պատրաստ է տպագրության';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'Ուղղակի տպագրության աջակցություն';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'Հարուստ տեքստային խմբագիր';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'Ընդլայնված որոնում';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'Որոնել և փոխարինել ձեր տեքստում';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'Հարուստ մեդիա';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'Տեղադրել նկարներ, տեսանյութեր և հղումներ';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'Խմբագրի ոճավորում';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'Անհատական տեքստի և խմբագրի ֆոն';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'Հաշվեկշիռ';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'Գովազդը բեռնվում է...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'Դիտել գովազդ (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'Բեռնել գովազդը';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'Պահպանել ձեր տվյալների JSON ֆայլը';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'Միավորել պահուստային ֆայլը CopyClip-ի հետ';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied =>
+      'Ծանուցումների թույլտվությունը մերժված է:';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'Գրեք նոր առաջադրանք...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'Ավելացնել առաջադրանք';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'Ավարտված է';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'Հիանալի աշխատանք:';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'Դուք վաստակեցիք $amount XP: Հաջորդ առաջադրանքը՝ $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'Առաջադրանքն ավարտված է: +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'Տեղափոխե՞լ բոլոր ակտիվ առաջադրանքները աղբաման:';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'Ջնջել բոլոր հրապարակումները';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'Վստա՞հ եք, որ ցանկանում եք ջնջել ԲՈԼՈՐ սոցիալական հրապարակումները: Սա հնարավոր չէ չեղարկել:';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'Բոլոր հրապարակումները';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'Ֆավորիտներ';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'Սևագրեր';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'Դեռ ֆավորիտներ չկան';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'Դեռ սևագրեր չկան';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'Սկսեք ձեր սոցիալական ճանապարհորդությունը:';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'Սևագիր';
 
   @override
   String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
+    return '$count կցորդ';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent =>
+      'Խնդրում ենք ավելացնել որոշակի բովանդակություն կամ մեդիա կիսվելու համար';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'Սխալ՝ ֆայլը չի գտնվել $path հասցեում';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'Ստուգեք Facebook հավելվածը';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'Համակարգային կիսվել';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'Սոցիալական հրապարակում';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'Ֆավորիտ';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'Պահպանել սևագիրը';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'Գրառումը պատճենված է';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'Տեղափոխե՞լ բոլոր ակտիվ գրառումները աղբաման:';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'Սկսեք գրել ձեր պատմությունը';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories =>
+      'Գրանցեք ձեր ամենօրյա հիշողություններն ու զգացմունքները:';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'Գրել օրագիր';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'Իմ հիշողությունները';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'Տեսակավորել օրագիրը';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'Ըստ տրամադրության';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'Որոնել հիշողություններ...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'Ընտրել բոլորը';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'Ջնջել ընտրվածները';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'Առաջադրանքն ավարտված է:';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'Առաջադրանքը թերի է';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'Բուֆերը թարմացված է:';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'Բուֆերը պահպանված է՝ $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'Ակնարկ';
 
   @override
   String get colorAurora => 'Aurora';
@@ -2175,169 +2187,169 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   String get colorNova => 'Nova';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'Բեռնում...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'Տվյալների բազայի կարգավորում...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'Համակարգի կոնֆիգուրացում...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'Պատրաստ է';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'Ձեր արտադրողականության ուղեկիցը';
 
   @override
-  String get done => 'Done';
+  String get done => 'Պատրաստ է';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'Նոր նշում';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'Փոխել գույնը';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'Պատճենել բովանդակությունը';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'Վերնագիր (ըստ ցանկության)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'Արտահանել որպես PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'Առաջադրանքն այս պահին է';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'Տեղափոխե՞լ առաջադրանքը աղբաման:';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'Դուք կարող եք վերականգնել այս առաջադրանքը ավելի ուշ կարգավորումներից:';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'Նոր առաջադրանք';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'Խմբագրել առաջադրանքը';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'Հետադարձել';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'Կրկնել';
 
   @override
-  String get category => 'Category';
+  String get category => 'Կատեգորիա';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'օրինակ՝ Աշխատանք, Մարզասրահ';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'Ի՞նչ է պետք անել:';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'Մուտքագրեք առաջադրանքի մանրամասները...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'Սահմանել վերջնաժամկետ';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'Վերջնաժամկետ';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'Ծախսեր';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'Որոնել $currency-ով...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'Տեսակավորել և Ֆիլտրել';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'ՏԵՍԱԿԱՎՈՐԵԼ ԸՍՏ';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'Ամենաբարձր գումարը';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'Ամենացածր գումարը';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'Այլ ֆիլտրեր...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'Ֆիլտրել ծախսերը';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'Գործարքի տեսակ';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'Կատեգորիաներ';
 
   @override
-  String get all => 'All';
+  String get all => 'Բոլորը';
 
   @override
-  String get income => 'Income';
+  String get income => 'Եկամուտ';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'Ծախս';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'Վերակայել';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'Կիրառել';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'Նոր $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'Տվյալների բեռնման սխալ:\n\n$error';
   }
 
   @override
   String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+      'Ապագան կանխատեսելու լավագույն միջոցը այն ստեղծելն է:';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'Հարստությունը մեծ ունեցվածք ունենալու մեջ չէ, այլ քիչ կարիքներ ունենալու:';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'Ժամանակը գերագույն արժույթն է:';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'Հաջողությունը վերջնական չէ, ձախողումը մահացու չէ:';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'Կենտրոնացեք լուծման վրա, այլ ոչ թե խնդրի:';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'Ձեր կապերը ձեր զուտ արժեքն են:';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'Ուրախ';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'Ոգևորված';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'Չեզոք';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'Տխուր';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'Սթրեսային';
 
   @override
   String exportDate(String date) {
@@ -2346,17 +2358,17 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'Տրամադրություն՝ $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'ՎԵՐՆԱԳԻՐ՝ $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nՊիտակներ՝ $tags';
   }
 
   @override
@@ -2369,366 +2381,373 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'Նոր էսքիզ';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'Որոնել էսքիզներ և թղթապանակներ...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'Արդյունքներ չեն գտնվել';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'Տարրեր չկան';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'Դեռ նկարներ չկան';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro =>
+      'Սանձազերծեք ձեր ստեղծագործական ունակությունները կտավի վրա:';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'Նոր կտավ';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'Վերանվանել';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'Ջնջել թղթապանակը';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'Ջնջե՞լ էսքիզները';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'Այս թղթապանակի բոլոր էսքիզները վերջնականապես կջնջվեն:';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'Վերանվանել թղթապանակը';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'Ընտրել գույնը';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'Ջնջե՞լ թղթապանակը';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'Որոնել հատվածներ...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'Բուֆերը դատարկ է';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'Ավելացնել տարր';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'Հատվածի գույնը';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'Նոր հատված';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'Խմբագրել հատվածը';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater =>
+      'Դուք կարող եք վերականգնել այս հատվածը ավելի ուշ:';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'Գալիք իրադարձություններ';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'ՏՎՅԱԼՆԵՐԻ ԲԱՇԽՈՒՄ';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'ԱՌԱՋԱԴՐԱՆՔՆԵՐԻ ԸՆԹԱՑՔԸ';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'ԱՐԱԳ ՎԻՃԱԿԱԳՐՈՒԹՅՈՒՆ';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'Առաջադրանքների կատարում';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'Այս ամսաթվի համար տարրեր չկան';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'Վայելեք ձեր ազատ ժամանակը:';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'Որոնել այս օրվա մեջ...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'Ֆինանսներ';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'Ջնջե՞լ վերջնականապես';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'Սա վերջնականապես կջնջի $foldersCount թղթապանակ (և դրանց էսքիզները) և $sketchesCount այլ էսքիզներ:\n\nՍա հնարավոր չէ չեղարկել:';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'Ջնջել ընդմիշտ';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count ընտրված է';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes էսքիզ • $folders թղթապանակ';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'Տեսակավորել տարրերը';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'Անուն (Ա-Ֆ)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'Անուն (Ֆ-Ա)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'Ստեղծել թղթապանակ';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'Թղթապանակի անունը...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'Ջնջե՞լ $count էսքիզ: Սա հնարավոր չէ չեղարկել:';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'Էսքիզներ չեն գտնվել';
 
   @override
   String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+      'Փորձեք կարգավորել որոնումը կամ ստեղծել նոր էսքիզ:';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'Որոնել $folder-ում...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count էսքիզ';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'Տեսակավորել էսքիզները';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'Օրացույց';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'Ամենօրյա գործունեություն';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'Ջնջե՞լ տարրը';
 
   @override
-  String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+  String get deleteItemConfirmation => 'Սա կտեղափոխի տարրը աղբաման:';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'Տեղափոխե՞լ աղբաման:';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation =>
+      'Դուք կարող եք վերականգնել այն ավելի ուշ:';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count ընտրված է';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'Վերջին հատվածները';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'Պատճենված է:';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'Պատճենված է սովորական տեքստը';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'Հատվածի թեման';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Հենց նոր';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return '$countր առաջ';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return '$countժ առաջ';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return '$countօր առաջ';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'Առաջադրանքներ չեն գտնվել:';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'Որոնել առաջադրանքներ...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'Հիշեցում առաջադրանքի մասին';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'Անվերնագիր նշում';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'Ամենօրյա գրառում';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'Բուֆերի պատմություն';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent =>
+      'Այս գործողությունը հնարավոր չէ չեղարկել:';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'Դատարկե՞լ աղբամանը';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'Բոլոր $count տարրերը վերջնականապես կջնջվեն:';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'Դատարկել աղբամանը';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'Աղբամանը դատարկ է';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'Ջնջված տարրերը կհայտնվեն այստեղ:';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'Դատարկ';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Վերջին';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'Կատեգորիա՝ $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'Ընդհուր';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'Ցանկանու՞մ եք պահպանել այս գործարքը:';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'Խնդրում ենք լրացնել վերնագիրը և գումարը';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'Գումարի անվավեր ձևաչափ';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'Տեղափոխե՞լ գործարքը աղբաման:';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'Դուք կարող եք վերականգնել այս գործարքը ավելի ուշ կարգավորումներից:';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'Նոր գործարք';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'Ինչի՞ համար է սա:';
 
   @override
-  String get description => 'Description';
+  String get description => 'Նկարագրություն';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'Օրական';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Շաբաթական';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'Ամսական';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'Տարեկան';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'Ընդհանուր եկամուտ';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'Ընդհանուր ծախս';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'Վերլուծություն';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'Գործարքներ';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'Այս ժամանակահատվածի համար ծախսեր չեն գտնվել:';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'Զուտ հաշվեկշիռ';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'Հիմնական կատեգորիաներ';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'Ծախսերի միտումը';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'Խորհուրդներ';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'Ծախսեր չեն գրանցվել';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits =>
+      'Հեշտությամբ հետևեք ձեր ծախսային սովորություններին:';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'Ավելացնել ծախս';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'Այս ժամանակահատվածի համար տվյալներ չկան';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'Բյուջե';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'Ծախսված է';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'Սահմանաչափ';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'Բյուջեն գերազանցված է:';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return 'մնացել է $percent%';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'Խնայողության չափը';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'Առողջության միավոր';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'Այս միավորը հիմնված է ձեր խնայողության չափի վրա:\n\n• > 50% խնայված = Գերազանց (100)\n• 0% խնայված = Միջին (50)\n• Ծախսերը > Եկամուտները = Վատ (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'Լավ';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

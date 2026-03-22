@@ -2,10 +2,10 @@
   "@@locale": "de",
   "@canvasStats": {
     "placeholders": {
-      "notes": {
+      "folders": {
         "type": "int"
       },
-      "folders": {
+      "notes": {
         "type": "int"
       }
     }
@@ -137,6 +137,7 @@
   "balance": "Kontostand",
   "budget": "Budget",
   "buildNumber": "Build-Nummer",
+  "bulkImport": "Bulk Import",
   "buyPremium": "Premium kaufen (7 Tage)",
   "byMood": "Nach Stimmung",
   "calendar": "Kalender",
@@ -497,6 +498,7 @@
   "trackSpendingHabits": "Verfolgen Sie Ihre Ausgabegewohnheiten einfach.",
   "transactionType": "Transaktionstyp",
   "transactions": "Transaktionen",
+  "transactionsThisMonth": "{count} transaction{count, plural, =1{} other{s}} this month",
   "typeNewTask": "Geben Sie eine neue Aufgabe ein...",
   "undo": "Rückgängig",
   "unlimitedCloudStorage": "Unbegrenzter Cloud-Speicher",
@@ -522,6 +524,5 @@
   "xpToNextLevel": "XP zum nächsten Level",
   "yearly": "Jährlich",
   "youEarnedCoins": "Sie haben {amount} Münzen verdient!",
-  "youEarnedXPNextTask": "Sie haben {amount} XP verdient! Nächste Aufgabe: {date}",
-  "transactionsThisMonth": "{count} transaction{count, plural, =1{} other{s}} this month"
+  "youEarnedXPNextTask": "Sie haben {amount} XP verdient! Nächste Aufgabe: {date}"
 }

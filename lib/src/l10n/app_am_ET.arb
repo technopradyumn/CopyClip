@@ -33,6 +33,7 @@
   "deleteTask": "ተግባር ሰርዝ",
   "selectItems": "ንጥሎችን ይምረጡ",
   "deleteAll": "ሁሉንም ሰርዝ",
+  "error": "ስህተት፡ {error}",
   "orderingOnlyAvailableInAllPosts": "ማዘዝ የሚገኘው በ ''ሁሉም ልጥፎች'' ውስጥ ብቻ ነው",
   "deletePost": "ልጥፍ ሰርዝ",
   "postDeleted": "ልጥፍ ተሰርዟል።",
@@ -59,10 +60,12 @@
   "newPost": "አዲስ ፖስት",
   "textCopiedToClipboardFacebook": "ጽሑፍ ወደ ቅንጥብ ሰሌዳ ተቀድቷል (የፌስቡክ ፖሊሲ)",
   "tiktokSharingRequiresVideoImage": "TikTok ማጋራት ቪዲዮ/ምስል ያስፈልገዋል",
+  "errorSharing": "በማጋራት ላይ ስህተት፡ {error}",
   "shareToStory": "ለ{platform} ታሪክ አጋራ",
   "shareToFeed": "ለ{platform} ምግብ አጋራ",
   "unlockPermanently": "በቋሚነት ይክፈቱ",
   "notEnoughCoins": "በቂ ሳንቲሞች የሉም!",
+  "youEarnedCoins": "{amount} ሳንቲሞችን አግኝተዋል!",
   "contentCopied": "ይዘት ተቀድቷል።",
   "selectDateTime": "ቀን እና ሰዓት ይምረጡ",
   "areYouSureYouWantToDeleteThisPost": "እርግጠኛ ነዎት ይህን ልጥፍ መሰረዝ ይፈልጋሉ?",
@@ -103,7 +106,7 @@
   "exportFailed": "ወደ ውጭ መላክ አልተሳካም።",
   "importSuccess": "{count} ንጥሎች በተሳካ ሁኔታ ወደነበሩበት ተመልሰዋል!",
   "importFailed": "ማስመጣት አልተሳካም።",
-  "widgetAdded": "መግብር ወደ መነሻ ስክሪን ታክሏል!",
+  "widgetAdded": "መግብር {widget} ወደ መነሻ ስክሪን ታክሏል!",
   "widgetRequestSent": "የመግብር ጥያቄ ተልኳል። እባክህ የመነሻ ስክሪንህን ተመልከት።",
   "widgetAddFailed": "መግብርን ማከል አልተሳካም።",
   "autoSaveEnabled": "በራስሰር ማስቀመጥ ነቅቷል።",
@@ -122,7 +125,7 @@
   "welcomeTitle": "ወደ ኮፒ ክሊፕ እንኳን በደህና መጡ",
   "welcomeDescription": "የመጨረሻው ምርታማነት ጓደኛዎ። ቀንህን ለማስተዳደር በኃይለኛ መሳሪያዎች እናዋቅርህ።",
   "onboardingNotesTitle": "ብልጥ ማስታወሻዎች",
-  "onboardingNotesDesc": "በበለጸገ የጽሑፍ ቅርጸት ወዲያውኑ ሀሳቦችን ያንሱ። ሀሳቦችዎን ያደራጁ እና እንደገና አንድ ጥሩ ሀሳብ በጭራሽ አይጥፉ።",
+  "onboardingNotesDesc": "በበለጸገ የጽሑፍ ቅርዘት ወዲያውኑ ሀሳቦችን ያንሱ። ሀሳቦችዎን ያደራጁ እና እንደገና አንድ ጥሩ ሀሳብ በጭራሽ አይጥፉ።",
   "onboardingTodosTitle": "ተግባር አስተዳደር",
   "onboardingTodosDesc": "በጨዋታዎ አናት ላይ ይቆዩ። የስራ ዝርዝሮችን ይፍጠሩ፣ ቅድሚያ የሚሰጧቸውን ነገሮች ያዘጋጁ እና ግቦችዎን በአንድ ጊዜ ምልክት ያድርጉ።",
   "onboardingExpensesTitle": "የወጪ ክትትል",
@@ -151,6 +154,7 @@
   "checkUpcomingEvents": "መጪ ክስተቶችን ያረጋግጡ",
   "startNewSketch": "አዲስ ንድፍ ጀምር",
   "noTransactionsMonth": "በዚህ ወር ምንም ግብይቶች የሉም",
+  "transactionsThisMonth": "{count, plural, =1{{count} ግብይት} other{{count} ግብይቶች}} በዚህ ወር",
   "autoSaveClipboard": "ቅንጥብ ሰሌዳን በራስ-አስቀምጥ",
   "autoSaveClipboardDesc": "የተገለበጡ ዕቃዎችን በራስ-ሰር ያስቀምጡ",
   "permissionDeniedSettings": "ፍቃድ እስከመጨረሻው ተከልክሏል። እባክዎ በቅንብሮች ውስጥ አንቃ።",
@@ -192,6 +196,7 @@
   "editorStylingDesc": "ብጁ ጽሑፍ እና የአርታዒ ዳራ",
   "balance": "ሚዛን",
   "loadingAd": "ማስታወቂያን በመጫን ላይ...",
+  "watchAd": "ማስታወቂያ ይመልከቱ (+{amount})",
   "loadAd": "ማስታወቂያ ጫን",
   "backupDataDesc": "የውሂብህን JSON ፋይል አስቀምጥ",
   "importDataDesc": "የመጠባበቂያ ፋይልን ወደ ኮፒክሊፕ ያዋህዱ",
@@ -200,6 +205,8 @@
   "addTask": "ተግባር ጨምር",
   "completed": "ተጠናቀቀ",
   "greatJob": "ምርጥ ስራ!",
+  "youEarnedXPNextTask": "{amount} XP አግኝተዋል! ቀጣዩ ተግባር: {date}",
+  "taskCompletedXP": "ተግባር ተጠናቅቋል! +{amount} XP",
   "moveTasksToRecycleBin": "ሁሉም ንቁ ተግባራት ወደ ሪሳይክል ቢን ይወሰዱ?",
   "deleteAllPosts": "ሁሉንም ልጥፎች ሰርዝ",
   "deleteAllPostsConfirmation": "እርግጠኛ ነዎት ሁሉንም ማህበራዊ ልጥፎች መሰረዝ ይፈልጋሉ? ይህ ሊቀለበስ አይችልም።",
@@ -210,6 +217,7 @@
   "noDraftsYet": "እስካሁን ምንም ረቂቆች የሉም",
   "startSocialJourney": "ማህበራዊ ጉዞዎን ይጀምሩ!",
   "draft": "ረቂቅ",
+  "attachmentCount": "{count, plural, =1{{count} ዓባሪ} other{{count} ዓባሪዎች}}",
   "pleaseAddContent": "እባክዎ ለማጋራት አንዳንድ ይዘት ወይም ሚዲያ ያክሉ",
   "fileNotFoundError": "ስህተት፡ ፋይል በ{path} ላይ አልተገኘም",
   "checkFacebookApp": "የፌስቡክ መተግበሪያን ይፈትሹ",
@@ -262,16 +270,9 @@
   "whatNeedsToBeDone": "ምን መደረግ አለበት?",
   "enterTaskDetails": "የተግባር ዝርዝሮችን አስገባ...",
   "setDueDate": "የማለቂያ ቀን ያዘጋጁ",
-  "dueDate": "ሁለት ቀኖች",
+  "dueDate": "የማለቂያ ቀን",
   "expenseTitle": "ወጪዎች",
   "searchInCurrency": "በ{currency} ፈልግ...",
-  "@searchInCurrency": {
-    "placeholders": {
-      "currency": {
-        "type": "String"
-      }
-    }
-  },
   "sortAndFilter": "ደርድር እና አጣራ",
   "sortBy": "በ ደርድር",
   "highestAmount": "ከፍተኛው መጠን",
@@ -284,21 +285,9 @@
   "income": "ገቢ",
   "expense": "ወጪ",
   "reset": "ዳግም አስጀምር",
-  "apply": "ያመልክቱ",
-  "@newExpense": {
-    "placeholders": {
-      "currency": {
-        "type": "String"
-      }
-    }
-  },
-  "@errorLoadingData": {
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
+  "apply": "ተግብር",
+  "newExpense": "አዲስ {currency}",
+  "errorLoadingData": "ውሂብ በመጫን ላይ ስህተት ገጥሟል።\n\n{error}",
   "dailyQuote1": "የወደፊቱን ለመተንበይ በጣም ጥሩው መንገድ መፍጠር ነው።",
   "dailyQuote2": "ሀብት ብዙ ሀብትን በመያዝ ሳይሆን ጥቂቶች ፍላጎት በማግኘት ላይ ነው።",
   "dailyQuote3": "ጊዜ የመጨረሻው ገንዘብ ነው።",
@@ -310,39 +299,10 @@
   "moodNeutral": "ገለልተኛ",
   "moodSad": "መከፋት",
   "moodStressed": "ተጨንቋል",
-  "@exportDate": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "@exportMood": {
-    "placeholders": {
-      "emoji": {
-        "type": "String"
-      },
-      "mood": {
-        "type": "String"
-      }
-    }
-  },
+  "exportDate": "📅 {date}",
+  "exportMood": "ስሜት፡ {emoji} {mood}",
   "exportTitle": "ርዕስ፡ {title}",
-  "@exportTitle": {
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  },
-  "exportTags": "መለያዎች: {tags}",
-  "@exportTags": {
-    "placeholders": {
-      "tags": {
-        "type": "String"
-      }
-    }
-  },
+  "exportTags": "\nመለያዎች: {tags}",
   "instagram": "ኢንስታግራም",
   "facebook": "ፌስቡክ",
   "tiktok": "ቲክቶክ",
@@ -378,66 +338,19 @@
   "finance": "ፋይናንስ",
   "permanentlyDelete": "እስከመጨረሻው ይሰረዝ?",
   "deleteSelectionConfirmation": "ይህ የ{foldersCount} አቃፊዎችን (እና ንድፎችን) እና {sketchesCount} ሌሎች ንድፎችን እስከመጨረሻው ይሰርዛል።\n\nይህ ሊቀለበስ አይችልም።",
-  "@deleteSelectionConfirmation": {
-    "placeholders": {
-      "foldersCount": {
-        "type": "int"
-      },
-      "sketchesCount": {
-        "type": "int"
-      }
-    }
-  },
   "deleteForever": "ለዘላለም ሰርዝ",
   "selectedCount": "{count} ተመርጧል",
-  "@selectedCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "canvasStats": "{notes} ንድፎች • {folders} አቃፊዎች",
-  "@canvasStats": {
-    "placeholders": {
-      "notes": {
-        "type": "int"
-      },
-      "folders": {
-        "type": "int"
-      }
-    }
-  },
   "sortItems": "እቃዎችን ደርድር",
   "sortNameAZ": "ስም (A-Z)",
   "sortNameZA": "ስም (Z-A)",
   "createFolder": "አቃፊ ፍጠር",
   "folderNameHint": "የአቃፊ ስም...",
   "deleteSketchesConfirmation": "የ{count} ንድፎች ይሰረዙ? ይህ ሊቀለበስ አይችልም።",
-  "@deleteSketchesConfirmation": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "noSketchesFound": "ምንም ንድፎች አልተገኙም።",
   "noSketchesFoundSub": "ፍለጋዎን ለማስተካከል ወይም አዲስ ንድፍ ለመፍጠር ይሞክሩ።",
-  "@searchInFolder": {
-    "placeholders": {
-      "folder": {
-        "type": "String"
-      }
-    }
-  },
+  "searchInFolder": "በ{folder} ውስጥ ፈልግ...",
   "sketchesCount": "{count} ንድፎች",
-  "@sketchesCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "sortSketches": "ንድፎችን ደርድር",
   "calendarScreenTitle": "የቀን መቁጠሪያ",
   "dailyActivity": "የዕለት ተዕለት እንቅስቃሴ",
@@ -446,13 +359,6 @@
   "moveToBinItem": "ወደ ቢን ይንቀሳቀስ?",
   "moveToBinConfirmation": "በኋላ ወደነበረበት መመለስ ይችላሉ።",
   "selectedItems": "{count} ተመርጧል",
-  "@selectedItems": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "recentClips": "የቅርብ ጊዜ ክሊፖች",
   "copied": "ተቀድቷል!",
   "copiedPlainText": "የተገለበጠ ግልጽ ጽሑፍ",
@@ -475,6 +381,7 @@
   "deletedItemsAppearHere": "የተሰረዙ እቃዎች እዚህ ይታያሉ።",
   "empty": "ባዶ",
   "recent": "የቅርብ ጊዜ",
+  "categoryLabel": "ምድብ: {category}",
   "general": "አጠቃላይ",
   "saveTransactionQuestion": "ይህን ግብይት ማስቀመጥ ይፈልጋሉ?",
   "fillTitleAmount": "እባክዎን ርዕስ እና መጠን ይሙሉ",
@@ -505,23 +412,10 @@
   "spent": "አሳልፈዋል",
   "limit": "ገደብ",
   "overBudget": "ከበጀት በላይ!",
+  "remainingBudget": "{percent}% ቀርቷል",
   "savingsRate": "የቁጠባ መጠን",
   "healthScore": "የጤና ነጥብ",
   "healthScoreExplanation": "ይህ ነጥብ በእርስዎ የቁጠባ መጠን ላይ የተመሰረተ ነው።\n\n• > 50% ተቀምጧል = በጣም ጥሩ (100)\n• 0% ተቀምጧል = አማካኝ (50)\n• ወጪ > ገቢ = ድሃ (<50)",
   "ok": "እሺ",
-  "transactionsThisMonth": "{count} transaction{count, plural, =1{} other{s}} this month",
-  "attachmentCount": "{count} attachment{count, plural, =1{} other{s}}",
-  "error": "Error: {error}",
-  "errorSharing": "Error sharing: {error}",
-  "youEarnedCoins": "You earned {amount} coins!",
-  "watchAd": "Watch Ad (+{amount})",
-  "youEarnedXPNextTask": "You earned {amount} XP! Next task: {date}",
-  "taskCompletedXP": "Task completed! +{amount} XP",
-  "newExpense": "New {currency}",
-  "errorLoadingData": "Error loading data.\n\n{error}",
-  "exportDate": "📅 {date}",
-  "exportMood": "Mood: {emoji} {mood}",
-  "searchInFolder": "Search in {folder}...",
-  "categoryLabel": "Category: {category}",
-  "remainingBudget": "{percent}% remaining"
+  "bulkImport": "በጅምላ አስመጣ"
 }

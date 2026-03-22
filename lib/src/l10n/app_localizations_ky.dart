@@ -2731,4 +2731,7 @@ class AppLocalizationsKyKg extends AppLocalizationsKy {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

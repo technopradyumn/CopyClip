@@ -2731,6 +2731,9 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -4094,6 +4097,9 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -5457,6 +5463,9 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for English, as used in Ireland (`en_IE`).
@@ -6820,6 +6829,9 @@ class AppLocalizationsEnIe extends AppLocalizationsEn {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for English, as used in India (`en_IN`).
@@ -8183,6 +8195,9 @@ class AppLocalizationsEnIn extends AppLocalizationsEn {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for English, as used in New Zealand (`en_NZ`).
@@ -9546,6 +9561,9 @@ class AppLocalizationsEnNz extends AppLocalizationsEn {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for English, as used in Singapore (`en_SG`).
@@ -10909,6 +10927,9 @@ class AppLocalizationsEnSg extends AppLocalizationsEn {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for English, as used in South Africa (`en_ZA`).
@@ -12272,4 +12293,7 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

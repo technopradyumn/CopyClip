@@ -2731,4 +2731,7 @@ class AppLocalizationsHeIl extends AppLocalizationsHe {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

@@ -9,969 +9,972 @@ class AppLocalizationsIs extends AppLocalizations {
   AppLocalizationsIs([String locale = 'is']) : super(locale);
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Stillingar';
 
   @override
-  String get language => 'Language';
+  String get language => 'Tungumál';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'Sjálfgefið kerfi';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'Glósur';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'Verkefni';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'Útgjöld';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'Dagbók';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'Dagatal';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'Klemmuspjald';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'Striga';
 
   @override
-  String get save => 'Save';
+  String get save => 'Vista';
 
   @override
-  String get create => 'Create';
+  String get create => 'Búa til';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Hætta við';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Eyða';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'Breyta';
 
   @override
-  String get share => 'Share';
+  String get share => 'Deila';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'Afrita';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'Óvistaðar breytingar';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'Staðfesta eyðingu';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'Henda';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'Búa til færslu';
 
   @override
-  String get post => 'Post';
+  String get post => 'Senda';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'Senda á';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'Hvað er þér efst í huga?';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'Velja myndir';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'Velja myndband';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'Myndavél';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'Gallerí';
 
   @override
-  String get search => 'Search';
+  String get search => 'Leita';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'Vinsamlegast sláðu inn verkefni';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'Eyða verkefni';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'Velja atriði';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'Eyða öllu';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'Villa: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'Röðun er aðeins í boði í \'Allar færslur\'';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'Eyða færslu';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'Færslu eytt';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'Premium eiginleikar';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'Sýsla með mynt, auglýsingar og premium stöðu';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'Þema';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'Áherslulitur';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'Bakgrunnshönnun';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'Tilkynningar';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'Ruslakörfa';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'Flytja út gögn';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'Flytja inn gögn';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'Gefa umsögn';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'Senda ábendingu';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'Persónuverndarstefna';
 
   @override
-  String get version => 'Version';
+  String get version => 'Útgáfa';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'Byggingarnúmer';
 
   @override
-  String get system => 'System';
+  String get system => 'Kerfi';
 
   @override
-  String get light => 'Light';
+  String get light => 'Ljóst';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Dökkt';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'Atriði endurheimt';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'Ruslakörfa tæmd';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'Öllum færslum eytt';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'Ný færsla';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
+      'Texti afritaður á klemmuspjald (Facebook stefna)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'TikTok deiling krefst myndbands eða myndar';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'Villa við deilingu: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'Deila í $platform sögu';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'Deila í $platform straum';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'Opna varanlega';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'Ekki nóg af mynt!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'Þú vannst $amount mynt!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'Efni afritað';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'Velja dagsetningu og tíma';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'Ertu viss um að þú viljir eyða þessari færslu?';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'Samfélagsfærslur';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'Horfa á auglýsingu til að vinna mynt';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'Premium opnað';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'Fjarlægja auglýsingar';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'Ótakmarkað skýjapláss';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'Eyða glósu';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'Deila glósu';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'Breyta glósu';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'Leita í glósum...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'Engar glósur fundust';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'Skráðu hugsanir þínar samstundis.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'Búa til glósu';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'Sérsniðin röð';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'Nýjast fyrst';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'Elst fyrst';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'Titill: A-Ö';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'Titill: Ö-A';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'Eyða öllu?';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'Færa allar glósur í ruslakörfuna?';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'Færa í körfu?';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'Þú getur endurheimt þessa glósu síðar.';
 
   @override
-  String get move => 'Move';
+  String get move => 'Færa';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'Mínar hugsanir';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'Valið';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'Ekkert efni';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'Án titils';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'Veldu úr 10+ lifandi veggfóðrum';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'Öryggisafritun gagna';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile => 'Vista JSON skrá með öllum gögnum þínum?';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'Flytja út núna';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'Flytja inn gögn';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'Sameina öryggisafritskrá við núverandi atriði?';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'Velja skrá';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'Öryggisafrit vistað!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'Útflutningur mistókst.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count atriði endurheimt!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'Innflutningur mistókst.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'Græju bætt við heimaskjá!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'Græjubeiðni send. Vinsamlegast athugaðu heimaskjáinn þinn.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'Tókst ekki að bæta við græju';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'Sjálfvirk vistun virk.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'Sjálfvirk vistun óvirk.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'Heimaskjágræjur';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'Tilkynningar';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'Gögn og öryggisafritun';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'Ábendingar og aðstoð';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'Þakkir';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'Persónuvernd og viðhald';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'Um appið';
 
   @override
   String get premium => 'Premium';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'Útlit';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'Klemmuspjald';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'Sérsníddu upplifun þína';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'Velkomin í CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'Fullkominn félagi fyrir framleiðni. Við skulum koma þér af stað með öflugum verkfærum til að skipuleggja daginn.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'Snjallglósur';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'Skráðu hugmyndir samstundis með ríkulegu sniði. Skipuleggðu hugsanir þínar og týndu aldrei góðri hugmynd aftur.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'Verkefnastjórnun';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'Haltu utan um hlutina. Búðu til verkefnalista, forgangsraðaðu og náðu markmiðum þínum eitt af öðru.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'Útgjaldaskráning';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'Náðu stjórn á fjármálunum. Fylgstu með tekjum og gjöldum til að skilja eyðsluaðferðir þínar.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'Persónuleg dagbók';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'Hugleiddu daginn. Einkarými til að skrifa niður minningar, tilfinningar og daglega upplifun.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'Dagatal og viðburðir';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'Missa aldrei af neinu. Skipuleggðu áætlun þína og haltu utan um mikilvæga viðburði framundan.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'Klemmuspjaldstjóri';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'Afritaðu einu sinni, límdu hvar sem er. Fáðu aðgang að klemmuspjaldssögunni þinni.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'Skapandi striga';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'Slepptu sköpunargáfunni lausri. Teiknaðu, skissaðu og sjáðu hugmyndir þínar á stafrænum striga.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'Búa til og sýsla með glósurnar þínar';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'Haltu utan um verkefnin þín';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'Fylgstu með útgjöldum þínum';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'Skrifaðu niður hugsanir þínar';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'Skipuleggðu áætlun þína';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'Fáðu aðgang að klemmuspjaldssögu þinni';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'Teiknaðu og skissaðu frjálst';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'Samfélagsfærsla';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'Búðu til grípandi efni fyrir samfélagsmiðla';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'Veldu þína áru';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'Tjáðu þig með nýjum þemaliti!';
 
   @override
-  String get level => 'Level';
+  String get level => 'Stig';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP í stig';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'Skoða viðburði framundan';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'Byrja á nýrri skissu';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'Engar færslur í þessum mánuði';
 
   @override
   String transactionsThisMonth(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
+      other: 'ur',
       one: '',
     );
-    return '$count transaction$_temp0 this month';
+    return '$count færsla$_temp0 í þessum mánuði';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'Sjálfvirk vistun klemmuspjalds';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'Vista sjálfkrafa afrituð atriði';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'Heimild varanlega neitað. Vinsamlegast virkjaðu í stillingum.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'Tilkynningar virkjaðar!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'Beini þér í stillingar til að slökkva á tilkynningum...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'Premium aðgangur';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'Premium virkt til';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'Opna alla eiginleika';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'Kaupa Premium (7 dagar)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'Kostnaður: $cost mynt';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'Premium virkjað í 7 daga!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'Premium virkt';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'Rennur út:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'Tímabundinn aðgangur';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'Dagbók og tjáning';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'Listræn hönnun';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'Opnaðu 10+ einstök þemu fyrir dagbókarkort';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'Premium útlit';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc =>
+      'Einkaréttar leiðir til að skoða minningar þínar';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'Dagatal og verkfæri';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'Fullt dagatal';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'Heildstætt kerfi til að sýsla með viðburði';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'Bakgrunnsvistun á klemmuspjaldssögu';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'Pro græjur';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'Allir eiginleikar í boði á heimaskjánum þínum';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'Gögn og útflutningur';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'Ítarleg öryggisafritun';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'Öruggur inn- og útflutningur allra gagna';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'PDF útflutningur';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'Flytja glósur og dagbækur út sem PDF';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'Tilbúið til útprentunar';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'Beinn stuðningur við prentun';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'Ríkulegur textaritill';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'Ítarleg leit';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'Leita og skipta út í textanum þínum';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'Ríkulegur miðill';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'Setja inn myndir, myndbönd og tengla';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'Stíll ritils';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'Sérsniðinn texti og bakgrunnur ritils';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'Innistæða';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'Hleð auglýsingu...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'Horfa á auglýsingu (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'Hlaða auglýsingu';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'Vista JSON skrá með gögnunum þínum';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'Sameina öryggisafritskrá við CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied =>
+      'Heimild fyrir tilkynningum neitað.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'Sláðu inn nýtt verkefni...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'Bæta við verkefni';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'Lokið';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'Vel gert!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'Þú fékkst $amount XP! Næsta verkefni: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'Verkefni lokið! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin => 'Færa öll virk verkefni í ruslakörfuna?';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'Eyða öllum færslum';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'Ertu viss um að þú viljir eyða ÖLLUM samfélagsfærslum? Þessu er ekki hægt að hneppa aftur.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'Allar færslur';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'Uppáhalds';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'Uppköst';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'Ekkert í uppáhaldi ennþá';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'Engin uppköst ennþá';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'Byrjaðu samfélagsvegferðina þína!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'UPPKAST';
 
   @override
   String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
+    return '$count viðhengi';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent =>
+      'Vinsamlegast bættu við efni eða miðli til að deila';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'Villa: Skrá fannst ekki á $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'Athugaðu Facebook appið';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'Kerfisdeiling';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'Samfélagsfærsla';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'Uppáhald';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'Vista uppkast';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'Færsla afrituð';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'Færa allar virkar færslur í ruslakörfuna?';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'Byrjaðu að skrifa söguna þína';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories =>
+      'Skráðu daglegar minningar þínar og tilfinningar.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'Skrifa í dagbók';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'Mínar minningar';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'Raða dagbók';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'Eftir skapi';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'Leita í minningum...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'Velja allt';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'Eyða völdu';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'Verkefni lokið!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'Verkefni ólokið';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'Klemmuspjald uppfært!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'Klemmuspjald vistað: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'Yfirlit';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'Norðurljós';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'Alheimur';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'Stjörnuþoka';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'Stjörnuljós';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'Sól';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'Nýstjarna';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'Hleð...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'Set upp gagnagrunn...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'Stilli kerfi...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'Tilbúið';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'Félagi þinn í framleiðni';
 
   @override
-  String get done => 'Done';
+  String get done => 'Búið';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'Ný glósa';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'Breyta lit';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'Afrita efni';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'Titill (valfrjálst)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'Flytja út sem PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'Verkefni á gjalddaga núna';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'Færa verkefni í ruslakörfuna?';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'Þú getur endurheimt þetta verkefni síðar í stillingum.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'Nýtt verkefni';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'Breyta verkefni';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'Afturkalla';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'Endurgera';
 
   @override
-  String get category => 'Category';
+  String get category => 'Flokkur';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 't.d. Vinna, Ræktin';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'Hvað þarf að gera?';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'Sláðu inn upplýsingar um verkefni...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'Setja gjalddaga';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'Gjalddagi';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'Útgjöld';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'Leita í $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'Raða og sía';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'RAÐA EFTIR';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'Hæsta upphæð';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'Lægsta upphæð';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'Fleiri síur...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'Sía útgjöld';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'Tegund færslu';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'Flokkar';
 
   @override
-  String get all => 'All';
+  String get all => 'Allt';
 
   @override
-  String get income => 'Income';
+  String get income => 'Tekjur';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'Gjöld';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'Frumstilla';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'Virkja';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'Nýtt $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'Villa við að hlaða gögnum.\n\n$error';
   }
 
   @override
   String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+      'Besta leiðin til að spá fyrir um framtíðina er að skapa hana.';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'Auður felst ekki í því að eiga stórar eignir heldur að hafa fáar þarfir.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'Tíminn er endanlegur gjaldmiðill.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 =>
+      'Árangur er ekki endanlegur, mistök eru ekki banvæn.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'Einbeittu þér að lausninni, ekki vandamálinu.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'Tengslanetið þitt er nettóvirði þitt.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'Glaður';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'Spenntur';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'Hlutlaus';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'Dapur';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'Stressaður';
 
   @override
   String exportDate(String date) {
@@ -980,17 +983,17 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'Skap: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'TITILL: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nMerki: $tags';
   }
 
   @override
@@ -1003,368 +1006,368 @@ class AppLocalizationsIs extends AppLocalizations {
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'Ný skissa';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'Leita í skissum og möppum...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'Engar niðurstöður fundust';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'Engin atriði';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'Engar teikningar ennþá';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'Slepptu sköpunargáfunni lausri á striganum!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'Nýr strigi';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'Endurnefna';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'Eyða möppu';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'Eyða skissum?';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'Öllum skissum í þessari möppu verður eytt varanlega.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'Endurnefna möppu';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'Velja lit';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'Eyða möppu?';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'Leita í bútum...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'Klemmuspjaldið er tómt';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'Bæta við atriði';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'Litur búts';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'Nýr bútur';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'Breyta búti';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'Þú getur endurheimt þennan bút síðar.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'Viðburðir framundan';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'DREIFING GAGNA';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'FRAMGANGUR VERKEFNA';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'FLÝTISTÖLUR';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'Verkefnastaða';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'Engin atriði fyrir þessa dagsetningu';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'Njóttu frítímans!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'Leita á þessum degi...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'Fjármál';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'Eyða varanlega?';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'Þetta mun eyða varanlega $foldersCount möppum (og skissum þeirra) og $sketchesCount öðrum skissum.\n\nÞessu er ekki hægt að hneppa aftur.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'Eyða að eilífu';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count valið';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes skissur • $folders möppur';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'Raða atriðum';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'Nafn (A-Ö)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'Nafn (Ö-A)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'Búa til möppu';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'Nafn möppu...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'Eyða $count skissum? Þessu er ekki hægt að hneppa aftur.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'Engar skissur fundust';
 
   @override
   String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+      'Prófaðu að breyta leitinni eða búðu til nýja skissu.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'Leita í $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count skissur';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'Raða skissum';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'Dagatal';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'Dagleg virkni';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'Eyða atriði?';
 
   @override
-  String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+  String get deleteItemConfirmation => 'Þetta mun færa atriðið í ruslakörfuna.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'Færa í körfu?';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'Þú getur endurheimt það síðar.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count valið';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'Nýlegir bútar';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'Afritað!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'Afritaði hreinan texta';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'Þema búts';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Rétt í þessu';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return '${count}m síðan';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return '${count}klst síðan';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return '${count}d síðan';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'Engin verkefni fundust.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'Leita í verkefnum...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'Áminning um verkefni';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'Ónefnd glósa';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'Dagleg færsla';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'Klemmuspjaldssaga';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent =>
+      'Þessa aðgerð er ekki hægt að hneppa aftur.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'Tæma ruslakörfu?';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'Öllum $count atriðunum verður eytt varanlega.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'Tæma körfu';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'Ruslakarfan er tóm';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'Eydd atriði birtast hér.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'Tómt';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Nýlegt';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'Flokkur: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'Almennt';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'Viltu vista þessa færslu?';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'Vinsamlegast fylltu út titil og upphæð';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'Ógilt snið upphæðar';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'Færa færslu í ruslakörfuna?';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'Þú getur endurheimt þessa færslu síðar í stillingum.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'Ný færsla';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'Fyrir hvað er þetta?';
 
   @override
-  String get description => 'Description';
+  String get description => 'Lýsing';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'Daglega';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Vikulega';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'Mánaðarlega';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'Árlega';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'Heildartekjur';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'Heildarútgjöld';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'Greining';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'Færslur';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'Engin útgjöld fundust fyrir þetta tímabil.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'Hrein staða';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'Helstu flokkar';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'Eyðslubreytni';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'Innsýn';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'Engin útgjöld skráð';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits => 'Fylgstu auðveldlega með eyðslunni þinni.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'Bæta við útgjaldi';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'Engin gögn fyrir þetta tímabil';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'Fjárhagsáætlun';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'Eytt';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'Hámark';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'Yfir áætlun!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return '$percent% eftir';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'Sparnaðarhlutfall';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'Heilsustig';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'Þetta stig byggist á sparnaðarhlutfalli þínu.\n\n• > 50% sparað = Frábært (100)\n• 0% sparað = Meðallag (50)\n• Eyðsla > Tekjur = Lélegt (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'LOKIÐ';
 
   @override
   String get bulkImport => 'Bulk Import';
@@ -1375,181 +1378,182 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   AppLocalizationsIsIs() : super('is_IS');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Stillingar';
 
   @override
-  String get language => 'Language';
+  String get language => 'Tungumál';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'Sjálfgefið kerfi';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'Glósur';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'Verkefni';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'Útgjöld';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'Dagbók';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'Dagatal';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'Klemmuspjald';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'Striga';
 
   @override
-  String get save => 'Save';
+  String get save => 'Vista';
 
   @override
-  String get create => 'Create';
+  String get create => 'Búa til';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Hætta við';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Eyða';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'Breyta';
 
   @override
-  String get share => 'Share';
+  String get share => 'Deila';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'Afrita';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'Óvistaðar breytingar';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'Staðfesta eyðingu';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'Henda';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'Búa til færslu';
 
   @override
-  String get post => 'Post';
+  String get post => 'Senda';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'Senda á';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'Hvað er þér efst í huga?';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'Velja myndir';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'Velja myndband';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'Myndavél';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'Gallerí';
 
   @override
-  String get search => 'Search';
+  String get search => 'Leita';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'Vinsamlegast sláðu inn verkefni';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'Eyða verkefni';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'Velja atriði';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'Eyða öllu';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'Villa: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'Röðun er aðeins í boði í \'Allar færslur\'';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'Eyða færslu';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'Færslu eytt';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'Premium eiginleikar';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'Sýsla með mynt, auglýsingar og premium stöðu';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'Þema';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'Áherslulitur';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'Bakgrunnshönnun';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'Tilkynningar';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'Ruslakörfa';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'Flytja út gögn';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'Flytja inn gögn';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'Gefa umsögn';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'Senda ábendingu';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'Persónuverndarstefna';
 
   @override
-  String get version => 'Version';
+  String get version => 'Útgáfa';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'Byggingarnúmer';
 
   @override
-  String get system => 'System';
+  String get system => 'Kerfi';
 
   @override
-  String get light => 'Light';
+  String get light => 'Ljóst';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Dökkt';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'Atriði endurheimt';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'Ruslakörfa tæmd';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'Öllum færslum eytt';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'Ný færsla';
 
   @override
   String get textCopiedToClipboardFacebook =>
@@ -1557,787 +1561,789 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'TikTok deiling krefst myndbands eða myndar';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'Villa við deilingu: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'Deila í $platform sögu';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'Deila í $platform straum';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'Opna varanlega';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'Ekki nóg af mynt!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'Þú vannst $amount mynt!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'Efni afritað';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'Velja dagsetningu og tíma';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'Ertu viss um að þú viljir eyða þessari færslu?';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'Samfélagsfærslur';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'Horfa á auglýsingu til að vinna mynt';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'Premium opnað';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'Fjarlægja auglýsingar';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'Ótakmarkað skýjapláss';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'Eyða glósu';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'Deila glósu';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'Breyta glósu';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'Leita í glósum...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'Engar glósur fundust';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'Skráðu hugsanir þínar samstundis.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'Búa til glósu';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'Sérsniðin röð';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'Nýjast fyrst';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'Elst fyrst';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'Titill: A-Ö';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'Titill: Ö-A';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'Eyða öllu?';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'Færa allar glósur í ruslakörfuna?';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'Færa í körfu?';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'Þú getur endurheimt þessa glósu síðar.';
 
   @override
-  String get move => 'Move';
+  String get move => 'Færa';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'Mínar hugsanir';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'Valið';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'Ekkert efni';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'Án titils';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'Veldu úr 10+ lifandi veggfóðrum';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'Öryggisafritun gagna';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile => 'Vista JSON skrá með öllum gögnum þínum?';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'Flytja út núna';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'Flytja inn gögn';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'Sameina öryggisafritskrá við núverandi atriði?';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'Velja skrá';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'Öryggisafrit vistað!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'Útflutningur mistókst.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count atriði endurheimt!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'Innflutningur mistókst.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'Græju bætt við heimaskjá!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'Græjubeiðni send. Vinsamlegast athugaðu heimaskjáinn þinn.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'Tókst ekki að bæta við græju';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'Sjálfvirk vistun virk.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'Sjálfvirk vistun óvirk.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'Heimaskjágræjur';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'Tilkynningar';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'Gögn og öryggisafritun';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'Ábendingar og aðstoð';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'Þakkir';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'Persónuvernd og viðhald';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'Um appið';
 
   @override
   String get premium => 'Premium';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'Útlit';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'Klemmuspjald';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'Sérsníddu upplifun þína';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'Velkomin í CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'Fullkominn félagi fyrir framleiðni. Við skulum koma þér af stað með öflugum verkfærum til að skipuleggja daginn.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'Snjallglósur';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'Skráðu hugmyndir samstundis með ríkulegu sniði. Skipuleggðu hugsanir þínar og týndu aldrei góðri hugmynd aftur.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'Verkefnastjórnun';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'Haltu utan um hlutina. Búðu til verkefnalista, forgangsraðaðu og náðu markmiðum þínum eitt af öðru.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'Útgjaldaskráning';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'Náðu stjórn á fjármálunum. Fylgstu með tekjum og gjöldum til að skilja eyðsluaðferðir þínar.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'Persónuleg dagbók';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'Hugleiddu daginn. Einkarými til að skrifa niður minningar, tilfinningar og daglega upplifun.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'Dagatal og viðburðir';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'Missa aldrei af neinu. Skipuleggðu áætlun þína og haltu utan um mikilvæga viðburði framundan.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'Klemmuspjaldstjóri';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'Afritaðu einu sinni, límdu hvar sem er. Fáðu aðgang að klemmuspjaldssögunni þinni.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'Skapandi striga';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'Slepptu sköpunargáfunni lausri. Teiknaðu, skissaðu og sjáðu hugmyndir þínar á stafrænum striga.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'Búa til og sýsla með glósurnar þínar';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'Haltu utan um verkefnin þín';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'Fylgstu með útgjöldum þínum';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'Skrifaðu niður hugsanir þínar';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'Skipuleggðu áætlun þína';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'Fáðu aðgang að klemmuspjaldssögu þinni';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'Teiknaðu og skissaðu frjálst';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'Samfélagsfærsla';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'Búðu til grípandi efni fyrir samfélagsmiðla';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'Veldu þína áru';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'Tjáðu þig með nýjum þemaliti!';
 
   @override
-  String get level => 'Level';
+  String get level => 'Stig';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP í stig';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'Skoða viðburði framundan';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'Byrja á nýrri skissu';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'Engar færslur í þessum mánuði';
 
   @override
   String transactionsThisMonth(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
+      other: 'ur',
       one: '',
     );
-    return '$count transaction$_temp0 this month';
+    return '$count færsla$_temp0 í þessum mánuði';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'Sjálfvirk vistun klemmuspjalds';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'Vista sjálfkrafa afrituð atriði';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'Heimild varanlega neitað. Vinsamlegast virkjaðu í stillingum.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'Tilkynningar virkjaðar!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'Beini þér í stillingar til að slökkva á tilkynningum...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'Premium aðgangur';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'Premium virkt til';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'Opna alla eiginleika';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'Kaupa Premium (7 dagar)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'Kostnaður: $cost mynt';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'Premium virkjað í 7 daga!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'Premium virkt';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'Rennur út:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'Tímabundinn aðgangur';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'Dagbók og tjáning';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'Listræn hönnun';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'Opnaðu 10+ einstök þemu fyrir dagbókarkort';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'Premium útlit';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc =>
+      'Einkaréttar leiðir til að skoða minningar þínar';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'Dagatal og verkfæri';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'Fullt dagatal';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'Heildstætt kerfi til að sýsla með viðburði';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'Bakgrunnsvistun á klemmuspjaldssögu';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'Pro græjur';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'Allir eiginleikar í boði á heimaskjánum þínum';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'Gögn og útflutningur';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'Ítarleg öryggisafritun';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'Öruggur inn- og útflutningur allra gagna';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'PDF útflutningur';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'Flytja glósur og dagbækur út sem PDF';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'Tilbúið til útprentunar';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'Beinn stuðningur við prentun';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'Ríkulegur textaritill';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'Ítarleg leit';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'Leita og skipta út í textanum þínum';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'Ríkulegur miðill';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'Setja inn myndir, myndbönd og tengla';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'Stíll ritils';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'Sérsniðinn texti og bakgrunnur ritils';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'Innistæða';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'Hleð auglýsingu...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'Horfa á auglýsingu (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'Hlaða auglýsingu';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'Vista JSON skrá með gögnunum þínum';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'Sameina öryggisafritskrá við CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied =>
+      'Heimild fyrir tilkynningum neitað.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'Sláðu inn nýtt verkefni...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'Bæta við verkefni';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'Lokið';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'Vel gert!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'Þú fékkst $amount XP! Næsta verkefni: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'Verkefni lokið! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin => 'Færa öll virk verkefni í ruslakörfuna?';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'Eyða öllum færslum';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'Ertu viss um að þú viljir eyða ÖLLUM samfélagsfærslum? Þessu er ekki hægt að hneppa aftur.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'Allar færslur';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'Uppáhalds';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'Uppköst';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'Ekkert í uppáhaldi ennþá';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'Engin uppköst ennþá';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'Byrjaðu samfélagsvegferðina þína!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'UPPKAST';
 
   @override
   String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
+    return '$count viðhengi';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent =>
+      'Vinsamlegast bættu við efni eða miðli til að deila';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'Villa: Skrá fannst ekki á $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'Athugaðu Facebook appið';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'Kerfisdeiling';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'Samfélagsfærsla';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'Uppáhald';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'Vista uppkast';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'Færsla afrituð';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'Færa allar virkar færslur í ruslakörfuna?';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'Byrjaðu að skrifa söguna þína';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories =>
+      'Skráðu daglegar minningar þínar og tilfinningar.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'Skrifa í dagbók';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'Mínar minningar';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'Raða dagbók';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'Eftir skapi';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'Leita í minningum...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'Velja allt';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'Eyða völdu';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'Verkefni lokið!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'Verkefni ólokið';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'Klemmuspjald uppfært!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'Klemmuspjald vistað: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'Yfirlit';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'Norðurljós';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'Alheimur';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'Stjörnuþoka';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'Stjörnuljós';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'Sól';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'Nýstjarna';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'Hleð...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'Set upp gagnagrunn...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'Stilli kerfi...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'Tilbúið';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'Félagi þinn í framleiðni';
 
   @override
-  String get done => 'Done';
+  String get done => 'Búið';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'Ný glósa';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'Breyta lit';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'Afrita efni';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'Titill (valfrjálst)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'Flytja út sem PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'Verkefni á gjalddaga núna';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'Færa verkefni í ruslakörfuna?';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'Þú getur endurheimt þetta verkefni síðar í stillingum.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'Nýtt verkefni';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'Breyta verkefni';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'Afturkalla';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'Endurgera';
 
   @override
-  String get category => 'Category';
+  String get category => 'Flokkur';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 't.d. Vinna, Ræktin';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'Hvað þarf að gera?';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'Sláðu inn upplýsingar um verkefni...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'Setja gjalddaga';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'Gjalddagi';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'Útgjöld';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'Leita í $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'Raða og sía';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'RAÐA EFTIR';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'Hæsta upphæð';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'Lægsta upphæð';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'Fleiri síur...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'Sía útgjöld';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'Tegund færslu';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'Flokkar';
 
   @override
-  String get all => 'All';
+  String get all => 'Allt';
 
   @override
-  String get income => 'Income';
+  String get income => 'Tekjur';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'Gjöld';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'Frumstilla';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'Virkja';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'Nýtt $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'Villa við að hlaða gögnum.\n\n$error';
   }
 
   @override
   String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+      'Besta leiðin til að spá fyrir um framtíðina er að skapa hana.';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'Auður felst ekki í því að eiga stórar eignir heldur að hafa fáar þarfir.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'Tíminn érendanlegur gjaldmiðill.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 =>
+      'Árangur er ekki endanlegur, mistök eru ekki banvæn.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'Einbeittu þér að lausninni, ekki vandamálinu.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'Tengslanetið þitt er nettóvirði þitt.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'Glaður';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'Spenntur';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'Hlutlaus';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'Dapur';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'Stressaður';
 
   @override
   String exportDate(String date) {
@@ -2346,17 +2352,17 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'Skap: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'TITILL: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nMerki: $tags';
   }
 
   @override
@@ -2369,366 +2375,369 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'Ný skissa';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'Leita í skissum og möppum...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'Engar niðurstöður fundust';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'Engin atriði';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'Engar teikningar ennþá';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'Slepptu sköpunargáfunni lausri á striganum!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'Nýr strigi';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'Endurnefna';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'Eyða möppu';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'Eyða skissum?';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'Öllum skissum í þessari möppu verður eytt varanlega.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'Endurnefna möppu';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'Velja lit';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'Eyða möppu?';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'Leita í bútum...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'Klemmuspjaldið er tómt';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'Bæta við atriði';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'Litur búts';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'Nýr bútur';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'Breyta búti';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'Þú getur endurheimt þennan bút síðar.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'Viðburðir framundan';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'DREIFING GAGNA';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'FRAMGANGUR VERKEFNA';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'FLÝTISTÖLUR';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'Verkefnastaða';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'Engin atriði fyrir þessa dagsetningu';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'Njóttu frítímans!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'Leita á þessum degi...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'Fjármál';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'Eyða varanlega?';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'Þetta mun eyða varanlega $foldersCount möppum (og skissum þeirra) og $sketchesCount öðrum skissum.\n\nÞessu er ekki hægt að hneppa aftur.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'Eyða að eilífu';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count valið';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes skissur • $folders möppur';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'Raða atriðum';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'Nafn (A-Ö)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'Nafn (Ö-A)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'Búa til möppu';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'Nafn möppu...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'Eyða $count skissum? Þessu er ekki hægt að hneppa aftur.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'Engar skissur fundust';
 
   @override
   String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+      'Prófaðu að breyta leitinni eða búðu til nýja skissu.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'Leita í $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count skissur';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'Raða skissum';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'Dagatal';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'Dagleg virkni';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'Eyða atriði?';
 
   @override
-  String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+  String get deleteItemConfirmation => 'Þetta mun færa atriðið í ruslakörfuna.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'Færa í körfu?';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'Þú getur endurheimt það síðar.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count valið';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'Nýlegir bútar';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'Afritað!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'Afritaði hreinan texta';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'Þema búts';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Rétt í þessu';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return '${count}m síðan';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return '${count}klst síðan';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return '${count}d síðan';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'Engin verkefni fundust.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'Leita í verkefnum...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'Áminning um verkefni';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'Ónefnd glósa';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'Dagleg færsla';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'Klemmuspjaldssaga';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent =>
+      'Þessa aðgerð er ekki hægt að hneppa aftur.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'Tæma ruslakörfu?';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'Öllum $count atriðunum verður eytt varanlega.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'Tæma körfu';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'Ruslakarfan er tóm';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'Eydd atriði birtast hér.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'Tómt';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Nýlegt';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'Flokkur: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'Almennt';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'Viltu vista þessa færslu?';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'Vinsamlegast fylltu út titil og upphæð';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'Ógilt snið upphæðar';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'Færa færslu í ruslakörfuna?';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'Þú getur endurheimt þessa færslu síðar í stillingum.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'Ný færsla';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'Fyrir hvað er þetta?';
 
   @override
-  String get description => 'Description';
+  String get description => 'Lýsing';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'Daglega';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Vikulega';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'Mánaðarlega';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'Árlega';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'Heildartekjur';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'Heildarútgjöld';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'Greining';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'Færslur';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'Engin útgjöld fundust fyrir þetta tímabil.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'Hrein staða';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'Helstu flokkar';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'Eyðslubreytni';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'Innsýn';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'Engin útgjöld skráð';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits => 'Fylgstu auðveldlega með eyðslunni þinni.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'Bæta við útgjaldi';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'Engin gögn fyrir þetta tímabil';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'Fjárhagsáætlun';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'Eytt';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'Hámark';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'Yfir áætlun!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return '$percent% eftir';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'Sparnaðarhlutfall';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'Heilsustig';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'Þetta stig byggist á sparnaðarhlutfalli þínu.\n\n• > 50% sparað = Frábært (100)\n• 0% sparað = Meðallag (50)\n• Eyðsla > Tekjur = Lélegt (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'LOKIÐ';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

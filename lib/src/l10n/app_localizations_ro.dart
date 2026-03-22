@@ -2731,4 +2731,7 @@ class AppLocalizationsRoRo extends AppLocalizationsRo {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

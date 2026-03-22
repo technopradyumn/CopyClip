@@ -29,11 +29,12 @@
   "camera": "Kamera",
   "gallery": "Galery",
   "search": "Soek",
-  "pleaseEnterTask": "Voer asseblief ''n taak in",
+  "pleaseEnterTask": "Voer asseblief 'n taak in",
   "deleteTask": "Vee taak uit",
   "selectItems": "Kies Items",
   "deleteAll": "Vee alles uit",
-  "orderingOnlyAvailableInAllPosts": "Bestelling slegs beskikbaar in ''Alle plasings''",
+  "error": "Fout: {error}",
+  "orderingOnlyAvailableInAllPosts": "Bestelling slegs beskikbaar in 'Alle plasings'",
   "deletePost": "Vee plasing uit",
   "postDeleted": "Pos uitgevee",
   "premiumFeatures": "Premium kenmerke",
@@ -58,7 +59,8 @@
   "allPostsDeleted": "Alle plasings is uitgevee",
   "newPost": "Nuwe Pos",
   "textCopiedToClipboardFacebook": "Teks na knipbord gekopieer (Facebook-beleid)",
-  "tiktokSharingRequiresVideoImage": "TikTok-deling vereis ''n video/prent",
+  "tiktokSharingRequiresVideoImage": "TikTok-deling vereis 'n video/prent",
+  "errorSharing": "Fout met deel: {error}",
   "shareToStory": "Deel na {platform}-verhaal",
   "shareToFeed": "Deel na {platform}-stroom",
   "unlockPermanently": "Ontsluit Permanent",
@@ -95,16 +97,16 @@
   "untitled": "Titelloos",
   "chooseWallpapers": "Kies uit 10+ dinamiese agtergronde",
   "backupData": "Rugsteun data",
-  "saveJsonFile": "Stoor ''n JSON-lêer wat al jou data bevat?",
+  "saveJsonFile": "Stoor 'n JSON-lêer wat al jou data bevat?",
   "exportNow": "Voer nou uit",
   "importDataTitle": "Voer data in",
-  "mergeBackupFile": "Voeg ''n rugsteunlêer saam met jou huidige items?",
+  "mergeBackupFile": "Voeg 'n rugsteunlêer saam met jou huidige items?",
   "selectFile": "Kies Lêer",
   "backupSaved": "Rugsteun suksesvol gestoor!",
   "exportFailed": "Uitvoer het misluk.",
   "importSuccess": "{count} items is suksesvol herstel!",
   "importFailed": "Invoer het misluk.",
-  "widgetAdded": "Legstuk bygevoeg by tuisskerm!",
+  "widgetAdded": "Legstuk {widget} is by tuisskerm gevoeg!",
   "widgetRequestSent": "Legstukversoek gestuur. Gaan asseblief jou tuisskerm na.",
   "widgetAddFailed": "Kon nie legstuk byvoeg nie",
   "autoSaveEnabled": "Outo-stoor geaktiveer.",
@@ -123,22 +125,22 @@
   "welcomeTitle": "Welkom by CopyClip",
   "welcomeDescription": "Jou uiteindelike produktiwiteitsmetgesel. Kom ons stel jou op met kragtige nutsmiddels om jou dag te bestuur.",
   "onboardingNotesTitle": "Slim notas",
-  "onboardingNotesDesc": "Vang idees onmiddellik vas met ryk teksformatering. Organiseer jou gedagtes en verloor nooit weer ''n goeie idee nie.",
+  "onboardingNotesDesc": "Vang idees onmiddellik vas with ryk teksformatering. Organiseer jou gedagtes en verloor nooit weer 'n goeie idee nie.",
   "onboardingTodosTitle": "Taakbestuur",
-  "onboardingTodosDesc": "Bly op hoogte van jou spel. Skep doenlyste, stel prioriteite en verpletter jou doelwitte een vinkje op ''n slag.",
+  "onboardingTodosDesc": "Bly op hoogte van jou spel. Skep doenlyste, stel prioriteite en verpletter jou doelwitte een vinkje op 'n slag.",
   "onboardingExpensesTitle": "Uitgawe dop",
   "onboardingExpensesDesc": "Neem beheer van jou finansies. Volg inkomste en uitgawes maklik om jou bestedingsgewoontes te verstaan.",
   "onboardingJournalTitle": "Persoonlike Joernaal",
-  "onboardingJournalDesc": "Besin oor jou dag. ''n Privaat ruimte om jou herinneringe, gevoelens en daaglikse ervarings neer te skryf.",
+  "onboardingJournalDesc": "Besin oor jou dag. 'n Privaat ruimte om jou herinneringe, gevoelens en daaglikse ervarings neer te skryf.",
   "onboardingCalendarTitle": "Kalender en gebeure",
-  "onboardingCalendarDesc": "Moet nooit ''n oomblik mis nie. Organiseer jou skedule en hou tred met belangrike komende gebeure.",
+  "onboardingCalendarDesc": "Moet nooit 'n oomblik mis nie. Organiseer jou skedule en hou tred met belangrike komende gebeure.",
   "onboardingClipboardTitle": "Knipbord Bestuurder",
   "onboardingClipboardDesc": "Kopieer een keer, plak enige plek. Kry toegang tot jou knipbordgeskiedenis om brokkies wat jy vroeër gekopieer het, op te spoor.",
-  "onboardingCanvasTitle": "Kreatiewe doek",
-  "onboardingCanvasDesc": "Laat jou kreatiwiteit los. Teken, skets en visualiseer jou idees op ''n vryvorm digitale doek.",
+  "onboardingCanvasTitle": "Kreatiewే doek",
+  "onboardingCanvasDesc": "Laat jou kreatiwiteit los. Teken, skets en visualiseer jou idees op 'n vryvorm digitale doek.",
   "featuresNotesDesc": "Skep en bestuur jou notas",
   "featuresTodosDesc": "Bly op hoogte van jou take",
-  "featuresExpensesDesc": "Monitor jou uitgawes",
+  "featuresExpensesDesc": "Monitor jou uitగవలు",
   "featuresJournalDesc": "Skryf jou gedagtes neer",
   "featuresCalendarDesc": "Organiseer jou skedule",
   "featuresClipboardDesc": "Toegang tot jou knipbordgeskiedenis",
@@ -146,12 +148,13 @@
   "featuresSocialPost": "Sosiale Pos",
   "featuresSocialPostDesc": "Skep boeiende sosiale media-inhoud",
   "chooseYourAura": "Kies jou aura",
-  "expressYourselfTheme": "Druk jouself uit met ''n nuwe temakleur!",
+  "expressYourselfTheme": "Druk jouself uit met 'n nuwe temakleur!",
   "level": "Vlak",
   "xpToNextLevel": "XP na vlak",
   "checkUpcomingEvents": "Gaan komende gebeure na",
-  "startNewSketch": "Begin ''n nuwe skets",
+  "startNewSketch": "Begin 'n nuwe skets",
   "noTransactionsMonth": "Geen transaksies hierdie maand nie",
+  "transactionsThisMonth": "{count} transaksies hierdie maand",
   "autoSaveClipboard": "Outo-stoor knipbord",
   "autoSaveClipboardDesc": "Stoor outomaties gekopieerde items",
   "permissionDeniedSettings": "Toestemming permanent geweier. Aktiveer asseblief in Instellings.",
@@ -161,6 +164,7 @@
   "premiumActiveUntil": "Premium Aktief tot",
   "unlockAllFeatures": "Ontsluit alle kenmerke",
   "buyPremium": "Koop Premium (7 dae)",
+  "costCoins": "Koste: {cost} munte",
   "premiumActivated": "Premium geaktiveer vir 7 dae!",
   "premiumActive": "Premium aktief",
   "expires": "Verval:",
@@ -187,18 +191,18 @@
   "advancedSearch": "Gevorderde soektog",
   "advancedSearchDesc": "Soek en vervang binne jou teks",
   "richMedia": "Ryk media",
-  "richMediaDesc": "Voeg prente, video''s en skakels in",
+  "richMediaDesc": "Voeg prente, video's en skakels in",
   "editorStyling": "Redakteur Stilering",
   "editorStylingDesc": "Pasgemaakte teks en redakteur agtergronde",
   "balance": "Balans",
   "loadingAd": "Laai tans advertensie …",
   "watchAd": "Kyk advertensie (+{amount})",
   "loadAd": "Laai advertensie",
-  "backupDataDesc": "Stoor ''n JSON-lêer van jou data",
-  "importDataDesc": "Voeg ''n rugsteunlêer saam in CopyClip",
+  "backupDataDesc": "Stoor 'n JSON-lêer van jou data",
+  "importDataDesc": "Voeg 'n rugsteunlêer saam in CopyClip",
   "notificationPermissionDenied": "Kennisgewingtoestemming geweier.",
-  "typeNewTask": "Tik ''n nuwe taak...",
-  "addTask": "Voeg ''n taak by",
+  "typeNewTask": "Tik 'n nuwe taak...",
+  "addTask": "Voeg 'n taak by",
   "completed": "Voltooi",
   "greatJob": "Puik werk!",
   "youEarnedXPNextTask": "Jy het {amount} XP verdien! Volgende taak: {date}",
@@ -213,6 +217,7 @@
   "noDraftsYet": "Nog geen konsepte nie",
   "startSocialJourney": "Begin jou sosiale reis!",
   "draft": "KONSEP",
+  "attachmentCount": "{count} aanhangsels",
   "pleaseAddContent": "Voeg asseblief inhoud of media by om te deel",
   "fileNotFoundError": "Fout: Lêer nie gevind by {path}",
   "checkFacebookApp": "Gaan Facebook-toepassing na",
@@ -255,7 +260,7 @@
   "exportAsPdf": "Voer as PDF uit",
   "taskDueNow": "Taak nou verskuldig",
   "moveTaskToBinTitle": "Skuif taak na asblik?",
-  "restoreTaskLater": "U kan hierdie taak later vanaf instellings herstel.",
+  "restoreTaskLater": "Jy kan hierdie taak later vanaf instellings herstel.",
   "newTask": "Nuwe taak",
   "editTask": "Wysig taak",
   "undo": "Ontdoen",
@@ -265,18 +270,11 @@
   "whatNeedsToBeDone": "Wat moet gedoen word?",
   "enterTaskDetails": "Voer taakbesonderhede in...",
   "setDueDate": "Stel Sperdatum",
-  "dueDate": "Twee datums",
+  "dueDate": "Sperdatum",
   "expenseTitle": "Uitgawes",
   "searchInCurrency": "Soek in {currency}...",
-  "@searchInCurrency": {
-    "placeholders": {
-      "currency": {
-        "type": "String"
-      }
-    }
-  },
   "sortAndFilter": "Sorteer & Filter",
-  "sortBy": "SORTEER BY",
+  "sortBy": "SORTEER VOLGENS",
   "highestAmount": "Hoogste bedrag",
   "lowestAmount": "Laagste bedrag",
   "moreFilters": "Meer filters...",
@@ -287,67 +285,24 @@
   "income": "Inkomste",
   "expense": "Uitgawe",
   "reset": "Stel terug",
-  "apply": "Doen aansoek",
+  "apply": "Pas toe",
   "newExpense": "Nuwe {currency}",
-  "@newExpense": {
-    "placeholders": {
-      "currency": {
-        "type": "String"
-      }
-    }
-  },
-  "@errorLoadingData": {
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
+  "errorLoadingData": "Fout met laai van data.\n\n{error}",
   "dailyQuote1": "Die beste manier om die toekoms te voorspel, is om dit te skep.",
-  "dailyQuote2": "Rykdom bestaan ​​nie daarin om groot besittings te hê nie, maar daarin om min behoeftes te hê.",
+  "dailyQuote2": "Rykdom bestaan nie daarin om groot besittings te hê nie, maar daarin om min behoeftes te hê.",
   "dailyQuote3": "Tyd is die uiteindelike geldeenheid.",
   "dailyQuote4": "Sukses is nie finaal nie, mislukking is nie noodlottig nie.",
-  "dailyQuote5": "Fokus op die oplossing, nie die probleem nie.",
+  "dailyQuote5": "Fokus op the oplossing, nie die probleem nie.",
   "dailyQuote6": "Jou netwerk is jou netto waarde.",
   "moodHappy": "Gelukkig",
   "moodExcited": "Opgewonde",
   "moodNeutral": "Neutraal",
   "moodSad": "Hartseer",
   "moodStressed": "Gestres",
-  "@exportDate": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
+  "exportDate": "📅 {date}",
   "exportMood": "Bui: {emoji} {mood}",
-  "@exportMood": {
-    "placeholders": {
-      "emoji": {
-        "type": "String"
-      },
-      "mood": {
-        "type": "String"
-      }
-    }
-  },
-  "exportTitle": "TITEL: {title}",
-  "@exportTitle": {
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  },
-  "exportTags": "Merkers: {tags}",
-  "@exportTags": {
-    "placeholders": {
-      "tags": {
-        "type": "String"
-      }
-    }
-  },
+  "exportTitle": "Titel: {title}",
+  "exportTags": "\nMerkers: {tags}",
   "instagram": "Instagram",
   "facebook": "Facebook",
   "tiktok": "TikTok",
@@ -383,65 +338,19 @@
   "finance": "Finansies",
   "permanentlyDelete": "Vee permanent uit?",
   "deleteSelectionConfirmation": "Dit sal {foldersCount} vouers (en hul sketse) en {sketchesCount} ander sketse permanent uitvee.\n\nDit kan nie ongedaan gemaak word nie.",
-  "@deleteSelectionConfirmation": {
-    "placeholders": {
-      "foldersCount": {
-        "type": "int"
-      },
-      "sketchesCount": {
-        "type": "int"
-      }
-    }
-  },
   "deleteForever": "Vee vir altyd uit",
   "selectedCount": "{count} Gekies",
-  "@selectedCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@canvasStats": {
-    "placeholders": {
-      "notes": {
-        "type": "int"
-      },
-      "folders": {
-        "type": "int"
-      }
-    }
-  },
+  "canvasStats": "{notes} sketse • {folders} dopgehou",
   "sortItems": "Sorteer items",
   "sortNameAZ": "Naam (A-Z)",
   "sortNameZA": "Naam (Z-A)",
   "createFolder": "Skep gids",
   "folderNameHint": "Vouernaam...",
   "deleteSketchesConfirmation": "Vee {count} sketse uit? Dit kan nie ongedaan gemaak word nie.",
-  "@deleteSketchesConfirmation": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "noSketchesFound": "Geen sketse gevind nie",
-  "noSketchesFoundSub": "Probeer jou soektog aanpas of ''n nuwe skets skep.",
+  "noSketchesFoundSub": "Probeer jou soektog aanpas of 'n nuwe skets skep.",
   "searchInFolder": "Soek in {folder}...",
-  "@searchInFolder": {
-    "placeholders": {
-      "folder": {
-        "type": "String"
-      }
-    }
-  },
-  "@sketchesCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
+  "sketchesCount": "{count} sketse",
   "sortSketches": "Sorteer sketse",
   "calendarScreenTitle": "Kalender",
   "dailyActivity": "Daaglikse aktiwiteit",
@@ -450,13 +359,6 @@
   "moveToBinItem": "Skuif na Bin?",
   "moveToBinConfirmation": "Jy kan dit later herstel.",
   "selectedItems": "{count} Gekies",
-  "@selectedItems": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "recentClips": "Onlangse knipsels",
   "copied": "Gekopieer!",
   "copiedPlainText": "Gekopieerde gewone teks",
@@ -479,6 +381,7 @@
   "deletedItemsAppearHere": "Geskrap items sal hier verskyn.",
   "empty": "Leeg",
   "recent": "Onlangs",
+  "categoryLabel": "Kategorie: {category}",
   "general": "Algemeen",
   "saveTransactionQuestion": "Wil jy hierdie transaksie stoor?",
   "fillTitleAmount": "Vul asseblief titel en bedrag in",
@@ -514,14 +417,5 @@
   "healthScore": "Gesondheid telling",
   "healthScoreExplanation": "Hierdie telling is gebaseer op jou Spaarkoers.\n\n• > 50% gespaar = Uitstekend (100)\n• 0% gestoor = Gemiddeld (50)\n• Besteding > Inkomste = Swak (<50)",
   "ok": "OK",
-  "transactionsThisMonth": "{count} transaction{count, plural, =1{} other{s}} this month",
-  "attachmentCount": "{count} attachment{count, plural, =1{} other{s}}",
-  "error": "Error: {error}",
-  "errorSharing": "Error sharing: {error}",
-  "costCoins": "Cost: {cost} Coins",
-  "errorLoadingData": "Error loading data.\n\n{error}",
-  "exportDate": "📅 {date}",
-  "canvasStats": "{notes} sketches • {folders} folders",
-  "sketchesCount": "{count} sketches",
-  "categoryLabel": "Category: {category}"
+  "bulkImport": "Grootmaat Invoer"
 }

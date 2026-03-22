@@ -276,6 +276,7 @@ abstract class AppLocalizations {
     Locale('is', 'IS'),
     Locale('it'),
     Locale('it', 'CH'),
+    Locale('it', 'IT'),
     Locale('ja'),
     Locale('ja', 'JP'),
     Locale('ka'),
@@ -3312,6 +3313,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
         switch (locale.countryCode) {
           case 'CH':
             return AppLocalizationsItCh();
+          case 'IT':
+            return AppLocalizationsItIt();
         }
         break;
       }

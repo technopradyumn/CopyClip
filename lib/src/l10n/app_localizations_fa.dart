@@ -1383,493 +1383,497 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   AppLocalizationsFaIr() : super('fa_IR');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'تنظیمات';
 
   @override
-  String get language => 'Language';
+  String get language => 'زبان';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'پیش فرض سیستم';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'یادداشت ها';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'کارها';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'مخارج';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'مجله';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'تقویم';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'کلیپ بورد';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'بوم';
 
   @override
-  String get save => 'Save';
+  String get save => 'ذخیره کنید';
 
   @override
-  String get create => 'Create';
+  String get create => 'ایجاد کنید';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'لغو کنید';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'حذف کنید';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'ویرایش کنید';
 
   @override
-  String get share => 'Share';
+  String get share => 'به اشتراک بگذارید';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'کپی کنید';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'تغییرات ذخیره نشده';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'حذف را تایید کنید';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'دور انداختن';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'ایجاد پست';
 
   @override
-  String get post => 'Post';
+  String get post => 'ارسال کنید';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'ارسال به';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'چه چیزی در ذهن شماست؟';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'تصاویر را انتخاب کنید';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'ویدیو را انتخاب کنید';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'دوربین';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'گالری';
 
   @override
-  String get search => 'Search';
+  String get search => 'جستجو کنید';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'لطفاً یک کار وارد کنید';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'Task را حذف کنید';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'موارد را انتخاب کنید';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'حذف همه';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطا: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'سفارش فقط در \"همه پست ها\" موجود است';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'حذف پست';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'پست حذف شد';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'ویژگی های پرمیوم';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'سکه ها، تبلیغات و وضعیت حق بیمه را مدیریت کنید';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'حالت تم';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'رنگ تاکیدی';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'طراحی پس زمینه';
 
   @override
   String get pushNotifications => 'Push Notifications';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'سطل بازیافت';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'صادرات داده ها';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'وارد کردن داده ها';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'امتیاز دادن به برنامه';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'ارسال بازخورد';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'سیاست حفظ حریم خصوصی';
 
   @override
-  String get version => 'Version';
+  String get version => 'نسخه';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'شماره ساخت';
 
   @override
-  String get system => 'System';
+  String get system => 'سیستم';
 
   @override
-  String get light => 'Light';
+  String get light => 'نور';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'تاریک';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'مورد بازیابی شد';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'سطل بازیافت با موفقیت پاک شد';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'همه پست ها حذف شد';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'پست جدید';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
+      'متن در کلیپ بورد کپی شد (خط مشی فیس بوک)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'اشتراک‌گذاری TikTok به یک ویدیو/تصویر نیاز دارد';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'اشتراک‌گذاری خطا: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'به اشتراک گذاری در داستان $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'اشتراک‌گذاری در فید $platform';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'قفل را برای همیشه باز کنید';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'سکه کافی نیست!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'شما $amount سکه به دست آوردید!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'محتوا کپی شد';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'تاریخ و زمان را انتخاب کنید';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'آیا مطمئن هستید که می خواهید این پست را حذف کنید؟';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'پست های اجتماعی';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'تبلیغ برای کسب سکه را تماشا کنید';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'Premium آنلاک شد';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'تبلیغات را حذف کنید';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'فضای ذخیره سازی ابری نامحدود';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'حذف یادداشت';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'یادداشت را به اشتراک بگذارید';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'ویرایش یادداشت';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'جستجوی یادداشت ها...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'هیچ یادداشتی یافت نشد';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'افکار خود را فوراً ضبط کنید.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'یادداشت ایجاد کنید';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'سفارش سفارشی';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'جدیدترین اول';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'قدیمی ترین اول';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'عنوان: A-Z';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'عنوان: Z-A';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'همه حذف شود؟';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'همه یادداشت‌ها به سطل بازیافت منتقل شوند؟';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'حرکت به Bin؟';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'بعداً می‌توانید این یادداشت را بازیابی کنید.';
 
   @override
-  String get move => 'Move';
+  String get move => 'حرکت کنید';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'افکار من';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'انتخاب شده است';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'بدون محتوا';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'از بین 10+ کاغذ دیواری پویا انتخاب کنید';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'پشتیبان گیری از داده ها';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile => 'فایل JSON حاوی تمام داده های شما ذخیره شود؟';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'اکنون صادر کنید';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'وارد کردن داده ها';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'یک فایل پشتیبان را با موارد فعلی خود ادغام کنید؟';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'فایل را انتخاب کنید';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'پشتیبان گیری با موفقیت ذخیره شد!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'صادرات انجام نشد.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count مورد با موفقیت بازیابی شد!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'واردات انجام نشد.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'ویجت به صفحه اصلی اضافه شد!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'درخواست ویجت ارسال شد. لطفا صفحه اصلی خود را بررسی کنید.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'ویجت اضافه نشد';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'ذخیره خودکار فعال شد.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'ذخیره خودکار غیرفعال است.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'ابزارک های صفحه اصلی';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'اطلاعیه ها';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'داده و پشتیبان گیری';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'بازخورد و پشتیبانی';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'اعتبارات';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'حریم خصوصی و نگهداری';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'درباره';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'حق بیمه';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'ظاهر';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'کلیپ بورد';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'تجربه خود را سفارشی کنید';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'به CopyClip خوش آمدید';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'همدم بهره وری نهایی شما. بیایید شما را با ابزارهای قدرتمند برای مدیریت روزتان آماده کنیم.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'یادداشت های هوشمند';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'ایده ها را فوراً با قالب بندی متن غنی بگیرید. افکار خود را سازماندهی کنید و هرگز یک ایده عالی را از دست ندهید.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'مدیریت وظایف';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'در بالای بازی خود بمانید. فهرست کارها را ایجاد کنید، اولویت ها را تعیین کنید، و اهداف خود را یک علامت چک کنید.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'ردیابی هزینه';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'کنترل امور مالی خود را در دست بگیرید. درآمد و هزینه ها را به راحتی پیگیری کنید تا عادات خرج کردن خود را درک کنید.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'مجله شخصی';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'به روز خود فکر کنید فضایی خصوصی برای نوشتن خاطرات، احساسات و تجربیات روزانه خود.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'تقویم و رویدادها';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'هرگز لحظه ای را از دست نده. برنامه خود را سازماندهی کنید و رویدادهای مهم آینده را پیگیری کنید.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'مدیر کلیپ بورد';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'یکبار کپی کنید، هرجا پیست کنید. برای بازیابی قطعه‌هایی که قبلاً کپی کرده‌اید، به تاریخچه کلیپ‌بورد خود دسترسی داشته باشید.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'بوم خلاقانه';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'خلاقیت خود را آزاد کنید. ایده های خود را روی یک بوم دیجیتال با فرم آزاد ترسیم، ترسیم و تجسم کنید.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'یادداشت های خود را ایجاد و مدیریت کنید';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'وظایف خود را پیگیری کنید';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'بر هزینه های خود نظارت کنید';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'افکار خود را بنویسید';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'برنامه خود را سازماندهی کنید';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc =>
+      'به تاریخچه کلیپ بورد خود دسترسی داشته باشید';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'آزادانه طراحی و ترسیم کنید';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'پست اجتماعی';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'محتوای رسانه های اجتماعی جذاب ایجاد کنید';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'هاله خود را انتخاب کنید';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'خود را با یک رنگ تم جدید بیان کنید!';
 
   @override
-  String get level => 'Level';
+  String get level => 'سطح';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP به Level';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'رویدادهای آینده را بررسی کنید';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'یک طرح جدید شروع کنید';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'هیچ معامله ای در این ماه وجود ندارد';
 
   @override
   String transactionsThisMonth(num count) {
@@ -1879,205 +1883,207 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
       other: 's',
       one: '',
     );
-    return '$count transaction$_temp0 this month';
+    return '$count تراکنش$_temp0 در این ماه';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'ذخیره خودکار کلیپ بورد';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc =>
+      'موارد کپی شده را به صورت خودکار ذخیره کنید';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'اجازه برای همیشه رد شد. لطفا در تنظیمات فعال کنید.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'اعلان ها فعال شد!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'در حال تغییر مسیر به تنظیمات برای غیرفعال کردن اعلان‌ها...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'دسترسی پریمیوم';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'Premium Active تا';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'قفل تمام ویژگی ها را باز کنید';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'خرید حق بیمه (7 روز)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'هزینه: $cost سکه';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'Premium به مدت 7 روز فعال شد!';
 
   @override
   String get premiumActive => 'Premium Active';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'منقضی می شود:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'دسترسی موقت';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'مجله و بیان';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'طرح های هنری';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc => '10+ تم کارت مجله منحصر به فرد را باز کنید';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'چیدمان های ممتاز';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc => 'راه های انحصاری برای مشاهده خاطرات شما';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'تقویم و ابزار';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'تقویم کامل';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'سیستم مدیریت رویداد کامل';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'ضبط سابقه کلیپ بورد پس زمینه';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'ابزارک های حرفه ای';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'تمام ویژگی های موجود در صفحه اصلی شما';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'داده و صادرات';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'پشتیبان گیری پیشرفته';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'واردات / صادرات امن تمام داده ها';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'صادرات PDF';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'یادداشت ها و مجلات را به PDF صادر کنید';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'آماده چاپ';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'پشتیبانی مستقیم از چاپ';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'ویرایشگر متن غنی';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'جستجوی پیشرفته';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'جستجو و جایگزینی در متن خود';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'رسانه های غنی';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'درج تصاویر، ویدیوها و پیوندها';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'استایل ویرایشگر';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'متن سفارشی و پس زمینه ویرایشگر';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'تعادل';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'در حال بارگیری آگهی...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'تماشای آگهی (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'بارگذاری آگهی';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'یک فایل JSON از داده های خود را ذخیره کنید';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'یک فایل پشتیبان را در CopyClip ادغام کنید';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied => 'مجوز اعلان رد شد.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'یک کار جدید تایپ کنید...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'یک کار اضافه کنید';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'تکمیل شد';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'کار عالی!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'شما $amount XP کسب کردید! کار بعدی: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'کار تکمیل شد! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'همه وظایف فعال به سطل بازیافت منتقل شوند؟';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'حذف همه پست ها';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'آیا مطمئن هستید که می خواهید همه پست های اجتماعی را حذف کنید؟ این قابل واگرد نیست.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'همه پست ها';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'موارد دلخواه';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'پیش نویس ها';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'هنوز موارد دلخواه وجود ندارد';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'هنوز هیچ پیش نویسی وجود ندارد';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'سفر اجتماعی خود را شروع کنید!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'پیش نویس';
 
   @override
   String attachmentCount(num count) {
@@ -2091,261 +2097,261 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent =>
+      'لطفاً مقداری محتوا یا رسانه برای اشتراک گذاری اضافه کنید';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'خطا: فایل در $path یافت نشد';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'برنامه فیس بوک را بررسی کنید';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'اشتراک گذاری سیستم';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'پست اجتماعی';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'مورد علاقه';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'ذخیره پیش نویس';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'ورودی کپی شد';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'همه ورودی های فعال به سطل بازیافت منتقل شوند؟';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'شروع به نوشتن داستان خود کنید';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'خاطرات و احساسات روزانه خود را ثبت کنید.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'مجله بنویس';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'خاطرات من';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'مرتب سازی مجله';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'با خلق و خو';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'جستجوی خاطرات...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'همه را انتخاب کنید';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'حذف انتخاب شده';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'کار تکمیل شد!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'کار ناتمام';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'کلیپ بورد به روز شد!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'بریده‌دان ذخیره شد: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'نمای کلی';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'شفق قطبی';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'کیهانی';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'سحابی';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'نور ستاره';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'خورشیدی';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'جدید';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'در حال بارگیری...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'راه اندازی پایگاه داده...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'پیکربندی سیستم ...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'آماده است';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'همراه بهره وری شما';
 
   @override
-  String get done => 'Done';
+  String get done => 'انجام شد';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'یادداشت جدید';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'تغییر رنگ';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'مطالب را کپی کنید';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'عنوان (اختیاری)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'صادرات به صورت PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'تکلیف سررسید';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'وظیفه به سطل بازیافت منتقل شود؟';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'می توانید این کار را بعداً از تنظیمات بازیابی کنید.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'وظیفه جدید';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'ویرایش وظیفه';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'واگرد';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'دوباره انجام دهید';
 
   @override
-  String get category => 'Category';
+  String get category => 'دسته بندی';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'به عنوان مثال کار، ورزشگاه';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'چه کاری باید انجام شود؟';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'جزئیات کار را وارد کنید...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'تعیین تاریخ سررسید';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'دو تاریخ';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'مخارج';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'جستجو در $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'مرتب سازی و فیلتر کردن';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'مرتب سازی بر اساس';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'بالاترین مقدار';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'کمترین مقدار';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'فیلترهای بیشتر...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'هزینه های فیلتر';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'نوع معامله';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'دسته بندی ها';
 
   @override
-  String get all => 'All';
+  String get all => 'همه';
 
   @override
-  String get income => 'Income';
+  String get income => 'درآمد';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'هزینه';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'بازنشانی کنید';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'درخواست کنید';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جدید $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'خطا در بارگیری داده ها.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+  String get dailyQuote1 => 'بهترین راه برای پیش بینی آینده، ساختن آن است.';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'ثروت در داشتن دارایی های بزرگ نیست، بلکه در داشتن خواسته های کم است.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'زمان ارز نهایی است.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'موفقیت نهایی نیست، شکست کشنده نیست.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'روی راه حل تمرکز کنید نه مشکل.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'شبکه شما ارزش خالص شماست.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'شاد';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'هیجان زده';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'خنثی';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'غمگین';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'استرس گرفت';
 
   @override
   String exportDate(String date) {
@@ -2354,389 +2360,394 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'حالت: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'عنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return 'برچسب‌ها: $tags';
   }
 
   @override
-  String get instagram => 'Instagram';
+  String get instagram => 'اینستاگرام';
 
   @override
-  String get facebook => 'Facebook';
+  String get facebook => 'فیس بوک';
 
   @override
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'طرح جدید';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'جستجوی طرح ها و پوشه ها...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'هیچ نتیجه ای یافت نشد';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'هیچ موردی وجود ندارد';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'هنوز نقشه ای وجود ندارد';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'خلاقیت خود را بر روی بوم رها کنید!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'بوم جدید';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'تغییر نام دهید';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'حذف پوشه';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'طرح ها حذف شود؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'تمام طرح های موجود در این پوشه برای همیشه حذف می شوند.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'تغییر نام پوشه';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'رنگ را انتخاب کنید';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'پوشه حذف شود؟';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'جستجوی کلیپ ها...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'بریده‌دان خالی است';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'آیتم را اضافه کنید';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'رنگ کلیپ';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'کلیپ جدید';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'ویرایش کلیپ';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'بعداً می توانید این کلیپ را بازیابی کنید.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'رویدادهای آینده';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'توزیع داده ها';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'پیشرفت کار';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'آمار سریع';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'تکمیل کار';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'هیچ موردی برای این تاریخ وجود ندارد';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'از اوقات فراغت خود لذت ببرید!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'جستجو در این روز ...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'امور مالی';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'برای همیشه حذف شود؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'با این کار پوشه‌های $foldersCount (و طرح‌های آنها) و طرح‌های دیگر $sketchesCount برای همیشه حذف می‌شوند.\n\nاین قابل واگرد نیست.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'حذف برای همیشه';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count انتخاب شد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return 'طرح‌های $notes • پوشه‌های $folders';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'مرتب سازی موارد';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'نام (A-Z)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'نام (Z-A)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'پوشه ایجاد کنید';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'نام پوشه ...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'طرح $count حذف شود؟ این قابل واگرد نیست.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'هیچ طرحی یافت نشد';
 
   @override
   String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+      'سعی کنید جستجوی خود را تنظیم کنید یا یک طرح جدید ایجاد کنید.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'جستجو در $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count طرح';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'طرح ها را مرتب کنید';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'تقویم';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'فعالیت روزانه';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'مورد حذف شود؟';
 
   @override
   String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+      'این مورد را به سطل بازیافت منتقل می کند.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'حرکت به Bin؟';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'بعدا می توانید آن را بازیابی کنید.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count انتخاب شد';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'کلیپ های اخیر';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'کپی شده!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'متن ساده کپی شد';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'تم کلیپ';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'همین الان';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return '$count دقیقه پیش';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return '$countساعت قبل';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return '$count روز پیش';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'هیچ کاری پیدا نشد';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'جستجوی وظایف...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'یادآوری کار';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'یادداشت بدون عنوان';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'ورودی روزانه';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'تاریخچه کلیپ بورد';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'این عمل قابل لغو نیست.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'سطل بازیافت خالی؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'همه $count مورد برای همیشه حذف خواهند شد.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'سطل خالی';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'سطل بازیافت خالی است';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'موارد حذف شده در اینجا ظاهر می شوند.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'خالی';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'اخیر';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'دسته: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'ژنرال';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion =>
+      'آیا می خواهید این تراکنش را ذخیره کنید؟';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'لطفا عنوان و مبلغ را وارد کنید';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'قالب مبلغ نامعتبر است';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'تراکنش به سطل بازیافت منتقل شود؟';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'بعداً می‌توانید این تراکنش را از تنظیمات بازیابی کنید.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'معامله جدید';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'این برای چیست؟';
 
   @override
-  String get description => 'Description';
+  String get description => 'توضیحات';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'روزانه';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'هفتگی';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'ماهانه';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'سالانه';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'درآمد کل';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'کل هزینه';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'تجزیه و تحلیل';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'معاملات';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'هیچ هزینه ای برای این دوره پیدا نشد.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'موجودی خالص';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'دسته بندی های برتر';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'روند خرج کردن';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'بینش ها';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'هیچ هزینه ای ثبت نشده است';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits =>
+      'عادات خرج کردن خود را به راحتی پیگیری کنید.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'اضافه کردن هزینه';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'هیچ داده ای برای این دوره وجود ندارد';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'بودجه';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'صرف کرد';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'محدود کنید';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'بیش از بودجه!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return '$percent% باقی مانده است';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'نرخ پس انداز';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'نمره سلامتی';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'این امتیاز بر اساس نرخ پس انداز شما است.\n\n• > 50% ذخیره شده = عالی (100)\n• 0% ذخیره شده = میانگین (50)\n• هزینه > درآمد = ضعیف (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'باشه';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

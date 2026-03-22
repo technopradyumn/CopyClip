@@ -2731,6 +2731,9 @@ class AppLocalizationsSrCyrl extends AppLocalizationsSr {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Serbian, using the Latin script (`sr_Latn`).
@@ -4094,4 +4097,7 @@ class AppLocalizationsSrLatn extends AppLocalizationsSr {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

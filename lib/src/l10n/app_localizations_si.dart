@@ -2731,4 +2731,7 @@ class AppLocalizationsSiLk extends AppLocalizationsSi {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

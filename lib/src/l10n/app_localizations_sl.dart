@@ -2731,4 +2731,7 @@ class AppLocalizationsSlSi extends AppLocalizationsSl {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

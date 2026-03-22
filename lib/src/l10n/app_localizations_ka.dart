@@ -9,969 +9,970 @@ class AppLocalizationsKa extends AppLocalizations {
   AppLocalizationsKa([String locale = 'ka']) : super(locale);
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'პარამეტრები';
 
   @override
-  String get language => 'Language';
+  String get language => 'ენა';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'სისტემური სტანდარტი';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'შენიშვნები';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'დავალებები';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'ხარჯები';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'ჟურნალი';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'კალენდარი';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'ბუფერი';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'ტილო';
 
   @override
-  String get save => 'Save';
+  String get save => 'შენახვა';
 
   @override
-  String get create => 'Create';
+  String get create => 'შექმნა';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'გაუქმება';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'წაშლა';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'რედაქტირება';
 
   @override
-  String get share => 'Share';
+  String get share => 'გაზიარება';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'კოპირება';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'შეუნახავი ცვლილებები';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'წაშლის დადასტურება';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'უარყოფა';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'პოსტის შექმნა';
 
   @override
-  String get post => 'Post';
+  String get post => 'გამოქვეყნება';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'ქვეყნდება აქ:';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'რაზე ფიქრობთ?';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'სურათების არჩევა';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'ვიდეოს არჩევა';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'კამერა';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'გალერეა';
 
   @override
-  String get search => 'Search';
+  String get search => 'ძებნა';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'გთხოვთ, შეიყვანოთ დავალება';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'დავალების წაშლა';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'ელემენტების არჩევა';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'ყველას წაშლა';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'შეცდომა: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'დახარისხება ხელმისაწვდომია მხოლოდ \'ყველა პოსტში\'';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'პოსტის წაშლა';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'პოსტი წაშლილია';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'პრემიუმ ფუნქციები';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'მონეტების, რეკლამების და პრემიუმ სტატუსის მართვა';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'თემის რეჟიმი';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'აქცენტის ფერი';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'ფონის დიზაინი';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'შეტყობინებები';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'ნაგვის ყუთი';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'მონაცემების ექსპორტი';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'მონაცემების იმპორტი';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'აპლიკაციის შეფასება';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'უკუკავშირის გაგზავნა';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'კონფიდენციალურობის პოლიტიკა';
 
   @override
-  String get version => 'Version';
+  String get version => 'ვერსია';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'Build ნომერი';
 
   @override
-  String get system => 'System';
+  String get system => 'სისტემა';
 
   @override
-  String get light => 'Light';
+  String get light => 'ნათელი';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'ბნელი';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'ელემენტი აღდგენილია';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'ნაგვის ყუთი წარმატებით გასუფთავდა';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'ყველა პოსტი წაშლილია';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'ახალი პოსტი';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
+      'ტექსტი კოპირებულია (Facebook-ის პოლიტიკა)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'TikTok-ზე გასაზიარებლად საჭიროა ვიდეო ან სურათი';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'გაზიარების შეცდომა: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'გაზიარება $platform Story-ში';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'გაზიარება $platform Feed-ში';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'სამუდამოდ განბლოკვა';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'არ არის საკმარისი მონეტა!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'თქვენ დაიმსახურეთ $amount მონეტა!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'კონტენტი კოპირებულია';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'აირჩიეთ თარიღი და დრო';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'დარწმუნებული ხართ, რომ გსურთ ამ პოსტის წაშლა?';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'სოციალური პოსტები';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'უყურეთ რეკლამას მონეტების მისაღებად';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'პრემიუმი განბლოკილია';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'რეკლამების მოცილება';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'ულიმიტო ღრუბლოვანი მეხსიერება';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'შენიშვნის წაშლა';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'შენიშვნის გაზიარება';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'შენიშვნის რედაქტირება';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'შენიშვნების ძებნა...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'შენიშვნები ვერ მოიძებნა';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'ჩაიწერეთ თქვენი აზრები მომენტალურად.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'შენიშვნის შექმნა';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'მორგებული რიგი';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'ჯერ ახალი';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'ჯერ ძველი';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'სათაური: ა-ჰ';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'სათაური: ჰ-ა';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'წაიშალოს ყველაფერი?';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'გადავიდეს ყველა შენიშვნა ნაგვის ყუთში?';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'გადავიდეს ნაგვის ყუთში?';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater =>
+      'თქვენ შეგიძლიათ აღადგინოთ ეს შენიშვნა მოგვიანებით.';
 
   @override
-  String get move => 'Move';
+  String get move => 'გადატანა';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'ჩემი აზრები';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'არჩეული';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'კონტენტი არ არის';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'უსათაურო';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'აირჩიეთ 10+ დინამიური ფონიდან';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'მონაცემთა სარეზერვო ასლი';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile =>
+      'გსურთ შეინახოთ JSON ფაილი თქვენი ყველა მონაცემით?';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'ექსპორტი ახლა';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'მონაცემთა იმპორტი';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'გსურთ სარეზერვო ფაილის გაერთიანება არსებულ ელემენტებთან?';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'ფაილის არჩევა';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'სარეზერვო ასლი წარმატებით შენახულია!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'ექსპორტი ვერ მოხერხდა.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count ელემენტი წარმატებით აღდგა!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'იმპორტი ვერ მოხერხდა.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'ვიჯეტი დაემატა მთავარ ეკრანს!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'ვიჯეტის მოთხოვნა გაგზავნილია. შეამოწმეთ თქვენი მთავარი ეკრანი.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'ვიჯეტის დამატება ვერ მოხერხდა';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'ავტომატური შენახვა ჩართულია.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'ავტომატური შენახვა გამორთულია.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'მთავარი ეკრანის ვიჯეტები';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'შეტყობინებები';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'მონაცემები და სარეზერვო ასლი';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'უკუკავშირი და მხარდაჭერა';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'კრედიტები';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'კონფიდენციალურობა და მომსახურება';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'შესახებ';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'პრემიუმი';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'გარეგნობა';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'ბუფერი';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'მოარგეთ თქვენი გამოცდილება';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'მოგესალმებით CopyClip-ში';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'თქვენი საუკეთესო პროდუქტიულობის კომპანიონი. მოვემზადოთ მძლავრი ხელსაწყოებით თქვენი დღის სამართავად.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'ჭკვიანი შენიშვნები';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'ჩაიწერეთ იდეები მომენტალურად ტექსტის ფორმატირებით. დაალაგეთ თქვენი აზრები და არასოდეს დაკარგოთ კარგი იდეა.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'დავალებების მართვა';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'იყავით მოვლენების ეპიცენტრში. შექმენით დავალებების სიები, განსაზღვრეთ პრიორიტეტები და მიაღწიეთ მიზნებს.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'ხარჯების კონტროლი';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'აკონტროლეთ თქვენი ფინანსები. მარტივად ადევნეთ თვალი შემოსავლებსა და ხარჯებს.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'პირადი ჟურნალი';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'გააანალიზეთ თქვენი დღე. პირადი სივრცე თქვენი მოგონებების, გრძნობების და ყოველდღიური გამოცდილების ჩასაწერად.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'კალენდარი და მოვლენები';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'არასოდეს გამოტოვოთ მომენტი. დააორგანიზეთ თქვენი განრიგი და თვალი ადევნეთ მნიშვნელოვან მოვლენებს.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'ბუფერის მენეჯერი';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'დააკოპირეთ ერთხელ, ჩასვით ყველგან. წვდომა ბუფერის ისტორიასთან ადრე კოპირებული ფრაგმენტების ამოსაღებად.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'კრეატიული ტილო';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'გამოავლინეთ თქვენი კრეატიულობა. ხატეთ, ჩაინიშნეთ და მოახდინეთ იდეების ვიზუალიზაცია ციფრულ ტილოზე.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'შექმენით და მართეთ თქვენი შენიშვნები';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'თვალი ადევნეთ თქვენს დავალებებს';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'აკონტროლეთ თქვენი ხარჯები';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'ჩაწერეთ თქვენი აზრები';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'დააორგანიზეთ თქვენი განრიგი';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'წვდომა ბუფერის ისტორიასთან';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'ხატეთ და ჩაინიშნეთ თავისუფლად';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'სოციალური პოსტი';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'შექმენით მიმზიდველი კონტენტი სოციალური მედიისთვის';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'აირჩიეთ თქვენი აურა';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'გამოხატეთ თქვენი თავი თემის ახალი ფერით!';
 
   @override
-  String get level => 'Level';
+  String get level => 'დონე';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP შემდეგ დონემდე';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'შეამოწმეთ მომავალი მოვლენები';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'დაიწყეთ ახალი ესკიზი';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'ამ თვეში ტრანზაქციები არ არის';
 
   @override
   String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
+    return '$count ტრანზაქცია ამ თვეში';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'ბუფერის ავტომატური შენახვა';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc =>
+      'კოპირებული ელემენტების ავტომატური შენახვა';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'წვდომა სამუდამოდ უარყოფილია. გთხოვთ, ჩართოთ პარამეტრებიდან.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'შეტყობინებები ჩართულია!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'პარამეტრებზე გადამისამართება შეტყობინებების გამოსართავად...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'პრემიუმ წვდომა';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'პრემიუმი აქტიურია:';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'ყველა ფუნქციის განბლოკვა';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'პრემიუმის ყიდვა (7 დღე)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'ღირებულება: $cost მონეტა';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'პრემიუმი გააქტიურდა 7 დღით!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'პრემიუმი აქტიურია';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'იწურება:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'დროებითი წვდომა';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'ჟურნალი და გამოხატვა';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'არტისტული დიზაინები';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'განბლოკეთ 10-ზე მეტი უნიკალური ჟურნალის ბარათის თემა';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'პრემიუმ განლაგებები';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc =>
+      'თქვენი მოგონებების ნახვის ექსკლუზიური გზები';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'კალენდარი და ხელსაწყოები';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'სრული კალენდარი';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'მოვლენების მართვის სრული სისტემა';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'ბუფერის ისტორიის ფონური ჩაწერა';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'Pro ვიჯეტები';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc =>
+      'ყველა ფუნქცია ხელმისაწვდომია თქვენს მთავარ ეკრანზე';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'მონაცემები და ექსპორტი';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'გაფართოებული რეზერვირება';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'ყველა მონაცემის უსაფრთხო იმპორტი/ექსპორტი';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'PDF ექსპორტი';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'შენიშვნების და ჟურნალების ექსპორტი PDF-ში';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'ბეჭდვისთვის მზადყოფნა';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'პირდაპირი ბეჭდვის მხარდაჭერა';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'Rich Text რედაქტორი';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'გაფართოებული ძებნა';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'ძებნა და ჩანაცვლება ტექსტში';
 
   @override
   String get richMedia => 'Rich Media';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'სურათების, ვიდეოების და ბმულების ჩასმა';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'რედაქტორის სტილი';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'ტექსტის და რედაქტორის მორგებული ფონი';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'ბალანსი';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'რეკლამა იტვირთება...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'უყურეთ რეკლამას (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'რეკლამის ჩატვირთვა';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'შეინახეთ თქვენი მონაცემების JSON ფაილი';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'სარეზერვო ფაილის გაერთიანება CopyClip-თან';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied =>
+      'შეტყობინებებზე წვდომა უარყოფილია.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'ჩაწერეთ ახალი დავალება...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'დავალების დამატება';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'დასრულებული';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'კარგი სამუშაოა!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'თქვენ დაიმსახურეთ $amount XP! შემდეგი დავალება: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'დავალება დასრულდა! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'გადავიდეს ყველა აქტიური დავალება ნაგვის ყუთში?';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'ყველა პოსტის წაშლა';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'დარწმუნებული ხართ, რომ გსურთ ყველა სოციალური პოსტის წაშლა? მოქმედების გაუქმება შეუძლებელია.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'ყველა პოსტი';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'რჩეულები';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'შავნახატები';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'ჯერ არ არის რჩეულები';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'ჯერ არ არის შავნახატები';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'დაიწყეთ თქვენი სოციალური მოგზაურობა!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'შავნახატი';
 
   @override
   String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
+    return '$count მიმაგრებული ფაილი';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent => 'გთხოვთ, დაამატოთ კონტენტი გასაზიარებლად';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'შეცდომა: ფაილი ვერ მოიძებნა აქ: $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'შეამოწმეთ Facebook აპლიკაცია';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'სისტემური გაზიარება';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'სოციალური პოსტი';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'რჩეული';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'შავნახატის შენახვა';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'ჩანაწერი კოპირებულია';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'გადავიდეს ყველა აქტიური ჩანაწერი ნაგვის ყუთში?';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'დაიწყეთ თქვენი ისტორიის წერა';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories =>
+      'ჩაიწერეთ თქვენი ყოველდღიური მოგონებები და გრძნობები.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'ჟურნალის წერა';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'ჩემი მოგონებები';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'ჟურნალის დახარისხება';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'განწყობის მიხედვით';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'მოგონებების ძებნა...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'ყველას არჩევა';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'არჩეულების წაშლა';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'დავალება დასრულდა!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'დავალება დაუსრულებელია';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'ბუფერი განახლდა!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'ბუფერში შენახულია: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'მიმოხილვა';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'ავრორა';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'კოსმიური';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'ნებულა';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'ვარსკვლავური ნათება';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'მზის';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'ნოვა';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'იტვირთება...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'მონაცემთა ბაზის მომზადება...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'სისტემის კონფიგურაცია...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'მზად არის';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'თქვენი პროდუქტიულობის კომპანიონი';
 
   @override
-  String get done => 'Done';
+  String get done => 'მზად არის';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'ახალი შენიშვნა';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'ფერის შეცვლა';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'კონტენტის კოპირება';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'სათაური (არასავალდებულო)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'ექსპორტი PDF-ში';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'დავალების ვადა იწურება ახლა';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'გადავიდეს დავალება ნაგვის ყუთში?';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'თქვენ შეგიძლიათ აღადგინოთ ეს დავალება პარამეტრებიდან.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'ახალი დავალება';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'დავალების რედაქტირება';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'დაბრუნება';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'წინ გადასვლა';
 
   @override
-  String get category => 'Category';
+  String get category => 'კატეგორია';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'მაგ. სამუშაო, დარბაზი';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'რა არის გასაკეთებელი?';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'შეიყვანეთ დავალების დეტალები...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'ვადის დაყენება';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'ვადის თარიღი';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'ხარჯები';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'ძებნა $currency-ში...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'დახარისხება და ფილტრი';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'დახარისხება:';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'ყველაზე მაღალი თანხა';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'ყველაზე დაბალი თანხა';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'მეტი ფილტრი...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'ხარჯების ფილტრი';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'ტრანზაქციის ტიპი';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'კატეგორიები';
 
   @override
-  String get all => 'All';
+  String get all => 'ყველა';
 
   @override
-  String get income => 'Income';
+  String get income => 'შემოსავალი';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'ხარჯი';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'გასუფთავება';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'გამოყენება';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'ახალი $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'მონაცემების ჩატვირთვის შეცდომა.\n\n$error';
   }
 
   @override
   String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+      'მომავლის წინასწარმეტყველების საუკეთესო გზა მისი შექმნაა.';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'სიმდიდრე დიდ ქონებაში კი არ არის, არამედ მცირე მოთხოვნილებებში.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'დრო არის უმთავრესი ვალუტა.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 =>
+      'წარმატება არ არის საბოლოო, მარცხი არ არის ფატალური.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'ფოკუსირდით გამოსავალზე და არა პრობლემაზე.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'თქვენი კავშირები თქვენი კაპიტალია.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'ბედნიერი';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'აღფრთოვანებული';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'ნეიტრალური';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'სევდიანი';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'დასტრესილი';
 
   @override
   String exportDate(String date) {
@@ -980,17 +981,17 @@ class AppLocalizationsKa extends AppLocalizations {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'განწყობა: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'სათაური: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nტეგები: $tags';
   }
 
   @override
@@ -1003,368 +1004,370 @@ class AppLocalizationsKa extends AppLocalizations {
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'ახალი ესკიზი';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'ძებნა ესკიზებსა და საქაღალდეებში...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'შედეგები ვერ მოიძებნა';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'ელემენტები არ არის';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'ნახატები ჯერ არ არის';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'გამოავლინეთ თქვენი კრეატიულობა ტილოზე!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'ახალი ტილო';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'სახელის შეცვლა';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'საქაღალდის წაშლა';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'წაიშალოს ესკიზები?';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'ამ საქაღალდეში არსებული ყველა ესკიზი სამუდამოდ წაიშლება.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'საქაღალდის სახელის შეცვლა';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'ფერის არჩევა';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'წაიშალოს საქაღალდე?';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'კლიპების ძებნა...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'ბუფერი ცარიელია';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'ელემენტის დამატება';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'კლიპის ფერი';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'ახალი კლიპი';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'კლიპის რედაქტირება';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater =>
+      'თქვენ შეგიძლიათ აღადგინოთ ეს კლიპი მოგვიანებით.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'მომავალი მოვლენები';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'მონაცემთა განაწილება';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'დავალებების პროგრესი';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'სწრაფი სტატისტიკა';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'დავალებების შესრულება';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'ამ თარიღისთვის ელემენტები არ არის';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'ისიამოვნეთ თავისუფალი დროით!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'ძებნა ამ დღეს...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'ფინანსები';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'წაიშალოს სამუდამოდ?';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'ეს სამუდამოდ წაშლის $foldersCount საქაღალდეს (და მათში არსებულ ესკიზებს) და კიდევ $sketchesCount ესკიზს.\n\nმოქმედების გაუქმება შეუძლებელია.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'სამუდამოდ წაშლა';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count არჩეული';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes ესკიზი • $folders საქაღალდე';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'დახარისხება';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'სახელი (ა-ჰ)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'სახელი (ჰ-ა)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'საქაღალდის შექმნა';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'საქაღალდის სახელი...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'წაიშალოს $count ესკიზი? მოქმედების გაუქმება შეუძლებელია.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'ესკიზები ვერ მოიძებნა';
 
   @override
   String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+      'სცადეთ ძებნის შეცვლა ან ახალი ესკიზის შექმნა.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'ძებნა $folder-ში...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count ესკიზი';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'ესკიზების დახარისხება';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'კალენდარი';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'დღიური აქტივობა';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'წაიშალოს ელემენტი?';
 
   @override
-  String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+  String get deleteItemConfirmation => 'ეს ელემენტს გადაიტანს ნაგვის ყუთში.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'გადავიდეს ნაგვის ყუთში?';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation =>
+      'თქვენ შეგიძლიათ მისი აღდგენა მოგვიანებით.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count არჩეული';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'ბოლო კლიპები';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'კოპირებულია!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'უბრალო ტექსტი კოპირებულია';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'კლიპის თემა';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'ახლავე';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return '$count წთ წინ';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return '$count სთ წინ';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return '$count დღის წინ';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'დავალებები ვერ მოიძებნა.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'დავალებების ძებნა...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'დავალების შეხსენება';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'უსათაურო შენიშვნა';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'დღიური ჩანაწერი';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'ბუფერის ისტორია';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'ეს მოქმედება შეუქცევადია.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'გასუფთავდეს ნაგვის ყუთი?';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'ყველა ($count) ელემენტი სამუდამოდ წაიშლება.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'ყუთის გასუფთავება';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'ნაგვის ყუთი ცარიელია';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'წაშლილი ელემენტები აქ გამოჩდება.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'ცარიელი';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'ბოლო';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'კატეგორია: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'ზოგადი';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'გსურთ ამ ტრანზაქციის შენახვა?';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'გთხოვთ, შეავსოთ სათაური და თანხა';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'თანხის არასწორი ფორმატი';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'გადავიდეს ტრანზაქცია ნაგვის ყუთში?';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'თქვენ შეგიძლიათ აღადგინოთ ეს ტრანზაქცია მოგვიანებით პარამეტრებიდან.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'ახალი ტრანზაქცია';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'რისთვის არის ეს?';
 
   @override
-  String get description => 'Description';
+  String get description => 'აღწერა';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'ყოველდღიური';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'ყოველკვირეული';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'ყოველთვიური';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'ყოველწლიური';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'მთლიანი შემოსავალი';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'მთლიანი ხარჯი';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'ანალიზი';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'ტრანზაქციები';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'ამ პერიოდში ხარჯები ვერ მოიძებნა.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'წმინდა ბალანსი';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'ტოპ კატეგორიები';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'ხარჯვის ტრენდი';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'ინსაიტები';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'ხარჯები არ არის ჩაწერილი';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits =>
+      'მარტივად ადევნეთ თვალი თქვენს ხარჯვის ჩვევებს.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'ხარჯის დამატება';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'მონაცემები ამ პერიოდისთვის არ არის';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'ბიუჯეტი';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'დახარჯული';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'ლიმიტი';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'ბიუჯეტს გადაცილებულია!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return 'დარჩენილია $percent%';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'დაზოგვის მაჩვენებელი';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'ჯანმრთელობის ქულა';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'ეს ქულა ეფუძნება თქვენს დაზოგვის მაჩვენებელს.\n\n• > 50% დაზოგილი = შესანიშნავი (100)\n• 0% დაზოგილი = საშუალო (50)\n• ხარჯი > შემოსავალი = ცუდი (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'კარგი';
 
   @override
   String get bulkImport => 'Bulk Import';
@@ -1375,969 +1378,970 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   AppLocalizationsKaGe() : super('ka_GE');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'პარამეტრები';
 
   @override
-  String get language => 'Language';
+  String get language => 'ენა';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'სისტემური სტანდარტი';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'შენიშვნები';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'დავალებები';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'ხარჯები';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'ჟურნალი';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'კალენდარი';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'ბუფერი';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'ტილო';
 
   @override
-  String get save => 'Save';
+  String get save => 'შენახვა';
 
   @override
-  String get create => 'Create';
+  String get create => 'შექმნა';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'გაუქმება';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'წაშლა';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'რედაქტირება';
 
   @override
-  String get share => 'Share';
+  String get share => 'გაზიარება';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'კოპირება';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'შეუნახავი ცვლილებები';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'წაშლის დადასტურება';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'უარყოფა';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'პოსტის შექმნა';
 
   @override
-  String get post => 'Post';
+  String get post => 'გამოქვეყნება';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'ქვეყნდება აქ:';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'რაზე ფიქრობთ?';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'სურათების არჩევა';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'ვიდეოს არჩევა';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'კამერა';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'გალერეა';
 
   @override
-  String get search => 'Search';
+  String get search => 'ძებნა';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'გთხოვთ, შეიყვანოთ დავალება';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'დავალების წაშლა';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'ელემენტების არჩევა';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'ყველას წაშლა';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'შეცდომა: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'დახარისხება ხელმისაწვდომია მხოლოდ \'ყველა პოსტში\'';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'პოსტის წაშლა';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'პოსტი წაშლილია';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'პრემიუმ ფუნქციები';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'მონეტების, რეკლამების და პრემიუმ სტატუსის მართვა';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'თემის რეჟიმი';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'აქცენტის ფერი';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'ფონის დიზაინი';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'შეტყობინებები';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'ნაგვის ყუთი';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'მონაცემების ექსპორტი';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'მონაცემების იმპორტი';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'აპლიკაციის შეფასება';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'უკუკავშირის გაგზავნა';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'კონფიდენციალურობის პოლიტიკა';
 
   @override
-  String get version => 'Version';
+  String get version => 'ვერსია';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'Build ნომერი';
 
   @override
-  String get system => 'System';
+  String get system => 'სისტემა';
 
   @override
-  String get light => 'Light';
+  String get light => 'ნათელი';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'ბნელი';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'ელემენტი აღდგენილია';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'ნაგვის ყუთი წარმატებით გასუფთავდა';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'ყველა პოსტი წაშლილია';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'ახალი პოსტი';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
+      'ტექსტი კოპირებულია (Facebook-ის პოლიტიკა)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'TikTok-ზე გასაზიარებლად საჭიროა ვიდეო ან სურათი';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'გაზიარების შეცდომა: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'გაზიარება $platform Story-ში';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'გაზიარება $platform Feed-ში';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'სამუდამოდ განბლოკვა';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'არ არის საკმარისი მონეტა!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'თქვენ დაიმსახურეთ $amount მონეტა!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'კონტენტი კოპირებულია';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'აირჩიეთ თარიღი და დრო';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'დარწმუნებული ხართ, რომ გსურთ ამ პოსტის წაშლა?';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'სოციალური პოსტები';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'უყურეთ რეკლამას მონეტების მისაღებად';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'პრემიუმი განბლოკილია';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'რეკლამების მოცილება';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'ულიმიტო ღრუბლოვანი მეხსიერება';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'შენიშვნის წაშლა';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'შენიშვნის გაზიარება';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'შენიშვნის რედაქტირება';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'შენიშვნების ძებნა...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'შენიშვნები ვერ მოიძებნა';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'ჩაიწერეთ თქვენი აზრები მომენტალურად.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'შენიშვნის შექმნა';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'მორგებული რიგი';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'ჯერ ახალი';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'ჯერ ძველი';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'სათაური: ა-ჰ';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'სათაური: ჰ-ა';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'წაიშალოს ყველაფერი?';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'გადავიდეს ყველა შენიშვნა ნაგვის ყუთში?';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'გადავიდეს ნაგვის ყუთში?';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater =>
+      'თქვენ შეგიძლიათ აღადგინოთ ეს შენიშვნა მოგვიანებით.';
 
   @override
-  String get move => 'Move';
+  String get move => 'გადატანა';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'ჩემი აზრები';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'არჩეული';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'კონტენტი არ არის';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'უსათაურო';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'აირჩიეთ 10+ დინამიური ფონიდან';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'მონაცემთა სარეზერვო ასლი';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile =>
+      'გსურთ შეინახოთ JSON ფაილი თქვენი ყველა მონაცემით?';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'ექსპორტი ახლა';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'მონაცემთა იმპორტი';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'გსურთ სარეზერვო ფაილის გაერთიანება არსებულ ელემენტებთან?';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'ფაილის არჩევა';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'სარეზერვო ასლი წარმატებით შენახულია!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'ექსპორტი ვერ მოხერხდა.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count ელემენტი წარმატებით აღდგა!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'იმპორტი ვერ მოხერხდა.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'ვიჯეტი დაემატა მთავარ ეკრანს!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'ვიჯეტის მოთხოვნა გაგზავნილია. შეამოწმეთ თქვენი მთავარი ეკრანი.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'ვიჯეტის დამატება ვერ მოხერხდა';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'ავტომატური შენახვა ჩართულია.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'ავტომატური შენახვა გამორთულია.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'მთავარი ეკრანის ვიჯეტები';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'შეტყობინებები';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'მონაცემები და სარეზერვო ასლი';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'უკუკავშირი და მხარდაჭერა';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'კრედიტები';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'კონფიდენციალურობა და მომსახურება';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'შესახებ';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'პრემიუმი';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'გარეგნობა';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'ბუფერი';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'მოარგეთ თქვენი გამოცდილება';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'მოგესალმებით CopyClip-ში';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'თქვენი საუკეთესო პროდუქტიულობის კომპანიონი. მოვემზადოთ მძლავრი ხელსაწყოებით თქვენი დღის სამართავად.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'ჭკვიანი შენიშვნები';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'ჩაიწერეთ იდეები მომენტალურად ტექსტის ფორმატირებით. დაალაგეთ თქვენი აზრები და არასოდეს დაკარგოთ კარგი იდეა.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'დავალებების მართვა';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'იყავით მოვლენების ეპიცენტრში. შექმენით დავალებების სიები, განსაზღვრეთ პრიორიტეტები და მიაღწიეთ მიზნებს.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'ხარჯების კონტროლი';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'აკონტროლეთ თქვენი ფინანსები. მარტივად ადევნეთ თვალი შემოსავლებსა და ხარჯებს.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'პირადი ჟურნალი';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'გააანალიზეთ თქვენი დღე. პირადი სივრცე თქვენი მოგონებების, გრძნობების და ყოველდღიური გამოცდილების ჩასაწერად.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'კალენდარი და მოვლენები';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'არასოდეს გამოტოვოთ მომენტი. დააორგანიზეთ თქვენი განრიგი და თვალი ადევნეთ მნიშვნელოვან მოვლენებს.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'ბუფერის მენეჯერი';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'დააკოპირეთ ერთხელ, ჩასვით ყველგან. წვდომა ბუფერის ისტორიასთან ადრე კოპირებული ფრაგმენტების ამოსაღებად.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'კრეატიული ტილო';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'გამოავლინეთ თქვენი კრეატიულობა. ხატეთ, ჩაინიშნეთ და მოახდინეთ იდეების ვიზუალიზაცია ციფრულ ტილოზე.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'შექმენით და მართეთ თქვენი შენიშვნები';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'თვალი ადევნეთ თქვენს დავალებებს';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'აკონტროლეთ თქვენი ხარჯები';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'ჩაწერეთ თქვენი აზრები';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'დააორგანიზეთ თქვენი განრიგი';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'წვდომა ბუფერის ისტორიასთან';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'ხატეთ და ჩაინიშნეთ თავისუფლად';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'სოციალური პოსტი';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'შექმენით მიმზიდველი კონტენტი სოციალური მედიისთვის';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'აირჩიეთ თქვენი აურა';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'გამოხატეთ თქვენი თავი თემის ახალი ფერით!';
 
   @override
-  String get level => 'Level';
+  String get level => 'დონე';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP შემდეგ დონემდე';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'შეამოწმეთ მომავალი მოვლენები';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'დაიწყეთ ახალი ესკიზი';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'ამ თვეში ტრანზაქციები არ არის';
 
   @override
   String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
+    return '$count ტრანზაქცია ამ თვეში';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'ბუფერის ავტომატური შენახვა';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc =>
+      'კოპირებული ელემენტების ავტომატური შენახვა';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'წვდომა სამუდამოდ უარყოფილია. გთხოვთ, ჩართოთ პარამეტრებიდან.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'შეტყობინებები ჩართულია!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'პარამეტრებზე გადამისამართება შეტყობინებების გამოსართავად...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'პრემიუმ წვდომა';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'პრემიუმი აქტიურია:';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'ყველა ფუნქციის განბლოკვა';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'პრემიუმის ყიდვა (7 დღე)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'ღირებულება: $cost მონეტა';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'პრემიუმი გააქტიურდა 7 დღით!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'პრემიუმი აქტიურია';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'იწურება:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'დროებითი წვდომა';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'ჟურნალი და გამოხატვა';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'არტისტული დიზაინები';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'განბლოკეთ 10-ზე მეტი უნიკალური ჟურნალის ბარათის თემა';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'პრემიუმ განლაგებები';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc =>
+      'თქვენი მოგონებების ნახვის ექსკლუზიური გზები';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'კალენდარი და ხელსაწყოები';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'სრული კალენდარი';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'მოვლენების მართვის სრული სისტემა';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'ბუფერის ისტორიის ფონური ჩაწერა';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'Pro ვიჯეტები';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc =>
+      'ყველა ფუნქცია ხელმისაწვდომია თქვენს მთავარ ეკრანზე';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'მონაცემები და ექსპორტი';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'გაფართოებული რეზერვირება';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'ყველა მონაცემის უსაფრთხო იმპორტი/ექსპორტი';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'PDF ექსპორტი';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'შენიშვნების და ჟურნალების ექსპორტი PDF-ში';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'ბეჭდვისთვის მზადყოფნა';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'პირდაპირი ბეჭდვის მხარდაჭერა';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'Rich Text რედაქტორი';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'გაფართოებული ძებნა';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'ძებნა და ჩანაცვლება ტექსტში';
 
   @override
   String get richMedia => 'Rich Media';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'სურათების, ვიდეოების და ბმულების ჩასმა';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'რედაქტორის სტილი';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'ტექსტის და რედაქტორის მორგებული ფონი';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'ბალანსი';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'რეკლამა იტვირთება...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'უყურეთ რეკლამას (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'რეკლამის ჩატვირთვა';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'შეინახეთ თქვენი მონაცემების JSON ფაილი';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'სარეზერვო ფაილის გაერთიანება CopyClip-თან';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied =>
+      'შეტყობინებებზე წვდომა უარყოფილია.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'ჩაწერეთ ახალი დავალება...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'დავალების დამატება';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'დასრულებული';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'კარგი სამუშაოა!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'თქვენ დაიმსახურეთ $amount XP! შემდეგი დავალება: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'დავალება დასრულდა! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'გადავიდეს ყველა აქტიური დავალება ნაგვის ყუთში?';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'ყველა პოსტის წაშლა';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'დარწმუნებული ხართ, რომ გსურთ ყველა სოციალური პოსტის წაშლა? მოქმედების გაუქმება შეუძლებელია.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'ყველა პოსტი';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'რჩეულები';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'შავნახატები';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'ჯერ არ არის რჩეულები';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'ჯერ არ არის შავნახატები';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'დაიწყეთ თქვენი სოციალური მოგზაურობა!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'შავნახატი';
 
   @override
   String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
+    return '$count მიმაგრებული ფაილი';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent => 'გთხოვთ, დაამატოთ კონტენტი გასაზიარებლად';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'შეცდომა: ფაილი ვერ მოიძებნა აქ: $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'შეამოწმეთ Facebook აპლიკაცია';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'სისტემური გაზიარება';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'სოციალური პოსტი';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'რჩეული';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'შავნახატის შენახვა';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'ჩანაწერი კოპირებულია';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'გადავიდეს ყველა აქტიური ჩანაწერი ნაგვის ყუთში?';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'დაიწყეთ თქვენი ისტორიის წერა';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories =>
+      'ჩაიწერეთ თქვენი ყოველდღიური მოგონებები და გრძნობები.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'ჟურნალის წერა';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'ჩემი მოგონებები';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'ჟურნალის დახარისხება';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'განწყობის მიხედვით';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'მოგონებების ძებნა...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'ყველას არჩევა';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'არჩეულების წაშლა';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'დავალება დასრულდა!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'დავალება დაუსრულებელია';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'ბუფერი განახლდა!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'ბუფერში შენახულია: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'მიმოხილვა';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'ავრორა';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'კოსმიური';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'ნებულა';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'ვარსკვლავური ნათება';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'მზის';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'ნოვა';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'იტვირთება...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'მონაცემთა ბაზის მომზადება...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'სისტემის კონფიგურაცია...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'მზად არის';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'თქვენი პროდუქტიულობის კომპანიონი';
 
   @override
-  String get done => 'Done';
+  String get done => 'მზად არის';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'ახალი შენიშვნა';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'ფერის შეცვლა';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'კონტენტის კოპირება';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'სათაური (არასავალდებულო)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'ექსპორტი PDF-ში';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'დავალების ვადა იწურება ახლა';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'გადავიდეს დავალება ნაგვის ყუთში?';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'თქვენ შეგიძლიათ აღადგინოთ ეს დავალება პარამეტრებიდან.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'ახალი დავალება';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'დავალების რედაქტირება';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'დაბრუნება';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'წინ გადასვლა';
 
   @override
-  String get category => 'Category';
+  String get category => 'კატეგორია';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'მაგ. სამუშაო, დარბაზი';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'რა არის გასაკეთებელი?';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'შეიყვანეთ დავალების დეტალები...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'ვადის დაყენება';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'ვადის თარიღი';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'ხარჯები';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'ძებნა $currency-ში...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'დახარისხება და ფილტრი';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'დახარისხება:';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'ყველაზე მაღალი თანხა';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'ყველაზე დაბალი თანხა';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'მეტი ფილტრი...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'ხარჯების ფილტრი';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'ტრანზაქციის ტიპი';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'კატეგორიები';
 
   @override
-  String get all => 'All';
+  String get all => 'ყველა';
 
   @override
-  String get income => 'Income';
+  String get income => 'შემოსავალი';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'ხარჯი';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'გასუფთავება';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'გამოყენება';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'ახალი $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'მონაცემების ჩატვირთვის შეცდომა.\n\n$error';
   }
 
   @override
   String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+      'მომავლის წინასწარმეტყველების საუკეთესო გზა მისი შექმნაა.';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'სიმდიდრე დიდ ქონებაში კი არ არის, არამედ მცირე მოთხოვნილებებში.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'დრო არის უმთავრესი ვალუტა.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 =>
+      'წარმატება არ არის საბოლოო, მარცხი არ არის ფატალური.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'ფოკუსირდით გამოსავალზე და არა პრობლემაზე.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'თქვენი კავშირები თქვენი კაპიტალია.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'ბედნიერი';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'აღფრთოვანებული';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'ნეიტრალური';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'სევდიანი';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'დასტრესილი';
 
   @override
   String exportDate(String date) {
@@ -2346,17 +2350,17 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'განწყობა: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'სათაური: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nტეგები: $tags';
   }
 
   @override
@@ -2369,366 +2373,371 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'ახალი ესკიზი';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'ძებნა ესკიზებსა და საქაღალდეებში...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'შედეგები ვერ მოიძებნა';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'ელემენტები არ არის';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'ნახატები ჯერ არ არის';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'გამოავლინეთ თქვენი კრეატიულობა ტილოზე!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'ახალი ტილო';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'სახელის შეცვლა';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'საქაღალდის წაშლა';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'წაიშალოს ესკიზები?';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'ამ საქაღალდეში არსებული ყველა ესკიზი სამუდამოდ წაიშლება.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'საქაღალდის სახელის შეცვლა';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'ფერის არჩევა';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'წაიშალოს საქაღალდე?';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'კლიპების ძებნა...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'ბუფერი ცარიელია';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'ელემენტის დამატება';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'კლიპის ფერი';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'ახალი კლიპი';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'კლიპის რედაქტირება';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater =>
+      'თქვენ შეგიძლიათ აღადგინოთ ეს კლიპი მოგვიანებით.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'მომავალი მოვლენები';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'მონაცემთა განაწილება';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'დავალებების პროგრესი';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'სწრაფი სტატისტიკა';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'დავალებების შესრულება';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'ამ თარიღისთვის ელემენტები არ არის';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'ისიამოვნეთ თავისუფალი დროით!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'ძებნა ამ დღეს...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'ფინანსები';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'წაიშალოს სამუდამოდ?';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'ეს სამუდამოდ წაშლის $foldersCount საქაღალდეს (და მათში არსებულ ესკიზებს) და კიდევ $sketchesCount ესკიზს.\n\nმოქმედების გაუქმება შეუძლებელია.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'სამუდამოდ წაშლა';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count არჩეული';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes ესკიზი • $folders საქაღალდე';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'დახარისხება';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'სახელი (ა-ჰ)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'სახელი (ჰ-ა)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'საქაღალდის შექმნა';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'საქაღალდის სახელი...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'წაიშალოს $count ესკიზი? მოქმედების გაუქმება შეუძლებელია.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'ესკიზები ვერ მოიძებნა';
 
   @override
   String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+      'სცადეთ ძებნის შეცვლა ან ახალი ესკიზის შექმნა.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'ძებნა $folder-ში...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count ესკიზი';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'ესკიზების დახარისხება';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'კალენდარი';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'დღიური აქტივობა';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'წაიშალოს ელემენტი?';
 
   @override
-  String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+  String get deleteItemConfirmation => 'ეს ელემენტს გადაიტანს ნაგვის ყუთში.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'გადავიდეს ნაგვის ყუთში?';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation =>
+      'თქვენ შეგიძლიათ მისი აღდგენა მოგვიანებით.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count არჩეული';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'ბოლო კლიპები';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'კოპირებულია!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'უბრალო ტექსტი კოპირებულია';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'კლიპის თემა';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'ახლავე';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return '$count წთ წინ';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return '$count სთ წინ';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return '$count დღის წინ';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'დავალებები ვერ მოიძებნა.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'დავალებების ძებნა...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'დავალების შეხსენება';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'უსათაურო შენიშვნა';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'დღიური ჩანაწერი';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'ბუფერის ისტორია';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'ეს მოქმედება შეუქცევადია.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'გასუფთავდეს ნაგვის ყუთი?';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'ყველა ($count) ელემენტი სამუდამოდ წაიშლება.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'ყუთის გასუფთავება';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'ნაგვის ყუთი ცარიელია';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'წაშლილი ელემენტები აქ გამოჩნდება.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'ცარიელი';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'ბოლო';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'კატეგორია: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'ზოგადი';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'გსურთ ამ ტრანზაქციის შენახვა?';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'გთხოვთ, შეავსოთ სათაური და თანხა';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'თანხის არასწორი ფორმატი';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'გადავიდეს ტრანზაქცია ნაგვის ყუთში?';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'თქვენ შეგიძლიათ აღადგინოთ ეს ტრანზაქცია მოგვიანებით პარამეტრებიდან.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'ახალი ტრანზაქცია';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'რისთვის არის ეს?';
 
   @override
-  String get description => 'Description';
+  String get description => 'აღწერა';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'ყოველდღიური';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'ყოველკვირეული';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'ყოველთვიური';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'ყოველწლიური';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'მთლიანი შემოსავალი';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'მთლიანი ხარჯი';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'ანალიზი';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'ტრანზაქციები';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'ამ პერიოდში ხარჯები ვერ მოიძებნა.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'წმინდა ბალანსი';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'ტოპ კატეგორიები';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'ხარჯვის ტრენდი';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'ინსაიტები';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'ხარჯები არ არის ჩაწერილი';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits =>
+      'მარტივად ადევნეთ თვალი თქვენს ხარჯვის ჩვევებს.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'ხარჯის დამატება';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'მონაცემები ამ პერიოდისთვის არ არის';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'ბიუჯეტი';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'დახარჯული';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'ლიმიტი';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'ბიუჯეტს გადაცილებულია!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return 'დარჩენილია $percent%';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'დაზოგვის მაჩვენებელი';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'ჯანმრთელობის ქულა';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'ეს ქულა ეფუძნება თქვენს დაზოგვის მაცივენებელს.\n\n• > 50% დაზოგილი = შესანიშნავი (100)\n• 0% დაზოგილი = საშუალო (50)\n• ხარჯი > შემოსავალი = ცუდი (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'კარგი';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

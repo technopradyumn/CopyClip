@@ -2731,4 +2731,7 @@ class AppLocalizationsUzUz extends AppLocalizationsUz {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

@@ -194,7 +194,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String errorSharing(Object error) {
-    return 'ማጋራት ላይ ስህተት፡ $error';
+    return 'በማጋራት ላይ ስህተት፡ $error';
   }
 
   @override
@@ -215,7 +215,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String youEarnedCoins(Object amount) {
-    return '$amount ሳንቲም አግኝተዋል!';
+    return '$amount ሳንቲሞችን አግኝተዋል!';
   }
 
   @override
@@ -403,7 +403,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get onboardingNotesDesc =>
-      'በበለጸገ የጽሑፍ ቅርጸት ወዲያውኑ ሀሳቦችን ያንሱ። ሀሳቦችዎን ያደራጁ እና እንደገና አንድ ጥሩ ሀሳብ በጭራሽ አይጥፉ።';
+      'በበለጸገ የጽሑፍ ቅርዘት ወዲያውኑ ሀሳቦችን ያንሱ። ሀሳቦችዎን ያደራጁ እና እንደገና አንድ ጥሩ ሀሳብ በጭራሽ አይጥፉ።';
 
   @override
   String get onboardingTodosTitle => 'ተግባር አስተዳደር';
@@ -500,10 +500,10 @@ class AppLocalizationsAm extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count ግብይቶች',
+      one: '$count ግብይት',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0 በዚህ ወር';
   }
 
   @override
@@ -663,12 +663,12 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return '$amount XP አግኝተዋል! ቀጣዩ ተግባር፡ $date';
+    return '$amount XP አግኝተዋል! ቀጣዩ ተግባር: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'ተግባር ተጠናቀቀ! +$amount ኤክስፒ';
+    return 'ተግባር ተጠናቅቋል! +$amount XP';
   }
 
   @override
@@ -707,10 +707,10 @@ class AppLocalizationsAm extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count ዓባሪዎች',
+      one: '$count ዓባሪ',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
@@ -874,7 +874,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get setDueDate => 'የማለቂያ ቀን ያዘጋጁ';
 
   @override
-  String get dueDate => 'ሁለት ቀኖች';
+  String get dueDate => 'የማለቂያ ቀን';
 
   @override
   String get expenseTitle => 'ወጪዎች';
@@ -921,7 +921,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get reset => 'ዳግም አስጀምር';
 
   @override
-  String get apply => 'ያመልክቱ';
+  String get apply => 'ተግብር';
 
   @override
   String newExpense(String currency) {
@@ -930,7 +930,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String errorLoadingData(String error) {
-    return 'ውሂብ መጫን ላይ ስህተት።\n\n$error';
+    return 'ውሂብ በመጫን ላይ ስህተት ገጥሟል።\n\n$error';
   }
 
   @override
@@ -983,7 +983,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String exportTags(String tags) {
-    return 'መለያዎች: $tags';
+    return '\nመለያዎች: $tags';
   }
 
   @override
@@ -1135,7 +1135,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String searchInFolder(String folder) {
-    return 'በ$folder ውስጥ ይፈልጉ...';
+    return 'በ$folder ውስጥ ፈልግ...';
   }
 
   @override
@@ -1245,7 +1245,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String categoryLabel(Object category) {
-    return 'ምድብ፡ $category';
+    return 'ምድብ: $category';
   }
 
   @override
@@ -1341,7 +1341,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% ይቀራል';
+    return '$percent% ቀርቷል';
   }
 
   @override
@@ -1358,7 +1358,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get ok => 'እሺ';
 
   @override
-  String get bulkImport => 'Bulk Import';
+  String get bulkImport => 'በጅምላ አስመጣ';
 }
 
 /// The translations for Amharic, as used in Ethiopia (`am_ET`).
@@ -1466,7 +1466,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'ስህተት፡ $error';
   }
 
   @override
@@ -1551,7 +1551,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'በማጋራት ላይ ስህተት፡ $error';
   }
 
   @override
@@ -1572,7 +1572,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return '$amount ሳንቲሞችን አግኝተዋል!';
   }
 
   @override
@@ -1700,7 +1700,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String widgetAdded(String widget) {
-    return 'መግብር ወደ መነሻ ስክሪን ታክሏል!';
+    return 'መግብር $widget ወደ መነሻ ስክሪን ታክሏል!';
   }
 
   @override
@@ -1760,7 +1760,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String get onboardingNotesDesc =>
-      'በበለጸገ የጽሑፍ ቅርጸት ወዲያውኑ ሀሳቦችን ያንሱ። ሀሳቦችዎን ያደራጁ እና እንደገና አንድ ጥሩ ሀሳብ በጭራሽ አይጥፉ።';
+      'በበለጸገ የጽሑፍ ቅርዘት ወዲያውኑ ሀሳቦችን ያንሱ። ሀሳቦችዎን ያደራጁ እና እንደገና አንድ ጥሩ ሀሳብ በጭራሽ አይጥፉ።';
 
   @override
   String get onboardingTodosTitle => 'ተግባር አስተዳደር';
@@ -1857,10 +1857,10 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count ግብይቶች',
+      one: '$count ግብይት',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0 በዚህ ወር';
   }
 
   @override
@@ -1991,7 +1991,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'ማስታወቂያ ይመልከቱ (+$amount)';
   }
 
   @override
@@ -2020,12 +2020,12 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return '$amount XP አግኝተዋል! ቀጣዩ ተግባር: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'ተግባር ተጠናቅቋል! +$amount XP';
   }
 
   @override
@@ -2064,10 +2064,10 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count ዓባሪዎች',
+      one: '$count ዓባሪ',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
@@ -2231,7 +2231,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   String get setDueDate => 'የማለቂያ ቀን ያዘጋጁ';
 
   @override
-  String get dueDate => 'ሁለት ቀኖች';
+  String get dueDate => 'የማለቂያ ቀን';
 
   @override
   String get expenseTitle => 'ወጪዎች';
@@ -2278,16 +2278,16 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   String get reset => 'ዳግም አስጀምር';
 
   @override
-  String get apply => 'ያመልክቱ';
+  String get apply => 'ተግብር';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'አዲስ $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'ውሂብ በመጫን ላይ ስህተት ገጥሟል።\n\n$error';
   }
 
   @override
@@ -2330,7 +2330,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'ስሜት፡ $emoji $mood';
   }
 
   @override
@@ -2340,7 +2340,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String exportTags(String tags) {
-    return 'መለያዎች: $tags';
+    return '\nመለያዎች: $tags';
   }
 
   @override
@@ -2492,7 +2492,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'በ$folder ውስጥ ፈልግ...';
   }
 
   @override
@@ -2602,7 +2602,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'ምድብ: $category';
   }
 
   @override
@@ -2698,7 +2698,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return '$percent% ቀርቷል';
   }
 
   @override
@@ -2713,4 +2713,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String get ok => 'እሺ';
+
+  @override
+  String get bulkImport => 'በጅምላ አስመጣ';
 }

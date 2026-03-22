@@ -2731,6 +2731,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Portuguese, as used in Portugal (`pt_PT`).
@@ -4094,4 +4097,7 @@ class AppLocalizationsPtPt extends AppLocalizationsPt {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

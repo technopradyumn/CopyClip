@@ -1375,969 +1375,965 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   AppLocalizationsHuHu() : super('hu_HU');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Beállítások';
 
   @override
-  String get language => 'Language';
+  String get language => 'Nyelv';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'Rendszer alapértelmezés';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'Jegyzetek';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'Teendők';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'Kiadások';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'Napló';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'Naptár';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'Vágólap';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'Vászon';
 
   @override
-  String get save => 'Save';
+  String get save => 'Mentés';
 
   @override
-  String get create => 'Create';
+  String get create => 'Létrehozás';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Mégse';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Törlés';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'Szerkesztés';
 
   @override
-  String get share => 'Share';
+  String get share => 'Megosztás';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'Másolás';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'Nem mentett módosítások';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'Törlés megerősítése';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'Elvetés';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'Bejegyzés létrehozása';
 
   @override
-  String get post => 'Post';
+  String get post => 'Közzététel';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'Közzététel itt:';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'Mi jár a fejedben?';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'Képek kiválasztása';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'Videó kiválasztása';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'Kamera';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'Galéria';
 
   @override
-  String get search => 'Search';
+  String get search => 'Keresés';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'Kérjük, adjon meg egy feladatot';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'Feladat törlése';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'Elemek kiválasztása';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'Összes törlése';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'Hiba: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'A sorrend csak az \'\'Összes bejegyzés\'\'-nél érhető el';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'Bejegyzés törlése';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'Bejegyzés törölve';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'Prémium funkciók';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'Érmék, hirdetések és prémium állapot kezelése';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'Téma mód';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'Kiemelő szín';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'Háttér kialakítása';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'Leküldéses értesítések';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'Lomtár';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'Adatok exportálása';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'Adatok importálása';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'Alkalmazás értékelése';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'Visszajelzés küldése';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'Adatvédelmi irányelvek';
 
   @override
-  String get version => 'Version';
+  String get version => 'Verzió';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'Verziószám';
 
   @override
-  String get system => 'System';
+  String get system => 'Rendszer';
 
   @override
-  String get light => 'Light';
+  String get light => 'Világos';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Sötét';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'Elem visszaállítva';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'Lomtár sikeresen kiürítve';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'Minden bejegyzés törölve';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'Új bejegyzés';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
+      'Szöveg a vágólapra másolva (Facebook irányelv)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'A TikTok megosztáshoz videó/kép szükséges';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'Hiba a megosztáskor: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'Megosztás a(z) $platform Történetben';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'Megosztás a(z) $platform Hírfolyamban';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'Végleges feloldás';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'Nincs elég érme!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'Szerzett $amount érmét!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'Tartalom másolva';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'Dátum és idő kiválasztása';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'Biztosan törölni szeretné ezt a bejegyzést?';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'Közösségi bejegyzések';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'Nézzen hirdetést érmékért';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'Prémium feloldva';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'Hirdetések eltávolítása';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'Korlátlan felhőtárhely';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'Jegyzet törlése';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'Jegyzet megosztása';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'Jegyzet szerkesztése';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'Jegyzetek keresése...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'Nincs talált jegyzet';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'Rögzítse gondolatait azonnal.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'Jegyzet létrehozása';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'Egyéni sorrend';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'Legújabb előre';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'Legrégebbi előre';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'Cím: A-Z';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'Cím: Z-A';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'Mindent töröl?';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'Minden jegyzet áthelyezése a lomtárba?';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'Áthelyezés a lomtárba?';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'Ezt a jegyzetet később visszaállíthatja.';
 
   @override
-  String get move => 'Move';
+  String get move => 'Áthelyezés';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'Gondolataim';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'Kiválasztva';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'Nincs tartalom';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'Névtelen';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'Válasszon 10+ dinamikus háttérkép közül';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'Adatok biztonsági mentése';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile =>
+      'Menti a JSON fájlt, amely tartalmazza az összes adatát?';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'Exportálás most';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'Adatok importálása';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'Egyesíti a mentési fájlt a jelenlegi elemekkel?';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'Fájl kiválasztása';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'Sikeres biztonsági mentés!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'Exportálás sikertelen.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count elem sikeresen visszaállítva!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'Importálás sikertelen.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'Modul hozzáadva a kezdőképernyőhöz!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'Modul kérelem elküldve. Kérjük, ellenőrizze a kezdőképernyőt.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'Modul hozzáadása sikertelen';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'Automatikus mentés engedélyezve.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'Automatikus mentés letiltva.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'Kezdőképernyő modulok';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'Értesítések';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'Adatok és biztonsági mentés';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'Visszajelzés és támogatás';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'Közreműködők';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'Adatvédelem és karbantartás';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'Névjegy';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'Prémium';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'Megjelenés';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'Vágólap';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'Testreszabhatja élményét';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'Üdvözöljük a CopyClip-ben';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'Az Ön végső produktivitási társa. Készítsük fel a napja kezeléséhez szükséges hatékony eszközökkel.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'Okos jegyzetek';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'Rögzítse ötleteit azonnal gazdag szövegformázással. Rendszerezze gondolatait, és soha többé ne veszítsen el egy nagyszerű ötletet sem.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'Feladatkezelés';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'Maradjon a csúcson. Hozzon létre teendőlistákat, állítson be prioritásokat, és érje el céljait pipáról pipára.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'Kiadások nyomon követése';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'Irányítsa pénzügyeit. Kövesse nyomon a bevételeit és kiadásait egyszerűen, hogy megértse költési szokásait.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'Személyes napló';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'Gondolja át a napját. Privát hely az emlékek, érzések és napi tapasztalatok leírására.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'Naptár és események';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'Soha ne maradjon le semmiről. Rendszerezze időbeosztását, és kövesse nyomon a fontos közelgő eseményeket.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'Vágólapkezelő';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'Másolja egyszer, illessze be bárhová. Hozzáférés a vágólap előzményeihez a korábban másolt részletek előhívásához.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'Kreatív vászon';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'Engedje szabadjára kreativitását. Rajzoljon, vázoljon és vizualizálja ötleteit egy szabad formátumú digitális vásznon.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'Jegyzetek létrehozása és kezelése';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'Kövesse nyomon feladatait';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'Kövesse nyomon kiadásait';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'Írja le gondolatait';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'Rendszerezze időbeosztását';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'Hozzáférés a vágólap előzményeihez';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'Rajzoljon és vázoljon szabadon';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'Közösségi bejegyzés';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'Készítsen vonzó közösségi média tartalmakat';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'Válassza ki az auráját';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'Fejezze ki magát egy új témaszínnel!';
 
   @override
-  String get level => 'Level';
+  String get level => 'Szint';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP a szintig';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'Ellenőrizze a közelgő eseményeket';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'Új vázlat indítása';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'Nincs tranzakció ebben a hónapban';
 
   @override
   String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
+    return '$count tranzakció ebben a hónapban';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'Vágólap automatikus mentése';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'Másolt elemek automatikus mentése';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'Engedély véglegesen megtagadva. Kérjük, engedélyezze a Beállításokban.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'Értesítések engedélyezve!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'Átirányítás a beállításokhoz az értesítések letiltásához...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'Prémium hozzáférés';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'Prémium aktív eddig:';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'Összes funkció feloldása';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'Prémium vásárlása (7 nap)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'Költség: $cost érme';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'Prémium aktiválva 7 napra!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'Prémium aktív';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'Lejár:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'Ideiglenes hozzáférés';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'Napló és önkifejezés';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'Művészi tervek';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc => 'Oldjon fel 10+ egyedi naplókártya-témát';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'Prémium elrendezések';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc => 'Exkluzív módok az emlékek megtekintésére';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'Naptár és eszközök';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'Teljes naptár';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'Teljes eseménykezelő rendszer';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc =>
+      'Háttérben történő vágólap-előzmények rögzítése';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'Pro modulok';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'Minden funkció elérhető a kezdőképernyőn';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'Adatok és exportálás';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'Naprakész mentés';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc =>
+      'Minden adat biztonságos importálása/exportálása';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'PDF exportálás';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'Jegyzetek és naplók exportálása PDF-be';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'Nyomtatásra kész';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'Közvetlen nyomtatási támogatás';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'Formázott szövegszerkesztő';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'Részletes keresés';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'Keresés és csere a szövegben';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'Gazdag média';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'Képek, videók és hivatkozások beszúrása';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'Szerkesztő stílusozása';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'Egyedi szöveg- és szerkesztőháttér';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'Egyenleg';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'Hirdetés betöltése...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'Hirdetés megtekintése (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'Hirdetés betöltése';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'JSON fájl mentése az adatairól';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'Mentési fájl egyesítése a CopyClippel';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied => 'Értesítési engedély megtagadva.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'Írjon be egy új feladatot...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'Feladat hozzáadása';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'Befejezve';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'Szép munka!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'Szerzett $amount XP-t! Következő feladat: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'Feladat befejezve! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'Minden aktív feladat áthelyezése a lomtárba?';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'Minden bejegyzés törlése';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'Biztosan törölni szeretné az ÖSSZES közösségi bejegyzést? Ez a művelet nem vonható vissza.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'Minden bejegyzés';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'Kedvencek';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'Piszkozatok';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'Még nincsenek kedvencek';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'Még nincsenek piszkozatok';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'Kezdje el közösségi utazását!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'PISZKOZAT';
 
   @override
   String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
+    return '$count melléklet';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent =>
+      'Kérjük, adjon hozzá tartalmat vagy médiát a megosztáshoz';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'Hiba: Fájl nem található itt: $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'Ellenőrizze a Facebook alkalmazást';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'Rendszer megosztás';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'Közösségi bejegyzés';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'Kedvenc';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'Piszkozat mentése';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'Bejegyzés másolva';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'Minden aktív bejegyzés áthelyezése a lomtárba?';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'Kezdje el írni a történetét';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'Rögzítse napi emlékeit és érzéseit.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'Napló írása';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'Emlékeim';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'Napló rendezése';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'Hangulat szerint';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'Emlékek keresése...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'Mindet kiválaszt';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'Kijelöltek törlése';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'Feladat befejezve!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'Feladat befejezetlen';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'Vágólap frissítve!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'Vágólap mentve: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'Áttekintés';
 
   @override
   String get colorAurora => 'Aurora';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'Kozmikus';
 
   @override
   String get colorNebula => 'Nebula';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'Csillagfény';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'Szolár';
 
   @override
   String get colorNova => 'Nova';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'Betöltés...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'Adatbázis beállítása...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'Rendszer konfigurálása...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'Kész';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'Az Ön produktivitási társa';
 
   @override
-  String get done => 'Done';
+  String get done => 'Kész';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'Új jegyzet';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'Szín módosítása';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'Tartalom másolása';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'Cím (opcionális)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'Exportálás PDF-be';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'Esedékes feladat';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'Feladat áthelyezése a lomtárba?';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'Ezt a feladatot később visszaállíthatja a beállításokból.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'Új feladat';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'Feladat szerkesztése';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'Visszavonás';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'Ismét';
 
   @override
-  String get category => 'Category';
+  String get category => 'Kategória';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'pl. Munka, Edzőterem';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'Mit kell tenni?';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'Adja meg a feladat részleteit...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'Határidő beállítása';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'Határidő';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'Kiadások';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'Keresés ebben: $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'Rendezés és szűrés';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'RENDEZÉS';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'Legmagasabb összeg';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'Legalacsonyabb összeg';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'További szűrők...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'Kiadások szűrése';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'Tranzakció típusa';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'Kategóriák';
 
   @override
-  String get all => 'All';
+  String get all => 'Összes';
 
   @override
-  String get income => 'Income';
+  String get income => 'Bevétel';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'Kiadás';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'Alaphelyzet';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'Alkalmaz';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'Új $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'Hiba az adatok betöltésekor.\n\n$error';
   }
 
   @override
   String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+      'A jövő megjósolásának legjobb módja, ha megalkotjuk azt.';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'A gazdagság nem a nagy javak birtoklásában, hanem a kevés vágyban rejlik.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'Az idő a legfőbb valuta.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'A siker nem végleges, a kudarc nem végzetes.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'A megoldásra összpontosítson, ne a problémára.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'A kapcsolati hálója a nettó értéke.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'Boldog';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'Izgatott';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'Semleges';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'Szomorú';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'Stresszes';
 
   @override
   String exportDate(String date) {
@@ -2346,17 +2342,17 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'Hangulat: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'CÍM: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nCímkék: $tags';
   }
 
   @override
@@ -2369,366 +2365,369 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'Új vázlat';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'Vázlatok és mappák keresése...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'Nincs találat';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'Nincs elem';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'Még nincsenek rajzok';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'Engedje szabadjára kreativitását a vásznon!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'Új vászon';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'Átnevezés';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'Mappa törlése';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'Törli a vázlatokat?';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'Ebben a mappában lévő összes vázlat véglegesen törlődik.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'Mappa átnevezése';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'Szín kiválasztása';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'Mappa törlése?';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'Klipek keresése...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'A vágólap üres';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'Elem hozzáadása';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'Klip színe';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'Új klip';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'Klip szerkesztése';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'Ezt a klipet később visszaállíthatja.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'Közelgő események';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'ADATELOSZLÁS';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'FELADATOK ÁLLAPOTA';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'GYORS STATISZTIKA';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'Feladatok elvégzése';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'Nincs elem ehhez a dátumhoz';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'Élvezze a szabadidejét!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'Keresés ezen a napon...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'Pénzügyek';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'Véglegesen törli?';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'Ez véglegesen töröl $foldersCount mappát (és a bennük lévő vázlatokat) és $sketchesCount egyéb vázlatot.\n\nEz a művelet nem vonható vissza.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'Törlés véglegesen';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count kiválasztva';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes vázlat • $folders mappa';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'Elemek rendezése';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'Név (A-Z)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'Név (Z-A)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'Mappa létrehozása';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'Mappa neve...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'Töröl $count vázlatot? Ez a művelet nem vonható vissza.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'Nincs talált vázlat';
 
   @override
   String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+      'Próbálja meg módosítani a keresést, vagy hozzon létre egy új vázlatot.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'Keresés ebben: $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count vázlat';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'Vázlatok rendezése';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'Naptár';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'Napi tevékenység';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'Elem törlése?';
 
   @override
-  String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+  String get deleteItemConfirmation => 'Ez az elemet a lomtárba helyezi.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'Lomtárba helyezi?';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'Később visszaállíthatja.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count kiválasztva';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'Legutóbbi klipek';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'Másolva!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'Egyszerű szöveg másolva';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'Klip téma';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Éppen most';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return '$count perce';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return '$count órája';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return '$count napja';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'Nincs talált feladat.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'Feladatok keresése...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'Feladat emlékeztető';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'Névtelen jegyzet';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'Napi bejegyzés';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'Vágólap előzmények';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'Ez a művelet nem vonható vissza.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'Kiüríti a lomtárat?';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'Mind a(z) $count elem véglegesen törlődik.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'Lomtár ürítése';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'A lomtár üres';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'A törölt elemek itt fognak megjelenni.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'Üres';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Legutóbbi';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'Kategória: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'Általános';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'Szeretné elmenteni ezt a tranzakciót?';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'Kérjük, töltse ki a címet és az összeget';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'Érvénytelen összegformátum';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'Tranzakció áthelyezése a lomtárba?';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'Ezt a tranzakciót később visszaállíthatja a beállításokból.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'Új tranzakció';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'Mire való ez?';
 
   @override
-  String get description => 'Description';
+  String get description => 'Leírás';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'Napi';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Heti';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'Havi';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'Évi';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'Összes bevétel';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'Összes kiadás';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'Elemzés';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'Tranzakciók';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'Nem találhatók kiadások ebben az időszakban.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'Nettó egyenleg';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'Legfontosabb kategóriák';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'Költési trend';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'Betekintések';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'Nincsenek rögzített kiadások';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits =>
+      'Kövesse nyomon költési szokásait egyszerűen.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'Kiadás hozzáadása';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'Nincs adat ebben az időszakban';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'Költségvetés';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'Elköltött';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'Határ';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'Költségvetés túllépve!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return '$percent% maradt';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'Megtakarítási ráta';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'Egészségügyi pontszám';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'Ez a pontszám a megtakarítási rátáján alapul.\n\n• > 50% megtakarítás = Kiváló (100)\n• 0% megtakarítás = Átlagos (50)\n• Költés > Bevétel = Gyenge (<50)';
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

@@ -39,64 +39,64 @@ class AppLocalizationsAr extends AppLocalizations {
   String get canvas => 'قماش';
 
   @override
-  String get save => 'يحفظ';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'يخلق';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'يلغي';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'يمسح';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'يحرر';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'يشارك';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'ينسخ';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'التغييرات غير المحفوظة';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
   String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'ينبذ';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'إنشاء مشاركة';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'بريد';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'النشر إلى';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'ما الذي يدور في ذهنك؟';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'اختر الصور';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'اختر الفيديو';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'آلة تصوير';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'معرض';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'يبحث';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'الرجاء إدخال مهمة';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
   String get deleteTask => 'حذف المهمة';
@@ -114,32 +114,32 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'الطلب متاح فقط في \"جميع المشاركات\"';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'حذف المشاركة';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'تم حذف المشاركة';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'ميزات متميزة';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
   String get manageCoinsAdsPremium =>
-      'إدارة العملات المعدنية والإعلانات والحالة المميزة';
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'وضع الموضوع';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'لون مميز';
+  String get accentColor => 'لون التمييز';
 
   @override
   String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'دفع الإخطارات';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
   String get recycleBin => 'سلة المحذوفات';
@@ -151,48 +151,48 @@ class AppLocalizationsAr extends AppLocalizations {
   String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'معدل التطبيق';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'إرسال الملاحظات';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'إصدار';
+  String get version => 'الإصدار';
 
   @override
   String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'نظام';
+  String get system => 'النظام';
 
   @override
-  String get light => 'ضوء';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'مظلم';
+  String get dark => 'داكن';
 
   @override
   String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'تم مسح سلة المحذوفات بنجاح';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'تم حذف جميع المشاركات';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'مشاركة جديدة';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'تم نسخ النص إلى الحافظة (سياسة Facebook)';
+      'تم نسخ النص إلى الحافظة (سياسة فيسبوك)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'تتطلب مشاركة TikTok مقطع فيديو/صورة';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
@@ -201,12 +201,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String shareToStory(Object platform) {
-    return 'شارك في قصة $platform.';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'شارك في خلاصة $platform.';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
@@ -217,7 +217,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'لقد ربحت $amount عملة معدنية!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
@@ -228,16 +228,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'هل أنت متأكد أنك تريد حذف هذه المشاركة؟';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'المشاركات الاجتماعية';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'شاهد الإعلان لكسب العملات المعدنية';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'قسط مفتوح';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
   String get removeAds => 'إزالة الإعلانات';
@@ -252,22 +252,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'تحرير الملاحظة';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'ملاحظات البحث...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'لم يتم العثور على أي ملاحظات';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'التقط أفكارك على الفور.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
   String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'طلب مخصص';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
   String get newestFirst => 'الأحدث أولاً';
@@ -279,29 +279,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'العنوان: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'هل تريد حذف الكل؟';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin =>
-      'هل تريد نقل جميع الملاحظات إلى سلة المحذوفات؟';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
   String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'يتحرك';
+  String get move => 'نقل';
 
   @override
   String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'مختارة';
+  String get selected => 'محدد';
 
   @override
   String get noContent => 'لا يوجد محتوى';
@@ -310,10 +309,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'اختر من بين 10+ خلفيات ديناميكية';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'بيانات النسخ الاحتياطي';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
   String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
@@ -329,7 +328,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'حدد ملف';
+  String get selectFile => 'حدد ملفاً';
 
   @override
   String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
@@ -347,18 +346,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String widgetAdded(String widget) {
-    return 'تمت إضافة القطعة $widget إلى الشاشة الرئيسية!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'تم إرسال طلب القطعة. يرجى التحقق من الشاشة الرئيسية الخاصة بك.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'فشلت إضافة القطعة';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'تم تمكين الحفظ التلقائي.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
   String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
@@ -367,13 +366,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'إشعارات';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
   String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'ردود الفعل والدعم';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
   String get creditsTitle => 'الاعتمادات';
@@ -382,13 +381,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'عن';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'غالي';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'مظهر';
+  String get appearanceTitle => 'المظهر';
 
   @override
   String get clipboardTitle => 'الحافظة';
@@ -401,56 +400,56 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get welcomeDescription =>
-      'رفيقك الإنتاجي النهائي. دعنا نجهزك بأدوات قوية لإدارة يومك.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'الملاحظات الذكية';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'التقط الأفكار على الفور باستخدام تنسيق النص المنسق. نظم أفكارك ولا تفقد أي فكرة عظيمة مرة أخرى.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
   String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'البقاء على رأس اللعبة الخاصة بك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك بعلامة اختيار واحدة في كل مرة.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
   String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'السيطرة على اموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'مجلة شخصية';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'فكر في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
   String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'لا تفوت لحظة واحدة. تنظيم الجدول الزمني الخاص بك وتتبع الأحداث القادمة الهامة.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
   String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'انسخ مرة واحدة، والصق في أي مكان. قم بالوصول إلى سجل الحافظة الخاصة بك لاسترداد المقتطفات التي قمت بنسخها مسبقًا.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'قماش إبداعي';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'أطلق العنان لإبداعك. ارسم أفكارك ورسمها وتصورها على لوحة رقمية ذات شكل حر.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
   String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
@@ -462,19 +461,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'اكتب أفكارك';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'تنظيم الجدول الزمني الخاص بك';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'الوصول إلى تاريخ الحافظة الخاصة بك';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'ارسم ورسم بحرية';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'مشاركة اجتماعية';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
   String get featuresSocialPostDesc =>
@@ -484,19 +483,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'عبر عن نفسك بلون موضوع جديد!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'مستوى';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP إلى المستوى';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
   String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'ابدأ رسمًا جديدًا';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
   String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
@@ -506,193 +505,194 @@ class AppLocalizationsAr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'الحفظ التلقائي للحافظة';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائيا';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'تم رفض الإذن بشكل دائم. يرجى التمكين في الإعدادات.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'تم تمكين الإخطارات!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'جارٍ إعادة التوجيه إلى الإعدادات لتعطيل الإشعارات...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'الوصول المميز';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'قسط نشط حتى';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'فتح كافة الميزات';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
   String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'التكلفة: $cost عملات معدنية';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'قسط مفعل لمدة 7 أيام!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'قسط نشط';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'تنتهي:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'الوصول المؤقت';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'مجلة والتعبير';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
   String get artisticDesigns => 'تصاميم فنية';
 
   @override
   String get artisticDesignsDesc =>
-      'افتح أكثر من 10 سمات فريدة لبطاقات المجلات';
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'تخطيطات متميزة';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
   String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'التقويم والأدوات';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'التقويم الكامل';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
   String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'التقاط تاريخ الحافظة الخلفية';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'الحاجيات للمحترفين';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc =>
-      'جميع الميزات المتاحة على الشاشة الرئيسية الخاصة بك';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
   String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'النسخ الاحتياطي المتقدم';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'تأمين استيراد/تصدير جميع البيانات';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'تصدير قوات الدفاع الشعبي';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'تصدير الملاحظات والمجلات إلى PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'طباعة جاهزة';
+  String get printReady => 'جاهز للطباعة';
 
   @override
   String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'محرر النص الغني';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
   String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'بحث واستبدال داخل النص الخاص بك';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'الوسائط الغنية';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'إدراج الصور ومقاطع الفيديو والروابط';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'أسلوب المحرر';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'نص مخصص وخلفيات المحرر';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'توازن';
+  String get balance => 'الرصيد';
 
   @override
   String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'مشاهدة الإعلان (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'تحميل الإعلان';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'احفظ ملف JSON لبياناتك';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'دمج ملف النسخ الاحتياطي في CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'تم رفض إذن الإخطار.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
   String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'أضف مهمة';
+  String get addTask => 'إضافة مهمة';
 
   @override
   String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'عمل عظيم!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'لقد حصلت على $amount XP! المهمة التالية: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'اكتملت المهمة! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
   String get moveTasksToRecycleBin =>
-      'هل تريد نقل جميع المهام النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'حذف كافة المشاركات';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'جميع المشاركات';
+  String get allPosts => 'جميع المنشورات';
 
   @override
   String get favorites => 'المفضلة';
@@ -701,10 +701,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'لا يوجد مفضلة بعد';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'لا توجد مسودات حتى الآن';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
@@ -717,28 +717,30 @@ class AppLocalizationsAr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'الرجاء إضافة بعض المحتوى أو الوسائط للمشاركة';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'خطأ: الملف غير موجود في $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'تحقق من تطبيق الفيسبوك';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
   String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'مشاركة اجتماعية';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
   String get favorite => 'مفضل';
@@ -747,11 +749,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'تم نسخ الإدخال';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'هل تريد نقل جميع الإدخالات النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
   String get startWritingStory => 'ابدأ بكتابة قصتك';
@@ -760,42 +762,42 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'اكتب المجلة';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
   String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'فرز المجلة';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'بواسطة المزاج';
+  String get byMood => 'حسب المزاج';
 
   @override
   String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'حدد الكل';
+  String get selectAll => 'تحديد الكل';
 
   @override
   String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'اكتملت المهمة!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'المهمة غير مكتملة';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
   String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'تم حفظ الحافظة: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'ملخص';
+  String get overview => 'نظرة عامة';
 
   @override
   String get colorAurora => 'أورورا';
@@ -810,28 +812,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'الشمسية';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'جديد';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'تحميل...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'جارٍ إعداد قاعدة البيانات...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'جارٍ تكوين النظام...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'مستعد';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'رفيقك الإنتاجية';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'منتهي';
+  String get done => 'تم';
 
   @override
   String get newNote => 'ملاحظة جديدة';
@@ -846,13 +848,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'تصدير بصيغة PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'المهمة مستحقة الآن';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'هل تريد نقل المهمة إلى سلة المحذوفات؟';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
@@ -862,7 +864,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'تحرير المهمة';
+  String get editTask => 'تعديل المهمة';
 
   @override
   String get undo => 'تراجع';
@@ -871,10 +873,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get redo => 'إعادة';
 
   @override
-  String get category => 'فئة';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'على سبيل المثال العمل، صالة الألعاب الرياضية';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
   String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
@@ -883,17 +885,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'تحديد تاريخ الاستحقاق';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'تاريخان';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'نفقات';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'البحث في $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
@@ -909,7 +911,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'المزيد من المرشحات...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
   String get filterExpenses => 'تصفية النفقات';
@@ -918,22 +920,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'فئات';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'الجميع';
+  String get all => 'الكل';
 
   @override
-  String get income => 'دخل';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'حساب';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'إعادة ضبط';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'يتقدم';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
@@ -946,23 +948,22 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي صناعته.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'الثروة ليست في امتلاك ممتلكات كبيرة، بل في الحصول على القليل من الحاجات.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'الوقت هو العملة النهائية.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'النجاح ليس نهائيا، والفشل ليس قاتلا.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'ركز على الحل وليس المشكلة.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'شبكتك هي ثروتك الصافية.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
   String get moodHappy => 'سعيد';
@@ -971,13 +972,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'حيادي';
+  String get moodNeutral => 'محايد';
 
   @override
   String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'وشدد';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -996,11 +997,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String exportTags(String tags) {
-    return 'العلامات: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'انستغرام';
+  String get instagram => 'إنستغرام';
 
   @override
   String get facebook => 'فيسبوك';
@@ -1009,7 +1010,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'رسم جديد';
+  String get newSketch => 'رسمة جديدة';
 
   @override
   String get searchSketches => 'البحث في الرسومات والمجلدات...';
@@ -1024,10 +1025,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'أطلق العنان لإبداعك على القماش!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'قماش جديد';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
   String get rename => 'إعادة تسمية';
@@ -1036,23 +1037,23 @@ class AppLocalizationsAr extends AppLocalizations {
   String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'هل تريد حذف الرسومات؟';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'سيتم حذف جميع الرسومات الموجودة في هذا المجلد نهائيًا.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
   String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'اختر اللون';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'هل تريد حذف المجلد؟';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'بحث في المقاطع...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
   String get clipboardEmpty => 'الحافظة فارغة';
@@ -1061,16 +1062,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'لون المقطع';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'كليب جديد';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'تحرير المقطع';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'يمكنك استعادة هذا المقطع لاحقا.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
   String get upcomingEvents => 'الأحداث القادمة';
@@ -1094,30 +1095,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'البحث في مثل هذا اليوم...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'تمويل';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'هل تريد الحذف نهائيًا؟';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'سيؤدي هذا إلى حذف مجلدات $foldersCount (ورسوماتها) و$sketchesCount من الرسومات الأخرى نهائيًا.\n\nلا يمكن التراجع عن هذا.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'حذف إلى الأبد';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes الرسومات • $folders المجلدات';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
@@ -1137,125 +1138,125 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'هل تريد حذف $count من الرسومات؟ لا يمكن التراجع عن هذا.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'لم يتم العثور على الرسومات';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسم جديد.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'البحث في $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count اسكتشات';
+    return '$count رسومات';
   }
 
   @override
   String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'تقويم';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
   String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'هل تريد حذف العنصر؟';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
       'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'ويمكنك استعادته لاحقًا.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'المقاطع الأخيرة';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'منسوخ!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'نسخ نص عادي';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'موضوع كليب';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
   String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '$countم مضت';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '$countقبل ح';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '$countد مضت';
+    return 'منذ $count ي';
   }
 
   @override
   String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'مهام البحث...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
   String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'ملاحظة بلا عنوان';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'الدخول اليومي';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'تاريخ الحافظة';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'لا يمكن التراجع عن هذا الإجراء.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'سلة المحذوفات فارغة؟';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'سيتم حذف جميع العناصر البالغ عددها $count نهائيًا.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'سلة فارغة';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
   String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'سوف تظهر العناصر المحذوفة هنا.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
   String get empty => 'فارغ';
 
   @override
-  String get recent => 'مؤخرًا';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
@@ -1275,33 +1276,32 @@ class AppLocalizationsAr extends AppLocalizations {
   String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle =>
-      'هل تريد نقل المعاملة إلى سلة المحذوفات؟';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'يمكنك استعادة هذه المعاملة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
   String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'لماذا هذا؟';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'وصف';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'يوميًا';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'أسبوعي';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'شهريا';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'سنوي';
+  String get yearly => 'سنوياً';
 
   @override
   String get totalIncome => 'إجمالي الدخل';
@@ -1310,19 +1310,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'تحليل';
+  String get analysis => 'التحليل';
 
   @override
   String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'لم يتم العثور على مصاريف لهذه الفترة.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
   String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'أهم الفئات';
+  String get topCategories => 'أبرز الفئات';
 
   @override
   String get spendingTrend => 'اتجاه الإنفاق';
@@ -1337,22 +1337,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'أضف النفقات';
+  String get addExpense => 'إضافة نفقة';
 
   @override
   String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'ميزانية';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'قضى';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'حد';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'أكثر من الميزانية!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
@@ -1363,17 +1363,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'النتيجة الصحية';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'تعتمد هذه النتيجة على معدل الادخار الخاص بك.\n\n• > توفير 50% = ممتاز (100)\n• 0% تم توفيره = المتوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'نعم';
+  String get ok => 'موافق';
 
   @override
-  String get bulkImport => 'Bulk Import';
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in the United Arab Emirates (`ar_AE`).
@@ -1411,64 +1411,64 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get canvas => 'قماش';
 
   @override
-  String get save => 'يحفظ';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'يخلق';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'يلغي';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'يمسح';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'يحرر';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'يشارك';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'ينسخ';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'التغييرات غير المحفوظة';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
   String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'ينبذ';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'إنشاء مشاركة';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'بريد';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'النشر إلى';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'ما الذي يدور في ذهنك؟';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'اختر الصور';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'اختر الفيديو';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'آلة تصوير';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'معرض';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'يبحث';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'الرجاء إدخال مهمة';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
   String get deleteTask => 'حذف المهمة';
@@ -1481,37 +1481,37 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'الطلب متاح فقط في \"جميع المشاركات\"';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'حذف المشاركة';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'تم حذف المشاركة';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'ميزات متميزة';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
   String get manageCoinsAdsPremium =>
-      'إدارة العملات المعدنية والإعلانات والحالة المميزة';
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'وضع الموضوع';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'لون مميز';
+  String get accentColor => 'لون التمييز';
 
   @override
   String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'دفع الإخطارات';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
   String get recycleBin => 'سلة المحذوفات';
@@ -1523,62 +1523,62 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'معدل التطبيق';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'إرسال الملاحظات';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'إصدار';
+  String get version => 'الإصدار';
 
   @override
   String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'نظام';
+  String get system => 'النظام';
 
   @override
-  String get light => 'ضوء';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'مظلم';
+  String get dark => 'داكن';
 
   @override
   String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'تم مسح سلة المحذوفات بنجاح';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'تم حذف جميع المشاركات';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'مشاركة جديدة';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'تم نسخ النص إلى الحافظة (سياسة Facebook)';
+      'تم نسخ النص إلى الحافظة (سياسة فيسبوك)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'تتطلب مشاركة TikTok مقطع فيديو/صورة';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'شارك في قصة $platform.';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'شارك في خلاصة $platform.';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
@@ -1589,7 +1589,7 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'لقد ربحت $amount عملة معدنية!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
@@ -1600,16 +1600,16 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'هل أنت متأكد أنك تريد حذف هذه المشاركة؟';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'المشاركات الاجتماعية';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'شاهد الإعلان لكسب العملات المعدنية';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'قسط مفتوح';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
   String get removeAds => 'إزالة الإعلانات';
@@ -1624,22 +1624,22 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'تحرير الملاحظة';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'ملاحظات البحث...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'لم يتم العثور على أي ملاحظات';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'التقط أفكارك على الفور.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
   String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'طلب مخصص';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
   String get newestFirst => 'الأحدث أولاً';
@@ -1651,29 +1651,28 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'العنوان: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'هل تريد حذف الكل؟';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin =>
-      'هل تريد نقل جميع الملاحظات إلى سلة المحذوفات؟';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
   String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'يتحرك';
+  String get move => 'نقل';
 
   @override
   String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'مختارة';
+  String get selected => 'محدد';
 
   @override
   String get noContent => 'لا يوجد محتوى';
@@ -1682,10 +1681,10 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'اختر من بين 10+ خلفيات ديناميكية';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'بيانات النسخ الاحتياطي';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
   String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
@@ -1701,7 +1700,7 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
       'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'حدد ملف';
+  String get selectFile => 'حدد ملفاً';
 
   @override
   String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
@@ -1719,18 +1718,18 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
 
   @override
   String widgetAdded(String widget) {
-    return 'القطعة المضافة إلى الشاشة الرئيسية!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'تم إرسال طلب القطعة. يرجى التحقق من الشاشة الرئيسية الخاصة بك.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'فشلت إضافة القطعة';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'تم تمكين الحفظ التلقائي.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
   String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
@@ -1739,13 +1738,13 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'إشعارات';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
   String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'ردود الفعل والدعم';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
   String get creditsTitle => 'الاعتمادات';
@@ -1754,13 +1753,13 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'عن';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'غالي';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'مظهر';
+  String get appearanceTitle => 'المظهر';
 
   @override
   String get clipboardTitle => 'الحافظة';
@@ -1773,56 +1772,56 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
 
   @override
   String get welcomeDescription =>
-      'رفيقك الإنتاجي النهائي. دعنا نجهزك بأدوات قوية لإدارة يومك.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'الملاحظات الذكية';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'التقط الأفكار على الفور باستخدام تنسيق النص المنسق. نظم أفكارك ولا تفقد أي فكرة عظيمة مرة أخرى.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
   String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'البقاء على رأس اللعبة الخاصة بك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك بعلامة اختيار واحدة في كل مرة.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
   String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'السيطرة على اموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'مجلة شخصية';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'فكر في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
   String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'لا تفوت لحظة واحدة. تنظيم الجدول الزمني الخاص بك وتتبع الأحداث القادمة الهامة.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
   String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'انسخ مرة واحدة، والصق في أي مكان. قم بالوصول إلى سجل الحافظة الخاصة بك لاسترداد المقتطفات التي قمت بنسخها مسبقًا.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'قماش إبداعي';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'أطلق العنان لإبداعك. ارسم أفكارك ورسمها وتصورها على لوحة رقمية ذات شكل حر.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
   String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
@@ -1834,19 +1833,19 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'اكتب أفكارك';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'تنظيم الجدول الزمني الخاص بك';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'الوصول إلى تاريخ الحافظة الخاصة بك';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'ارسم ورسم بحرية';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'مشاركة اجتماعية';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
   String get featuresSocialPostDesc =>
@@ -1856,19 +1855,19 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'عبر عن نفسك بلون موضوع جديد!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'مستوى';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP إلى المستوى';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
   String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'ابدأ رسمًا جديدًا';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
   String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
@@ -1878,193 +1877,194 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'الحفظ التلقائي للحافظة';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائيا';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'تم رفض الإذن بشكل دائم. يرجى التمكين في الإعدادات.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'تم تمكين الإخطارات!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'جارٍ إعادة التوجيه إلى الإعدادات لتعطيل الإشعارات...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'الوصول المميز';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'قسط نشط حتى';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'فتح كافة الميزات';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
   String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'قسط مفعل لمدة 7 أيام!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'قسط نشط';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'تنتهي:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'الوصول المؤقت';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'مجلة والتعبير';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
   String get artisticDesigns => 'تصاميم فنية';
 
   @override
   String get artisticDesignsDesc =>
-      'افتح أكثر من 10 سمات فريدة لبطاقات المجلات';
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'تخطيطات متميزة';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
   String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'التقويم والأدوات';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'التقويم الكامل';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
   String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'التقاط تاريخ الحافظة الخلفية';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'الحاجيات للمحترفين';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc =>
-      'جميع الميزات المتاحة على الشاشة الرئيسية الخاصة بك';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
   String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'النسخ الاحتياطي المتقدم';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'تأمين استيراد/تصدير جميع البيانات';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'تصدير قوات الدفاع الشعبي';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'تصدير الملاحظات والمجلات إلى PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'طباعة جاهزة';
+  String get printReady => 'جاهز للطباعة';
 
   @override
   String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'محرر النص الغني';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
   String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'بحث واستبدال داخل النص الخاص بك';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'الوسائط الغنية';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'إدراج الصور ومقاطع الفيديو والروابط';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'أسلوب المحرر';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'نص مخصص وخلفيات المحرر';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'توازن';
+  String get balance => 'الرصيد';
 
   @override
   String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'تحميل الإعلان';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'احفظ ملف JSON لبياناتك';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'دمج ملف النسخ الاحتياطي في CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'تم رفض إذن الإخطار.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
   String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'أضف مهمة';
+  String get addTask => 'إضافة مهمة';
 
   @override
   String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'عمل عظيم!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
   String get moveTasksToRecycleBin =>
-      'هل تريد نقل جميع المهام النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'حذف كافة المشاركات';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'جميع المشاركات';
+  String get allPosts => 'جميع المنشورات';
 
   @override
   String get favorites => 'المفضلة';
@@ -2073,10 +2073,10 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'لا يوجد مفضلة بعد';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'لا توجد مسودات حتى الآن';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
@@ -2089,28 +2089,30 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'الرجاء إضافة بعض المحتوى أو الوسائط للمشاركة';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'خطأ: الملف غير موجود في $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'تحقق من تطبيق الفيسبوك';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
   String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'مشاركة اجتماعية';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
   String get favorite => 'مفضل';
@@ -2119,11 +2121,11 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'تم نسخ الإدخال';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'هل تريد نقل جميع الإدخالات النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
   String get startWritingStory => 'ابدأ بكتابة قصتك';
@@ -2132,42 +2134,42 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'اكتب المجلة';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
   String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'فرز المجلة';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'بواسطة المزاج';
+  String get byMood => 'حسب المزاج';
 
   @override
   String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'حدد الكل';
+  String get selectAll => 'تحديد الكل';
 
   @override
   String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'اكتملت المهمة!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'المهمة غير مكتملة';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
   String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'تم حفظ الحافظة: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'ملخص';
+  String get overview => 'نظرة عامة';
 
   @override
   String get colorAurora => 'أورورا';
@@ -2182,28 +2184,28 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'الشمسية';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'جديد';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'تحميل...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'جارٍ إعداد قاعدة البيانات...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'جارٍ تكوين النظام...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'مستعد';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'رفيقك الإنتاجية';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'منتهي';
+  String get done => 'تم';
 
   @override
   String get newNote => 'ملاحظة جديدة';
@@ -2218,13 +2220,13 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'تصدير بصيغة PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'المهمة مستحقة الآن';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'هل تريد نقل المهمة إلى سلة المحذوفات؟';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
@@ -2234,7 +2236,7 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'تحرير المهمة';
+  String get editTask => 'تعديل المهمة';
 
   @override
   String get undo => 'تراجع';
@@ -2243,10 +2245,10 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get redo => 'إعادة';
 
   @override
-  String get category => 'فئة';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'على سبيل المثال العمل، صالة الألعاب الرياضية';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
   String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
@@ -2255,17 +2257,17 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'تحديد تاريخ الاستحقاق';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'تاريخان';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'نفقات';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
@@ -2281,7 +2283,7 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'المزيد من المرشحات...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
   String get filterExpenses => 'تصفية النفقات';
@@ -2290,51 +2292,50 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'فئات';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'الجميع';
+  String get all => 'الكل';
 
   @override
-  String get income => 'دخل';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'حساب';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'إعادة ضبط';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'يتقدم';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي صناعته.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'الثروة ليست في امتلاك ممتلكات كبيرة، بل في الحصول على القليل من الحاجات.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'الوقت هو العملة النهائية.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'النجاح ليس نهائيا، والفشل ليس قاتلا.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'ركز على الحل وليس المشكلة.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'شبكتك هي ثروتك الصافية.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
   String get moodHappy => 'سعيد';
@@ -2343,13 +2344,13 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'حيادي';
+  String get moodNeutral => 'محايد';
 
   @override
   String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'وشدد';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -2363,16 +2364,16 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'انستغرام';
+  String get instagram => 'إنستغرام';
 
   @override
   String get facebook => 'فيسبوك';
@@ -2381,7 +2382,7 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'رسم جديد';
+  String get newSketch => 'رسمة جديدة';
 
   @override
   String get searchSketches => 'البحث في الرسومات والمجلدات...';
@@ -2396,10 +2397,10 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'أطلق العنان لإبداعك على القماش!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'قماش جديد';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
   String get rename => 'إعادة تسمية';
@@ -2408,23 +2409,23 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'هل تريد حذف الرسومات؟';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'سيتم حذف جميع الرسومات الموجودة في هذا المجلد نهائيًا.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
   String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'اختر اللون';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'هل تريد حذف المجلد؟';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'بحث في المقاطع...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
   String get clipboardEmpty => 'الحافظة فارغة';
@@ -2433,16 +2434,16 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'لون المقطع';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'كليب جديد';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'تحرير المقطع';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'يمكنك استعادة هذا المقطع لاحقا.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
   String get upcomingEvents => 'الأحداث القادمة';
@@ -2466,30 +2467,30 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'البحث في مثل هذا اليوم...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'تمويل';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'هل تريد الحذف نهائيًا؟';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'سيؤدي هذا إلى حذف مجلدات $foldersCount (ورسوماتها) و$sketchesCount من الرسومات الأخرى نهائيًا.\n\nلا يمكن التراجع عن هذا.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'حذف إلى الأبد';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
@@ -2509,129 +2510,129 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'هل تريد حذف $count من الرسومات؟ لا يمكن التراجع عن هذا.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'لم يتم العثور على الرسومات';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسم جديد.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
   String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'تقويم';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
   String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'هل تريد حذف العنصر؟';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
       'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'ويمكنك استعادته لاحقًا.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'المقاطع الأخيرة';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'منسوخ!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'نسخ نص عادي';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'موضوع كليب';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
   String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
   String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'مهام البحث...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
   String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'ملاحظة بلا عنوان';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'الدخول اليومي';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'تاريخ الحافظة';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'لا يمكن التراجع عن هذا الإجراء.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'سلة المحذوفات فارغة؟';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'سيتم حذف جميع العناصر البالغ عددها $count نهائيًا.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'سلة فارغة';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
   String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'سوف تظهر العناصر المحذوفة هنا.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
   String get empty => 'فارغ';
 
   @override
-  String get recent => 'مؤخرًا';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
@@ -2647,33 +2648,32 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle =>
-      'هل تريد نقل المعاملة إلى سلة المحذوفات؟';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'يمكنك استعادة هذه المعاملة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
   String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'لماذا هذا؟';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'وصف';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'يوميًا';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'أسبوعي';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'شهريا';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'سنوي';
+  String get yearly => 'سنوياً';
 
   @override
   String get totalIncome => 'إجمالي الدخل';
@@ -2682,19 +2682,19 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'تحليل';
+  String get analysis => 'التحليل';
 
   @override
   String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'لم يتم العثور على مصاريف لهذه الفترة.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
   String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'أهم الفئات';
+  String get topCategories => 'أبرز الفئات';
 
   @override
   String get spendingTrend => 'اتجاه الإنفاق';
@@ -2709,22 +2709,22 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'أضف النفقات';
+  String get addExpense => 'إضافة نفقة';
 
   @override
   String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'ميزانية';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'قضى';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'حد';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'أكثر من الميزانية!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
@@ -2735,14 +2735,17 @@ class AppLocalizationsArAe extends AppLocalizationsAr {
   String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'النتيجة الصحية';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'تعتمد هذه النتيجة على معدل الادخار الخاص بك.\n\n• > توفير 50% = ممتاز (100)\n• 0% تم توفيره = المتوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'نعم';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Bahrain (`ar_BH`).
@@ -2780,64 +2783,64 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get canvas => 'قماش';
 
   @override
-  String get save => 'يحفظ';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'يخلق';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'يلغي';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'يمسح';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'يحرر';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'يشارك';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'ينسخ';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'التغييرات غير المحفوظة';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
   String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'ينبذ';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'إنشاء مشاركة';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'بريد';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'النشر إلى';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'ما الذي يدور في ذهنك؟';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'اختر الصور';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'اختر الفيديو';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'آلة تصوير';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'معرض';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'يبحث';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'الرجاء إدخال مهمة';
+  String get pleaseEnterTask => 'يرجى إدخل مهمة';
 
   @override
   String get deleteTask => 'حذف المهمة';
@@ -2850,37 +2853,37 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'الطلب متاح فقط في \"جميع المشاركات\"';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'حذف المشاركة';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'تم حذف المشاركة';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'ميزات متميزة';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
   String get manageCoinsAdsPremium =>
-      'إدارة العملات المعدنية والإعلانات والحالة المميزة';
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'وضع الموضوع';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'لون مميز';
+  String get accentColor => 'لون التمييز';
 
   @override
   String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'دفع الإخطارات';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
   String get recycleBin => 'سلة المحذوفات';
@@ -2892,62 +2895,62 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'معدل التطبيق';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'إرسال الملاحظات';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'إصدار';
+  String get version => 'الإصدار';
 
   @override
   String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'نظام';
+  String get system => 'النظام';
 
   @override
-  String get light => 'ضوء';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'مظلم';
+  String get dark => 'داكن';
 
   @override
   String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'تم مسح سلة المحذوفات بنجاح';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'تم حذف جميع المشاركات';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'مشاركة جديدة';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'تم نسخ النص إلى الحافظة (سياسة Facebook)';
+      'تم نسخ النص إلى الحافظة (سياسة فيسبوك)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'تتطلب مشاركة TikTok مقطع فيديو/صورة';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'شارك في قصة $platform.';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'شارك في خلاصة $platform.';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
@@ -2958,7 +2961,7 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'لقد ربحت $amount عملة معدنية!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
@@ -2969,16 +2972,16 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'هل أنت متأكد أنك تريد حذف هذه المشاركة؟';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'المشاركات الاجتماعية';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'شاهد الإعلان لكسب العملات المعدنية';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'قسط مفتوح';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
   String get removeAds => 'إزالة الإعلانات';
@@ -2993,22 +2996,22 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'تحرير الملاحظة';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'ملاحظات البحث...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'لم يتم العثور على أي ملاحظات';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'التقط أفكارك على الفور.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
   String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'طلب مخصص';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
   String get newestFirst => 'الأحدث أولاً';
@@ -3020,29 +3023,28 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'العنوان: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'هل تريد حذف الكل؟';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin =>
-      'هل تريد نقل جميع الملاحظات إلى سلة المحذوفات؟';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
   String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'يتحرك';
+  String get move => 'نقل';
 
   @override
   String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'مختارة';
+  String get selected => 'محدد';
 
   @override
   String get noContent => 'لا يوجد محتوى';
@@ -3051,10 +3053,10 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'اختر من بين 10+ خلفيات ديناميكية';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'بيانات النسخ الاحتياطي';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
   String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
@@ -3070,7 +3072,7 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
       'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'حدد ملف';
+  String get selectFile => 'حدد ملفاً';
 
   @override
   String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
@@ -3088,18 +3090,18 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
 
   @override
   String widgetAdded(String widget) {
-    return 'القطعة المضافة إلى الشاشة الرئيسية!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'تم إرسال طلب القطعة. يرجى التحقق من الشاشة الرئيسية الخاصة بك.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'فشلت إضافة القطعة';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'تم تمكين الحفظ التلقائي.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
   String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
@@ -3108,13 +3110,13 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'إشعارات';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
   String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'ردود الفعل والدعم';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
   String get creditsTitle => 'الاعتمادات';
@@ -3123,13 +3125,13 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'عن';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'غالي';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'مظهر';
+  String get appearanceTitle => 'المظهر';
 
   @override
   String get clipboardTitle => 'الحافظة';
@@ -3142,56 +3144,56 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
 
   @override
   String get welcomeDescription =>
-      'رفيقك الإنتاجي النهائي. دعنا نجهزك بأدوات قوية لإدارة يومك.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'الملاحظات الذكية';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'التقط الأفكار على الفور باستخدام تنسيق النص المنسق. نظم أفكارك ولا تفقد أي فكرة عظيمة مرة أخرى.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
   String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'البقاء على رأس اللعبة الخاصة بك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك بعلامة اختيار واحدة في كل مرة.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
   String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'السيطرة على اموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'مجلة شخصية';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'فكر في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
   String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'لا تفوت لحظة واحدة. تنظيم الجدول الزمني الخاص بك وتتبع الأحداث القادمة الهامة.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
   String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'انسخ مرة واحدة، والصق في أي مكان. قم بالوصول إلى سجل الحافظة الخاصة بك لاسترداد المقتطفات التي قمت بنسخها مسبقًا.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'قماش إبداعي';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'أطلق العنان لإبداعك. ارسم أفكارك ورسمها وتصورها على لوحة رقمية ذات شكل حر.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
   String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
@@ -3203,19 +3205,19 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'اكتب أفكارك';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'تنظيم الجدول الزمني الخاص بك';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'الوصول إلى تاريخ الحافظة الخاصة بك';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'ارسم ورسم بحرية';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'مشاركة اجتماعية';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
   String get featuresSocialPostDesc =>
@@ -3225,19 +3227,19 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'عبر عن نفسك بلون موضوع جديد!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'مستوى';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP إلى المستوى';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
   String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'ابدأ رسمًا جديدًا';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
   String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
@@ -3247,193 +3249,194 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'الحفظ التلقائي للحافظة';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائيا';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'تم رفض الإذن بشكل دائم. يرجى التمكين في الإعدادات.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'تم تمكين الإخطارات!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'جارٍ إعادة التوجيه إلى الإعدادات لتعطيل الإشعارات...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'الوصول المميز';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'قسط نشط حتى';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'فتح كافة الميزات';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
   String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'قسط مفعل لمدة 7 أيام!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'قسط نشط';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'تنتهي:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'الوصول المؤقت';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'مجلة والتعبير';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
   String get artisticDesigns => 'تصاميم فنية';
 
   @override
   String get artisticDesignsDesc =>
-      'افتح أكثر من 10 سمات فريدة لبطاقات المجلات';
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'تخطيطات متميزة';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
   String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'التقويم والأدوات';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'التقويم الكامل';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
   String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'التقاط تاريخ الحافظة الخلفية';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'الحاجيات للمحترفين';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc =>
-      'جميع الميزات المتاحة على الشاشة الرئيسية الخاصة بك';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
   String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'النسخ الاحتياطي المتقدم';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'تأمين استيراد/تصدير جميع البيانات';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'تصدير قوات الدفاع الشعبي';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'تصدير الملاحظات والمجلات إلى PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'طباعة جاهزة';
+  String get printReady => 'جاهز للطباعة';
 
   @override
   String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'محرر النص الغني';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
   String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'بحث واستبدال داخل النص الخاص بك';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'الوسائط الغنية';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'إدراج الصور ومقاطع الفيديو والروابط';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'أسلوب المحرر';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'نص مخصص وخلفيات المحرر';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'توازن';
+  String get balance => 'الرصيد';
 
   @override
   String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'تحميل الإعلان';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'احفظ ملف JSON لبياناتك';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'دمج ملف النسخ الاحتياطي في CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'تم رفض إذن الإخطار.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
   String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'أضف مهمة';
+  String get addTask => 'إضافة مهمة';
 
   @override
   String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'عمل عظيم!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
   String get moveTasksToRecycleBin =>
-      'هل تريد نقل جميع المهام النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'حذف كافة المشاركات';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'جميع المشاركات';
+  String get allPosts => 'جميع المنشورات';
 
   @override
   String get favorites => 'المفضلة';
@@ -3442,10 +3445,10 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'لا يوجد مفضلة بعد';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'لا توجد مسودات حتى الآن';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
@@ -3458,28 +3461,30 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'الرجاء إضافة بعض المحتوى أو الوسائط للمشاركة';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'خطأ: الملف غير موجود في $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'تحقق من تطبيق الفيسبوك';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
   String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'مشاركة اجتماعية';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
   String get favorite => 'مفضل';
@@ -3488,11 +3493,11 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'تم نسخ الإدخال';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'هل تريد نقل جميع الإدخالات النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
   String get startWritingStory => 'ابدأ بكتابة قصتك';
@@ -3501,42 +3506,42 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'اكتب المجلة';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
   String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'فرز المجلة';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'بواسطة المزاج';
+  String get byMood => 'حسب المزاج';
 
   @override
   String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'حدد الكل';
+  String get selectAll => 'تحديد الكل';
 
   @override
   String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'اكتملت المهمة!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'المهمة غير مكتملة';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
   String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'تم حفظ الحافظة: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'ملخص';
+  String get overview => 'نظرة عامة';
 
   @override
   String get colorAurora => 'أورورا';
@@ -3551,28 +3556,28 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'الشمسية';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'جديد';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'تحميل...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'جارٍ إعداد قاعدة البيانات...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'جارٍ تكوين النظام...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'مستعد';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'رفيقك الإنتاجية';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'منتهي';
+  String get done => 'تم';
 
   @override
   String get newNote => 'ملاحظة جديدة';
@@ -3587,23 +3592,23 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'تصدير بصيغة PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'المهمة مستحقة الآن';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'هل تريد نقل المهمة إلى سلة المحذوفات؟';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
-      'يمكنك استعادة هذه المهمة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المهمة لاحقاً من الإعدادات.';
 
   @override
   String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'تحرير المهمة';
+  String get editTask => 'تعديل المهمة';
 
   @override
   String get undo => 'تراجع';
@@ -3612,10 +3617,10 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get redo => 'إعادة';
 
   @override
-  String get category => 'فئة';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'على سبيل المثال العمل، صالة الألعاب الرياضية';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
   String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
@@ -3624,17 +3629,17 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'تحديد تاريخ الاستحقاق';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'تاريخان';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'نفقات';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
@@ -3650,7 +3655,7 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'المزيد من المرشحات...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
   String get filterExpenses => 'تصفية النفقات';
@@ -3659,51 +3664,50 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'فئات';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'الجميع';
+  String get all => 'الكل';
 
   @override
-  String get income => 'دخل';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'حساب';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'إعادة ضبط';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'يتقدم';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي صناعته.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'الثروة ليست في امتلاك ممتلكات كبيرة، بل في الحصول على القليل من الحاجات.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'الوقت هو العملة النهائية.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'النجاح ليس نهائيا، والفشل ليس قاتلا.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'ركز على الحل وليس المشكلة.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'شبكتك هي ثروتك الصافية.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
   String get moodHappy => 'سعيد';
@@ -3712,13 +3716,13 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'حيادي';
+  String get moodNeutral => 'محايد';
 
   @override
   String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'وشدد';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -3732,16 +3736,16 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'انستغرام';
+  String get instagram => 'إنستغرام';
 
   @override
   String get facebook => 'فيسبوك';
@@ -3750,7 +3754,7 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'رسم جديد';
+  String get newSketch => 'رسمة جديدة';
 
   @override
   String get searchSketches => 'البحث في الرسومات والمجلدات...';
@@ -3765,10 +3769,10 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'أطلق العنان لإبداعك على القماش!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'قماش جديد';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
   String get rename => 'إعادة تسمية';
@@ -3777,23 +3781,23 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'هل تريد حذف الرسومات؟';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'سيتم حذف جميع الرسومات الموجودة في هذا المجلد نهائيًا.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
   String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'اختر اللون';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'هل تريد حذف المجلد؟';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'بحث في المقاطع...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
   String get clipboardEmpty => 'الحافظة فارغة';
@@ -3802,16 +3806,16 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'لون المقطع';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'كليب جديد';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'تحرير المقطع';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'يمكنك استعادة هذا المقطع لاحقا.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
   String get upcomingEvents => 'الأحداث القادمة';
@@ -3835,30 +3839,30 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'البحث في مثل هذا اليوم...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'تمويل';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'هل تريد الحذف نهائيًا؟';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'سيؤدي هذا إلى حذف مجلدات $foldersCount (ورسوماتها) و$sketchesCount من الرسومات الأخرى نهائيًا.\n\nلا يمكن التراجع عن هذا.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'حذف إلى الأبد';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
@@ -3878,129 +3882,129 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'هل تريد حذف $count من الرسومات؟ لا يمكن التراجع عن هذا.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'لم يتم العثور على الرسومات';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسم جديد.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
   String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'تقويم';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
   String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'هل تريد حذف العنصر؟';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
       'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'ويمكنك استعادته لاحقًا.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'المقاطع الأخيرة';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'منسوخ!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'نسخ نص عادي';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'موضوع كليب';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
   String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
   String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'مهام البحث...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
   String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'ملاحظة بلا عنوان';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'الدخول اليومي';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'تاريخ الحافظة';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'لا يمكن التراجع عن هذا الإجراء.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'سلة المحذوفات فارغة؟';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'سيتم حذف جميع العناصر البالغ عددها $count نهائيًا.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'سلة فارغة';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
   String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'سوف تظهر العناصر المحذوفة هنا.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
   String get empty => 'فارغ';
 
   @override
-  String get recent => 'مؤخرًا';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
@@ -4016,33 +4020,32 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle =>
-      'هل تريد نقل المعاملة إلى سلة المحذوفات؟';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'يمكنك استعادة هذه المعاملة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
   String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'لماذا هذا؟';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'وصف';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'يوميًا';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'أسبوعي';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'شهريا';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'سنوي';
+  String get yearly => 'سنوياً';
 
   @override
   String get totalIncome => 'إجمالي الدخل';
@@ -4051,19 +4054,19 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'تحليل';
+  String get analysis => 'التحليل';
 
   @override
   String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'لم يتم العثور على مصاريف لهذه الفترة.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
   String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'أهم الفئات';
+  String get topCategories => 'أبرز الفئات';
 
   @override
   String get spendingTrend => 'اتجاه الإنفاق';
@@ -4078,22 +4081,22 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'أضف النفقات';
+  String get addExpense => 'إضافة نفقة';
 
   @override
   String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'ميزانية';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'قضى';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'حد';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'أكثر من الميزانية!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
@@ -4104,14 +4107,17 @@ class AppLocalizationsArBh extends AppLocalizationsAr {
   String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'النتيجة الصحية';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'تعتمد هذه النتيجة على معدل الادخار الخاص بك.\n\n• > توفير 50% = ممتاز (100)\n• 0% تم توفيره = المتوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'نعم';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Algeria (`ar_DZ`).
@@ -4149,64 +4155,64 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get canvas => 'قماش';
 
   @override
-  String get save => 'يحفظ';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'يخلق';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'يلغي';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'يمسح';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'يحرر';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'يشارك';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'ينسخ';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'التغييرات غير المحفوظة';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
   String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'ينبذ';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'إنشاء مشاركة';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'بريد';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'النشر إلى';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'ما الذي يدور في ذهنك؟';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'اختر الصور';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'اختر الفيديو';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'آلة تصوير';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'معرض';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'يبحث';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'الرجاء إدخال مهمة';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
   String get deleteTask => 'حذف المهمة';
@@ -4219,37 +4225,37 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'الطلب متاح فقط في \"جميع المشاركات\"';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'حذف المشاركة';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'تم حذف المشاركة';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'ميزات متميزة';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
   String get manageCoinsAdsPremium =>
-      'إدارة العملات المعدنية والإعلانات والحالة المميزة';
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'وضع الموضوع';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'لون مميز';
+  String get accentColor => 'لون التمييز';
 
   @override
   String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'دفع الإخطارات';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
   String get recycleBin => 'سلة المحذوفات';
@@ -4261,62 +4267,62 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'معدل التطبيق';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'إرسال الملاحظات';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'إصدار';
+  String get version => 'الإصدار';
 
   @override
   String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'نظام';
+  String get system => 'النظام';
 
   @override
-  String get light => 'ضوء';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'مظلم';
+  String get dark => 'داكن';
 
   @override
   String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'تم مسح سلة المحذوفات بنجاح';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'تم حذف جميع المشاركات';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'مشاركة جديدة';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'تم نسخ النص إلى الحافظة (سياسة Facebook)';
+      'Text copied to clipboard (Facebook policy)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'تتطلب مشاركة TikTok مقطع فيديو/صورة';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'شارك في قصة $platform.';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'شارك في خلاصة $platform.';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
@@ -4327,7 +4333,7 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'لقد ربحت $amount عملة معدنية!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
@@ -4338,16 +4344,16 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'هل أنت متأكد أنك تريد حذف هذه المشاركة؟';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'المشاركات الاجتماعية';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'شاهد الإعلان لكسب العملات المعدنية';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'قسط مفتوح';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
   String get removeAds => 'إزالة الإعلانات';
@@ -4362,22 +4368,22 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'تحرير الملاحظة';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'ملاحظات البحث...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'لم يتم العثور على أي ملاحظات';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'التقط أفكارك على الفور.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
   String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'طلب مخصص';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
   String get newestFirst => 'الأحدث أولاً';
@@ -4389,29 +4395,28 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'العنوان: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'هل تريد حذف الكل؟';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin =>
-      'هل تريد نقل جميع الملاحظات إلى سلة المحذوفات؟';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
   String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'يتحرك';
+  String get move => 'نقل';
 
   @override
   String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'مختارة';
+  String get selected => 'محدد';
 
   @override
   String get noContent => 'لا يوجد محتوى';
@@ -4420,10 +4425,10 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'اختر من بين 10+ خلفيات ديناميكية';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'بيانات النسخ الاحتياطي';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
   String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
@@ -4439,7 +4444,7 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
       'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'حدد ملف';
+  String get selectFile => 'حدد ملفاً';
 
   @override
   String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
@@ -4457,18 +4462,18 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
 
   @override
   String widgetAdded(String widget) {
-    return 'القطعة المضافة إلى الشاشة الرئيسية!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'تم إرسال طلب القطعة. يرجى التحقق من الشاشة الرئيسية الخاصة بك.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'فشلت إضافة القطعة';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'تم تمكين الحفظ التلقائي.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
   String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
@@ -4477,13 +4482,13 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'إشعارات';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
   String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'ردود الفعل والدعم';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
   String get creditsTitle => 'الاعتمادات';
@@ -4492,13 +4497,13 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'عن';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'غالي';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'مظهر';
+  String get appearanceTitle => 'المظهر';
 
   @override
   String get clipboardTitle => 'الحافظة';
@@ -4511,56 +4516,56 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
 
   @override
   String get welcomeDescription =>
-      'رفيقك الإنتاجي النهائي. دعنا نجهزك بأدوات قوية لإدارة يومك.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'الملاحظات الذكية';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'التقط الأفكار على الفور باستخدام تنسيق النص المنسق. نظم أفكارك ولا تفقد أي فكرة عظيمة مرة أخرى.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
   String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'البقاء على رأس اللعبة الخاصة بك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك بعلامة اختيار واحدة في كل مرة.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
   String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'السيطرة على اموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'مجلة شخصية';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'فكر في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
   String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'لا تفوت لحظة واحدة. تنظيم الجدول الزمني الخاص بك وتتبع الأحداث القادمة الهامة.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
   String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'انسخ مرة واحدة، والصق في أي مكان. قم بالوصول إلى سجل الحافظة الخاصة بك لاسترداد المقتطفات التي قمت بنسخها مسبقًا.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'قماش إبداعي';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'أطلق العنان لإبداعك. ارسم أفكارك ورسمها وتصورها على لوحة رقمية ذات شكل حر.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
   String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
@@ -4572,19 +4577,19 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'اكتب أفكارك';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'تنظيم الجدول الزمني الخاص بك';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'الوصول إلى تاريخ الحافظة الخاصة بك';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'ارسم ورسم بحرية';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'مشاركة اجتماعية';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
   String get featuresSocialPostDesc =>
@@ -4594,19 +4599,19 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'عبر عن نفسك بلون موضوع جديد!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'مستوى';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP إلى المستوى';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
   String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'ابدأ رسمًا جديدًا';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
   String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
@@ -4616,193 +4621,195 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'الحفظ التلقائي للحافظة';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائيا';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'تم رفض الإذن بشكل دائم. يرجى التمكين في الإعدادات.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'تم تمكين الإخطارات!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'جارٍ إعادة التوجيه إلى الإعدادات لتعطيل الإشعارات...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'الوصول المميز';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'قسط نشط حتى';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'فتح كافة الميزات';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
   String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'قسط مفعل لمدة 7 أيام!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'قسط نشط';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'تنتهي:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'الوصول المؤقت';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'مجلة والتعبير';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
   String get artisticDesigns => 'تصاميم فنية';
 
   @override
   String get artisticDesignsDesc =>
-      'افتح أكثر من 10 سمات فريدة لبطاقات المجلات';
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'تخطيطات متميزة';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
   String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'التقويم والأدوات';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'التقويم الكامل';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
   String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'التقاط تاريخ الحافظة الخلفية';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'الحاجيات للمحترفين';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc =>
-      'جميع الميزات المتاحة على الشاشة الرئيسية الخاصة بك';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
   String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'النسخ الاحتياطي المتقدم';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'تأمين استيراد/تصدير جميع البيانات';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'تصدير قوات الدفاع الشعبي';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'تصدير الملاحظات والمجلات إلى PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'طباعة جاهزة';
+  String get printReady => 'جاهز للطباعة';
 
   @override
   String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'محرر النص الغني';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
   String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'بحث واستبدال داخل النص الخاص بك';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'الوسائط الغنية';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'إدراج الصور ومقاطع الفيديو والروابط';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'أسلوب المحرر';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'نص مخصص وخلفيات المحرر';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'توازن';
+  String get balance => 'الرصيد';
 
   @override
   String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'تحميل الإعلان';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'احفظ ملف JSON لبياناتك';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'دمج ملف النسخ الاحتياطي في CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'تم رفض إذن الإخطار.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
   String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'أضف مهمة';
+  String get addTask => 'إضافة مهمة';
 
   @override
   String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'عمل عظيم!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
   String get moveTasksToRecycleBin =>
-      'هل تريد نقل جميع المهام النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'حذف كافة المشاركات';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'جميع المشاركات';
+  String get allPosts => 'جميع المنشورات';
 
   @override
   String get favorites => 'المفضلة';
@@ -4811,10 +4818,10 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'لا يوجد مفضلة بعد';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'لا توجد مسودات حتى الآن';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
@@ -4827,28 +4834,31 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'الرجاء إضافة بعض المحتوى أو الوسائط للمشاركة';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'خطأ: الملف غير موجود في $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'تحقق من تطبيق الفيسبوك';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
   String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'مشاركة اجتماعية';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
   String get favorite => 'مفضل';
@@ -4857,11 +4867,11 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'تم نسخ الإدخال';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'هل تريد نقل جميع الإدخالات النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
   String get startWritingStory => 'ابدأ بكتابة قصتك';
@@ -4870,42 +4880,42 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'اكتب المجلة';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
   String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'فرز المجلة';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'بواسطة المزاج';
+  String get byMood => 'حسب المزاج';
 
   @override
   String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'حدد الكل';
+  String get selectAll => 'تحديد الكل';
 
   @override
   String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'اكتملت المهمة!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'المهمة غير مكتملة';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
   String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'تم حفظ الحافظة: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'ملخص';
+  String get overview => 'نظرة عامة';
 
   @override
   String get colorAurora => 'أورورا';
@@ -4920,28 +4930,28 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'الشمسية';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'جديد';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'تحميل...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'جارٍ إعداد قاعدة البيانات...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'جارٍ تكوين النظام...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'مستعد';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'رفيقك الإنتاجية';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'منتهي';
+  String get done => 'تم';
 
   @override
   String get newNote => 'ملاحظة جديدة';
@@ -4956,13 +4966,13 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'تصدير بصيغة PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'المهمة مستحقة الآن';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'هل تريد نقل المهمة إلى سلة المحذوفات؟';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
@@ -4972,7 +4982,7 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'تحرير المهمة';
+  String get editTask => 'تعديل المهمة';
 
   @override
   String get undo => 'تراجع';
@@ -4981,10 +4991,10 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get redo => 'إعادة';
 
   @override
-  String get category => 'فئة';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'على سبيل المثال العمل، صالة الألعاب الرياضية';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
   String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
@@ -4993,17 +5003,17 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'تحديد تاريخ الاستحقاق';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'تاريخان';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'نفقات';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
@@ -5019,7 +5029,7 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'المزيد من المرشحات...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
   String get filterExpenses => 'تصفية النفقات';
@@ -5028,51 +5038,50 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'فئات';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'الجميع';
+  String get all => 'الكل';
 
   @override
-  String get income => 'دخل';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'حساب';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'إعادة ضبط';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'يتقدم';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي صناعته.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'الثروة ليست في امتلاك ممتلكات كبيرة، بل في الحصول على القليل من الحاجات.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'الوقت هو العملة النهائية.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'النجاح ليس نهائيا، والفشل ليس قاتلا.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'ركز على الحل وليس المشكلة.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'شبكتك هي ثروتك الصافية.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
   String get moodHappy => 'سعيد';
@@ -5081,13 +5090,13 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'حيادي';
+  String get moodNeutral => 'محايد';
 
   @override
   String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'وشدد';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -5101,16 +5110,16 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'انستغرام';
+  String get instagram => 'إنستغرام';
 
   @override
   String get facebook => 'فيسبوك';
@@ -5119,7 +5128,7 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'رسم جديد';
+  String get newSketch => 'رسمة جديدة';
 
   @override
   String get searchSketches => 'البحث في الرسومات والمجلدات...';
@@ -5134,10 +5143,10 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'أطلق العنان لإبداعك على القماش!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'قماش جديد';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
   String get rename => 'إعادة تسمية';
@@ -5146,23 +5155,23 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'هل تريد حذف الرسومات؟';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'سيتم حذف جميع الرسومات الموجودة في هذا المجلد نهائيًا.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
   String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'اختر اللون';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'هل تريد حذف المجلد؟';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'بحث في المقاطع...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
   String get clipboardEmpty => 'الحافظة فارغة';
@@ -5171,16 +5180,16 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'لون المقطع';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'كليب جديد';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'تحرير المقطع';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'يمكنك استعادة هذا المقطع لاحقا.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
   String get upcomingEvents => 'الأحداث القادمة';
@@ -5192,7 +5201,7 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get taskProgress => 'تقدم المهمة';
 
   @override
-  String get quickStats => 'إحصائيات سريعة';
+  String get quickStats => 'إحصيات سريعة';
 
   @override
   String get taskCompletion => 'إكمال المهمة';
@@ -5204,30 +5213,30 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'البحث في مثل هذا اليوم...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'تمويل';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'هل تريد الحذف نهائيًا؟';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'سيؤدي هذا إلى حذف مجلدات $foldersCount (ورسوماتها) و$sketchesCount من الرسومات الأخرى نهائيًا.\n\nلا يمكن التراجع عن هذا.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'حذف إلى الأبد';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
@@ -5247,129 +5256,129 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'هل تريد حذف $count من الرسومات؟ لا يمكن التراجع عن هذا.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'لم يتم العثور على الرسومات';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسم جديد.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
   String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'تقويم';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
   String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'هل تريد حذف العنصر؟';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
       'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'ويمكنك استعادته لاحقًا.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'المقاطع الأخيرة';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'منسوخ!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'نسخ نص عادي';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'موضوع كليب';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
   String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
   String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'مهام البحث...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
   String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'ملاحظة بلا عنوان';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'الدخول اليومي';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'تاريخ الحافظة';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'لا يمكن التراجع عن هذا الإجراء.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'سلة المحذوفات فارغة؟';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'سيتم حذف جميع العناصر البالغ عددها $count نهائيًا.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'سلة فارغة';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
   String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'سوف تظهر العناصر المحذوفة هنا.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
   String get empty => 'فارغ';
 
   @override
-  String get recent => 'مؤخرًا';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
@@ -5385,33 +5394,32 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle =>
-      'هل تريد نقل المعاملة إلى سلة المحذوفات؟';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'يمكنك استعادة هذه المعاملة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
   String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'لماذا هذا؟';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'وصف';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'يوميًا';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'أسبوعي';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'شهريا';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'سنوي';
+  String get yearly => 'سنوياً';
 
   @override
   String get totalIncome => 'إجمالي الدخل';
@@ -5420,19 +5428,19 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'تحليل';
+  String get analysis => 'التحليل';
 
   @override
   String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'لم يتم العثور على مصاريف لهذه الفترة.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
   String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'أهم الفئات';
+  String get topCategories => 'أبرز الفئات';
 
   @override
   String get spendingTrend => 'اتجاه الإنفاق';
@@ -5447,22 +5455,22 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'أضف النفقات';
+  String get addExpense => 'إضافة نفقة';
 
   @override
   String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'ميزانية';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'قضى';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'حد';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'أكثر من الميزانية!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
@@ -5473,14 +5481,17 @@ class AppLocalizationsArDz extends AppLocalizationsAr {
   String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'النتيجة الصحية';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'تعتمد هذه النتيجة على معدل الادخار الخاص بك.\n\n• > توفير 50% = ممتاز (100)\n• 0% تم توفيره = المتوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'نعم';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Egypt (`ar_EG`).
@@ -5518,64 +5529,64 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get canvas => 'قماش';
 
   @override
-  String get save => 'يحفظ';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'يخلق';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'يلغي';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'يمسح';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'يحرر';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'يشارك';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'ينسخ';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'التغييرات غير المحفوظة';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
   String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'ينبذ';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'إنشاء مشاركة';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'بريد';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'النشر إلى';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'ما الذي يدور في ذهنك؟';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'اختر الصور';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'اختر الفيديو';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'آلة تصوير';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'معرض';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'يبحث';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'الرجاء إدخال مهمة';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
   String get deleteTask => 'حذف المهمة';
@@ -5588,37 +5599,37 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'الطلب متاح فقط في \"جميع المشاركات\"';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'حذف المشاركة';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'تم حذف المشاركة';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'ميزات متميزة';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
   String get manageCoinsAdsPremium =>
-      'إدارة العملات المعدنية والإعلانات والحالة المميزة';
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'وضع الموضوع';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'لون مميز';
+  String get accentColor => 'لون التمييز';
 
   @override
   String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'دفع الإخطارات';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
   String get recycleBin => 'سلة المحذوفات';
@@ -5630,62 +5641,62 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'معدل التطبيق';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'إرسال الملاحظات';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'إصدار';
+  String get version => 'الإصدار';
 
   @override
   String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'نظام';
+  String get system => 'النظام';
 
   @override
-  String get light => 'ضوء';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'مظلم';
+  String get dark => 'داكن';
 
   @override
   String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'تم مسح سلة المحذوفات بنجاح';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'تم حذف جميع المشاركات';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'مشاركة جديدة';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'تم نسخ النص إلى الحافظة (سياسة Facebook)';
+      'تم نسخ النص إلى الحافظة (سياسة فيسبوك)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'تتطلب مشاركة TikTok مقطع فيديو/صورة';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'شارك في قصة $platform.';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'شارك في خلاصة $platform.';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
@@ -5696,7 +5707,7 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'لقد ربحت $amount عملة معدنية!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
@@ -5707,16 +5718,16 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'هل أنت متأكد أنك تريد حذف هذه المشاركة؟';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'المشاركات الاجتماعية';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'شاهد الإعلان لكسب العملات المعدنية';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'قسط مفتوح';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
   String get removeAds => 'إزالة الإعلانات';
@@ -5731,22 +5742,22 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'تحرير الملاحظة';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'ملاحظات البحث...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'لم يتم العثور على أي ملاحظات';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'التقط أفكارك على الفور.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
   String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'طلب مخصص';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
   String get newestFirst => 'الأحدث أولاً';
@@ -5758,29 +5769,28 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'العنوان: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'هل تريد حذف الكل؟';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin =>
-      'هل تريد نقل جميع الملاحظات إلى سلة المحذوفات؟';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
   String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'يتحرك';
+  String get move => 'نقل';
 
   @override
   String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'مختارة';
+  String get selected => 'محدد';
 
   @override
   String get noContent => 'لا يوجد محتوى';
@@ -5789,10 +5799,10 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'اختر من بين 10+ خلفيات ديناميكية';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'بيانات النسخ الاحتياطي';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
   String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
@@ -5808,7 +5818,7 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
       'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'حدد ملف';
+  String get selectFile => 'حدد ملفاً';
 
   @override
   String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
@@ -5826,18 +5836,18 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
 
   @override
   String widgetAdded(String widget) {
-    return 'القطعة المضافة إلى الشاشة الرئيسية!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'تم إرسال طلب القطعة. يرجى التحقق من الشاشة الرئيسية الخاصة بك.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'فشلت إضافة القطعة';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'تم تمكين الحفظ التلقائي.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
   String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
@@ -5846,13 +5856,13 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'إشعارات';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
   String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'ردود الفعل والدعم';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
   String get creditsTitle => 'الاعتمادات';
@@ -5861,13 +5871,13 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'عن';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'غالي';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'مظهر';
+  String get appearanceTitle => 'المظهر';
 
   @override
   String get clipboardTitle => 'الحافظة';
@@ -5880,56 +5890,56 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
 
   @override
   String get welcomeDescription =>
-      'رفيقك الإنتاجي النهائي. دعنا نجهزك بأدوات قوية لإدارة يومك.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'الملاحظات الذكية';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'التقط الأفكار على الفور باستخدام تنسيق النص المنسق. نظم أفكارك ولا تفقد أي فكرة عظيمة مرة أخرى.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
   String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'البقاء على رأس اللعبة الخاصة بك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك بعلامة اختيار واحدة في كل مرة.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
   String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'السيطرة على اموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'مجلة شخصية';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'فكر في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
   String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'لا تفوت لحظة واحدة. تنظيم الجدول الزمني الخاص بك وتتبع الأحداث القادمة الهامة.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
   String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'انسخ مرة واحدة، والصق في أي مكان. قم بالوصول إلى سجل الحافظة الخاصة بك لاسترداد المقتطفات التي قمت بنسخها مسبقًا.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'قماش إبداعي';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'أطلق العنان لإبداعك. ارسم أفكارك ورسمها وتصورها على لوحة رقمية ذات شكل حر.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
   String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
@@ -5941,19 +5951,19 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'اكتب أفكارك';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'تنظيم الجدول الزمني الخاص بك';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'الوصول إلى تاريخ الحافظة الخاصة بك';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'ارسم ورسم بحرية';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'مشاركة اجتماعية';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
   String get featuresSocialPostDesc =>
@@ -5963,19 +5973,19 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'عبر عن نفسك بلون موضوع جديد!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'مستوى';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP إلى المستوى';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
   String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'ابدأ رسمًا جديدًا';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
   String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
@@ -5985,193 +5995,195 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'الحفظ التلقائي للحافظة';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائيا';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'تم رفض الإذن بشكل دائم. يرجى التمكين في الإعدادات.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'تم تمكين الإخطارات!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'جارٍ إعادة التوجيه إلى الإعدادات لتعطيل الإشعارات...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'الوصول المميز';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'قسط نشط حتى';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'فتح كافة الميزات';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
   String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'قسط مفعل لمدة 7 أيام!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'قسط نشط';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'تنتهي:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'الوصول المؤقت';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'مجلة والتعبير';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
   String get artisticDesigns => 'تصاميم فنية';
 
   @override
   String get artisticDesignsDesc =>
-      'افتح أكثر من 10 سمات فريدة لبطاقات المجلات';
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'تخطيطات متميزة';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
   String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'التقويم والأدوات';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'التقويم الكامل';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
   String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'التقاط تاريخ الحافظة الخلفية';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'الحاجيات للمحترفين';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc =>
-      'جميع الميزات المتاحة على الشاشة الرئيسية الخاصة بك';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
   String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'النسخ الاحتياطي المتقدم';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'تأمين استيراد/تصدير جميع البيانات';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'تصدير قوات الدفاع الشعبي';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'تصدير الملاحظات والمجلات إلى PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'طباعة جاهزة';
+  String get printReady => 'جاهز للطباعة';
 
   @override
   String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'محرر النص الغني';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
   String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'بحث واستبدال داخل النص الخاص بك';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'الوسائط الغنية';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'إدراج الصور ومقاطع الفيديو والروابط';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'أسلوب المحرر';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'نص مخصص وخلفيات المحرر';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'توازن';
+  String get balance => 'الرصيد';
 
   @override
   String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'تحميل الإعلان';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'احفظ ملف JSON لبياناتك';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'دمج ملف النسخ الاحتياطي في CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'تم رفض إذن الإخطار.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
   String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'أضف مهمة';
+  String get addTask => 'إضافة مهمة';
 
   @override
   String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'عمل عظيم!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
   String get moveTasksToRecycleBin =>
-      'هل تريد نقل جميع المهام النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'حذف كافة المشاركات';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'جميع المشاركات';
+  String get allPosts => 'جميع المنشورات';
 
   @override
   String get favorites => 'المفضلة';
@@ -6180,10 +6192,10 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'لا يوجد مفضلة بعد';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'لا توجد مسودات حتى الآن';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
@@ -6196,28 +6208,31 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'الرجاء إضافة بعض المحتوى أو الوسائط للمشاركة';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'خطأ: الملف غير موجود في $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'تحقق من تطبيق الفيسبوك';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
   String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'مشاركة اجتماعية';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
   String get favorite => 'مفضل';
@@ -6226,11 +6241,11 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'تم نسخ الإدخال';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'هل تريد نقل جميع الإدخالات النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
   String get startWritingStory => 'ابدأ بكتابة قصتك';
@@ -6239,42 +6254,42 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'اكتب المجلة';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
   String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'فرز المجلة';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'بواسطة المزاج';
+  String get byMood => 'حسب المزاج';
 
   @override
   String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'حدد الكل';
+  String get selectAll => 'تحديد الكل';
 
   @override
   String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'اكتملت المهمة!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'المهمة غير مكتملة';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
   String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'تم حفظ الحافظة: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'ملخص';
+  String get overview => 'نظرة عامة';
 
   @override
   String get colorAurora => 'أورورا';
@@ -6289,28 +6304,28 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'الشمسية';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'جديد';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'تحميل...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'جارٍ إعداد قاعدة البيانات...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'جارٍ تكوين النظام...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'مستعد';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'رفيقك الإنتاجية';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'منتهي';
+  String get done => 'تم';
 
   @override
   String get newNote => 'ملاحظة جديدة';
@@ -6325,13 +6340,13 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'تصدير بصيغة PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'المهمة مستحقة الآن';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'هل تريد نقل المهمة إلى سلة المحذوفات؟';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
@@ -6341,7 +6356,7 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'تحرير المهمة';
+  String get editTask => 'تعديل المهمة';
 
   @override
   String get undo => 'تراجع';
@@ -6350,10 +6365,10 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get redo => 'إعادة';
 
   @override
-  String get category => 'فئة';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'على سبيل المثال العمل، صالة الألعاب الرياضية';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
   String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
@@ -6362,17 +6377,17 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'تحديد تاريخ الاستحقاق';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'تاريخان';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'نفقات';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
@@ -6388,7 +6403,7 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'المزيد من المرشحات...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
   String get filterExpenses => 'تصفية النفقات';
@@ -6397,51 +6412,50 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'فئات';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'الجميع';
+  String get all => 'الكل';
 
   @override
-  String get income => 'دخل';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'حساب';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'إعادة ضبط';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'يتقدم';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي صناعته.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'الثروة ليست في امتلاك ممتلكات كبيرة، بل في الحصول على القليل من الحاجات.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'الوقت هو العملة النهائية.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'النجاح ليس نهائيا، والفشل ليس قاتلا.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'ركز على الحل وليس المشكلة.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'شبكتك هي ثروتك الصافية.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
   String get moodHappy => 'سعيد';
@@ -6450,13 +6464,13 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'حيادي';
+  String get moodNeutral => 'محايد';
 
   @override
   String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'وشدد';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -6470,16 +6484,16 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'انستغرام';
+  String get instagram => 'إنستغرام';
 
   @override
   String get facebook => 'فيسبوك';
@@ -6488,7 +6502,7 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'رسم جديد';
+  String get newSketch => 'رسمة جديدة';
 
   @override
   String get searchSketches => 'البحث في الرسومات والمجلدات...';
@@ -6503,10 +6517,10 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'أطلق العنان لإبداعك على القماش!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'قماش جديد';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
   String get rename => 'إعادة تسمية';
@@ -6515,23 +6529,23 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'هل تريد حذف الرسومات؟';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'سيتم حذف جميع الرسومات الموجودة في هذا المجلد نهائيًا.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
   String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'اختر اللون';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'هل تريد حذف المجلد؟';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'بحث في المقاطع...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
   String get clipboardEmpty => 'الحافظة فارغة';
@@ -6540,16 +6554,16 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'لون المقطع';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'كليب جديد';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'تحرير المقطع';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'يمكنك استعادة هذا المقطع لاحقا.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
   String get upcomingEvents => 'الأحداث القادمة';
@@ -6573,30 +6587,30 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'البحث في مثل هذا اليوم...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'تمويل';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'هل تريد الحذف نهائيًا؟';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'سيؤدي هذا إلى حذف مجلدات $foldersCount (ورسوماتها) و$sketchesCount من الرسومات الأخرى نهائيًا.\n\nلا يمكن التراجع عن هذا.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'حذف إلى الأبد';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
@@ -6616,129 +6630,129 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'هل تريد حذف $count من الرسومات؟ لا يمكن التراجع عن هذا.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'لم يتم العثور على الرسومات';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسم جديد.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
   String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'تقويم';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
   String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'هل تريد حذف العنصر؟';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
       'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'ويمكنك استعادته لاحقًا.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'المقاطع الأخيرة';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'منسوخ!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'نسخ نص عادي';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'موضوع كليب';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
   String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
   String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'مهام البحث...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
   String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'ملاحظة بلا عنوان';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'الدخول اليومي';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'تاريخ الحافظة';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'لا يمكن التراجع عن هذا الإجراء.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'سلة المحذوفات فارغة؟';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'سيتم حذف جميع العناصر البالغ عددها $count نهائيًا.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'سلة فارغة';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
   String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'سوف تظهر العناصر المحذوفة هنا.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
   String get empty => 'فارغ';
 
   @override
-  String get recent => 'مؤخرًا';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
@@ -6754,33 +6768,32 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle =>
-      'هل تريد نقل المعاملة إلى سلة المحذوفات؟';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'يمكنك استعادة هذه المعاملة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
   String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'لماذا هذا؟';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'وصف';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'يوميًا';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'أسبوعي';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'شهريا';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'سنوي';
+  String get yearly => 'سنوياً';
 
   @override
   String get totalIncome => 'إجمالي الدخل';
@@ -6789,19 +6802,19 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'تحليل';
+  String get analysis => 'التحليل';
 
   @override
   String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'لم يتم العثور على مصاريف لهذه الفترة.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
   String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'أهم الفئات';
+  String get topCategories => 'أبرز الفئات';
 
   @override
   String get spendingTrend => 'اتجاه الإنفاق';
@@ -6816,22 +6829,22 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'أضف النفقات';
+  String get addExpense => 'إضافة نفقة';
 
   @override
   String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'ميزانية';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'قضى';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'حد';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'أكثر من الميزانية!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
@@ -6842,14 +6855,17 @@ class AppLocalizationsArEg extends AppLocalizationsAr {
   String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'النتيجة الصحية';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'تعتمد هذه النتيجة على معدل الادخار الخاص بك.\n\n• > توفير 50% = ممتاز (100)\n• 0% تم توفيره = المتوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'نعم';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Iraq (`ar_IQ`).
@@ -6887,64 +6903,64 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get canvas => 'قماش';
 
   @override
-  String get save => 'يحفظ';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'يخلق';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'يلغي';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'يمسح';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'يحرر';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'يشارك';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'ينسخ';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'التغييرات غير المحفوظة';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
   String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'ينبذ';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'إنشاء مشاركة';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'بريد';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'النشر إلى';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'ما الذي يدور في ذهنك؟';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'اختر الصور';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'اختر الفيديو';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'آلة تصوير';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'معرض';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'يبحث';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'الرجاء إدخال مهمة';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
   String get deleteTask => 'حذف المهمة';
@@ -6957,37 +6973,37 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'الطلب متاح فقط في \"جميع المشاركات\"';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'حذف المشاركة';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'تم حذف المشاركة';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'ميزات متميزة';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
   String get manageCoinsAdsPremium =>
-      'إدارة العملات المعدنية والإعلانات والحالة المميزة';
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'وضع الموضوع';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'لون مميز';
+  String get accentColor => 'لون التمييز';
 
   @override
   String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'دفع الإخطارات';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
   String get recycleBin => 'سلة المحذوفات';
@@ -6999,62 +7015,62 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'معدل التطبيق';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'إرسال الملاحظات';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'إصدار';
+  String get version => 'الإصدار';
 
   @override
   String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'نظام';
+  String get system => 'النظام';
 
   @override
-  String get light => 'ضوء';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'مظلم';
+  String get dark => 'داكن';
 
   @override
   String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'تم مسح سلة المحذوفات بنجاح';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'تم حذف جميع المشاركات';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'مشاركة جديدة';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'تم نسخ النص إلى الحافظة (سياسة Facebook)';
+      'تم نسخ النص إلى الحافظة (سياسة فيسبوك)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'تتطلب مشاركة TikTok مقطع فيديو/صورة';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'شارك في قصة $platform.';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'شارك في خلاصة $platform.';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
@@ -7065,7 +7081,7 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'لقد ربحت $amount عملة معدنية!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
@@ -7076,16 +7092,16 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'هل أنت متأكد أنك تريد حذف هذه المشاركة؟';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'المشاركات الاجتماعية';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'شاهد الإعلان لكسب العملات المعدنية';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'قسط مفتوح';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
   String get removeAds => 'إزالة الإعلانات';
@@ -7100,22 +7116,22 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'تحرير الملاحظة';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'ملاحظات البحث...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'لم يتم العثور على أي ملاحظات';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'التقط أفكارك على الفور.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
   String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'طلب مخصص';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
   String get newestFirst => 'الأحدث أولاً';
@@ -7127,29 +7143,28 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'العنوان: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'هل تريد حذف الكل؟';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin =>
-      'هل تريد نقل جميع الملاحظات إلى سلة المحذوفات؟';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
   String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'يتحرك';
+  String get move => 'نقل';
 
   @override
   String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'مختارة';
+  String get selected => 'محدد';
 
   @override
   String get noContent => 'لا يوجد محتوى';
@@ -7158,10 +7173,10 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'اختر من بين 10+ خلفيات ديناميكية';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'بيانات النسخ الاحتياطي';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
   String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
@@ -7177,7 +7192,7 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
       'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'حدد ملف';
+  String get selectFile => 'حدد ملفاً';
 
   @override
   String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
@@ -7195,18 +7210,18 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
 
   @override
   String widgetAdded(String widget) {
-    return 'القطعة المضافة إلى الشاشة الرئيسية!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'تم إرسال طلب القطعة. يرجى التحقق من الشاشة الرئيسية الخاصة بك.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'فشلت إضافة القطعة';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'تم تمكين الحفظ التلقائي.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
   String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
@@ -7215,13 +7230,13 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'إشعارات';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
   String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'ردود الفعل والدعم';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
   String get creditsTitle => 'الاعتمادات';
@@ -7230,13 +7245,13 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'عن';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'غالي';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'مظهر';
+  String get appearanceTitle => 'المظهر';
 
   @override
   String get clipboardTitle => 'الحافظة';
@@ -7249,56 +7264,56 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
 
   @override
   String get welcomeDescription =>
-      'رفيقك الإنتاجي النهائي. دعنا نجهزك بأدوات قوية لإدارة يومك.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'الملاحظات الذكية';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'التقط الأفكار على الفور باستخدام تنسيق النص المنسق. نظم أفكارك ولا تفقد أي فكرة عظيمة مرة أخرى.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
   String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'البقاء على رأس اللعبة الخاصة بك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك بعلامة اختيار واحدة في كل مرة.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
   String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'السيطرة على اموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'مجلة شخصية';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'فكر في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
   String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'لا تفوت لحظة واحدة. تنظيم الجدول الزمني الخاص بك وتتبع الأحداث القادمة الهامة.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
   String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'انسخ مرة واحدة، والصق في أي مكان. قم بالوصول إلى سجل الحافظة الخاصة بك لاسترداد المقتطفات التي قمت بنسخها مسبقًا.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'قماش إبداعي';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'أطلق العنان لإبداعك. ارسم أفكارك ورسمها وتصورها على لوحة رقمية ذات شكل حر.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
   String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
@@ -7310,19 +7325,19 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'اكتب أفكارك';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'تنظيم الجدول الزمني الخاص بك';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'الوصول إلى تاريخ الحافظة الخاصة بك';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'ارسم ورسم بحرية';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'مشاركة اجتماعية';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
   String get featuresSocialPostDesc =>
@@ -7332,19 +7347,19 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'عبر عن نفسك بلون موضوع جديد!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'مستوى';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP إلى المستوى';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
   String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'ابدأ رسمًا جديدًا';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
   String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
@@ -7354,193 +7369,194 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'الحفظ التلقائي للحافظة';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائيا';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'تم رفض الإذن بشكل دائم. يرجى التمكين في الإعدادات.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'تم تمكين الإخطارات!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'جارٍ إعادة التوجيه إلى الإعدادات لتعطيل الإشعارات...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'الوصول المميز';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'قسط نشط حتى';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'فتح كافة الميزات';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
   String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'قسط مفعل لمدة 7 أيام!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'قسط نشط';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'تنتهي:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'الوصول المؤقت';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'مجلة والتعبير';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
   String get artisticDesigns => 'تصاميم فنية';
 
   @override
   String get artisticDesignsDesc =>
-      'افتح أكثر من 10 سمات فريدة لبطاقات المجلات';
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'تخطيطات متميزة';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
   String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'التقويم والأدوات';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'التقويم الكامل';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
   String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'التقاط تاريخ الحافظة الخلفية';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'الحاجيات للمحترفين';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc =>
-      'جميع الميزات المتاحة على الشاشة الرئيسية الخاصة بك';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
   String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'النسخ الاحتياطي المتقدم';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'تأمين استيراد/تصدير جميع البيانات';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'تصدير قوات الدفاع الشعبي';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'تصدير الملاحظات والمجلات إلى PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'طباعة جاهزة';
+  String get printReady => 'جاهز للطباعة';
 
   @override
   String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'محرر النص الغني';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
   String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'بحث واستبدال داخل النص الخاص بك';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'الوسائط الغنية';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'إدراج الصور ومقاطع الفيديو والروابط';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'أسلوب المحرر';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'نص مخصص وخلفيات المحرر';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'توازن';
+  String get balance => 'الرصيد';
 
   @override
   String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'تحميل الإعلان';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'احفظ ملف JSON لبياناتك';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'دمج ملف النسخ الاحتياطي في CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'تم رفض إذن الإخطار.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
   String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'أضف مهمة';
+  String get addTask => 'إضافة مهمة';
 
   @override
   String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'عمل عظيم!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
   String get moveTasksToRecycleBin =>
-      'هل تريد نقل جميع المهام النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'حذف كافة المشاركات';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'جميع المشاركات';
+  String get allPosts => 'جميع المنشورات';
 
   @override
   String get favorites => 'المفضلة';
@@ -7549,10 +7565,10 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'لا يوجد مفضلة بعد';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'لا توجد مسودات حتى الآن';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
@@ -7565,28 +7581,30 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'الرجاء إضافة بعض المحتوى أو الوسائط للمشاركة';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'خطأ: الملف غير موجود في $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'تحقق من تطبيق الفيسبوك';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
   String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'مشاركة اجتماعية';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
   String get favorite => 'مفضل';
@@ -7595,11 +7613,11 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'تم نسخ الإدخال';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'هل تريد نقل جميع الإدخالات النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
   String get startWritingStory => 'ابدأ بكتابة قصتك';
@@ -7608,42 +7626,42 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'اكتب المجلة';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
   String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'فرز المجلة';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'بواسطة المزاج';
+  String get byMood => 'حسب المزاج';
 
   @override
   String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'حدد الكل';
+  String get selectAll => 'تحديد الكل';
 
   @override
   String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'اكتملت المهمة!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'المهمة غير مكتملة';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
   String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'تم حفظ الحافظة: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'ملخص';
+  String get overview => 'نظرة عامة';
 
   @override
   String get colorAurora => 'أورورا';
@@ -7658,28 +7676,28 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'الشمسية';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'جديد';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'تحميل...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'جارٍ إعداد قاعدة البيانات...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'جارٍ تكوين النظام...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'مستعد';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'رفيقك الإنتاجية';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'منتهي';
+  String get done => 'تم';
 
   @override
   String get newNote => 'ملاحظة جديدة';
@@ -7694,23 +7712,23 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'تصدير بصيغة PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'المهمة مستحقة الآن';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'هل تريد نقل المهمة إلى سلة المحذوفات؟';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
-      'يمكنك استعادة هذه المهمة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المهمة لاحقاً من الإعدادات.';
 
   @override
   String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'تحرير المهمة';
+  String get editTask => 'تعديل المهمة';
 
   @override
   String get undo => 'تراجع';
@@ -7719,10 +7737,10 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get redo => 'إعادة';
 
   @override
-  String get category => 'فئة';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'على سبيل المثال العمل، صالة الألعاب الرياضية';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
   String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
@@ -7731,17 +7749,17 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'تحديد تاريخ الاستحقاق';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'تاريخان';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'نفقات';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
@@ -7757,7 +7775,7 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'المزيد من المرشحات...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
   String get filterExpenses => 'تصفية النفقات';
@@ -7766,51 +7784,50 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'فئات';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'الجميع';
+  String get all => 'الكل';
 
   @override
-  String get income => 'دخل';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'حساب';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'إعادة ضبط';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'يتقدم';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي صناعته.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'الثروة ليست في امتلاك ممتلكات كبيرة، بل في الحصول على القليل من الحاجات.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'الوقت هو العملة النهائية.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'النجاح ليس نهائيا، والفشل ليس قاتلا.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'ركز على الحل وليس المشكلة.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'شبكتك هي ثروتك الصافية.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
   String get moodHappy => 'سعيد';
@@ -7819,13 +7836,13 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'حيادي';
+  String get moodNeutral => 'محايد';
 
   @override
   String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'وشدد';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -7839,16 +7856,16 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'انستغرام';
+  String get instagram => 'إنستغرام';
 
   @override
   String get facebook => 'فيسبوك';
@@ -7857,7 +7874,7 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'رسم جديد';
+  String get newSketch => 'رسمة جديدة';
 
   @override
   String get searchSketches => 'البحث في الرسومات والمجلدات...';
@@ -7872,10 +7889,10 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'أطلق العنان لإبداعك على القماش!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'قماش جديد';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
   String get rename => 'إعادة تسمية';
@@ -7884,23 +7901,23 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'هل تريد حذف الرسومات؟';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'سيتم حذف جميع الرسومات الموجودة في هذا المجلد نهائيًا.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
   String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'اختر اللون';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'هل تريد حذف المجلد؟';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'بحث في المقاطع...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
   String get clipboardEmpty => 'الحافظة فارغة';
@@ -7909,16 +7926,16 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'لون المقطع';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'كليب جديد';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'تحرير المقطع';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'يمكنك استعادة هذا المقطع لاحقا.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
   String get upcomingEvents => 'الأحداث القادمة';
@@ -7942,30 +7959,30 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'البحث في مثل هذا اليوم...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'تمويل';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'هل تريد الحذف نهائيًا؟';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'سيؤدي هذا إلى حذف مجلدات $foldersCount (ورسوماتها) و$sketchesCount من الرسومات الأخرى نهائيًا.\n\nلا يمكن التراجع عن هذا.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'حذف إلى الأبد';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
@@ -7985,129 +8002,129 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'هل تريد حذف $count من الرسومات؟ لا يمكن التراجع عن هذا.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'لم يتم العثور على الرسومات';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسم جديد.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
   String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'تقويم';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
   String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'هل تريد حذف العنصر؟';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
       'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'ويمكنك استعادته لاحقًا.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'المقاطع الأخيرة';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'منسوخ!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'نسخ نص عادي';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'موضوع كليب';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
   String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
   String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'مهام البحث...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
   String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'ملاحظة بلا عنوان';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'الدخول اليومي';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'تاريخ الحافظة';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'لا يمكن التراجع عن هذا الإجراء.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'سلة المحذوفات فارغة؟';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'سيتم حذف جميع العناصر البالغ عددها $count نهائيًا.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'سلة فارغة';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
   String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'سوف تظهر العناصر المحذوفة هنا.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
   String get empty => 'فارغ';
 
   @override
-  String get recent => 'مؤخرًا';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
@@ -8123,33 +8140,32 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle =>
-      'هل تريد نقل المعاملة إلى سلة المحذوفات؟';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'يمكنك استعادة هذه المعاملة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
   String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'لماذا هذا؟';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'وصف';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'يوميًا';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'أسبوعي';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'شهريا';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'سنوي';
+  String get yearly => 'سنوياً';
 
   @override
   String get totalIncome => 'إجمالي الدخل';
@@ -8158,19 +8174,19 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'تحليل';
+  String get analysis => 'التحليل';
 
   @override
   String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'لم يتم العثور على مصاريف لهذه الفترة.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
   String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'أهم الفئات';
+  String get topCategories => 'أبرز الفئات';
 
   @override
   String get spendingTrend => 'اتجاه الإنفاق';
@@ -8185,22 +8201,22 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'أضف النفقات';
+  String get addExpense => 'إضافة نفقة';
 
   @override
   String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'ميزانية';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'قضى';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'حد';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'أكثر من الميزانية!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
@@ -8211,14 +8227,17 @@ class AppLocalizationsArIq extends AppLocalizationsAr {
   String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'النتيجة الصحية';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'تعتمد هذه النتيجة على معدل الادخار الخاص بك.\n\n• > توفير 50% = ممتاز (100)\n• 0% تم توفيره = المتوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'نعم';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Jordan (`ar_JO`).
@@ -8256,64 +8275,64 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get canvas => 'قماش';
 
   @override
-  String get save => 'يحفظ';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'يخلق';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'يلغي';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'يمسح';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'يحرر';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'يشارك';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'ينسخ';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'التغييرات غير المحفوظة';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
   String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'ينبذ';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'إنشاء مشاركة';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'بريد';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'النشر إلى';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'ما الذي يدور في ذهنك؟';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'اختر الصور';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'اختر الفيديو';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'آلة تصوير';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'معرض';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'يبحث';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'الرجاء إدخال مهمة';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
   String get deleteTask => 'حذف المهمة';
@@ -8326,37 +8345,37 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'الطلب متاح فقط في \"جميع المشاركات\"';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'حذف المشاركة';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'تم حذف المشاركة';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'ميزات متميزة';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
   String get manageCoinsAdsPremium =>
-      'إدارة العملات المعدنية والإعلانات والحالة المميزة';
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'وضع الموضوع';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'لون مميز';
+  String get accentColor => 'لون التمييز';
 
   @override
   String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'دفع الإخطارات';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
   String get recycleBin => 'سلة المحذوفات';
@@ -8368,62 +8387,62 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'معدل التطبيق';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'إرسال الملاحظات';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'إصدار';
+  String get version => 'الإصدار';
 
   @override
   String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'نظام';
+  String get system => 'النظام';
 
   @override
-  String get light => 'ضوء';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'مظلم';
+  String get dark => 'داكن';
 
   @override
   String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'تم مسح سلة المحذوفات بنجاح';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'تم حذف جميع المشاركات';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'مشاركة جديدة';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'تم نسخ النص إلى الحافظة (سياسة Facebook)';
+      'تم نسخ النص إلى الحافظة (سياسة فيسبوك)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'تتطلب مشاركة TikTok مقطع فيديو/صورة';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'شارك في قصة $platform.';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'شارك في خلاصة $platform.';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
@@ -8434,7 +8453,7 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'لقد ربحت $amount عملة معدنية!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
@@ -8445,16 +8464,16 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'هل أنت متأكد أنك تريد حذف هذه المشاركة؟';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'المشاركات الاجتماعية';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'شاهد الإعلان لكسب العملات المعدنية';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'قسط مفتوح';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
   String get removeAds => 'إزالة الإعلانات';
@@ -8469,22 +8488,22 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'تحرير الملاحظة';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'ملاحظات البحث...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'لم يتم العثور على أي ملاحظات';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'التقط أفكارك على الفور.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
   String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'طلب مخصص';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
   String get newestFirst => 'الأحدث أولاً';
@@ -8496,29 +8515,28 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'العنوان: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'هل تريد حذف الكل؟';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin =>
-      'هل تريد نقل جميع الملاحظات إلى سلة المحذوفات؟';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
   String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'يتحرك';
+  String get move => 'نقل';
 
   @override
   String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'مختارة';
+  String get selected => 'محدد';
 
   @override
   String get noContent => 'لا يوجد محتوى';
@@ -8527,10 +8545,10 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'اختر من بين 10+ خلفيات ديناميكية';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'بيانات النسخ الاحتياطي';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
   String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
@@ -8546,7 +8564,7 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
       'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'حدد ملف';
+  String get selectFile => 'حدد ملفاً';
 
   @override
   String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
@@ -8564,18 +8582,18 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
 
   @override
   String widgetAdded(String widget) {
-    return 'القطعة المضافة إلى الشاشة الرئيسية!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'تم إرسال طلب القطعة. يرجى التحقق من الشاشة الرئيسية الخاصة بك.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'فشلت إضافة القطعة';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'تم تمكين الحفظ التلقائي.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
   String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
@@ -8584,13 +8602,13 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'إشعارات';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
   String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'ردود الفعل والدعم';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
   String get creditsTitle => 'الاعتمادات';
@@ -8599,13 +8617,13 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'عن';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'غالي';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'مظهر';
+  String get appearanceTitle => 'المظهر';
 
   @override
   String get clipboardTitle => 'الحافظة';
@@ -8618,56 +8636,56 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
 
   @override
   String get welcomeDescription =>
-      'رفيقك الإنتاجي النهائي. دعنا نجهزك بأدوات قوية لإدارة يومك.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'الملاحظات الذكية';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'التقط الأفكار على الفور باستخدام تنسيق النص المنسق. نظم أفكارك ولا تفقد أي فكرة عظيمة مرة أخرى.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
   String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'البقاء على رأس اللعبة الخاصة بك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك بعلامة اختيار واحدة في كل مرة.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
   String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'السيطرة على اموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'مجلة شخصية';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'فكر في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
   String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'لا تفوت لحظة واحدة. تنظيم الجدول الزمني الخاص بك وتتبع الأحداث القادمة الهامة.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
   String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'انسخ مرة واحدة، والصق في أي مكان. قم بالوصول إلى سجل الحافظة الخاصة بك لاسترداد المقتطفات التي قمت بنسخها مسبقًا.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'قماش إبداعي';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'أطلق العنان لإبداعك. ارسم أفكارك ورسمها وتصورها على لوحة رقمية ذات شكل حر.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
   String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
@@ -8679,19 +8697,19 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'اكتب أفكارك';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'تنظيم الجدول الزمني الخاص بك';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'الوصول إلى تاريخ الحافظة الخاصة بك';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'ارسم ورسم بحرية';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'مشاركة اجتماعية';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
   String get featuresSocialPostDesc =>
@@ -8701,19 +8719,19 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'عبر عن نفسك بلون موضوع جديد!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'مستوى';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP إلى المستوى';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
   String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'ابدأ رسمًا جديدًا';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
   String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
@@ -8723,193 +8741,194 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'الحفظ التلقائي للحافظة';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائيا';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'تم رفض الإذن بشكل دائم. يرجى التمكين في الإعدادات.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'تم تمكين الإخطارات!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'جارٍ إعادة التوجيه إلى الإعدادات لتعطيل الإشعارات...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'الوصول المميز';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'قسط نشط حتى';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'فتح كافة الميزات';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
   String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'قسط مفعل لمدة 7 أيام!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'قسط نشط';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'تنتهي:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'الوصول المؤقت';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'مجلة والتعبير';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
   String get artisticDesigns => 'تصاميم فنية';
 
   @override
   String get artisticDesignsDesc =>
-      'افتح أكثر من 10 سمات فريدة لبطاقات المجلات';
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'تخطيطات متميزة';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
   String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'التقويم والأدوات';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'التقويم الكامل';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
   String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'التقاط تاريخ الحافظة الخلفية';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'الحاجيات للمحترفين';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc =>
-      'جميع الميزات المتاحة على الشاشة الرئيسية الخاصة بك';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
   String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'النسخ الاحتياطي المتقدم';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'تأمين استيراد/تصدير جميع البيانات';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'تصدير قوات الدفاع الشعبي';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'تصدير الملاحظات والمجلات إلى PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'طباعة جاهزة';
+  String get printReady => 'جاهز للطباعة';
 
   @override
   String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'محرر النص الغني';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
   String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'بحث واستبدال داخل النص الخاص بك';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'الوسائط الغنية';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'إدراج الصور ومقاطع الفيديو والروابط';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'أسلوب المحرر';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'نص مخصص وخلفيات المحرر';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'توازن';
+  String get balance => 'الرصيد';
 
   @override
   String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'تحميل الإعلان';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'احفظ ملف JSON لبياناتك';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'دمج ملف النسخ الاحتياطي في CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'تم رفض إذن الإخطار.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
   String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'أضف مهمة';
+  String get addTask => 'إضافة مهمة';
 
   @override
   String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'عمل عظيم!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
   String get moveTasksToRecycleBin =>
-      'هل تريد نقل جميع المهام النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'حذف كافة المشاركات';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'جميع المشاركات';
+  String get allPosts => 'جميع المنشورات';
 
   @override
   String get favorites => 'المفضلة';
@@ -8918,10 +8937,10 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'لا يوجد مفضلة بعد';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'لا توجد مسودات حتى الآن';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
@@ -8934,28 +8953,30 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'الرجاء إضافة بعض المحتوى أو الوسائط للمشاركة';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'خطأ: الملف غير موجود في $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'تحقق من تطبيق الفيسبوك';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
   String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'مشاركة اجتماعية';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
   String get favorite => 'مفضل';
@@ -8964,11 +8985,11 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'تم نسخ الإدخال';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'هل تريد نقل جميع الإدخالات النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
   String get startWritingStory => 'ابدأ بكتابة قصتك';
@@ -8977,42 +8998,42 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'اكتب المجلة';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
   String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'فرز المجلة';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'بواسطة المزاج';
+  String get byMood => 'حسب المزاج';
 
   @override
   String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'حدد الكل';
+  String get selectAll => 'تحديد الكل';
 
   @override
   String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'اكتملت المهمة!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'المهمة غير مكتملة';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
   String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'تم حفظ الحافظة: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'ملخص';
+  String get overview => 'نظرة عامة';
 
   @override
   String get colorAurora => 'أورورا';
@@ -9027,28 +9048,28 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'الشمسية';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'جديد';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'تحميل...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'جارٍ إعداد قاعدة البيانات...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'جارٍ تكوين النظام...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'مستعد';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'رفيقك الإنتاجية';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'منتهي';
+  String get done => 'تم';
 
   @override
   String get newNote => 'ملاحظة جديدة';
@@ -9063,23 +9084,23 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'تصدير بصيغة PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'المهمة مستحقة الآن';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'هل تريد نقل المهمة إلى سلة المحذوفات؟';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
-      'يمكنك استعادة هذه المهمة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المهمة لاحقاً من الإعدادات.';
 
   @override
   String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'تحرير المهمة';
+  String get editTask => 'تعديل المهمة';
 
   @override
   String get undo => 'تراجع';
@@ -9088,10 +9109,10 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get redo => 'إعادة';
 
   @override
-  String get category => 'فئة';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'على سبيل المثال العمل، صالة الألعاب الرياضية';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
   String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
@@ -9100,17 +9121,17 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'تحديد تاريخ الاستحقاق';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'تاريخان';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'نفقات';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
@@ -9126,7 +9147,7 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'المزيد من المرشحات...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
   String get filterExpenses => 'تصفية النفقات';
@@ -9135,51 +9156,50 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'فئات';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'الجميع';
+  String get all => 'الكل';
 
   @override
-  String get income => 'دخل';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'حساب';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'إعادة ضبط';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'يتقدم';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي صناعته.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'الثروة ليست في امتلاك ممتلكات كبيرة، بل في الحصول على القليل من الحاجات.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'الوقت هو العملة النهائية.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'النجاح ليس نهائيا، والفشل ليس قاتلا.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'ركز على الحل وليس المشكلة.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'شبكتك هي ثروتك الصافية.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
   String get moodHappy => 'سعيد';
@@ -9188,13 +9208,13 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'حيادي';
+  String get moodNeutral => 'محايد';
 
   @override
   String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'وشدد';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -9208,16 +9228,16 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'انستغرام';
+  String get instagram => 'إنستغرام';
 
   @override
   String get facebook => 'فيسبوك';
@@ -9226,7 +9246,7 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'رسم جديد';
+  String get newSketch => 'رسمة جديدة';
 
   @override
   String get searchSketches => 'البحث في الرسومات والمجلدات...';
@@ -9241,10 +9261,10 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'أطلق العنان لإبداعك على القماش!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'قماش جديد';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
   String get rename => 'إعادة تسمية';
@@ -9253,23 +9273,23 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'هل تريد حذف الرسومات؟';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'سيتم حذف جميع الرسومات الموجودة في هذا المجلد نهائيًا.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
   String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'اختر اللون';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'هل تريد حذف المجلد؟';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'بحث في المقاطع...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
   String get clipboardEmpty => 'الحافظة فارغة';
@@ -9278,16 +9298,16 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'لون المقطع';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'كليب جديد';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'تحرير المقطع';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'يمكنك استعادة هذا المقطع لاحقا.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
   String get upcomingEvents => 'الأحداث القادمة';
@@ -9299,7 +9319,7 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get taskProgress => 'تقدم المهمة';
 
   @override
-  String get quickStats => 'إحصائيات سريعة';
+  String get quickStats => 'إحصيات سريعة';
 
   @override
   String get taskCompletion => 'إكمال المهمة';
@@ -9311,30 +9331,30 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'البحث في مثل هذا اليوم...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'تمويل';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'هل تريد الحذف نهائيًا؟';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'سيؤدي هذا إلى حذف مجلدات $foldersCount (ورسوماتها) و$sketchesCount من الرسومات الأخرى نهائيًا.\n\nلا يمكن التراجع عن هذا.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'حذف إلى الأبد';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
@@ -9354,129 +9374,129 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'هل تريد حذف $count من الرسومات؟ لا يمكن التراجع عن هذا.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'لم يتم العثور على الرسومات';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسم جديد.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
   String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'تقويم';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
   String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'هل تريد حذف العنصر؟';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
       'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'ويمكنك استعادته لاحقًا.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'المقاطع الأخيرة';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'منسوخ!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'نسخ نص عادي';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'موضوع كليب';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
   String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
   String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'مهام البحث...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
   String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'ملاحظة بلا عنوان';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'الدخول اليومي';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'تاريخ الحافظة';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'لا يمكن التراجع عن هذا الإجراء.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'سلة المحذوفات فارغة؟';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'سيتم حذف جميع العناصر البالغ عددها $count نهائيًا.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'سلة فارغة';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
   String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'سوف تظهر العناصر المحذوفة هنا.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
   String get empty => 'فارغ';
 
   @override
-  String get recent => 'مؤخرًا';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
@@ -9492,33 +9512,32 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle =>
-      'هل تريد نقل المعاملة إلى سلة المحذوفات؟';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'يمكنك استعادة هذه المعاملة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
   String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'لماذا هذا؟';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'وصف';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'يوميًا';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'أسبوعي';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'شهريا';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'سنوي';
+  String get yearly => 'سنوياً';
 
   @override
   String get totalIncome => 'إجمالي الدخل';
@@ -9527,19 +9546,19 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'تحليل';
+  String get analysis => 'التحليل';
 
   @override
   String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'لم يتم العثور على مصاريف لهذه الفترة.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
   String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'أهم الفئات';
+  String get topCategories => 'أبرز الفئات';
 
   @override
   String get spendingTrend => 'اتجاه الإنفاق';
@@ -9554,22 +9573,22 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'أضف النفقات';
+  String get addExpense => 'إضافة نفقة';
 
   @override
   String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'ميزانية';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'قضى';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'حد';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'أكثر من الميزانية!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
@@ -9580,14 +9599,17 @@ class AppLocalizationsArJo extends AppLocalizationsAr {
   String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'النتيجة الصحية';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'تعتمد هذه النتيجة على معدل الادخار الخاص بك.\n\n• > توفير 50% = ممتاز (100)\n• 0% تم توفيره = المتوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'نعم';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Kuwait (`ar_KW`).
@@ -9625,64 +9647,64 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get canvas => 'قماش';
 
   @override
-  String get save => 'يحفظ';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'يخلق';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'يلغي';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'يمسح';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'يحرر';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'يشارك';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'ينسخ';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'التغييرات غير المحفوظة';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
   String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'ينبذ';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'إنشاء مشاركة';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'بريد';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'النشر إلى';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'ما الذي يدور في ذهنك؟';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'اختر الصور';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'اختر الفيديو';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'آلة تصوير';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'معرض';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'يبحث';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'الرجاء إدخال مهمة';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
   String get deleteTask => 'حذف المهمة';
@@ -9695,37 +9717,37 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'الطلب متاح فقط في \"جميع المشاركات\"';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'حذف المشاركة';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'تم حذف المشاركة';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'ميزات متميزة';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
   String get manageCoinsAdsPremium =>
-      'إدارة العملات المعدنية والإعلانات والحالة المميزة';
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'وضع الموضوع';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'لون مميز';
+  String get accentColor => 'لون التمييز';
 
   @override
   String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'دفع الإخطارات';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
   String get recycleBin => 'سلة المحذوفات';
@@ -9737,62 +9759,62 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'معدل التطبيق';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'إرسال الملاحظات';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'إصدار';
+  String get version => 'الإصدار';
 
   @override
   String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'نظام';
+  String get system => 'النظام';
 
   @override
-  String get light => 'ضوء';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'مظلم';
+  String get dark => 'داكن';
 
   @override
   String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'تم مسح سلة المحذوفات بنجاح';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'تم حذف جميع المشاركات';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'مشاركة جديدة';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'تم نسخ النص إلى الحافظة (سياسة Facebook)';
+      'Text copied to clipboard (Facebook policy)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'تتطلب مشاركة TikTok مقطع فيديو/صورة';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'شارك في قصة $platform.';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'شارك في خلاصة $platform.';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
@@ -9803,7 +9825,7 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'لقد ربحت $amount عملة معدنية!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
@@ -9814,16 +9836,16 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'هل أنت متأكد أنك تريد حذف هذه المشاركة؟';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'المشاركات الاجتماعية';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'شاهد الإعلان لكسب العملات المعدنية';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'قسط مفتوح';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
   String get removeAds => 'إزالة الإعلانات';
@@ -9838,22 +9860,22 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'تحرير الملاحظة';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'ملاحظات البحث...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'لم يتم العثور على أي ملاحظات';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'التقط أفكارك على الفور.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
   String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'طلب مخصص';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
   String get newestFirst => 'الأحدث أولاً';
@@ -9865,29 +9887,28 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'العنوان: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'هل تريد حذف الكل؟';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin =>
-      'هل تريد نقل جميع الملاحظات إلى سلة المحذوفات؟';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
   String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'يتحرك';
+  String get move => 'نقل';
 
   @override
   String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'مختارة';
+  String get selected => 'محدد';
 
   @override
   String get noContent => 'لا يوجد محتوى';
@@ -9896,10 +9917,10 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'اختر من بين 10+ خلفيات ديناميكية';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'بيانات النسخ الاحتياطي';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
   String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
@@ -9915,7 +9936,7 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
       'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'حدد ملف';
+  String get selectFile => 'حدد ملفاً';
 
   @override
   String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
@@ -9933,18 +9954,18 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
 
   @override
   String widgetAdded(String widget) {
-    return 'القطعة المضافة إلى الشاشة الرئيسية!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'تم إرسال طلب القطعة. يرجى التحقق من الشاشة الرئيسية الخاصة بك.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'فشلت إضافة القطعة';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'تم تمكين الحفظ التلقائي.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
   String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
@@ -9953,13 +9974,13 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'إشعارات';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
   String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'ردود الفعل والدعم';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
   String get creditsTitle => 'الاعتمادات';
@@ -9968,13 +9989,13 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'عن';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'غالي';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'مظهر';
+  String get appearanceTitle => 'المظهر';
 
   @override
   String get clipboardTitle => 'الحافظة';
@@ -9987,56 +10008,56 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
 
   @override
   String get welcomeDescription =>
-      'رفيقك الإنتاجي النهائي. دعنا نجهزك بأدوات قوية لإدارة يومك.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'الملاحظات الذكية';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'التقط الأفكار على الفور باستخدام تنسيق النص المنسق. نظم أفكارك ولا تفقد أي فكرة عظيمة مرة أخرى.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
   String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'البقاء على رأس اللعبة الخاصة بك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك بعلامة اختيار واحدة في كل مرة.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
   String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'السيطرة على اموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'مجلة شخصية';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'فكر في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
   String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'لا تفوت لحظة واحدة. تنظيم الجدول الزمني الخاص بك وتتبع الأحداث القادمة الهامة.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
   String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'انسخ مرة واحدة، والصق في أي مكان. قم بالوصول إلى سجل الحافظة الخاصة بك لاسترداد المقتطفات التي قمت بنسخها مسبقًا.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'قماش إبداعي';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'أطلق العنان لإبداعك. ارسم أفكارك ورسمها وتصورها على لوحة رقمية ذات شكل حر.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
   String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
@@ -10048,19 +10069,19 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'اكتب أفكارك';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'تنظيم الجدول الزمني الخاص بك';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'الوصول إلى تاريخ الحافظة الخاصة بك';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'ارسم ورسم بحرية';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'مشاركة اجتماعية';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
   String get featuresSocialPostDesc =>
@@ -10070,19 +10091,19 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'عبر عن نفسك بلون موضوع جديد!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'مستوى';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP إلى المستوى';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
   String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'ابدأ رسمًا جديدًا';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
   String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
@@ -10092,193 +10113,195 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'الحفظ التلقائي للحافظة';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائيا';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'تم رفض الإذن بشكل دائم. يرجى التمكين في الإعدادات.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'تم تمكين الإخطارات!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'جارٍ إعادة التوجيه إلى الإعدادات لتعطيل الإشعارات...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'الوصول المميز';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'قسط نشط حتى';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'فتح كافة الميزات';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
   String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'قسط مفعل لمدة 7 أيام!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'قسط نشط';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'تنتهي:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'الوصول المؤقت';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'مجلة والتعبير';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
   String get artisticDesigns => 'تصاميم فنية';
 
   @override
   String get artisticDesignsDesc =>
-      'افتح أكثر من 10 سمات فريدة لبطاقات المجلات';
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'تخطيطات متميزة';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
   String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'التقويم والأدوات';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'التقويم الكامل';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
   String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'التقاط تاريخ الحافظة الخلفية';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'الحاجيات للمحترفين';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc =>
-      'جميع الميزات المتاحة على الشاشة الرئيسية الخاصة بك';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
   String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'النسخ الاحتياطي المتقدم';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'تأمين استيراد/تصدير جميع البيانات';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'تصدير قوات الدفاع الشعبي';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'تصدير الملاحظات والمجلات إلى PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'طباعة جاهزة';
+  String get printReady => 'جاهز للطباعة';
 
   @override
   String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'محرر النص الغني';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
   String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'بحث واستبدال داخل النص الخاص بك';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'الوسائط الغنية';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'إدراج الصور ومقاطع الفيديو والروابط';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'أسلوب المحرر';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'نص مخصص وخلفيات المحرر';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'توازن';
+  String get balance => 'الرصيد';
 
   @override
   String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'تحميل الإعلان';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'احفظ ملف JSON لبياناتك';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'دمج ملف النسخ الاحتياطي في CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'تم رفض إذن الإخطار.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
   String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'أضف مهمة';
+  String get addTask => 'إضافة مهمة';
 
   @override
   String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'عمل عظيم!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
   String get moveTasksToRecycleBin =>
-      'هل تريد نقل جميع المهام النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'حذف كافة المشاركات';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'جميع المشاركات';
+  String get allPosts => 'جميع المنشورات';
 
   @override
   String get favorites => 'المفضلة';
@@ -10287,10 +10310,10 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'لا يوجد مفضلة بعد';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'لا توجد مسودات حتى الآن';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
@@ -10303,28 +10326,31 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'الرجاء إضافة بعض المحتوى أو الوسائط للمشاركة';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'خطأ: الملف غير موجود في $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'تحقق من تطبيق الفيسبوك';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
   String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'مشاركة اجتماعية';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
   String get favorite => 'مفضل';
@@ -10333,11 +10359,11 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'تم نسخ الإدخال';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'هل تريد نقل جميع الإدخالات النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
   String get startWritingStory => 'ابدأ بكتابة قصتك';
@@ -10346,42 +10372,42 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'اكتب المجلة';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
   String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'فرز المجلة';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'بواسطة المزاج';
+  String get byMood => 'حسب المزاج';
 
   @override
   String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'حدد الكل';
+  String get selectAll => 'تحديد الكل';
 
   @override
   String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'اكتملت المهمة!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'المهمة غير مكتملة';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
   String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'تم حفظ الحافظة: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'ملخص';
+  String get overview => 'نظرة عامة';
 
   @override
   String get colorAurora => 'أورورا';
@@ -10396,28 +10422,28 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'الشمسية';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'جديد';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'تحميل...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'جارٍ إعداد قاعدة البيانات...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'جارٍ تكوين النظام...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'مستعد';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'رفيقك الإنتاجية';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'منتهي';
+  String get done => 'تم';
 
   @override
   String get newNote => 'ملاحظة جديدة';
@@ -10432,13 +10458,13 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'تصدير بصيغة PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'المهمة مستحقة الآن';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'هل تريد نقل المهمة إلى سلة المحذوفات؟';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
@@ -10448,7 +10474,7 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'تحرير المهمة';
+  String get editTask => 'تعديل المهمة';
 
   @override
   String get undo => 'تراجع';
@@ -10457,10 +10483,10 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get redo => 'إعادة';
 
   @override
-  String get category => 'فئة';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'على سبيل المثال العمل، صالة الألعاب الرياضية';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
   String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
@@ -10469,17 +10495,17 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'تحديد تاريخ الاستحقاق';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'تاريخان';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'نفقات';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
@@ -10495,7 +10521,7 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'المزيد من المرشحات...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
   String get filterExpenses => 'تصفية النفقات';
@@ -10504,51 +10530,50 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'فئات';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'الجميع';
+  String get all => 'الكل';
 
   @override
-  String get income => 'دخل';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'حساب';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'إعادة ضبط';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'يتقدم';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي صناعته.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'الثروة ليست في امتلاك ممتلكات كبيرة، بل في الحصول على القليل من الحاجات.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'الوقت هو العملة النهائية.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'النجاح ليس نهائيا، والفشل ليس قاتلا.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'ركز على الحل وليس المشكلة.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'شبكتك هي ثروتك الصافية.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
   String get moodHappy => 'سعيد';
@@ -10557,13 +10582,13 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'حيادي';
+  String get moodNeutral => 'محايد';
 
   @override
   String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'وشدد';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -10577,16 +10602,16 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'انستغرام';
+  String get instagram => 'إنستغرام';
 
   @override
   String get facebook => 'فيسبوك';
@@ -10595,7 +10620,7 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'رسم جديد';
+  String get newSketch => 'رسمة جديدة';
 
   @override
   String get searchSketches => 'البحث في الرسومات والمجلدات...';
@@ -10610,10 +10635,10 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'أطلق العنان لإبداعك على القماش!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'قماش جديد';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
   String get rename => 'إعادة تسمية';
@@ -10622,23 +10647,23 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'هل تريد حذف الرسومات؟';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'سيتم حذف جميع الرسومات الموجودة في هذا المجلد نهائيًا.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
   String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'اختر اللون';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'هل تريد حذف المجلد؟';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'بحث في المقاطع...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
   String get clipboardEmpty => 'الحافظة فارغة';
@@ -10647,16 +10672,16 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'لون المقطع';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'كليب جديد';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'تحرير المقطع';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'يمكنك استعادة هذا المقطع لاحقا.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
   String get upcomingEvents => 'الأحداث القادمة';
@@ -10680,30 +10705,30 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'البحث في مثل هذا اليوم...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'تمويل';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'هل تريد الحذف نهائيًا؟';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'سيؤدي هذا إلى حذف مجلدات $foldersCount (ورسوماتها) و$sketchesCount من الرسومات الأخرى نهائيًا.\n\nلا يمكن التراجع عن هذا.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'حذف إلى الأبد';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
@@ -10723,129 +10748,129 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'هل تريد حذف $count من الرسومات؟ لا يمكن التراجع عن هذا.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'لم يتم العثور على الرسومات';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسم جديد.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
   String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'تقويم';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
   String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'هل تريد حذف العنصر؟';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
       'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'ويمكنك استعادته لاحقًا.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'المقاطع الأخيرة';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'منسوخ!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'نسخ نص عادي';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'موضوع كليب';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
   String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
   String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'مهام البحث...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
   String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'ملاحظة بلا عنوان';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'الدخول اليومي';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'تاريخ الحافظة';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'لا يمكن التراجع عن هذا الإجراء.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'سلة المحذوفات فارغة؟';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'سيتم حذف جميع العناصر البالغ عددها $count نهائيًا.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'سلة فارغة';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
   String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'سوف تظهر العناصر المحذوفة هنا.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
   String get empty => 'فارغ';
 
   @override
-  String get recent => 'مؤخرًا';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
@@ -10861,33 +10886,32 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle =>
-      'هل تريد نقل المعاملة إلى سلة المحذوفات؟';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'يمكنك استعادة هذه المعاملة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
   String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'لماذا هذا؟';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'وصف';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'يوميًا';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'أسبوعي';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'شهريا';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'سنوي';
+  String get yearly => 'سنوفياً';
 
   @override
   String get totalIncome => 'إجمالي الدخل';
@@ -10896,19 +10920,19 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'تحليل';
+  String get analysis => 'التحليل';
 
   @override
   String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'لم يتم العثور على مصاريف لهذه الفترة.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
   String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'أهم الفئات';
+  String get topCategories => 'أبرز الفئات';
 
   @override
   String get spendingTrend => 'اتجاه الإنفاق';
@@ -10923,22 +10947,22 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'أضف النفقات';
+  String get addExpense => 'إضافة نفقة';
 
   @override
   String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'ميزانية';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'قضى';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'حد';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'أكثر من الميزانية!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
@@ -10949,14 +10973,17 @@ class AppLocalizationsArKw extends AppLocalizationsAr {
   String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'النتيجة الصحية';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'تعتمد هذه النتيجة على معدل الادخار الخاص بك.\n\n• > توفير 50% = ممتاز (100)\n• 0% تم توفيره = المتوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'نعم';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Lebanon (`ar_LB`).
@@ -10994,64 +11021,64 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get canvas => 'قماش';
 
   @override
-  String get save => 'يحفظ';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'يخلق';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'يلغي';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'يمسح';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'يحرر';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'يشارك';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'ينسخ';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'التغييرات غير المحفوظة';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
   String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'ينبذ';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'إنشاء مشاركة';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'بريد';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'النشر إلى';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'ما الذي يدور في ذهنك؟';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'اختر الصور';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'اختر الفيديو';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'آلة تصوير';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'معرض';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'يبحث';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'الرجاء إدخال مهمة';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
   String get deleteTask => 'حذف المهمة';
@@ -11064,37 +11091,37 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'الطلب متاح فقط في \"جميع المشاركات\"';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'حذف المشاركة';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'تم حذف المشاركة';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'ميزات متميزة';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
   String get manageCoinsAdsPremium =>
-      'إدارة العملات المعدنية والإعلانات والحالة المميزة';
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'وضع الموضوع';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'لون مميز';
+  String get accentColor => 'لون التمييز';
 
   @override
   String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'دفع الإخطارات';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
   String get recycleBin => 'سلة المحذوفات';
@@ -11106,62 +11133,62 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'معدل التطبيق';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'إرسال الملاحظات';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'إصدار';
+  String get version => 'الإصدار';
 
   @override
   String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'نظام';
+  String get system => 'النظام';
 
   @override
-  String get light => 'ضوء';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'مظلم';
+  String get dark => 'داكن';
 
   @override
   String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'تم مسح سلة المحذوفات بنجاح';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'تم حذف جميع المشاركات';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'مشاركة جديدة';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'تم نسخ النص إلى الحافظة (سياسة Facebook)';
+      'تم نسخ النص إلى الحافظة (سياسة فيسبوك)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'تتطلب مشاركة TikTok مقطع فيديو/صورة';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'شارك في قصة $platform.';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'شارك في خلاصة $platform.';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
@@ -11172,7 +11199,7 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'لقد ربحت $amount عملة معدنية!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
@@ -11183,16 +11210,16 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'هل أنت متأكد أنك تريد حذف هذه المشاركة؟';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'المشاركات الاجتماعية';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'شاهد الإعلان لكسب العملات المعدنية';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'قسط مفتوح';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
   String get removeAds => 'إزالة الإعلانات';
@@ -11207,22 +11234,22 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'تحرير الملاحظة';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'ملاحظات البحث...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'لم يتم العثور على أي ملاحظات';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'التقط أفكارك على الفور.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
   String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'طلب مخصص';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
   String get newestFirst => 'الأحدث أولاً';
@@ -11234,29 +11261,28 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'العنوان: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'هل تريد حذف الكل؟';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin =>
-      'هل تريد نقل جميع الملاحظات إلى سلة المحذوفات؟';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
   String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'يتحرك';
+  String get move => 'نقل';
 
   @override
   String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'مختارة';
+  String get selected => 'محدد';
 
   @override
   String get noContent => 'لا يوجد محتوى';
@@ -11265,10 +11291,10 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'اختر من بين 10+ خلفيات ديناميكية';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'بيانات النسخ الاحتياطي';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
   String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
@@ -11284,7 +11310,7 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
       'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'حدد ملف';
+  String get selectFile => 'حدد ملفاً';
 
   @override
   String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
@@ -11302,18 +11328,18 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
 
   @override
   String widgetAdded(String widget) {
-    return 'القطعة المضافة إلى الشاشة الرئيسية!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'تم إرسال طلب القطعة. يرجى التحقق من الشاشة الرئيسية الخاصة بك.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'فشلت إضافة القطعة';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'تم تمكين الحفظ التلقائي.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
   String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
@@ -11322,13 +11348,13 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'إشعارات';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
   String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'ردود الفعل والدعم';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
   String get creditsTitle => 'الاعتمادات';
@@ -11337,13 +11363,13 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'عن';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'غالي';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'مظهر';
+  String get appearanceTitle => 'المظهر';
 
   @override
   String get clipboardTitle => 'الحافظة';
@@ -11356,56 +11382,56 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
 
   @override
   String get welcomeDescription =>
-      'رفيقك الإنتاجي النهائي. دعنا نجهزك بأدوات قوية لإدارة يومك.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'الملاحظات الذكية';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'التقط الأفكار على الفور باستخدام تنسيق النص المنسق. نظم أفكارك ولا تفقد أي فكرة عظيمة مرة أخرى.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
   String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'البقاء على رأس اللعبة الخاصة بك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك بعلامة اختيار واحدة في كل مرة.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
   String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'السيطرة على اموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'مجلة شخصية';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'فكر في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
   String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'لا تفوت لحظة واحدة. تنظيم الجدول الزمني الخاص بك وتتبع الأحداث القادمة الهامة.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
   String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'انسخ مرة واحدة، والصق في أي مكان. قم بالوصول إلى سجل الحافظة الخاصة بك لاسترداد المقتطفات التي قمت بنسخها مسبقًا.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'قماش إبداعي';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'أطلق العنان لإبداعك. ارسم أفكارك ورسمها وتصورها على لوحة رقمية ذات شكل حر.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
   String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
@@ -11417,19 +11443,19 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'اكتب أفكارك';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'تنظيم الجدول الزمني الخاص بك';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'الوصول إلى تاريخ الحافظة الخاصة بك';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'ارسم ورسم بحرية';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'مشاركة اجتماعية';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
   String get featuresSocialPostDesc =>
@@ -11439,19 +11465,19 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'عبر عن نفسك بلون موضوع جديد!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'مستوى';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP إلى المستوى';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
   String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'ابدأ رسمًا جديدًا';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
   String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
@@ -11461,193 +11487,195 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'الحفظ التلقائي للحافظة';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائيا';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'تم رفض الإذن بشكل دائم. يرجى التمكين في الإعدادات.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'تم تمكين الإخطارات!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'جارٍ إعادة التوجيه إلى الإعدادات لتعطيل الإشعارات...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'الوصول المميز';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'قسط نشط حتى';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'فتح كافة الميزات';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
   String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'قسط مفعل لمدة 7 أيام!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'قسط نشط';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'تنتهي:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'الوصول المؤقت';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'مجلة والتعبير';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
   String get artisticDesigns => 'تصاميم فنية';
 
   @override
   String get artisticDesignsDesc =>
-      'افتح أكثر من 10 سمات فريدة لبطاقات المجلات';
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'تخطيطات متميزة';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
   String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'التقويم والأدوات';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'التقويم الكامل';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
   String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'التقاط تاريخ الحافظة الخلفية';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'الحاجيات للمحترفين';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc =>
-      'جميع الميزات المتاحة على الشاشة الرئيسية الخاصة بك';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
   String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'النسخ الاحتياطي المتقدم';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'تأمين استيراد/تصدير جميع البيانات';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'تصدير قوات الدفاع الشعبي';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'تصدير الملاحظات والمجلات إلى PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'طباعة جاهزة';
+  String get printReady => 'جاهز للطباعة';
 
   @override
   String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'محرر النص الغني';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
   String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'بحث واستبدال داخل النص الخاص بك';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'الوسائط الغنية';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'إدراج الصور ومقاطع الفيديو والروابط';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'أسلوب المحرر';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'نص مخصص وخلفيات المحرر';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'توازن';
+  String get balance => 'الرصيد';
 
   @override
   String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'تحميل الإعلان';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'احفظ ملف JSON لبياناتك';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'دمج ملف النسخ الاحتياطي في CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'تم رفض إذن الإخطار.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
   String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'أضف مهمة';
+  String get addTask => 'إضافة مهمة';
 
   @override
   String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'عمل عظيم!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
   String get moveTasksToRecycleBin =>
-      'هل تريد نقل جميع المهام النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'حذف كافة المشاركات';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'جميع المشاركات';
+  String get allPosts => 'جميع المنشورات';
 
   @override
   String get favorites => 'المفضلة';
@@ -11656,10 +11684,10 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'لا يوجد مفضلة بعد';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'لا توجد مسودات حتى الآن';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
@@ -11672,28 +11700,31 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'الرجاء إضافة بعض المحتوى أو الوسائط للمشاركة';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'خطأ: الملف غير موجود في $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'تحقق من تطبيق الفيسبوك';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
   String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'مشاركة اجتماعية';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
   String get favorite => 'مفضل';
@@ -11702,11 +11733,11 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'تم نسخ الإدخال';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'هل تريد نقل جميع الإدخالات النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
   String get startWritingStory => 'ابدأ بكتابة قصتك';
@@ -11715,42 +11746,42 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'اكتب المجلة';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
   String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'فرز المجلة';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'بواسطة المزاج';
+  String get byMood => 'حسب المزاج';
 
   @override
   String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'حدد الكل';
+  String get selectAll => 'تحديد الكل';
 
   @override
   String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'اكتملت المهمة!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'المهمة غير مكتملة';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
   String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'تم حفظ الحافظة: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'ملخص';
+  String get overview => 'نظرة عامة';
 
   @override
   String get colorAurora => 'أورورا';
@@ -11765,28 +11796,28 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'الشمسية';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'جديد';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'تحميل...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'جارٍ إعداد قاعدة البيانات...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'جارٍ تكوين النظام...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'مستعد';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'رفيقك الإنتاجية';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'منتهي';
+  String get done => 'تم';
 
   @override
   String get newNote => 'ملاحظة جديدة';
@@ -11801,13 +11832,13 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'تصدير بصيغة PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'المهمة مستحقة الآن';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'هل تريد نقل المهمة إلى سلة المحذوفات؟';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
@@ -11817,7 +11848,7 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'تحرير المهمة';
+  String get editTask => 'تعديل المهمة';
 
   @override
   String get undo => 'تراجع';
@@ -11826,10 +11857,10 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get redo => 'إعادة';
 
   @override
-  String get category => 'فئة';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'على سبيل المثال العمل، صالة الألعاب الرياضية';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
   String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
@@ -11838,17 +11869,17 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'تحديد تاريخ الاستحقاق';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'تاريخان';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'نفقات';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
@@ -11864,7 +11895,7 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'المزيد من المرشحات...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
   String get filterExpenses => 'تصفية النفقات';
@@ -11873,51 +11904,50 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'فئات';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'الجميع';
+  String get all => 'الكل';
 
   @override
-  String get income => 'دخل';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'حساب';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'إعادة ضبط';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'يتقدم';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي صناعته.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'الثروة ليست في امتلاك ممتلكات كبيرة، بل في الحصول على القليل من الحاجات.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'الوقت هو العملة النهائية.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'النجاح ليس نهائيا، والفشل ليس قاتلا.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'ركز على الحل وليس المشكلة.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'شبكتك هي ثروتك الصافية.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
   String get moodHappy => 'سعيد';
@@ -11926,13 +11956,13 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'حيادي';
+  String get moodNeutral => 'محايد';
 
   @override
   String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'وشدد';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -11946,16 +11976,16 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'انستغرام';
+  String get instagram => 'إنستغرام';
 
   @override
   String get facebook => 'فيسبوك';
@@ -11964,7 +11994,7 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'رسم جديد';
+  String get newSketch => 'رسمة جديدة';
 
   @override
   String get searchSketches => 'البحث في الرسومات والمجلدات...';
@@ -11979,10 +12009,10 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'أطلق العنان لإبداعك على القماش!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'قماش جديد';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
   String get rename => 'إعادة تسمية';
@@ -11991,23 +12021,23 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'هل تريد حذف الرسومات؟';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'سيتم حذف جميع الرسومات الموجودة في هذا المجلد نهائيًا.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
   String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'اختر اللون';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'هل تريد حذف المجلد؟';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'بحث في المقاطع...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
   String get clipboardEmpty => 'الحافظة فارغة';
@@ -12016,16 +12046,16 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'لون المقطع';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'كليب جديد';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'تحرير المقطع';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'يمكنك استعادة هذا المقطع لاحقا.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
   String get upcomingEvents => 'الأحداث القادمة';
@@ -12049,30 +12079,30 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'البحث في مثل هذا اليوم...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'تمويل';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'هل تريد الحذف نهائيًا؟';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'سيؤدي هذا إلى حذف مجلدات $foldersCount (ورسوماتها) و$sketchesCount من الرسومات الأخرى نهائيًا.\n\nلا يمكن التراجع عن هذا.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'حذف إلى الأبد';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
@@ -12092,129 +12122,129 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'هل تريد حذف $count من الرسومات؟ لا يمكن التراجع عن هذا.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'لم يتم العثور على الرسومات';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسم جديد.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
   String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'تقويم';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
   String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'هل تريد حذف العنصر؟';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
       'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'ويمكنك استعادته لاحقًا.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'المقاطع الأخيرة';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'منسوخ!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'نسخ نص عادي';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'موضوع كليب';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
   String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
   String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'مهام البحث...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
   String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'ملاحظة بلا عنوان';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'الدخول اليومي';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'تاريخ الحافظة';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'لا يمكن التراجع عن هذا الإجراء.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'سلة المحذوفات فارغة؟';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'سيتم حذف جميع العناصر البالغ عددها $count نهائيًا.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'سلة فارغة';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
   String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'سوف تظهر العناصر المحذوفة هنا.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
   String get empty => 'فارغ';
 
   @override
-  String get recent => 'مؤخرًا';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
@@ -12230,33 +12260,32 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle =>
-      'هل تريد نقل المعاملة إلى سلة المحذوفات؟';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'يمكنك استعادة هذه المعاملة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
   String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'لماذا هذا؟';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'وصف';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'يوميًا';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'أسبوعي';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'شهريا';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'سنوي';
+  String get yearly => 'سنوياً';
 
   @override
   String get totalIncome => 'إجمالي الدخل';
@@ -12265,19 +12294,19 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'تحليل';
+  String get analysis => 'التحليل';
 
   @override
   String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'لم يتم العثور على مصاريف لهذه الفترة.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
   String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'أهم الفئات';
+  String get topCategories => 'أبرز الفئات';
 
   @override
   String get spendingTrend => 'اتجاه الإنفاق';
@@ -12292,22 +12321,22 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'أضف النفقات';
+  String get addExpense => 'إضافة نفقة';
 
   @override
   String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'ميزانية';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'قضى';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'حد';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'أكثر من الميزانية!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
@@ -12318,14 +12347,17 @@ class AppLocalizationsArLb extends AppLocalizationsAr {
   String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'النتيجة الصحية';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'تعتمد هذه النتيجة على معدل الادخار الخاص بك.\n\n• > توفير 50% = ممتاز (100)\n• 0% تم توفيره = المتوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'نعم';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Libya (`ar_LY`).
@@ -12363,64 +12395,64 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get canvas => 'قماش';
 
   @override
-  String get save => 'يحفظ';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'يخلق';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'يلغي';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'يمسح';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'يحرر';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'يشارك';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'ينسخ';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'التغييرات غير المحفوظة';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
   String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'ينبذ';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'إنشاء مشاركة';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'بريد';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'النشر إلى';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'ما الذي يدور في ذهنك؟';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'اختر الصور';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'اختر الفيديو';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'آلة تصوير';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'معرض';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'يبحث';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'الرجاء إدخال مهمة';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
   String get deleteTask => 'حذف المهمة';
@@ -12433,37 +12465,37 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'الطلب متاح فقط في \"جميع المشاركات\"';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'حذف المشاركة';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'تم حذف المشاركة';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'ميزات متميزة';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
   String get manageCoinsAdsPremium =>
-      'إدارة العملات المعدنية والإعلانات والحالة المميزة';
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'وضع الموضوع';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'لون مميز';
+  String get accentColor => 'لون التمييز';
 
   @override
   String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'دفع الإخطارات';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
   String get recycleBin => 'سلة المحذوفات';
@@ -12475,62 +12507,62 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'معدل التطبيق';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'إرسال الملاحظات';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'إصدار';
+  String get version => 'الإصدار';
 
   @override
   String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'نظام';
+  String get system => 'النظام';
 
   @override
-  String get light => 'ضوء';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'مظلم';
+  String get dark => 'داكن';
 
   @override
   String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'تم مسح سلة المحذوفات بنجاح';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'تم حذف جميع المشاركات';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'مشاركة جديدة';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'تم نسخ النص إلى الحافظة (سياسة Facebook)';
+      'Text copied to clipboard (Facebook policy)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'تتطلب مشاركة TikTok مقطع فيديو/صورة';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'شارك في قصة $platform.';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'شارك في خلاصة $platform.';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
@@ -12541,7 +12573,7 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'لقد ربحت $amount عملة معدنية!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
@@ -12552,16 +12584,16 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'هل أنت متأكد أنك تريد حذف هذه المشاركة؟';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'المشاركات الاجتماعية';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'شاهد الإعلان لكسب العملات المعدنية';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'قسط مفتوح';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
   String get removeAds => 'إزالة الإعلانات';
@@ -12576,22 +12608,22 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'تحرير الملاحظة';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'ملاحظات البحث...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'لم يتم العثور على أي ملاحظات';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'التقط أفكارك على الفور.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
   String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'طلب مخصص';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
   String get newestFirst => 'الأحدث أولاً';
@@ -12603,29 +12635,28 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'العنوان: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'هل تريد حذف الكل؟';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin =>
-      'هل تريد نقل جميع الملاحظات إلى سلة المحذوفات؟';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
   String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'يتحرك';
+  String get move => 'نقل';
 
   @override
   String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'مختارة';
+  String get selected => 'محدد';
 
   @override
   String get noContent => 'لا يوجد محتوى';
@@ -12634,10 +12665,10 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'اختر من بين 10+ خلفيات ديناميكية';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'بيانات النسخ الاحتياطي';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
   String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
@@ -12653,7 +12684,7 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
       'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'حدد ملف';
+  String get selectFile => 'حدد ملفاً';
 
   @override
   String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
@@ -12671,18 +12702,18 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
 
   @override
   String widgetAdded(String widget) {
-    return 'القطعة المضافة إلى الشاشة الرئيسية!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'تم إرسال طلب القطعة. يرجى التحقق من الشاشة الرئيسية الخاصة بك.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'فشلت إضافة القطعة';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'تم تمكين الحفظ التلقائي.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
   String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
@@ -12691,13 +12722,13 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'إشعارات';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
   String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'ردود الفعل والدعم';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
   String get creditsTitle => 'الاعتمادات';
@@ -12706,13 +12737,13 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'عن';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'غالي';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'مظهر';
+  String get appearanceTitle => 'المظهر';
 
   @override
   String get clipboardTitle => 'الحافظة';
@@ -12725,56 +12756,56 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
 
   @override
   String get welcomeDescription =>
-      'رفيقك الإنتاجي النهائي. دعنا نجهزك بأدوات قوية لإدارة يومك.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'الملاحظات الذكية';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'التقط الأفكار على الفور باستخدام تنسيق النص المنسق. نظم أفكارك ولا تفقد أي فكرة عظيمة مرة أخرى.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
   String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'البقاء على رأس اللعبة الخاصة بك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك بعلامة اختيار واحدة في كل مرة.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
   String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'السيطرة على اموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'مجلة شخصية';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'فكر في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
   String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'لا تفوت لحظة واحدة. تنظيم الجدول الزمني الخاص بك وتتبع الأحداث القادمة الهامة.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
   String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'انسخ مرة واحدة، والصق في أي مكان. قم بالوصول إلى سجل الحافظة الخاصة بك لاسترداد المقتطفات التي قمت بنسخها مسبقًا.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'قماش إبداعي';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'أطلق العنان لإبداعك. ارسم أفكارك ورسمها وتصورها على لوحة رقمية ذات شكل حر.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
   String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
@@ -12786,19 +12817,19 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'اكتب أفكارك';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'تنظيم الجدول الزمني الخاص بك';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'الوصول إلى تاريخ الحافظة الخاصة بك';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'ارسم ورسم بحرية';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'مشاركة اجتماعية';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
   String get featuresSocialPostDesc =>
@@ -12808,19 +12839,19 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'عبر عن نفسك بلون موضوع جديد!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'مستوى';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP إلى المستوى';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
   String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'ابدأ رسمًا جديدًا';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
   String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
@@ -12830,193 +12861,195 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'الحفظ التلقائي للحافظة';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائيا';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'تم رفض الإذن بشكل دائم. يرجى التمكين في الإعدادات.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'تم تمكين الإخطارات!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'جارٍ إعادة التوجيه إلى الإعدادات لتعطيل الإشعارات...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'الوصول المميز';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'قسط نشط حتى';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'فتح كافة الميزات';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
   String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'قسط مفعل لمدة 7 أيام!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'قسط نشط';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'تنتهي:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'الوصول المؤقت';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'مجلة والتعبير';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
   String get artisticDesigns => 'تصاميم فنية';
 
   @override
   String get artisticDesignsDesc =>
-      'افتح أكثر من 10 سمات فريدة لبطاقات المجلات';
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'تخطيطات متميزة';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
   String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'التقويم والأدوات';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'التقويم الكامل';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
   String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'التقاط تاريخ الحافظة الخلفية';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'الحاجيات للمحترفين';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc =>
-      'جميع الميزات المتاحة على الشاشة الرئيسية الخاصة بك';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
   String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'النسخ الاحتياطي المتقدم';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'تأمين استيراد/تصدير جميع البيانات';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'تصدير قوات الدفاع الشعبي';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'تصدير الملاحظات والمجلات إلى PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'طباعة جاهزة';
+  String get printReady => 'جاهز للطباعة';
 
   @override
   String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'محرر النص الغني';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
   String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'بحث واستبدال داخل النص الخاص بك';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'الوسائط الغنية';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'إدراج الصور ومقاطع الفيديو والروابط';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'أسلوب المحرر';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'نص مخصص وخلفيات المحرر';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'توازن';
+  String get balance => 'الرصيد';
 
   @override
   String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'تحميل الإعلان';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'احفظ ملف JSON لبياناتك';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'دمج ملف النسخ الاحتياطي في CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'تم رفض إذن الإخطار.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
   String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'أضف مهمة';
+  String get addTask => 'إضافة مهمة';
 
   @override
   String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'عمل عظيم!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
   String get moveTasksToRecycleBin =>
-      'هل تريد نقل جميع المهام النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'حذف كافة المشاركات';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'جميع المشاركات';
+  String get allPosts => 'جميع المنشورات';
 
   @override
   String get favorites => 'المفضلة';
@@ -13025,10 +13058,10 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'لا يوجد مفضلة بعد';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'لا توجد مسودات حتى الآن';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
@@ -13041,28 +13074,31 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'الرجاء إضافة بعض المحتوى أو الوسائط للمشاركة';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'خطأ: الملف غير موجود في $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'تحقق من تطبيق الفيسبوك';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
   String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'مشاركة اجتماعية';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
   String get favorite => 'مفضل';
@@ -13071,11 +13107,11 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'تم نسخ الإدخال';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'هل تريد نقل جميع الإدخالات النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
   String get startWritingStory => 'ابدأ بكتابة قصتك';
@@ -13084,42 +13120,42 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'اكتب المجلة';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
   String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'فرز المجلة';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'بواسطة المزاج';
+  String get byMood => 'حسب المزاج';
 
   @override
   String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'حدد الكل';
+  String get selectAll => 'تحديد الكل';
 
   @override
   String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'اكتملت المهمة!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'المهمة غير مكتملة';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
   String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'تم حفظ الحافظة: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'ملخص';
+  String get overview => 'نظرة عامة';
 
   @override
   String get colorAurora => 'أورورا';
@@ -13134,28 +13170,28 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'الشمسية';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'جديد';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'تحميل...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'جارٍ إعداد قاعدة البيانات...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'جارٍ تكوين النظام...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'مستعد';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'رفيقك الإنتاجية';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'منتهي';
+  String get done => 'تم';
 
   @override
   String get newNote => 'ملاحظة جديدة';
@@ -13170,13 +13206,13 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'تصدير بصيغة PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'المهمة مستحقة الآن';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'هل تريد نقل المهمة إلى سلة المحذوفات؟';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
@@ -13186,7 +13222,7 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'تحرير المهمة';
+  String get editTask => 'تعديل المهمة';
 
   @override
   String get undo => 'تراجع';
@@ -13195,10 +13231,10 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get redo => 'إعادة';
 
   @override
-  String get category => 'فئة';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'على سبيل المثال العمل، صالة الألعاب الرياضية';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
   String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
@@ -13207,17 +13243,17 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'تحديد تاريخ الاستحقاق';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'تاريخان';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'نفقات';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
@@ -13233,7 +13269,7 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'المزيد من المرشحات...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
   String get filterExpenses => 'تصفية النفقات';
@@ -13242,51 +13278,50 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'فئات';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'الجميع';
+  String get all => 'الكل';
 
   @override
-  String get income => 'دخل';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'حساب';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'إعادة ضبط';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'يتقدم';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي صناعته.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'الثروة ليست في امتلاك ممتلكات كبيرة، بل في الحصول على القليل من الحاجات.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'الوقت هو العملة النهائية.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'النجاح ليس نهائيا، والفشل ليس قاتلا.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'ركز على الحل وليس المشكلة.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'شبكتك هي ثروتك الصافية.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
   String get moodHappy => 'سعيد';
@@ -13295,13 +13330,13 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'حيادي';
+  String get moodNeutral => 'محايد';
 
   @override
   String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'وشدد';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -13315,16 +13350,16 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'انستغرام';
+  String get instagram => 'إنستغرام';
 
   @override
   String get facebook => 'فيسبوك';
@@ -13333,7 +13368,7 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'رسم جديد';
+  String get newSketch => 'رسمة جديدة';
 
   @override
   String get searchSketches => 'البحث في الرسومات والمجلدات...';
@@ -13348,10 +13383,10 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'أطلق العنان لإبداعك على القماش!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'قماش جديد';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
   String get rename => 'إعادة تسمية';
@@ -13360,23 +13395,23 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'هل تريد حذف الرسومات؟';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'سيتم حذف جميع الرسومات الموجودة في هذا المجلد نهائيًا.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
   String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'اختر اللون';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'هل تريد حذف المجلد؟';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'بحث في المقاطع...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
   String get clipboardEmpty => 'الحافظة فارغة';
@@ -13385,16 +13420,16 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'لون المقطع';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'كليب جديد';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'تحرير المقطع';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'يمكنك استعادة هذا المقطع لاحقا.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
   String get upcomingEvents => 'الأحداث القادمة';
@@ -13418,30 +13453,30 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'البحث في مثل هذا اليوم...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'تمويل';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'هل تريد الحذف نهائيًا؟';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'سيؤدي هذا إلى حذف مجلدات $foldersCount (ورسوماتها) و$sketchesCount من الرسومات الأخرى نهائيًا.\n\nلا يمكن التراجع عن هذا.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'حذف إلى الأبد';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
@@ -13461,129 +13496,129 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'هل تريد حذف $count من الرسومات؟ لا يمكن التراجع عن هذا.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'لم يتم العثور على الرسومات';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسم جديد.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
   String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'تقويم';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
   String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'هل تريد حذف العنصر؟';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
       'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'ويمكنك استعادته لاحقًا.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'المقاطع الأخيرة';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'منسوخ!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'نسخ نص عادي';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'موضوع كليب';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
   String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
   String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'مهام البحث...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
   String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'ملاحظة بلا عنوان';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'الدخول اليومي';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'تاريخ الحافظة';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'لا يمكن التراجع عن هذا الإجراء.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'سلة المحذوفات فارغة؟';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'سيتم حذف جميع العناصر البالغ عددها $count نهائيًا.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'سلة فارغة';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
   String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'سوف تظهر العناصر المحذوفة هنا.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
   String get empty => 'فارغ';
 
   @override
-  String get recent => 'مؤخرًا';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
@@ -13599,33 +13634,32 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle =>
-      'هل تريد نقل المعاملة إلى سلة المحذوفات؟';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'يمكنك استعادة هذه المعاملة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
   String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'لماذا هذا؟';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'وصف';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'يوميًا';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'أسبوعي';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'شهريا';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'سنوي';
+  String get yearly => 'سنوياً';
 
   @override
   String get totalIncome => 'إجمالي الدخل';
@@ -13634,19 +13668,19 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'تحليل';
+  String get analysis => 'التحليل';
 
   @override
   String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'لم يتم العثور على مصاريف لهذه الفترة.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
   String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'أهم الفئات';
+  String get topCategories => 'أبرز الفئات';
 
   @override
   String get spendingTrend => 'اتجاه الإنفاق';
@@ -13661,22 +13695,22 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'أضف النفقات';
+  String get addExpense => 'إضافة نفقة';
 
   @override
   String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'ميزانية';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'قضى';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'حد';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'أكثر من الميزانية!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
@@ -13687,14 +13721,17 @@ class AppLocalizationsArLy extends AppLocalizationsAr {
   String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'النتيجة الصحية';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'تعتمد هذه النتيجة على معدل الادخار الخاص بك.\n\n• > توفير 50% = ممتاز (100)\n• 0% تم توفيره = المتوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'نعم';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Morocco (`ar_MA`).
@@ -13732,64 +13769,64 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get canvas => 'قماش';
 
   @override
-  String get save => 'يحفظ';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'يخلق';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'يلغي';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'يمسح';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'يحرر';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'يشارك';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'ينسخ';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'التغييرات غير المحفوظة';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
   String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'ينبذ';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'إنشاء مشاركة';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'بريد';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'النشر إلى';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'ما الذي يدور في ذهنك؟';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'اختر الصور';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'اختر الفيديو';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'آلة تصوير';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'معرض';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'يبحث';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'الرجاء إدخال مهمة';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
   String get deleteTask => 'حذف المهمة';
@@ -13802,37 +13839,37 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'الطلب متاح فقط في \"جميع المشاركات\"';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'حذف المشاركة';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'تم حذف المشاركة';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'ميزات متميزة';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
   String get manageCoinsAdsPremium =>
-      'إدارة العملات المعدنية والإعلانات والحالة المميزة';
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'وضع الموضوع';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'لون مميز';
+  String get accentColor => 'لون التمييز';
 
   @override
   String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'دفع الإخطارات';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
   String get recycleBin => 'سلة المحذوفات';
@@ -13844,62 +13881,62 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'معدل التطبيق';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'إرسال الملاحظات';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'إصدار';
+  String get version => 'الإصدار';
 
   @override
   String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'نظام';
+  String get system => 'النظام';
 
   @override
-  String get light => 'ضوء';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'مظلم';
+  String get dark => 'داكن';
 
   @override
   String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'تم مسح سلة المحذوفات بنجاح';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'تم حذف جميع المشاركات';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'مشاركة جديدة';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'تم نسخ النص إلى الحافظة (سياسة Facebook)';
+      'Text copied to clipboard (Facebook policy)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'تتطلب مشاركة TikTok مقطع فيديو/صورة';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'شارك في قصة $platform.';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'شارك في خلاصة $platform.';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
@@ -13910,7 +13947,7 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'لقد ربحت $amount عملة معدنية!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
@@ -13921,16 +13958,16 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'هل أنت متأكد أنك تريد حذف هذه المشاركة؟';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'المشاركات الاجتماعية';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'شاهد الإعلان لكسب العملات المعدنية';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'قسط مفتوح';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
   String get removeAds => 'إزالة الإعلانات';
@@ -13945,22 +13982,22 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'تحرير الملاحظة';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'ملاحظات البحث...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'لم يتم العثور على أي ملاحظات';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'التقط أفكارك على الفور.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
   String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'طلب مخصص';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
   String get newestFirst => 'الأحدث أولاً';
@@ -13972,29 +14009,28 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'العنوان: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'هل تريد حذف الكل؟';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin =>
-      'هل تريد نقل جميع الملاحظات إلى سلة المحذوفات؟';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
   String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'يتحرك';
+  String get move => 'نقل';
 
   @override
   String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'مختارة';
+  String get selected => 'محدد';
 
   @override
   String get noContent => 'لا يوجد محتوى';
@@ -14003,10 +14039,10 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'اختر من بين 10+ خلفيات ديناميكية';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'بيانات النسخ الاحتياطي';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
   String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
@@ -14022,7 +14058,7 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
       'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'حدد ملف';
+  String get selectFile => 'حدد ملفاً';
 
   @override
   String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
@@ -14040,18 +14076,18 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
 
   @override
   String widgetAdded(String widget) {
-    return 'القطعة المضافة إلى الشاشة الرئيسية!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'تم إرسال طلب القطعة. يرجى التحقق من الشاشة الرئيسية الخاصة بك.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'فشلت إضافة القطعة';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'تم تمكين الحفظ التلقائي.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
   String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
@@ -14060,13 +14096,13 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'إشعارات';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
   String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'ردود الفعل والدعم';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
   String get creditsTitle => 'الاعتمادات';
@@ -14075,13 +14111,13 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'عن';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'غالي';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'مظهر';
+  String get appearanceTitle => 'المظهر';
 
   @override
   String get clipboardTitle => 'الحافظة';
@@ -14094,56 +14130,56 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
 
   @override
   String get welcomeDescription =>
-      'رفيقك الإنتاجي النهائي. دعنا نجهزك بأدوات قوية لإدارة يومك.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'الملاحظات الذكية';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'التقط الأفكار على الفور باستخدام تنسيق النص المنسق. نظم أفكارك ولا تفقد أي فكرة عظيمة مرة أخرى.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
   String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'البقاء على رأس اللعبة الخاصة بك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك بعلامة اختيار واحدة في كل مرة.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
   String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'السيطرة على اموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'مجلة شخصية';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'فكر في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
   String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'لا تفوت لحظة واحدة. تنظيم الجدول الزمني الخاص بك وتتبع الأحداث القادمة الهامة.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
   String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'انسخ مرة واحدة، والصق في أي مكان. قم بالوصول إلى سجل الحافظة الخاصة بك لاسترداد المقتطفات التي قمت بنسخها مسبقًا.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'قماش إبداعي';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'أطلق العنان لإبداعك. ارسم أفكارك ورسمها وتصورها على لوحة رقمية ذات شكل حر.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
   String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
@@ -14155,19 +14191,19 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'اكتب أفكارك';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'تنظيم الجدول الزمني الخاص بك';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'الوصول إلى تاريخ الحافظة الخاصة بك';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'ارسم ورسم بحرية';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'مشاركة اجتماعية';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
   String get featuresSocialPostDesc =>
@@ -14177,19 +14213,19 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'عبر عن نفسك بلون موضوع جديد!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'مستوى';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP إلى المستوى';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
   String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'ابدأ رسمًا جديدًا';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
   String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
@@ -14199,193 +14235,195 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'الحفظ التلقائي للحافظة';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائيا';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'تم رفض الإذن بشكل دائم. يرجى التمكين في الإعدادات.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'تم تمكين الإخطارات!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'جارٍ إعادة التوجيه إلى الإعدادات لتعطيل الإشعارات...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'الوصول المميز';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'قسط نشط حتى';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'فتح كافة الميزات';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
   String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'قسط مفعل لمدة 7 أيام!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'قسط نشط';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'تنتهي:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'الوصول المؤقت';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'مجلة والتعبير';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
   String get artisticDesigns => 'تصاميم فنية';
 
   @override
   String get artisticDesignsDesc =>
-      'افتح أكثر من 10 سمات فريدة لبطاقات المجلات';
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'تخطيطات متميزة';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
   String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'التقويم والأدوات';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'التقويم الكامل';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
   String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'التقاط تاريخ الحافظة الخلفية';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'الحاجيات للمحترفين';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc =>
-      'جميع الميزات المتاحة على الشاشة الرئيسية الخاصة بك';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
   String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'النسخ الاحتياطي المتقدم';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'تأمين استيراد/تصدير جميع البيانات';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'تصدير قوات الدفاع الشعبي';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'تصدير الملاحظات والمجلات إلى PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'طباعة جاهزة';
+  String get printReady => 'جاهز للطباعة';
 
   @override
   String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'محرر النص الغني';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
   String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'بحث واستبدال داخل النص الخاص بك';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'الوسائط الغنية';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'إدراج الصور ومقاطع الفيديو والروابط';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'أسلوب المحرر';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'نص مخصص وخلفيات المحرر';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'توازن';
+  String get balance => 'الرصيد';
 
   @override
   String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'تحميل الإعلان';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'احفظ ملف JSON لبياناتك';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'دمج ملف النسخ الاحتياطي في CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'تم رفض إذن الإخطار.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
   String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'أضف مهمة';
+  String get addTask => 'إضافة مهمة';
 
   @override
   String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'عمل عظيم!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
   String get moveTasksToRecycleBin =>
-      'هل تريد نقل جميع المهام النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'حذف كافة المشاركات';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'جميع المشاركات';
+  String get allPosts => 'جميع المنشورات';
 
   @override
   String get favorites => 'المفضلة';
@@ -14394,10 +14432,10 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'لا يوجد مفضلة بعد';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'لا توجد مسودات حتى الآن';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
@@ -14410,28 +14448,31 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'الرجاء إضافة بعض المحتوى أو الوسائط للمشاركة';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'خطأ: الملف غير موجود في $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'تحقق من تطبيق الفيسبوك';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
   String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'مشاركة اجتماعية';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
   String get favorite => 'مفضل';
@@ -14440,11 +14481,11 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'تم نسخ الإدخال';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'هل تريد نقل جميع الإدخالات النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
   String get startWritingStory => 'ابدأ بكتابة قصتك';
@@ -14453,42 +14494,42 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'اكتب المجلة';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
   String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'فرز المجلة';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'بواسطة المزاج';
+  String get byMood => 'حسب المزاج';
 
   @override
   String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'حدد الكل';
+  String get selectAll => 'تحديد الكل';
 
   @override
   String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'اكتملت المهمة!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'المهمة غير مكتملة';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
   String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'تم حفظ الحافظة: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'ملخص';
+  String get overview => 'نظرة عامة';
 
   @override
   String get colorAurora => 'أورورا';
@@ -14503,28 +14544,28 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'الشمسية';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'جديد';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'تحميل...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'جارٍ إعداد قاعدة البيانات...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'جارٍ تكوين النظام...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'مستعد';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'رفيقك الإنتاجية';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'منتهي';
+  String get done => 'تم';
 
   @override
   String get newNote => 'ملاحظة جديدة';
@@ -14539,13 +14580,13 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'تصدير بصيغة PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'المهمة مستحقة الآن';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'هل تريد نقل المهمة إلى سلة المحذوفات؟';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
@@ -14555,7 +14596,7 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'تحرير المهمة';
+  String get editTask => 'تعديل المهمة';
 
   @override
   String get undo => 'تراجع';
@@ -14564,10 +14605,10 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get redo => 'إعادة';
 
   @override
-  String get category => 'فئة';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'على سبيل المثال العمل، صالة الألعاب الرياضية';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
   String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
@@ -14576,17 +14617,17 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'تحديد تاريخ الاستحقاق';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'تاريخان';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'نفقات';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
@@ -14602,7 +14643,7 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'المزيد من المرشحات...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
   String get filterExpenses => 'تصفية النفقات';
@@ -14611,51 +14652,50 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'فئات';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'الجميع';
+  String get all => 'الكل';
 
   @override
-  String get income => 'دخل';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'حساب';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'إعادة ضبط';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'يتقدم';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي صناعته.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'الثروة ليست في امتلاك ممتلكات كبيرة، بل في الحصول على القليل من الحاجات.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'الوقت هو العملة النهائية.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'النجاح ليس نهائيا، والفشل ليس قاتلا.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'ركز على الحل وليس المشكلة.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'شبكتك هي ثروتك الصافية.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
   String get moodHappy => 'سعيد';
@@ -14664,13 +14704,13 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'حيادي';
+  String get moodNeutral => 'محايد';
 
   @override
   String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'وشدد';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -14684,16 +14724,16 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'انستغرام';
+  String get instagram => 'إنستغرام';
 
   @override
   String get facebook => 'فيسبوك';
@@ -14702,7 +14742,7 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'رسم جديد';
+  String get newSketch => 'رسمة جديدة';
 
   @override
   String get searchSketches => 'البحث في الرسومات والمجلدات...';
@@ -14717,10 +14757,10 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'أطلق العنان لإبداعك على القماش!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'قماش جديد';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
   String get rename => 'إعادة تسمية';
@@ -14729,23 +14769,23 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'هل تريد حذف الرسومات؟';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'سيتم حذف جميع الرسومات الموجودة في هذا المجلد نهائيًا.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
   String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'اختر اللون';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'هل تريد حذف المجلد؟';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'بحث في المقاطع...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
   String get clipboardEmpty => 'الحافظة فارغة';
@@ -14754,16 +14794,16 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'لون المقطع';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'كليب جديد';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'تحرير المقطع';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'يمكنك استعادة هذا المقطع لاحقا.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
   String get upcomingEvents => 'الأحداث القادمة';
@@ -14787,30 +14827,30 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'البحث في مثل هذا اليوم...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'تمويل';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'هل تريد الحذف نهائيًا؟';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'سيؤدي هذا إلى حذف مجلدات $foldersCount (ورسوماتها) و$sketchesCount من الرسومات الأخرى نهائيًا.\n\nلا يمكن التراجع عن هذا.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'حذف إلى الأبد';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
@@ -14830,129 +14870,129 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'هل تريد حذف $count من الرسومات؟ لا يمكن التراجع عن هذا.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'لم يتم العثور على الرسومات';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسم جديد.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
   String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'تقويم';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
   String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'هل تريد حذف العنصر؟';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
       'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'ويمكنك استعادته لاحقًا.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count تم التحديد';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'المقاطع الأخيرة';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'منسوخ!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'نسخ نص عادي';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'موضوع كليب';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
   String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
   String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'مهام البحث...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
   String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'ملاحظة بلا عنوان';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'الدخول اليومي';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'تاريخ الحافظة';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'لا يمكن التراجع عن هذا الإجراء.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'سلة المحذوفات فارغة؟';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'سيتم حذف جميع العناصر البالغ عددها $count نهائيًا.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'سلة فارغة';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
   String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'سوف تظهر العناصر المحذوفة هنا.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
   String get empty => 'فارغ';
 
   @override
-  String get recent => 'مؤخرًا';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
@@ -14968,33 +15008,32 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle =>
-      'هل تريد نقل المعاملة إلى سلة المحذوفات؟';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'يمكنك استعادة هذه المعاملة لاحقًا من الإعدادات.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
   String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'لماذا هذا؟';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'وصف';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'يوميًا';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'أسبوعي';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'شهريا';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'سنوي';
+  String get yearly => 'سنوياً';
 
   @override
   String get totalIncome => 'إجمالي الدخل';
@@ -15003,19 +15042,19 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'تحليل';
+  String get analysis => 'التحليل';
 
   @override
   String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'لم يتم العثور على مصاريف لهذه الفترة.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
   String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'أهم الفئات';
+  String get topCategories => 'أبرز الفئات';
 
   @override
   String get spendingTrend => 'اتجاه الإنفاق';
@@ -15030,22 +15069,22 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'أضف النفقات';
+  String get addExpense => 'إضافة نفقة';
 
   @override
   String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'ميزانية';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'قضى';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'حد';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'أكثر من الميزانية!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
@@ -15056,14 +15095,17 @@ class AppLocalizationsArMa extends AppLocalizationsAr {
   String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'النتيجة الصحية';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'تعتمد هذه النتيجة على معدل الادخار الخاص بك.\n\n• > توفير 50% = ممتاز (100)\n• 0% تم توفيره = المتوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'نعم';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Oman (`ar_OM`).
@@ -15101,64 +15143,64 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
   String get canvas => 'قماش';
 
   @override
-  String get save => 'يحفظ';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'يخلق';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'يلغي';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'يمسح';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'يحرر';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'يشارك';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'ينسخ';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'التغييرات غير المحفوظة';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
   String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'ينبذ';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'إنشاء مشاركة';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'بريد';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'النشر إلى';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'ما الذي يدور في ذهنك؟';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'اختر الصور';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'اختر الفيديو';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'آلة تصوير';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'معرض';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'يبحث';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'الرجاء إدخال مهمة';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
   String get deleteTask => 'حذف المهمة';
@@ -15171,37 +15213,37 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'الطلب متاح فقط في \"جميع المشاركات\"';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'حذف المشاركة';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'تم حذف المشاركة';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'ميزات متميزة';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
   String get manageCoinsAdsPremium =>
-      'إدارة العملات المعدنية والإعلانات والحالة المميزة';
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'وضع الموضوع';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'لون مميز';
+  String get accentColor => 'لون التمييز';
 
   @override
   String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'دفع الإخطارات';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
   String get recycleBin => 'سلة المحذوفات';
@@ -15213,62 +15255,62 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
   String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'معدل التطبيق';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'إرسال الملاحظات';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'إصدار';
+  String get version => 'الإصدار';
 
   @override
   String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'نظام';
+  String get system => 'النظام';
 
   @override
-  String get light => 'ضوء';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'مظلم';
+  String get dark => 'داكن';
 
   @override
   String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'تم مسح سلة المحذوفات بنجاح';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'تم حذف جميع المشاركات';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'مشاركة جديدة';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'تم نسخ النص إلى الحافظة (سياسة Facebook)';
+      'Text copied to clipboard (Facebook policy)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'تتطلب مشاركة TikTok مقطع فيديو/صورة';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'شارك في قصة $platform.';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'شارك في خلاصة $platform.';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
@@ -15279,7 +15321,7 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'لقد ربحت $amount عملة معدنية!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
@@ -15290,16 +15332,16 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'هل أنت متأكد أنك تريد حذف هذه المشاركة؟';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'المشاركات الاجتماعية';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'شاهد الإعلان لكسب العملات المعدنية';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'قسط مفتوح';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
   String get removeAds => 'إزالة الإعلانات';
@@ -15314,22 +15356,22 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
   String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'تحرير الملاحظة';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'ملاحظات البحث...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'لم يتم العثور على أي ملاحظات';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'التقط أفكارك على الفور.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
   String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'طلب مخصص';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
   String get newestFirst => 'الأحدث أولاً';
@@ -15341,29 +15383,28 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
   String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'العنوان: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'هل تريد حذف الكل؟';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin =>
-      'هل تريد نقل جميع الملاحظات إلى سلة المحذوفات؟';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'الانتقال إلى سلة المهملات؟';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
   String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'يتحرك';
+  String get move => 'نقل';
 
   @override
   String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'مختارة';
+  String get selected => 'محدد';
 
   @override
   String get noContent => 'لا يوجد محتوى';
@@ -15372,10 +15413,10 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
   String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'اختر من بين 10+ خلفيات ديناميكية';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'بيانات النسخ الاحتياطي';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
   String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
@@ -15391,7 +15432,7 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
       'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'حدد ملف';
+  String get selectFile => 'حدد ملفاً';
 
   @override
   String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
@@ -15409,18 +15450,18 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
 
   @override
   String widgetAdded(String widget) {
-    return 'القطعة المضافة إلى الشاشة الرئيسية!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'تم إرسال طلب القطعة. يرجى التحقق من الشاشة الرئيسية الخاصة بك.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'فشلت إضافة القطعة';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'تم تمكين الحفظ التلقائي.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
   String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
@@ -15429,13 +15470,13 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
   String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'إشعارات';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
   String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'ردود الفعل والدعم';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
   String get creditsTitle => 'الاعتمادات';
@@ -15444,13 +15485,13 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
   String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'عن';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'غالي';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'مظهر';
+  String get appearanceTitle => 'المظهر';
 
   @override
   String get clipboardTitle => 'الحافظة';
@@ -15463,56 +15504,56 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
 
   @override
   String get welcomeDescription =>
-      'رفيقك الإنتاجي النهائي. دعنا نجهزك بأدوات قوية لإدارة يومك.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'الملاحظات الذكية';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'التقط الأفكار على الفور باستخدام تنسيق النص المنسق. نظم أفكارك ولا تفقد أي فكرة عظيمة مرة أخرى.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
   String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'البقاء على رأس اللعبة الخاصة بك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك بعلامة اختيار واحدة في كل مرة.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
   String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'السيطرة على اموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'مجلة شخصية';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'فكر في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
   String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'لا تفوت لحظة واحدة. تنظيم الجدول الزمني الخاص بك وتتبع الأحداث القادمة الهامة.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
   String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'انسخ مرة واحدة، والصق في أي مكان. قم بالوصول إلى سجل الحافظة الخاصة بك لاسترداد المقتطفات التي قمت بنسخها مسبقًا.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'قماش إبداعي';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'أطلق العنان لإبداعك. ارسم أفكارك ورسمها وتصورها على لوحة رقمية ذات شكل حر.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
   String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
@@ -15524,19 +15565,19 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
   String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'اكتب أفكارك';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'تنظيم الجدول الزمني الخاص بك';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'الوصول إلى تاريخ الحافظة الخاصة بك';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'ارسم ورسم بحرية';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'مشاركة اجتماعية';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
   String get featuresSocialPostDesc =>
@@ -15546,19 +15587,19 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
   String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'عبر عن نفسك بلون موضوع جديد!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'مستوى';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP إلى المستوى';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
   String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'ابدأ رسمًا جديدًا';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
   String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
@@ -15568,193 +15609,195 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'الحفظ التلقائي للحافظة';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائيا';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'تم رفض الإذن بشكل دائم. يرجى التمكين في الإعدادات.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'تم تمكين الإخطارات!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'جارٍ إعادة التوجيه إلى الإعدادات لتعطيل الإشعارات...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'الوصول المميز';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'قسط نشط حتى';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'فتح كافة الميزات';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
   String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'قسط مفعل لمدة 7 أيام!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'قسط نشط';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'تنتهي:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'الوصول المؤقت';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'مجلة والتعبير';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
   String get artisticDesigns => 'تصاميم فنية';
 
   @override
   String get artisticDesignsDesc =>
-      'افتح أكثر من 10 سمات فريدة لبطاقات المجلات';
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'تخطيطات متميزة';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
   String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'التقويم والأدوات';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'التقويم الكامل';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
   String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'التقاط تاريخ الحافظة الخلفية';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'الحاجيات للمحترفين';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc =>
-      'جميع الميزات المتاحة على الشاشة الرئيسية الخاصة بك';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
   String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'النسخ الاحتياطي المتقدم';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'تأمين استيراد/تصدير جميع البيانات';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'تصدير قوات الدفاع الشعبي';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'تصدير الملاحظات والمجلات إلى PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'طباعة جاهزة';
+  String get printReady => 'جاهز للطباعة';
 
   @override
   String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'محرر النص الغني';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
   String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'بحث واستبدال داخل النص الخاص بك';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'الوسائط الغنية';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'إدراج الصور ومقاطع الفيديو والروابط';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'أسلوب المحرر';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'نص مخصص وخلفيات المحرر';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'توازن';
+  String get balance => 'الرصيد';
 
   @override
   String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'تحميل الإعلان';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'احفظ ملف JSON لبياناتك';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'دمج ملف النسخ الاحتياطي في CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'تم رفض إذن الإخطار.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
   String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'أضف مهمة';
+  String get addTask => 'إضافة مهمة';
 
   @override
   String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'عمل عظيم!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
   String get moveTasksToRecycleBin =>
-      'هل تريد نقل جميع المهام النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'حذف كافة المشاركات';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'جميع المشاركات';
+  String get allPosts => 'جميع المنشورات';
 
   @override
   String get favorites => 'المفضلة';
@@ -15763,10 +15806,10 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
   String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'لا يوجد مفضلة بعد';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'لا توجد مسودات حتى الآن';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
@@ -15779,28 +15822,31 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'الرجاء إضافة بعض المحتوى أو الوسائط للمشاركة';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'خطأ: الملف غير موجود في $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'تحقق من تطبيق الفيسبوك';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
   String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'مشاركة اجتماعية';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
   String get favorite => 'مفضل';
@@ -15809,11 +15855,11 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
   String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'تم نسخ الإدخال';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'هل تريد نقل جميع الإدخالات النشطة إلى سلة المحذوفات؟';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
   String get startWritingStory => 'ابدأ بكتابة قصتك';
@@ -15822,225 +15868,223 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
   String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'اكتب المجلة';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
   String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'فرز المجلة';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'بواسطة المزاج';
+  String get byMood => 'حسب المزاج';
 
   @override
   String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'حدد الكل';
+  String get selectAll => 'تحديد الكل';
 
   @override
   String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'اكتملت المهمة!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'المهمة غير مكتملة';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
   String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'تم حفظ الحافظة: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'نظرة عامة';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'أورورا';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'كوني';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'سديم';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'Done';
+  String get done => 'تم';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'ملاحظة جديدة';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'تغيير اللون';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'نسخ المحتوى';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'يمكنك استعادة هذه المهمة لاحقًا من الإعدادات.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'تعديل المهمة';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'تراجع';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'إعادة';
 
   @override
-  String get category => 'Category';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'فرز وتصفية';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'فرز حسب';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'أعلى مبلغ';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'تصفية النفقات';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'All';
+  String get all => 'الكل';
 
   @override
-  String get income => 'Income';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'سعيد';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'محايد';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -16049,391 +16093,393 @@ class AppLocalizationsArOm extends AppLocalizationsAr {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'المزاج: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'Instagram';
+  String get instagram => 'إنستغرام';
 
   @override
-  String get facebook => 'Facebook';
+  String get facebook => 'فيسبوك';
 
   @override
-  String get tiktok => 'TikTok';
+  String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'رسمة جديدة';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'البحث في الرسومات والمجلدات...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'لم يتم العثور على نتائج';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'لا توجد عناصر';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'إعادة تسمية';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'الحافظة فارغة';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'الأحداث القادمة';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'توزيع البيانات';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'تقدم المهمة';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'إحصائيات سريعة';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'إكمال المهمة';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'لا توجد عناصر لهذا التاريخ';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'فرز العناصر';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'الاسم (أ-ي)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'الاسم (ي-أ)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'إنشاء مجلد';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'اسم المجلد...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+      'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'فارغ';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'عام';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'هل تريد حفظ هذه المعاملة؟';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'يرجى ملء العنوان والمبلغ';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'Description';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'سنوياً';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'إجمالي الدخل';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'التحليل';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'أبرز الفئات';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'اتجاه الإنفاق';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'رؤى';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'لم يتم تسجيل أي نفقات';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'إضافة نفقة';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return 'متبقي $percent%';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Qatar (`ar_QA`).
@@ -16441,181 +16487,182 @@ class AppLocalizationsArQa extends AppLocalizationsAr {
   AppLocalizationsArQa() : super('ar_QA');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'إعدادات';
 
   @override
-  String get language => 'Language';
+  String get language => 'لغة';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'النظام الافتراضي';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'ملحوظات';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'المهام';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'نفقات';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'مجلة';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'تقويم';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'الحافظة';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'قماش';
 
   @override
-  String get save => 'Save';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'Create';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'Share';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'Post';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'Search';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'حذف المهمة';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'حدد العناصر';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'حذف الكل';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'لون التمييز';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'سلة المحذوفات';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'تصدير البيانات';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'Version';
+  String get version => 'الإصدار';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'System';
+  String get system => 'النظام';
 
   @override
-  String get light => 'Light';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'داكن';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
@@ -16623,787 +16670,795 @@ class AppLocalizationsArQa extends AppLocalizationsAr {
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'فتح بشكل دائم';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'لا توجد عملات كافية!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'تم نسخ المحتوى';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'حدد التاريخ والوقت';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'إزالة الإعلانات';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'تخزين سحابي غير محدود';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'حذف الملاحظة';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'الأحدث أولاً';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'الأقدم أولاً';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'Move';
+  String get move => 'نقل';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'محدد';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'لا يوجد محتوى';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'تصدير الآن';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'استيراد البيانات';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'حدد ملفاً';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'فشل التصدير.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return 'تمت استعادة $count من العناصر بنجاح!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'فشل الاستيراد.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'الاعتمادات';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'المظهر';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'الحافظة';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'تخصيص تجربتك';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'مرحبًا بك في CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'تتبع المهام الخاصة بك';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'إنشاء محتوى جذاب لوسائل التواصل الاجتماعي';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'Level';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
 
   @override
   String transactionsThisMonth(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'تصاميم فنية';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'جاهز للطباعة';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'الرصيد';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'إضافة مهمة';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'جميع المنشورات';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'المفضلة';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'مسودة';
 
   @override
   String attachmentCount(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'مفضل';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'ابدأ بكتابة قصتك';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'حسب المزاج';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'تحديد الكل';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'نظرة عامة';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'أورورا';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'كوني';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'سديم';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'Done';
+  String get done => 'تم';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'ملاحظة جديدة';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'تغيير اللون';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'نسخ المحتوى';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'يمكنك استعادة هذه المهمة لاحقًا من الإعدادات.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'تعديل المهمة';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'تراجع';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'إعادة';
 
   @override
-  String get category => 'Category';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'فرز وتصفية';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'فرز حسب';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'أعلى مبلغ';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'تصفية النفقات';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'All';
+  String get all => 'الكل';
 
   @override
-  String get income => 'Income';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'سعيد';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'محايد';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -17412,391 +17467,393 @@ class AppLocalizationsArQa extends AppLocalizationsAr {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'المزاج: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'Instagram';
+  String get instagram => 'إنستغرام';
 
   @override
-  String get facebook => 'Facebook';
+  String get facebook => 'فيسبوك';
 
   @override
-  String get tiktok => 'TikTok';
+  String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'رسمة جديدة';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'البحث في الرسومات والمجلدات...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'لم يتم العثور على نتائج';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'لا توجد عناصر';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'إعادة تسمية';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'الحافظة فارغة';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'الأحداث القادمة';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'توزيع البيانات';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'تقدم المهمة';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'إحصيات سريعة';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'إكمال المهمة';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'لا توجد عناصر لهذا التاريخ';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'فرز العناصر';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'الاسم (أ-ي)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'الاسم (ي-أ)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'إنشاء مجلد';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'اسم المجلد...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+      'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'فارغ';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'عام';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'هل تريد حفظ هذه المعاملة؟';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'يرجى ملء العنوان والمبلغ';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'Description';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'سنوياً';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'إجمالي الدخل';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'التحليل';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'أبرز الفئات';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'اتجاه الإنفاق';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'رؤى';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'لم يتم تسجيل أي نفقات';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'إضافة نفقة';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return 'متبقي $percent%';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Saudi Arabia (`ar_SA`).
@@ -17804,181 +17861,182 @@ class AppLocalizationsArSa extends AppLocalizationsAr {
   AppLocalizationsArSa() : super('ar_SA');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'إعدادات';
 
   @override
-  String get language => 'Language';
+  String get language => 'لغة';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'النظام الافتراضي';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'ملحوظات';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'المهام';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'نفقات';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'مجلة';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'تقويم';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'الحافظة';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'قماش';
 
   @override
-  String get save => 'Save';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'Create';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'Share';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'Post';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'Search';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'حذف المهمة';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'حدد العناصر';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'حذف الكل';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'لون التمييز';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'سلة المحذوفات';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'تصدير البيانات';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'Version';
+  String get version => 'الإصدار';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'System';
+  String get system => 'النظام';
 
   @override
-  String get light => 'Light';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'داكن';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
@@ -17986,787 +18044,795 @@ class AppLocalizationsArSa extends AppLocalizationsAr {
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'فتح بشكل دائم';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'لا توجد عملات كافية!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'تم نسخ المحتوى';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'حدد التاريخ والوقت';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'إزالة الإعلانات';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'تخزين سحابي غير محدود';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'حذف الملاحظة';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'الأحدث أولاً';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'الأقدم أولاً';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'Move';
+  String get move => 'نقل';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'محدد';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'لا يوجد محتوى';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'تصدير الآن';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'استيراد البيانات';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'حدد ملفاً';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'فشل التصدير.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return 'تمت استعادة $count من العناصر بنجاح!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'فشل الاستيراد.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'الاعتمادات';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'المظهر';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'الحافظة';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'تخصيص تجربتك';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'مرحبًا بك في CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'تتبع المهام الخاصة بك';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'إنشاء محتوى جذاب لوسائل التواصل الاجتماعي';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'Level';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
 
   @override
   String transactionsThisMonth(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'تصاميم فنية';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'جاهز للطباعة';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'الرصيد';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'إضافة مهمة';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'جميع المنشورات';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'المفضلة';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'مسودة';
 
   @override
   String attachmentCount(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'مفضل';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'ابدأ بكتابة قصتك';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'حسب المزاج';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'تحديد الكل';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'نظرة عامة';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'أورورا';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'كوني';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'سديم';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'Done';
+  String get done => 'تم';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'ملاحظة جديدة';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'تغيير اللون';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'نسخ المحتوى';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'يمكنك استعادة هذه المهمة لاحقًا من الإعدادات.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'تعديل المهمة';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'تراجع';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'إعادة';
 
   @override
-  String get category => 'Category';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'فرز وتصفية';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'فرز حسب';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'أعلى مبلغ';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'تصفية النفقات';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'All';
+  String get all => 'الكل';
 
   @override
-  String get income => 'Income';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'سعيد';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'محايد';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -18775,391 +18841,393 @@ class AppLocalizationsArSa extends AppLocalizationsAr {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'المزاج: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'Instagram';
+  String get instagram => 'إنستغرام';
 
   @override
-  String get facebook => 'Facebook';
+  String get facebook => 'فيسبوك';
 
   @override
-  String get tiktok => 'TikTok';
+  String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'رسمة جديدة';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'البحث في الرسومات والمجلدات...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'لم يتم العثور على نتائج';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'لا توجد عناصر';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'إعادة تسمية';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'الحافظة فارغة';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'الأحداث القادمة';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'توزيع البيانات';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'تقدم المهمة';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'إحصائيات سريعة';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'إكمال المهمة';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'لا توجد عناصر لهذا التاريخ';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'فرز العناصر';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'الاسم (أ-ي)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'الاسم (ي-أ)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'إنشاء مجلد';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'اسم المجلد...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+      'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'فارغ';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'عام';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'هل تريد حفظ هذه المعاملة؟';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'يرجى ملء العنوان والمبلغ';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'Description';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'سنوياً';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'إجمالي الدخل';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'التحليل';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'أبرز الفئات';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'اتجاه الإنفاق';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'رؤى';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'لم يتم تسجيل أي نفقات';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'إضافة نفقة';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return 'متبقي $percent%';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Sudan (`ar_SD`).
@@ -19167,181 +19235,182 @@ class AppLocalizationsArSd extends AppLocalizationsAr {
   AppLocalizationsArSd() : super('ar_SD');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'إعدادات';
 
   @override
-  String get language => 'Language';
+  String get language => 'لغة';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'النظام الافتراضي';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'ملحوظات';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'المهام';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'نفقات';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'مجلة';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'تقويم';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'الحافظة';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'قماش';
 
   @override
-  String get save => 'Save';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'Create';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'Share';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'Post';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'Search';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'حذف المهمة';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'حدد العناصر';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'حذف الكل';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'لون التمييز';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'سلة المحذوفات';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'تصدير البيانات';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'Version';
+  String get version => 'الإصدار';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'System';
+  String get system => 'النظام';
 
   @override
-  String get light => 'Light';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'داكن';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
@@ -19349,787 +19418,795 @@ class AppLocalizationsArSd extends AppLocalizationsAr {
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'فتح بشكل دائم';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'لا توجد عملات كافية!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'تم نسخ المحتوى';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'حدد التاريخ والوقت';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'إزالة الإعلانات';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'تخزين سحابي غير محدود';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'حذف الملاحظة';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'الأحدث أولاً';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'الأقدم أولاً';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'Move';
+  String get move => 'نقل';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'محدد';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'لا يوجد محتوى';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'تصدير الآن';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'استيراد البيانات';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'حدد ملفاً';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'فشل التصدير.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return 'تمت استعادة $count من العناصر بنجاح!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'فشل الاستيراد.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'الاعتمادات';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'المظهر';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'الحافظة';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'تخصيص تجربتك';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'مرحبًا بك في CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'تتبع المهام الخاصة بك';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'إنشاء محتوى جذاب لوسائل التواصل الاجتماعي';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'Level';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
 
   @override
   String transactionsThisMonth(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'تصاميم فنية';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'جاهز للطباعة';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'الرصيد';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'إضافة مهمة';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'جميع المنشورات';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'المفضلة';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'مسودة';
 
   @override
   String attachmentCount(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'مفضل';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'ابدأ بكتابة قصتك';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'حسب المزاج';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'تحديد الكل';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'نظرة عامة';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'أورورا';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'كوني';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'سديم';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'Done';
+  String get done => 'تم';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'ملاحظة جديدة';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'تغيير اللون';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'نسخ المحتوى';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'يمكنك استعادة هذه المهمة لاحقًا من الإعدادات.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'تعديل المهمة';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'تراجع';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'إعادة';
 
   @override
-  String get category => 'Category';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'فرز وتصفية';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'فرز حسب';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'أعلى مبلغ';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'تصفية النفقات';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'All';
+  String get all => 'الكل';
 
   @override
-  String get income => 'Income';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'سعيد';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'محايد';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -20138,391 +20215,393 @@ class AppLocalizationsArSd extends AppLocalizationsAr {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'المزاج: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'Instagram';
+  String get instagram => 'إنستغرام';
 
   @override
-  String get facebook => 'Facebook';
+  String get facebook => 'فيسبوك';
 
   @override
-  String get tiktok => 'TikTok';
+  String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'رسمة جديدة';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'البحث في الرسومات والمجلدات...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'لم يتم العثور على نتائج';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'لا توجد عناصر';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'إعادة تسمية';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'الحافظة فارغة';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'الأحداث القادمة';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'توزيع البيانات';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'تقدم المهمة';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'إحصائيات سريعة';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'إكمال المهمة';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'لا توجد عناصر لهذا التاريخ';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'فرز العناصر';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'الاسم (أ-ي)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'الاسم (ي-أ)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'إنشاء مجلد';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'اسم المجلد...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+      'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'فارغ';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'عام';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'هل تريد حفظ هذه المعاملة؟';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'يرجى ملء العنوان والمبلغ';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'Description';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'سنوياً';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'إجمالي الدخل';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'التحليل';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'أبرز الفئات';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'اتجاه الإنفاق';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'رؤى';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'لم يتم تسجيل أي نفقات';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'إضافة نفقة';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return 'متبقي $percent%';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in the Syrian Arab Republic (`ar_SY`).
@@ -20530,181 +20609,182 @@ class AppLocalizationsArSy extends AppLocalizationsAr {
   AppLocalizationsArSy() : super('ar_SY');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'إعدادات';
 
   @override
-  String get language => 'Language';
+  String get language => 'لغة';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'النظام الافتراضي';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'ملحوظات';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'المهام';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'نفقات';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'مجلة';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'تقويم';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'الحافظة';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'قماش';
 
   @override
-  String get save => 'Save';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'Create';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'Share';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'Post';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'Search';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'حذف المهمة';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'حدد العناصر';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'حذف الكل';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'لون التمييز';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'سلة المحذوفات';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'تصدير البيانات';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'Version';
+  String get version => 'الإصدار';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'System';
+  String get system => 'النظام';
 
   @override
-  String get light => 'Light';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'داكن';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
@@ -20712,787 +20792,795 @@ class AppLocalizationsArSy extends AppLocalizationsAr {
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'فتح بشكل دائم';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'لا توجد عملات كافية!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'تم نسخ المحتوى';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'حدد التاريخ والوقت';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'إزالة الإعلانات';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'تخزين سحابي غير محدود';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'حذف الملاحظة';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'الأحدث أولاً';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'الأقدم أولاً';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'Move';
+  String get move => 'نقل';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'محدد';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'لا يوجد محتوى';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'تصدير الآن';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'استيراد البيانات';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'حدد ملفاً';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'فشل التصدير.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return 'تمت استعادة $count من العناصر بنجاح!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'فشل الاستيراد.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'الاعتمادات';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'المظهر';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'الحافظة';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'تخصيص تجربتك';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'مرحبًا بك في CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'تتبع المهام الخاصة بك';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'إنشاء محتوى جذاب لوسائل التواصل الاجتماعي';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'Level';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
 
   @override
   String transactionsThisMonth(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'تصاميم فنية';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'جاهز للطباعة';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'الرصيد';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'إضافة مهمة';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'جميع المنشورات';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'المفضلة';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'مسودة';
 
   @override
   String attachmentCount(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'مفضل';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'ابدأ بكتابة قصتك';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'حسب المزاج';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'تحديد الكل';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'نظرة عامة';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'أورورا';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'كوني';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'سديم';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'Done';
+  String get done => 'تم';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'ملاحظة جديدة';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'تغيير اللون';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'نسخ المحتوى';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'يمكنك استعادة هذه المهمة لاحقًا من الإعدادات.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'تعديل المهمة';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'تراجع';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'إعادة';
 
   @override
-  String get category => 'Category';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'فرز وتصفية';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'فرز حسب';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'أعلى مبلغ';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'تصفية النفقات';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'All';
+  String get all => 'الكل';
 
   @override
-  String get income => 'Income';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'سعيد';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'محايد';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -21501,391 +21589,393 @@ class AppLocalizationsArSy extends AppLocalizationsAr {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'المزاج: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'Instagram';
+  String get instagram => 'إنستغرام';
 
   @override
-  String get facebook => 'Facebook';
+  String get facebook => 'فيسبوك';
 
   @override
-  String get tiktok => 'TikTok';
+  String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'رسمة جديدة';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'البحث في الرسومات والمجلدات...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'لم يتم العثور على نتائج';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'لا توجد عناصر';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'إعادة تسمية';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'الحافظة فارغة';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'الأحداث القادمة';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'توزيع البيانات';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'تقدم المهمة';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'إحصائيات سريعة';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'إكمال المهمة';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'لا توجد عناصر لهذا التاريخ';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'فرز العناصر';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'الاسم (أ-ي)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'الاسم (ي-أ)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'إنشاء مجلد';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'اسم المجلد...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+      'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'فارغ';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'عام';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'هل تريد حفظ هذه المعاملة؟';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'يرجى ملء العنوان والمبلغ';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'Description';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'سنوياً';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'إجمالي الدخل';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'التحليل';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'أبرز الفئات';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'اتجاه الإنفاق';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'رؤى';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'لم يتم تسجيل أي نفقات';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'إضافة نفقة';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return 'متبقي $percent%';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Tunisia (`ar_TN`).
@@ -21893,107 +21983,107 @@ class AppLocalizationsArTn extends AppLocalizationsAr {
   AppLocalizationsArTn() : super('ar_TN');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'إعدادات';
 
   @override
-  String get language => 'Language';
+  String get language => 'لغة';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'النظام الافتراضي';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'ملحوظات';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'المهام';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'نفقات';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'مجلة';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'تقويم';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'الحافظة';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'قماش';
 
   @override
-  String get save => 'Save';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'Create';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'Share';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'Post';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'Search';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'حذف المهمة';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'حدد العناصر';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'حذف الكل';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
@@ -22001,73 +22091,74 @@ class AppLocalizationsArTn extends AppLocalizationsAr {
       'Ordering only available in \'\'All Posts\'\'';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'لون التمييز';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'سلة المحذوفات';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'تصدير البيانات';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'Version';
+  String get version => 'الإصدار';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'System';
+  String get system => 'النظام';
 
   @override
-  String get light => 'Light';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'داكن';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
@@ -22075,787 +22166,795 @@ class AppLocalizationsArTn extends AppLocalizationsAr {
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'فتح بشكل دائم';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'لا توجد عملات كافية!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'تم نسخ المحتوى';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'حدد التاريخ والوقت';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'إزالة الإعلانات';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'تخزين سحابي غير محدود';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'حذف الملاحظة';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'الأحدث أولاً';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'الأقدم أولاً';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'Move';
+  String get move => 'نقل';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'محدد';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'لا يوجد محتوى';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'تصدير الآن';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'استيراد البيانات';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'حدد ملفاً';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'فشل التصدير.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return 'تمت استعادة $count من العناصر بنجاح!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'فشل الاستيراد.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'الاعتمادات';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'المظهر';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'الحافظة';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'تخصيص تجربتك';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'مرحبًا بك في CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'تتبع المهام الخاصة بك';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'إنشاء محتوى جذاب لوسائل التواصل الاجتماعي';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'Level';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
 
   @override
   String transactionsThisMonth(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'تصاميم فنية';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'جاهز للطباعة';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'الرصيد';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'إضافة مهمة';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'جميع المنشورات';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'المفضلة';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
   String get startSocialJourney => 'Start your social journey!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'مسودة';
 
   @override
   String attachmentCount(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'خطأ: لم يتم العثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'مفضل';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'ابدأ بكتابة قصتك';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'حسب المزاج';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'تحديد الكل';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'نظرة عامة';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'أورورا';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'كوني';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'سديم';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'Done';
+  String get done => 'تم';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'ملاحظة جديدة';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'تغيير اللون';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'نسخ المحتوى';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'يمكنك استعادة هذه المهمة لاحقًا من الإعدادات.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'تعديل المهمة';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'تراجع';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'إعادة';
 
   @override
-  String get category => 'Category';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'فرز وتصفية';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'فرز حسب';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'أعلى مبلغ';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'تصفية النفقات';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'All';
+  String get all => 'الكل';
 
   @override
-  String get income => 'Income';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
   String get moodHappy => 'Happy';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'محايد';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -22864,391 +22963,393 @@ class AppLocalizationsArTn extends AppLocalizationsAr {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'المزاج: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'Instagram';
+  String get instagram => 'إنستغرام';
 
   @override
-  String get facebook => 'Facebook';
+  String get facebook => 'فيسبوك';
 
   @override
-  String get tiktok => 'TikTok';
+  String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'رسمة جديدة';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'البحث في الرسومات والمجلدات...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'لم يتم العثور على نتائج';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'لا توجد عناصر';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'إعادة تسمية';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'الحافظة فارغة';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'الأحداث القادمة';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'توزيع البيانات';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'تقدم المهمة';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'إحصائيات سريعة';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'إكمال المهمة';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'لا توجد عناصر لهذا التاريخ';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'فرز العناصر';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'الاسم (أ-ي)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'الاسم (ي-أ)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'إنشاء مجلد';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'اسم المجلد...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+      'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
   String get deletedItemsAppearHere => 'Deleted items will appear here.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'فارغ';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'عام';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'هل تريد حفظ هذه المعاملة؟';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'يرجى ملء العنوان والمبلغ';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'Description';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'سنوياً';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'إجمالي الدخل';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'التحليل';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'أبرز الفئات';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'اتجاه الإنفاق';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'رؤى';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'لم يتم تسجيل أي نفقات';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'إضافة نفقة';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return 'متبقي $percent%';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }
 
 /// The translations for Arabic, as used in Yemen (`ar_YE`).
@@ -23256,181 +23357,182 @@ class AppLocalizationsArYe extends AppLocalizationsAr {
   AppLocalizationsArYe() : super('ar_YE');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'إعدادات';
 
   @override
-  String get language => 'Language';
+  String get language => 'لغة';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'النظام الافتراضي';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'ملحوظات';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'المهام';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'نفقات';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'مجلة';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'تقويم';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'الحافظة';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'قماش';
 
   @override
-  String get save => 'Save';
+  String get save => 'حفظ';
 
   @override
-  String get create => 'Create';
+  String get create => 'إنشاء';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'إلغاء';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'حذف';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'تعديل';
 
   @override
-  String get share => 'Share';
+  String get share => 'مشاركة';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'نسخ';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'تغييرات غير محفوظة';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'تأكيد الحذف';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'تجاهل';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'إنشاء منشور';
 
   @override
-  String get post => 'Post';
+  String get post => 'منشور';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'النشر في';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'ماذا يدور في ذهنك؟';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'اختر صورًا';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'اختر فيديو';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'كاميرا';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'معرض الصور';
 
   @override
-  String get search => 'Search';
+  String get search => 'بحث';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'يرجى إدخال مهمة';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'حذف المهمة';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'حدد العناصر';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'حذف الكل';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'خطأ: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'الترتيب متاح فقط في \"جميع المنشورات\"';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'حذف المنشور';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'تم حذف المنشور';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'ميزات بريميوم';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'إدارة العملات والإعلانات وحالة البريميوم';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'وضع المظهر';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'لون التمييز';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'تصميم الخلفية';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'إشعارات الدفع';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'سلة المحذوفات';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'تصدير البيانات';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'استيراد البيانات';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'تقييم التطبيق';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'إرسال تعليقات';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'سياسة الخصوصية';
 
   @override
-  String get version => 'Version';
+  String get version => 'الإصدار';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'رقم البناء';
 
   @override
-  String get system => 'System';
+  String get system => 'النظام';
 
   @override
-  String get light => 'Light';
+  String get light => 'فاتح';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'داكن';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'تمت استعادة العنصر';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'تم إفراغ سلة المحذوفات بنجاح';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'تم حذف جميع المنشورات';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'منشور جديد';
 
   @override
   String get textCopiedToClipboardFacebook =>
@@ -23438,787 +23540,795 @@ class AppLocalizationsArYe extends AppLocalizationsAr {
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'تتطلب مشاركة TikTok فيديو/صورة';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'خطأ في المشاركة: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'مشاركة في قصة $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'مشاركة في موجز $platform';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'فتح بشكل دائم';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'لا توجد عملات كافية!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'لقد ربحت $amount من العملات!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'تم نسخ المحتوى';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'حدد التاريخ والوقت';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'هل أنت متأكد أنك تريد حذف هذا المنشور؟';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'منشورات اجتماعية';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'شاهد إعلانًا لربح العملات';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'تم فتح البريميوم';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'إزالة الإعلانات';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'تخزين سحابي غير محدود';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'حذف الملاحظة';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'مشاركة الملاحظة';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'تعديل الملاحظة';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'البحث في الملاحظات...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'لم يتم العثور على ملاحظات';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'سجل أفكارك فورا.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'إنشاء ملاحظة';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'ترتيب مخصص';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'الأحدث أولاً';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'الأقدم أولاً';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'العنوان: أ-ي';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'العنوان: ي-أ';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'حذف الكل؟';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'نقل جميع الملاحظات إلى سلة المحذوفات؟';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'نقل إلى السلة؟';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'يمكنك استعادة هذه الملاحظة لاحقًا.';
 
   @override
-  String get move => 'Move';
+  String get move => 'نقل';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'أفكاري';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'محدد';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'لا يوجد محتوى';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'بدون عنوان';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'اختر من بين أكثر من 10 خلفيات ديناميكية';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'نسخ احتياطي للبيانات';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile => 'هل تريد حفظ ملف JSON يحتوي على جميع بياناتك؟';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'تصدير الآن';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'استيراد البيانات';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'هل تريد دمج ملف النسخ الاحتياطي مع العناصر الحالية؟';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'حدد ملفاً';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'تم حفظ النسخة الاحتياطية بنجاح!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'فشل التصدير.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return 'تمت استعادة $count من العناصر بنجاح!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'فشل الاستيراد.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'تمت إضافة الأداة $widget إلى الشاشة الرئيسية!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'تم إرسال طلب الأداة. يرجى التحقق من الشاشة الرئيسية.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'فشل إضافة الأداة';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'تم تفعيل الحفظ التلقائي.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'تم تعطيل الحفظ التلقائي.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'أدوات الشاشة الرئيسية';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'الإشعارات';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'البيانات والنسخ الاحتياطي';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'التعليقات والدعم';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'الاعتمادات';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'الخصوصية والصيانة';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'حول';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'بريميوم';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'المظهر';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'الحافظة';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'تخصيص تجربتك';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'مرحبًا بك في CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'رفيقك النهائي للإنتاجية. دعنا نجهزك بأدوات قوية لإدارة يومك.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'ملاحظات ذكية';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'إدارة المهام';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'تتبع النفقات';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'يوميات شخصية';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'التقويم والأحداث';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'مدير الحافظة';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'لوحة إبداعية';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'إنشاء وإدارة الملاحظات الخاصة بك';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'تتبع المهام الخاصة بك';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'مراقبة النفقات الخاصة بك';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'اكتتب أفكارك';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'نظم جدولك الزمني';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'الوصول إلى سجل الحافظة الخاص بك';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'ارسم وخطط بحرية';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'منشور اجتماعي';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'إنشاء محتوى جذاب لوسائل التواصل الاجتماعي';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'اختر هالتك';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'عبر عن نفسك بلون مظهر جديد!';
 
   @override
-  String get level => 'Level';
+  String get level => 'المستوى';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP للمستوى التالي';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'تحقق من الأحداث القادمة';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'بدأ رسمة جديدة';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'لا توجد معاملات هذا الشهر';
 
   @override
   String transactionsThisMonth(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count معاملات هذا الشهر',
+      few: '$count معاملات هذا الشهر',
+      two: 'معاملتان هذا الشهر',
+      one: 'معاملة واحدة هذا الشهر',
+      zero: 'لا توجد معاملات هذا الشهر',
     );
-    return '$count transaction$_temp0 this month';
+    return '$_temp0';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'حفظ تلقائي للحافظة';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'حفظ العناصر المنسوخة تلقائياً';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'تم تفعيل الإشعارات!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'جارٍ التوجيه إلى الإعدادات لتعطيل الإشعارات...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'وصول بريميوم';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'بريميوم نشط حتى';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'فتح جميع الميزات';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'شراء بريميوم (7 أيام)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'التكلفة: $cost عملات';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'تم تفعيل البريميوم لمدة 7 أيام!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'البريميوم نشط';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'تنتهي الصلاحية:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'وصول مؤقت';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'يوميات وتعبير';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'تصاميم فنية';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'تخطيطات بريميوم';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc => 'طرق حصرية لعرض ذكرياتك';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'تقويم وأدوات';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'تقويم كامل';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'نظام متكامل لإدارة الأحداث';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'التقاط سجل الحافظة في الخلفية';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'أدوات ذكية للمحترفين';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'جميع الميزات متوفرة على شاشتك الرئيسية';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'البيانات والتصدير';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'نسخ احتياطي متقدم';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'استيراد/تصدير آمن لجميع البيانات';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'تصدير إلى PDF';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'تصدير الملاحظات واليوميات إلى PDF';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'جاهز للطباعة';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'دعم الطباعة المباشرة';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'محرر نص غني';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'بحث متقدم';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'البحث والاستبدال داخل النص';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'وسائط غنية';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'إدراج صور وفيديوهات وروابط';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'تنسيق المحرر';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'نص مخصص وخلفيات للمحرر';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'الرصيد';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'جارٍ تحميل الإعلان...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'مشاهدة إعلان (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'تحميل إعلان';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'حفظ ملف JSON لبياناتك';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'دمج ملف نسخة احتياطية في CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied => 'تم رفض إذن الإشعارات.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'اكتب مهمة جديدة...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'إضافة مهمة';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'مكتمل';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'عمل رائع!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'لقد ربحت $amount XP! المهمة التالية: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'تمت المهمة! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'نقل جميع المهام النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'حذف جميع المنشورات';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'جميع المنشورات';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'المفضلة';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'المسودات';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'لا توجد مفضلات بعد';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'لا توجد مسودات بعد';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'ابدأ رحلتك الاجتماعية!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'مسودة';
 
   @override
   String attachmentCount(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
-      one: '',
+      other: '$count مرفقات',
+      few: '$count مرفقات',
+      two: 'مرفقان',
+      one: 'مرفق واحد',
+      zero: 'لا توجد مرفقات',
     );
-    return '$count attachment$_temp0';
+    return '$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent => 'يرجى إضافة بعض المحتوى أو الوسائط للمشاركة';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'خطأ: لم يتم العخثور على الملف في $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'تحقق من تطبيق فيسبوك';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'مشاركة النظام';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'منشور اجتماعي';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'مفضل';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'حفظ المسودة';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'تم نسخ المدخل';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'نقل جميع المدخلات النشطة إلى سلة المحذوفات؟';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'ابدأ بكتابة قصتك';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'سجل ذكرياتك ومشاعرك اليومية.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'اكتب يومياتك';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'ذكرياتي';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'فرز اليوميات';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'حسب المزاج';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'بحث في الذكريات...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'تحديد الكل';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'حذف المحدد';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'تمت المهمة!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'مهمة غير مكتملة';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'تم تحديث الحافظة!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'تم حفظ في الحافظة: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'نظرة عامة';
 
   @override
-  String get colorAurora => 'Aurora';
+  String get colorAurora => 'أورورا';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'كوني';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'سديم';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'ضوء النجوم';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'شمسي';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'نوفا';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'جارٍ التحميل...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'إعداد قاعدة البيانات...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'تكوين النظام...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'جاهز';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'رفيقك للإنتاجية';
 
   @override
-  String get done => 'Done';
+  String get done => 'تم';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'ملاحظة جديدة';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'تغيير اللون';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'نسخ المحتوى';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'العنوان (اختياري)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'تصدير كـ PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'موعد المهمة الآن';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'نقل المهمة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'يمكنك استعادة هذه المهمة لاحقًا من الإعدادات.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'مهمة جديدة';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'تعديل المهمة';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'تراجع';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'إعادة';
 
   @override
-  String get category => 'Category';
+  String get category => 'الفئة';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'مثال: العمل، النادي';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'ما الذي يجب القيام به؟';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'أدخل تفاصيل المهمة...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'تحديد موعد الاستحقاق';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'موعد الاستحقاق';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'النفقات';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'بحث في $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'فرز وتصفية';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'فرز حسب';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'أعلى مبلغ';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'أقل مبلغ';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'مزيد من الفلاتر...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'تصفية النفقات';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'نوع المعاملة';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'الفئات';
 
   @override
-  String get all => 'All';
+  String get all => 'الكل';
 
   @override
-  String get income => 'Income';
+  String get income => 'الدخل';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'المصروفات';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'إعادة تعيين';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'تطبيق';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'جديد $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'حدث خطأ أثناء تحميل البيانات.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+  String get dailyQuote1 => 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.';
 
   @override
-  String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+  String get dailyQuote2 => 'الغنى ليس في كثرة العرض، ولكن الغنى غنى النفس.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'الوقت هو العملة الأغلى.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'النجاح ليس نهائياً، والفشل ليس قاتلاً.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'ركز على الحل، وليس المشكلة.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'شبكة علاقاتك هي ثروتك الحقيقية.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'سعيد';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'متحمس';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'محايد';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'حزين';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'متوتر';
 
   @override
   String exportDate(String date) {
@@ -24227,389 +24337,391 @@ class AppLocalizationsArYe extends AppLocalizationsAr {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'المزاج: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'العنوان: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nالوسوم: $tags';
   }
 
   @override
-  String get instagram => 'Instagram';
+  String get instagram => 'إنستغرام';
 
   @override
-  String get facebook => 'Facebook';
+  String get facebook => 'فيسبوك';
 
   @override
-  String get tiktok => 'TikTok';
+  String get tiktok => 'تيك توك';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'رسمة جديدة';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'البحث في الرسومات والمجلدات...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'لم يتم العثور على نتائج';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'لا توجد عناصر';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'لا توجد رسومات بعد';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'أطلق العنان لإبداعك على اللوحة!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'لوحة جديدة';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'إعادة تسمية';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'حذف المجلد';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'حذف الرسومات؟';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'سيتم حذف جميع الرسومات في هذا المجلد نهائياً.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'إعادة تسمية المجلد';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'اختر لوناً';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'حذف المجلد؟';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'البحث في القصاصات...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'الحافظة فارغة';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'إضافة عنصر';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'لون القصاصة';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'قصاصة جديدة';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'تعديل القصاصة';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'يمكنك استعادة هذه القصاصة لاحقاً.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'الأحداث القادمة';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'توزيع البيانات';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'تقدم المهمة';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'إحصائيات سريعة';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'إكمال المهمة';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'لا توجد عناصر لهذا التاريخ';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'استمتع بوقت فراغك!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'البحث في هذا اليوم...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'المالية';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'حذف نهائي؟';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'سيؤدي هذا إلى حذف $foldersCount مجلدات (ورسماتها) و $sketchesCount رسومات أخرى نهائياً.\n\nلا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'حذف للأبد';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes رسومات • $folders مجلدات';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'فرز العناصر';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'الاسم (أ-ي)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'الاسم (ي-أ)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'إنشاء مجلد';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'اسم المجلد...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'حذف $count رسومات؟ لا يمكن التراجع عن هذا الإجراء.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'لم يتم العثور على رسومات';
 
   @override
-  String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+  String get noSketchesFoundSub => 'حاول تعديل بحثك أو إنشاء رسمة جديدة.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'بحث في $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count رسومات';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'فرز الرسومات';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'التقويم';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'النشاط اليومي';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'حذف العنصر؟';
 
   @override
   String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+      'سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'نقل إلى السلة؟';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'يمكنك استعادته لاحقاً.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count محدد';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'القصاصات الأخيرة';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'تم النسخ!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'تم نسخ النص المجرد';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'مظهر القصاصة';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'الآن';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'منذ $count د';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'منذ $count س';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'منذ $count ي';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'لم يتم العثور على مهام.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'بحث في المهام...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'تذكير بالمهمة';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'ملاحظة بدون عنوان';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'مدخل يومي';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'سجل الحافظة';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'هذا الإجراء لا يمكن التراجع عنه.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'إفراغ سلة المحذوفات؟';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'سيتم حذف جميع العناصر الـ $count نهائياً.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'إفراغ السلة';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'سلة المحذوفات فارغة';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'العناصر المحذوفة ستظهر هنا.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'فارغ';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'الأخيرة';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'الفئة: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'عام';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'هل تريد حفظ هذه المعاملة؟';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'يرجى ملء العنوان والمبلغ';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'تنسيق المبلغ غير صالح';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'نقل المعاملة إلى سلة المحذوفات؟';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'معاملة جديدة';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'فيما هذا؟';
 
   @override
-  String get description => 'Description';
+  String get description => 'الوصف';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'يومياً';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'أسبوعياً';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'شهرياً';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'سنوياً';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'إجمالي الدخل';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'إجمالي النفقات';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'التحليل';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'المعاملات';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'لم يتم العثور على نفقات لهذه الفترة.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'صافي الرصيد';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'أبرز الفئات';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'اتجاه الإنفاق';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'رؤى';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'لم يتم تسجيل أي نفقات';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits => 'تتبع عادات الإنفاق الخاصة بك بسهولة.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'إضافة نفقة';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'لا توجد بيانات لهذه الفترة';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'الميزانية';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'تم صرفه';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'الحد';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'تجاوز الميزانية!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return 'متبقي $percent%';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'معدل الادخار';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'درجة الصحة المالية';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'موافق';
+
+  @override
+  String get bulkImport => 'استيراد بالجملة';
 }

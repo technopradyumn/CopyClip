@@ -2,10 +2,10 @@
   "@@locale": "zh",
   "@canvasStats": {
     "placeholders": {
-      "notes": {
+      "folders": {
         "type": "int"
       },
-      "folders": {
+      "notes": {
         "type": "int"
       }
     }
@@ -125,6 +125,7 @@
   "areYouSureYouWantToDeleteThisPost": "您确定要删除此帖子吗？",
   "artisticDesigns": "艺术设计",
   "artisticDesignsDesc": "解锁 10+ 种独特的日记卡主题",
+  "attachmentCount": "{count} attachment{count, plural, =1{} other{s}}",
   "autoSaveClipboard": "自动保存剪贴板",
   "autoSaveClipboardDesc": "自动保存复制的项目",
   "autoSaveDisabled": "自动保存已禁用。",
@@ -136,6 +137,7 @@
   "balance": "余额",
   "budget": "预算",
   "buildNumber": "构建版本号",
+  "bulkImport": "Bulk Import",
   "buyPremium": "购买高级版（7天）",
   "byMood": "按心情",
   "calendar": "日历",
@@ -496,6 +498,7 @@
   "trackSpendingHabits": "轻松跟踪您的消费习惯。",
   "transactionType": "交易类型",
   "transactions": "交易",
+  "transactionsThisMonth": "{count} transaction{count, plural, =1{} other{s}} this month",
   "typeNewTask": "输入新任务...",
   "undo": "撤消",
   "unlimitedCloudStorage": "无限云存储",
@@ -515,13 +518,11 @@
   "whatNeedsToBeDone": "需要做什么？",
   "whatsOnYourMind": "您在想什么？",
   "widgetAddFailed": "添加小部件失败",
+  "widgetAdded": "Widget {widget} added to Home Screen!",
   "widgetRequestSent": "小部件请求已发送（检查主屏幕）",
   "writeJournal": "写日记",
   "xpToNextLevel": "距离下一级所需 XP",
   "yearly": "每年",
   "youEarnedCoins": "您赢得了 {amount} 金币！",
-  "youEarnedXPNextTask": "您赢得了 {amount} XP！下一个任务：{date}",
-  "widgetAdded": "Widget {widget} added to Home Screen!",
-  "transactionsThisMonth": "{count} transaction{count, plural, =1{} other{s}} this month",
-  "attachmentCount": "{count} attachment{count, plural, =1{} other{s}}"
+  "youEarnedXPNextTask": "您赢得了 {amount} XP！下一个任务：{date}"
 }

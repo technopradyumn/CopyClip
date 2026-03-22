@@ -2731,4 +2731,7 @@ class AppLocalizationsNlBe extends AppLocalizationsNl {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

@@ -2,10 +2,10 @@
   "@@locale": "fr",
   "@canvasStats": {
     "placeholders": {
-      "notes": {
+      "folders": {
         "type": "int"
       },
-      "folders": {
+      "notes": {
         "type": "int"
       }
     }
@@ -137,6 +137,7 @@
   "balance": "Solde",
   "budget": "Budget",
   "buildNumber": "Numéro de build",
+  "bulkImport": "Bulk Import",
   "buyPremium": "Acheter Premium (7 jours)",
   "byMood": "Par humeur",
   "calendar": "Calendrier",

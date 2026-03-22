@@ -96,7 +96,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get search => 'Soek';
 
   @override
-  String get pleaseEnterTask => 'Voer asseblief \'\'n taak in';
+  String get pleaseEnterTask => 'Voer asseblief \'n taak in';
 
   @override
   String get deleteTask => 'Vee taak uit';
@@ -114,7 +114,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Bestelling slegs beskikbaar in \'\'Alle plasings\'\'';
+      'Bestelling slegs beskikbaar in \'Alle plasings\'';
 
   @override
   String get deletePost => 'Vee plasing uit';
@@ -192,11 +192,11 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok-deling vereis \'\'n video/prent';
+      'TikTok-deling vereis \'n video/prent';
 
   @override
   String errorSharing(Object error) {
-    return 'Kon nie deel nie: $error';
+    return 'Fout met deel: $error';
   }
 
   @override
@@ -315,7 +315,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get backupData => 'Rugsteun data';
 
   @override
-  String get saveJsonFile => 'Stoor \'\'n JSON-lêer wat al jou data bevat?';
+  String get saveJsonFile => 'Stoor \'n JSON-lêer wat al jou data bevat?';
 
   @override
   String get exportNow => 'Voer nou uit';
@@ -325,7 +325,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get mergeBackupFile =>
-      'Voeg \'\'n rugsteunlêer saam met jou huidige items?';
+      'Voeg \'n rugsteunlêer saam met jou huidige items?';
 
   @override
   String get selectFile => 'Kies Lêer';
@@ -407,14 +407,14 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get onboardingNotesDesc =>
-      'Vang idees onmiddellik vas met ryk teksformatering. Organiseer jou gedagtes en verloor nooit weer \'\'n goeie idee nie.';
+      'Vang idees onmiddellik vas with ryk teksformatering. Organiseer jou gedagtes en verloor nooit weer \'n goeie idee nie.';
 
   @override
   String get onboardingTodosTitle => 'Taakbestuur';
 
   @override
   String get onboardingTodosDesc =>
-      'Bly op hoogte van jou spel. Skep doenlyste, stel prioriteite en verpletter jou doelwitte een vinkje op \'\'n slag.';
+      'Bly op hoogte van jou spel. Skep doenlyste, stel prioriteite en verpletter jou doelwitte een vinkje op \'n slag.';
 
   @override
   String get onboardingExpensesTitle => 'Uitgawe dop';
@@ -428,14 +428,14 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get onboardingJournalDesc =>
-      'Besin oor jou dag. \'\'n Privaat ruimte om jou herinneringe, gevoelens en daaglikse ervarings neer te skryf.';
+      'Besin oor jou dag. \'n Privaat ruimte om jou herinneringe, gevoelens en daaglikse ervarings neer te skryf.';
 
   @override
   String get onboardingCalendarTitle => 'Kalender en gebeure';
 
   @override
   String get onboardingCalendarDesc =>
-      'Moet nooit \'\'n oomblik mis nie. Organiseer jou skedule en hou tred met belangrike komende gebeure.';
+      'Moet nooit \'n oomblik mis nie. Organiseer jou skedule en hou tred met belangrike komende gebeure.';
 
   @override
   String get onboardingClipboardTitle => 'Knipbord Bestuurder';
@@ -449,7 +449,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get onboardingCanvasDesc =>
-      'Laat jou kreatiwiteit los. Teken, skets en visualiseer jou idees op \'\'n vryvorm digitale doek.';
+      'Laat jou kreatiwiteit los. Teken, skets en visualiseer jou idees op \'n vryvorm digitale doek.';
 
   @override
   String get featuresNotesDesc => 'Skep en bestuur jou notas';
@@ -482,8 +482,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get chooseYourAura => 'Kies jou aura';
 
   @override
-  String get expressYourselfTheme =>
-      'Druk jouself uit met \'\'n nuwe temakleur!';
+  String get expressYourselfTheme => 'Druk jouself uit met \'n nuwe temakleur!';
 
   @override
   String get level => 'Vlak';
@@ -495,20 +494,14 @@ class AppLocalizationsAf extends AppLocalizations {
   String get checkUpcomingEvents => 'Gaan komende gebeure na';
 
   @override
-  String get startNewSketch => 'Begin \'\'n nuwe skets';
+  String get startNewSketch => 'Begin \'n nuwe skets';
 
   @override
   String get noTransactionsMonth => 'Geen transaksies hierdie maand nie';
 
   @override
   String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
+    return '$count transaksies hierdie maand';
   }
 
   @override
@@ -542,7 +535,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String costCoins(Object cost) {
-    return 'Koste: $cost Munte';
+    return 'Koste: $cost munte';
   }
 
   @override
@@ -626,7 +619,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get richMedia => 'Ryk media';
 
   @override
-  String get richMediaDesc => 'Voeg prente, video\'\'s en skakels in';
+  String get richMediaDesc => 'Voeg prente, video\'s en skakels in';
 
   @override
   String get editorStyling => 'Redakteur Stilering';
@@ -649,19 +642,19 @@ class AppLocalizationsAf extends AppLocalizations {
   String get loadAd => 'Laai advertensie';
 
   @override
-  String get backupDataDesc => 'Stoor \'\'n JSON-lêer van jou data';
+  String get backupDataDesc => 'Stoor \'n JSON-lêer van jou data';
 
   @override
-  String get importDataDesc => 'Voeg \'\'n rugsteunlêer saam in CopyClip';
+  String get importDataDesc => 'Voeg \'n rugsteunlêer saam in CopyClip';
 
   @override
   String get notificationPermissionDenied => 'Kennisgewingtoestemming geweier.';
 
   @override
-  String get typeNewTask => 'Tik \'\'n nuwe taak...';
+  String get typeNewTask => 'Tik \'n nuwe taak...';
 
   @override
-  String get addTask => 'Voeg \'\'n taak by';
+  String get addTask => 'Voeg \'n taak by';
 
   @override
   String get completed => 'Voltooi';
@@ -712,13 +705,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
+    return '$count aanhangsels';
   }
 
   @override
@@ -855,7 +842,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get restoreTaskLater =>
-      'U kan hierdie taak later vanaf instellings herstel.';
+      'Jy kan hierdie taak later vanaf instellings herstel.';
 
   @override
   String get newTask => 'Nuwe taak';
@@ -885,7 +872,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get setDueDate => 'Stel Sperdatum';
 
   @override
-  String get dueDate => 'Twee datums';
+  String get dueDate => 'Sperdatum';
 
   @override
   String get expenseTitle => 'Uitgawes';
@@ -899,7 +886,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get sortAndFilter => 'Sorteer & Filter';
 
   @override
-  String get sortBy => 'SORTEER BY';
+  String get sortBy => 'SORTEER VOLGENS';
 
   @override
   String get highestAmount => 'Hoogste bedrag';
@@ -932,7 +919,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get reset => 'Stel terug';
 
   @override
-  String get apply => 'Doen aansoek';
+  String get apply => 'Pas toe';
 
   @override
   String newExpense(String currency) {
@@ -941,7 +928,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String errorLoadingData(String error) {
-    return 'Kon nie data laai nie.\n\n$error';
+    return 'Fout met laai van data.\n\n$error';
   }
 
   @override
@@ -950,7 +937,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get dailyQuote2 =>
-      'Rykdom bestaan ​​nie daarin om groot besittings te hê nie, maar daarin om min behoeftes te hê.';
+      'Rykdom bestaan nie daarin om groot besittings te hê nie, maar daarin om min behoeftes te hê.';
 
   @override
   String get dailyQuote3 => 'Tyd is die uiteindelike geldeenheid.';
@@ -992,12 +979,12 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String exportTitle(String title) {
-    return 'TITEL: $title';
+    return 'Titel: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return 'Merkers: $tags';
+    return '\nMerkers: $tags';
   }
 
   @override
@@ -1146,7 +1133,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get noSketchesFoundSub =>
-      'Probeer jou soektog aanpas of \'\'n nuwe skets skep.';
+      'Probeer jou soektog aanpas of \'n nuwe skets skep.';
 
   @override
   String searchInFolder(String folder) {
@@ -1374,7 +1361,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get ok => 'OK';
 
   @override
-  String get bulkImport => 'Bulk Import';
+  String get bulkImport => 'Grootmaat Invoer';
 }
 
 /// The translations for Afrikaans, as used in South Africa (`af_ZA`).
@@ -1469,7 +1456,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get search => 'Soek';
 
   @override
-  String get pleaseEnterTask => 'Voer asseblief \'\'n taak in';
+  String get pleaseEnterTask => 'Voer asseblief \'n taak in';
 
   @override
   String get deleteTask => 'Vee taak uit';
@@ -1482,12 +1469,12 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'Fout: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Bestelling slegs beskikbaar in \'\'Alle plasings\'\'';
+      'Bestelling slegs beskikbaar in \'Alle plasings\'';
 
   @override
   String get deletePost => 'Vee plasing uit';
@@ -1565,11 +1552,11 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok-deling vereis \'\'n video/prent';
+      'TikTok-deling vereis \'n video/prent';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'Fout met deel: $error';
   }
 
   @override
@@ -1688,7 +1675,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get backupData => 'Rugsteun data';
 
   @override
-  String get saveJsonFile => 'Stoor \'\'n JSON-lêer wat al jou data bevat?';
+  String get saveJsonFile => 'Stoor \'n JSON-lêer wat al jou data bevat?';
 
   @override
   String get exportNow => 'Voer nou uit';
@@ -1698,7 +1685,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String get mergeBackupFile =>
-      'Voeg \'\'n rugsteunlêer saam met jou huidige items?';
+      'Voeg \'n rugsteunlêer saam met jou huidige items?';
 
   @override
   String get selectFile => 'Kies Lêer';
@@ -1719,7 +1706,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String widgetAdded(String widget) {
-    return 'Legstuk bygevoeg by tuisskerm!';
+    return 'Legstuk $widget is by tuisskerm gevoeg!';
   }
 
   @override
@@ -1780,14 +1767,14 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String get onboardingNotesDesc =>
-      'Vang idees onmiddellik vas met ryk teksformatering. Organiseer jou gedagtes en verloor nooit weer \'\'n goeie idee nie.';
+      'Vang idees onmiddellik vas with ryk teksformatering. Organiseer jou gedagtes en verloor nooit weer \'n goeie idee nie.';
 
   @override
   String get onboardingTodosTitle => 'Taakbestuur';
 
   @override
   String get onboardingTodosDesc =>
-      'Bly op hoogte van jou spel. Skep doenlyste, stel prioriteite en verpletter jou doelwitte een vinkje op \'\'n slag.';
+      'Bly op hoogte van jou spel. Skep doenlyste, stel prioriteite en verpletter jou doelwitte een vinkje op \'n slag.';
 
   @override
   String get onboardingExpensesTitle => 'Uitgawe dop';
@@ -1801,14 +1788,14 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String get onboardingJournalDesc =>
-      'Besin oor jou dag. \'\'n Privaat ruimte om jou herinneringe, gevoelens en daaglikse ervarings neer te skryf.';
+      'Besin oor jou dag. \'n Privaat ruimte om jou herinneringe, gevoelens en daaglikse ervarings neer te skryf.';
 
   @override
   String get onboardingCalendarTitle => 'Kalender en gebeure';
 
   @override
   String get onboardingCalendarDesc =>
-      'Moet nooit \'\'n oomblik mis nie. Organiseer jou skedule en hou tred met belangrike komende gebeure.';
+      'Moet nooit \'n oomblik mis nie. Organiseer jou skedule en hou tred met belangrike komende gebeure.';
 
   @override
   String get onboardingClipboardTitle => 'Knipbord Bestuurder';
@@ -1818,11 +1805,11 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
       'Kopieer een keer, plak enige plek. Kry toegang tot jou knipbordgeskiedenis om brokkies wat jy vroeër gekopieer het, op te spoor.';
 
   @override
-  String get onboardingCanvasTitle => 'Kreatiewe doek';
+  String get onboardingCanvasTitle => 'Kreatiewే doek';
 
   @override
   String get onboardingCanvasDesc =>
-      'Laat jou kreatiwiteit los. Teken, skets en visualiseer jou idees op \'\'n vryvorm digitale doek.';
+      'Laat jou kreatiwiteit los. Teken, skets en visualiseer jou idees op \'n vryvorm digitale doek.';
 
   @override
   String get featuresNotesDesc => 'Skep en bestuur jou notas';
@@ -1831,7 +1818,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get featuresTodosDesc => 'Bly op hoogte van jou take';
 
   @override
-  String get featuresExpensesDesc => 'Monitor jou uitgawes';
+  String get featuresExpensesDesc => 'Monitor jou uitగవలు';
 
   @override
   String get featuresJournalDesc => 'Skryf jou gedagtes neer';
@@ -1855,8 +1842,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get chooseYourAura => 'Kies jou aura';
 
   @override
-  String get expressYourselfTheme =>
-      'Druk jouself uit met \'\'n nuwe temakleur!';
+  String get expressYourselfTheme => 'Druk jouself uit met \'n nuwe temakleur!';
 
   @override
   String get level => 'Vlak';
@@ -1868,20 +1854,14 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get checkUpcomingEvents => 'Gaan komende gebeure na';
 
   @override
-  String get startNewSketch => 'Begin \'\'n nuwe skets';
+  String get startNewSketch => 'Begin \'n nuwe skets';
 
   @override
   String get noTransactionsMonth => 'Geen transaksies hierdie maand nie';
 
   @override
   String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
+    return '$count transaksies hierdie maand';
   }
 
   @override
@@ -1915,7 +1895,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'Koste: $cost munte';
   }
 
   @override
@@ -1999,7 +1979,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get richMedia => 'Ryk media';
 
   @override
-  String get richMediaDesc => 'Voeg prente, video\'\'s en skakels in';
+  String get richMediaDesc => 'Voeg prente, video\'s en skakels in';
 
   @override
   String get editorStyling => 'Redakteur Stilering';
@@ -2022,19 +2002,19 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get loadAd => 'Laai advertensie';
 
   @override
-  String get backupDataDesc => 'Stoor \'\'n JSON-lêer van jou data';
+  String get backupDataDesc => 'Stoor \'n JSON-lêer van jou data';
 
   @override
-  String get importDataDesc => 'Voeg \'\'n rugsteunlêer saam in CopyClip';
+  String get importDataDesc => 'Voeg \'n rugsteunlêer saam in CopyClip';
 
   @override
   String get notificationPermissionDenied => 'Kennisgewingtoestemming geweier.';
 
   @override
-  String get typeNewTask => 'Tik \'\'n nuwe taak...';
+  String get typeNewTask => 'Tik \'n nuwe taak...';
 
   @override
-  String get addTask => 'Voeg \'\'n taak by';
+  String get addTask => 'Voeg \'n taak by';
 
   @override
   String get completed => 'Voltooi';
@@ -2085,13 +2065,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
+    return '$count aanhangsels';
   }
 
   @override
@@ -2228,7 +2202,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String get restoreTaskLater =>
-      'U kan hierdie taak later vanaf instellings herstel.';
+      'Jy kan hierdie taak later vanaf instellings herstel.';
 
   @override
   String get newTask => 'Nuwe taak';
@@ -2258,7 +2232,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get setDueDate => 'Stel Sperdatum';
 
   @override
-  String get dueDate => 'Twee datums';
+  String get dueDate => 'Sperdatum';
 
   @override
   String get expenseTitle => 'Uitgawes';
@@ -2272,7 +2246,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get sortAndFilter => 'Sorteer & Filter';
 
   @override
-  String get sortBy => 'SORTEER BY';
+  String get sortBy => 'SORTEER VOLGENS';
 
   @override
   String get highestAmount => 'Hoogste bedrag';
@@ -2305,7 +2279,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get reset => 'Stel terug';
 
   @override
-  String get apply => 'Doen aansoek';
+  String get apply => 'Pas toe';
 
   @override
   String newExpense(String currency) {
@@ -2314,7 +2288,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'Fout met laai van data.\n\n$error';
   }
 
   @override
@@ -2323,7 +2297,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String get dailyQuote2 =>
-      'Rykdom bestaan ​​nie daarin om groot besittings te hê nie, maar daarin om min behoeftes te hê.';
+      'Rykdom bestaan nie daarin om groot besittings te hê nie, maar daarin om min behoeftes te hê.';
 
   @override
   String get dailyQuote3 => 'Tyd is die uiteindelike geldeenheid.';
@@ -2333,7 +2307,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
       'Sukses is nie finaal nie, mislukking is nie noodlottig nie.';
 
   @override
-  String get dailyQuote5 => 'Fokus op die oplossing, nie die probleem nie.';
+  String get dailyQuote5 => 'Fokus op the oplossing, nie die probleem nie.';
 
   @override
   String get dailyQuote6 => 'Jou netwerk is jou netto waarde.';
@@ -2365,12 +2339,12 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String exportTitle(String title) {
-    return 'TITEL: $title';
+    return 'Titel: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return 'Merkers: $tags';
+    return '\nMerkers: $tags';
   }
 
   @override
@@ -2491,7 +2465,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes sketse • $folders dopgehou';
   }
 
   @override
@@ -2519,7 +2493,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String get noSketchesFoundSub =>
-      'Probeer jou soektog aanpas of \'\'n nuwe skets skep.';
+      'Probeer jou soektog aanpas of \'n nuwe skets skep.';
 
   @override
   String searchInFolder(String folder) {
@@ -2528,7 +2502,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count sketse';
   }
 
   @override
@@ -2634,7 +2608,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'Kategorie: $category';
   }
 
   @override
@@ -2745,4 +2719,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Grootmaat Invoer';
 }

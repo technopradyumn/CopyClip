@@ -1383,493 +1383,497 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   AppLocalizationsDaDk() : super('da_DK');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Indstillinger';
 
   @override
-  String get language => 'Language';
+  String get language => 'Sprog';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'Systemstandard';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'Noter';
 
   @override
   String get todos => 'To-Dos';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'Udgifter';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'Tidsskrift';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'Kalender';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'Udklipsholder';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'Lærred';
 
   @override
-  String get save => 'Save';
+  String get save => 'Spare';
 
   @override
-  String get create => 'Create';
+  String get create => 'Skabe';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Ophæve';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Slet';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'Redigere';
 
   @override
-  String get share => 'Share';
+  String get share => 'Dele';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'Kopi';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'Ikke-gemte ændringer';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'Bekræft sletning';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'Kassér';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'Opret indlæg';
 
   @override
-  String get post => 'Post';
+  String get post => 'Stolpe';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'Sender til';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'Hvad tænker du på?';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'Vælg billeder';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'Vælg video';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'Kamera';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'Galleri';
 
   @override
-  String get search => 'Search';
+  String get search => 'Søge';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'Indtast venligst en opgave';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'Slet opgave';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'Vælg elementer';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'Slet alle';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'Fejl: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'Bestilling kun tilgængelig i \'\'Alle indlæg\'\'';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'Slet indlæg';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'Indlæg slettet';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'Premium funktioner';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'Administrer mønter, annoncer og premium-status';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'Tematilstand';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'Accent farve';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'Baggrundsdesign';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'Push-meddelelser';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'Papirkurv';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'Eksporter data';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'Importer data';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'Bedøm app';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'Send feedback';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'Privatlivspolitik';
 
   @override
   String get version => 'Version';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'Byg nummer';
 
   @override
   String get system => 'System';
 
   @override
-  String get light => 'Light';
+  String get light => 'Lys';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Mørk';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'Varen er gendannet';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'Papirkurven blev ryddet';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'Alle indlæg slettet';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'Nyt indlæg';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
+      'Tekst kopieret til udklipsholder (Facebook-politik)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'TikTok-deling kræver en video/billede';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'Fejl ved deling: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'Del til $platform-historie';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'Del til $platform feed';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'Lås op permanent';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'Ikke nok mønter!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'Du har tjent $amount mønter!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'Indhold kopieret';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'Vælg dato og tid';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'Er du sikker på, at du vil slette dette indlæg?';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'Sociale indlæg';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'Se annonce for at tjene mønter';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'Premium ulåst';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'Fjern annoncer';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'Ubegrænset Cloud Storage';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'Slet note';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'Del note';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'Rediger note';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'Søg i noter...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'Ingen noter fundet';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'Fang dine tanker med det samme.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'Opret note';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'Brugerdefineret rækkefølge';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'Nyeste først';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'Ældste først';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'Titel: A-Z';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'Titel: Z-A';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'Vil du slette alle?';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'Flytte alle sedler til papirkurven?';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'Flytte til bin?';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'Du kan gendanne denne note senere.';
 
   @override
-  String get move => 'Move';
+  String get move => 'Flytte';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'Mine tanker';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'Valgt';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'Intet indhold';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'Uden titel';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'Vælg mellem 10+ dynamiske tapeter';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'Sikkerhedskopier data';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile =>
+      'Vil du gemme en JSON-fil, der indeholder alle dine data?';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'Eksporter nu';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'Importer data';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'Vil du flette en sikkerhedskopifil med dine nuværende elementer?';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'Vælg Fil';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'Sikkerhedskopien blev gemt!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'Eksport mislykkedes.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count elementer blev gendannet!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'Import mislykkedes.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'Widget tilføjet til startskærmen!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'Widgetanmodning sendt. Tjek venligst din startskærm.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'Kunne ikke tilføje widget';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'Automatisk lagring aktiveret.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'Automatisk lagring er deaktiveret.';
 
   @override
   String get homeScreenWidgets => 'Home Screen Widgets';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'Meddelelser';
 
   @override
   String get dataBackup => 'Data & Backup';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'Feedback og support';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'Kreditter';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'Privatliv og vedligeholdelse';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'Om';
 
   @override
-  String get premium => 'Premium';
+  String get premium => 'Præmie';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'Udseende';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'Udklipsholder';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'Tilpas din oplevelse';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'Velkommen til CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'Din ultimative produktivitetsledsager. Lad os sætte dig op med kraftfulde værktøjer til at styre din dag.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'Smarte noter';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'Fang ideer med det samme med RTF-formatering. Organiser dine tanker og mist aldrig en god idé igen.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'Opgavestyring';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'Hold dig på toppen af ​​dit spil. Opret to-do-lister, sæt prioriteter og knus dine mål et flueben ad gangen.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'Udgiftssporing';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'Tag kontrol over din økonomi. Spor indtægter og udgifter nemt for at forstå dine forbrugsvaner.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'Personlig Journal';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'Reflekter over din dag. Et privat rum til at skrive dine minder, følelser og daglige oplevelser ned.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'Kalender og begivenheder';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'Gå aldrig glip af et øjeblik. Organiser din tidsplan og hold styr på vigtige kommende begivenheder.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'Udklipsholder';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'Kopiér én gang, indsæt hvor som helst. Få adgang til din udklipsholderhistorik for at hente uddrag, du har kopieret tidligere.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'Kreativt lærred';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'Slip din kreativitet løs. Tegn, skitser og visualiser dine ideer på et digitalt lærred i frit format.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'Opret og administrer dine noter';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'Hold styr på dine opgaver';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'Overvåg dine udgifter';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'Skriv dine tanker ned';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'Organiser din tidsplan';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'Få adgang til din udklipsholderhistorik';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'Tegn og skitser frit';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'Social post';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'Skab engagerende indhold på sociale medier';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'Vælg din aura';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'Udtryk dig selv med en ny temafarve!';
 
   @override
-  String get level => 'Level';
+  String get level => 'Niveau';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP til niveau';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'Tjek kommende begivenheder';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'Start en ny skitse';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'Ingen transaktioner denne måned';
 
   @override
   String transactionsThisMonth(num count) {
@@ -1883,201 +1887,203 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'Gem automatisk udklipsholder';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'Gem automatisk kopierede elementer';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'Tilladelse nægtet permanent. Aktiver venligst i Indstillinger.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'Notifikationer aktiveret!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'Omdirigerer til indstillinger for at deaktivere meddelelser...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'Premium adgang';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'Premium Aktiv indtil';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'Lås op for alle funktioner';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'Køb Premium (7 dage)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'Pris: $cost mønter';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'Premium aktiveret i 7 dage!';
 
   @override
   String get premiumActive => 'Premium Active';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'Udløber:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'Midlertidig adgang';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'Journal & Udtryk';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'Kunstneriske Designs';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc => 'Lås op for 10+ unikke journalkorttemaer';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'Premium layouts';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc => 'Eksklusive måder at se dine minder på';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'Kalender og værktøjer';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'Fuld kalender';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'Komplet event management system';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc =>
+      'Optagelse af historik i baggrunden udklipsholder';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'Pro widgets';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc => 'Alle funktioner tilgængelige på din startskærm';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'Data og eksport';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'Avanceret sikkerhedskopiering';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'Sikker import/eksport af alle data';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'PDF eksport';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'Eksporter noter og journaler til PDF';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'Print klar';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'Direkte udskrivningsstøtte';
 
   @override
   String get richTextEditor => 'Rich Text Editor';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'Avanceret søgning';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'Søg og erstat i din tekst';
 
   @override
   String get richMedia => 'Rich Media';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'Indsæt billeder, videoer og links';
 
   @override
   String get editorStyling => 'Editor Styling';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'Brugerdefineret tekst og editor baggrunde';
 
   @override
   String get balance => 'Balance';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'Indlæser annonce...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'Se annonce (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'Indlæs annonce';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'Gem en JSON-fil med dine data';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'Flet en sikkerhedskopifil ind i CopyClip';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied => 'Notifikationstilladelse nægtet.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'Indtast en ny opgave...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'Tilføj en opgave';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'Afsluttet';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'Godt arbejde!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'Du har optjent $amount XP! Næste opgave: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'Opgave afsluttet! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'Flytte alle aktive opgaver til papirkurven?';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'Slet alle indlæg';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'Er du sikker på, at du vil slette ALLE sociale opslag? Dette kan ikke fortrydes.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'Alle indlæg';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'Favoritter';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'Udkast';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'Ingen favoritter endnu';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'Ingen udkast endnu';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'Start din sociale rejse!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'UDKAST';
 
   @override
   String attachmentCount(num count) {
@@ -2091,261 +2097,262 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent =>
+      'Tilføj noget indhold eller medier for at dele';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'Fejl: Filen blev ikke fundet på $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'Tjek Facebook-appen';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'Systemdeling';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'Social post';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'Favorit';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'Gem udkast';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'Indlæg kopieret';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'Flytte alle aktive poster til papirkurven?';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'Begynd at skrive din historie';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'Optag dine daglige minder og følelser.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'Skriv Journal';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'Mine minder';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'Sorter Journal';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'Efter humør';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'Søg efter minder...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'Vælg alle';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'Slet valgte';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'Opgave afsluttet!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'Opgaven er ikke fuldført';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'Udklipsholder opdateret!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'Udklipsholder gemt: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'Oversigt';
 
   @override
   String get colorAurora => 'Aurora';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'Kosmisk';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'Tåge';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'Stjernelys';
 
   @override
   String get colorSolar => 'Solar';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'Ny';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'Indlæser...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'Opsætter database...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'Konfigurerer system...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'Parat';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'Din produktivitetsledsager';
 
   @override
-  String get done => 'Done';
+  String get done => 'Færdig';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'Ny note';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'Skift farve';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'Kopier indhold';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'Titel (valgfrit)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'Eksporter som PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'Opgave klar nu';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'Flytte opgave til papirkurven?';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'Du kan gendanne denne opgave senere fra indstillingerne.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'Ny opgave';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'Rediger opgave';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'Fortryd';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'Gentag';
 
   @override
-  String get category => 'Category';
+  String get category => 'Kategori';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'f.eks. Arbejde, Gym';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'Hvad skal der gøres?';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'Indtast opgavedetaljer...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'Indstil forfaldsdato';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'To datoer';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'Udgifter';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'Søg i $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'Sorter og filtrer';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'SORTERT EFTER';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'Højeste beløb';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'Laveste Beløb';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'Flere filtre...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'Filtrere udgifter';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'Transaktionstype';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'Kategorier';
 
   @override
-  String get all => 'All';
+  String get all => 'Alle';
 
   @override
-  String get income => 'Income';
+  String get income => 'Indkomst';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'Bekostning';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'Nulstil';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'Anvende';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'Ny $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'Fejl ved indlæsning af data.\n\n$error';
   }
 
   @override
   String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+      'Den bedste måde at forudsige fremtiden er at skabe den.';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'Rigdom består ikke i at have store ejendele, men i at have få ønsker.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'Tid er den ultimative valuta.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'Succes er ikke endelig, fiasko er ikke fatal.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'Fokuser på løsningen, ikke problemet.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'Dit netværk er din nettoværdi.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'Lykkelig';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'Ophidset';
 
   @override
   String get moodNeutral => 'Neutral';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'Sørgelig';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'Stresset';
 
   @override
   String exportDate(String date) {
@@ -2354,17 +2361,17 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'Stemning: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'TITEL: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return 'Tags: $tags';
   }
 
   @override
@@ -2377,366 +2384,370 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'Ny skitse';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'Søg i skitser og mapper...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'Ingen resultater fundet';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'Ingen varer';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'Ingen tegninger endnu';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'Slip din kreativitet løs på lærredet!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'Nyt lærred';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'Omdøb';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'Slet mappe';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'Vil du slette skitser?';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'Alle skitser i denne mappe vil blive slettet permanent.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'Omdøb mappe';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'Vælg Farve';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'Slet mappe?';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'Søg efter klip...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'Udklipsholderen er tom';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'Tilføj vare';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'Klip farve';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'Nyt klip';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'Rediger klip';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'Du kan gendanne dette klip senere.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'Kommende begivenheder';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'DATADISTRIBUTION';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'OPGAVEFREMSKRIDT';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'HURTIG STATISTIK';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'Opgaveafslutning';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'Ingen varer for denne dato';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'Nyd din fritid!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'Søg i denne dag...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'Finansiere';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'Slet permanent?';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'Dette vil permanent slette $foldersCount mapper (og deres skitser) og $sketchesCount andre skitser.\n\nDette kan ikke fortrydes.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'Slet for evigt';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count valgt';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes skitser • $folders mapper';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'Sorter genstande';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'Navn (A-Z)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'Navn (Z-A)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'Opret mappe';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'Mappenavn...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'Vil du slette $count skitser? Dette kan ikke fortrydes.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'Ingen skitser fundet';
 
   @override
   String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+      'Prøv at justere din søgning eller oprette en ny skitse.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'Søg i $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count skitser';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'Sorter skitser';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'Kalender';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'Daglig aktivitet';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'Slet element?';
 
   @override
   String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+      'Dette vil flytte varen til papirkurven.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'Flytte til bin?';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'Du kan gendanne den senere.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count valgt';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'Seneste klip';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'Kopieret!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'Kopieret almindelig tekst';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'Klip tema';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Lige nu';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'for $count m siden';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'for $count t siden';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'for ${count}d siden';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'Ingen opgaver fundet.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'Søg opgaver...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'Opgavepåmindelse';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'Unavngivet note';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'Daglig indgang';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'Udklipsholder historie';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'Denne handling kan ikke fortrydes.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'Tøm papirkurven?';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'Alle $count elementer vil blive slettet permanent.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'Tøm beholder';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'Papirkurven er tom';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'Slettede elementer vises her.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'Tom';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Nylig';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'Kategori: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'Generel';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'Vil du gemme denne transaktion?';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'Udfyld venligst titel og beløb';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'Ugyldigt beløbsformat';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle =>
+      'Flytte transaktionen til papirkurven?';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'Du kan gendanne denne transaktion senere fra indstillingerne.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'Ny transaktion';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'Hvad er dette til for?';
 
   @override
-  String get description => 'Description';
+  String get description => 'Beskrivelse';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'Daglig';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Ugentlig';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'Månedlig';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'Årligt';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'Samlet indkomst';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'Samlet udgift';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'Analyse';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'Transaktioner';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'Ingen udgifter fundet for denne periode.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'Nettobalance';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'Topkategorier';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'Udgiftstrend';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'Indsigt';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'Ingen udgifter registreret';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits => 'Spor dine forbrugsvaner nemt.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'Tilføj udgift';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'Ingen data for denne periode';
 
   @override
   String get budget => 'Budget';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'Brugt';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'Begrænse';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'Over budget!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return '$percent % tilbage';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'Besparelsesrate';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'Sundhedsscore';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'Denne score er baseret på din opsparingsrate.\n\n• > 50 % sparet = Fremragende (100)\n• 0 % sparet = Gennemsnit (50)\n• Udgifter > Indkomst = Dårlig (<50)';
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

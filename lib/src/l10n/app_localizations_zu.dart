@@ -2731,4 +2731,7 @@ class AppLocalizationsZuZa extends AppLocalizationsZu {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

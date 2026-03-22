@@ -2731,4 +2731,7 @@ class AppLocalizationsTrTr extends AppLocalizationsTr {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

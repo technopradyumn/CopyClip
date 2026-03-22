@@ -2707,6 +2707,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Chinese, as used in Hong Kong (`zh_HK`).
@@ -4070,6 +4073,9 @@ class AppLocalizationsZhHk extends AppLocalizationsZh {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -5433,4 +5439,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

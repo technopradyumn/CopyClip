@@ -2731,4 +2731,7 @@ class AppLocalizationsSwKe extends AppLocalizationsSw {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

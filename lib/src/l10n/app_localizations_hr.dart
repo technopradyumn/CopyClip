@@ -1375,969 +1375,974 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   AppLocalizationsHrHr() : super('hr_HR');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Postavke';
 
   @override
-  String get language => 'Language';
+  String get language => 'Jezik';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'Sustavski zadano';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'Bilješke';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'Zadaci';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'Troškovi';
 
   @override
-  String get journal => 'Journal';
+  String get journal => 'Dnevnik';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'Kalendar';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'Međuspremnik';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'Platno';
 
   @override
-  String get save => 'Save';
+  String get save => 'Spremi';
 
   @override
-  String get create => 'Create';
+  String get create => 'Izradi';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Odustani';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Obriši';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'Uredi';
 
   @override
-  String get share => 'Share';
+  String get share => 'Podijeli';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'Kopiraj';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'Nespremljene promjene';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'Potvrdi brisanje';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'Odbaci';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'Izradi objavu';
 
   @override
-  String get post => 'Post';
+  String get post => 'Objavi';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'Objavljivanje na';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'Što vam je na umu?';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'Odaberi slike';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'Odaberi video';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'Kamera';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'Galerija';
 
   @override
-  String get search => 'Search';
+  String get search => 'Pretraži';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'Unesite zadatak';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'Obriši zadatak';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'Odaberi stavke';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'Obriši sve';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'Pogreška: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'Naručivanje je dostupno samo u \'Svim objavama\'';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'Obriši objavu';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'Objava obrisana';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'Premium značajke';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'Upravljaj novčićima, oglasima i premium statusom';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'Način teme';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'Boja naglaska';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'Dizajn pozadine';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'Push obavijesti';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'Otpad';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'Izvezi podatke';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'Uvezi podatke';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'Ocijeni aplikaciju';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'Pošalji povratne informacije';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'Pravila privatnosti';
 
   @override
-  String get version => 'Version';
+  String get version => 'Verzija';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'Broj verzije';
 
   @override
-  String get system => 'System';
+  String get system => 'Sustav';
 
   @override
-  String get light => 'Light';
+  String get light => 'Svijetlo';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Tamno';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'Stavka vraćena';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'Otpad uspješno ispražnjen';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'Sve objave obrisane';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'Nova objava';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
+      'Tekst kopiran u međuspremnik (Facebook pravila)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'Dijeljenje na TikTok zahtijeva video/sliku';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'Pogreška pri dijeljenju: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'Podijeli na $platform Story';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'Podijeli na $platform Feed';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'Otključaj trajno';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'Nedovoljno novčića!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'Zaradili ste $amount novčića!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'Sadržaj kopiran';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'Odaberi datum i vrijeme';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'Jeste li sigurni da želite obrisati ovu objavu?';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'Društvene objave';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'Gledaj oglas za novčiće';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'Premium otključan';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'Ukloni oglase';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'Neograničena pohrana u oblaku';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'Obriši bilješku';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'Podijeli bilješku';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'Uredi bilješku';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'Pretraži bilješke...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'Nema pronađenih bilješki';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'Trenutačno zabilježite svoje misli.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'Izradi bilješku';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'Prilagođeni redoslijed';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'Najnovije prvo';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'Najstarije prvo';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'Naslov: A-Z';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'Naslov: Z-A';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'Obrisati sve?';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin => 'Premjesti sve bilješke u otpad?';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'Premjesti u otpad?';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater => 'Ovu bilješku možete vratiti kasnije.';
 
   @override
-  String get move => 'Move';
+  String get move => 'Premjesti';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'Moje misli';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'Odabrano';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'Nema sadržaja';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'Bez naslova';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'Odaberite između 10+ dinamičnih pozadina';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'Sigurnosna kopija podataka';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile => 'Spremiti JSON datoteku sa svim vašim podacima?';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'Izvezi sada';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'Uvezi podatke';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'Spojiti sigurnosnu kopiju s trenutnim stavkama?';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'Odaberi datoteku';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'Sigurnosna kopija uspješno spremljena!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'Izvoz nije uspio.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count stavki uspješno vraćeno!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'Uvoz nije uspio.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'Widget dodan na početni zaslon!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'Zahtjev za widget poslan. Provjerite početni zaslon.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'Dodavanje widgeta nije uspjelo';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'Automatsko spremanje omogućeno.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'Automatsko spremanje onemogućeno.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'Widgeti na početnom zaslonu';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'Obavijesti';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'Podaci i sig. kopija';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'Povratne informacije i podrška';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'Zasluge';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'Privatnost i održavanje';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'O aplikaciji';
 
   @override
   String get premium => 'Premium';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'Izgled';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'Međuspremnik';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'Prilagodite svoje iskustvo';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'Dobrodošli u CopyClip';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'Vaš vrhunski suputnik za produktivnost. Hajdemo vas pripremiti s moćnim alatima za upravljanje danom.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'Pametne bilješke';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'Trenutačno bilježite ideje s bogatim formatiranjem teksta. Organizirajte svoje misli i nikada više ne izgubite sjajnu ideju.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'Upravljanje zadacima';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'Ostanite na vrhu svoje igre. Izradite popise obaveza, postavite prioritete i ostvarite svoje ciljeve jedan po jedan.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'Praćenje troškova';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'Preuzmite kontrolu nad svojim financijama. Jednostavno pratite prihode i troškove kako biste razumjeli svoje potrošačke navike.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'Osobni dnevnik';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'Razmislite o svom danu. Privatni prostor za zapisivanje vaših sjećanja, osjećaja i dnevnih iskustava.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'Kalendar i događaji';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'Nikada ne propustite trenutak. Organizirajte svoj raspored i pratite važne nadolazeće događaje.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'Upravitelj međuspremnika';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'Kopiraj jednom, zalijepi bilo gdje. Pristupite povijesti međuspremnika kako biste preuzeli isječke koje ste ranije kopirali.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'Kreativno platno';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'Oslobodite svoju kreativnost. Crtajte, skicirajte i vizualizirajte svoje ideje na platnu slobodnog oblika.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'Izradite i upravljajte svojim bilješkama';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'Pratite svoje zadatke';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'Pratite svoje troškove';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'Zapišite svoje misli';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'Organizirajte svoj raspored';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'Pristupite povijesti međuspremnika';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'Crtajte i skicirajte slobodno';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'Društvena objava';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'Stvarajte zanimljiv sadržaj za društvene mreže';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'Odaberite svoju auru';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'Izrazite se novom bojom teme!';
 
   @override
-  String get level => 'Level';
+  String get level => 'Razina';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP do razine';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'Provjeri nadolazeće događaje';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'Započni novu skicu';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'Nema transakcija ovog mjeseca';
 
   @override
   String transactionsThisMonth(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
+      other: 'e',
       one: '',
     );
-    return '$count transaction$_temp0 this month';
+    return '$count transakcija$_temp0 ovog mjeseca';
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'Automatsko spremanje međuspremnika';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc => 'Automatski spremaj kopirane stavke';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'Dopuštenje trajno odbijeno. Omogućite u Postavkama.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'Obavijesti omogućene!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'Preusmjeravanje na postavke radi onemogućavanja obavijesti...';
 
   @override
-  String get premiumAccess => 'Premium Access';
+  String get premiumAccess => 'Premium pristup';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'Premium aktivan do';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'Otključaj sve značajke';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'Kupi Premium (7 dana)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'Cijena: $cost novčića';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'Premium aktiviran na 7 dana!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'Premium aktivan';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'Istječe:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'Privremeni pristup';
 
   @override
-  String get journalExpression => 'Journal & Expression';
+  String get journalExpression => 'Dnevnik i izražavanje';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'Umjetnički dizajni';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'Otključajte 10+ jedinstvenih tema za kartice dnevnika';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'Premium izgledi';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc => 'Ekskluzivni načini pregleda vaših sjećanja';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'Kalendar i alati';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'Puni kalendar';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'Kompletan sustav upravljanja događajima';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc =>
+      'Snimanje povijesti međuspremnika u pozadini';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'Pro widgeti';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc =>
+      'Sve značajke dostupne na vašem početnom zaslonu';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'Izvoz i podaci';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'Napredna sig. kopija';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'Siguran uvoz/izvoz svih podataka';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'PDF izvoz';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'Izvezite bilješke i dnevnike u PDF';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'Spremno za ispis';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'Izravna podrška za ispis';
 
   @override
-  String get richTextEditor => 'Rich Text Editor';
+  String get richTextEditor => 'Uređivač obogaćenog teksta';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'Napredno pretraživanje';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'Pronađi i zamijeni unutar teksta';
 
   @override
-  String get richMedia => 'Rich Media';
+  String get richMedia => 'Bogati mediji';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'Umetnite slike, videozapise i poveznice';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'Stiliziranje uređivača';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'Prilagođeni tekst i pozadine uređivača';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'Stanje';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'Učitavanje oglasa...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'Gledaj oglas (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'Učitaj oglas';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'Spremi JSON datoteku svojih podataka';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'Spoji sigurnosnu kopiju s CopyClipom';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied =>
+      'Dopuštenje za obavijesti odbijeno.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'Upišite novi zadatak...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'Dodaj zadatak';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'Dovršeno';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'Odličan posao!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'Zaradili ste $amount XP! Sljedeći zadatak: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'Zadatak dovršen! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin => 'Premjesti sve aktivne zadatke u otpad?';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'Obriši sve objave';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'Jeste li sigurni da želite obrisati SVE društvene objave? To se ne može poništiti.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'Sve objave';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'Favoriti';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'Skice';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'Još nema favorita';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'Još nema skica';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'Započnite svoje društveno putovanje!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'SKICA';
 
   @override
   String attachmentCount(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 's',
+      other: 'a',
       one: '',
     );
-    return '$count attachment$_temp0';
+    return '$count privitak$_temp0';
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent => 'Dodajte neki sadržaj ili medij za dijeljenje';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'Pogreška: Datoteka nije pronađena na $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'Provjeri Facebook aplikaciju';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'Sustavsko dijeljenje';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'Društvena objava';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'Favorit';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'Spremi skicu';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'Unos kopiran';
 
   @override
-  String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+  String get moveEntriesToRecycleBin => 'Premjesti sve aktivne unose u otpad?';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'Počnite pisati svoju priču';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'Zabilježite svoja dnevna sjećanja i osjećaje.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'Piši dnevnik';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'Moja sjećanja';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'Sortiraj dnevnik';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'Po raspoloženju';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'Pretraži sjećanja...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'Odaberi sve';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'Obriši odabrano';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'Zadatak dovršen!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'Zadatak nedovršen';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'Međuspremnik ažuriran!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'Međuspremnik spremljen: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'Pregled';
 
   @override
   String get colorAurora => 'Aurora';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'Kozmički';
 
   @override
   String get colorNebula => 'Nebula';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'Zvjezdana svjetlost';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'Solarni';
 
   @override
   String get colorNova => 'Nova';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'Učitavanje...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'Postavljanje baze podataka...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'Konfiguriranje sustava...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'Spremno';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'Vaš suputnik za produktivnost';
 
   @override
-  String get done => 'Done';
+  String get done => 'Gotovo';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'Nova bilješka';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'Promijeni boju';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'Kopiraj sadržaj';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'Naslov (opcionalno)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'Izvezi kao PDF';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'Zadatak dospijeva sada';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'Premjestiti zadatak u otpad?';
 
   @override
-  String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+  String get restoreTaskLater => 'Zadatak možete kasnije vratiti iz postavki.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'Novi zadatak';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'Uredi zadatak';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'Poništi';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'Ponovi';
 
   @override
-  String get category => 'Category';
+  String get category => 'Kategorija';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'npr. Posao, Teretana';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'Što treba učiniti?';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'Unesite detalje zadatka...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'Postavi rok';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'Datum dospijeća';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'Troškovi';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'Pretraži u $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'Sortiraj i filtriraj';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'SORTIRAJ PO';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'Najviši iznos';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'Najniži iznos';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'Više filtara...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'Filtriraj troškove';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'Vrsta transakcije';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'Kategorije';
 
   @override
-  String get all => 'All';
+  String get all => 'Sve';
 
   @override
-  String get income => 'Income';
+  String get income => 'Prihod';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'Trošak';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'Resetiraj';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'Primijeni';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'Novo $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'Pogreška pri učitavanju podataka.\n\n$error';
   }
 
   @override
   String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+      'Najbolji način za predviđanje budućnosti je njezino stvaranje.';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'Bogatstvo se ne sastoji u posjedovanju velikih dobara, već u malim željama.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'Vrijeme je vrhunska valuta.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 => 'Uspjeh nije konačan, neuspjeh nije fatalan.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'Usredotočite se na rješenje, a ne na problem.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'Vaša mreža je vaša neto vrijednost.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'Sretno';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'Uzbuđeno';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'Neutralno';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'Tužno';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'Pod stresom';
 
   @override
   String exportDate(String date) {
@@ -2346,17 +2351,17 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'Raspoloženje: $emoji $mood';
   }
 
   @override
   String exportTitle(String title) {
-    return 'TITLE: $title';
+    return 'NASLOV: $title';
   }
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return '\nOznake: $tags';
   }
 
   @override
@@ -2369,366 +2374,369 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'Nova skica';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'Pretraži skice i mape...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'Nema pronađenih rezultata';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'Nema stavki';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'Još nema crteža';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'Oslobodite svoju kreativnost na platnu!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'Novo platno';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'Preimenuj';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'Obriši mapu';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'Obrisati skice?';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'Sve skice u ovoj mapi bit će trajno obrisane.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'Preimenuj mapu';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'Odaberi boju';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'Obriši mapu?';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'Pretraži isječke...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'Međuspremnik je prazan';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'Dodaj stavku';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'Boja isječka';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'Novi isječak';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'Uredi isječak';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'Ovaj isječak možete vratiti kasnije.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'Nadolazeći događaji';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'DISTRIBUCIJA PODATAKA';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'NAPREDAK ZADATAKA';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'BRZA STATISTIKA';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'Dovršenost zadataka';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'Nema stavki za ovaj datum';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'Uživajte u slobodnom vremenu!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'Pretraži u ovom danu...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'Financije';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'Trajno obrisati?';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'Ovo će trajno obrisati $foldersCount mapa (i njihove skice) i $sketchesCount ostalih skica.\n\nTo se ne može poništiti.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'Obriši zauvijek';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count odabrano';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes skica • $folders mapa';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'Sortiraj stavke';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'Naziv (A-Z)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'Naziv (Z-A)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'Izradi mapu';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'Naziv mape...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'Obrisati $count skica? To se ne može poništiti.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'Nema pronađenih skica';
 
   @override
   String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+      'Pokušajte prilagoditi pretraživanje ili izraditi novu skicu.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'Pretraži u $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count skica';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'Sortiraj skice';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'Kalendar';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'Dnevna aktivnost';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'Obrisati stavku?';
 
   @override
-  String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+  String get deleteItemConfirmation => 'Ovo će premjestiti stavku u otpad.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'Premjesti u otpad?';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'Možete je vratiti kasnije.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count odabrano';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'Nedavni isječci';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'Kopirano!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'Kopiran običan tekst';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'Tema isječka';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Upravo sada';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return 'prije ${count}m';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return 'prije ${count}h';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return 'prije ${count}d';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'Nema pronađenih zadataka.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'Pretraži zadatke...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'Podsjetnik na zadatak';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'Bilješka bez naslova';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'Dnevni unos';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'Povijest međuspremnika';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'Ova radnja se ne može poništiti.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'Isprazniti otpad?';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'Svih $count stavki bit će trajno obrisano.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'Isprazni otpad';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'Otpad je prazan';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'Obrisane stavke pojavit će se ovdje.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'Prazno';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Nedavno';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'Kategorija: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'Općenito';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'Želite li spremiti ovu transakciju?';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'Molimo ispunite naslov i iznos';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'Nevažeći format iznosa';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'Premjestiti transakciju u otpad?';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'Ovu transakciju možete kasnije vratiti iz postavki.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'Nova transakcija';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'Za što je ovo?';
 
   @override
-  String get description => 'Description';
+  String get description => 'Opis';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'Dnevno';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Tjedno';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'Mjesečno';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'Godišnje';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'Ukupni prihod';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'Ukupni trošak';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'Analiza';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'Transakcije';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'Nema pronađenih troškova za ovo razdoblje.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'Neto saldo';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'Glavne kategorije';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'Trend potrošnje';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'Uvidi';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'Nema zabilježenih troškova';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits =>
+      'Jednostavno pratite svoje potrošačke navike.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'Dodaj trošak';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'Nema podataka za ovo razdoblje';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'Proračun';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'Potrošeno';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'Granica';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'Prekoračen proračun!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return 'preostalo $percent%';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'Stopa štednje';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'Zdravstveni rezultat';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'Ovaj rezultat temelji se na vašoj stopi štednje.\n\n• > 50% ušteđeno = Izvrsno (100)\n• 0% ušteđeno = Prosječno (50)\n• Potrošnja > Prihod = Loše (<50)';
 
   @override
-  String get ok => 'OK';
+  String get ok => 'U redu';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

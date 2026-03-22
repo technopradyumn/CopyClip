@@ -2731,4 +2731,7 @@ class AppLocalizationsSqAl extends AppLocalizationsSq {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

@@ -1385,493 +1385,499 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   AppLocalizationsFiFi() : super('fi_FI');
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Asetukset';
 
   @override
-  String get language => 'Language';
+  String get language => 'Kieli';
 
   @override
-  String get systemDefault => 'System Default';
+  String get systemDefault => 'Järjestelmän oletusarvo';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'Huomautuksia';
 
   @override
-  String get todos => 'To-Dos';
+  String get todos => 'Tehtävät';
 
   @override
-  String get expenses => 'Expenses';
+  String get expenses => 'Kulut';
 
   @override
   String get journal => 'Journal';
 
   @override
-  String get calendar => 'Calendar';
+  String get calendar => 'Kalenteri';
 
   @override
-  String get clipboard => 'Clipboard';
+  String get clipboard => 'Leikepöytä';
 
   @override
-  String get canvas => 'Canvas';
+  String get canvas => 'Kangas';
 
   @override
-  String get save => 'Save';
+  String get save => 'Tallentaa';
 
   @override
-  String get create => 'Create';
+  String get create => 'Luoda';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Peruuttaa';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Poistaa';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'Muokata';
 
   @override
-  String get share => 'Share';
+  String get share => 'Jakaa';
 
   @override
-  String get copy => 'Copy';
+  String get copy => 'Kopioida';
 
   @override
-  String get unsavedChanges => 'Unsaved Changes';
+  String get unsavedChanges => 'Tallentamattomat muutokset';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'Vahvista Poista';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'Hävitä';
 
   @override
-  String get createPost => 'Create Post';
+  String get createPost => 'Loo viesti';
 
   @override
-  String get post => 'Post';
+  String get post => 'Lähettää';
 
   @override
-  String get postingTo => 'Posting to';
+  String get postingTo => 'Lähetetään osoitteeseen';
 
   @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
+  String get whatsOnYourMind => 'Mitä sinulla on mielessäsi?';
 
   @override
-  String get pickImages => 'Pick Images';
+  String get pickImages => 'Valitse kuvat';
 
   @override
-  String get pickVideo => 'Pick Video';
+  String get pickVideo => 'Valitse Video';
 
   @override
-  String get camera => 'Camera';
+  String get camera => 'Kamera';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'Galleria';
 
   @override
-  String get search => 'Search';
+  String get search => 'Haku';
 
   @override
-  String get pleaseEnterTask => 'Please enter a task';
+  String get pleaseEnterTask => 'Anna tehtävä';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'Poista tehtävä';
 
   @override
-  String get selectItems => 'Select Items';
+  String get selectItems => 'Valitse kohteet';
 
   @override
-  String get deleteAll => 'Delete All';
+  String get deleteAll => 'Poista kaikki';
 
   @override
   String error(Object error) {
-    return 'Error: $error';
+    return 'Virhe: $error';
   }
 
   @override
   String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
+      'Tilaus saatavilla vain \"Kaikki viestit\"';
 
   @override
-  String get deletePost => 'Delete Post';
+  String get deletePost => 'Poista viesti';
 
   @override
-  String get postDeleted => 'Post deleted';
+  String get postDeleted => 'Viesti poistettu';
 
   @override
-  String get premiumFeatures => 'Premium Features';
+  String get premiumFeatures => 'Premium-ominaisuudet';
 
   @override
-  String get manageCoinsAdsPremium => 'Manage coins, ads, and premium status';
+  String get manageCoinsAdsPremium =>
+      'Hallitse kolikoita, mainoksia ja premium-tilaa';
 
   @override
-  String get themeMode => 'Theme Mode';
+  String get themeMode => 'Teematila';
 
   @override
-  String get accentColor => 'Accent Color';
+  String get accentColor => 'Aksenttiväri';
 
   @override
-  String get backgroundDesign => 'Background Design';
+  String get backgroundDesign => 'Tausta suunnittelu';
 
   @override
-  String get pushNotifications => 'Push Notifications';
+  String get pushNotifications => 'Push-ilmoitukset';
 
   @override
-  String get recycleBin => 'Recycle Bin';
+  String get recycleBin => 'Roskakori';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'Vie tiedot';
 
   @override
-  String get importData => 'Import Data';
+  String get importData => 'Tuo tiedot';
 
   @override
-  String get rateApp => 'Rate App';
+  String get rateApp => 'Arvioi sovellus';
 
   @override
-  String get sendFeedback => 'Send Feedback';
+  String get sendFeedback => 'Lähetä palautetta';
 
   @override
-  String get privacyPolicy => 'Privacy Policy';
+  String get privacyPolicy => 'Tietosuojakäytäntö';
 
   @override
-  String get version => 'Version';
+  String get version => 'Versio';
 
   @override
-  String get buildNumber => 'Build Number';
+  String get buildNumber => 'Rakennusnumero';
 
   @override
-  String get system => 'System';
+  String get system => 'Järjestelmä';
 
   @override
-  String get light => 'Light';
+  String get light => 'Kevyt';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Tumma';
 
   @override
-  String get itemRestored => 'Item restored';
+  String get itemRestored => 'Kohde palautettu';
 
   @override
-  String get recycleBinCleared => 'Recycle Bin cleared successfully';
+  String get recycleBinCleared => 'Roskakori tyhjennetty onnistuneesti';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
+  String get allPostsDeleted => 'Kaikki viestit poistettu';
 
   @override
-  String get newPost => 'New Post';
+  String get newPost => 'Uusi viesti';
 
   @override
   String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
+      'Teksti kopioitu leikepöydälle (Facebook-käytäntö)';
 
   @override
   String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
+      'TikTokin jakaminen vaatii videon/kuvan';
 
   @override
   String errorSharing(Object error) {
-    return 'Error sharing: $error';
+    return 'Virhe jakamisessa: $error';
   }
 
   @override
   String shareToStory(Object platform) {
-    return 'Share to $platform Story';
+    return 'Jaa tarinaan $platform';
   }
 
   @override
   String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
+    return 'Jaa $platform-syötteeseen';
   }
 
   @override
-  String get unlockPermanently => 'Unlock Permanently';
+  String get unlockPermanently => 'Avaa lukitus pysyvästi';
 
   @override
-  String get notEnoughCoins => 'Not enough coins!';
+  String get notEnoughCoins => 'Ei tarpeeksi kolikoita!';
 
   @override
   String youEarnedCoins(Object amount) {
-    return 'You earned $amount coins!';
+    return 'Ansaitsit $amount kolikkoa!';
   }
 
   @override
-  String get contentCopied => 'Content copied';
+  String get contentCopied => 'Sisältö kopioitu';
 
   @override
-  String get selectDateTime => 'Select Date & Time';
+  String get selectDateTime => 'Valitse Päivämäärä ja aika';
 
   @override
   String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
+      'Haluatko varmasti poistaa tämän viestin?';
 
   @override
-  String get socialPosts => 'Social Posts';
+  String get socialPosts => 'Sosiaaliset viestit';
 
   @override
-  String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
+  String get watchAdToEarnCoins => 'Katso mainos ansaitaksesi kolikoita';
 
   @override
-  String get premiumUnlocked => 'Premium Unlocked';
+  String get premiumUnlocked => 'Premium avattu';
 
   @override
-  String get removeAds => 'Remove Ads';
+  String get removeAds => 'Poista mainokset';
 
   @override
-  String get unlimitedCloudStorage => 'Unlimited Cloud Storage';
+  String get unlimitedCloudStorage => 'Rajoittamaton pilvitallennustila';
 
   @override
-  String get deleteNote => 'Delete Note';
+  String get deleteNote => 'Poista huomautus';
 
   @override
-  String get shareNote => 'Share Note';
+  String get shareNote => 'Jaa huomautus';
 
   @override
-  String get editNote => 'Edit Note';
+  String get editNote => 'Muokkaa huomautusta';
 
   @override
-  String get searchNotes => 'Search notes...';
+  String get searchNotes => 'Hae muistiinpanoja...';
 
   @override
-  String get noNotesFound => 'No notes found';
+  String get noNotesFound => 'Muistiinpanoja ei löytynyt';
 
   @override
-  String get captureThoughts => 'Capture your thoughts instantly.';
+  String get captureThoughts => 'Vangitse ajatuksesi välittömästi.';
 
   @override
-  String get createNote => 'Create Note';
+  String get createNote => 'Loo muistiinpano';
 
   @override
-  String get customOrder => 'Custom Order';
+  String get customOrder => 'Mukautettu tilaus';
 
   @override
-  String get newestFirst => 'Newest First';
+  String get newestFirst => 'Uusin ensin';
 
   @override
-  String get oldestFirst => 'Oldest First';
+  String get oldestFirst => 'Vanhin ensin';
 
   @override
-  String get titleAZ => 'Title: A-Z';
+  String get titleAZ => 'Otsikko: A-Z';
 
   @override
-  String get titleZA => 'Title: Z-A';
+  String get titleZA => 'Otsikko: Z-A';
 
   @override
-  String get deleteAllQuestion => 'Delete All?';
+  String get deleteAllQuestion => 'Poistetaanko kaikki?';
 
   @override
-  String get moveToRecycleBin => 'Move all notes to Recycle Bin?';
+  String get moveToRecycleBin =>
+      'Siirretäänkö kaikki muistiinpanot roskakoriin?';
 
   @override
-  String get moveToBinQuestion => 'Move to Bin?';
+  String get moveToBinQuestion => 'Siirrätkö Biniin?';
 
   @override
-  String get restoreNoteLater => 'You can restore this note later.';
+  String get restoreNoteLater =>
+      'Voit palauttaa tämän muistiinpanon myöhemmin.';
 
   @override
-  String get move => 'Move';
+  String get move => 'Liikkua';
 
   @override
-  String get myThoughts => 'My Thoughts';
+  String get myThoughts => 'Minun Ajatukseni';
 
   @override
-  String get selected => 'Selected';
+  String get selected => 'Valittu';
 
   @override
-  String get noContent => 'No content';
+  String get noContent => 'Ei sisältöä';
 
   @override
-  String get untitled => 'Untitled';
+  String get untitled => 'Nimetön';
 
   @override
-  String get chooseWallpapers => 'Choose from 10+ dynamic wallpapers';
+  String get chooseWallpapers => 'Valitse yli 10 dynaamisesta taustakuvasta';
 
   @override
-  String get backupData => 'Backup Data';
+  String get backupData => 'Varmuuskopioi tiedot';
 
   @override
-  String get saveJsonFile => 'Save a JSON file containing all your data?';
+  String get saveJsonFile =>
+      'Tallennetaanko kaikki tietosi sisältävä JSON-tiedosto?';
 
   @override
-  String get exportNow => 'Export Now';
+  String get exportNow => 'Vie nyt';
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => 'Tuo tiedot';
 
   @override
-  String get mergeBackupFile => 'Merge a backup file with your current items?';
+  String get mergeBackupFile =>
+      'Yhdistetäänkö varmuuskopiotiedosto nykyisiin kohteihisi?';
 
   @override
-  String get selectFile => 'Select File';
+  String get selectFile => 'Valitse Tiedosto';
 
   @override
-  String get backupSaved => 'Backup saved successfully!';
+  String get backupSaved => 'Varmuuskopio tallennettu onnistuneesti!';
 
   @override
-  String get exportFailed => 'Export failed.';
+  String get exportFailed => 'Vienti epäonnistui.';
 
   @override
   String importSuccess(Object count) {
-    return '$count items restored successfully!';
+    return '$count kohdetta palautettu onnistuneesti!';
   }
 
   @override
-  String get importFailed => 'Import failed.';
+  String get importFailed => 'Tuonti epäonnistui.';
 
   @override
   String widgetAdded(String widget) {
-    return 'Widget added to Home Screen!';
+    return 'Widget lisätty aloitusnäyttöön!';
   }
 
   @override
   String get widgetRequestSent =>
-      'Widget request sent. Please check your home screen.';
+      'Widget-pyyntö lähetetty. Tarkista aloitusnäyttösi.';
 
   @override
-  String get widgetAddFailed => 'Failed to add widget';
+  String get widgetAddFailed => 'Widgetin lisääminen epäonnistui';
 
   @override
-  String get autoSaveEnabled => 'Auto-save enabled.';
+  String get autoSaveEnabled => 'Automaattinen tallennus käytössä.';
 
   @override
-  String get autoSaveDisabled => 'Auto-save disabled.';
+  String get autoSaveDisabled => 'Automaattinen tallennus poistettu käytöstä.';
 
   @override
-  String get homeScreenWidgets => 'Home Screen Widgets';
+  String get homeScreenWidgets => 'Aloitusnäytön widgetit';
 
   @override
-  String get notificationsTitle => 'Notifications';
+  String get notificationsTitle => 'Ilmoitukset';
 
   @override
-  String get dataBackup => 'Data & Backup';
+  String get dataBackup => 'Tiedot ja varmuuskopiointi';
 
   @override
-  String get feedbackSupport => 'Feedback & Support';
+  String get feedbackSupport => 'Palaute ja tuki';
 
   @override
-  String get creditsTitle => 'Credits';
+  String get creditsTitle => 'Krediitit';
 
   @override
-  String get privacyMaintenance => 'Privacy & Maintenance';
+  String get privacyMaintenance => 'Yksityisyys ja ylläpito';
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'Noin';
 
   @override
   String get premium => 'Premium';
 
   @override
-  String get appearanceTitle => 'Appearance';
+  String get appearanceTitle => 'Ulkonäkö';
 
   @override
-  String get clipboardTitle => 'Clipboard';
+  String get clipboardTitle => 'Leikepöytä';
 
   @override
-  String get settingsSubtitle => 'Customize Your Experience';
+  String get settingsSubtitle => 'Mukauta kokemuksesi';
 
   @override
-  String get welcomeTitle => 'Welcome to CopyClip';
+  String get welcomeTitle => 'Tervetuloa CopyClipiin';
 
   @override
   String get welcomeDescription =>
-      'Your ultimate productivity companion. Let\'\'s get you set up with powerful tools to manage your day.';
+      'Perimmäinen tuottavuuden kumppanisi. Otetaan käyttöön tehokkaat työkalut päivän hallintaan.';
 
   @override
-  String get onboardingNotesTitle => 'Smart Notes';
+  String get onboardingNotesTitle => 'Älykkäät muistiinpanot';
 
   @override
   String get onboardingNotesDesc =>
-      'Capture ideas instantly with rich text formatting. Organize your thoughts and never lose a great idea again.';
+      'Taltioi ideoita heti interaktiivisen tekstin muotoilulla. Järjestä ajatuksesi, äläkä koskaan enää menetä hienoa ideaa.';
 
   @override
-  String get onboardingTodosTitle => 'Task Management';
+  String get onboardingTodosTitle => 'Tehtävien hallinta';
 
   @override
   String get onboardingTodosDesc =>
-      'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
+      'Pysy pelisi kärjessä. Luo tehtäväluetteloita, aseta prioriteetteja ja murskaa tavoitteesi valintamerkki kerrallaan.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
+  String get onboardingExpensesTitle => 'Kulujen seuranta';
 
   @override
   String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
+      'Ota taloutesi hallintaan. Seuraa tuloja ja menoja helposti ymmärtääksesi kulutustottumuksiasi.';
 
   @override
-  String get onboardingJournalTitle => 'Personal Journal';
+  String get onboardingJournalTitle => 'Henkilökohtainen päiväkirja';
 
   @override
   String get onboardingJournalDesc =>
-      'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
+      'Mieti päivääsi. Yksityinen tila, jossa voit kirjoittaa muistiin muistosi, tunteesi ja päivittäiset kokemuksesi.';
 
   @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
+  String get onboardingCalendarTitle => 'Kalenteri ja tapahtumat';
 
   @override
   String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
+      'Älä koskaan missaa hetkeäkään. Järjestä aikataulusi ja seuraa tärkeitä tulevia tapahtumia.';
 
   @override
-  String get onboardingClipboardTitle => 'Clipboard Manager';
+  String get onboardingClipboardTitle => 'Leikepöydän hallinta';
 
   @override
   String get onboardingClipboardDesc =>
-      'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
+      'Kopioi kerran, liitä mihin tahansa. Käytä leikepöydän historiaa hakeaksesi aiemmin kopioituja katkelmia.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
+  String get onboardingCanvasTitle => 'Luova kangas';
 
   @override
   String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
+      'Päästä luovuutesi valloilleen. Piirrä, luonnostele ja visualisoi ideasi vapaamuotoiselle digitaaliselle kankaalle.';
 
   @override
-  String get featuresNotesDesc => 'Create and manage your notes';
+  String get featuresNotesDesc => 'Luo ja hallinnoi muistiinpanojasi';
 
   @override
-  String get featuresTodosDesc => 'Keep track of your tasks';
+  String get featuresTodosDesc => 'Pidä kirjaa tehtävistäsi';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
+  String get featuresExpensesDesc => 'Valvo kulujasi';
 
   @override
-  String get featuresJournalDesc => 'Write down your thoughts';
+  String get featuresJournalDesc => 'Kirjoita ajatuksesi muistiin';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
+  String get featuresCalendarDesc => 'Järjestä aikataulusi';
 
   @override
-  String get featuresClipboardDesc => 'Access your clipboard history';
+  String get featuresClipboardDesc => 'Käytä leikepöydän historiaa';
 
   @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
+  String get featuresCanvasDesc => 'Piirrä ja luonnostele vapaasti';
 
   @override
-  String get featuresSocialPost => 'Social Post';
+  String get featuresSocialPost => 'Sosiaalinen viesti';
 
   @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
+  String get featuresSocialPostDesc =>
+      'Luo kiinnostavaa sosiaalisen median sisältöä';
 
   @override
-  String get chooseYourAura => 'Choose Your Aura';
+  String get chooseYourAura => 'Valitse Aurasi';
 
   @override
-  String get expressYourselfTheme => 'Express yourself with a new theme color!';
+  String get expressYourselfTheme => 'Ilmaise itseäsi uudella teemavärillä!';
 
   @override
-  String get level => 'Level';
+  String get level => 'Taso';
 
   @override
-  String get xpToNextLevel => 'XP to Level';
+  String get xpToNextLevel => 'XP tasolle';
 
   @override
-  String get checkUpcomingEvents => 'Check upcoming events';
+  String get checkUpcomingEvents => 'Tarkista tulevat tapahtumat';
 
   @override
-  String get startNewSketch => 'Start a new sketch';
+  String get startNewSketch => 'Aloita uusi luonnos';
 
   @override
-  String get noTransactionsMonth => 'No transactions this month';
+  String get noTransactionsMonth => 'Ei tapahtumia tässä kuussa';
 
   @override
   String transactionsThisMonth(num count) {
@@ -1885,201 +1891,206 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   }
 
   @override
-  String get autoSaveClipboard => 'Auto-save Clipboard';
+  String get autoSaveClipboard => 'Tallenna leikepöytä automaattisesti';
 
   @override
-  String get autoSaveClipboardDesc => 'Automatically save copied items';
+  String get autoSaveClipboardDesc =>
+      'Tallenna kopioidut kohteet automaattisesti';
 
   @override
   String get permissionDeniedSettings =>
-      'Permission permanently denied. Please enable in Settings.';
+      'Lupa evätty pysyvästi. Ota käyttöön asetuksista.';
 
   @override
-  String get notificationsEnabled => 'Notifications enabled!';
+  String get notificationsEnabled => 'Ilmoitukset käytössä!';
 
   @override
   String get redirectingToSettings =>
-      'Redirecting to settings to disable notifications...';
+      'Uudelleenohjataan asetuksiin ilmoitusten poistamiseksi käytöstä...';
 
   @override
   String get premiumAccess => 'Premium Access';
 
   @override
-  String get premiumActiveUntil => 'Premium Active until';
+  String get premiumActiveUntil => 'Premium Aktiivinen asti';
 
   @override
-  String get unlockAllFeatures => 'Unlock All Features';
+  String get unlockAllFeatures => 'Avaa kaikki ominaisuudet';
 
   @override
-  String get buyPremium => 'Buy Premium (7 Days)';
+  String get buyPremium => 'Osta Premium (7 päivää)';
 
   @override
   String costCoins(Object cost) {
-    return 'Cost: $cost Coins';
+    return 'Hinta: $cost kolikkoa';
   }
 
   @override
-  String get premiumActivated => 'Premium Activated for 7 days!';
+  String get premiumActivated => 'Premium aktivoitu 7 päiväksi!';
 
   @override
-  String get premiumActive => 'Premium Active';
+  String get premiumActive => 'Premium aktiivinen';
 
   @override
-  String get expires => 'Expires:';
+  String get expires => 'Vanhenee:';
 
   @override
-  String get temporaryAccess => 'Temporary Access';
+  String get temporaryAccess => 'Väliaikainen pääsy';
 
   @override
   String get journalExpression => 'Journal & Expression';
 
   @override
-  String get artisticDesigns => 'Artistic Designs';
+  String get artisticDesigns => 'Taiteelliset mallit';
 
   @override
-  String get artisticDesignsDesc => 'Unlock 10+ unique journal card themes';
+  String get artisticDesignsDesc =>
+      'Avaa yli 10 ainutlaatuista päiväkirjakorttiteemaa';
 
   @override
-  String get premiumLayouts => 'Premium Layouts';
+  String get premiumLayouts => 'Premium-asettelut';
 
   @override
-  String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
+  String get premiumLayoutsDesc =>
+      'Ainutlaatuisia tapoja tarkastella muistojasi';
 
   @override
-  String get calendarTools => 'Calendar & Tools';
+  String get calendarTools => 'Kalenteri ja työkalut';
 
   @override
-  String get fullCalendar => 'Full Calendar';
+  String get fullCalendar => 'Täysi kalenteri';
 
   @override
-  String get fullCalendarDesc => 'Complete event management system';
+  String get fullCalendarDesc => 'Täydellinen tapahtumanhallintajärjestelmä';
 
   @override
-  String get clipboardAutoSaveDesc => 'Background clipboard history capture';
+  String get clipboardAutoSaveDesc => 'Taustaleikepöydän historian kaappaus';
 
   @override
-  String get proWidgets => 'Pro Widgets';
+  String get proWidgets => 'Pro-widgetit';
 
   @override
-  String get proWidgetsDesc => 'All features available on your home screen';
+  String get proWidgetsDesc =>
+      'Kaikki ominaisuudet saatavilla aloitusnäytölläsi';
 
   @override
-  String get dataExport => 'Data & Export';
+  String get dataExport => 'Tiedot ja vienti';
 
   @override
-  String get advancedBackup => 'Advanced Backup';
+  String get advancedBackup => 'Edistynyt varmuuskopiointi';
 
   @override
-  String get advancedBackupDesc => 'Secure import/export of all data';
+  String get advancedBackupDesc => 'Kaikkien tietojen suojattu tuonti/vienti';
 
   @override
-  String get pdfExport => 'PDF Export';
+  String get pdfExport => 'PDF-vienti';
 
   @override
-  String get pdfExportDesc => 'Export notes & journals to PDF';
+  String get pdfExportDesc => 'Vie muistiinpanot ja päiväkirjat PDF-muotoon';
 
   @override
-  String get printReady => 'Print Ready';
+  String get printReady => 'Tulostusvalmis';
 
   @override
-  String get printReadyDesc => 'Direct printing support';
+  String get printReadyDesc => 'Suoratulostuksen tuki';
 
   @override
   String get richTextEditor => 'Rich Text Editor';
 
   @override
-  String get advancedSearch => 'Advanced Search';
+  String get advancedSearch => 'Tarkennettu haku';
 
   @override
-  String get advancedSearchDesc => 'Search & Replace within your text';
+  String get advancedSearchDesc => 'Etsi ja korvaa tekstistäsi';
 
   @override
   String get richMedia => 'Rich Media';
 
   @override
-  String get richMediaDesc => 'Insert Images, Videos, and Links';
+  String get richMediaDesc => 'Lisää kuvia, videoita ja linkkejä';
 
   @override
-  String get editorStyling => 'Editor Styling';
+  String get editorStyling => 'Toimittajan tyyli';
 
   @override
-  String get editorStylingDesc => 'Custom text and editor backgrounds';
+  String get editorStylingDesc => 'Mukautetut teksti- ja muokkaustaustat';
 
   @override
-  String get balance => 'Balance';
+  String get balance => 'Saldo';
 
   @override
-  String get loadingAd => 'Loading Ad...';
+  String get loadingAd => 'Ladataan mainosta...';
 
   @override
   String watchAd(Object amount) {
-    return 'Watch Ad (+$amount)';
+    return 'Katso mainos (+$amount)';
   }
 
   @override
-  String get loadAd => 'Load Ad';
+  String get loadAd => 'Lataa mainos';
 
   @override
-  String get backupDataDesc => 'Save a JSON file of your data';
+  String get backupDataDesc => 'Tallenna tiedoistasi JSON-tiedosto';
 
   @override
-  String get importDataDesc => 'Merge a backup file into CopyClip';
+  String get importDataDesc => 'Yhdistä varmuuskopiotiedosto CopyClipiin';
 
   @override
-  String get notificationPermissionDenied => 'Notification permission denied.';
+  String get notificationPermissionDenied => 'Ilmoituslupa evätty.';
 
   @override
-  String get typeNewTask => 'Type a new task...';
+  String get typeNewTask => 'Kirjoita uusi tehtävä...';
 
   @override
-  String get addTask => 'Add a task';
+  String get addTask => 'Lisää tehtävä';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'Valmis';
 
   @override
-  String get greatJob => 'Great job!';
+  String get greatJob => 'Hienoa työtä!';
 
   @override
   String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
+    return 'Ansaitsit $amount XP:tä! Seuraava tehtävä: $date';
   }
 
   @override
   String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
+    return 'Tehtävä suoritettu! +$amount XP';
   }
 
   @override
-  String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
+  String get moveTasksToRecycleBin =>
+      'Siirretäänkö kaikki aktiiviset tehtävät roskakoriin?';
 
   @override
-  String get deleteAllPosts => 'Delete All Posts';
+  String get deleteAllPosts => 'Poista kaikki viestit';
 
   @override
   String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
+      'Are you sure you want to delete ALL social posts? Tätä ei voi kumota.';
 
   @override
-  String get allPosts => 'All Posts';
+  String get allPosts => 'Kaikki viestit';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'Suosikit';
 
   @override
-  String get drafts => 'Drafts';
+  String get drafts => 'Luonnokset';
 
   @override
-  String get noFavoritesYet => 'No favorites yet';
+  String get noFavoritesYet => 'Ei vielä suosikkeja';
 
   @override
-  String get noDraftsYet => 'No drafts yet';
+  String get noDraftsYet => 'Ei luonnoksia vielä';
 
   @override
-  String get startSocialJourney => 'Start your social journey!';
+  String get startSocialJourney => 'Aloita sosiaalinen matkasi!';
 
   @override
-  String get draft => 'DRAFT';
+  String get draft => 'LUONNOS';
 
   @override
   String attachmentCount(num count) {
@@ -2093,261 +2104,261 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   }
 
   @override
-  String get pleaseAddContent => 'Please add some content or media to share';
+  String get pleaseAddContent => 'Lisää sisältöä tai mediaa jaettavaksi';
 
   @override
   String fileNotFoundError(Object path) {
-    return 'Error: File not found at $path';
+    return 'Virhe: tiedostoa ei löydy osoitteesta $path';
   }
 
   @override
-  String get checkFacebookApp => 'Check Facebook app';
+  String get checkFacebookApp => 'Tarkista Facebook-sovellus';
 
   @override
-  String get systemShare => 'System Share';
+  String get systemShare => 'Järjestelmän jako';
 
   @override
-  String get socialPost => 'Social Post';
+  String get socialPost => 'Sosiaalinen viesti';
 
   @override
-  String get favorite => 'Favorite';
+  String get favorite => 'Suosikki';
 
   @override
-  String get saveDraft => 'Save Draft';
+  String get saveDraft => 'Tallenna luonnos';
 
   @override
-  String get entryCopied => 'Entry copied';
+  String get entryCopied => 'Merkintä kopioitu';
 
   @override
   String get moveEntriesToRecycleBin =>
-      'Move all active entries to Recycle Bin?';
+      'Siirretäänkö kaikki aktiiviset merkinnät roskakoriin?';
 
   @override
-  String get startWritingStory => 'Start writing your story';
+  String get startWritingStory => 'Aloita tarinasi kirjoittaminen';
 
   @override
-  String get recordMemories => 'Record your daily memories and feelings.';
+  String get recordMemories => 'Tallenna päivittäiset muistosi ja tunteesi.';
 
   @override
-  String get writeJournal => 'Write Journal';
+  String get writeJournal => 'Kirjoita päiväkirja';
 
   @override
-  String get myMemories => 'My Memories';
+  String get myMemories => 'Minun Muistoni';
 
   @override
-  String get sortJournal => 'Sort Journal';
+  String get sortJournal => 'Lajittele päiväkirja';
 
   @override
-  String get byMood => 'By Mood';
+  String get byMood => 'Tunnelman mukaan';
 
   @override
-  String get searchMemories => 'Search memories...';
+  String get searchMemories => 'Etsi muistoja...';
 
   @override
-  String get selectAll => 'Select All';
+  String get selectAll => 'Valitse Kaikki';
 
   @override
-  String get deleteSelected => 'Delete Selected';
+  String get deleteSelected => 'Poista valitut';
 
   @override
-  String get taskCompletedExclamation => 'Task completed!';
+  String get taskCompletedExclamation => 'Tehtävä suoritettu!';
 
   @override
-  String get taskUncompletedExclamation => 'Task uncompleted';
+  String get taskUncompletedExclamation => 'Tehtävä kesken';
 
   @override
-  String get clipboardUpdatedExclamation => 'Clipboard updated!';
+  String get clipboardUpdatedExclamation => 'Leikepöytä päivitetty!';
 
   @override
   String clipboardSavedContent(Object content) {
-    return 'Clipboard saved: $content';
+    return 'Leikepöytä tallennettu: $content';
   }
 
   @override
-  String get overview => 'Overview';
+  String get overview => 'Yleiskatsaus';
 
   @override
   String get colorAurora => 'Aurora';
 
   @override
-  String get colorCosmic => 'Cosmic';
+  String get colorCosmic => 'Kosminen';
 
   @override
-  String get colorNebula => 'Nebula';
+  String get colorNebula => 'Tähtisumu';
 
   @override
-  String get colorStarlight => 'Starlight';
+  String get colorStarlight => 'Tähtien valo';
 
   @override
-  String get colorSolar => 'Solar';
+  String get colorSolar => 'Aurinko';
 
   @override
-  String get colorNova => 'Nova';
+  String get colorNova => 'Uusi';
 
   @override
-  String get loadingStepLoading => 'Loading...';
+  String get loadingStepLoading => 'Ladataan...';
 
   @override
-  String get loadingStepDatabase => 'Setting up database...';
+  String get loadingStepDatabase => 'Luodaan tietokantaa...';
 
   @override
-  String get loadingStepSystem => 'Configuring system...';
+  String get loadingStepSystem => 'Määritetään järjestelmää...';
 
   @override
-  String get loadingStepReady => 'Ready';
+  String get loadingStepReady => 'Valmis';
 
   @override
-  String get productivityCompanion => 'Your productivity companion';
+  String get productivityCompanion => 'Tuottavuuden kumppanisi';
 
   @override
-  String get done => 'Done';
+  String get done => 'Tehty';
 
   @override
-  String get newNote => 'New Note';
+  String get newNote => 'Uusi huomautus';
 
   @override
-  String get changeColor => 'Change Color';
+  String get changeColor => 'Vaihda väriä';
 
   @override
-  String get copyContent => 'Copy Content';
+  String get copyContent => 'Kopioi sisältö';
 
   @override
-  String get titleOptional => 'Title (Optional)';
+  String get titleOptional => 'Otsikko (valinnainen)';
 
   @override
-  String get exportAsPdf => 'Export as PDF';
+  String get exportAsPdf => 'Vie PDF-muodossa';
 
   @override
-  String get taskDueNow => 'Task Due Now';
+  String get taskDueNow => 'Tehtävä erääntyy nyt';
 
   @override
-  String get moveTaskToBinTitle => 'Move Task to Recycle Bin?';
+  String get moveTaskToBinTitle => 'Siirretäänkö tehtävä roskakoriin?';
 
   @override
   String get restoreTaskLater =>
-      'You can restore this task later from settings.';
+      'Voit palauttaa tämän tehtävän myöhemmin asetuksista.';
 
   @override
-  String get newTask => 'New Task';
+  String get newTask => 'Uusi tehtävä';
 
   @override
-  String get editTask => 'Edit Task';
+  String get editTask => 'Muokkaa tehtävää';
 
   @override
-  String get undo => 'Undo';
+  String get undo => 'Kumoa';
 
   @override
-  String get redo => 'Redo';
+  String get redo => 'Toista';
 
   @override
-  String get category => 'Category';
+  String get category => 'Luokka';
 
   @override
-  String get categoryHint => 'e.g. Work, Gym';
+  String get categoryHint => 'esim. Työ, kuntosali';
 
   @override
-  String get whatNeedsToBeDone => 'What needs to be done?';
+  String get whatNeedsToBeDone => 'Mitä pitää tehdä?';
 
   @override
-  String get enterTaskDetails => 'Enter task details...';
+  String get enterTaskDetails => 'Anna tehtävän tiedot...';
 
   @override
-  String get setDueDate => 'Set Due Date';
+  String get setDueDate => 'Aseta eräpäivä';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'Kaksi päivämäärää';
 
   @override
-  String get expenseTitle => 'Expenses';
+  String get expenseTitle => 'Kulut';
 
   @override
   String searchInCurrency(String currency) {
-    return 'Search in $currency...';
+    return 'Hae kielellä $currency...';
   }
 
   @override
-  String get sortAndFilter => 'Sort & Filter';
+  String get sortAndFilter => 'Lajittele & Suodata';
 
   @override
-  String get sortBy => 'SORT BY';
+  String get sortBy => 'LAJITTELU';
 
   @override
-  String get highestAmount => 'Highest Amount';
+  String get highestAmount => 'Suurin määrä';
 
   @override
-  String get lowestAmount => 'Lowest Amount';
+  String get lowestAmount => 'Pienin summa';
 
   @override
-  String get moreFilters => 'More Filters...';
+  String get moreFilters => 'Lisää suodattimia...';
 
   @override
-  String get filterExpenses => 'Filter Expenses';
+  String get filterExpenses => 'Suodatuskulut';
 
   @override
-  String get transactionType => 'Transaction Type';
+  String get transactionType => 'Tapahtumatyyppi';
 
   @override
-  String get categories => 'Categories';
+  String get categories => 'Luokat';
 
   @override
-  String get all => 'All';
+  String get all => 'Kaikki';
 
   @override
-  String get income => 'Income';
+  String get income => 'Tulot';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'Kustannukset';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'Nollaa';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'Käytä';
 
   @override
   String newExpense(String currency) {
-    return 'New $currency';
+    return 'Uusi $currency';
   }
 
   @override
   String errorLoadingData(String error) {
-    return 'Error loading data.\n\n$error';
+    return 'Virhe ladattaessa tietoja.\n\n$error';
   }
 
   @override
-  String get dailyQuote1 =>
-      'The best way to predict the future is to create it.';
+  String get dailyQuote1 => 'Paras tapa ennustaa tulevaisuutta on luoda se.';
 
   @override
   String get dailyQuote2 =>
-      'Wealth consists not in having great possessions, but in having few wants.';
+      'Rikkaus ei koostu suuresta omaisuudesta, vaan siitä, että on vähän tarpeita.';
 
   @override
-  String get dailyQuote3 => 'Time is the ultimate currency.';
+  String get dailyQuote3 => 'Aika on lopullinen valuutta.';
 
   @override
-  String get dailyQuote4 => 'Success is not final, failure is not fatal.';
+  String get dailyQuote4 =>
+      'Menestys ei ole lopullista, epäonnistuminen ei ole kohtalokasta.';
 
   @override
-  String get dailyQuote5 => 'Focus on the solution, not the problem.';
+  String get dailyQuote5 => 'Keskity ratkaisuun, älä ongelmaan.';
 
   @override
-  String get dailyQuote6 => 'Your network is your net worth.';
+  String get dailyQuote6 => 'Verkkosi on nettovarallisuutesi.';
 
   @override
-  String get moodHappy => 'Happy';
+  String get moodHappy => 'Onnellinen';
 
   @override
-  String get moodExcited => 'Excited';
+  String get moodExcited => 'Innoissaan';
 
   @override
-  String get moodNeutral => 'Neutral';
+  String get moodNeutral => 'Neutraali';
 
   @override
-  String get moodSad => 'Sad';
+  String get moodSad => 'Surullinen';
 
   @override
-  String get moodStressed => 'Stressed';
+  String get moodStressed => 'Stressaantunut';
 
   @override
   String exportDate(String date) {
@@ -2356,7 +2367,7 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
 
   @override
   String exportMood(String emoji, String mood) {
-    return 'Mood: $emoji $mood';
+    return 'Tunnelma: $emoji $mood';
   }
 
   @override
@@ -2366,7 +2377,7 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
 
   @override
   String exportTags(String tags) {
-    return '\nTags: $tags';
+    return 'Tunnisteet: $tags';
   }
 
   @override
@@ -2379,366 +2390,368 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   String get tiktok => 'TikTok';
 
   @override
-  String get newSketch => 'New Sketch';
+  String get newSketch => 'Uusi Sketch';
 
   @override
-  String get searchSketches => 'Search sketches and folders...';
+  String get searchSketches => 'Hae luonnoksia ja kansioita...';
 
   @override
-  String get noResultsFound => 'No results found';
+  String get noResultsFound => 'Tuloksia ei löytynyt';
 
   @override
-  String get noItems => 'No items';
+  String get noItems => 'Ei kohteita';
 
   @override
-  String get noDrawingsYet => 'No drawings yet';
+  String get noDrawingsYet => 'Ei vielä piirustuksia';
 
   @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
+  String get canvasIntro => 'Päästä luovuutesi valloilleen kankaalla!';
 
   @override
-  String get newCanvas => 'New Canvas';
+  String get newCanvas => 'Uusi kangas';
 
   @override
-  String get rename => 'Rename';
+  String get rename => 'Nimeä uudelleen';
 
   @override
-  String get deleteFolder => 'Delete Folder';
+  String get deleteFolder => 'Poista kansio';
 
   @override
-  String get deleteSketchesQuestion => 'Delete Sketches?';
+  String get deleteSketchesQuestion => 'Poistetaanko luonnokset?';
 
   @override
   String get deleteFolderConfirmation =>
-      'All sketches in this folder will be deleted permanently.';
+      'Kaikki tämän kansion luonnokset poistetaan pysyvästi.';
 
   @override
-  String get renameFolder => 'Rename Folder';
+  String get renameFolder => 'Nimeä kansio uudelleen';
 
   @override
-  String get chooseColor => 'Choose Color';
+  String get chooseColor => 'Valitse Väri';
 
   @override
-  String get deleteFolderQuestion => 'Delete Folder?';
+  String get deleteFolderQuestion => 'Poistetaanko kansio?';
 
   @override
-  String get searchClips => 'Search clips...';
+  String get searchClips => 'Hae leikkeitä...';
 
   @override
-  String get clipboardEmpty => 'Clipboard is empty';
+  String get clipboardEmpty => 'Leikepöytä on tyhjä';
 
   @override
-  String get addItem => 'Add Item';
+  String get addItem => 'Lisää kohde';
 
   @override
-  String get clipColor => 'Clip Color';
+  String get clipColor => 'Leikkeen väri';
 
   @override
-  String get newClip => 'New Clip';
+  String get newClip => 'Uusi klippi';
 
   @override
-  String get editClip => 'Edit Clip';
+  String get editClip => 'Muokkaa leikettä';
 
   @override
-  String get restoreClipLater => 'You can restore this clip later.';
+  String get restoreClipLater => 'Voit palauttaa tämän leikkeen myöhemmin.';
 
   @override
-  String get upcomingEvents => 'Upcoming Events';
+  String get upcomingEvents => 'Tulevat tapahtumat';
 
   @override
-  String get dataDistribution => 'DATA DISTRIBUTION';
+  String get dataDistribution => 'TIETOJEN JAKELU';
 
   @override
-  String get taskProgress => 'TASK PROGRESS';
+  String get taskProgress => 'TEHTÄVÄ ETENEMINEN';
 
   @override
-  String get quickStats => 'QUICK STATS';
+  String get quickStats => 'PIKATILASTOT';
 
   @override
-  String get taskCompletion => 'Task Completion';
+  String get taskCompletion => 'Tehtävän suorittaminen';
 
   @override
-  String get noItemsForDate => 'No items for this date';
+  String get noItemsForDate => 'Ei kohteita tälle päivälle';
 
   @override
-  String get enjoyFreeTime => 'Enjoy your free time!';
+  String get enjoyFreeTime => 'Nauti vapaa-ajasta!';
 
   @override
-  String get searchThisDay => 'Search in this day...';
+  String get searchThisDay => 'Etsi tänä päivänä...';
 
   @override
-  String get finance => 'Finance';
+  String get finance => 'Rahoitus';
 
   @override
-  String get permanentlyDelete => 'Permanently Delete?';
+  String get permanentlyDelete => 'Poistetaanko pysyvästi?';
 
   @override
   String deleteSelectionConfirmation(int foldersCount, int sketchesCount) {
-    return 'This will permanently delete $foldersCount folders (and their sketches) and $sketchesCount other sketches.\n\nThis cannot be undone.';
+    return 'Tämä poistaa pysyvästi $foldersCount kansiota (ja niiden luonnoksia) ja $sketchesCount muuta luonnosta.\n\nTätä ei voi kumota.';
   }
 
   @override
-  String get deleteForever => 'Delete Forever';
+  String get deleteForever => 'Poista ikuisesti';
 
   @override
   String selectedCount(int count) {
-    return '$count Selected';
+    return '$count valittu';
   }
 
   @override
   String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
+    return '$notes luonnokset • $folders kansiot';
   }
 
   @override
-  String get sortItems => 'Sort Items';
+  String get sortItems => 'Lajittele kohteet';
 
   @override
-  String get sortNameAZ => 'Name (A-Z)';
+  String get sortNameAZ => 'Nimi (A-Z)';
 
   @override
-  String get sortNameZA => 'Name (Z-A)';
+  String get sortNameZA => 'Nimi (Z-A)';
 
   @override
-  String get createFolder => 'Create Folder';
+  String get createFolder => 'Loo kansio';
 
   @override
-  String get folderNameHint => 'Folder name...';
+  String get folderNameHint => 'Kansion nimi...';
 
   @override
   String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
+    return 'Poistetaanko $count luonnosta? Tätä ei voi kumota.';
   }
 
   @override
-  String get noSketchesFound => 'No sketches found';
+  String get noSketchesFound => 'Luonnoksia ei löytynyt';
 
   @override
   String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
+      'Yritä muokata hakuasi tai luoda uusi luonnos.';
 
   @override
   String searchInFolder(String folder) {
-    return 'Search in $folder...';
+    return 'Hae hakemistosta $folder...';
   }
 
   @override
   String sketchesCount(int count) {
-    return '$count sketches';
+    return '$count luonnosta';
   }
 
   @override
-  String get sortSketches => 'Sort Sketches';
+  String get sortSketches => 'Lajittele luonnokset';
 
   @override
-  String get calendarScreenTitle => 'Calendar';
+  String get calendarScreenTitle => 'Kalenteri';
 
   @override
-  String get dailyActivity => 'Daily Activity';
+  String get dailyActivity => 'Päivittäinen toiminta';
 
   @override
-  String get deleteItemQuestion => 'Delete Item?';
+  String get deleteItemQuestion => 'Poistetaanko kohde?';
 
   @override
-  String get deleteItemConfirmation =>
-      'This will move the item to the recycle bin.';
+  String get deleteItemConfirmation => 'Tämä siirtää kohteen roskakoriin.';
 
   @override
-  String get moveToBinItem => 'Move to Bin?';
+  String get moveToBinItem => 'Siirrätkö Biniin?';
 
   @override
-  String get moveToBinConfirmation => 'You can restore it later.';
+  String get moveToBinConfirmation => 'Voit palauttaa sen myöhemmin.';
 
   @override
   String selectedItems(int count) {
-    return '$count Selected';
+    return '$count valittu';
   }
 
   @override
-  String get recentClips => 'Recent Clips';
+  String get recentClips => 'Viimeaikaiset leikkeet';
 
   @override
-  String get copied => 'Copied!';
+  String get copied => 'Kopioitu!';
 
   @override
-  String get copiedPlainText => 'Copied plain text';
+  String get copiedPlainText => 'Kopioitu pelkkä teksti';
 
   @override
-  String get clipTheme => 'Clip Theme';
+  String get clipTheme => 'Leikkeen teema';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Juuri nyt';
 
   @override
   String minutesAgo(Object count) {
-    return '${count}m ago';
+    return '$count min sitten';
   }
 
   @override
   String hoursAgo(Object count) {
-    return '${count}h ago';
+    return '${count}h sitten';
   }
 
   @override
   String daysAgo(Object count) {
-    return '${count}d ago';
+    return '$count p sitten';
   }
 
   @override
-  String get noTasksFound => 'No tasks found.';
+  String get noTasksFound => 'Tehtäviä ei löytynyt.';
 
   @override
-  String get searchTasks => 'Search tasks...';
+  String get searchTasks => 'Hae tehtäviä...';
 
   @override
-  String get taskReminder => 'Task Reminder';
+  String get taskReminder => 'Tehtävämuistutus';
 
   @override
-  String get untitledNote => 'Untitled Note';
+  String get untitledNote => 'Nimetön huomautus';
 
   @override
-  String get dailyEntry => 'Daily Entry';
+  String get dailyEntry => 'Päivittäinen sisäänpääsy';
 
   @override
-  String get clipboardHistory => 'Clipboard History';
+  String get clipboardHistory => 'Leikepöydän historia';
 
   @override
-  String get deletePermanentlyContent => 'This action cannot be undone.';
+  String get deletePermanentlyContent => 'Tätä toimintoa ei voi kumota.';
 
   @override
-  String get emptyRecycleBinTitle => 'Empty Recycle Bin?';
+  String get emptyRecycleBinTitle => 'Tyhjä roskakori?';
 
   @override
   String emptyRecycleBinContent(Object count) {
-    return 'All $count items will be permanently deleted.';
+    return 'Kaikki $count kohdetta poistetaan pysyvästi.';
   }
 
   @override
-  String get emptyBin => 'Empty Bin';
+  String get emptyBin => 'Tyhjä Säiliö';
 
   @override
-  String get recycleBinEmpty => 'Recycle Bin is empty';
+  String get recycleBinEmpty => 'Roskakori on tyhjä';
 
   @override
-  String get deletedItemsAppearHere => 'Deleted items will appear here.';
+  String get deletedItemsAppearHere => 'Poistetut kohteet näkyvät täällä.';
 
   @override
-  String get empty => 'Empty';
+  String get empty => 'Tyhjä';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Viimeaikaiset';
 
   @override
   String categoryLabel(Object category) {
-    return 'Category: $category';
+    return 'Luokka: $category';
   }
 
   @override
-  String get general => 'General';
+  String get general => 'Kenraali';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
+  String get saveTransactionQuestion => 'Haluatko tallentaa tämän tapahtuman?';
 
   @override
-  String get fillTitleAmount => 'Please fill in title and amount';
+  String get fillTitleAmount => 'Täytä otsikko ja summa';
 
   @override
-  String get invalidAmount => 'Invalid amount format';
+  String get invalidAmount => 'Virheellinen summan muoto';
 
   @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
+  String get moveTransactionToBinTitle => 'Siirretäänkö tapahtuma roskakoriin?';
 
   @override
   String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
+      'Voit palauttaa tämän tapahtuman myöhemmin asetuksista.';
 
   @override
-  String get newTransaction => 'New Transaction';
+  String get newTransaction => 'Uusi tapahtuma';
 
   @override
-  String get whatIsThisFor => 'What is this for?';
+  String get whatIsThisFor => 'Mitä varten tämä on?';
 
   @override
-  String get description => 'Description';
+  String get description => 'Kuvaus';
 
   @override
-  String get daily => 'Daily';
+  String get daily => 'Päivittäin';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Viikoittain';
 
   @override
-  String get monthly => 'Monthly';
+  String get monthly => 'Kuukausittain';
 
   @override
-  String get yearly => 'Yearly';
+  String get yearly => 'Vuosittain';
 
   @override
-  String get totalIncome => 'Total Income';
+  String get totalIncome => 'Kokonaistulot';
 
   @override
-  String get totalExpense => 'Total Expense';
+  String get totalExpense => 'Kokonaiskulut';
 
   @override
-  String get analysis => 'Analysis';
+  String get analysis => 'Analyysi';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'Tapahtumat';
 
   @override
-  String get noExpensesFound => 'No expenses found for this period.';
+  String get noExpensesFound => 'Kuluja ei löytynyt tälle ajanjaksolle.';
 
   @override
-  String get netBalance => 'Net Balance';
+  String get netBalance => 'Nettosaldo';
 
   @override
-  String get topCategories => 'Top Categories';
+  String get topCategories => 'Parhaat luokat';
 
   @override
-  String get spendingTrend => 'Spending Trend';
+  String get spendingTrend => 'Kulutustrendi';
 
   @override
-  String get insights => 'Insights';
+  String get insights => 'Näkemyksiä';
 
   @override
-  String get noExpensesRecorded => 'No expenses recorded';
+  String get noExpensesRecorded => 'Ei kirjattu kuluja';
 
   @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
+  String get trackSpendingHabits => 'Seuraa kulutustottumuksiasi helposti.';
 
   @override
-  String get addExpense => 'Add Expense';
+  String get addExpense => 'Lisää kuluja';
 
   @override
-  String get noDataForPeriod => 'No data for this period';
+  String get noDataForPeriod => 'Ei tietoja tälle ajanjaksolle';
 
   @override
-  String get budget => 'Budget';
+  String get budget => 'Budjetti';
 
   @override
-  String get spent => 'Spent';
+  String get spent => 'Käytetty';
 
   @override
-  String get limit => 'Limit';
+  String get limit => 'Rajoittaa';
 
   @override
-  String get overBudget => 'Over Budget!';
+  String get overBudget => 'Yli budjetin!';
 
   @override
   String remainingBudget(Object percent) {
-    return '$percent% remaining';
+    return '$percent % jäljellä';
   }
 
   @override
-  String get savingsRate => 'Savings Rate';
+  String get savingsRate => 'Säästöprosentti';
 
   @override
-  String get healthScore => 'Health Score';
+  String get healthScore => 'Terveyspisteet';
 
   @override
   String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
+      'Tämä pistemäärä perustuu säästöprosenttiisi.\n\n• > 50 % säästetty = Erinomainen (100)\n• 0 % säästetty = keskiarvo (50)\n• Kulutus > Tulot = Huono (<50)';
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }

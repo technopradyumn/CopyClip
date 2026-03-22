@@ -1,5 +1,5 @@
 {
-  "@@locale": "it",
+  "@@locale": "it_IT",
   "@canvasStats": {
     "placeholders": {
       "folders": {
@@ -472,7 +472,7 @@
   "spent": "Speso",
   "startNewSketch": "Inizia un nuovo schizzo",
   "startSocialJourney": "Inizia il tuo viaggio social!",
-  "startWritingStory": "Inizia a scrivere la tua story",
+  "startWritingStory": "Inizia a scrivere la tua storia",
   "system": "Sistema",
   "systemDefault": "Predefinito di sistema",
   "systemShare": "Condivisione di sistema",

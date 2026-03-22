@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:copyclip/src/core/services/home_widget_service.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:copyclip/src/core/utils/widget_sync_service.dart';
 import 'package:copyclip/src/core/providers/locale_provider.dart';
@@ -18,7 +17,6 @@ import 'package:copyclip/src/features/premium/presentation/bloc/premium_event.da
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +26,6 @@ import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/router/main_router.dart';
 import 'package:copyclip/src/core/services/app_update_service.dart';
 
-import 'package:copyclip/src/core/services/notification_service.dart';
 import 'package:copyclip/src/core/theme/app_theme.dart';
 import 'package:copyclip/src/core/services/gamification_service.dart';
 import 'package:copyclip/src/core/models/gamification_model.dart';
@@ -346,6 +343,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   );
 
   Timer? _clipboardTimer;
+  String? _lastClipboardText;
 
   @override
   void initState() {
@@ -358,172 +356,18 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     widgetChannel.setMethodCallHandler(_handleNativeCalls);
 
     // ✅ Listen to widget interactions
-    _setupWidgetInteractionListener();
+    HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
+    HomeWidget.initiallyLaunchedFromHomeWidget().then(_handleWidgetNavigation);
+    HomeWidget.widgetClicked.listen(_handleWidgetNavigation);
 
-    // ✅ Listen to notification taps
-    _setupNotificationListener();
+    // ✅ Initialize background tasks (Parallel)
+    _initializeBackgroundTasks();
 
-    // ✅ Initialize heavy services after first frame
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _postFrameInitialization();
-      _startClipboardTimer(); // ✅ Restore Real-Time Monitoring
-    });
-  }
+    _checkClipboard(); // Initial Check
+    _startClipboardTimer();
 
-  /// ✅ OPTIMIZATION: Initialize ads and preload boxes after first frame
-  Future<void> _postFrameInitialization() async {
-    debugPrint('🚀 Post-frame initialization STARTED');
-
-    // 1. Initialize Home Widget Service & Callbacks
-    try {
-      if (!isIntegrationTesting) {
-        await HomeWidgetService.initialize();
-        HomeWidget.registerBackgroundCallback(homeWidgetBackgroundCallback);
-        HomeWidget.setAppGroupId('group.com.technopradyumn.copyclip');
-      }
-    } catch (e) {
-      debugPrint('⚠️ HomeWidget init error: $e');
-    }
-
-    // 2. Preload common boxes in background
-    try {
-      await LazyBoxLoader.preloadCommonBoxes();
-    } catch (e) {
-      debugPrint('⚠️ Box preload error: $e');
-    }
-
-    // 3. Notifications & Background Workers
-    try {
-      NotificationService().init();
-      await BackgroundWorker.initialize();
-      await BackgroundWorker.registerPeriodicTask();
-    } catch (e) {
-      debugPrint('⚠️ Background worker error: $e');
-    }
-
-    // 4. Healing check
-    try {
-      await TodoSchedulerService().handleMissedRecurrences();
-    } catch (e) {
-      debugPrint("Healing error: $e");
-    }
-
-    // 5. Defer background tasks
-    try {
-      await _initializeBackgroundTasks();
-    } catch (e) {
-      debugPrint('Background task error: $e');
-    }
-
-    // 6. Ads
-    try {
-      await MobileAds.instance.updateRequestConfiguration(
-        RequestConfiguration(
-          testDeviceIds: ["144FE4F3F00EAB19BA87344D34904C8B"],
-        ),
-      );
-      await MobileAds.instance.initialize();
-    } catch (e) {
-      debugPrint('❌ Ad init error: $e');
-    }
-
-    // 7. Check for Updates
-    try {
-      await AppUpdateService.instance.checkForUpdate();
-    } catch (e) {
-      debugPrint('Update check error: $e');
-    }
-
-    debugPrint('✅ Post-frame initialization COMPLETE');
-  }
-
-  // ✅ CHANGE 8: NEW - Setup widget interaction listener
-  void _setupWidgetInteractionListener() {
-    // 1. Check if app was launched via widget (Cold Start)
-    HomeWidget.initiallyLaunchedFromHomeWidget().then((Uri? uri) {
-      if (uri != null && mounted) {
-        debugPrint('🚀 Launched from widget (Cold Start): $uri');
-        _handleWidgetNavigation(uri);
-      }
-    });
-
-    // 2. Listen for widget clicks while running (Background/Foreground)
-    HomeWidget.widgetClicked.listen((Uri? uri) {
-      if (uri != null && mounted) {
-        debugPrint('📱 Widget clicked: $uri');
-        _handleWidgetNavigation(uri);
-      }
-    });
-  }
-
-  // ✅ CHANGE 9: Configure Notification Listener
-  void _setupNotificationListener() {
-    NotificationService().onNotifications.stream.listen((
-      String? payload,
-    ) async {
-      if (payload == null || !mounted) return;
-      debugPrint('🔔 Notification Tapped with Payload: $payload');
-
-      // 1. Static Routes
-      if (payload == 'dashboard') {
-        router.go(AppRouter.root);
-        return;
-      } else if (payload == 'todos') {
-        router.push(AppRouter.todos);
-        return;
-      } else if (payload == 'journal') {
-        router.push(AppRouter.journal);
-        return;
-      } else if (payload == 'expenses') {
-        router.push(AppRouter.expenses);
-        return;
-      } else if (payload == 'clipboard') {
-        router.push(AppRouter.clipboard);
-        return;
-      }
-
-      // 2. Action Actions
-      if (payload.startsWith("ACTION:mark_done:")) {
-        final todoId = payload.replaceAll("ACTION:mark_done:", "");
-        if (!Hive.isBoxOpen('todos_box')) {
-          await LazyBoxLoader.getBox<Todo>('todos_box');
-        }
-        final box = Hive.box<Todo>('todos_box');
-        try {
-          Todo? todo = box.get(todoId);
-          todo ??= box.values.firstWhere((t) => t.id == todoId);
-          await TodoSchedulerService().completeTodo(todo);
-          debugPrint("✅ Todo marked done from notification: ${todo.task}");
-        } catch (e) {
-          debugPrint("❌ Failed to process action: $e");
-        }
-        return;
-      }
-
-      // 3. Dynamic Routes (IDs)
-      if (!Hive.isBoxOpen('todos_box')) {
-        await Future.delayed(const Duration(milliseconds: 500));
-        if (!Hive.isBoxOpen('todos_box')) {
-          await LazyBoxLoader.getBox<Todo>('todos_box');
-        }
-      }
-
-      final box = Hive.box<Todo>('todos_box');
-      Todo? todo;
-      try {
-        todo = box.get(payload);
-        todo ??= box.values.firstWhere((t) => t.id == payload);
-      } catch (e) {
-        // Payload might not be a Todo ID
-      }
-
-      if (todo != null && mounted) {
-        debugPrint('🚀 Navigating to Todo Edit: ${todo.task}');
-        router.push(AppRouter.todoEdit, extra: todo);
-      } else {
-        debugPrint('⚠️ Unknown payload or Todo not found: $payload');
-      }
-    });
+    // App Update Service
+    AppUpdateService.instance.checkForUpdate();
   }
 
   void _startClipboardTimer() {
@@ -541,7 +385,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   }
 
   // Handle widget navigation
-  void _handleWidgetNavigation(Uri uri) {
+  void _handleWidgetNavigation(Uri? uri) {
+    if (uri == null) return;
     final host = uri.host;
 
     // ✅ Handle 'app' host (Standard Deep Links)
@@ -582,8 +427,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       String? route;
       if (args is String) {
         route = args;
-      } else if (args is Map)
+      } else if (args is Map) {
         route = args['route'];
+      }
       if (route != null && mounted) {
         router.push(route);
         debugPrint('✅ Navigated to: $route');
@@ -677,14 +523,16 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
       if (trimmedContent.isEmpty) return;
 
+      // ✅ 1. Session Cache Check: Avoid redundant checks every 2 seconds
+      if (_lastClipboardText == trimmedContent) return;
+
       // Ensure box is open
       if (!Hive.isBoxOpen('clipboard_box')) {
         await Hive.openBox<ClipboardItem>('clipboard_box');
       }
       final clipboardBox = Hive.box<ClipboardItem>('clipboard_box');
 
-      // ✅ DEDUPLICATION & BUMPING Logic (Refined):
-      // Find ALL items that match this content (trimmed)
+      // ✅ 2. Database State Check: Find existing matches
       final matchingItems =
           clipboardBox.values
               .where((item) => _getPlainText(item.content) == trimmedContent)
@@ -692,23 +540,37 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
             ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
       if (matchingItems.isNotEmpty) {
-        // Keep the most recent one, delete the rest if any
         final keptItem = matchingItems.first;
 
-        // Delete older duplicates if they exist
+        // Check if this item is already at the very top of the list
+        // and there are no other duplicates to clean up.
+        final newestItemInBox =
+            clipboardBox.values.isEmpty
+                ? null
+                : (clipboardBox.values.toList()
+                  ..sort((a, b) => b.createdAt.compareTo(a.createdAt))).first;
+
+        if (newestItemInBox != null &&
+            newestItemInBox.id == keptItem.id &&
+            matchingItems.length == 1) {
+          // Already synchronized with DB, just update session cache
+          _lastClipboardText = trimmedContent;
+          return;
+        }
+
+        // Clean up older duplicates
         if (matchingItems.length > 1) {
           for (int i = 1; i < matchingItems.length; i++) {
             await matchingItems[i].delete();
           }
-          debugPrint(
-            '🗑️ Deleted ${matchingItems.length - 1} extra duplicates',
-          );
+          debugPrint('🗑️ Deleted ${matchingItems.length - 1} duplicates');
         }
 
-        // Bump the kept item to top
+        // Bump to top
         keptItem.createdAt = DateTime.now();
         await keptItem.save();
 
+        _lastClipboardText = trimmedContent;
         debugPrint('⬆️ Bumped existing item to top');
 
         if (mounted) {
@@ -719,7 +581,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
                 AppLocalizations.of(context)!.clipboardUpdatedExclamation,
               ),
               behavior: SnackBarBehavior.floating,
-              duration: Duration(seconds: 1),
+              duration: const Duration(seconds: 1),
             ),
           );
         }
@@ -727,8 +589,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         return;
       }
 
-      // Add as NEW item
-      // Use UUID + timestamp for guaranteed uniqueness
+      // ✅ 3. New Item Logic
+      _lastClipboardText = trimmedContent;
       final uuid = const Uuid();
       final newItem = ClipboardItem(
         id: uuid.v4(),
@@ -751,9 +613,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
               ),
             ),
             behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.green,
-            duration: const Duration(seconds: 2),
-            margin: const EdgeInsets.all(16),
+            duration: const Duration(seconds: 1),
           ),
         );
       }

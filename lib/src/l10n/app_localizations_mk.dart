@@ -2731,4 +2731,7 @@ class AppLocalizationsMkMk extends AppLocalizationsMk {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get bulkImport => 'Bulk Import';
 }
