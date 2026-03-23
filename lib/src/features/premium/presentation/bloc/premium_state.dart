@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:copyclip/src/core/const/premium_constants.dart';
 
 class PremiumState extends Equatable {
   final int coins;
@@ -16,6 +17,7 @@ class PremiumState extends Equatable {
   });
 
   bool get isPremium {
+    if (PremiumConstants.isPremiumFree) return true;
     if (isPremiumOverride) return true;
     if (premiumExpiryDate == null) return false;
     return premiumExpiryDate!.isAfter(DateTime.now());
