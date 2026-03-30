@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:share_plus/share_plus.dart';
+import 'dart:io';
 
 class SocialPostListWidget extends StatefulWidget {
   final String filter; // 'all', 'favorites', 'drafts'
@@ -353,6 +355,15 @@ class SocialPostListWidgetState extends State<SocialPostListWidget>
                       post.save();
                     },
                   ),
+                  // Share Button
+                  IconButton(
+                    icon: Icon(
+                      Icons.share_outlined,
+                      color: Colors.grey,
+                      size: 20.sp,
+                    ),
+                    onPressed: () => _sharePost(context, post),
+                  ),
                   if (post.isDraft)
                     Container(
                       margin: EdgeInsets.only(left: 8.w),
@@ -434,6 +445,41 @@ class SocialPostListWidgetState extends State<SocialPostListWidget>
       return buffer.toString().trim().replaceAll('\n', ' ');
     } catch (_) {
       return content;
+    }
+  }
+
+  /// Share post text + images via system share sheet
+  Future<void> _sharePost(BuildContext context, SocialPost post) async {
+    try {
+      final plainText = _getPreviewText(post.content);
+
+      // Collect valid media files
+      final validFiles = post.mediaPaths
+          .where((p) => File(p).existsSync())
+          .map((p) => XFile(p))
+          .toList();
+
+      if (validFiles.isNotEmpty) {
+        await Share.shareXFiles(
+          validFiles,
+          text: plainText.isNotEmpty ? plainText : null,
+          subject: 'Shared from CopyClip',
+        );
+      } else if (plainText.isNotEmpty) {
+        await Share.share(plainText, subject: 'Shared from CopyClip');
+      } else {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Nothing to share')),
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error sharing: $e')),
+        );
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -7,8 +8,7 @@ import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
-import 'package:copyclip/src/core/widgets/empty_state_widget.dart'; // Added
-// import 'package:copyclip/src/core/widgets/glass_container.dart'; // ❌ REMOVED to prevent lag
+import 'package:copyclip/src/core/widgets/empty_state_widget.dart';
 
 import '../../../clipboard/data/clipboard_model.dart';
 import '../../../expenses/data/expense_model.dart';
@@ -25,6 +25,26 @@ class RecycleBinScreen extends StatefulWidget {
 
 class _RecycleBinScreenState extends State<RecycleBinScreen> {
   String _sortBy = 'date';
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _initBoxes();
+  }
+
+  Future<void> _initBoxes() async {
+    try {
+      // Ensure all major boxes are open so deleted items are visible
+      await LazyBoxLoader.loadAllBoxes();
+    } catch (e) {
+      debugPrint("Error opening boxes for RecycleBin: $e");
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
 
   List<dynamic> _getAllDeleted() {
     List<dynamic> allDeleted = [];
@@ -182,8 +202,7 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
   }
 
   void _emptyTrash() {
-    final itemsToDelete =
-        _getAllDeleted(); // Get currently visible deleted items
+    final itemsToDelete = _getAllDeleted();
     if (itemsToDelete.isEmpty) return;
 
     showDialog(
@@ -196,41 +215,25 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
         confirmText: AppLocalizations.of(context)!.emptyBin,
         isDestructive: true,
         onConfirm: () async {
-          // Close dialog first to avoid UI freeze perception
           Navigator.pop(ctx);
-
           try {
-            // Delete all items directly
             for (var item in itemsToDelete) {
               if (item is HiveObject) {
                 await item.delete();
               }
             }
-
-            // Wait a tick for Hive to sync
             await Future.delayed(const Duration(milliseconds: 100));
-
             if (mounted) {
-              setState(() {}); // Refresh UI
+              setState(() {});
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(
-                    AppLocalizations.of(context)!.recycleBinCleared,
-                  ),
+                  content: Text(AppLocalizations.of(context)!.recycleBinCleared),
                   behavior: SnackBarBehavior.floating,
                 ),
               );
             }
           } catch (e) {
             debugPrint("Error emptying trash: $e");
-            if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Error: $e"),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            }
           }
         },
       ),
@@ -267,218 +270,152 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
             ],
           ),
           Expanded(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 10,
-                  ),
-                  child: Row(
+            child: _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : Column(
                     children: [
-                      _filterChip(
-                        AppLocalizations.of(context)!.recent,
-                        _sortBy == 'date',
-                        () => setState(() => _sortBy = 'date'),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        child: Row(
+                          children: [
+                            _filterChip(
+                              AppLocalizations.of(context)!.recent,
+                              _sortBy == 'date',
+                              () => setState(() => _sortBy = 'date'),
+                            ),
+                            const SizedBox(width: 8),
+                            _filterChip(
+                              AppLocalizations.of(context)!.category,
+                              _sortBy == 'type',
+                              () => setState(() => _sortBy = 'type'),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(width: 8),
-                      _filterChip(
-                        AppLocalizations.of(context)!.category,
-                        _sortBy == 'type',
-                        () => setState(() => _sortBy = 'type'),
+                      Expanded(
+                        child: items.isEmpty
+                            ? Center(
+                                child: EmptyStateWidget(
+                                  message: AppLocalizations.of(
+                                    context,
+                                  )!.recycleBinEmpty,
+                                  subMessage: AppLocalizations.of(
+                                    context,
+                                  )!.deletedItemsAppearHere,
+                                  assetPath: "assets/images/recycle_bin_empty.svg",
+                                ),
+                              )
+                            : ValueListenableBuilder(
+                                valueListenable: Hive.box<Note>('notes_box').listenable(),
+                                builder: (context, _, __) {
+                                  return ValueListenableBuilder(
+                                    valueListenable: Hive.box<Todo>('todos_box').listenable(),
+                                    builder: (context, _, __) {
+                                      return ValueListenableBuilder(
+                                        valueListenable: Hive.box<Expense>('expenses_box').listenable(),
+                                        builder: (context, _, __) {
+                                          return ValueListenableBuilder(
+                                            valueListenable: Hive.box<JournalEntry>('journal_box').listenable(),
+                                            builder: (context, _, __) {
+                                              return ValueListenableBuilder(
+                                                valueListenable: Hive.box<ClipboardItem>('clipboard_box').listenable(),
+                                                builder: (context, _, __) {
+                                                  final currentItems = _getAllDeleted();
+                                                  return ListView.separated(
+                                                    padding: const EdgeInsets.symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 8,
+                                                    ),
+                                                    itemCount: currentItems.length,
+                                                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                                                    itemBuilder: (context, index) {
+                                                      final item = currentItems[index];
+                                                      final data = _getItemDisplayData(context, item);
+                                                      final deletedAt = (item as dynamic).deletedAt;
+                                                      String timeLabel = AppLocalizations.of(context)!.untitled;
+                                                      if (deletedAt != null) {
+                                                        final now = DateTime.now();
+                                                        final diff = now.difference(deletedAt);
+                                                        final l10n = AppLocalizations.of(context)!;
+                                                        if (diff.inMinutes < 1) {
+                                                          timeLabel = l10n.justNow;
+                                                        } else if (diff.inHours < 1) {
+                                                          timeLabel = l10n.minutesAgo(diff.inMinutes);
+                                                        } else if (diff.inDays < 1) {
+                                                          timeLabel = l10n.hoursAgo(diff.inHours);
+                                                        } else {
+                                                          timeLabel = l10n.daysAgo(diff.inDays);
+                                                        }
+                                                      }
+                                                      return Container(
+                                                        decoration: BoxDecoration(
+                                                          color: theme.colorScheme.surface.withValues(alpha: 0.6),
+                                                          borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+                                                          border: Border.all(
+                                                            color: theme.dividerColor.withValues(alpha: 0.1),
+                                                            width: AppConstants.borderWidth,
+                                                          ),
+                                                        ),
+                                                        child: ListTile(
+                                                          contentPadding: const EdgeInsets.symmetric(
+                                                            horizontal: 16,
+                                                            vertical: 8,
+                                                          ),
+                                                          leading: Icon(
+                                                            data['icon'] as IconData,
+                                                            color: data['color'] as Color,
+                                                            size: 30,
+                                                          ),
+                                                          title: Text(
+                                                            data['title'] as String,
+                                                            style: theme.textTheme.bodyLarge?.copyWith(
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
+                                                            maxLines: 1,
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                          subtitle: Text(
+                                                            "${data['subtitle']} • $timeLabel",
+                                                            style: theme.textTheme.bodySmall,
+                                                            maxLines: 1,
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                          trailing: Row(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: [
+                                                              IconButton(
+                                                                icon: const Icon(CupertinoIcons.arrow_counterclockwise),
+                                                                onPressed: () => _restoreItem(item),
+                                                              ),
+                                                              IconButton(
+                                                                icon: const Icon(
+                                                                  CupertinoIcons.delete,
+                                                                  color: Colors.redAccent,
+                                                                ),
+                                                                onPressed: () => _permanentlyDeleteItem(item),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                       ),
                     ],
                   ),
-                ),
-                Expanded(
-                  child: items.isEmpty
-                      ? Center(
-                          child: EmptyStateWidget(
-                            message: AppLocalizations.of(
-                              context,
-                            )!.recycleBinEmpty,
-                            subMessage: AppLocalizations.of(
-                              context,
-                            )!.deletedItemsAppearHere,
-                            assetPath: "assets/images/recycle_bin_empty.svg",
-                          ),
-                        )
-                      : ValueListenableBuilder(
-                          valueListenable: Hive.box<Note>(
-                            'notes_box',
-                          ).listenable(),
-                          builder: (context, _, __) {
-                            return ValueListenableBuilder(
-                              valueListenable: Hive.box<Todo>(
-                                'todos_box',
-                              ).listenable(),
-                              builder: (context, _, __) {
-                                return ValueListenableBuilder(
-                                  valueListenable: Hive.box<Expense>(
-                                    'expenses_box',
-                                  ).listenable(),
-                                  builder: (context, _, __) {
-                                    return ValueListenableBuilder(
-                                      valueListenable: Hive.box<JournalEntry>(
-                                        'journal_box',
-                                      ).listenable(),
-                                      builder: (context, _, __) {
-                                        return ValueListenableBuilder(
-                                          valueListenable:
-                                              Hive.box<ClipboardItem>(
-                                                'clipboard_box',
-                                              ).listenable(),
-                                          builder: (context, _, __) {
-                                            final currentItems =
-                                                _getAllDeleted();
-                                            return ListView.separated(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 8,
-                                                  ),
-                                              itemCount: currentItems.length,
-                                              separatorBuilder: (_, __) =>
-                                                  const SizedBox(height: 12),
-                                              itemBuilder: (context, index) {
-                                                final item =
-                                                    currentItems[index];
-                                                final data =
-                                                    _getItemDisplayData(
-                                                      context,
-                                                      item,
-                                                    );
-                                                final deletedAt =
-                                                    (item as dynamic).deletedAt;
-                                                String timeLabel =
-                                                    AppLocalizations.of(
-                                                      context,
-                                                    )!.untitled;
-                                                if (deletedAt != null) {
-                                                  final now = DateTime.now();
-                                                  final diff = now.difference(
-                                                    deletedAt,
-                                                  );
-                                                  final l10n =
-                                                      AppLocalizations.of(
-                                                        context,
-                                                      )!;
-                                                  if (diff.inMinutes < 1) {
-                                                    timeLabel = l10n.justNow;
-                                                  } else if (diff.inHours < 1) {
-                                                    timeLabel = l10n.minutesAgo(
-                                                      diff.inMinutes,
-                                                    );
-                                                  } else if (diff.inDays < 1) {
-                                                    timeLabel = l10n.hoursAgo(
-                                                      diff.inHours,
-                                                    );
-                                                  } else {
-                                                    timeLabel = l10n.daysAgo(
-                                                      diff.inDays,
-                                                    );
-                                                  }
-                                                }
-                                                return Container(
-                                                  decoration: BoxDecoration(
-                                                    color: theme
-                                                        .colorScheme
-                                                        .surface
-                                                        .withValues(alpha: 0.6),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          AppConstants
-                                                              .cornerRadius,
-                                                        ),
-                                                    border: Border.all(
-                                                      color: theme.dividerColor
-                                                          .withValues(
-                                                            alpha: 0.1,
-                                                          ),
-                                                      width: AppConstants
-                                                          .borderWidth,
-                                                    ),
-                                                  ),
-                                                  child: ListTile(
-                                                    contentPadding:
-                                                        const EdgeInsets.symmetric(
-                                                          horizontal: 16,
-                                                          vertical: 8,
-                                                        ),
-                                                    leading: Icon(
-                                                      data['icon'] as IconData,
-                                                      color:
-                                                          data['color']
-                                                              as Color,
-                                                      size: 30,
-                                                    ),
-                                                    title: Text(
-                                                      data['title'] as String,
-                                                      style: theme
-                                                          .textTheme
-                                                          .bodyLarge
-                                                          ?.copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                    subtitle: Text(
-                                                      "${data['subtitle']} • $timeLabel",
-                                                      style: theme
-                                                          .textTheme
-                                                          .bodySmall,
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                    trailing: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        IconButton(
-                                                          icon: const Icon(
-                                                            CupertinoIcons
-                                                                .arrow_counterclockwise,
-                                                          ),
-                                                          onPressed: () =>
-                                                              _restoreItem(
-                                                                item,
-                                                              ),
-                                                        ),
-                                                        IconButton(
-                                                          icon: const Icon(
-                                                            CupertinoIcons
-                                                                .delete,
-                                                            color: Colors
-                                                                .redAccent,
-                                                          ),
-                                                          onPressed: () =>
-                                                              _permanentlyDeleteItem(
-                                                                item,
-                                                              ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          },
-                                        );
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        ),
-                ),
-              ],
-            ),
           ),
         ],
       ),
@@ -489,7 +426,6 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
     final theme = Theme.of(context);
     return GestureDetector(
       onTap: onTap,
-      // ✅ Replaced GlassContainer with a simple Container
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

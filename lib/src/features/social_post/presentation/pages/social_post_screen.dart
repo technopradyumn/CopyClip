@@ -18,6 +18,8 @@ import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:copyclip/src/l10n/app_localizations.dart';
 import 'package:copyclip/src/core/services/social_share_service.dart';
+import 'package:provider/provider.dart';
+import 'package:copyclip/src/core/services/gamification_service.dart';
 
 class SocialPostScreen extends StatefulWidget {
   final SocialPost? postToEdit;
@@ -182,6 +184,12 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
     }
 
     if (mounted) {
+      // Award XP for creating a post
+      try {
+        Provider.of<GamificationService>(context, listen: false)
+            .recordFeatureUsage('social_post');
+      } catch (_) {}
+
       // User requested no snackbars for save actions
       if (shouldPop) {
         setState(() => _allowPop = true);
@@ -264,6 +272,11 @@ class _SocialPostScreenState extends State<SocialPostScreen> {
         title: AppLocalizations.of(context)!.createPost,
         showBackArrow: true,
         actions: [
+          IconButton(
+            onPressed: () => _savePost(isDraft: false, shouldPop: true),
+            icon: const Icon(CupertinoIcons.checkmark_alt, size: 28),
+            tooltip: AppLocalizations.of(context)!.save,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
             child: FilledButton(

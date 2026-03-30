@@ -12,6 +12,8 @@ import 'package:intl/intl.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/utils/widget_sync_service.dart';
 import '../../../../core/widgets/glass_dialog.dart';
+import 'package:provider/provider.dart';
+import '../../../../core/services/gamification_service.dart';
 
 class ExpenseFormState {
   final String title;
@@ -514,7 +516,13 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
         expense.isIncome,
       );
 
-      if (mounted) context.pop();
+      if (mounted) {
+        try {
+          Provider.of<GamificationService>(context, listen: false)
+              .recordFeatureUsage('expense');
+        } catch (_) {}
+        context.pop();
+      }
     } catch (e) {
       debugPrint("❌ Error saving expense: $e");
       if (mounted) {

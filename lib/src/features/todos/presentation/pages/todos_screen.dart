@@ -203,35 +203,12 @@ class _TodosScreenState extends State<TodosScreen>
   Future<void> _initData() async {
     await LazyBoxLoader.getBox<Todo>('todos_box'); // Ensure loaded
 
-    // Auto-cleanup expired tasks (User Request: "not repeat then automatically delete by end of the day")
-    _cleanupExpiredTasks();
-
     if (mounted) {
       _refreshTodos();
       Hive.box<Todo>('todos_box').listenable().addListener(_refreshTodos);
     }
   }
 
-  void _cleanupExpiredTasks() {
-    if (!Hive.isBoxOpen('todos_box')) return;
-    final box = Hive.box<Todo>('todos_box');
-    final now = DateTime.now();
-    final todayStart = DateTime(now.year, now.month, now.day);
-
-    for (var todo in box.values) {
-      if (todo.isDeleted) continue;
-      // Only non-repeating tasks with a set date
-      if (todo.repeatInterval == null && todo.dueDate != null) {
-        if (todo.dueDate!.isBefore(todayStart)) {
-          debugPrint("Auto-deleting expired task: ${todo.task}");
-          todo.isDeleted = true;
-          todo.deletedAt = now;
-          todo.save();
-          NotificationService().cancelNotification(todo.id.hashCode);
-        }
-      }
-    }
-  }
 
   @override
   void dispose() {
@@ -456,7 +433,7 @@ class _TodosScreenState extends State<TodosScreen>
     if (result != null && mounted) {
       // Award XP
       final gamification = context.read<GamificationService>();
-      await gamification.addXp(10);
+      await gamification.addXp(10, feature: 'todo');
       await gamification.recordActivity();
 
       if (mounted) {
@@ -502,7 +479,7 @@ class _TodosScreenState extends State<TodosScreen>
     } else if (todo.isDone && mounted) {
       // Award XP for single tasks too
       final gamification = context.read<GamificationService>();
-      await gamification.addXp(10);
+      await gamification.addXp(10, feature: 'todo');
       await gamification.recordActivity();
 
       if (mounted) {

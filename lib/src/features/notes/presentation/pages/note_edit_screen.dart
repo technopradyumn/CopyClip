@@ -27,6 +27,7 @@ import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dar
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/services/gamification_service.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final Note? note;
@@ -300,6 +301,12 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
     }
     // Sync Widget
     WidgetSyncService.syncNotes();
+
+    // Award XP
+    try {
+      Provider.of<GamificationService>(context, listen: false)
+          .recordFeatureUsage('note');
+    } catch (_) {}
   }
 
   void _showColorPicker() {

@@ -39,7 +39,7 @@ class _MascotCharacterState extends State<MascotCharacter>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 3000),
+      duration: const Duration(milliseconds: 1500),
     )..repeat();
 
     _interactionController = AnimationController(
@@ -137,18 +137,25 @@ class _MascotCharacterState extends State<MascotCharacter>
   }
 
   void _updateAnimationSpeed() {
+    // Trigger burst animation on state change for snappy transitions
+    if (!_interactionController.isAnimating) {
+      _interactionController.forward(from: 0.0);
+    }
     switch (widget.state) {
       case MascotState.happy:
-        _controller.duration = const Duration(milliseconds: 1500);
+        _controller.duration = const Duration(milliseconds: 800);
         break;
       case MascotState.sleeping:
-        _controller.duration = const Duration(milliseconds: 6000);
+        _controller.duration = const Duration(milliseconds: 4000);
         break;
       case MascotState.amazed:
-        _controller.duration = const Duration(milliseconds: 2000);
+        _controller.duration = const Duration(milliseconds: 1000);
+        break;
+      case MascotState.encouraging:
+        _controller.duration = const Duration(milliseconds: 900);
         break;
       default:
-        _controller.duration = const Duration(milliseconds: 3000);
+        _controller.duration = const Duration(milliseconds: 1500);
     }
     _controller.repeat();
   }

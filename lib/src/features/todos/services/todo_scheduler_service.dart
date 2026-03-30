@@ -197,38 +197,9 @@ class TodoSchedulerService {
 
   /// Called on app start or background wake to fix "Missed" schedules
   Future<void> handleMissedRecurrences() async {
-    if (!Hive.isBoxOpen('todos_box')) {
-      // Should be opened by caller, but safety check
-      return;
-    }
-    final box = Hive.box<Todo>('todos_box');
-    final now = DateTime.now();
-    final todayStart = DateTime(now.year, now.month, now.day);
-
-    for (var todo in box.values) {
-      if (todo.isDeleted) continue;
-
-      // If it's a repeatable task instance...
-      if (todo.repeatInterval != null && !todo.isDone && todo.dueDate != null) {
-        // User requested that uncompleted repeated tasks from previous days
-        // should no longer be treated as repeating to avoid duplication clutter.
-        if (todo.dueDate!.isBefore(todayStart)) {
-          debugPrint(
-            '🧹 Found overdue repeated task: ${todo.task}. Removing repeat status.',
-          );
-
-          todo.repeatInterval = null;
-          todo.repeatDays = null;
-          todo.nextInstanceId = null;
-
-          // Reschedule notification (will cancel if in past)
-          await _updateNotifications(todo);
-          await todo.save();
-          debugPrint('📅 Removed repeat from stale task');
-        }
-      }
-    }
+    // Note: Automated cleanup of past tasks was disabled based on user feedback.
   }
+
 
   // --- Helpers for NotificationEngine ---
 

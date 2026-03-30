@@ -41,11 +41,14 @@ import 'package:copyclip/src/features/notes/data/note_adapter.dart';
 import 'package:copyclip/src/features/todos/data/todo_adapter.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'package:copyclip/src/features/social_post/data/social_post_model.dart'; // Added
+import 'package:copyclip/src/features/calendar/data/calendar_event_adapter.dart';
+import 'package:copyclip/src/features/calendar/data/calendar_event_model.dart';
 import 'package:copyclip/src/core/const/languages.dart';
 import 'src/l10n/app_localizations.dart';
 
 import 'package:upgrader/upgrader.dart';
 import 'package:uuid/uuid.dart';
+import 'package:in_app_update/in_app_update.dart';
 
 // ============================================
 // ✅ ENHANCED BACKGROUND CALLBACK FOR WIDGETS
@@ -155,12 +158,19 @@ Future<void> _initializeApp(AppInitializationState state) async {
 
     // Step 3: Critical System setup
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.transparent,
+        statusBarColor: Colors.transparent,
+      ),
+    );
 
     // Step 4: Open ONLY critical boxes for UI
     // Grouping awaits for parallelism
     await Future.wait([
       _openBoxSafely('settings'),
       _openBoxSafely('theme_box'),
+      _openBoxSafely<CalendarEvent>('calendar_events_box'),
       CanvasDatabase().init(),
     ]);
 
@@ -180,6 +190,7 @@ void _registerAdapters() {
   Hive.registerAdapter(ClipboardItemAdapter());
   Hive.registerAdapter(SocialPostAdapter());
   Hive.registerAdapter(GamificationModelAdapter());
+  Hive.registerAdapter(CalendarEventAdapter());
 }
 
 /// Helper to safely open a Hive box.
@@ -219,6 +230,10 @@ Future<void> _initializeBackgroundTasks() async {
     // ✅ NEW: Update all widgets with latest data on app start
     await _updateAllWidgets();
     debugPrint('✅ All widgets updated with latest data');
+
+    // ✅ NEW: Initialize BackgroundWorker before any registrations
+    await BackgroundWorker.initialize();
+    debugPrint('✅ Workmanager Initialized');
 
     // ✅ NEW: Reschedule daily briefing to ensure it's set
     await BackgroundWorker.rescheduleDailyBriefing();
@@ -368,6 +383,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
     // App Update Service
     AppUpdateService.instance.checkForUpdate();
+
+    // Native In-App Update (Google Play)
+    _checkNativeUpdate();
   }
 
   void _startClipboardTimer() {
@@ -503,6 +521,25 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     }
   }
 
+  /// Native Google Play In-App Update check
+  Future<void> _checkNativeUpdate() async {
+    try {
+      final updateInfo = await InAppUpdate.checkForUpdate();
+      if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
+        // Try flexible update first
+        try {
+          await InAppUpdate.startFlexibleUpdate();
+          await InAppUpdate.completeFlexibleUpdate();
+        } catch (_) {
+          // Fallback: offer immediate update for critical ones
+          debugPrint('⚠️ Flexible update failed, skipping immediate.');
+        }
+      }
+    } catch (e) {
+      debugPrint('ℹ️ In-app update check skipped: $e');
+    }
+  }
+
   Future<void> _checkClipboard() async {
     try {
       if (!mounted) return;
@@ -620,6 +657,14 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
       debugPrint('✅ Auto-saved clipboard item: ${newItem.id}');
       await WidgetSyncService.syncClipboard();
+
+      // Award XP for clipboard save
+      if (mounted) {
+        try {
+          final gamification = Provider.of<GamificationService>(context, listen: false);
+          gamification.recordFeatureUsage('clipboard');
+        } catch (_) {}
+      }
     } catch (e) {
       debugPrint('❌ Clipboard check error: $e');
     }
@@ -689,19 +734,40 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
               },
 
               builder: (context, child) {
-                // Ensure text selection uses our CustomSelectionControls globally
+                final bottomPadding = MediaQuery.of(context).viewPadding.bottom;
                 final upgradedChild = UpgradeAlert(
                   navigatorKey: router.routerDelegate.navigatorKey,
                   upgrader: Upgrader(
-                    debugLogging: true,
-                    debugDisplayAlways: true,
                     messages: RateUpgraderMessages(),
-                    durationUntilAlertAgain: const Duration(days: 0),
+                    durationUntilAlertAgain: const Duration(days: 1),
                   ),
                   child: child ?? const SizedBox(),
                 );
 
-                return upgradedChild;
+                return MediaQuery(
+                  data: MediaQuery.of(context),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 10,
+                        child: upgradedChild,
+                      ),
+                      // Fill the area behind system nav bar with scaffold bg
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        height: bottomPadding,
+                        child: ColoredBox(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               },
             );
           },

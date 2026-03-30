@@ -20,6 +20,8 @@ import '../../../../features/premium/presentation/widgets/premium_lock_dialog.da
 import '../../../../features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:copyclip/src/core/widgets/premium_badge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import '../../../../core/services/gamification_service.dart';
 
 enum BrushShape {
   round,
@@ -311,6 +313,14 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
     _currentNote.lastModified = DateTime.now();
     await CanvasDatabase().saveNote(_currentNote);
     WidgetSyncService.syncCanvas(); // Sync Widget
+
+    // Award XP
+    if (mounted) {
+      try {
+        Provider.of<GamificationService>(context, listen: false)
+            .recordFeatureUsage('canvas');
+      } catch (_) {}
+    }
   }
 
   void _undo() {
@@ -676,132 +686,135 @@ class _CanvasEditScreenState extends State<CanvasEditScreen>
   // --- THE CANVAS STACK WITH BOOK EFFECT ---
   // --- THE CANVAS STACK (Simplified) ---
   Widget _buildCanvasArea(ThemeData theme, ColorScheme colorScheme) {
-    return InteractiveViewer(
-      transformationController: _transformationController,
-      boundaryMargin: const EdgeInsets.all(0),
-      minScale: 0.5,
-      maxScale: 5.0,
-      panEnabled: !_isDrawingMode || _isHandMode,
-      scaleEnabled: !_isDrawingMode || _isHandMode,
-      child: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onPanStart: (details) {
-          if (_isDrawingMode && !_isHandMode) {
-            // Get correct local position using RenderBox
-            final RenderBox? renderBox =
-                _canvasKey.currentContext?.findRenderObject() as RenderBox?;
-            if (renderBox != null) {
-              final localPos = renderBox.globalToLocal(details.globalPosition);
-              setState(() {
-                _redoStack.clear();
-                _strokes.add(
-                  DrawingStroke(
-                    points: [localPos.dx, localPos.dy],
-                    color: _isErasing
-                        ? _currentNote.backgroundColor.toARGB32()
-                        : _selectedColor.toARGB32(),
-                    strokeWidth: _isErasing ? _eraserSize : _strokeWidth,
-                    penType: _brushShape.index,
-                  ),
-                );
-              });
-            }
-          }
-        },
-        onPanUpdate: (details) {
-          if (_isDrawingMode && !_isHandMode) {
-            // Get correct local position using RenderBox
-            final RenderBox? renderBox =
-                _canvasKey.currentContext?.findRenderObject() as RenderBox?;
-            if (renderBox != null) {
-              final localPos = renderBox.globalToLocal(details.globalPosition);
-              setState(() {
-                if (_strokes.isNotEmpty) {
-                  _strokes.last.points.addAll([localPos.dx, localPos.dy]);
-                }
-              });
-            }
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // --- FAKE STACK PAGES (DEPTH VISUALS) ---
-              _buildStackLayer(theme, 3, 10, 0.85),
-              _buildStackLayer(theme, 2, 6, 0.90),
-              _buildStackLayer(theme, 1, 3, 0.95),
+    return Stack(
+      children: [
+        // 1. InteractiveViewer for zoom/pan (only active in hand mode)
+        InteractiveViewer(
+          transformationController: _transformationController,
+          boundaryMargin: const EdgeInsets.all(0),
+          minScale: 0.5,
+          maxScale: 5.0,
+          panEnabled: !_isDrawingMode || _isHandMode,
+          scaleEnabled: !_isDrawingMode || _isHandMode,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // --- FAKE STACK PAGES (DEPTH VISUALS) ---
+                _buildStackLayer(theme, 3, 10, 0.85),
+                _buildStackLayer(theme, 2, 6, 0.90),
+                _buildStackLayer(theme, 1, 3, 0.95),
 
-              // --- CURRENT PAGE (No 3D Animation to prevent bugs) ---
-              Container(
-                key: ValueKey<int>(_currentPageIndex),
-                decoration: BoxDecoration(
-                  color: _currentNote.backgroundColor,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 5,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                width: double.infinity,
-                height: double.infinity,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Stack(
-                    children: [
-                      // BACKGROUND IMAGE (PDF Page)
-                      if (_currentNote
-                              .pages[_currentPageIndex]
-                              .backgroundImageBytes !=
-                          null)
-                        Positioned.fill(
-                          child: Image.memory(
-                            _currentNote
-                                .pages[_currentPageIndex]
-                                .backgroundImageBytes!,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-
-                      RepaintBoundary(
-                        child: CustomPaint(
-                          key: _canvasKey,
-                          painter: DrawingPainter(
-                            _strokes,
-                            _currentNote
-                                .backgroundColor, // Passing background color to painter (might be redundant if image covers it, but good for erasing)
-                          ),
-                          size: Size.infinite,
-                        ),
+                // --- CURRENT PAGE ---
+                Container(
+                  key: ValueKey<int>(_currentPageIndex),
+                  decoration: BoxDecoration(
+                    color: _currentNote.backgroundColor,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 5,
+                        offset: const Offset(0, 2),
                       ),
-                      ..._textElements.map(
-                        (text) => Positioned(
-                          left: text.position.dx,
-                          top: text.position.dy,
-                          child: _buildEditableText(
-                            text,
-                            _selectedTextId == text.id,
-                            colorScheme,
-                          ),
-                        ),
-                      ),
-                      if (_isDrawingMode && !_isHandMode)
-                        GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          child: Container(color: Colors.transparent),
-                        ),
                     ],
                   ),
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Stack(
+                      children: [
+                        // BACKGROUND IMAGE (PDF Page)
+                        if (_currentNote
+                                .pages[_currentPageIndex]
+                                .backgroundImageBytes !=
+                            null)
+                          Positioned.fill(
+                            child: Image.memory(
+                              _currentNote
+                                  .pages[_currentPageIndex]
+                                  .backgroundImageBytes!,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+
+                        RepaintBoundary(
+                          child: CustomPaint(
+                            key: _canvasKey,
+                            painter: DrawingPainter(
+                              _strokes,
+                              _currentNote.backgroundColor,
+                            ),
+                            size: Size.infinite,
+                          ),
+                        ),
+                        ..._textElements.map(
+                          (text) => Positioned(
+                            left: text.position.dx,
+                            top: text.position.dy,
+                            child: _buildEditableText(
+                              text,
+                              _selectedTextId == text.id,
+                              colorScheme,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
+
+        // 2. Drawing gesture overlay — sits ABOVE InteractiveViewer
+        //    This ensures strokes in ALL directions (L→R, R→L, up, down) work
+        if (_isDrawingMode && !_isHandMode)
+          Positioned.fill(
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onPanStart: (details) {
+                final RenderBox? renderBox =
+                    _canvasKey.currentContext?.findRenderObject() as RenderBox?;
+                if (renderBox != null) {
+                  final localPos = renderBox.globalToLocal(details.globalPosition);
+                  setState(() {
+                    _redoStack.clear();
+                    _strokes.add(
+                      DrawingStroke(
+                        points: [localPos.dx, localPos.dy],
+                        color: _isErasing
+                            ? _currentNote.backgroundColor.toARGB32()
+                            : _selectedColor.toARGB32(),
+                        strokeWidth: _isErasing ? _eraserSize : _strokeWidth,
+                        penType: _brushShape.index,
+                      ),
+                    );
+                  });
+                }
+              },
+              onPanUpdate: (details) {
+                final RenderBox? renderBox =
+                    _canvasKey.currentContext?.findRenderObject() as RenderBox?;
+                if (renderBox != null) {
+                  final localPos = renderBox.globalToLocal(details.globalPosition);
+                  setState(() {
+                    if (_strokes.isNotEmpty) {
+                      _strokes.last.points.addAll([localPos.dx, localPos.dy]);
+                    }
+                  });
+                }
+              },
+              onPanEnd: (_) {
+                // Stroke complete - trigger auto-save if desired
+              },
+              child: Container(color: Colors.transparent),
+            ),
+          ),
+      ],
     );
   }
 

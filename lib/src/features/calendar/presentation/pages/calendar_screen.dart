@@ -4,21 +4,25 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../l10n/app_localizations.dart';
-
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/const/constant.dart';
 import 'package:flutter/cupertino.dart';
 import '../../../../core/widgets/dynamic_background.dart';
-
-// Models
-import '../../../clipboard/data/clipboard_model.dart';
+import 'package:provider/provider.dart';
+import '../../../../core/services/gamification_service.dart';
 import '../../../dashboard/presentation/pages/dashboard_screen.dart';
-import '../../../expenses/data/expense_model.dart';
-import '../../../journal/data/journal_model.dart';
+import '../../data/calendar_event_model.dart';
+import '../../presentation/widgets/event_card.dart';
+import 'package:copyclip/src/core/services/lazy_box_loader.dart';
+import 'package:copyclip/src/features/gamification/presentation/widgets/medal_widget.dart';
 import '../../../notes/data/note_model.dart';
 import '../../../todos/data/todo_model.dart';
+import '../../../expenses/data/expense_model.dart';
+import '../../../journal/data/journal_model.dart';
+import '../../../clipboard/data/clipboard_model.dart';
+import '../widgets/calendar_design_picker_sheet.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -30,67 +34,220 @@ class CalendarScreen extends StatefulWidget {
 class _CalendarScreenState extends State<CalendarScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  String _selectedDesignId = 'min_1';
 
   @override
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
+    _initData();
+  }
+
+  Future<void> _initData() async {
+    final settingsBox = Hive.box('settings');
+    final savedDesign = settingsBox.get('calendar_card_design', defaultValue: 'min_1');
+    if (mounted) setState(() => _selectedDesignId = savedDesign);
+
+    await LazyBoxLoader.loadAllBoxes();
+    if (mounted) {
+      setState(() {});
+      Hive.box('notes_box').listenable().addListener(_onDataChanged);
+      Hive.box('todos_box').listenable().addListener(_onDataChanged);
+      Hive.box('expenses_box').listenable().addListener(_onDataChanged);
+      Hive.box('journal_box').listenable().addListener(_onDataChanged);
+      Hive.box<CalendarEvent>('calendar_events_box').listenable().addListener(_onDataChanged);
+    }
+  }
+
+  void _onDataChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    // Clean up listeners
+    if (Hive.isBoxOpen('notes_box')) Hive.box('notes_box').listenable().removeListener(_onDataChanged);
+    if (Hive.isBoxOpen('todos_box')) Hive.box('todos_box').listenable().removeListener(_onDataChanged);
+    if (Hive.isBoxOpen('expenses_box')) Hive.box('expenses_box').listenable().removeListener(_onDataChanged);
+    if (Hive.isBoxOpen('journal_box')) Hive.box('journal_box').listenable().removeListener(_onDataChanged);
+    if (Hive.isBoxOpen('calendar_events_box')) Hive.box<CalendarEvent>('calendar_events_box').listenable().removeListener(_onDataChanged);
+    super.dispose();
   }
 
   // --- DATA FETCHING ---
-  List<dynamic> _getEventsForDay(DateTime day) {
+  List<dynamic> _getActivityForDay(DateTime day) {
     List<dynamic> events = [];
     final dateKey = DateFormat('yyyy-MM-dd').format(day);
 
-    void addFromBox<T>(String boxName, bool Function(T) filter) {
-      if (Hive.isBoxOpen(boxName)) {
-        events.addAll(Hive.box<T>(boxName).values.where(filter));
+    // Helper to safely add from box with type checking
+    void addFromBox(String boxName, String type, Function(dynamic) filter) {
+      try {
+        if (Hive.isBoxOpen(boxName)) {
+          final box = Hive.box(boxName);
+          events.addAll(box.values.where((e) => filter(e)));
+        }
+      } catch (e) {
+        debugPrint("ActivityCalendar: Failed to access $boxName: $e");
       }
     }
 
-    addFromBox<Note>(
-      'notes_box',
-      (e) =>
-          !e.isDeleted &&
-          DateFormat('yyyy-MM-dd').format(e.updatedAt) == dateKey,
-    );
-    addFromBox<Todo>(
-      'todos_box',
-      (e) =>
-          !e.isDeleted &&
-          e.dueDate != null &&
-          DateFormat('yyyy-MM-dd').format(e.dueDate!) == dateKey,
-    );
-    addFromBox<Expense>(
-      'expenses_box',
-      (e) => !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.date) == dateKey,
-    );
-    addFromBox<JournalEntry>(
-      'journal_box',
-      (e) => !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.date) == dateKey,
-    );
-    addFromBox<ClipboardItem>(
-      'clipboard_box',
-      (e) =>
-          !e.isDeleted &&
-          DateFormat('yyyy-MM-dd').format(e.createdAt) == dateKey,
-    );
+    // Features only - NO CalendarEvent mixing
+    addFromBox('notes_box', 'Note', (e) {
+      if (e is Note) return !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.updatedAt) == dateKey;
+      return false;
+    });
+    addFromBox('todos_box', 'Todo', (e) {
+      if (e is Todo) return !e.isDeleted && e.dueDate != null && DateFormat('yyyy-MM-dd').format(e.dueDate!) == dateKey;
+      return false;
+    });
+    addFromBox('expenses_box', 'Expense', (e) {
+      if (e is Expense) return !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.date) == dateKey;
+      return false;
+    });
+    addFromBox('journal_box', 'JournalEntry', (e) {
+      if (e is JournalEntry) return !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.date) == dateKey;
+      return false;
+    });
+    addFromBox('clipboard_box', 'ClipboardItem', (e) {
+      if (e is ClipboardItem) return !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.createdAt) == dateKey;
+      return false;
+    });
+    // REMOVED: calendar_events_box - Pure activity now!
 
     return events;
   }
 
   // --- UI BUILDERS ---
   @override
+  List<CalendarEvent> _getRecentEvents([int limit = 5]) {
+    if (!Hive.isBoxOpen('calendar_events_box')) return [];
+    final box = Hive.box<CalendarEvent>('calendar_events_box');
+    final events = box.values.where((e) => !e.isDeleted).toList();
+    events.sort((a, b) => b.startDate.compareTo(a.startDate));
+    return events.take(limit).toList();
+  }
+
+  Widget _buildAllEventsTile(ThemeData theme, Color onSurface) {
+    final recentEvents = _getRecentEvents(3);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _sectionLabel(theme, 'All Events'),
+        const SizedBox(height: 12),
+        if (recentEvents.isEmpty)
+          Container(
+            height: 80,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface.withOpacity(0.4),
+              borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+            ),
+            child: Center(
+              child: Text(
+                'No events yet',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: onSurface.withOpacity(0.5),
+                ),
+              ),
+            ),
+          )
+        else
+          SizedBox(
+            height: 100,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: recentEvents.length + 1,
+              itemBuilder: (context, index) {
+                if (index < recentEvents.length) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: SizedBox(
+                      width: 280,
+                      child: EventCard(
+                        event: recentEvents[index],
+onTap: () => context.push('/calendar/detail/${recentEvents[index].id}'),
+                      ),
+                    ),
+                  );
+                }
+                return Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: GestureDetector(
+                    onTap: () => context.push(AppRouter.dateDetail, extra: {
+                      'date': DateTime.now(),
+                      'items': _mapEventsToResults([]), // All time
+                    }),
+                    child: Container(
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: theme.colorScheme.primary.withOpacity(0.3)),
+                      ),
+                      child: const Icon(
+                        CupertinoIcons.chevron_right_circle,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+      ],
+    );
+  }
+
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final onSurface = theme.colorScheme.onSurface;
 
     // Get events for the currently selected day
-    final selectedEvents = _getEventsForDay(_selectedDay ?? DateTime.now());
+    final selectedEvents = _getActivityForDay(_selectedDay ?? DateTime.now());
 
     return GlassScaffold(
       showBackArrow: false,
       title: null,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => context.push(AppRouter.calendarEventEdit, extra: null),
+        backgroundColor: theme.colorScheme.primary,
+        icon: const Icon(CupertinoIcons.add, color: Colors.white),
+        label: const Text('New Event', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+      actions: [
+        PopupMenuButton<String>(
+          icon: Icon(CupertinoIcons.ellipsis, color: theme.colorScheme.onSurface.withOpacity(0.6)),
+          onSelected: (value) {
+            if (value == 'design') {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (context) => CalendarDesignPickerSheet(
+                  currentDesignId: _selectedDesignId,
+                  onDesignSelected: (designId) {
+                    final settingsBox = Hive.box('settings');
+                    settingsBox.put('calendar_card_design', designId);
+                    if (mounted) setState(() => _selectedDesignId = designId);
+                  },
+                ),
+              );
+            }
+          },
+          itemBuilder: (context) => [
+            const PopupMenuItem(
+              value: 'design',
+              child: Row(
+                children: [
+                  Icon(Icons.palette, size: 20),
+                  SizedBox(width: 12),
+                  Text('Change Card Design'),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
       body: DynamicBackground(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -100,6 +257,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
             children: [
               const SizedBox(height: 10),
               _buildHeader(theme, onSurface),
+              const SizedBox(height: 8),
+              _buildXpIndicator(theme),
+              const SizedBox(height: 16),
+              
+              // All Events tile
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
+                child: _buildAllEventsTile(theme, onSurface),
+              ),
+              
               const SizedBox(height: 10),
               _buildCalendarCard(theme, onSurface),
 
@@ -155,6 +322,89 @@ class _CalendarScreenState extends State<CalendarScreen> {
     );
   }
 
+  Widget _buildXpIndicator(ThemeData theme) {
+    return Consumer<GamificationService>(
+      builder: (context, service, _) {
+        final model = service.model;
+        final medal = GamificationService.getMedalTier(model.level);
+        return GestureDetector(
+          onTap: () => context.push(AppRouter.xpDetail),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surface.withValues(alpha: 0.6),
+                borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+                border: Border.all(
+                  color: theme.dividerColor.withValues(alpha: 0.1),
+                  width: AppConstants.borderWidth,
+                ),
+              ),
+              child: Row(
+                children: [
+                  MedalWidget(level: model.level, size: 36),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${AppLocalizations.of(context)!.level} ${model.level} ($medal)',
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.primary,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: LinearProgressIndicator(
+                            value: model.progressToNextLevel,
+                            minHeight: 5,
+                            backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.1),
+                            valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.primary),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        '${model.totalXp} XP',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.onSurface,
+                        ),
+                      ),
+                      Text(
+                        '🔥 ${model.streak}',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: Colors.orangeAccent,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 4),
+                  Icon(
+                    CupertinoIcons.chevron_right,
+                    size: 16,
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.3),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _buildCalendarCard(ThemeData theme, Color onSurface) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -183,7 +433,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           focusedDay: _focusedDay,
           rowHeight: 48,
           selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-          eventLoader: _getEventsForDay,
+          eventLoader: _getActivityForDay,
           calendarFormat: CalendarFormat.month,
           headerStyle: HeaderStyle(
             formatButtonVisible: false,
@@ -258,7 +508,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             // Navigate to details after a short delay for visual feedback
             Future.delayed(const Duration(milliseconds: 250), () {
               final results = _mapEventsToResults(
-                _getEventsForDay(selectedDay),
+                _getActivityForDay(selectedDay),
               );
               context.push(
                 AppRouter.dateDetail,
@@ -277,8 +527,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
     Color onSurface,
     ThemeData theme,
   ) {
-    final Map<String, int> counts = {
+  final Map<String, int> counts = {
       'Notes': events.whereType<Note>().length,
+      'Todos': events.whereType<Todo>().length,
       'Finance': events.whereType<Expense>().length,
       'Journal': events.whereType<JournalEntry>().length,
       'Clips': events.whereType<ClipboardItem>().length,
@@ -419,6 +670,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   Widget _buildAllFiveMarkers(List<dynamic> events) {
     final colors = <Color>[];
+    if (events.any((e) => e is CalendarEvent)) colors.add(Colors.deepOrangeAccent);
     if (events.any((e) => e is Note)) colors.add(Colors.amberAccent);
     if (events.any((e) => e is Todo)) colors.add(Colors.greenAccent);
     if (events.any((e) => e is Expense)) colors.add(Colors.redAccent);
@@ -549,6 +801,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   Color _getColorForType(String type) {
     switch (type) {
+      case 'Events':
+        return Colors.deepOrangeAccent;
       case 'Notes':
         return Colors.amberAccent;
       case 'Finance':
@@ -605,9 +859,19 @@ class _CalendarScreenState extends State<CalendarScreen> {
           argument: e,
         );
       }
+      if (e is CalendarEvent) {
+        return GlobalSearchResult(
+          id: e.id,
+          title: e.title,
+          subtitle: e.description.isNotEmpty ? e.description : "Event",
+          type: 'Event',
+          route: AppRouter.calendarEventEdit,
+          argument: e,
+        );
+      }
       return GlobalSearchResult(
         id: e.id,
-        title: e.content,
+        title: e.content ?? "Clipboard",
         subtitle: "Clipboard",
         type: 'Clipboard',
         route: AppRouter.clipboardEdit,

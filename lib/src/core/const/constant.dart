@@ -29,8 +29,10 @@ class FeatureColors {
   // Calm blue for journal
   static const Color journal = Color(0xFF42A5F5);
 
-  // Vibrant orange for calendar
+  // Vibrant orange for calendar activity
   static const Color calendar = Color(0xFFFF7043);
+  // Distinct purple for events list
+  static const Color events = Color.fromARGB(255, 229, 99, 247);
 
   // Rich purple for clipboard
   static const Color clipboard = Color(0xFFAB47BC);

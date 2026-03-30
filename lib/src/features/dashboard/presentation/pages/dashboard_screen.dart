@@ -1,38 +1,34 @@
 import 'dart:async';
-import 'dart:math' as math;
-import 'dart:convert'; // Added for JSON decoding
+import 'dart:convert';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/services/interstitial_ad_service.dart';
 import 'package:copyclip/src/core/const/constant.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:copyclip/src/core/services/gamification_service.dart';
 import 'package:copyclip/src/core/common_widgets/mascot_character.dart';
 import 'package:copyclip/src/core/common_widgets/micro_animation.dart';
-import '../../../../core/theme/bloc/theme_bloc.dart';
-import '../../../../core/theme/app_colors.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-
+import 'package:copyclip/src/core/services/gamification_service.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/dynamic_background.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:intl/intl.dart';
 import '../../../../l10n/app_localizations.dart';
-
 import '../../../notes/data/note_model.dart';
 import '../../../todos/data/todo_model.dart';
 import '../../../journal/data/journal_model.dart';
 import '../../../clipboard/data/clipboard_model.dart';
+import '../../../calendar/data/calendar_event_model.dart';
 import '../../../expenses/data/expense_model.dart';
 import '../../../canvas/data/canvas_adapter.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
+import 'package:copyclip/src/features/gamification/presentation/widgets/medal_widget.dart';
 
 class FeatureItem {
   final String id;
@@ -110,8 +106,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   // State for View Mode
   bool _isGridView = false;
 
-  MascotState _dashboardMascotState = MascotState.idle;
-  Timer? _mascotTimer;
 
   @override
   void initState() {
@@ -120,7 +114,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       vsync: this,
       duration: const Duration(milliseconds: 1000),
     );
-    _startMascotMoodCycle();
+
     _initHive();
     _adService.loadAd();
   }
@@ -199,6 +193,14 @@ class _DashboardScreenState extends State<DashboardScreen>
         AppRouter.socialPost,
         l10n.featuresSocialPostDesc,
       ),
+'events': FeatureItem(
+        'events',
+        'Events',
+        CupertinoIcons.calendar_today,
+        const Color(0xFFAB47BC), // Distinct events purple
+        AppRouter.allEvents,
+        'View all your events',
+      ),
     };
 
     _onboardingData = [
@@ -253,30 +255,10 @@ class _DashboardScreenState extends State<DashboardScreen>
     ];
   }
 
-  void _startMascotMoodCycle() {
-    _mascotTimer?.cancel();
-    _mascotTimer = Timer.periodic(const Duration(seconds: 8), (timer) {
-      if (mounted) {
-        setState(() {
-          // Cycle through interesting states, but mostly stay idle
-          final random = math.Random().nextInt(10);
-          if (random < 5) {
-            _dashboardMascotState = MascotState.idle;
-          } else if (random < 7) {
-            _dashboardMascotState = MascotState.thinking;
-          } else if (random < 8) {
-            _dashboardMascotState = MascotState.amazed;
-          } else {
-            _dashboardMascotState = MascotState.happy;
-          }
-        });
-      }
-    });
-  }
+
 
   @override
   void dispose() {
-    _mascotTimer?.cancel();
     _settingsAnimationController.dispose();
     _onboardingController.dispose();
     WidgetsBinding.instance.removeObserver(this);
@@ -427,231 +409,30 @@ class _DashboardScreenState extends State<DashboardScreen>
     return AppLocalizations.of(context)!.transactionsThisMonth(count);
   }
 
+  CalendarEvent? _getLatestEvent() {
+    if (!Hive.isBoxOpen('calendar_events_box')) return null;
+    final box = Hive.box<CalendarEvent>('calendar_events_box');
+    final events = box.values.where((e) => !e.isDeleted).toList();
+    if (events.isEmpty) return null;
+    events.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return events.first;
+  }
+
+  String? _getLatestEventPreview() {
+    final event = _getLatestEvent();
+    if (event == null) return null;
+    final format = DateFormat('MMM d, h:mm a');
+    return '${event.title} • ${format.format(event.startDate)}';
+  }
+
   void _completeOnboarding() {
     Hive.box('settings').put('has_seen_onboarding', true);
     setState(() => _showOnboarding = false);
   }
 
-  void _showThemeColorPicker(ThemeData theme) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        padding: const EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              blurRadius: 20,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const MascotCharacter(size: 40, state: MascotState.happy),
-                const SizedBox(width: 12),
-                Text(
-                  AppLocalizations.of(context)!.chooseYourAura,
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              AppLocalizations.of(context)!.expressYourselfTheme,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-              ),
-            ),
-            const SizedBox(height: 24),
-            GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 3,
-              mainAxisSpacing: 16,
-              crossAxisSpacing: 16,
-              childAspectRatio: 1.2,
-              children: [
-                _buildColorOption(
-                  AppColors.auroraPink,
-                  AppLocalizations.of(context)!.colorAurora,
-                  theme,
-                ),
-                _buildColorOption(
-                  AppColors.cosmicIndigo,
-                  AppLocalizations.of(context)!.colorCosmic,
-                  theme,
-                ),
-                _buildColorOption(
-                  AppColors.nebulaViolet,
-                  AppLocalizations.of(context)!.colorNebula,
-                  theme,
-                ),
-                _buildColorOption(
-                  AppColors.starlightTeal,
-                  AppLocalizations.of(context)!.colorStarlight,
-                  theme,
-                ),
-                _buildColorOption(
-                  AppColors.solarAmber,
-                  AppLocalizations.of(context)!.colorSolar,
-                  theme,
-                ),
-                _buildColorOption(
-                  AppColors.novaEmerald,
-                  AppLocalizations.of(context)!.colorNova,
-                  theme,
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-          ],
-        ),
-      ),
-    );
-  }
 
-  Widget _buildColorOption(Color color, String label, ThemeData theme) {
-    final isSelected = theme.primaryColor.value == color.value;
-    return GestureDetector(
-      onTap: () {
-        context.read<ThemeBloc>().add(ChangePrimaryColor(color));
-        Navigator.pop(context);
-        // Happy mascot animation feedback could be added here if we had a way to trigger it
-      },
-      child: Column(
-        children: [
-          Container(
-            width: 60,
-            height: 44,
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(12),
-              border: isSelected
-                  ? Border.all(color: theme.colorScheme.onSurface, width: 3)
-                  : null,
-              boxShadow: [
-                BoxShadow(
-                  color: color.withValues(alpha: 0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: isSelected
-                ? const Icon(Icons.check, color: Colors.white)
-                : null,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: theme.textTheme.bodySmall?.copyWith(
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
-  Widget _buildGamificationHeader(ThemeData theme) {
-    return Consumer<GamificationService>(
-      builder: (context, service, _) {
-        final model = service.model;
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  MascotCharacter(
-                    size: 60,
-                    state: _dashboardMascotState,
-                    onTap: () {
-                      setState(() {
-                        _dashboardMascotState = MascotState.happy;
-                      });
-                      _showThemeColorPicker(theme);
-                    },
-                  ),
-                  const SizedBox(width: 5),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${AppLocalizations.of(context)!.level} ${model.level}',
-                          style: theme.textTheme.displaySmall?.copyWith(
-                            fontSize: 20,
-                            color: theme.colorScheme.primary,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: LinearProgressIndicator(
-                            value: model.progressToNextLevel,
-                            minHeight: 6,
-                            backgroundColor: theme.colorScheme.primary
-                                .withOpacity(0.1),
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              theme.colorScheme.primary,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '${model.xp} / ${model.xpToNextLevel} ${AppLocalizations.of(context)!.xpToNextLevel} ${model.level + 1}',
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: theme.colorScheme.onSurface.withOpacity(0.6),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  _buildStreakIndicator(model.streak, theme),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 
-  Widget _buildStreakIndicator(int streak, ThemeData theme) {
-    return Column(
-      children: [
-        Icon(
-              CupertinoIcons.flame_fill,
-              color: streak > 0 ? Colors.orange : Colors.grey.withOpacity(0.5),
-              size: 32,
-            )
-            .animate(onPlay: (controller) => controller.repeat(reverse: true))
-            .scale(
-              begin: const Offset(1, 1),
-              end: const Offset(1.1, 1.1),
-              duration: 1.seconds,
-            ),
-        Text(
-          '$streak',
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: streak > 0 ? Colors.orange : Colors.grey,
-          ),
-        ),
-      ],
-    );
-  }
 
   Widget _buildListTile(int index, ThemeData theme) {
     if (index >= _order.length) return const SizedBox.shrink();
@@ -686,6 +467,9 @@ class _DashboardScreenState extends State<DashboardScreen>
         break;
       case 'canvas':
         preview = AppLocalizations.of(context)!.startNewSketch;
+        break;
+      case 'events':
+        preview = _getLatestEventPreview();
         break;
     }
 
@@ -866,6 +650,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       case 'journal':
       case 'canvas':
       case 'expenses':
+      case 'events':
         return IconButton(
           style: style,
           icon: Icon(CupertinoIcons.add, color: baseColor, size: 20),
@@ -892,6 +677,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                 break;
               case 'expenses':
                 context.push(AppRouter.expenseEdit);
+                break;
+              case 'events':
+                context.push(AppRouter.calendarEventEdit);
                 break;
             }
           },
@@ -1497,6 +1285,99 @@ class _DashboardScreenState extends State<DashboardScreen>
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildGamificationHeader(ThemeData theme) {
+    return Consumer<GamificationService>(
+      builder: (context, service, _) {
+        final model = service.model;
+        final medal = GamificationService.getMedalTier(model.level);
+        return GestureDetector(
+          onTap: () => context.push(AppRouter.xpDetail),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    const MascotCharacter(size: 60, state: MascotState.happy),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              MedalWidget(level: model.level, size: 28),
+                              const SizedBox(width: 8),
+                              Text(
+                                '${AppLocalizations.of(context)!.level} ${model.level} ($medal)',
+                                style: theme.textTheme.displaySmall?.copyWith(
+                                  fontSize: 20,
+                                  color: theme.colorScheme.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: LinearProgressIndicator(
+                              value: model.progressToNextLevel,
+                              minHeight: 6,
+                              backgroundColor: theme.colorScheme.primary
+                                  .withValues(alpha: 0.1),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                theme.colorScheme.primary,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '${model.totalXp} / ${model.xpToNextLevel} ${AppLocalizations.of(context)!.xpToNextLevel} ${model.level + 1}',
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(width: 12),
+                    _buildStreakIndicator(model.streak, theme),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildStreakIndicator(int streak, ThemeData theme) {
+    return Column(
+      children: [
+        Icon(
+              CupertinoIcons.flame_fill,
+              color: streak > 0 ? Colors.orange : Colors.grey.withValues(alpha: 0.5),
+              size: 32,
+            )
+            .animate(onPlay: (controller) => controller.repeat(reverse: true))
+            .scale(
+              begin: const Offset(1, 1),
+              end: const Offset(1.1, 1.1),
+              duration: 1.seconds,
+            ),
+        Text(
+          '$streak',
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: streak > 0 ? Colors.orange : Colors.grey,
+          ),
+        ),
+      ],
     );
   }
 }

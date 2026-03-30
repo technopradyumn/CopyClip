@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/providers/locale_provider.dart';
-import 'package:copyclip/src/core/common_widgets/mascot_character.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -213,11 +212,11 @@ class _SettingsScreenState extends State<SettingsScreen>
   List<SettingsSection> _createSections(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return [
-      SettingsSection(
-        type: SettingsSectionType.premium,
-        title: l10n.premium,
-        builder: _buildPremiumSection,
-      ),
+      // SettingsSection(
+      //   type: SettingsSectionType.premium,
+      //   title: l10n.premium,
+      //   builder: _buildPremiumSection,
+      // ),
       SettingsSection(
         type: SettingsSectionType.widgets,
         title: l10n.homeScreenWidgets,
@@ -645,7 +644,7 @@ class _SettingsScreenState extends State<SettingsScreen>
     );
   }
 
-  static Widget _buildPremiumSection(
+  /* static Widget _buildPremiumSection(
     BuildContext context,
     _SettingsScreenState state,
   ) {
@@ -700,7 +699,7 @@ class _SettingsScreenState extends State<SettingsScreen>
         ),
       ),
     );
-  }
+  } */
 
   static Widget _buildClipboardSection(
     BuildContext context,
@@ -1290,72 +1289,6 @@ class _ThemeDropdown extends StatelessWidget {
                 child: Text(AppLocalizations.of(context)!.dark),
               ),
             ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _ColorPicker extends StatelessWidget {
-  const _ColorPicker();
-
-  static const _colors = [
-    Colors.lightBlue,
-    Colors.blueAccent,
-    Colors.teal,
-    Colors.purpleAccent,
-    Colors.redAccent,
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: _colors.map((color) => _ColorDot(color: color)).toList(),
-    );
-  }
-}
-
-class _ColorDot extends StatelessWidget {
-  const _ColorDot({required this.color});
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(
-      buildWhen: (previous, current) =>
-          previous.primaryColor != current.primaryColor,
-      builder: (context, state) {
-        final isSelected = state.primaryColor.toARGB32() == color.toARGB32();
-        return GestureDetector(
-          onTap: () => context.read<ThemeBloc>().add(ChangePrimaryColor(color)),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            width: 34,
-            height: 34,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-              border: isSelected
-                  ? Border.all(color: Colors.white, width: 2.5)
-                  : null,
-              boxShadow: isSelected
-                  ? [
-                      BoxShadow(
-                        color: color.withValues(alpha: 0.4),
-                        blurRadius: 10,
-                      ),
-                    ]
-                  : null,
-            ),
-            child: isSelected
-                ? const Icon(
-                    CupertinoIcons.checkmark,
-                    size: 18,
-                    color: Colors.black,
-                  )
-                : null,
           ),
         );
       },

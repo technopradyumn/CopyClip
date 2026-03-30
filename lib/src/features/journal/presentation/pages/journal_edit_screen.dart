@@ -30,6 +30,8 @@ import 'package:copyclip/src/core/widgets/premium_badge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../designs/journal_page_registry.dart';
+import 'package:provider/provider.dart';
+import '../../../../core/services/gamification_service.dart';
 import '../designs/journal_moods.dart';
 import '../widgets/page_design_picker.dart';
 
@@ -588,6 +590,12 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
 
     // Sync Widget
     WidgetSyncService.syncJournal();
+
+    // Award XP
+    try {
+      Provider.of<GamificationService>(context, listen: false)
+          .recordFeatureUsage('journal');
+    } catch (_) {}
   }
 
   @override
