@@ -6,13 +6,14 @@ import 'package:intl/intl.dart';
 import '../../../../core/router/app_router.dart';
 import '../../data/calendar_event_model.dart';
 import '../designs/event_design_registry.dart';
-import 'calendar_design_picker_sheet.dart';
+import './calendar_design_picker_sheet.dart';
 
 class EventCard extends StatefulWidget {
   final CalendarEvent event;
   final bool isSelected;
   final VoidCallback? onDelete;
   final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
 
   const EventCard({
     super.key,
@@ -20,8 +21,8 @@ class EventCard extends StatefulWidget {
     this.isSelected = false,
     this.onDelete,
     this.onTap,
+    this.onLongPress,
   });
-
 
   @override
   State<EventCard> createState() => _EventCardState();
@@ -34,10 +35,37 @@ class _EventCardState extends State<EventCard> {
   void initState() {
     super.initState();
     _loadPattern();
+    if (Hive.isBoxOpen('calendar_events_box')) {
+      Hive.box<CalendarEvent>('calendar_events_box').listenable().addListener(_onBoxChanged);
+    }
+  }
+
+  void _onBoxChanged() {
+    if (!mounted) return;
+    final box = Hive.box<CalendarEvent>('calendar_events_box');
+    final updated = box.get(widget.event.id);
+    if (updated != null) {
+      _loadPatternById(updated.designPatternId ?? 'min_1');
+    }
+  }
+
+  @override
+  void dispose() {
+    if (Hive.isBoxOpen('calendar_events_box')) {
+      Hive.box<CalendarEvent>('calendar_events_box').listenable().removeListener(_onBoxChanged);
+    }
+    super.dispose();
   }
 
   void _loadPattern() {
     _pattern = EventDesignRegistry.byId(widget.event.designPatternId ?? 'min_1')!;
+  }
+
+  void _loadPatternById(String id) {
+    final p = EventDesignRegistry.byId(id);
+    if (p != null && mounted) {
+      setState(() => _pattern = p);
+    }
   }
 
   @override
@@ -48,215 +76,324 @@ class _EventCardState extends State<EventCard> {
     }
   }
 
-  Future<void> _showDesignPicker(BuildContext context) async {
-    showCalendarDesignPicker(context, widget.event);
-  }
-
-  Future<void> _showDeleteConfirmation(BuildContext context) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.delete_outline, size: 64, color: Colors.red),
-              const SizedBox(height: 16),
-              Text(
-                'Delete Event',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'This event will be permanently deleted.',
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                      ),
-                      onPressed: () => Navigator.pop(context, false),
-                      child: const Text('Cancel'),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                      ),
-                      onPressed: () => Navigator.pop(context, true),
-                      child: const Text('Delete'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-
-    if (confirmed == true) {
-      widget.onDelete?.call();
+  void _handleTap() {
+    if (widget.onTap != null) {
+      widget.onTap!();
+    } else {
+      context.push(AppRouter.calendarEventDetail.replaceAll(':id', widget.event.id));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final EventDesignPattern pattern = _pattern ?? EventDesignRegistry.byId('min_1')!;
-    final startFormat = DateFormat('h:mm a').format(widget.event.startDate);
-    final endFormat = widget.event.endDate.isAfter(widget.event.startDate.add(const Duration(hours: 1))) 
-        ? DateFormat('h:mm a').format(widget.event.endDate) 
-        : '';
+    final isSameDay = widget.event.startDate.year == widget.event.endDate.year &&
+                      widget.event.startDate.month == widget.event.endDate.month &&
+                      widget.event.startDate.day == widget.event.endDate.day;
+    
+    String _formatTime(DateTime date) {
+      return DateFormat('h:mm a').format(date).replaceAll(' ', '');
+    }
+
+    String timeString;
+    if (isSameDay) {
+      timeString = '${DateFormat('d MMMM yyyy').format(widget.event.startDate)}, ${_formatTime(widget.event.startDate)} - ${_formatTime(widget.event.endDate)}';
+    } else {
+      timeString = '${DateFormat('d MMMM yyyy').format(widget.event.startDate)}, ${_formatTime(widget.event.startDate)} - ${DateFormat('d MMMM yyyy').format(widget.event.endDate)}, ${_formatTime(widget.event.endDate)}';
+    }
+
+    final now = DateTime.now();
+    String statusStr;
+    Color statusColor;
+    if (now.isAfter(widget.event.endDate)) {
+      statusStr = 'PAST';
+      statusColor = Colors.grey.shade700;
+    } else if (now.isBefore(widget.event.startDate)) {
+      statusStr = 'UPCOMING';
+      statusColor = const Color(0xFF2196F3); // Vibrant Blue
+    } else {
+      statusStr = 'ONGOING';
+      statusColor = const Color(0xFF4CAF50); // Vibrant Green
+    }
 
     return GestureDetector(
-onTap: widget.onTap ?? () => context.push('/calendar/detail/${widget.event.id}'),
+      onTap: _handleTap,
+      onLongPress: widget.onLongPress,
+      behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 80,
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: pattern.primaryColor.withOpacity(0.2),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: CustomPaint(
-          painter: pattern.painter,
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Row(
+        margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: widget.isSelected 
+                ? Border.all(color: theme.colorScheme.primary, width: 2)
+                : Border.all(color: Colors.transparent, width: 2),
+            boxShadow: [
+              BoxShadow(
+                color: _pattern.primaryColor.withOpacity(0.12),
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(14),
+            child: Stack(
               children: [
-                // Priority indicator
-                if (pattern.priorityStyle != PriorityStyle.none)
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: pattern.primaryColor,
-                      shape: BoxShape.circle,
-                    ),
+                Positioned.fill(
+                  child: CustomPaint(
+                    painter: _pattern.painter,
                   ),
-                const SizedBox(width: 12),
-                // Content
-                Expanded(
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        widget.event.title,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: theme.colorScheme.onSurface,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (pattern.hasTimeBadge) ...[
-                        const SizedBox(height: 2),
-                        Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.clock,
-                              size: 12,
-                              color: theme.colorScheme.onSurface.withOpacity(0.6),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (_pattern.priorityStyle != PriorityStyle.none)
+                            Container(
+                              width: 4,
+                              height: 16,
+                              margin: const EdgeInsets.only(top: 4, right: 8),
+                              decoration: BoxDecoration(
+                                color: _pattern.primaryColor,
+                                borderRadius: BorderRadius.circular(2),
+                              ),
                             ),
-                            const SizedBox(width: 4),
-                            Text(
-                              '$startFormat${endFormat.isNotEmpty ? ' - $endFormat' : ''}',
-                              style: theme.textTheme.bodySmall?.copyWith(
+                          Expanded(
+                            child: Text(
+                              widget.event.title,
+                              style: theme.textTheme.titleSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                                fontSize: 13,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          _buildThreeDotsMenu(context, theme),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      // Time Info
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.surface.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2),
+                              child: Icon(
+                                CupertinoIcons.clock,
+                                size: 12,
                                 color: theme.colorScheme.onSurface.withOpacity(0.7),
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Text(
+                                timeString,
+                                style: theme.textTheme.labelSmall?.copyWith(
+                                  color: theme.colorScheme.onSurface.withOpacity(0.9),
+                                  fontSize: 9,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.visible,
                               ),
                             ),
                           ],
                         ),
+                      ),
+                      
+                      // Details Section
+                      if (widget.event.description.isNotEmpty || widget.event.location != null) ...[
+                        const SizedBox(height: 6),
+                        Flexible(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (widget.event.description.isNotEmpty)
+                                Text(
+                                  widget.event.description,
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                                    fontSize: 9,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              if (widget.event.location != null) ...[
+                                const SizedBox(height: 4),
+                                Row(
+                                  children: [
+                                    Icon(CupertinoIcons.location, size: 10, color: theme.colorScheme.primary.withOpacity(0.7)),
+                                    const SizedBox(width: 4),
+                                    Flexible(
+                                      child: Text(
+                                        widget.event.location!,
+                                        style: theme.textTheme.bodySmall?.copyWith(
+                                          color: theme.colorScheme.primary.withOpacity(0.7),
+                                          fontSize: 9,
+                                          fontStyle: FontStyle.italic,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
                       ],
+                      
+                      const SizedBox(height: 8),
+                      // Status Bar
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: statusColor,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: statusColor.withOpacity(0.4),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.3),
+                                width: 1.5,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  width: 6,
+                                  height: 6,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  statusStr,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
-                if (pattern.hasLocationBadge && widget.event.location != null)
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: pattern.secondaryColor,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      widget.event.location!,
-                      style: theme.textTheme.labelSmall,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                if (widget.isSelected)
+                  Positioned.fill(
+                    child: Container(
+                      color: theme.colorScheme.primary.withOpacity(0.1),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            CupertinoIcons.check_mark_circled_solid,
+                            color: theme.colorScheme.primary,
+                            size: 20,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                PopupMenuButton<String>(
-                  icon: Icon(
-                    CupertinoIcons.ellipsis_vertical,
-                    color: theme.colorScheme.onSurface.withOpacity(0.4),
-                  ),
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      value: 'design',
-                      child: const Row(
-                        children: [
-                          Icon(Icons.palette, size: 20),
-                          SizedBox(width: 12),
-                          Text('Change Design'),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'edit',
-                      child: const Row(
-                        children: [
-                          Icon(Icons.edit, size: 20),
-                          SizedBox(width: 12),
-                          Text('Edit'),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'delete',
-                      child: const Row(
-                        children: [
-                          Icon(Icons.delete, size: 20, color: Colors.red),
-                          SizedBox(width: 12),
-                          Text('Delete', style: TextStyle(color: Colors.red)),
-                        ],
-                      ),
-                    ),
-                  ],
-                  onSelected: (value) async {
-                    if (value == 'design') {
-                      await _showDesignPicker(context);
-                    } else if (value == 'edit') {
-                      context.push(AppRouter.calendarEventEdit);
-                    } else if (value == 'delete') {
-                      await _showDeleteConfirmation(context);
-                    }
-                  },
-                ),
               ],
-            ),
           ),
         ),
       ),
     );
   }
-}
 
+  Widget _buildThreeDotsMenu(BuildContext context, ThemeData theme) {
+    return PopupMenuButton<String>(
+      icon: Icon(
+        CupertinoIcons.ellipsis_vertical,
+        size: 18,
+        color: theme.colorScheme.onSurface.withOpacity(0.5),
+      ),
+      padding: EdgeInsets.zero,
+      onSelected: (value) {
+        if (value == 'edit') {
+          context.push(AppRouter.calendarEventEdit, extra: widget.event);
+        } else if (value == 'design') {
+          showModalBottomSheet(
+            context: context,
+            backgroundColor: Colors.transparent,
+            builder: (context) => CalendarDesignPickerSheet(
+              event: widget.event,
+              currentDesignId: widget.event.designPatternId,
+              onDesignSelected: (id) async {
+                final event = widget.event;
+                event.designPatternId = id;
+                await event.save();
+              },
+            ),
+          );
+        } else if (value == 'delete') {
+          widget.onDelete?.call();
+        }
+      },
+      itemBuilder: (context) => [
+        const PopupMenuItem(
+          value: 'edit',
+          child: Row(
+            children: [
+              Icon(CupertinoIcons.pencil, size: 18),
+              SizedBox(width: 8),
+              Text('Edit Info'),
+            ],
+          ),
+        ),
+        const PopupMenuItem(
+          value: 'design',
+          child: Row(
+            children: [
+              Icon(CupertinoIcons.paintbrush, size: 18),
+              SizedBox(width: 8),
+              Text('Change Design'),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: 'delete',
+          child: Row(
+            children: [
+              Icon(CupertinoIcons.trash, size: 18, color: theme.colorScheme.error),
+              const SizedBox(width: 8),
+              Text('Delete', style: TextStyle(color: theme.colorScheme.error)),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}

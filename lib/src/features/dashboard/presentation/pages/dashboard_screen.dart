@@ -29,6 +29,7 @@ import '../../../canvas/data/canvas_adapter.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
 import 'package:copyclip/src/features/gamification/presentation/widgets/medal_widget.dart';
+import '../widgets/aura_picker_sheet.dart';
 
 class FeatureItem {
   final String id;
@@ -106,6 +107,9 @@ class _DashboardScreenState extends State<DashboardScreen>
   // State for View Mode
   bool _isGridView = false;
 
+  // Cached previews for performance
+  final Map<String, String?> _previews = {};
+  final Map<String, StreamSubscription?> _boxSubscriptions = {};
 
   @override
   void initState() {
@@ -261,6 +265,9 @@ class _DashboardScreenState extends State<DashboardScreen>
   void dispose() {
     _settingsAnimationController.dispose();
     _onboardingController.dispose();
+    for (var sub in _boxSubscriptions.values) {
+      sub?.cancel();
+    }
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -308,7 +315,44 @@ class _DashboardScreenState extends State<DashboardScreen>
         _showOnboarding = !hasSeenOnboarding;
         _isGridView = savedIsGridView;
       });
+
+      // Initialize previews after boxes are opened
+      _initPreviews();
     }
+  }
+
+  void _initPreviews() {
+    _updatePreview('notes');
+    _updatePreview('todos');
+    _updatePreview('journal');
+    _updatePreview('clipboard');
+    _updatePreview('expenses');
+    _updatePreview('events');
+
+    // Setup listeners for real-time updates without re-sorting everything on every frame
+    _boxSubscriptions['notes'] = Hive.box<Note>('notes_box').watch().listen((_) => _updatePreview('notes'));
+    _boxSubscriptions['todos'] = Hive.box<Todo>('todos_box').watch().listen((_) => _updatePreview('todos'));
+    _boxSubscriptions['journal'] = Hive.box<JournalEntry>('journal_box').watch().listen((_) => _updatePreview('journal'));
+    _boxSubscriptions['clipboard'] = Hive.box<ClipboardItem>('clipboard_box').watch().listen((_) => _updatePreview('clipboard'));
+    _boxSubscriptions['expenses'] = Hive.box<Expense>('expenses_box').watch().listen((_) => _updatePreview('expenses'));
+    _boxSubscriptions['events'] = Hive.box<CalendarEvent>('calendar_events_box').watch().listen((_) => _updatePreview('events'));
+  }
+
+  void _updatePreview(String id) {
+    if (!mounted) return;
+    String? preview;
+    switch (id) {
+      case 'notes': preview = _getLatestNote(); break;
+      case 'todos': preview = _getLatestTodo(); break;
+      case 'journal': preview = _getLatestJournal(); break;
+      case 'clipboard': 
+        final clip = _getLatestClipboard();
+        preview = clip != null ? _extractPlainText(clip.content) : null;
+        break;
+      case 'expenses': preview = _getExpensesSummary(); break;
+      case 'events': preview = _getLatestEventPreview(); break;
+    }
+    setState(() => _previews[id] = preview);
   }
 
   void _saveViewPreference(bool isGrid) {
@@ -442,36 +486,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     final Color baseColor = item.color;
 
-    String? preview;
-    switch (id) {
-      case 'notes':
-        preview = _getLatestNote();
-        break;
-      case 'todos':
-        preview = _getLatestTodo();
-        break;
-      case 'journal':
-        preview = _getLatestJournal();
-        break;
-      case 'clipboard':
-        final clipItem = _getLatestClipboard();
-        if (clipItem != null) {
-          preview = _extractPlainText(clipItem.content);
-        }
-        break;
-      case 'expenses':
-        preview = _getExpensesSummary();
-        break;
-      case 'calendar':
-        preview = AppLocalizations.of(context)!.checkUpcomingEvents;
-        break;
-      case 'canvas':
-        preview = AppLocalizations.of(context)!.startNewSketch;
-        break;
-      case 'events':
-        preview = _getLatestEventPreview();
-        break;
-    }
+    final String? preview = _previews[id];
 
     return _KeepAliveTile(
       key: ValueKey(id),
@@ -580,9 +595,15 @@ class _DashboardScreenState extends State<DashboardScreen>
                     const SizedBox(width: 8),
                     _buildActionButton(id, baseColor, theme),
                     const SizedBox(width: 4),
-                    Icon(
-                      CupertinoIcons.bars,
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                    ReorderableDragStartListener(
+                      index: index,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                        child: Icon(
+                          CupertinoIcons.bars,
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -698,34 +719,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     final Color baseColor = item.color;
 
-    // Preview Logic (Shared)
-    String? preview;
-    switch (id) {
-      case 'notes':
-        preview = _getLatestNote();
-        break;
-      case 'todos':
-        preview = _getLatestTodo();
-        break;
-      case 'journal':
-        preview = _getLatestJournal();
-        break;
-      case 'clipboard':
-        final clipItem = _getLatestClipboard();
-        if (clipItem != null) {
-          preview = _extractPlainText(clipItem.content);
-        }
-        break;
-      case 'expenses':
-        preview = _getExpensesSummary();
-        break;
-      case 'calendar':
-        preview = 'Events';
-        break;
-      case 'canvas':
-        preview = 'New sketch';
-        break;
-    }
+    final String? preview = _previews[id];
 
     return _KeepAliveTile(
       key: ValueKey(id),
@@ -755,6 +749,10 @@ class _DashboardScreenState extends State<DashboardScreen>
               borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
               child: InkWell(
                 borderRadius: BorderRadius.circular(AppConstants.cornerRadius),
+                // Fix: Ensure scrolling works even when touching items
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                overlayColor: WidgetStateProperty.all(baseColor.withValues(alpha: 0.05)),
                 onTap: () {
                   if (id == 'calendar') {
                     final isPremium = context
@@ -810,13 +808,21 @@ class _DashboardScreenState extends State<DashboardScreen>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            item.title,
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: isSmall ? 13 : 15,
+                          Hero(
+                            tag: '${id}_title',
+                            child: Material(
+                              type: MaterialType.transparency,
+                              child: Text(
+                                item.title,
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: isSmall ? 13 : 15,
+                                ),
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                            textAlign: TextAlign.center,
                           ),
                           // Premium Tag for Calendar
                           if (id == 'calendar') ...[
@@ -919,10 +925,10 @@ class _DashboardScreenState extends State<DashboardScreen>
         ),
         const SizedBox(width: 8),
         IconButton(
-          icon: RotationTransition(
-            turns: _settingsAnimationController,
-            child: Hero(
-              tag: 'settings_icon',
+          icon: Hero(
+            tag: 'settings_icon',
+            child: RotationTransition(
+              turns: _settingsAnimationController,
               child: Icon(
                 CupertinoIcons.settings,
                 color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
@@ -1293,61 +1299,89 @@ class _DashboardScreenState extends State<DashboardScreen>
       builder: (context, service, _) {
         final model = service.model;
         final medal = GamificationService.getMedalTier(model.level);
-        return GestureDetector(
-          onTap: () => context.push(AppRouter.xpDetail),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: RepaintBoundary(
+            child: Row(
               children: [
-                Row(
-                  children: [
-                    const MascotCharacter(size: 60, state: MascotState.happy),
-                    const SizedBox(width: 5),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              MedalWidget(level: model.level, size: 28),
-                              const SizedBox(width: 8),
-                              Text(
-                                '${AppLocalizations.of(context)!.level} ${model.level} ($medal)',
-                                style: theme.textTheme.displaySmall?.copyWith(
-                                  fontSize: 20,
-                                  color: theme.colorScheme.primary,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: LinearProgressIndicator(
-                              value: model.progressToNextLevel,
-                              minHeight: 6,
-                              backgroundColor: theme.colorScheme.primary
-                                  .withValues(alpha: 0.1),
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                theme.colorScheme.primary,
-                              ),
+                Hero(
+                  tag: 'mascot_hero',
+                  child: MascotCharacter(
+                    size: 80,
+                    state: MascotState.values[Hive.box('settings').get(
+                        'mascot_state',
+                        defaultValue: MascotState.happy.index)],
+                    color: Color(Hive.box('settings').get(
+                        'mascot_aura_color',
+                        defaultValue: theme.colorScheme.primary.value)),
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) => Container(
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.surface,
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(32),
                             ),
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '${model.totalXp} / ${model.xpToNextLevel} ${AppLocalizations.of(context)!.xpToNextLevel} ${model.level + 1}',
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(width: 12),
-                    _buildStreakIndicator(model.streak, theme),
-                  ],
+                          child: const AuraPickerSheet(),
+                        ),
+                      ).then((_) {
+                        if (mounted) setState(() {});
+                      });
+                    },
+                  ),
                 ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => context.push(AppRouter.xpDetail),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            MedalWidget(level: model.level, size: 28),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Level ${model.level} ($medal)',
+                              style: theme.textTheme.displaySmall?.copyWith(
+                                fontSize: 18,
+                                color: theme.colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: LinearProgressIndicator(
+                            value: model.progressToNextLevel,
+                            minHeight: 6,
+                            backgroundColor:
+                                theme.colorScheme.primary.withOpacity(0.1),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                theme.colorScheme.primary),
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '${model.totalXp} / ${model.xpToNextLevel} XP to Level ${model.level + 1}',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurface.withOpacity(0.6),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                _buildStreakIndicator(model.streak, theme),
               ],
             ),
           ),

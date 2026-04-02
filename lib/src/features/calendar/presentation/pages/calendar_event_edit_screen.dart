@@ -6,9 +6,12 @@ import 'package:go_router/go_router.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/dynamic_background.dart';
+import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/const/constant.dart';
 import '../../data/calendar_event_model.dart';
 import '../widgets/calendar_design_picker_sheet.dart';
+import '../../services/event_notification_service.dart';
 
 class CalendarEventEditScreen extends StatefulWidget {
   final CalendarEvent? event;
@@ -101,6 +104,10 @@ class _CalendarEventEditScreenState extends State<CalendarEventEditScreen> {
         ..isAllDay = _allDay
         ..designPatternId = _selectedDesignId;
       await box.put(event.id, event);
+      
+      // ✅ NEW: Schedule notifications for the event
+      await EventNotificationService.scheduleNotifications(event);
+      
       if (context.mounted) {
         context.pop();
       }
@@ -112,20 +119,31 @@ class _CalendarEventEditScreenState extends State<CalendarEventEditScreen> {
     final theme = Theme.of(context);
 
     return GlassScaffold(
-      title: widget.event == null ? 'New Event' : 'Edit Event',
+      showBackArrow: false,
+      title: null,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _saveEvent,
         backgroundColor: theme.colorScheme.primary,
         icon: const Icon(CupertinoIcons.checkmark_alt, color: Colors.white),
         label: const Text('Save', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      body: DynamicBackground(
+        child: Column(
+          children: [
+            SeamlessHeader(
+              title: widget.event == null ? 'New Event' : 'Edit Event',
+              icon: CupertinoIcons.calendar_today,
+              iconColor: const Color(0xFFAB47BC),
+              heroTagPrefix: 'events',
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
               TextFormField(
                 controller: _titleController,
                 decoration: InputDecoration(
@@ -247,8 +265,6 @@ class _CalendarEventEditScreenState extends State<CalendarEventEditScreen> {
                     backgroundColor: Colors.transparent,
                     builder: (ctx) => CalendarDesignPickerSheet(
                       currentDesignId: _selectedDesignId,
-                      event: widget.event,
-                      onDesignSelected: (id) => Navigator.pop(ctx, id),
                     ),
                   );
                   if (selectedDesign != null) {
@@ -261,7 +277,7 @@ class _CalendarEventEditScreenState extends State<CalendarEventEditScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.surfaceVariant.withOpacity(0.7),
+                    color: theme.colorScheme.surfaceVariant.withValues(alpha: 0.7),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -281,6 +297,10 @@ class _CalendarEventEditScreenState extends State<CalendarEventEditScreen> {
             ],
           ),
         ),
+      ),
+    ),
+  ],
+),
       ),
     );
   }

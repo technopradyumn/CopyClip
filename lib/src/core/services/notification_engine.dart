@@ -132,19 +132,15 @@ class NotificationEngine {
     required int hour,
     required int minute,
     String channelId = 'todos',
+    String? payload,
   }) async {
-    // Convert target local time (e.g. 7:00 AM) to the appropriate Schedule
-    // Since NotificationService.scheduleDailyNotification takes TimeOfDay
-    // and handles the daily recurrence logic internally using flutter_local_notifications matchDateTimeComponents,
-    // we just pass the TimeOfDay.
-    // TimeZoneService ensures we are in the correct local zone.
-
     await _notificationService.scheduleDailyNotification(
       id: id,
       title: title,
       body: body,
       time: TimeOfDay(hour: hour, minute: minute),
       channelId: channelId,
+      payload: payload ?? channelId,
     );
   }
 

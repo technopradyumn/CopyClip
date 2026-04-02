@@ -12,6 +12,8 @@ import '../../../todos/data/todo_model.dart';
 import '../../../expenses/data/expense_model.dart';
 import '../../../journal/data/journal_model.dart';
 import '../../../clipboard/data/clipboard_model.dart';
+import '../../../calendar/data/calendar_event_model.dart';
+import '../../../social_post/data/social_post_model.dart';
 
 class ActivityCalendarScreen extends StatefulWidget {
   const ActivityCalendarScreen({super.key});
@@ -135,36 +137,51 @@ class _ActivityCalendarScreenState extends State<ActivityCalendarScreen> {
   }
 
   Widget _buildActivityMarkers(List<dynamic> events) {
-    final colors = <Color>[];
-    if (events.any((e) => e is Note)) colors.add(Colors.amber);
-    if (events.any((e) => e is Todo)) colors.add(Colors.green);
-    if (events.any((e) => e is Expense)) colors.add(Colors.red);
-    if (events.any((e) => e is JournalEntry)) colors.add(Colors.blue);
-    if (events.any((e) => e is ClipboardItem)) colors.add(Colors.purple);
+    if (events.isEmpty) return const SizedBox.shrink();
 
-    if (colors.isEmpty) return const SizedBox();
-    
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: colors.take(3).map((c) => Container(
-        margin: const EdgeInsets.only(left: 1),
-        width: 4,
-        height: 4,
-        decoration: BoxDecoration(
-          color: c,
-          shape: BoxShape.circle,
-        ),
-      )).toList(),
+    final colors = <Color>[];
+    if (events.any((e) => e is CalendarEvent)) colors.add(Colors.deepOrangeAccent);
+    if (events.any((e) => e is Note)) colors.add(Colors.amberAccent);
+    if (events.any((e) => e is Todo)) colors.add(Colors.greenAccent);
+    if (events.any((e) => e is Expense)) colors.add(Colors.redAccent);
+    if (events.any((e) => e is JournalEntry)) colors.add(Colors.blueAccent);
+    if (events.any((e) => e is ClipboardItem)) colors.add(Colors.purpleAccent);
+    if (events.any((e) => e is SocialPost)) colors.add(Colors.cyanAccent);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 2),
+      child: Wrap(
+        spacing: 1.5,
+        children: colors.take(4).map((c) {
+          return Container(
+            width: 6,
+            height: 2,
+            decoration: BoxDecoration(
+              color: c.withOpacity(0.8),
+              borderRadius: BorderRadius.circular(1),
+              boxShadow: [
+                BoxShadow(
+                  color: c.withOpacity(0.3),
+                  blurRadius: 1,
+                  offset: const Offset(0, 0.5),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 
   Widget _buildActivityStats(List<dynamic> events, ThemeData theme) {
     final Map<String, int> counts = {
+      '📅 Events': events.where((e) => e is CalendarEvent).length,
       '📝 Notes': events.where((e) => e is Note).length,
       '✅ Todos': events.where((e) => e is Todo).length,
       '💰 Expenses': events.where((e) => e is Expense).length,
       '📔 Journal': events.where((e) => e is JournalEntry).length,
       '📋 Clips': events.where((e) => e is ClipboardItem).length,
+      '🌐 Social': events.where((e) => e is SocialPost).length,
     };
 
     return Container(
@@ -245,6 +262,22 @@ class _ActivityCalendarScreenState extends State<ActivityCalendarScreen> {
     
     addFromBox('clipboard_box', (dynamic e) {
       if (e is ClipboardItem && !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.createdAt) == dateKey) return true;
+      return false;
+    });
+
+    addFromBox('social_posts_box', (dynamic e) {
+      if (e is SocialPost && DateFormat('yyyy-MM-dd').format(e.createdAt) == dateKey) return true;
+      return false;
+    });
+
+    addFromBox('calendar_events_box', (dynamic e) {
+      if (e is CalendarEvent && !e.isDeleted) {
+        final start = DateTime(e.startDate.year, e.startDate.month, e.startDate.day);
+        final end = DateTime(e.endDate.year, e.endDate.month, e.endDate.day);
+        final current = DateTime(day.year, day.month, day.day);
+        return (current.isAtSameMomentAs(start) || current.isAfter(start)) && 
+               (current.isAtSameMomentAs(end) || current.isBefore(end));
+      }
       return false;
     });
 

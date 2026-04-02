@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -23,6 +22,9 @@ import '../../../expenses/data/expense_model.dart';
 import '../../../journal/data/journal_model.dart';
 import '../../../clipboard/data/clipboard_model.dart';
 import '../widgets/calendar_design_picker_sheet.dart';
+import 'package:copyclip/src/core/widgets/glass_dialog.dart';
+import '../../services/event_notification_service.dart';
+import 'package:table_calendar/table_calendar.dart' show isSameDay; // Ensure we can still access it if needed, but we'll use our own
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -75,50 +77,58 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   // --- DATA FETCHING ---
-  List<dynamic> _getActivityForDay(DateTime day) {
-    List<dynamic> events = [];
-    final dateKey = DateFormat('yyyy-MM-dd').format(day);
+  bool _isSameDayCustom(DateTime a, DateTime b) {
+    final localA = a.toLocal();
+    // b from TableCalendar is UTC midnight — compare date components only
+    return localA.year == b.year &&
+        localA.month == b.month &&
+        localA.day == b.day;
+  }
 
-    // Helper to safely add from box with type checking
-    void addFromBox(String boxName, String type, Function(dynamic) filter) {
+  List<dynamic> _getActivityForDay(DateTime day) {
+    if (!mounted) return [];
+    final List<dynamic> events = [];
+
+    // Helper: safely read from a typed Hive box
+    void addFromTypedBox<T>(String boxName, bool Function(T) filter) {
       try {
-        if (Hive.isBoxOpen(boxName)) {
-          final box = Hive.box(boxName);
-          events.addAll(box.values.where((e) => filter(e)));
-        }
+        if (!Hive.isBoxOpen(boxName)) return;
+        final box = Hive.box<T>(boxName);
+        events.addAll(box.values.where((e) => filter(e)));
       } catch (e) {
         debugPrint("ActivityCalendar: Failed to access $boxName: $e");
       }
     }
 
-    // Features only - NO CalendarEvent mixing
-    addFromBox('notes_box', 'Note', (e) {
-      if (e is Note) return !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.updatedAt) == dateKey;
-      return false;
+    addFromTypedBox<Note>('notes_box', (e) {
+      if (e.isDeleted) return false;
+      return _isSameDayCustom(e.updatedAt, day);
     });
-    addFromBox('todos_box', 'Todo', (e) {
-      if (e is Todo) return !e.isDeleted && e.dueDate != null && DateFormat('yyyy-MM-dd').format(e.dueDate!) == dateKey;
-      return false;
+    addFromTypedBox<Todo>('todos_box', (e) {
+      if (e.isDeleted || e.dueDate == null) return false;
+      return _isSameDayCustom(e.dueDate!, day);
     });
-    addFromBox('expenses_box', 'Expense', (e) {
-      if (e is Expense) return !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.date) == dateKey;
-      return false;
+    addFromTypedBox<Expense>('expenses_box', (e) {
+      if (e.isDeleted) return false;
+      return _isSameDayCustom(e.date, day);
     });
-    addFromBox('journal_box', 'JournalEntry', (e) {
-      if (e is JournalEntry) return !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.date) == dateKey;
-      return false;
+    addFromTypedBox<JournalEntry>('journal_box', (e) {
+      if (e.isDeleted) return false;
+      return _isSameDayCustom(e.date, day);
     });
-    addFromBox('clipboard_box', 'ClipboardItem', (e) {
-      if (e is ClipboardItem) return !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.createdAt) == dateKey;
-      return false;
+    addFromTypedBox<ClipboardItem>('clipboard_box', (e) {
+      if (e.isDeleted) return false;
+      return _isSameDayCustom(e.createdAt, day);
     });
-    // REMOVED: calendar_events_box - Pure activity now!
+    addFromTypedBox<CalendarEvent>('calendar_events_box', (e) {
+      if (e.isDeleted) return false;
+      return _isSameDayCustom(e.startDate, day) || _isSameDayCustom(e.endDate, day);
+    });
 
     return events;
   }
 
   // --- UI BUILDERS ---
-  @override
   List<CalendarEvent> _getRecentEvents([int limit = 5]) {
     if (!Hive.isBoxOpen('calendar_events_box')) return [];
     final box = Hive.box<CalendarEvent>('calendar_events_box');
@@ -152,7 +162,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           )
         else
           SizedBox(
-            height: 100,
+            height: 180,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: recentEvents.length + 1,
@@ -164,7 +174,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       width: 280,
                       child: EventCard(
                         event: recentEvents[index],
-onTap: () => context.push('/calendar/detail/${recentEvents[index].id}'),
+                        onTap: () => context.push('/calendar/detail/${recentEvents[index].id}'),
+                        onDelete: () => _deleteEvent(recentEvents[index]),
                       ),
                     ),
                   );
@@ -172,10 +183,7 @@ onTap: () => context.push('/calendar/detail/${recentEvents[index].id}'),
                 return Padding(
                   padding: const EdgeInsets.only(right: 16),
                   child: GestureDetector(
-                    onTap: () => context.push(AppRouter.dateDetail, extra: {
-                      'date': DateTime.now(),
-                      'items': _mapEventsToResults([]), // All time
-                    }),
+                    onTap: () => context.push(AppRouter.allEvents),
                     child: Container(
                       width: 100,
                       decoration: BoxDecoration(
@@ -183,10 +191,23 @@ onTap: () => context.push('/calendar/detail/${recentEvents[index].id}'),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: theme.colorScheme.primary.withOpacity(0.3)),
                       ),
-                      child: const Icon(
-                        CupertinoIcons.chevron_right_circle,
-                        color: Colors.white,
-                        size: 40,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            CupertinoIcons.chevron_right_circle,
+                            color: theme.colorScheme.primary,
+                            size: 40,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'View All',
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: theme.colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -198,6 +219,7 @@ onTap: () => context.push('/calendar/detail/${recentEvents[index].id}'),
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final onSurface = theme.colorScheme.onSurface;
@@ -527,7 +549,8 @@ onTap: () => context.push('/calendar/detail/${recentEvents[index].id}'),
     Color onSurface,
     ThemeData theme,
   ) {
-  final Map<String, int> counts = {
+    final Map<String, int> counts = {
+      'Events': events.whereType<CalendarEvent>().length,
       'Notes': events.whereType<Note>().length,
       'Todos': events.whereType<Todo>().length,
       'Finance': events.whereType<Expense>().length,
@@ -670,22 +693,33 @@ onTap: () => context.push('/calendar/detail/${recentEvents[index].id}'),
 
   Widget _buildAllFiveMarkers(List<dynamic> events) {
     final colors = <Color>[];
-    if (events.any((e) => e is CalendarEvent)) colors.add(Colors.deepOrangeAccent);
-    if (events.any((e) => e is Note)) colors.add(Colors.amberAccent);
-    if (events.any((e) => e is Todo)) colors.add(Colors.greenAccent);
-    if (events.any((e) => e is Expense)) colors.add(Colors.redAccent);
-    if (events.any((e) => e is JournalEntry)) colors.add(Colors.blueAccent);
-    if (events.any((e) => e is ClipboardItem)) colors.add(Colors.purpleAccent);
+    if (events.any((e) => e is CalendarEvent)) colors.add(Colors.deepOrangeAccent); // Events
+    if (events.any((e) => e is Note)) colors.add(Colors.amberAccent); // Notes
+    if (events.any((e) => e is Todo)) colors.add(Colors.greenAccent); // Todos
+    if (events.any((e) => e is Expense)) colors.add(Colors.redAccent); // Finance
+    if (events.any((e) => e is JournalEntry)) colors.add(Colors.blueAccent); // Journal
+    if (events.any((e) => e is ClipboardItem)) colors.add(Colors.purpleAccent); // Clips
 
     return Row(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: colors
           .map(
             (c) => Container(
               margin: const EdgeInsets.symmetric(horizontal: 1.5),
-              width: 5,
-              height: 5,
-              decoration: BoxDecoration(color: c, shape: BoxShape.circle),
+              width: 7, // Increased from 5 to 7
+              height: 7, // Increased from 5 to 7
+              decoration: BoxDecoration(
+                color: c, 
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 2,
+                    spreadRadius: 0.5,
+                  ),
+                ],
+              ),
             ),
           )
           .toList(),
@@ -805,6 +839,8 @@ onTap: () => context.push('/calendar/detail/${recentEvents[index].id}'),
         return Colors.deepOrangeAccent;
       case 'Notes':
         return Colors.amberAccent;
+      case 'Todos':
+        return Colors.greenAccent;
       case 'Finance':
         return Colors.redAccent;
       case 'Journal':
@@ -878,5 +914,31 @@ onTap: () => context.push('/calendar/detail/${recentEvents[index].id}'),
         argument: e,
       );
     }).toList();
+  }
+
+  void _deleteEvent(CalendarEvent event) {
+    showDialog(
+      context: context,
+      builder: (ctx) => GlassDialog(
+        title: AppLocalizations.of(context)!.deleteItemQuestion,
+        content: AppLocalizations.of(context)!.deleteItemConfirmation,
+        confirmText: AppLocalizations.of(context)!.delete,
+        isDestructive: true,
+        onConfirm: () async {
+          try {
+            event.isDeleted = true;
+            await event.save();
+            
+            // ✅ NEW: Cancel notifications for the event
+            await EventNotificationService.cancelNotifications(event);
+            
+            if (mounted) setState(() {});
+          } catch (e) {
+            debugPrint("Error deleting event: $e");
+          }
+          Navigator.pop(ctx);
+        },
+      ),
+    );
   }
 }

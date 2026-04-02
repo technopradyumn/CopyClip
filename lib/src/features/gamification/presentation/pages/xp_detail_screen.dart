@@ -7,6 +7,7 @@ import '../widgets/medal_widget.dart';
 import '../../../../core/services/gamification_service.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/dynamic_background.dart';
+import '../../../../core/const/constant.dart';
 
 class XpDetailScreen extends StatefulWidget {
   const XpDetailScreen({super.key});
@@ -761,29 +762,49 @@ class _XpDetailScreenState extends State<XpDetailScreen> {
 
   Color _getFeatureColor(String feature) {
     switch (feature) {
-      case 'note': return Colors.amber;
-      case 'todo': return Colors.green;
-      case 'expense': return Colors.red;
-      case 'journal': return Colors.blue;
-      case 'clipboard': return Colors.purple;
-      case 'canvas': return Colors.pink;
-      case 'calendar_event': return Colors.indigo;
-      case 'social_post': return Colors.teal;
-      default: return Colors.grey;
+      case 'note':
+        return FeatureColors.notes;
+      case 'todo':
+        return FeatureColors.todos;
+      case 'expense':
+        return FeatureColors.expenses;
+      case 'journal':
+        return FeatureColors.journal;
+      case 'clipboard':
+        return FeatureColors.clipboard;
+      case 'canvas':
+        return FeatureColors.canvas;
+      case 'calendar_event':
+        return FeatureColors.events;
+      case 'social_post':
+        return FeatureColors.socialPost;
+      default:
+        return Colors.grey;
     }
   }
 
   IconData _getFeatureIcon(String feature) {
     switch (feature) {
-      case 'note': return CupertinoIcons.doc_text;
-      case 'todo': return CupertinoIcons.checkmark_circle;
-      case 'expense': return CupertinoIcons.money_dollar;
-      case 'journal': return CupertinoIcons.book;
-      case 'clipboard': return CupertinoIcons.doc_on_clipboard;
-      case 'canvas': return CupertinoIcons.pencil_outline;
-      case 'calendar_event': return CupertinoIcons.calendar;
-      case 'social_post': return CupertinoIcons.share;
-      default: return CupertinoIcons.question;
+      case 'note':
+        return CupertinoIcons.doc_text;
+      case 'todo':
+        return CupertinoIcons.checkmark_circle;
+      case 'expense':
+        return CupertinoIcons.money_dollar;
+      case 'journal':
+        return CupertinoIcons.book;
+      case 'clipboard':
+        return CupertinoIcons.doc_on_clipboard;
+      case 'canvas':
+        return CupertinoIcons.pencil_outline;
+      case 'calendar_event':
+        return CupertinoIcons.calendar;
+      case 'social_post':
+        return FeatureColors.socialPost == const Color(0xFF3F51B5)
+            ? CupertinoIcons.share
+            : CupertinoIcons.share;
+      default:
+        return CupertinoIcons.question;
     }
   }
 }

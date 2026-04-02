@@ -61,17 +61,18 @@ class DiamondGlassPainter extends EventCardPainter {
   }
 }
 
-class RippleGlassPainter extends EventCardPainter {
+class LinesGlassPainter extends EventCardPainter {
   final Color baseColor;
-  RippleGlassPainter(this.baseColor);
+  LinesGlassPainter(this.baseColor);
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = baseColor.withOpacity(0.1)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
-    final center = size.center(Offset.zero);
-    for (double r = 10; r < size.width / 2; r += 15) {
-      canvas.drawCircle(center, r, paint);
+      ..color = baseColor.withOpacity(0.08)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+    
+    for (double i = -size.height; i < size.width; i += 10) {
+      canvas.drawLine(Offset(i, 0), Offset(i + size.height, size.height), paint);
     }
   }
 }
@@ -141,27 +142,33 @@ class LinearGradientPainter extends EventCardPainter {
   }
 }
 
-class RadialGradientPainter extends EventCardPainter {
+class RectGradientPainter extends EventCardPainter {
   final List<Color> colors;
-  RadialGradientPainter(this.colors);
+  RectGradientPainter(this.colors);
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..shader = RadialGradient(colors: colors, radius: 0.8).createShader(size.rect());
-    canvas.drawCircle(size.center(Offset.zero), size.width / 2, paint);
+      ..shader = LinearGradient(
+        colors: colors,
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ).createShader(size.rect());
+    canvas.drawRRect(RRect.fromRectAndRadius(size.rect(), const Radius.circular(16)), paint);
   }
 }
 
-class SweepGradientPainter extends EventCardPainter {
+class CornerGradientPainter extends EventCardPainter {
   final Color color1, color2;
-  SweepGradientPainter(this.color1, this.color2);
+  CornerGradientPainter(this.color1, this.color2);
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..shader = SweepGradient(
+      ..shader = LinearGradient(
         colors: [color1, color2],
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
       ).createShader(size.rect());
-    canvas.drawCircle(size.center(Offset.zero), size.width / 2, paint);
+    canvas.drawRRect(RRect.fromRectAndRadius(size.rect(), const Radius.circular(16)), paint);
   }
 }
 
@@ -204,54 +211,51 @@ class FoldGlassPainter extends EventCardPainter {
   }
 }
 
-class OrbitGlassPainter extends EventCardPainter {
+class GridGlassPainter extends EventCardPainter {
   final Color baseColor;
-  OrbitGlassPainter(this.baseColor);
+  GridGlassPainter(this.baseColor);
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = baseColor.withOpacity(0.15)
+      ..color = baseColor.withOpacity(0.05)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
-    final center = size.center(Offset.zero);
-    canvas.drawCircle(center, size.width * 0.4, paint);
-    canvas.drawCircle(center, size.width * 0.2, paint);
-  }
-}
-
-class PulseGlassPainter extends EventCardPainter {
-  final Color baseColor;
-  PulseGlassPainter(this.baseColor);
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = size.center(Offset.zero);
-    for (int i = 1; i <= 3; i++) {
-      final paint = Paint()
-        ..color = baseColor.withOpacity(0.3 / i)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.0;
-      canvas.drawCircle(center, size.width * 0.4 * i / 3, paint);
+      ..strokeWidth = 0.5;
+    
+    for (double x = 0; x < size.width; x += 15) {
+      canvas.drawLine(Offset(x, 0), Offset(x, size.height), paint);
+    }
+    for (double y = 0; y < size.height; y += 15) {
+      canvas.drawLine(Offset(0, y), Offset(size.width, y), paint);
     }
   }
 }
 
-class SparkleGlassPainter extends EventCardPainter {
+class StripeGlassPainter extends EventCardPainter {
   final Color baseColor;
-  SparkleGlassPainter(this.baseColor);
+  StripeGlassPainter(this.baseColor);
+  @override
+  void paint(Canvas canvas, Size size) {
+     final paint = Paint()
+      ..color = baseColor.withOpacity(0.12);
+    
+    for (double x = 0; x < size.width; x += 40) {
+      canvas.drawRect(Rect.fromLTWH(x, 0, 4, size.height), paint);
+    }
+  }
+}
+
+class DotGlassPainter extends EventCardPainter {
+  final Color baseColor;
+  DotGlassPainter(this.baseColor);
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = baseColor.withOpacity(0.4)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+      ..color = baseColor.withOpacity(0.1);
     
-    // Sparkle stars
-    final sparkles = [
-      Offset(size.width * 0.2, size.height * 0.2),
-      Offset(size.width * 0.8, size.height * 0.3),
-      Offset(size.width * 0.5, size.height * 0.8),
-    ];
-    for (var pos in sparkles) {
-      canvas.drawCircle(pos, 4, paint);
+    for (double y = 0; y < size.height; y += 20) {
+      for (double x = 0; x < size.width; x += 20) {
+        canvas.drawRect(Rect.fromLTWH(x, y, 2, 2), paint);
+      }
     }
   }
 }
@@ -339,7 +343,7 @@ class GlowNeumorphicPainter extends EventCardPainter {
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 20);
     final bg = Paint()..color = baseColor.withOpacity(0.2);
     
-    canvas.drawCircle(size.center(Offset.zero), size.width / 2 + 10, glow);
+    canvas.drawRRect(RRect.fromRectAndRadius(size.rect().deflate(10), const Radius.circular(30)), glow);
     canvas.drawRRect(RRect.fromRectAndRadius(size.rect(), const Radius.circular(16)), bg);
   }
 }

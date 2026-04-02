@@ -85,9 +85,12 @@ class NotificationService {
       debugPrint(
         '🚀 App launched via notification payload: ${details.notificationResponse!.payload}',
       );
-      // Brief delay to allow listeners to attach in main.dart
-      Future.delayed(const Duration(milliseconds: 500), () {
-        onNotifications.add(details.notificationResponse!.payload);
+      // Wait for widget tree to be fully built before emitting payload.
+      // Use addPostFrameCallback + delay to ensure GoRouter navigator is ready.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          onNotifications.add(details.notificationResponse!.payload);
+        });
       });
     }
   }
@@ -140,6 +143,10 @@ class NotificationService {
         channelDesc = 'Clipboard background updates';
         importance = Importance.low;
         priority = Priority.low;
+        break;
+      case 'calendar':
+        channelName = 'Calendar Events';
+        channelDesc = 'Calendar event reminders';
         break;
     }
 
@@ -208,6 +215,7 @@ class NotificationService {
     required String body,
     required TimeOfDay time, // Use TimeOfDay for recurring
     String channelId = 'todos',
+    String? payload,
   }) async {
     final now = tz.TZDateTime.now(tz.local);
     var scheduledDate = tz.TZDateTime(
@@ -233,7 +241,7 @@ class NotificationService {
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents:
           DateTimeComponents.time, // Key for daily recurrence
-      payload: 'daily_planning',
+      payload: payload ?? channelId,
     );
   }
 

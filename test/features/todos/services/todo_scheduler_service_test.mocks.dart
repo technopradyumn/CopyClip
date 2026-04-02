@@ -157,6 +157,7 @@ class MockNotificationService extends _i1.Mock
     required String? body,
     required _i6.TimeOfDay? time,
     String? channelId = 'todos',
+    String? payload,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -168,6 +169,7 @@ class MockNotificationService extends _i1.Mock
             #body: body,
             #time: time,
             #channelId: channelId,
+            #payload: payload,
           },
         ),
         returnValue: _i5.Future<void>.value(),

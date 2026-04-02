@@ -12,20 +12,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart'
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:rxdart/rxdart.dart' as _i3;
 
-// ignore_for_file: type=lint
-// ignore_for_file: avoid_redundant_argument_values
-// ignore_for_file: avoid_setters_without_getters
-// ignore_for_file: comment_references
-// ignore_for_file: deprecated_member_use
-// ignore_for_file: deprecated_member_use_from_same_package
-// ignore_for_file: implementation_imports
-// ignore_for_file: invalid_use_of_visible_for_testing_member
-// ignore_for_file: must_be_immutable
-// ignore_for_file: prefer_const_constructors
-// ignore_for_file: unnecessary_parenthesis
-// ignore_for_file: camel_case_types
-// ignore_for_file: subtype_of_sealed_class
-
 class _FakeFlutterLocalNotificationsPlugin_0 extends _i1.SmartFake
     implements _i2.FlutterLocalNotificationsPlugin {
   _FakeFlutterLocalNotificationsPlugin_0(
@@ -157,6 +143,7 @@ class MockNotificationService extends _i1.Mock
     required String? body,
     required _i6.TimeOfDay? time,
     String? channelId = 'todos',
+    String? payload,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -168,6 +155,7 @@ class MockNotificationService extends _i1.Mock
             #body: body,
             #time: time,
             #channelId: channelId,
+            #payload: payload,
           },
         ),
         returnValue: _i5.Future<void>.value(),

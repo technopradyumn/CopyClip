@@ -811,6 +811,63 @@ class _SettingsScreenState extends State<SettingsScreen>
           ),
           const Divider(indent: 50),
           ListTile(
+            leading: Icon(CupertinoIcons.drop, color: primaryColor),
+            title: Text("App Primary Color", style: theme.textTheme.bodyLarge),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            child: BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, themeState) {
+                return Wrap(
+                  spacing: 14,
+                  runSpacing: 14,
+                  children: [
+                    Colors.blue,
+                    Colors.indigo,
+                    Colors.purple,
+                    Colors.pink,
+                    const Color(0xFFFF5252), // Modern Red
+                    const Color(0xFFFFAB40), // Modern Orange
+                    const Color(0xFFFFD740), // Modern Amber
+                    Colors.green,
+                    Colors.teal,
+                    Colors.cyan,
+                    const Color(0xFF7E57C2), // Deep Purple
+                  ].map((color) {
+                    final isSelected = themeState.primaryColor.value == color.value;
+                    return GestureDetector(
+                      onTap: () => context.read<ThemeBloc>().add(ChangePrimaryColor(color)),
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: color,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: isSelected ? theme.colorScheme.onSurface : Colors.transparent,
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            if (isSelected)
+                              BoxShadow(
+                                color: color.withOpacity(0.4),
+                                blurRadius: 8,
+                                spreadRadius: 1,
+                              ),
+                          ],
+                        ),
+                        child: isSelected 
+                          ? const Icon(Icons.check, color: Colors.white, size: 16) 
+                          : null,
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
+            ),
+          ),
+          const Divider(indent: 50),
+          ListTile(
             leading: Icon(CupertinoIcons.paintbrush, color: primaryColor),
             title: Text("Background Design", style: theme.textTheme.bodyLarge),
             subtitle: Text(

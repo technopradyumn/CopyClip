@@ -12,7 +12,9 @@ import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/widgets/empty_state_widget.dart'; // Added
 import 'package:copyclip/src/core/const/constant.dart';
+import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:flutter/cupertino.dart';
+import '../../../calendar/services/event_notification_service.dart';
 
 // Models & Cards
 import '../../../clipboard/data/clipboard_model.dart';
@@ -26,6 +28,8 @@ import '../../../expenses/presentation/widgets/expense_card.dart';
 import '../../../journal/presentation/widgets/journal_list_card.dart';
 import '../../../notes/presentation/widgets/note_card.dart';
 import '../../../todos/presentation/widgets/todo_card.dart';
+import '../../../calendar/data/calendar_event_model.dart';
+import '../../../calendar/presentation/widgets/event_card.dart';
 
 class DateDetailsScreen extends StatefulWidget {
   final DateTime date;
@@ -45,7 +49,8 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
       ValueNotifier([]);
 
   // Data Source
-  late List<GlobalSearchResult> _allData;
+  List<GlobalSearchResult> _allData = [];
+  bool _isLoading = true;
 
   // Filters
   String _searchQuery = "";
@@ -57,19 +62,28 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
     "Expense",
     "Journal",
     "Clipboard",
+    "Event",
   ];
 
   @override
   void initState() {
     super.initState();
-    _allData = List.from(widget.items);
-    _applyFilters(); // Initial population
+    // ✅ FIXED: Ensure all boxes are open BEFORE querying, then refresh data
+    _initAndRefresh();
 
     // Listen to search efficiently
     _searchController.addListener(() {
       _searchQuery = _searchController.text.toLowerCase();
       _applyFilters();
     });
+  }
+
+  Future<void> _initAndRefresh() async {
+    // Ensure all feature boxes are open before we query them
+    await LazyBoxLoader.loadAllBoxes();
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+    _refreshData();
   }
 
   @override
@@ -82,32 +96,33 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
   // --- DATA LOGIC ---
 
   void _refreshData() {
-    final dateKey = DateFormat('yyyy-MM-dd').format(widget.date);
     List<GlobalSearchResult> freshResults = [];
 
-    void safeAdd<T>(String boxName, GlobalSearchResult Function(T) mapper) {
-      if (Hive.isBoxOpen(boxName)) {
+    /// Generic helper — uses each model's built-in .date getter
+    /// and isSameDay comparison.
+    void safeAdd<T>(String boxName, GlobalSearchResult Function(T) mapper,
+        {bool Function(T)? extraFilter}) {
+      if (!Hive.isBoxOpen(boxName)) return;
+      try {
         final box = Hive.box<T>(boxName);
         freshResults.addAll(
           box.values
               .where((e) {
-                // Safe check for deleted and date match
                 try {
                   final dynamic item = e;
                   if (item.isDeleted == true) return false;
-
-                  // Use the unified 'date' getter we added to models
-                  final dateToCheck = item.date;
+                  if (extraFilter != null && !extraFilter(e)) return false;
+                  final DateTime? dateToCheck = item.date;
                   if (dateToCheck == null) return false;
-
-                  return DateFormat('yyyy-MM-dd').format(dateToCheck) ==
-                      dateKey;
+                  return isSameDay(dateToCheck, widget.date);
                 } catch (_) {
                   return false;
                 }
               })
               .map(mapper),
         );
+      } catch (e) {
+        debugPrint('DateDetail: safeAdd error for $boxName: $e');
       }
     }
 
@@ -122,6 +137,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
         argument: e,
       ),
     );
+
     safeAdd<Todo>(
       'todos_box',
       (e) => GlobalSearchResult(
@@ -134,6 +150,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
         isCompleted: e.isDone,
       ),
     );
+
     safeAdd<Expense>(
       'expenses_box',
       (e) => GlobalSearchResult(
@@ -145,6 +162,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
         argument: e,
       ),
     );
+
     safeAdd<JournalEntry>(
       'journal_box',
       (e) => GlobalSearchResult(
@@ -156,6 +174,7 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
         argument: e,
       ),
     );
+
     safeAdd<ClipboardItem>(
       'clipboard_box',
       (e) => GlobalSearchResult(
@@ -167,6 +186,35 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
         argument: e,
       ),
     );
+
+    // ✅ FIXED: CalendarEvents can span multiple days — check if widget.date
+    // falls anywhere within the event's startDate..endDate range.
+    if (Hive.isBoxOpen('calendar_events_box')) {
+      try {
+        final box = Hive.box<CalendarEvent>('calendar_events_box');
+        freshResults.addAll(
+          box.values
+              .where((e) {
+                if (e.isDeleted) return false;
+                // Match if the selected date falls within the event's range
+                final d = DateTime(widget.date.year, widget.date.month, widget.date.day);
+                final start = DateTime(e.startDate.toLocal().year, e.startDate.toLocal().month, e.startDate.toLocal().day);
+                final end = DateTime(e.endDate.toLocal().year, e.endDate.toLocal().month, e.endDate.toLocal().day);
+                return !d.isBefore(start) && !d.isAfter(end);
+              })
+              .map((e) => GlobalSearchResult(
+                    id: e.id,
+                    title: e.title,
+                    subtitle: e.description.isNotEmpty ? e.description : 'Event',
+                    type: 'Event',
+                    route: AppRouter.calendarEventEdit,
+                    argument: e,
+                  )),
+        );
+      } catch (e) {
+        debugPrint('DateDetail: CalendarEvent load error: $e');
+      }
+    }
 
     _allData = freshResults;
     _applyFilters();
@@ -210,6 +258,12 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
             _buildSearchBar(theme, onSurface),
             _buildFilterChips(theme, onSurface),
 
+            // ✅ Show loader while boxes are being opened
+            if (_isLoading)
+              const Expanded(
+                child: Center(child: CircularProgressIndicator()),
+              )
+            else
             // ✅ PERFORMANCE: ValueListenableBuilder
             Expanded(
               child: ValueListenableBuilder<List<GlobalSearchResult>>(
@@ -466,6 +520,16 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
           // ignore: deprecated_member_use
           onShare: () => Share.share(res.title),
         );
+      case 'Event':
+        return EventCard(
+          event: res.argument,
+          isSelected: false,
+          onTap: () async {
+            await context.push(res.route, extra: res.argument);
+            _refreshData();
+          },
+          onDelete: () => _deleteItem(res),
+        );
       default:
         return const SizedBox.shrink();
     }
@@ -479,17 +543,29 @@ class _DateDetailsScreenState extends State<DateDetailsScreen> {
         content: AppLocalizations.of(context)!.deleteItemConfirmation,
         confirmText: AppLocalizations.of(context)!.delete,
         isDestructive: true,
-        onConfirm: () {
+        onConfirm: () async {
           final dynamic item = res.argument;
           try {
             item.isDeleted = true;
             item.deletedAt = DateTime.now();
-            item.save();
+            await item.save();
+
+            // ✅ NEW: Cancel notifications if it's a CalendarEvent
+            if (item is CalendarEvent) {
+              await EventNotificationService.cancelNotifications(item);
+            }
           } catch (_) {}
           Navigator.pop(ctx);
           _refreshData();
         },
       ),
     );
+  }
+
+  bool isSameDay(DateTime? a, DateTime? b) {
+    if (a == null || b == null) return false;
+    final localA = a.toLocal();
+    // b is from the calendar (UTC midnight usually) or already local
+    return localA.year == b.year && localA.month == b.month && localA.day == b.day;
   }
 }

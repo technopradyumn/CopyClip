@@ -1,18 +1,18 @@
 import 'package:copyclip/src/features/canvas/presentation/pages/canvas_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:copyclip/src/core/widgets/deferred_widget.dart';
+
 
 // Deferred Imports for Tip 06: Performance
 import '../../features/calendar/data/calendar_event_model.dart';
 import '../../features/calendar/presentation/pages/calendar_event_edit_screen.dart';
-import '../../features/calendar/presentation/pages/calendar_screen.dart' deferred as calendar_screen;
+import '../../features/calendar/presentation/pages/calendar_screen.dart';
 import '../../features/calendar/presentation/pages/date_detail_screen.dart';
 import '../../features/calendar/presentation/pages/event_form_screen.dart';
 import '../../features/calendar/presentation/pages/all_events_screen.dart';
 import '../../features/calendar/presentation/pages/event_detail_screen.dart';
-import '../../features/canvas/presentation/pages/canvas_folder_screen.dart' deferred as canvas_folder_screen;
-import '../../features/canvas/presentation/pages/canvas_screen.dart' deferred as canvas_screen;
+import '../../features/canvas/presentation/pages/canvas_folder_screen.dart';
+import '../../features/canvas/presentation/pages/canvas_screen.dart';
 import '../../features/clipboard/data/clipboard_model.dart';
 import '../../features/clipboard/presentation/pages/clipboard_edit_screen.dart';
 import '../../features/dashboard/presentation/pages/dashboard_screen.dart';
@@ -23,7 +23,7 @@ import '../../features/journal/data/journal_model.dart';
 import '../../features/journal/presentation/pages/journal_edit_screen.dart';
 import '../../features/notes/data/note_model.dart';
 import '../../features/notes/presentation/pages/note_edit_screen.dart';
-import '../../features/notes/presentation/pages/notes_screen.dart' deferred as notes_screen;
+import '../../features/notes/presentation/pages/notes_screen.dart';
 import '../../features/settings/presentation/pages/feedback_screen.dart';
 import '../../features/settings/presentation/pages/privacy_policy_screen.dart';
 import '../../features/settings/presentation/pages/recycle_bin_screen.dart';
@@ -31,15 +31,15 @@ import '../../features/settings/presentation/pages/settings_screen.dart';
 import '../../features/settings/presentation/pages/background_picker_screen.dart';
 import '../../features/todos/data/todo_model.dart';
 import '../../features/todos/presentation/pages/todo_edit_screen.dart';
-import '../../features/todos/presentation/pages/todos_screen.dart' deferred as todos_screen;
-import '../../features/expenses/presentation/pages/expenses_screen.dart' deferred as expenses_screen;
-import '../../features/journal/presentation/pages/journal_screen.dart' deferred as journal_screen;
-import '../../features/clipboard/presentation/pages/clipboard_screen.dart' deferred as clipboard_screen;
-import '../../features/premium/presentation/pages/premium_screen.dart' deferred as premium_screen;
-import 'package:copyclip/src/features/social_post/presentation/pages/social_post_tabs_screen.dart' deferred as social_post_tabs_screen; 
+import '../../features/todos/presentation/pages/todos_screen.dart';
+import '../../features/expenses/presentation/pages/expenses_screen.dart';
+import '../../features/journal/presentation/pages/journal_screen.dart';
+import '../../features/clipboard/presentation/pages/clipboard_screen.dart';
+import '../../features/premium/presentation/pages/premium_screen.dart';
+import 'package:copyclip/src/features/social_post/presentation/pages/social_post_tabs_screen.dart'; 
 import 'package:copyclip/src/features/social_post/presentation/pages/social_post_screen.dart'; 
 import 'package:copyclip/src/features/social_post/data/social_post_model.dart'; 
-import 'package:copyclip/src/features/gamification/presentation/pages/xp_detail_screen.dart' deferred as xp_detail_screen;
+import 'package:copyclip/src/features/gamification/presentation/pages/xp_detail_screen.dart';
 
 class AppRouter {
   static const String root = '/';
@@ -90,17 +90,11 @@ List<GoRoute> getAuthRoutes() {
     ),
     GoRoute(
       path: AppRouter.premium,
-      builder: (context, state) => DeferredWidget(
-        libraryLoader: premium_screen.loadLibrary,
-        builder: () => premium_screen.PremiumScreen(),
-      ),
+      builder: (context, state) => PremiumScreen(),
     ),
     GoRoute(
       path: AppRouter.notes,
-      builder: (context, state) => DeferredWidget(
-        libraryLoader: notes_screen.loadLibrary,
-        builder: () => notes_screen.NotesScreen(),
-      ),
+      builder: (context, state) => NotesScreen(),
     ),
     GoRoute(
       path: AppRouter.noteEdit,
@@ -113,10 +107,7 @@ List<GoRoute> getAuthRoutes() {
     ),
     GoRoute(
       path: AppRouter.todos,
-      builder: (context, state) => DeferredWidget(
-        libraryLoader: todos_screen.loadLibrary,
-        builder: () => todos_screen.TodosScreen(),
-      ),
+      builder: (context, state) => TodosScreen(),
     ),
     GoRoute(
       path: AppRouter.todoEdit,
@@ -129,10 +120,7 @@ List<GoRoute> getAuthRoutes() {
     ),
     GoRoute(
       path: AppRouter.expenses,
-      builder: (context, state) => DeferredWidget(
-        libraryLoader: expenses_screen.loadLibrary,
-        builder: () => expenses_screen.ExpensesScreen(),
-      ),
+      builder: (context, state) => ExpensesScreen(),
     ),
     GoRoute(
       path: AppRouter.expenseEdit,
@@ -143,10 +131,7 @@ List<GoRoute> getAuthRoutes() {
     ),
     GoRoute(
       path: AppRouter.journal,
-      builder: (context, state) => DeferredWidget(
-        libraryLoader: journal_screen.loadLibrary,
-        builder: () => journal_screen.JournalScreen(),
-      ),
+      builder: (context, state) => JournalScreen(),
     ),
     GoRoute(
       path: AppRouter.journalEdit,
@@ -158,10 +143,7 @@ List<GoRoute> getAuthRoutes() {
     ),
     GoRoute(
       path: AppRouter.clipboard,
-      builder: (context, state) => DeferredWidget(
-        libraryLoader: clipboard_screen.loadLibrary,
-        builder: () => clipboard_screen.ClipboardScreen(),
-      ),
+      builder: (context, state) => ClipboardScreen(),
     ),
 
     GoRoute(
@@ -175,18 +157,12 @@ List<GoRoute> getAuthRoutes() {
 
     GoRoute(
       path: AppRouter.calendar,
-      builder: (context, state) => DeferredWidget(
-        libraryLoader: calendar_screen.loadLibrary,
-        builder: () => calendar_screen.CalendarScreen(),
-      ),
+      builder: (context, state) => CalendarScreen(),
     ),
 
     GoRoute(
       path: AppRouter.xpDetail,
-      builder: (context, state) => DeferredWidget(
-        libraryLoader: xp_detail_screen.loadLibrary,
-        builder: () => xp_detail_screen.XpDetailScreen(),
-      ),
+      builder: (context, state) => XpDetailScreen(),
     ),
 
     GoRoute(
@@ -221,10 +197,7 @@ List<GoRoute> getAuthRoutes() {
 
     GoRoute(
       path: AppRouter.canvas,
-      builder: (context, state) => DeferredWidget(
-        libraryLoader: canvas_screen.loadLibrary,
-        builder: () => canvas_screen.CanvasScreen(),
-      ),
+      builder: (context, state) => CanvasScreen(),
     ),
 
     // Canvas Folder Screen (shows all notes in a folder)
@@ -233,10 +206,7 @@ List<GoRoute> getAuthRoutes() {
       builder: (context, state) {
         // Expecting folderId as extra parameter
         final String folderId = state.extra as String;
-        return DeferredWidget(
-          libraryLoader: canvas_folder_screen.loadLibrary,
-          builder: () => canvas_folder_screen.CanvasFolderScreen(folderId: folderId),
-        );
+        return CanvasFolderScreen(folderId: folderId);
       },
     ),
 
@@ -290,10 +260,7 @@ List<GoRoute> getAuthRoutes() {
     ),
     GoRoute(
       path: AppRouter.socialPost,
-      builder: (context, state) => DeferredWidget(
-        libraryLoader: social_post_tabs_screen.loadLibrary,
-        builder: () => social_post_tabs_screen.SocialPostTabsScreen(),
-      ),
+      builder: (context, state) => SocialPostTabsScreen(),
     ),
     GoRoute(
       path: AppRouter.socialPostEdit,

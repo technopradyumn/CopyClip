@@ -70,19 +70,19 @@ class CalendarDesignPickerSheet extends StatelessWidget {
                 final pattern = designs[index];
                 final isSelected = (currentDesignId ?? event?.designPatternId ?? '') == pattern.id;
                 return GestureDetector(
-                  onTap: () async {
-                    if (onDesignSelected != null) {
-                      onDesignSelected!(pattern.id);
-                    } else if (event != null) {
-                      final box = Hive.box<CalendarEvent>('calendar_events_box');
-                      final evt = box.get(event!.id);
-                      if (evt != null) {
-                        evt.designPatternId = pattern.id;
-                        await evt.save();
+                    onTap: () async {
+                      if (onDesignSelected != null) {
+                        onDesignSelected!(pattern.id);
+                      } else if (event != null) {
+                        final box = Hive.box<CalendarEvent>('calendar_events_box');
+                        final evt = box.get(event!.id);
+                        if (evt != null) {
+                          evt.designPatternId = pattern.id;
+                          await evt.save();
+                        }
                       }
-                    }
-                    if (context.mounted) Navigator.pop(context);
-                  },
+                      if (context.mounted) Navigator.pop(context, pattern.id);
+                    },
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     decoration: BoxDecoration(

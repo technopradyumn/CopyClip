@@ -2,13 +2,18 @@ import 'dart:math' as math;
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-enum MascotState { idle, happy, encouraging, sad, amazed, thinking, sleeping }
+enum MascotState {
+  idle, happy, encouraging, sad, amazed, thinking, sleeping,
+  angry, excited, confused, laughing, cool, love, shocked,
+  proud, scared, tired, cheeky, dizzy
+}
 
 class MascotCharacter extends StatefulWidget {
   final MascotState state;
   final double size;
   final VoidCallback? onTap;
   final bool useThemeColor;
+  final Color? color;
 
   const MascotCharacter({
     super.key,
@@ -16,6 +21,7 @@ class MascotCharacter extends StatefulWidget {
     this.size = 150,
     this.onTap,
     this.useThemeColor = true,
+    this.color,
   });
 
   @override
@@ -143,18 +149,36 @@ class _MascotCharacterState extends State<MascotCharacter>
     }
     switch (widget.state) {
       case MascotState.happy:
+      case MascotState.excited:
+      case MascotState.laughing:
         _controller.duration = const Duration(milliseconds: 800);
         break;
       case MascotState.sleeping:
+      case MascotState.tired:
         _controller.duration = const Duration(milliseconds: 4000);
         break;
       case MascotState.amazed:
+      case MascotState.shocked:
+      case MascotState.scared:
         _controller.duration = const Duration(milliseconds: 1000);
         break;
       case MascotState.encouraging:
+      case MascotState.proud:
+      case MascotState.love:
         _controller.duration = const Duration(milliseconds: 900);
         break;
-      default:
+      case MascotState.angry:
+        _controller.duration = const Duration(milliseconds: 600);
+        break;
+      case MascotState.dizzy:
+        _controller.duration = const Duration(milliseconds: 500);
+        break;
+      case MascotState.idle:
+      case MascotState.thinking:
+      case MascotState.sad:
+      case MascotState.confused:
+      case MascotState.cool:
+      case MascotState.cheeky:
         _controller.duration = const Duration(milliseconds: 1500);
     }
     _controller.repeat();
@@ -170,9 +194,9 @@ class _MascotCharacterState extends State<MascotCharacter>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final auraColor = widget.useThemeColor
+    final auraColor = widget.color ?? (widget.useThemeColor
         ? theme.colorScheme.primary
-        : const Color(0xFF6366F1);
+        : const Color(0xFF6366F1));
 
     return GestureDetector(
       onTap: _handleTap,
@@ -289,6 +313,24 @@ class _AuraEntityPainter extends CustomPainter {
     );
   }
 
+  void _drawHeart(Canvas canvas, Offset center, double size, Color color) {
+    final paint = Paint()..color = color..style = PaintingStyle.fill;
+    final path = Path();
+    final width = size * 2.2;
+    final height = size * 2.2;
+    
+    path.moveTo(center.dx, center.dy + height * 0.25);
+    path.cubicTo(
+        center.dx + width * 0.6, center.dy - height * 0.15, 
+        center.dx + width * 0.4, center.dy - height * 0.6, 
+        center.dx, center.dy - height * 0.2);
+    path.cubicTo(
+        center.dx - width * 0.4, center.dy - height * 0.6, 
+        center.dx - width * 0.6, center.dy - height * 0.15, 
+        center.dx, center.dy + height * 0.25);
+    canvas.drawPath(path, paint);
+  }
+
   void _drawEyes(Canvas canvas, Offset center, double radius) {
     final eyeOffsetX = radius * 0.45;
     final eyeOffsetY = radius * -0.1;
@@ -296,31 +338,98 @@ class _AuraEntityPainter extends CustomPainter {
 
     final white = Paint()..color = Colors.white;
     final pupil = Paint()..color = Colors.black;
+    final linePaint = Paint()
+      ..color = Colors.white
+      ..strokeWidth = 4
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke;
 
     Offset left = center.translate(-eyeOffsetX, eyeOffsetY);
     Offset right = center.translate(eyeOffsetX, eyeOffsetY);
 
-    if (state == MascotState.sleeping) {
-      final sleep = Paint()
-        ..color = Colors.white
-        ..strokeWidth = 3
-        ..strokeCap = StrokeCap.round;
-
-      canvas.drawLine(left.translate(-8, 0), left.translate(8, 0), sleep);
-      canvas.drawLine(right.translate(-8, 0), right.translate(8, 0), sleep);
+    if (state == MascotState.sleeping || state == MascotState.tired) {
+      canvas.drawLine(left.translate(-8, 0), left.translate(8, 0), linePaint);
+      canvas.drawLine(right.translate(-8, 0), right.translate(8, 0), linePaint);
       return;
     }
 
-    canvas.drawCircle(left, eyeRadius, white);
-    canvas.drawCircle(right, eyeRadius, white);
+    if (state == MascotState.laughing) {
+      canvas.drawLine(left.translate(-6, -6), left.translate(6, 0), linePaint);
+      canvas.drawLine(left.translate(6, 0), left.translate(-6, 6), linePaint);
+      canvas.drawLine(right.translate(6, -6), right.translate(-6, 0), linePaint);
+      canvas.drawLine(right.translate(-6, 0), right.translate(6, 6), linePaint);
+      return;
+    }
+
+    if (state == MascotState.encouraging || state == MascotState.proud) {
+      canvas.drawArc(Rect.fromCircle(center: left.translate(0, 4), radius: 8), math.pi, math.pi, false, linePaint);
+      canvas.drawArc(Rect.fromCircle(center: right.translate(0, 4), radius: 8), math.pi, math.pi, false, linePaint);
+      return;
+    }
+
+    if (state == MascotState.cool) {
+      final glassPaint = Paint()..color = Colors.black87..style = PaintingStyle.fill;
+      canvas.drawRRect(RRect.fromRectAndRadius(Rect.fromCenter(center: left, width: eyeRadius*2.5, height: eyeRadius*1.5), const Radius.circular(4)), glassPaint);
+      canvas.drawRRect(RRect.fromRectAndRadius(Rect.fromCenter(center: right, width: eyeRadius*2.5, height: eyeRadius*1.5), const Radius.circular(4)), glassPaint);
+      canvas.drawLine(left, right, Paint()..color=Colors.black87..strokeWidth=3);
+      return;
+    }
+
+    if (state == MascotState.love) {
+      _drawHeart(canvas, left, eyeRadius, Colors.white);
+      _drawHeart(canvas, right, eyeRadius, Colors.white);
+      return;
+    }
+
+    if (state == MascotState.dizzy) {
+      canvas.drawCircle(left, eyeRadius * 0.8, linePaint);
+      canvas.drawCircle(left, eyeRadius * 0.4, linePaint);
+      canvas.drawCircle(right, eyeRadius * 0.8, linePaint);
+      canvas.drawCircle(right, eyeRadius * 0.4, linePaint);
+      return;
+    }
+
+    if (state == MascotState.cheeky) {
+       canvas.drawCircle(left, eyeRadius, white);
+       canvas.drawCircle(left, eyeRadius * 0.5, pupil);
+       canvas.drawLine(right.translate(-8, 0), right.translate(8, 0), linePaint);
+       return;
+    }
+
+    double leftRadius = eyeRadius;
+    double rightRadius = eyeRadius;
+    if (state == MascotState.amazed) {
+      leftRadius *= 1.3;
+      rightRadius *= 1.3;
+    } else if (state == MascotState.confused) {
+      leftRadius *= 1.2;
+      rightRadius *= 0.8;
+    }
+
+    canvas.drawCircle(left, leftRadius, white);
+    canvas.drawCircle(right, rightRadius, white);
 
     double shift = 0;
     if (state == MascotState.thinking) {
       shift = 4 * math.sin(rotation * 3);
     }
 
-    canvas.drawCircle(left.translate(shift, 0), eyeRadius * 0.5, pupil);
-    canvas.drawCircle(right.translate(shift, 0), eyeRadius * 0.5, pupil);
+    double pupilFactor = 0.5;
+    if (state == MascotState.shocked || state == MascotState.scared) pupilFactor = 0.2;
+    if (state == MascotState.excited) pupilFactor = 0.7;
+
+    canvas.drawCircle(left.translate(shift, 0), leftRadius * pupilFactor, pupil);
+    canvas.drawCircle(right.translate(shift, 0), rightRadius * pupilFactor, pupil);
+
+    if (state == MascotState.angry) {
+       final browPaint = Paint()..color = Colors.white..strokeWidth=4..strokeCap=StrokeCap.round;
+       canvas.drawLine(left.translate(-10, -15), left.translate(8, -5), browPaint);
+       canvas.drawLine(right.translate(10, -15), right.translate(-8, -5), browPaint);
+    } else if (state == MascotState.sad) {
+       final browPaint = Paint()..color = Colors.white..strokeWidth=3..strokeCap=StrokeCap.round;
+       canvas.drawLine(left.translate(-8, -5), left.translate(10, -12), browPaint);
+       canvas.drawLine(right.translate(8, -5), right.translate(-10, -12), browPaint);
+    }
   }
 
   void _drawMouth(Canvas canvas, Offset center, double radius) {
@@ -334,6 +443,9 @@ class _AuraEntityPainter extends CustomPainter {
 
     switch (state) {
       case MascotState.happy:
+      case MascotState.excited:
+      case MascotState.love:
+      case MascotState.proud:
         canvas.drawArc(
           Rect.fromCenter(
             center: Offset(center.dx, mouthY),
@@ -348,6 +460,7 @@ class _AuraEntityPainter extends CustomPainter {
         break;
 
       case MascotState.sad:
+      case MascotState.tired:
         canvas.drawArc(
           Rect.fromCenter(
             center: Offset(center.dx, mouthY + 10),
@@ -362,15 +475,104 @@ class _AuraEntityPainter extends CustomPainter {
         break;
 
       case MascotState.amazed:
-        canvas.drawCircle(Offset(center.dx, mouthY), radius * 0.25, mouthPaint);
+      case MascotState.shocked:
+        double r = state == MascotState.shocked ? radius * 0.15 : radius * 0.25;
+        canvas.drawCircle(Offset(center.dx, mouthY), r, mouthPaint);
+        break;
+
+      case MascotState.angry:
+        canvas.drawArc(
+          Rect.fromCenter(
+            center: Offset(center.dx, mouthY + 12),
+            width: radius * 1.0,
+            height: radius * 0.5,
+          ),
+          math.pi,
+          math.pi,
+          false,
+          mouthPaint,
+        );
+        break;
+
+      case MascotState.laughing:
+        final fillPaint = Paint()..color = Colors.white..style = PaintingStyle.fill;
+        canvas.drawArc(
+          Rect.fromCenter(
+            center: Offset(center.dx, mouthY - 5),
+            width: radius * 1.4,
+            height: radius * 1.4,
+          ),
+          0,
+          math.pi,
+          true,
+          fillPaint,
+        );
+        break;
+
+      case MascotState.dizzy:
+        final path = Path();
+        path.moveTo(center.dx - 15, mouthY);
+        path.quadraticBezierTo(center.dx - 7.5, mouthY - 10, center.dx, mouthY);
+        path.quadraticBezierTo(center.dx + 7.5, mouthY + 10, center.dx + 15, mouthY);
+        canvas.drawPath(path, mouthPaint);
+        break;
+
+      case MascotState.cheeky:
+        canvas.drawArc(
+          Rect.fromCenter(
+            center: Offset(center.dx, mouthY),
+            width: radius * 1.0,
+            height: radius * 0.6,
+          ),
+          0,
+          math.pi,
+          false,
+          mouthPaint,
+        );
+        final tonguePaint = Paint()..color = Colors.pinkAccent..style = PaintingStyle.fill;
+        canvas.drawArc(
+          Rect.fromCenter(
+            center: Offset(center.dx + 5, mouthY + 8),
+            width: radius * 0.4,
+            height: radius * 0.6,
+          ),
+          0,
+          math.pi,
+          false,
+          tonguePaint,
+        );
+        break;
+
+      case MascotState.confused:
+      case MascotState.cool:
+      case MascotState.scared:
+        canvas.drawLine(
+          Offset(center.dx - 10, mouthY),
+          Offset(center.dx + 10, mouthY - 3),
+          mouthPaint,
+        );
+        break;
+
+      case MascotState.encouraging:
+        canvas.drawArc(
+          Rect.fromCenter(
+            center: Offset(center.dx, mouthY),
+            width: radius * 1.0,
+            height: radius * 0.5,
+          ),
+          0,
+          math.pi,
+          false,
+          mouthPaint,
+        );
         break;
 
       default:
         canvas.drawArc(
           Rect.fromCenter(
             center: Offset(center.dx, mouthY),
-            width: radius,
-            height: radius * 0.6,
+            width: radius * 0.8,
+            height: radius * 0.3,
           ),
           0,
           math.pi,

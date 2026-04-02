@@ -26,6 +26,10 @@ import '../../../expenses/presentation/widgets/expense_card.dart';
 import '../../../journal/presentation/widgets/journal_list_card.dart';
 import '../../../notes/presentation/widgets/note_card.dart';
 import '../../../todos/presentation/widgets/todo_card.dart';
+import '../../../calendar/presentation/widgets/event_card.dart';
+import '../../../social_post/presentation/widgets/social_post_card.dart';
+import '../../../calendar/data/calendar_event_model.dart';
+import '../../../social_post/data/social_post_model.dart';
 
 import 'dashboard_screen.dart';
 
@@ -79,11 +83,13 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
 
   final List<String> _filterTypes = [
     "All",
+    "Event",
     "Note",
     "Todo",
     "Expense",
     "Journal",
     "Clipboard",
+    "Social",
   ];
 
   @override
@@ -228,6 +234,32 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           route: AppRouter.expenseEdit,
           argument: e,
           dateTime: e.date,
+        ),
+      );
+
+      await safeAdd<CalendarEvent>(
+        'calendar_events_box',
+        (e) => SearchResult(
+          id: e.id,
+          title: e.title,
+          subtitle: e.description.isNotEmpty ? e.description : "Event",
+          type: 'Event',
+          route: AppRouter.calendarEventEdit,
+          argument: e,
+          dateTime: e.startDate,
+        ),
+      );
+
+      await safeAdd<SocialPost>(
+        'social_posts_box',
+        (e) => SearchResult(
+          id: e.id,
+          title: e.content,
+          subtitle: "Social Post",
+          type: 'Social',
+          route: AppRouter.socialPostEdit,
+          argument: e,
+          dateTime: e.createdAt,
         ),
       );
 
@@ -709,85 +741,175 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   }
 
   Widget _buildResultCard(SearchResult res) {
+    final theme = Theme.of(context);
     switch (res.type) {
+      case 'Event':
+        return _wrapWithCategory(
+          Hero(
+            tag: 'event_${res.id}',
+            child: Material(
+              type: MaterialType.transparency,
+              child: EventCard(
+                event: res.argument,
+                onTap: () async {
+                  await context.push('/calendar/detail/${res.id}', extra: res.argument);
+                  _loadAllData();
+                },
+                onDelete: () {
+                  try {
+                    final event = res.argument as CalendarEvent;
+                    event.isDeleted = true;
+                    event.save();
+                  } catch (_) {}
+                  _loadAllData();
+                },
+              ),
+            ),
+          ),
+          res.type,
+          theme,
+        );
       case 'Note':
-        return NoteCard(
-          note: res.argument,
-          isSelected: false,
-          onTap: () async {
-            await context.push(res.route, extra: res.argument);
-            _loadAllData();
-          },
-          onCopy: () => _copy(res),
-          onShare: () => _share(res),
-          onDelete: () => _delete(res),
-          onColorChanged: (c) {
-            (res.argument as Note).colorValue = c.toARGB32();
-            (res.argument as Note).save();
-            setState(() {});
-          },
+        return _wrapWithCategory(
+          NoteCard(
+            note: res.argument,
+            isSelected: false,
+            onTap: () async {
+              await context.push(res.route, extra: res.argument);
+              _loadAllData();
+            },
+            onCopy: () => _copy(res),
+            onShare: () => _share(res),
+            onDelete: () => _delete(res),
+            onColorChanged: (c) {
+              (res.argument as Note).colorValue = c.toARGB32();
+              (res.argument as Note).save();
+              setState(() {});
+            },
+          ),
+          res.type,
+          theme,
         );
       case 'Todo':
-        return TodoCard(
-          todo: res.argument,
-          isSelected: false,
-          onTap: () async {
-            await context.push(res.route, extra: res.argument);
-            _loadAllData();
-          },
-          onToggleDone: () {
-            (res.argument as Todo).isDone = !(res.argument as Todo).isDone;
-            (res.argument as Todo).save();
-            _loadAllData();
-          },
+        return _wrapWithCategory(
+          TodoCard(
+            todo: res.argument,
+            isSelected: false,
+            onTap: () async {
+              await context.push(res.route, extra: res.argument);
+              _loadAllData();
+            },
+            onToggleDone: () {
+              (res.argument as Todo).isDone = !(res.argument as Todo).isDone;
+              (res.argument as Todo).save();
+              _loadAllData();
+            },
+          ),
+          res.type,
+          theme,
         );
       case 'Expense':
-        return ExpenseCard(
-          expense: res.argument,
-          isSelected: false,
-          onTap: () async {
-            await context.push(res.route, extra: res.argument);
-            _loadAllData();
-          },
+        return _wrapWithCategory(
+          ExpenseCard(
+            expense: res.argument,
+            isSelected: false,
+            onTap: () async {
+              await context.push(res.route, extra: res.argument);
+              _loadAllData();
+            },
+          ),
+          res.type,
+          theme,
         );
       case 'Journal':
-        return JournalListCard(
-          entry: res.argument,
-          isSelected: false,
-          onTap: () async {
-            await context.push(res.route, extra: res.argument);
-            _loadAllData();
-          },
-          onCopy: () => _copy(res),
-          onShare: () => _share(res),
-          onDelete: () => _delete(res),
-          onDesignChanged: (id) {
-            (res.argument as JournalEntry).designId = id;
-            (res.argument as JournalEntry).save();
-            setState(() {});
-          },
+        return _wrapWithCategory(
+          JournalListCard(
+            entry: res.argument,
+            isSelected: false,
+            onTap: () async {
+              await context.push(res.route, extra: res.argument);
+              _loadAllData();
+            },
+            onDelete: () => _delete(res),
+            onDesignChanged: (id) {
+              (res.argument as JournalEntry).designId = id;
+              (res.argument as JournalEntry).save();
+              setState(() {});
+            },
+            onCopy: () => _copy(res),
+            onShare: () => _share(res),
+          ),
+          res.type,
+          theme,
         );
       case 'Clipboard':
-        return ClipboardCard(
-          item: res.argument,
-          isSelected: false,
-          onTap: () async {
-            await context.push(res.route, extra: res.argument);
-            _loadAllData();
-          },
-          onCopy: () => _copy(res),
-          onShare: () => _share(res),
-          onDelete: () => _delete(res),
-          onColorChanged: (c) {
-            (res.argument as ClipboardItem).colorValue = c.toARGB32();
-            (res.argument as ClipboardItem).save();
-            setState(() {});
-          },
+        return _wrapWithCategory(
+          ClipboardCard(
+            item: res.argument,
+            isSelected: false,
+            onTap: () async {
+              await context.push(res.route, extra: res.argument);
+              _loadAllData();
+            },
+            onDelete: () => _delete(res),
+            onColorChanged: (c) {
+              (res.argument as ClipboardItem).colorValue = c.toARGB32();
+              (res.argument as ClipboardItem).save();
+              setState(() {});
+            },
+            onCopy: () => _copy(res),
+            onShare: () => _share(res),
+          ),
+          res.type,
+          theme,
         );
-
+      case 'Social':
+        return _wrapWithCategory(
+          SocialPostCard(
+            post: res.argument,
+            onTap: () async {
+              await context.push(res.route, extra: res.argument);
+              _loadAllData();
+            },
+          ),
+          res.type,
+          theme,
+        );
       default:
         return const SizedBox.shrink();
     }
+  }
+
+  Widget _wrapWithCategory(Widget card, String type, ThemeData theme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 4, bottom: 6),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary.withOpacity(0.15),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: theme.colorScheme.primary.withOpacity(0.2),
+                width: 1,
+              ),
+            ),
+            child: Text(
+              type.toUpperCase(),
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w900,
+                color: theme.colorScheme.primary,
+                letterSpacing: 0.8,
+              ),
+            ),
+          ),
+        ),
+        card,
+      ],
+    );
   }
 
   void _copy(SearchResult res) {

@@ -44,6 +44,8 @@ class CalendarEvent extends HiveObject {
   @HiveField(13)
   String? designPatternId;
 
+  DateTime get date => startDate;
+
   CalendarEvent({
     required this.id,
     required this.title,

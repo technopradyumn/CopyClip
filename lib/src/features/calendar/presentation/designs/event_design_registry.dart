@@ -24,7 +24,7 @@ class EventDesignPattern {
     required this.primaryColor,
     required this.secondaryColor,
     this.layout = EventLayoutVariant.standard,
-    this.priorityStyle = PriorityStyle.dot,
+    this.priorityStyle = PriorityStyle.bar,
     this.hasTimeBadge = true,
     this.hasLocationBadge = true,
   });
@@ -148,7 +148,7 @@ class EventDesignRegistry {
     EventDesignPattern(
       id: 'glass_3',
       name: 'Glass Ripple',
-      painter: RippleGlassPainter(Colors.orange.shade300.withOpacity(0.3)),
+      painter: LinesGlassPainter(Colors.orange.shade300.withOpacity(0.3)),
       primaryColor: Colors.orange.shade300,
       secondaryColor: Colors.white.withOpacity(0.2),
     ),
@@ -184,21 +184,21 @@ class EventDesignRegistry {
     EventDesignPattern(
       id: 'glass_8',
       name: 'Glass Orbit',
-      painter: OrbitGlassPainter(Colors.pink.shade300.withOpacity(0.3)),
+      painter: GridGlassPainter(Colors.pink.shade300.withOpacity(0.3)),
       primaryColor: Colors.pink.shade300,
       secondaryColor: Colors.white.withOpacity(0.2),
     ),
     EventDesignPattern(
       id: 'glass_9',
       name: 'Glass Pulse',
-      painter: PulseGlassPainter(Colors.cyan.shade300.withOpacity(0.3)),
+      painter: StripeGlassPainter(Colors.cyan.shade300.withOpacity(0.3)),
       primaryColor: Colors.cyan.shade300,
       secondaryColor: Colors.white.withOpacity(0.2),
     ),
     EventDesignPattern(
       id: 'glass_10',
-      name: 'Glass Spark',
-      painter: SparkleGlassPainter(Colors.amber.shade300.withOpacity(0.3)),
+      name: 'Glass Sparkle',
+      painter: ShineGlassPainter(Colors.amber.shade300.withOpacity(0.3)),
       primaryColor: Colors.amber.shade300,
       secondaryColor: Colors.white.withOpacity(0.2),
     ),
@@ -218,7 +218,7 @@ class EventDesignRegistry {
     EventDesignPattern(
       id: 'grad_2',
       name: 'Aurora',
-      painter: RadialGradientPainter([
+      painter: RectGradientPainter([
         Colors.purple.shade400,
         Colors.blue.shade400,
         Colors.green.shade400,
@@ -229,7 +229,7 @@ class EventDesignRegistry {
     EventDesignPattern(
       id: 'grad_3',
       name: 'Ocean Wave',
-      painter: SweepGradientPainter(Colors.blue.shade300, Colors.teal.shade400),
+      painter: CornerGradientPainter(Colors.blue.shade300, Colors.teal.shade400),
       primaryColor: Colors.blue.shade300,
       secondaryColor: Colors.teal.shade400,
     ),
@@ -267,7 +267,7 @@ class EventDesignRegistry {
     EventDesignPattern(
       id: 'grad_7',
       name: 'Lava',
-      painter: RadialGradientPainter([
+      painter: RectGradientPainter([
         Colors.red.shade400,
         Colors.orange.shade600,
       ]),
@@ -284,7 +284,7 @@ class EventDesignRegistry {
     EventDesignPattern(
       id: 'grad_9',
       name: 'Golden',
-      painter: SweepGradientPainter(
+      painter: CornerGradientPainter(
         Colors.amber.shade400,
         const Color(0xFFFFD700),
       ),

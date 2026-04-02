@@ -25,6 +25,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/router/main_router.dart';
 import 'package:copyclip/src/core/services/app_update_service.dart';
+import 'package:copyclip/src/core/services/notification_service.dart'; // Added
 
 import 'package:copyclip/src/core/theme/app_theme.dart';
 import 'package:copyclip/src/core/services/gamification_service.dart';
@@ -97,39 +98,20 @@ class RateUpgraderMessages extends UpgraderMessages {
 }
 
 // --- APP STATE MANAGER ---
-class AppInitializationState extends ChangeNotifier {
-  bool _isInitialized = false;
-  String _currentStep = 'Starting...';
-  double _progress = 0.0;
-
-  bool get isInitialized => _isInitialized;
-  String get currentStep => _currentStep;
-  double get progress => _progress;
-
-  void updateProgress(String step, double progress) {
-    _currentStep = step;
-    _progress = progress;
-    notifyListeners();
-  }
-
-  void complete() {
-    _isInitialized = true;
-    _progress = 1.0;
-    notifyListeners();
-  }
-}
+// initialization state no longer needed
 
 // ✅ TEST HELPER
 bool isIntegrationTesting = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final initState = AppInitializationState();
+  
+  // ✅ INITIALIZATION: Perform all critical startup tasks BEFORE first frame
+  await _initializeApp();
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: initState),
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
         ChangeNotifierProvider(create: (_) => GamificationService()..init()),
       ],
@@ -138,16 +120,13 @@ void main() async {
           BlocProvider(create: (_) => ThemeBloc()..add(LoadTheme())),
           BlocProvider(create: (_) => PremiumBloc()),
         ],
-        child: const LoadingApp(),
+        child: const MainApp(),
       ),
     ),
   );
-
-  // ✅ OPTIMIZATION: Fire and forget init while app launches
-  _initializeApp(initState);
 }
 
-Future<void> _initializeApp(AppInitializationState state) async {
+Future<void> _initializeApp() async {
   try {
     // Step 1: Basic services (Critical only)
     await dotenv.load(fileName: ".env").catchError((_) => null);
@@ -174,11 +153,9 @@ Future<void> _initializeApp(AppInitializationState state) async {
       CanvasDatabase().init(),
     ]);
 
-    state.complete();
     debugPrint("✅ Critical initialization complete");
   } catch (e, stackTrace) {
     debugPrint("❌ Initialization error: $e\n$stackTrace");
-    state.complete(); // Ensure app loads even on error
   }
 }
 
@@ -213,6 +190,11 @@ Future<Box<T>> _openBoxSafely<T>(String boxName) async {
 // ✅ CHANGE 4: Enhanced background tasks initialization
 Future<void> _initializeBackgroundTasks() async {
   try {
+    // ✅ CRITICAL FIX: Initialize NotificationService FIRST so the plugin is
+    // ready before any listeners attach and cold-start payloads are emitted.
+    await NotificationService().init();
+    debugPrint('✅ NotificationService initialized');
+
     // Initialize default widget data if not exists
     final String? title = await HomeWidget.getWidgetData<String>('title');
     if (title == null) {
@@ -262,89 +244,6 @@ Future<void> _updateAllWidgets() async {
   }
 }
 
-// --- LOADING APP & SCREEN ---
-class LoadingApp extends StatelessWidget {
-  const LoadingApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<AppInitializationState>(
-      builder: (context, initState, _) {
-        if (!initState.isInitialized) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: LoadingScreen(
-              currentStep: initState.currentStep,
-              progress: initState.progress,
-            ),
-          );
-        }
-        return const MainApp();
-      },
-    );
-  }
-}
-
-class LoadingScreen extends StatelessWidget {
-  final String currentStep;
-  final double progress;
-  const LoadingScreen({
-    super.key,
-    required this.currentStep,
-    required this.progress,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/logo/copyclip_logo.png',
-                width: 120,
-                height: 120,
-              ),
-              const SizedBox(height: 24),
-              const Text(
-                'CopyClip',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-              // const SizedBox(height: 12),
-              // Text(
-              //   currentStep,
-              //   style: const TextStyle(
-              //     fontSize: 14,
-              //     color: Colors.grey,
-              //   ),
-              //   textAlign: TextAlign.center,
-              // ),
-              // const SizedBox(height: 24),
-              // // ✅ CHANGE 6: Added progress indicator
-              // SizedBox(
-              //   width: 200,
-              //   child: LinearProgressIndicator(
-              //     value: progress,
-              //     backgroundColor: Colors.grey[200],
-              //     valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
-              //   ),
-              // ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 // --- MAIN APP ---
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -359,6 +258,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
   Timer? _clipboardTimer;
   String? _lastClipboardText;
+  StreamSubscription<String?>? _notificationSubscription; // Added
 
   @override
   void initState() {
@@ -377,6 +277,11 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
     // ✅ Initialize background tasks (Parallel)
     _initializeBackgroundTasks();
+
+    // ✅ NEW: Handle notifications
+    _notificationSubscription = NotificationService().onNotifications.stream.listen(
+      _handleNotificationPayload,
+    );
 
     _checkClipboard(); // Initial Check
     _startClipboardTimer();
@@ -401,6 +306,50 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     _clipboardTimer = null;
     debugPrint('🛑 Clipboard Check Timer Stopped');
   }
+
+  // ✅ NEW: Handle notification navigation
+  void _handleNotificationPayload(String? payload) {
+    if (payload == null || !mounted) return;
+    debugPrint('🔔 Notification Payload Received: $payload');
+
+    // Use post-frame callback to ensure the Navigator/GoRouter is fully ready
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _navigateForPayload(payload);
+    });
+  }
+
+  void _navigateForPayload(String payload) {
+    try {
+      if (payload.startsWith('ACTION:mark_done:')) {
+        // Mark-done action handled via stream, no navigation needed
+        return;
+      }
+      if (payload.startsWith('event:')) {
+        final String id = payload.split(':')[1];
+        router.push('/calendar/detail/$id');
+      } else if (payload == 'daily_planning') {
+        router.push(AppRouter.calendar);
+      } else if (payload == 'todos') {
+        router.push(AppRouter.todos);
+      } else if (payload == 'expenses') {
+        router.push(AppRouter.expenses);
+      } else if (payload == 'journal') {
+        router.push(AppRouter.journal);
+      } else if (payload == 'clipboard') {
+        router.push(AppRouter.clipboard);
+      } else if (payload == 'calendar') {
+        router.push(AppRouter.calendar);
+      } else {
+        // Fallback: go to dashboard
+        debugPrint('⚠️ Unhandled notification payload: $payload');
+      }
+    } catch (e) {
+      debugPrint('❌ Notification navigation error: $e');
+    }
+  }
+
+  // Redundant dispose removed from here
 
   // Handle widget navigation
   void _handleWidgetNavigation(Uri? uri) {
@@ -688,6 +637,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   @override
   void dispose() {
     _stopClipboardTimer();
+    _notificationSubscription?.cancel(); // Added: Tearing down notification listener
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

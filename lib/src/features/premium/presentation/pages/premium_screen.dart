@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:copyclip/src/core/common_widgets/mascot_character.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:copyclip/src/core/const/premium_constants.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
@@ -81,9 +82,10 @@ class _PremiumScreenState extends State<PremiumScreen> {
                                   ),
                                   content: Row(
                                     children: [
-                                      const MascotCharacter(
+                                      MascotCharacter(
                                         size: 40,
                                         state: MascotState.happy,
+                                        color: Color(Hive.box('settings').get('mascot_aura_color', defaultValue: const Color(0xFF6C63FF).value)),
                                       ),
                                       const SizedBox(width: 12),
                                       Expanded(
@@ -111,9 +113,10 @@ class _PremiumScreenState extends State<PremiumScreen> {
                                   backgroundColor: Colors.red.shade900,
                                   content: Row(
                                     children: [
-                                      const MascotCharacter(
+                                      MascotCharacter(
                                         size: 40,
                                         state: MascotState.sad,
+                                        color: Color(Hive.box('settings').get('mascot_aura_color', defaultValue: const Color(0xFF6C63FF).value)),
                                       ),
                                       const SizedBox(width: 12),
                                       Expanded(
@@ -146,10 +149,11 @@ class _PremiumScreenState extends State<PremiumScreen> {
                           ),
                           child: Column(
                             children: [
-                              const MascotCharacter(
-                                    size: 100,
-                                    state: MascotState.happy,
-                                  )
+                                MascotCharacter(
+                                     size: 100,
+                                     state: MascotState.happy,
+                                     color: Color(Hive.box('settings').get('mascot_aura_color', defaultValue: const Color(0xFF6C63FF).value)),
+                                   )
                                   .animate()
                                   .scale(
                                     duration: 600.ms,
@@ -400,10 +404,11 @@ class _PremiumScreenState extends State<PremiumScreen> {
                                         .withValues(alpha: 0.9),
                                     content: Row(
                                       children: [
-                                        const MascotCharacter(
-                                          size: 40,
-                                          state: MascotState.amazed,
-                                        ),
+                                        MascotCharacter(
+                                           size: 40,
+                                           state: MascotState.amazed,
+                                           color: Color(Hive.box('settings').get('mascot_aura_color', defaultValue: const Color(0xFF6C63FF).value)),
+                                         ),
                                         const SizedBox(width: 12),
                                         Expanded(
                                           child: Text(
@@ -664,7 +669,11 @@ class _PremiumFeatureTile extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                 ),
-                MascotCharacter(size: 45, state: mascotState),
+                MascotCharacter(
+                  size: 45, 
+                  state: mascotState,
+                  color: Color(Hive.box('settings').get('mascot_aura_color', defaultValue: const Color(0xFF6C63FF).value)),
+                ),
               ],
             ),
             const SizedBox(width: 16),

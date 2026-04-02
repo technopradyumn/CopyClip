@@ -441,7 +441,11 @@ class _TodosScreenState extends State<TodosScreen>
           SnackBar(
             content: Row(
               children: [
-                const MascotCharacter(size: 44, state: MascotState.happy),
+                MascotCharacter(
+                  size: 44, 
+                  state: MascotState.happy,
+                  color: Color(Hive.box('settings').get('mascot_aura_color', defaultValue: const Color(0xFF6C63FF).value)),
+                ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Column(
@@ -487,7 +491,11 @@ class _TodosScreenState extends State<TodosScreen>
           SnackBar(
             content: Row(
               children: [
-                const MascotCharacter(size: 44, state: MascotState.happy),
+                MascotCharacter(
+                  size: 44, 
+                  state: MascotState.happy,
+                  color: Color(Hive.box('settings').get('mascot_aura_color', defaultValue: const Color(0xFF6C63FF).value)),
+                ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(
