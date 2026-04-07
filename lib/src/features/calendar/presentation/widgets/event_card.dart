@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/router/app_router.dart';
 import '../../data/calendar_event_model.dart';
 import '../designs/event_design_registry.dart';
@@ -65,6 +66,25 @@ class _EventCardState extends State<EventCard> {
     final p = EventDesignRegistry.byId(id);
     if (p != null && mounted) {
       setState(() => _pattern = p);
+    }
+  }
+
+  Future<void> _launchUrl(String urlString) async {
+    try {
+      final Uri url = Uri.parse(urlString.startsWith('http') ? urlString : 'https://$urlString');
+      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Could not launch $urlString', style: const TextStyle(fontSize: 12))),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid URL format: $urlString', style: const TextStyle(fontSize: 12))),
+        );
+      }
     }
   }
 
@@ -215,7 +235,7 @@ class _EventCardState extends State<EventCard> {
                       ),
                       
                       // Details Section
-                      if (widget.event.description.isNotEmpty || widget.event.location != null) ...[
+                      if (widget.event.description.isNotEmpty || widget.event.location != null || (widget.event.url != null && widget.event.url!.isNotEmpty)) ...[
                         const SizedBox(height: 6),
                         Flexible(
                           child: Column(
@@ -251,6 +271,30 @@ class _EventCardState extends State<EventCard> {
                                       ),
                                     ),
                                   ],
+                                ),
+                              ],
+                              if (widget.event.url != null && widget.event.url!.isNotEmpty) ...[
+                                const SizedBox(height: 4),
+                                GestureDetector(
+                                  onTap: () => _launchUrl(widget.event.url!),
+                                  child: Row(
+                                    children: [
+                                      Icon(CupertinoIcons.link, size: 10, color: Colors.blue.withOpacity(0.8)),
+                                      const SizedBox(width: 4),
+                                      Flexible(
+                                        child: Text(
+                                          widget.event.url!,
+                                          style: theme.textTheme.bodySmall?.copyWith(
+                                            color: Colors.blue.withOpacity(0.8),
+                                            fontSize: 9,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ],

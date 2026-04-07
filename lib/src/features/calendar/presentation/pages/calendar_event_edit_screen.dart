@@ -26,10 +26,23 @@ class _CalendarEventEditScreenState extends State<CalendarEventEditScreen> {
   late final TextEditingController _titleController;
   late final TextEditingController _descriptionController;
   late final TextEditingController _locationController;
+  late final TextEditingController _urlController;
   DateTime _startDate = DateTime.now();
   DateTime? _endDate;
   bool _allDay = false;
   String? _selectedDesignId = 'min_1';
+  String? _repeatInterval;
+  int _reminderMinutesBefore = 0;
+  
+  final List<String> _repeats = ['None', 'Daily', 'Weekly', 'Monthly', 'Yearly'];
+  final Map<int, String> _reminders = {
+    0: 'No reminder',
+    5: '5 minutes before',
+    15: '15 minutes before',
+    30: '30 minutes before',
+    60: '1 hour before',
+    1440: '1 day before'
+  };
 
   @override
   void initState() {
@@ -37,11 +50,14 @@ class _CalendarEventEditScreenState extends State<CalendarEventEditScreen> {
     _titleController = TextEditingController(text: widget.event?.title);
     _descriptionController = TextEditingController(text: widget.event?.description);
     _locationController = TextEditingController(text: widget.event?.location);
+    _urlController = TextEditingController(text: widget.event?.url);
     if (widget.event != null) {
       _startDate = widget.event!.startDate;
       _endDate = widget.event!.endDate;
       _allDay = widget.event!.isAllDay;
       _selectedDesignId = widget.event!.designPatternId ?? 'min_1';
+      _repeatInterval = widget.event!.repeatInterval;
+      _reminderMinutesBefore = widget.event!.reminderMinutesBefore;
     }
   }
 
@@ -50,6 +66,7 @@ class _CalendarEventEditScreenState extends State<CalendarEventEditScreen> {
     _titleController.dispose();
     _descriptionController.dispose();
     _locationController.dispose();
+    _urlController.dispose();
     super.dispose();
   }
 
@@ -92,17 +109,23 @@ class _CalendarEventEditScreenState extends State<CalendarEventEditScreen> {
         endDate: _endDate ?? _startDate,
         isAllDay: _allDay,
         location: _locationController.text.isNotEmpty ? _locationController.text : null,
+        url: _urlController.text.isNotEmpty ? _urlController.text : null,
         createdAt: DateTime.now(),
         designPatternId: _selectedDesignId,
+        repeatInterval: _repeatInterval,
+        reminderMinutesBefore: _reminderMinutesBefore,
       );
       event
         ..title = _titleController.text
         ..description = _descriptionController.text
         ..location = _locationController.text.isNotEmpty ? _locationController.text : null
+        ..url = _urlController.text.isNotEmpty ? _urlController.text : null
         ..startDate = _startDate
         ..endDate = _endDate ?? _startDate
         ..isAllDay = _allDay
-        ..designPatternId = _selectedDesignId;
+        ..designPatternId = _selectedDesignId
+        ..repeatInterval = _repeatInterval
+        ..reminderMinutesBefore = _reminderMinutesBefore;
       await box.put(event.id, event);
       
       // ✅ NEW: Schedule notifications for the event
@@ -172,6 +195,16 @@ class _CalendarEventEditScreenState extends State<CalendarEventEditScreen> {
                   labelText: 'Location',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                   prefixIcon: const Icon(CupertinoIcons.location),
+                ),
+                style: theme.textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _urlController,
+                decoration: InputDecoration(
+                  labelText: 'URL (Optional)',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  prefixIcon: const Icon(CupertinoIcons.link),
                 ),
                 style: theme.textTheme.bodyLarge,
               ),
@@ -255,6 +288,55 @@ class _CalendarEventEditScreenState extends State<CalendarEventEditScreen> {
                   ? CupertinoIcons.sun_max 
                   : CupertinoIcons.clock),
                 controlAffinity: ListTileControlAffinity.trailing,
+              ),
+              const SizedBox(height: 16),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Reminders & Repeat',
+                        style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 12),
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(CupertinoIcons.bell),
+                        title: const Text('Alert'),
+                        trailing: DropdownButton<int>(
+                          value: _reminderMinutesBefore,
+                          underline: const SizedBox(),
+                          items: _reminders.entries.map((entry) {
+                            return DropdownMenuItem<int>(
+                              value: entry.key,
+                              child: Text(entry.value),
+                            );
+                          }).toList(),
+                          onChanged: (val) => setState(() => _reminderMinutesBefore = val ?? 0),
+                        ),
+                      ),
+                      const Divider(),
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(CupertinoIcons.repeat),
+                        title: const Text('Repeat'),
+                        trailing: DropdownButton<String>(
+                          value: _repeatInterval ?? 'None',
+                          underline: const SizedBox(),
+                          items: _repeats.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (val) => setState(() => _repeatInterval = val == 'None' ? null : val),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               const SizedBox(height: 16),
               GestureDetector(

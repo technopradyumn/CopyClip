@@ -8,6 +8,7 @@ import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/const/constant.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../data/calendar_event_model.dart';
 import '../widgets/event_card.dart';
 
@@ -37,6 +38,25 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
 
   Future<void> _editEvent(CalendarEvent event) async {
     context.push(AppRouter.calendarEventEdit, extra: event);
+  }
+
+  Future<void> _launchUrl(String urlString) async {
+    try {
+      final Uri url = Uri.parse(urlString.startsWith('http') ? urlString : 'https://$urlString');
+      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Could not launch $urlString')),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid URL format: $urlString')),
+        );
+      }
+    }
   }
 
   Future<void> _confirmDelete() async {
@@ -208,6 +228,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                         _buildInfoRow(context, 'End', _formatDate(event.endDate, includeTime: true)),
                         if ((event.location ?? '').isNotEmpty)
                           _buildInfoRow(context, 'Location', event.location!),
+                        if ((event.url ?? '').isNotEmpty)
+                          _buildUrlRow(context, 'Link', event.url!),
                         if ((event.description).isNotEmpty)
                           _buildInfoRow(context, 'Notes', event.description),
                       ],
@@ -281,6 +303,40 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
             child: Text(
               value,
               style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUrlRow(BuildContext context, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 80,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: GestureDetector(
+              onTap: () => _launchUrl(value),
+              child: Text(
+                value,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
             ),
           ),
         ],
