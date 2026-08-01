@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:copyclip/src/core/utils/widget_sync_service.dart';
 import 'package:copyclip/src/core/providers/locale_provider.dart';
@@ -9,7 +8,6 @@ import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart
 import 'package:copyclip/src/core/services/notification_engine.dart';
 import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
 import 'package:flutter/material.dart';
-// import 'package:copyclip/src/features/premium/presentation/provider/premium_provider.dart'; // 🗑️ REMOVED
 import 'package:flutter/services.dart';
 import 'package:copyclip/src/core/theme/bloc/theme_bloc.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
@@ -283,14 +281,26 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       _handleNotificationPayload,
     );
 
-    _checkClipboard(); // Initial Check
-    _startClipboardTimer();
+    // ✅ OPTIMIZATION: Delay heavy background initialization to prevent ANRs
+    // This allows the UI to render and become interactive FIRST.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 1), () {
+        if (!mounted) return;
+        
+        // Initialize background tasks
+        _initializeBackgroundTasks();
 
-    // App Update Service
-    AppUpdateService.instance.checkForUpdate();
+        // Initial Clipboard Check
+        _checkClipboard(); 
+        _startClipboardTimer();
 
-    // Native In-App Update (Google Play)
-    _checkNativeUpdate();
+        // App Update Service
+        AppUpdateService.instance.checkForUpdate();
+
+        // Native In-App Update (Google Play)
+        _checkNativeUpdate();
+      });
+    });
   }
 
   void _startClipboardTimer() {
@@ -519,22 +529,28 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       final clipboardBox = Hive.box<ClipboardItem>('clipboard_box');
 
       // ✅ 2. Database State Check: Find existing matches
-      final matchingItems =
-          clipboardBox.values
-              .where((item) => _getPlainText(item.content) == trimmedContent)
-              .toList()
-            ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      // PERFORMANCE FIX: Limit search depth to avoid ANRs with large clipboard history
+      final List<ClipboardItem> matchingItems = [];
+      final int totalCount = clipboardBox.length;
+      // Scan only the last 50 items (most likely duplicates)
+      final int start = (totalCount - 50).clamp(0, totalCount);
+      
+      for (int i = totalCount - 1; i >= start; i--) {
+        final item = clipboardBox.getAt(i);
+        if (item != null && _getPlainText(item.content) == trimmedContent) {
+          matchingItems.add(item);
+        }
+      }
+      
+      matchingItems.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
       if (matchingItems.isNotEmpty) {
         final keptItem = matchingItems.first;
 
         // Check if this item is already at the very top of the list
         // and there are no other duplicates to clean up.
-        final newestItemInBox =
-            clipboardBox.values.isEmpty
-                ? null
-                : (clipboardBox.values.toList()
-                  ..sort((a, b) => b.createdAt.compareTo(a.createdAt))).first;
+        // Again, limit check for performance
+        final newestItemInBox = clipboardBox.isEmpty ? null : clipboardBox.getAt(totalCount - 1);
 
         if (newestItemInBox != null &&
             newestItemInBox.id == keptItem.id &&

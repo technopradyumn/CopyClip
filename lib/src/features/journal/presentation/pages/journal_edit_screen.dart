@@ -27,7 +27,6 @@ import '../../../../core/utils/widget_sync_service.dart';
 import '../../../../features/premium/presentation/widgets/premium_lock_dialog.dart';
 import '../../../../features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:copyclip/src/core/widgets/premium_badge.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../designs/journal_page_registry.dart';
 import 'package:provider/provider.dart';
@@ -70,26 +69,60 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
     for (var mood in JournalMoods.allMoods) mood: JournalMoods.getEmoji(mood),
   };
 
-  bool _isLoading = true;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _initData();
+    _initDataSync();
     // ✅ Add focus listener for keyboard handling
     _editorFocusNode.addListener(_onFocusChanged);
   }
 
-  Future<void> _initData() async {
+  void _initDataSync() {
+    _resolvedEntry = widget.entry;
+
+    // Resolve by ID synchronously if entry is null and box is already open
+    if (_resolvedEntry == null && widget.entryId != null) {
+      if (Hive.isBoxOpen('journal_box')) {
+        final box = Hive.box<JournalEntry>('journal_box');
+        try {
+          _resolvedEntry = box.values.firstWhere((e) => e.id == widget.entryId);
+        } catch (e) {
+          debugPrint("Error finding journal entry by ID: ${widget.entryId}");
+        }
+      }
+    }
+
+    if (_resolvedEntry != null) {
+      _titleController.text = _resolvedEntry!.title;
+      _tagsController.text = _resolvedEntry!.tags.join(', ');
+      _selectedDate = _resolvedEntry!.date;
+      _selectedMood = _resolvedEntry!.mood;
+      _isFavorite = _resolvedEntry!.isFavorite;
+      _scaffoldColor = _resolvedEntry!.colorValue != null
+          ? Color(_resolvedEntry!.colorValue!)
+          : AppContentPalette.palette.first;
+      _selectedPageDesignId = _resolvedEntry!.pageDesignId ?? 'default';
+      _initQuill();
+      _isLoading = false;
+    } else if (widget.entry == null && widget.entryId == null) {
+      // New Entry
+      _initQuill();
+      _isLoading = false;
+    } else {
+      // Deep-linking fallback where box isn't open yet
+      _isLoading = true;
+      _initDataAsync();
+    }
+  }
+
+  Future<void> _initDataAsync() async {
     try {
-      // Ensure box is open
       if (!Hive.isBoxOpen('journal_box')) {
         await Hive.openBox<JournalEntry>('journal_box');
       }
 
-      _resolvedEntry = widget.entry;
-
-      // Resolve by ID if entry is null
       if (_resolvedEntry == null && widget.entryId != null) {
         final box = Hive.box<JournalEntry>('journal_box');
         try {
@@ -108,26 +141,12 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
         _scaffoldColor = _resolvedEntry!.colorValue != null
             ? Color(_resolvedEntry!.colorValue!)
             : AppContentPalette.palette.first;
-        // Load page design
         _selectedPageDesignId = _resolvedEntry!.pageDesignId ?? 'default';
-      }
-
-      // Dynamic Default Color logic
-      if (_resolvedEntry == null) {
-        if (_scaffoldColor == AppContentPalette.palette.first) {
-          if (mounted) {
-            final defaultColor = AppContentPalette.getDefaultColor(context);
-            if (_scaffoldColor != defaultColor) {
-              _scaffoldColor = defaultColor;
-            }
-          }
-        }
       }
 
       _initQuill();
     } catch (e) {
       debugPrint("Error initializing Journal data: $e");
-      // Fallback init to prevent crash
       _initQuill();
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -621,7 +640,10 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
           elevation: 0,
           leading: const BackButton(),
         ),
-        body: const Center(child: CircularProgressIndicator()),
+        body: Hero(
+          tag: heroTag,
+          child: const Center(child: CircularProgressIndicator()),
+        ),
       );
     }
 
@@ -825,12 +847,14 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                   // BACKGROUND LAYER - Stays Full Screen
                   // Because Scaffold is resizeToAvoidBottomInset: false
                   Positioned.fill(
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: double.infinity,
-                      // Apply the selected page design painter
-                      child: CustomPaint(
-                        painter: pageDesign.painterBuilder(_scaffoldColor),
+                    child: RepaintBoundary(
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: double.infinity,
+                        // Apply the selected page design painter
+                        child: CustomPaint(
+                          painter: pageDesign.painterBuilder(_scaffoldColor),
+                        ),
                       ),
                     ),
                   ),

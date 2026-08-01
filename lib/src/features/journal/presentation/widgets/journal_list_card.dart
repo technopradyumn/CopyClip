@@ -151,123 +151,127 @@ class JournalListCard extends StatelessWidget {
                       topRight: Radius.circular(16),
                       bottomRight: Radius.circular(16),
                     ),
-                    child: CustomPaint(
-                      painter: design.painterBuilder(cardBaseColor),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // Date & Mood Header
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: contentColor.withValues(alpha: 0.12),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        DateFormat('dd').format(entry.date),
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: contentColor,
-                                          height: 1.1,
-                                        ),
+                    child: RepaintBoundary(
+                      child: CustomPaint(
+                        painter: design.painterBuilder(cardBaseColor),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Date & Mood Header
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: contentColor.withValues(
+                                        alpha: 0.12,
                                       ),
-                                      Text(
-                                        DateFormat(
-                                          'MMM',
-                                        ).format(entry.date).toUpperCase(),
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w800,
-                                          color: contentColor.withValues(
-                                            alpha: 0.6,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          DateFormat('dd').format(entry.date),
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: contentColor,
+                                            height: 1.1,
                                           ),
-                                          letterSpacing: 0.5,
                                         ),
-                                      ),
-                                    ],
+                                        Text(
+                                          DateFormat(
+                                            'MMM',
+                                          ).format(entry.date).toUpperCase(),
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w800,
+                                            color: contentColor.withValues(
+                                              alpha: 0.6,
+                                            ),
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Expanded(
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                entry.title.isNotEmpty
+                                                    ? entry.title
+                                                    : "Untitled Entry",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: contentColor,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 4),
+                                            Text(
+                                              _getMoodEmoji(entry.mood),
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        if (entry.tags.isNotEmpty)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 4,
+                                            ),
                                             child: Text(
-                                              entry.title.isNotEmpty
-                                                  ? entry.title
-                                                  : "Untitled Entry",
+                                              entry.tags
+                                                  .join(" • ")
+                                                  .toUpperCase(),
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w800,
-                                                color: contentColor,
+                                                fontSize: 9,
+                                                color: contentColor.withValues(
+                                                  alpha: 0.5,
+                                                ),
+                                                fontWeight: FontWeight.w900,
+                                                letterSpacing: 1.0,
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(width: 4),
-                                          Text(
-                                            _getMoodEmoji(entry.mood),
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      if (entry.tags.isNotEmpty)
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 4,
-                                          ),
-                                          child: Text(
-                                            entry.tags
-                                                .join(" • ")
-                                                .toUpperCase(),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 9,
-                                              color: contentColor.withValues(
-                                                alpha: 0.5,
-                                              ),
-                                              fontWeight: FontWeight.w900,
-                                              letterSpacing: 1.0,
-                                            ),
-                                          ),
-                                        ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                _buildMenuButton(context, contentColor),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            // Content Preview
-                            Expanded(
-                              child: _buildContentPreview(
-                                parsed,
-                                contentColor,
-                                theme,
+                                  _buildMenuButton(context, contentColor),
+                                ],
                               ),
-                            ),
-                          ],
+                              const SizedBox(height: 12),
+                              // Content Preview
+                              Expanded(
+                                child: _buildContentPreview(
+                                  parsed,
+                                  contentColor,
+                                  theme,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

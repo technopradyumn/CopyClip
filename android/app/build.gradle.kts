@@ -22,7 +22,8 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "com.technopradyumn.copyclip"
     compileSdk = 36
-    ndkVersion = "28.2.13676358"
+    buildToolsVersion = "35.0.0"
+    ndkVersion = "28.2.13676358" // Required by integration_test and AGP 8.x+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -37,7 +38,7 @@ android {
     defaultConfig {
         applicationId = "com.technopradyumn.copyclip"
         minSdk = 24
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled = true

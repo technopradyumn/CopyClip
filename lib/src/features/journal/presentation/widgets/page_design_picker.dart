@@ -149,11 +149,13 @@ class _PageDesignTile extends StatelessWidget {
           child: Stack(
             children: [
               Positioned.fill(
-                child: CustomPaint(
-                  painter: design.painterBuilder(
-                    theme.brightness == Brightness.dark
-                        ? (Colors.grey[900] ?? Colors.black)
-                        : Colors.white,
+                child: RepaintBoundary(
+                  child: CustomPaint(
+                    painter: design.painterBuilder(
+                      theme.brightness == Brightness.dark
+                          ? (Colors.grey[900] ?? Colors.black)
+                          : Colors.white,
+                    ),
                   ),
                 ),
               ),

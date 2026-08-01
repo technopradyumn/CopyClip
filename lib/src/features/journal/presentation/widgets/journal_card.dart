@@ -139,9 +139,10 @@ class JournalCard extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: borderRadius,
-            child: CustomPaint(
-              painter: design.painterBuilder(cardBaseColor),
-              child: Padding(
+            child: RepaintBoundary(
+              child: CustomPaint(
+                painter: design.painterBuilder(cardBaseColor),
+                child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -341,6 +342,7 @@ class JournalCard extends StatelessWidget {
           ),
         ),
       ),
+    )
     );
   }
 }

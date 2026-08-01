@@ -28,18 +28,8 @@ class WidgetSyncService {
       syncCanvas(),
     ]);
 
-    // Update all widgets
-    try {
-      await HomeWidget.updateWidget(androidName: 'NotesWidgetProvider');
-      await HomeWidget.updateWidget(androidName: 'TodosWidgetProvider');
-      await HomeWidget.updateWidget(androidName: 'ExpensesWidgetProvider');
-      await HomeWidget.updateWidget(androidName: 'JournalWidgetProvider');
-      await HomeWidget.updateWidget(androidName: 'ClipboardWidgetProvider');
-      await HomeWidget.updateWidget(androidName: 'CalendarWidgetProvider');
-      await HomeWidget.updateWidget(androidName: 'CanvasWidgetProvider');
-    } catch (e) {
-      debugPrint('Error updating widgets: $e');
-    }
+    // Note: Individual syncX() methods already call updateWidget(), 
+    // so no additional calls are needed here to avoid redundant platform channel traffic.
   }
 
   // --- NOTES ---

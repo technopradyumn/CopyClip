@@ -174,9 +174,10 @@ class _DesignTile extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
-          child: CustomPaint(
-            painter: design.painterBuilder(cardBaseColor),
-            child: Stack(
+          child: RepaintBoundary(
+            child: CustomPaint(
+              painter: design.painterBuilder(cardBaseColor),
+              child: Stack(
               children: [
                 Center(
                   child: Column(
@@ -258,6 +259,7 @@ class _DesignTile extends StatelessWidget {
           ),
         ),
       ),
+      )
     );
   }
 }
