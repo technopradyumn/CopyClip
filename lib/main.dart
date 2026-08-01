@@ -49,9 +49,6 @@ import 'package:upgrader/upgrader.dart';
 import 'package:uuid/uuid.dart';
 import 'package:in_app_update/in_app_update.dart';
 
-// ============================================
-// ✅ ENHANCED BACKGROUND CALLBACK FOR WIDGETS
-// ============================================
 @pragma("vm:entry-point")
 Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
   if (uri == null || uri.scheme != 'copyclip') return;
