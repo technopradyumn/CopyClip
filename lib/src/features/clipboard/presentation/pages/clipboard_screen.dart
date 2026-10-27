@@ -277,7 +277,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
     final onSurfaceColor = theme.colorScheme.onSurface;
 
     return PopScope(
-      canPop: !_isSelectionMode,
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
         if (_isSelectionMode) {
@@ -285,13 +285,15 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
             _isSelectionMode = false;
             _selectedIds.clear();
           });
+          return;
         }
+        SystemNavigator.pop();
       },
       child: GlassScaffold(
         showBackArrow: false,
         title: null,
         showDrawer: true,
-        drawer: const CopyClipDrawer(),
+        drawer: CopyClipDrawer(),
         floatingActionButton: _isSelectionMode
             ? null
             : FloatingActionButton(
@@ -510,11 +512,18 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
       return SeamlessHeader(
         title: AppLocalizations.of(context)!.selectedItems(_selectedIds.length),
         heroTagPrefix: 'clipboard',
-        showBackButton: true,
+        showBackButton: false,
         onBackTap: () => setState(() {
           _isSelectionMode = false;
           _selectedIds.clear();
         }),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
+            tooltip: 'Open menu',
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
         actions: [
           IconButton(
             icon: Icon(CupertinoIcons.square_list, color: onSurfaceColor),
@@ -534,6 +543,14 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
       icon: CupertinoIcons.doc_on_clipboard,
       iconColor: FeatureColors.clipboard,
       heroTagPrefix: 'clipboard',
+      showBackButton: false,
+      leading: Builder(
+        builder: (context) => IconButton(
+          icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
+          tooltip: 'Open menu',
+          onPressed: () => Scaffold.of(context).openDrawer(),
+        ),
+      ),
       actions: [
         IconButton(
           icon: Icon(

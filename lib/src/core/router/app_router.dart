@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/clipboard/data/clipboard_model.dart';
 import '../../features/clipboard/presentation/pages/clipboard_edit_screen.dart';
-import '../../features/dashboard/presentation/pages/dashboard_screen.dart';
 import '../../features/dashboard/presentation/pages/global_search_screen.dart';
 import '../../features/journal/data/journal_model.dart';
 import '../../features/journal/presentation/pages/journal_edit_screen.dart';
@@ -51,7 +50,7 @@ List<GoRoute> getAuthRoutes() {
   return [
     GoRoute(
       path: AppRouter.root,
-      builder: (context, state) => const DashboardScreen(),
+      redirect: (context, state) => AppRouter.notes,
     ),
     GoRoute(
       path: AppRouter.premium,
@@ -134,7 +133,9 @@ List<GoRoute> getAuthRoutes() {
 
     GoRoute(
       path: AppRouter.globalSearch,
-      builder: (context, state) => const GlobalSearchScreen(),
+      builder: (context, state) => GlobalSearchScreen(
+        initialQuery: state.uri.queryParameters['q'] ?? '',
+      ),
     ),
   ];
 }

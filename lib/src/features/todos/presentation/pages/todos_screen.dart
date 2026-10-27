@@ -4,6 +4,7 @@ import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/core/widgets/navigation_drawer.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
@@ -614,7 +615,7 @@ class _TodosScreenState extends State<TodosScreen>
     final colorScheme = theme.colorScheme;
 
     return PopScope(
-      canPop: !_isSelectionMode && _quickAddCategory == null,
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
         if (_isSelectionMode) {
@@ -628,12 +629,13 @@ class _TodosScreenState extends State<TodosScreen>
           _cancelQuickAdd();
           return;
         }
+        SystemNavigator.pop();
       },
 
       child: GlassScaffold(
         title: null,
         showDrawer: true,
-        drawer: const CopyClipDrawer(),
+        drawer: CopyClipDrawer(),
         floatingActionButton: _isSelectionMode
             ? null
             : FloatingActionButton(
@@ -1094,11 +1096,18 @@ class _TodosScreenState extends State<TodosScreen>
         title:
             '${_selectedTodoIds.length} ${AppLocalizations.of(context)!.selected}',
         heroTagPrefix: 'todos',
-        showBackButton: true,
+        showBackButton: false,
         onBackTap: () => setState(() {
           _isSelectionMode = false;
           _selectedTodoIds.clear();
         }),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
+            tooltip: 'Open menu',
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
         actions: [
           IconButton(
             icon: Icon(CupertinoIcons.checkmark_square, color: onSurfaceColor),
@@ -1119,6 +1128,14 @@ class _TodosScreenState extends State<TodosScreen>
       icon: CupertinoIcons.checkmark_circle,
       iconColor: primaryColor,
       heroTagPrefix: 'todos',
+      showBackButton: false,
+      leading: Builder(
+        builder: (context) => IconButton(
+          icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
+          tooltip: 'Open menu',
+          onPressed: () => Scaffold.of(context).openDrawer(),
+        ),
+      ),
       actions: [
         // SORT MENU
         PopupMenuButton<TodoSortOption>(

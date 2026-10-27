@@ -9,9 +9,9 @@ class AppConstants {
   static const double selectedBorderWidth = 2.0;
 
   // Seamless Top Bar
-  static const double headerTitleSize = 28.0;
-  static const double headerSubtitleSize = 14.0;
-  static const double headerIconSize = 24.0;
+  static const double headerTitleSize = 21.0;
+  static const double headerSubtitleSize = 12.0;
+  static const double headerIconSize = 22.0;
 }
 
 /// Consistent feature colors used across the entire app

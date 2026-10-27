@@ -182,7 +182,7 @@ Future<void> _initializeBackgroundTasks() async {
           'description',
           'Your productivity companion',
         ),
-        HomeWidget.saveWidgetData<String>('deeplink', 'copyclip://dashboard'),
+        HomeWidget.saveWidgetData<String>('deeplink', 'copyclip://notes'),
       ]);
       debugPrint('✅ Default widget data initialized');
     }
@@ -322,8 +322,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       } else if (payload == 'clipboard') {
         router.push(AppRouter.clipboard);
       } else {
-        // Fallback: go to dashboard
-        debugPrint('⚠️ Unhandled notification payload: $payload');
+        // Fallback: go to notes (dashboard removed)
+        router.push(AppRouter.notes);
       }
     } catch (e) {
       debugPrint('❌ Notification navigation error: $e');

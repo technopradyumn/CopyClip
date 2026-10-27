@@ -277,7 +277,7 @@ class _NotesScreenState extends State<NotesScreen> {
     final onSurfaceColor = theme.colorScheme.onSurface;
 
     return PopScope(
-      canPop: !_isSelectionMode,
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
         if (_isSelectionMode) {
@@ -287,12 +287,13 @@ class _NotesScreenState extends State<NotesScreen> {
           });
           return;
         }
+        SystemNavigator.pop();
       },
       child: GlassScaffold(
         showBackArrow: false,
         title: null,
         showDrawer: true,
-        drawer: const CopyClipDrawer(),
+        drawer: CopyClipDrawer(),
         floatingActionButton: _isSelectionMode
             ? null
             : FloatingActionButton(
@@ -502,11 +503,18 @@ class _NotesScreenState extends State<NotesScreen> {
         title:
             '${_selectedNoteIds.length} ${AppLocalizations.of(context)!.selected}',
         heroTagPrefix: 'notes',
-        showBackButton: true,
+        showBackButton: false,
         onBackTap: () => setState(() {
           _isSelectionMode = false;
           _selectedNoteIds.clear();
         }),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
+            tooltip: 'Open menu',
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
         actions: [
           IconButton(
             icon: Icon(CupertinoIcons.checkmark_square, color: onSurfaceColor),
@@ -526,6 +534,14 @@ class _NotesScreenState extends State<NotesScreen> {
       icon: CupertinoIcons.doc_text,
       iconColor: FeatureColors.notes,
       heroTagPrefix: 'notes',
+      showBackButton: false,
+      leading: Builder(
+        builder: (context) => IconButton(
+          icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
+          tooltip: 'Open menu',
+          onPressed: () => Scaffold.of(context).openDrawer(),
+        ),
+      ),
       actions: [
         IconButton(
           icon: Icon(

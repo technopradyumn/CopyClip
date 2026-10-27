@@ -1,5 +1,6 @@
 import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -44,7 +45,9 @@ class SearchResult extends GlobalSearchResult {
 }
 
 class GlobalSearchScreen extends StatefulWidget {
-  const GlobalSearchScreen({super.key});
+  const GlobalSearchScreen({super.key, this.initialQuery = ''});
+
+  final String initialQuery;
 
   @override
   State<GlobalSearchScreen> createState() => _GlobalSearchScreenState();
@@ -86,6 +89,8 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   @override
   void initState() {
     super.initState();
+    _query = widget.initialQuery;
+    _searchController.text = widget.initialQuery;
     // ✅ Async initialization to not block the first frame
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadAllData();
@@ -325,10 +330,30 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     final theme = Theme.of(context);
 
     return GlassScaffold(
-      showBackArrow: false,
-      title: null,
+      title: 'Search',
       showDrawer: true,
       drawer: const CopyClipDrawer(),
+      leading: IconButton(
+        key: const ValueKey('global_search_back'),
+        icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+        tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+        onPressed: () {
+          if (context.canPop()) {
+            context.pop();
+          } else {
+            context.go(AppRouter.notes);
+          }
+        },
+      ),
+      actions: [
+        Builder(
+          builder: (scaffoldContext) => IconButton(
+            icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            onPressed: () => Scaffold.of(scaffoldContext).openDrawer(),
+          ),
+        ),
+      ],
       body: DynamicBackground(
         child: Column(
           children: [
@@ -416,12 +441,9 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 22),
-            onPressed: () => context.pop(),
-          ),
           Expanded(
             child: Container(
+              key: const ValueKey('navigation_search_input'),
               height: 48,
               decoration: BoxDecoration(
                 color: theme.colorScheme.onSurface.withValues(alpha: 0.08),
@@ -431,6 +453,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                 ),
               ),
               child: TextField(
+                key: const ValueKey('global_search_input'),
                 selectionControls: CustomSelectionControls(),
                 controller: _searchController,
                 style: theme.textTheme.bodyMedium,

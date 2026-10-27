@@ -9,6 +9,7 @@ class SeamlessHeader extends StatelessWidget {
   final IconData? icon;
   final Color? iconColor;
   final List<Widget>? actions;
+  final Widget? leading;
   final bool showBackButton;
   final VoidCallback? onBackTap;
   final String? heroTagPrefix;
@@ -26,6 +27,7 @@ class SeamlessHeader extends StatelessWidget {
     this.icon,
     this.iconColor,
     this.actions,
+    this.leading,
     this.showBackButton = true,
     this.onBackTap,
     this.heroTagPrefix,
@@ -54,7 +56,8 @@ class SeamlessHeader extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Row(
             children: [
-              if (showBackButton)
+              if (leading != null) leading!
+              else if (showBackButton)
                 IconButton(
                   icon: Icon(CupertinoIcons.back, color: onSurface, size: 22),
                   onPressed:

@@ -1,6 +1,7 @@
 import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/services.dart';
 
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/providers/locale_provider.dart';
@@ -1194,11 +1195,17 @@ class _SettingsScreenState extends State<SettingsScreen>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
-    return GlassScaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        SystemNavigator.pop();
+      },
+      child: GlassScaffold(
       title: null,
       showBackArrow: false,
       showDrawer: true,
-      drawer: const CopyClipDrawer(),
+      drawer: CopyClipDrawer(),
       body: DynamicBackground(
         child: Column(
           children: [
@@ -1208,6 +1215,14 @@ class _SettingsScreenState extends State<SettingsScreen>
               icon: CupertinoIcons.settings,
               iconColor: theme.colorScheme.primary,
               heroTagPrefix: 'settings',
+              showBackButton: false,
+              leading: Builder(
+                builder: (context) => IconButton(
+                  icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
+                  tooltip: 'Open menu',
+                  onPressed: () => Scaffold.of(context).openDrawer(),
+                ),
+              ),
             ),
             Expanded(
               child: CustomScrollView(
@@ -1244,6 +1259,7 @@ class _SettingsScreenState extends State<SettingsScreen>
             ),
           ],
         ),
+      ),
       ),
     );
   }

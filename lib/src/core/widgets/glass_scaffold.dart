@@ -55,6 +55,7 @@ class GlassScaffold extends StatelessWidget {
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         extendBodyBehindAppBar: true,
         drawer: drawer,
+        drawerEnableOpenDragGesture: false,
         appBar: title != null
             ? AppBar(
                 backgroundColor: Colors.transparent,
@@ -63,32 +64,36 @@ class GlassScaffold extends StatelessWidget {
                 centerTitle: centerTitle,
                 titleSpacing: titleSpacing,
                 systemOverlayStyle: overlayStyle,
-                leading: leading ??
+                leading:
+                    leading ??
                     (showDrawer
-                        ? IconButton(
-                            icon: const Icon(
-                              CupertinoIcons.line_horizontal_3,
-                              size: 20,
+                        ? Builder(
+                            builder: (scaffoldContext) => IconButton(
+                              icon: const Icon(
+                                CupertinoIcons.line_horizontal_3,
+                                size: 20,
+                              ),
+                              color: contentColor,
+                              onPressed: () =>
+                                  Scaffold.of(scaffoldContext).openDrawer(),
                             ),
-                            color: contentColor,
-                            onPressed: () => Scaffold.of(context).openDrawer(),
                           )
                         : (showBackArrow
-                            ? IconButton(
-                                icon: Icon(
-                                  CupertinoIcons.back,
-                                  size: 20,
-                                  color: contentColor,
-                                ),
-                                onPressed: () {
-                                  if (context.canPop()) {
-                                    context.pop();
-                                  } else {
-                                    context.go('/');
-                                  }
-                                },
-                              )
-                            : null)),
+                              ? IconButton(
+                                  icon: Icon(
+                                    CupertinoIcons.back,
+                                    size: 20,
+                                    color: contentColor,
+                                  ),
+                                  onPressed: () {
+                                    if (context.canPop()) {
+                                      context.pop();
+                                    } else {
+                                      context.go('/');
+                                    }
+                                  },
+                                )
+                              : null)),
                 title: title is Widget
                     ? title as Widget
                     : Text(
@@ -96,6 +101,7 @@ class GlassScaffold extends StatelessWidget {
                         style: theme.textTheme.titleLarge?.copyWith(
                           color: contentColor,
                           fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       ),
                 actions: actions,
@@ -138,6 +144,34 @@ class GlassScaffold extends StatelessWidget {
                 child: Column(children: [Expanded(child: body)]),
               ),
             ),
+            if (showDrawer && drawer != null)
+              Positioned(
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: 24,
+                child: Builder(
+                  builder: (scaffoldContext) {
+                    var dragDistance = 0.0;
+                    return GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onHorizontalDragStart: (_) => dragDistance = 0,
+                      onHorizontalDragUpdate: (details) {
+                        dragDistance += details.primaryDelta ?? 0;
+                      },
+                      onHorizontalDragEnd: (_) {
+                        final shouldOpen = dragDistance > 80;
+                        dragDistance = 0;
+                        if (shouldOpen && scaffoldContext.mounted) {
+                          Scaffold.of(scaffoldContext).openDrawer();
+                        }
+                      },
+                      onHorizontalDragCancel: () => dragDistance = 0,
+                      child: const SizedBox.expand(),
+                    );
+                  },
+                ),
+              ),
           ],
         ),
         floatingActionButton: floatingActionButton,

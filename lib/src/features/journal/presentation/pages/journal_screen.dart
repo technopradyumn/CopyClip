@@ -329,7 +329,7 @@ class _JournalScreenState extends State<JournalScreen> {
     final onSurfaceColor = theme.colorScheme.onSurface;
 
     return PopScope(
-      canPop: !_isSelectionMode,
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
         if (_isSelectionMode) {
@@ -339,11 +339,12 @@ class _JournalScreenState extends State<JournalScreen> {
           });
           return;
         }
+        SystemNavigator.pop();
       },
       child: GlassScaffold(
         title: null,
         showDrawer: true,
-        drawer: const CopyClipDrawer(),
+        drawer: CopyClipDrawer(),
         floatingActionButton: _isSelectionMode
             ? null
             : FloatingActionButton(
@@ -538,11 +539,18 @@ class _JournalScreenState extends State<JournalScreen> {
         title:
             '${_selectedIds.length} ${AppLocalizations.of(context)!.selected}',
         heroTagPrefix: 'journal',
-        showBackButton: true,
+        showBackButton: false,
         onBackTap: () => setState(() {
           _isSelectionMode = false;
           _selectedIds.clear();
         }),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
+            tooltip: 'Open menu',
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
         actions: [
           IconButton(
             icon: Icon(CupertinoIcons.square_list, color: onSurfaceColor),
@@ -562,6 +570,14 @@ class _JournalScreenState extends State<JournalScreen> {
       icon: CupertinoIcons.book,
       iconColor: Colors.blueAccent,
       heroTagPrefix: 'journal',
+      showBackButton: false,
+      leading: Builder(
+        builder: (context) => IconButton(
+          icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
+          tooltip: 'Open menu',
+          onPressed: () => Scaffold.of(context).openDrawer(),
+        ),
+      ),
       actions: [
         IconButton(
           icon: Icon(
