@@ -24,19 +24,10 @@ class AppLocalizationsCa extends AppLocalizations {
   String get todos => 'Coses pendents';
 
   @override
-  String get expenses => 'Despeses';
-
-  @override
   String get journal => 'Diari';
 
   @override
-  String get calendar => 'Calendari';
-
-  @override
   String get clipboard => 'Porta-retalls';
-
-  @override
-  String get canvas => 'Tela';
 
   @override
   String get save => 'Desa';
@@ -69,24 +60,6 @@ class AppLocalizationsCa extends AppLocalizations {
   String get discard => 'Descartar';
 
   @override
-  String get createPost => 'Crea una publicació';
-
-  @override
-  String get post => 'Publicació';
-
-  @override
-  String get postingTo => 'Publicació a';
-
-  @override
-  String get whatsOnYourMind => 'Què et passa pel cap?';
-
-  @override
-  String get pickImages => 'Trieu Imatges';
-
-  @override
-  String get pickVideo => 'Trieu el vídeo';
-
-  @override
   String get camera => 'Càmera';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsCa extends AppLocalizations {
   String error(Object error) {
     return 'Error: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Comandes només disponibles a \"Totes les publicacions\"';
-
-  @override
-  String get deletePost => 'Suprimeix la publicació';
-
-  @override
-  String get postDeleted => 'Publicació suprimida';
 
   @override
   String get premiumFeatures => 'Funcions Premium';
@@ -182,35 +145,6 @@ class AppLocalizationsCa extends AppLocalizations {
       'La paperera de reciclatge s\'\'ha esborrat correctament';
 
   @override
-  String get allPostsDeleted => 'S\'\'han suprimit totes les publicacions';
-
-  @override
-  String get newPost => 'Publicació nova';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Text copiat al porta-retalls (política de Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Per compartir TikTok cal un vídeo/imatge';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Error en compartir: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Comparteix a $platform Story';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Comparteix al feed $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Desbloqueja permanentment';
 
   @override
@@ -226,13 +160,6 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Seleccioneu Data i hora';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Esteu segur que voleu suprimir aquesta publicació?';
-
-  @override
-  String get socialPosts => 'Publicacions socials';
 
   @override
   String get watchAdToEarnCoins => 'Mira l\'\'anunci per guanyar monedes';
@@ -421,25 +348,11 @@ class AppLocalizationsCa extends AppLocalizations {
       'Manteniu-vos al capdavant del vostre joc. Creeu llistes de tasques pendents, establiu prioritats i aixafeu els vostres objectius marca per marca.';
 
   @override
-  String get onboardingExpensesTitle => 'Seguiment de despeses';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Preneu el control de les vostres finances. Feu un seguiment dels ingressos i les despeses fàcilment per entendre els vostres hàbits de despesa.';
-
-  @override
   String get onboardingJournalTitle => 'Diari personal';
 
   @override
   String get onboardingJournalDesc =>
       'Reflexiona sobre el teu dia. Un espai privat per escriure els teus records, sentiments i experiències diàries.';
-
-  @override
-  String get onboardingCalendarTitle => 'Calendari i esdeveniments';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'No et perdis ni un moment. Organitzeu la vostra agenda i feu un seguiment dels propers esdeveniments importants.';
 
   @override
   String get onboardingClipboardTitle => 'Gestor de porta-retalls';
@@ -449,72 +362,23 @@ class AppLocalizationsCa extends AppLocalizations {
       'Copia una vegada, enganxa a qualsevol lloc. Accediu al vostre historial del porta-retalls per recuperar fragments que heu copiat anteriorment.';
 
   @override
-  String get onboardingCanvasTitle => 'Tela Creativa';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Deixa anar la teva creativitat. Dibuixa, dibuixa i visualitza les teves idees en un llenç digital de forma lliure.';
-
-  @override
   String get featuresNotesDesc => 'Crea i gestiona les teves notes';
 
   @override
   String get featuresTodosDesc => 'Feu un seguiment de les vostres tasques';
 
   @override
-  String get featuresExpensesDesc => 'Superviseu les vostres despeses';
-
-  @override
   String get featuresJournalDesc => 'Escriu els teus pensaments';
-
-  @override
-  String get featuresCalendarDesc => 'Organitza el teu horari';
 
   @override
   String get featuresClipboardDesc =>
       'Accediu al vostre historial del porta-retalls';
 
   @override
-  String get featuresCanvasDesc => 'Dibuixa i dibuixa lliurement';
-
-  @override
-  String get featuresSocialPost => 'Post social';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Crea contingut atractiu a les xarxes socials';
-
-  @override
   String get chooseYourAura => 'Tria la teva aura';
 
   @override
   String get expressYourselfTheme => 'Expressa\'\'t amb un nou color temàtic!';
-
-  @override
-  String get level => 'Nivell';
-
-  @override
-  String get xpToNextLevel => 'XP a nivell';
-
-  @override
-  String get checkUpcomingEvents => 'Consulta els propers esdeveniments';
-
-  @override
-  String get startNewSketch => 'Comença un nou esbós';
-
-  @override
-  String get noTransactionsMonth => 'No hi ha transaccions aquest mes';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transacció$_temp0 aquest mes';
-  }
 
   @override
   String get autoSaveClipboard => 'Desa automàticament el porta-retalls';
@@ -579,15 +443,6 @@ class AppLocalizationsCa extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'Maneres exclusives de veure els teus records';
-
-  @override
-  String get calendarTools => 'Calendari i eines';
-
-  @override
-  String get fullCalendar => 'Calendari complet';
-
-  @override
-  String get fullCalendarDesc => 'Sistema complet de gestió d\'\'esdeveniments';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -678,84 +533,13 @@ class AppLocalizationsCa extends AppLocalizations {
   String get completed => 'Completat';
 
   @override
-  String get greatJob => 'Gran feina!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Has guanyat $amount XP! Següent tasca: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Tasca completada! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Voleu moure totes les tasques actives a la Paperera de reciclatge?';
-
-  @override
-  String get deleteAllPosts => 'Suprimeix totes les publicacions';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Confirmes que vols suprimir TOTES les publicacions socials? Això no es pot desfer.';
-
-  @override
-  String get allPosts => 'Totes les publicacions';
-
-  @override
-  String get favorites => 'Preferits';
-
-  @override
-  String get drafts => 'Esborranys';
-
-  @override
-  String get noFavoritesYet => 'Encara no hi ha cap favorit';
-
-  @override
-  String get noDraftsYet => 'Encara no hi ha esborranys';
-
-  @override
-  String get startSocialJourney => 'Comença el teu viatge social!';
-
-  @override
-  String get draft => 'PROJECTE';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Si us plau, afegiu contingut o contingut multimèdia per compartir';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Error: no s\'\'ha trobat el fitxer a $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Comproveu l\'\'aplicació de Facebook';
-
-  @override
-  String get systemShare => 'Compartició del sistema';
-
-  @override
-  String get socialPost => 'Post social';
-
-  @override
-  String get favorite => 'Favorit';
-
-  @override
-  String get saveDraft => 'Desa l\'\'esborrany';
 
   @override
   String get entryCopied => 'S\'\'ha copiat l\'\'entrada';
@@ -902,33 +686,10 @@ class AppLocalizationsCa extends AppLocalizations {
   String get dueDate => 'Dues Cites';
 
   @override
-  String get expenseTitle => 'Despeses';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Cerca en $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Ordena i filtra';
 
   @override
   String get sortBy => 'CLASIFICAR PER';
-
-  @override
-  String get highestAmount => 'Quantitat més alta';
-
-  @override
-  String get lowestAmount => 'Quantitat més baixa';
-
-  @override
-  String get moreFilters => 'Més filtres...';
-
-  @override
-  String get filterExpenses => 'Filtre les despeses';
-
-  @override
-  String get transactionType => 'Tipus de transacció';
 
   @override
   String get categories => 'Categories';
@@ -937,21 +698,10 @@ class AppLocalizationsCa extends AppLocalizations {
   String get all => 'Tots';
 
   @override
-  String get income => 'Ingressos';
-
-  @override
-  String get expense => 'Despesa';
-
-  @override
   String get reset => 'Restableix';
 
   @override
   String get apply => 'Aplicar';
-
-  @override
-  String newExpense(String currency) {
-    return 'Nova $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -1013,34 +763,10 @@ class AppLocalizationsCa extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Esbós nou';
-
-  @override
-  String get searchSketches => 'Cerca esbossos i carpetes...';
-
-  @override
   String get noResultsFound => 'No s\'\'han trobat resultats';
 
   @override
   String get noItems => 'No hi ha articles';
-
-  @override
-  String get noDrawingsYet => 'Encara no hi ha dibuixos';
-
-  @override
-  String get canvasIntro => 'Deixa anar la teva creativitat al llenç!';
-
-  @override
-  String get newCanvas => 'Nou Canvas';
 
   @override
   String get rename => 'Canvia el nom';
@@ -1056,13 +782,7 @@ class AppLocalizationsCa extends AppLocalizations {
       'Tots els esbossos d\'\'aquesta carpeta se suprimiran permanentment.';
 
   @override
-  String get renameFolder => 'Canvia el nom de la carpeta';
-
-  @override
   String get chooseColor => 'Trieu Color';
-
-  @override
-  String get deleteFolderQuestion => 'Vols suprimir la carpeta?';
 
   @override
   String get searchClips => 'Cerca clips...';
@@ -1084,9 +804,6 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'Pots restaurar aquest clip més tard.';
-
-  @override
-  String get upcomingEvents => 'Pròxims Esdeveniments';
 
   @override
   String get dataDistribution => 'DISTRIBUCIÓ DE DADES';
@@ -1127,57 +844,6 @@ class AppLocalizationsCa extends AppLocalizations {
   String selectedCount(int count) {
     return '$count seleccionat';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes esbossos • $folders carpetes';
-  }
-
-  @override
-  String get sortItems => 'Ordena els elements';
-
-  @override
-  String get sortNameAZ => 'Nom (A-Z)';
-
-  @override
-  String get sortNameZA => 'Nom (Z-A)';
-
-  @override
-  String get createFolder => 'Crea una carpeta';
-
-  @override
-  String get folderNameHint => 'Nom de la carpeta...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Vols suprimir $count esbossos? Això no es pot desfer.';
-  }
-
-  @override
-  String get noSketchesFound => 'No s\'\'han trobat esbossos';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Proveu d\'\'ajustar la cerca o de crear un esbós nou.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Cerca a $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count esbossos';
-  }
-
-  @override
-  String get sortSketches => 'Ordenar esbossos';
-
-  @override
-  String get calendarScreenTitle => 'Calendari';
-
-  @override
-  String get dailyActivity => 'Activitat diària';
 
   @override
   String get deleteItemQuestion => 'Vols suprimir l\'\'element?';
@@ -1281,29 +947,6 @@ class AppLocalizationsCa extends AppLocalizations {
   String get general => 'General';
 
   @override
-  String get saveTransactionQuestion => 'Vols desar aquesta transacció?';
-
-  @override
-  String get fillTitleAmount => 'Si us plau, empleneu el títol i l\'\'import';
-
-  @override
-  String get invalidAmount => 'Format d\'\'import no vàlid';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Voleu moure la transacció a la paperera de reciclatge?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Pots restaurar aquesta transacció més tard des de la configuració.';
-
-  @override
-  String get newTransaction => 'Nova transacció';
-
-  @override
-  String get whatIsThisFor => 'Per a què serveix això?';
-
-  @override
   String get description => 'Descripció';
 
   @override
@@ -1319,72 +962,10 @@ class AppLocalizationsCa extends AppLocalizations {
   String get yearly => 'Anualment';
 
   @override
-  String get totalIncome => 'Ingressos totals';
-
-  @override
-  String get totalExpense => 'Despesa total';
-
-  @override
   String get analysis => 'Anàlisi';
 
   @override
   String get transactions => 'Transaccions';
-
-  @override
-  String get noExpensesFound =>
-      'No s\'\'han trobat despeses per a aquest període.';
-
-  @override
-  String get netBalance => 'Saldo Net';
-
-  @override
-  String get topCategories => 'Categories principals';
-
-  @override
-  String get spendingTrend => 'Tendència de despesa';
-
-  @override
-  String get insights => 'Insights';
-
-  @override
-  String get noExpensesRecorded => 'No s\'\'han registrat despeses';
-
-  @override
-  String get trackSpendingHabits =>
-      'Feu un seguiment dels vostres hàbits de despesa fàcilment.';
-
-  @override
-  String get addExpense => 'Afegeix despesa';
-
-  @override
-  String get noDataForPeriod => 'No hi ha dades per a aquest període';
-
-  @override
-  String get budget => 'Pressupost';
-
-  @override
-  String get spent => 'Esgotat';
-
-  @override
-  String get limit => 'Límit';
-
-  @override
-  String get overBudget => 'Per sobre del pressupost!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% restant';
-  }
-
-  @override
-  String get savingsRate => 'Taxa d\'\'estalvi';
-
-  @override
-  String get healthScore => 'Puntuació de salut';
-
-  @override
-  String get healthScoreExplanation =>
-      'Aquesta puntuació es basa en la teva taxa d\'\'estalvi.\n\n• > 50% estalviat = Excel·lent (100)\n• 0% d\'\'estalvi = Mitjana (50)\n• Despesa > Ingressos = Pobre (<50)';
 
   @override
   String get ok => 'D\'\'acord';
@@ -1413,19 +994,10 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
   String get todos => 'Coses pendents';
 
   @override
-  String get expenses => 'Despeses';
-
-  @override
   String get journal => 'Diari';
 
   @override
-  String get calendar => 'Calendari';
-
-  @override
   String get clipboard => 'Porta-retalls';
-
-  @override
-  String get canvas => 'Tela';
 
   @override
   String get save => 'Desa';
@@ -1458,24 +1030,6 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
   String get discard => 'Descartar';
 
   @override
-  String get createPost => 'Crea una publicació';
-
-  @override
-  String get post => 'Publicació';
-
-  @override
-  String get postingTo => 'Publicació a';
-
-  @override
-  String get whatsOnYourMind => 'Què et passa pel cap?';
-
-  @override
-  String get pickImages => 'Trieu Imatges';
-
-  @override
-  String get pickVideo => 'Trieu el vídeo';
-
-  @override
   String get camera => 'Càmera';
 
   @override
@@ -1500,16 +1054,6 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
   String error(Object error) {
     return 'Error: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Comandes només disponibles a \"Totes les publicacions\"';
-
-  @override
-  String get deletePost => 'Suprimeix la publicació';
-
-  @override
-  String get postDeleted => 'Publicació suprimida';
 
   @override
   String get premiumFeatures => 'Funcions Premium';
@@ -1571,35 +1115,6 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
       'La paperera de reciclatge s\'\'ha esborrat correctament';
 
   @override
-  String get allPostsDeleted => 'S\'\'han suprimit totes les publicacions';
-
-  @override
-  String get newPost => 'Publicació nova';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Text copiat al porta-retalls (política de Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Per compartir TikTok cal un vídeo/imatge';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Error en compartir: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Comparteix a $platform Story';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Comparteix al feed $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Desbloqueja permanentment';
 
   @override
@@ -1615,13 +1130,6 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
 
   @override
   String get selectDateTime => 'Seleccioneu Data i hora';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Esteu segur que voleu suprimir aquesta publicació?';
-
-  @override
-  String get socialPosts => 'Publicacions socials';
 
   @override
   String get watchAdToEarnCoins => 'Mira l\'\'anunci per guanyar monedes';
@@ -1810,25 +1318,11 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
       'Manteniu-vos al capdavant del vostre joc. Creeu llistes de tasques pendents, establiu prioritats i aixafeu els vostres objectius marca per marca.';
 
   @override
-  String get onboardingExpensesTitle => 'Seguiment de despeses';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Preneu el control de les vostres finances. Feu un seguiment dels ingressos i les despeses fàcilment per entendre els vostres hàbits de despesa.';
-
-  @override
   String get onboardingJournalTitle => 'Diari personal';
 
   @override
   String get onboardingJournalDesc =>
       'Reflexiona sobre el teu dia. Un espai privat per escriure els teus records, sentiments i experiències diàries.';
-
-  @override
-  String get onboardingCalendarTitle => 'Calendari i esdeveniments';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'No et perdis ni un moment. Organitzeu la vostra agenda i feu un seguiment dels propers esdeveniments importants.';
 
   @override
   String get onboardingClipboardTitle => 'Gestor de porta-retalls';
@@ -1838,72 +1332,23 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
       'Copia una vegada, enganxa a qualsevol lloc. Accediu al vostre historial del porta-retalls per recuperar fragments que heu copiat anteriorment.';
 
   @override
-  String get onboardingCanvasTitle => 'Tela Creativa';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Deixa anar la teva creativitat. Dibuixa, dibuixa i visualitza les teves idees en un llenç digital de forma lliure.';
-
-  @override
   String get featuresNotesDesc => 'Crea i gestiona les teves notes';
 
   @override
   String get featuresTodosDesc => 'Feu un seguiment de les vostres tasques';
 
   @override
-  String get featuresExpensesDesc => 'Superviseu les vostres despeses';
-
-  @override
   String get featuresJournalDesc => 'Escriu els teus pensaments';
-
-  @override
-  String get featuresCalendarDesc => 'Organitza el teu horari';
 
   @override
   String get featuresClipboardDesc =>
       'Accediu al vostre historial del porta-retalls';
 
   @override
-  String get featuresCanvasDesc => 'Dibuixa i dibuixa lliurement';
-
-  @override
-  String get featuresSocialPost => 'Post social';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Crea contingut atractiu a les xarxes socials';
-
-  @override
   String get chooseYourAura => 'Tria la teva aura';
 
   @override
   String get expressYourselfTheme => 'Expressa\'\'t amb un nou color temàtic!';
-
-  @override
-  String get level => 'Nivell';
-
-  @override
-  String get xpToNextLevel => 'XP a nivell';
-
-  @override
-  String get checkUpcomingEvents => 'Consulta els propers esdeveniments';
-
-  @override
-  String get startNewSketch => 'Comença un nou esbós';
-
-  @override
-  String get noTransactionsMonth => 'No hi ha transaccions aquest mes';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transacció$_temp0 aquest mes';
-  }
 
   @override
   String get autoSaveClipboard => 'Desa automàticament el porta-retalls';
@@ -1968,15 +1413,6 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
   @override
   String get premiumLayoutsDesc =>
       'Maneres exclusives de veure els teus records';
-
-  @override
-  String get calendarTools => 'Calendari i eines';
-
-  @override
-  String get fullCalendar => 'Calendari complet';
-
-  @override
-  String get fullCalendarDesc => 'Sistema complet de gestió d\'\'esdeveniments';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -2067,84 +1503,13 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
   String get completed => 'Completat';
 
   @override
-  String get greatJob => 'Gran feina!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Has guanyat $amount XP! Següent tasca: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Tasca completada! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Voleu moure totes les tasques actives a la Paperera de reciclatge?';
-
-  @override
-  String get deleteAllPosts => 'Suprimeix totes les publicacions';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Confirmes que vols suprimir TOTES les publicacions socials? Això no es pot desfer.';
-
-  @override
-  String get allPosts => 'Totes les publicacions';
-
-  @override
-  String get favorites => 'Preferits';
-
-  @override
-  String get drafts => 'Esborranys';
-
-  @override
-  String get noFavoritesYet => 'Encara no hi ha cap favorit';
-
-  @override
-  String get noDraftsYet => 'Encara no hi ha esborranys';
-
-  @override
-  String get startSocialJourney => 'Comença el teu viatge social!';
-
-  @override
-  String get draft => 'PROJECTE';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Si us plau, afegiu contingut o contingut multimèdia per compartir';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Error: no s\'\'ha trobat el fitxer a $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Comproveu l\'\'aplicació de Facebook';
-
-  @override
-  String get systemShare => 'Compartició del sistema';
-
-  @override
-  String get socialPost => 'Post social';
-
-  @override
-  String get favorite => 'Favorit';
-
-  @override
-  String get saveDraft => 'Desa l\'\'esborrany';
 
   @override
   String get entryCopied => 'S\'\'ha copiat l\'\'entrada';
@@ -2291,33 +1656,10 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
   String get dueDate => 'Dues Cites';
 
   @override
-  String get expenseTitle => 'Despeses';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Cerca en $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Ordena i filtra';
 
   @override
   String get sortBy => 'CLASIFICAR PER';
-
-  @override
-  String get highestAmount => 'Quantitat més alta';
-
-  @override
-  String get lowestAmount => 'Quantitat més baixa';
-
-  @override
-  String get moreFilters => 'Més filtres...';
-
-  @override
-  String get filterExpenses => 'Filtre les despeses';
-
-  @override
-  String get transactionType => 'Tipus de transacció';
 
   @override
   String get categories => 'Categories';
@@ -2326,21 +1668,10 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
   String get all => 'Tots';
 
   @override
-  String get income => 'Ingressos';
-
-  @override
-  String get expense => 'Despesa';
-
-  @override
   String get reset => 'Restableix';
 
   @override
   String get apply => 'Aplicar';
-
-  @override
-  String newExpense(String currency) {
-    return 'Nova $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2402,34 +1733,10 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Esbós nou';
-
-  @override
-  String get searchSketches => 'Cerca esbossos i carpetes...';
-
-  @override
   String get noResultsFound => 'No s\'\'han trobat resultats';
 
   @override
   String get noItems => 'No hi ha articles';
-
-  @override
-  String get noDrawingsYet => 'Encara no hi ha dibuixos';
-
-  @override
-  String get canvasIntro => 'Deixa anar la teva creativitat al llenç!';
-
-  @override
-  String get newCanvas => 'Nou Canvas';
 
   @override
   String get rename => 'Canvia el nom';
@@ -2445,13 +1752,7 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
       'Tots els esbossos d\'\'aquesta carpeta se suprimiran permanentment.';
 
   @override
-  String get renameFolder => 'Canvia el nom de la carpeta';
-
-  @override
   String get chooseColor => 'Trieu Color';
-
-  @override
-  String get deleteFolderQuestion => 'Vols suprimir la carpeta?';
 
   @override
   String get searchClips => 'Cerca clips...';
@@ -2473,9 +1774,6 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
 
   @override
   String get restoreClipLater => 'Pots restaurar aquest clip més tard.';
-
-  @override
-  String get upcomingEvents => 'Pròxims Esdeveniments';
 
   @override
   String get dataDistribution => 'DISTRIBUCIÓ DE DADES';
@@ -2516,57 +1814,6 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
   String selectedCount(int count) {
     return '$count seleccionat';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes esbossos • $folders carpetes';
-  }
-
-  @override
-  String get sortItems => 'Ordena els elements';
-
-  @override
-  String get sortNameAZ => 'Nom (A-Z)';
-
-  @override
-  String get sortNameZA => 'Nom (Z-A)';
-
-  @override
-  String get createFolder => 'Crea una carpeta';
-
-  @override
-  String get folderNameHint => 'Nom de la carpeta...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Vols suprimir $count esbossos? Això no es pot desfer.';
-  }
-
-  @override
-  String get noSketchesFound => 'No s\'\'han trobat esbossos';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Proveu d\'\'ajustar la cerca o de crear un esbós nou.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Cerca a $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count esbossos';
-  }
-
-  @override
-  String get sortSketches => 'Ordenar esbossos';
-
-  @override
-  String get calendarScreenTitle => 'Calendari';
-
-  @override
-  String get dailyActivity => 'Activitat diària';
 
   @override
   String get deleteItemQuestion => 'Vols suprimir l\'\'element?';
@@ -2670,29 +1917,6 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
   String get general => 'General';
 
   @override
-  String get saveTransactionQuestion => 'Vols desar aquesta transacció?';
-
-  @override
-  String get fillTitleAmount => 'Si us plau, empleneu el títol i l\'\'import';
-
-  @override
-  String get invalidAmount => 'Format d\'\'import no vàlid';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Voleu moure la transacció a la paperera de reciclatge?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Pots restaurar aquesta transacció més tard des de la configuració.';
-
-  @override
-  String get newTransaction => 'Nova transacció';
-
-  @override
-  String get whatIsThisFor => 'Per a què serveix això?';
-
-  @override
   String get description => 'Descripció';
 
   @override
@@ -2708,72 +1932,10 @@ class AppLocalizationsCaEs extends AppLocalizationsCa {
   String get yearly => 'Anualment';
 
   @override
-  String get totalIncome => 'Ingressos totals';
-
-  @override
-  String get totalExpense => 'Despesa total';
-
-  @override
   String get analysis => 'Anàlisi';
 
   @override
   String get transactions => 'Transaccions';
-
-  @override
-  String get noExpensesFound =>
-      'No s\'\'han trobat despeses per a aquest període.';
-
-  @override
-  String get netBalance => 'Saldo Net';
-
-  @override
-  String get topCategories => 'Categories principals';
-
-  @override
-  String get spendingTrend => 'Tendència de despesa';
-
-  @override
-  String get insights => 'Insights';
-
-  @override
-  String get noExpensesRecorded => 'No s\'\'han registrat despeses';
-
-  @override
-  String get trackSpendingHabits =>
-      'Feu un seguiment dels vostres hàbits de despesa fàcilment.';
-
-  @override
-  String get addExpense => 'Afegeix despesa';
-
-  @override
-  String get noDataForPeriod => 'No hi ha dades per a aquest període';
-
-  @override
-  String get budget => 'Pressupost';
-
-  @override
-  String get spent => 'Esgotat';
-
-  @override
-  String get limit => 'Límit';
-
-  @override
-  String get overBudget => 'Per sobre del pressupost!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% restant';
-  }
-
-  @override
-  String get savingsRate => 'Taxa d\'\'estalvi';
-
-  @override
-  String get healthScore => 'Puntuació de salut';
-
-  @override
-  String get healthScoreExplanation =>
-      'Aquesta puntuació es basa en la teva taxa d\'\'estalvi.\n\n• > 50% estalviat = Excel·lent (100)\n• 0% d\'\'estalvi = Mitjana (50)\n• Despesa > Ingressos = Pobre (<50)';
 
   @override
   String get ok => 'D\'\'acord';

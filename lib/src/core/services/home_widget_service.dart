@@ -182,56 +182,6 @@ class HomeWidgetService {
     }
   }
 
-  /// Update Expenses Widget
-  static Future<bool> updateExpensesWidget() async {
-    try {
-      final expensesBox = _getBoxSafely('expenses_box');
-
-      if (expensesBox == null) {
-        return await updateWidget(
-          widgetType: 'expenses',
-          title: 'Finance Overview',
-          data: {'expenses': 0.0, 'income': 0.0, 'balance': 0.0},
-        );
-      }
-
-      double totalExpenses = 0;
-      double totalIncome = 0;
-
-      for (var expense in expensesBox.values) {
-        try {
-          final type = expense.type?.toString() ?? 'expense';
-          final amount = (expense.amount ?? 0).toDouble();
-
-          if (type == 'expense') {
-            totalExpenses += amount;
-          } else {
-            totalIncome += amount;
-          }
-        } catch (e) {
-          debugPrint('Error processing expense: $e');
-        }
-      }
-
-      return await updateWidget(
-        widgetType: 'expenses',
-        title: 'Finance Overview',
-        data: {
-          'expenses': totalExpenses,
-          'income': totalIncome,
-          'balance': totalIncome - totalExpenses,
-        },
-      );
-    } catch (e) {
-      debugPrint('❌ Error updating expenses widget: $e');
-      return await updateWidget(
-        widgetType: 'expenses',
-        title: 'Finance Overview',
-        data: {'expenses': 0.0, 'income': 0.0, 'balance': 0.0},
-      );
-    }
-  }
-
   /// Update Journal Widget
   static Future<bool> updateJournalWidget() async {
     try {
@@ -369,28 +319,11 @@ class HomeWidgetService {
         case 'todos':
           updateSuccess = await updateTodosWidget();
           break;
-        case 'expenses':
-          updateSuccess = await updateExpensesWidget();
-          break;
         case 'journal':
           updateSuccess = await updateJournalWidget();
           break;
         case 'clipboard':
           updateSuccess = await updateClipboardWidget();
-          break;
-        case 'calendar':
-          updateSuccess = await updateWidget(
-            widgetType: 'calendar',
-            title: 'Calendar',
-            data: {'message': 'View your calendar'},
-          );
-          break;
-        case 'canvas':
-          updateSuccess = await updateWidget(
-            widgetType: 'canvas',
-            title: 'Canvas',
-            data: {'message': 'Open your canvas'},
-          );
           break;
         default:
           debugPrint('⚠️ Unknown widget type: $widgetType');

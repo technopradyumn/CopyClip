@@ -24,19 +24,10 @@ class AppLocalizationsAz extends AppLocalizations {
   String get todos => 'Görüləcək işlər';
 
   @override
-  String get expenses => 'Xərclər';
-
-  @override
   String get journal => 'Jurnal';
 
   @override
-  String get calendar => 'Təqvim';
-
-  @override
   String get clipboard => 'Bufer';
-
-  @override
-  String get canvas => 'Kətan';
 
   @override
   String get save => 'Saxla';
@@ -69,24 +60,6 @@ class AppLocalizationsAz extends AppLocalizations {
   String get discard => 'Atın';
 
   @override
-  String get createPost => 'Post yaradın';
-
-  @override
-  String get post => 'Post';
-
-  @override
-  String get postingTo => 'ünvanına göndərilir';
-
-  @override
-  String get whatsOnYourMind => 'ağlında nə var?';
-
-  @override
-  String get pickImages => 'Şəkilləri seçin';
-
-  @override
-  String get pickVideo => 'Video seçin';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsAz extends AppLocalizations {
   String error(Object error) {
     return 'Xəta: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Sifariş yalnız \"Bütün Yazılar\" bölməsində mümkündür';
-
-  @override
-  String get deletePost => 'Postu silin';
-
-  @override
-  String get postDeleted => 'Post silindi';
 
   @override
   String get premiumFeatures => 'Premium Xüsusiyyətlər';
@@ -181,35 +144,6 @@ class AppLocalizationsAz extends AppLocalizations {
   String get recycleBinCleared => 'Zibil qutusu uğurla silindi';
 
   @override
-  String get allPostsDeleted => 'Bütün yazılar silindi';
-
-  @override
-  String get newPost => 'Yeni Yazı';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Mətn buferə kopyalandı (Facebook siyasəti)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok paylaşımı video/şəkil tələb edir';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Paylaşım xətası: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return '$platform Hekayə ilə paylaşın';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return '$platform Lentində paylaşın';
-  }
-
-  @override
   String get unlockPermanently => 'Daimi kilidini açın';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Tarix və Saat seçin';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Bu postu silmək istədiyinizə əminsiniz?';
-
-  @override
-  String get socialPosts => 'Sosial Yazılar';
 
   @override
   String get watchAdToEarnCoins => 'Pul Qazanmaq üçün Reklama baxın';
@@ -418,25 +345,11 @@ class AppLocalizationsAz extends AppLocalizations {
       'Oyununuzun üstündə qalın. Görüləcək işlər siyahıları yaradın, prioritetlər təyin edin və hədəflərinizi hər dəfə bir işarə ilə qırın.';
 
   @override
-  String get onboardingExpensesTitle => 'Xərclərin İzlənməsi';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Maliyyənizə nəzarət edin. Xərc vərdişlərinizi başa düşmək üçün gəlir və xərcləri asanlıqla izləyin.';
-
-  @override
   String get onboardingJournalTitle => 'Şəxsi Jurnal';
 
   @override
   String get onboardingJournalDesc =>
       'Gününüzü düşünün. Xatirələrinizi, hisslərinizi və gündəlik təcrübələrinizi yazmaq üçün şəxsi məkan.';
-
-  @override
-  String get onboardingCalendarTitle => 'Təqvim və Tədbirlər';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Heç vaxt bir anı qaçırmayın. Cədvəlinizi təşkil edin və qarşıdan gələn mühüm hadisələri izləyin.';
 
   @override
   String get onboardingClipboardTitle => 'Bufer Meneceri';
@@ -446,70 +359,22 @@ class AppLocalizationsAz extends AppLocalizations {
       'Bir dəfə kopyalayın, istənilən yerə yapışdırın. Əvvəllər kopyaladığınız fraqmentləri əldə etmək üçün bufer tarixçəsinə daxil olun.';
 
   @override
-  String get onboardingCanvasTitle => 'Yaradıcı Kətan';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Yaradıcılığınızı üzə çıxarın. Sərbəst formada rəqəmsal kətan üzərində fikirlərinizi çəkin, eskiz edin və vizuallaşdırın.';
-
-  @override
   String get featuresNotesDesc => 'Qeydlərinizi yaradın və idarə edin';
 
   @override
   String get featuresTodosDesc => 'Tapşırıqlarınızı izləyin';
 
   @override
-  String get featuresExpensesDesc => 'Xərclərinizə nəzarət edin';
-
-  @override
   String get featuresJournalDesc => 'Fikirlərinizi yazın';
 
   @override
-  String get featuresCalendarDesc => 'Cədvəlinizi təşkil edin';
-
-  @override
   String get featuresClipboardDesc => 'Bufer tarixçənizə daxil olun';
-
-  @override
-  String get featuresCanvasDesc => 'Sərbəst şəkildə çəkin və eskiz edin';
-
-  @override
-  String get featuresSocialPost => 'Sosial Post';
-
-  @override
-  String get featuresSocialPostDesc => 'Maraqlı sosial media məzmunu yaradın';
 
   @override
   String get chooseYourAura => 'Auranızı seçin';
 
   @override
   String get expressYourselfTheme => 'Yeni mövzu rəngi ilə özünüzü ifadə edin!';
-
-  @override
-  String get level => 'Səviyyə';
-
-  @override
-  String get xpToNextLevel => 'Səviyyəyə XP';
-
-  @override
-  String get checkUpcomingEvents => 'Qarşıdan gələn hadisələri yoxlayın';
-
-  @override
-  String get startNewSketch => 'Yeni bir eskizə başlayın';
-
-  @override
-  String get noTransactionsMonth => 'Bu ay əməliyyat yoxdur';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
-  }
 
   @override
   String get autoSaveClipboard => 'Panoya avtomatik saxla';
@@ -573,15 +438,6 @@ class AppLocalizationsAz extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'Xatirələrinizə baxmaq üçün eksklüziv yollar';
-
-  @override
-  String get calendarTools => 'Təqvim və Alətlər';
-
-  @override
-  String get fullCalendar => 'Tam Təqvim';
-
-  @override
-  String get fullCalendarDesc => 'Tam hadisə idarəetmə sistemi';
 
   @override
   String get clipboardAutoSaveDesc => 'Fon mübadilə buferinin tarixçəsi';
@@ -668,84 +524,13 @@ class AppLocalizationsAz extends AppLocalizations {
   String get completed => 'Tamamlandı';
 
   @override
-  String get greatJob => 'Əla iş!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return '$amount XP qazandınız! Növbəti tapşırıq: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Tapşırıq tamamlandı! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Bütün aktiv tapşırıqlar Zibil qutusuna köçürülsün?';
-
-  @override
-  String get deleteAllPosts => 'Bütün Yazıları Sil';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'BÜTÜN sosial yazıları silmək istədiyinizə əminsiniz? Bu geri qaytarıla bilməz.';
-
-  @override
-  String get allPosts => 'Bütün Yazılar';
-
-  @override
-  String get favorites => 'Sevimlilər';
-
-  @override
-  String get drafts => 'Qaralamalar';
-
-  @override
-  String get noFavoritesYet => 'Hələ favorit yoxdur';
-
-  @override
-  String get noDraftsYet => 'Hələ qaralama yoxdur';
-
-  @override
-  String get startSocialJourney => 'Sosial səyahətinizə başlayın!';
-
-  @override
-  String get draft => 'LAYİHƏ';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Paylaşmaq üçün bəzi məzmun və ya media əlavə edin';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Xəta: $path ünvanında fayl tapılmadı';
   }
-
-  @override
-  String get checkFacebookApp => 'Facebook tətbiqini yoxlayın';
-
-  @override
-  String get systemShare => 'Sistem Paylaşımı';
-
-  @override
-  String get socialPost => 'Sosial Post';
-
-  @override
-  String get favorite => 'Sevimli';
-
-  @override
-  String get saveDraft => 'Qaralama saxla';
 
   @override
   String get entryCopied => 'Giriş kopyalandı';
@@ -891,33 +676,10 @@ class AppLocalizationsAz extends AppLocalizations {
   String get dueDate => 'İki tarix';
 
   @override
-  String get expenseTitle => 'Xərclər';
-
-  @override
-  String searchInCurrency(String currency) {
-    return '$currency ilə axtar...';
-  }
-
-  @override
   String get sortAndFilter => 'Çeşidləyin və Filtr edin';
 
   @override
   String get sortBy => 'SORTLAMA';
-
-  @override
-  String get highestAmount => 'Ən yüksək məbləğ';
-
-  @override
-  String get lowestAmount => 'Ən Aşağı Məbləğ';
-
-  @override
-  String get moreFilters => 'Daha çox Filtrlər...';
-
-  @override
-  String get filterExpenses => 'Xərcləri süzün';
-
-  @override
-  String get transactionType => 'Əməliyyat növü';
 
   @override
   String get categories => 'Kateqoriyalar';
@@ -926,21 +688,10 @@ class AppLocalizationsAz extends AppLocalizations {
   String get all => 'Hamısı';
 
   @override
-  String get income => 'Gəlir';
-
-  @override
-  String get expense => 'Xərc';
-
-  @override
   String get reset => 'Sıfırlayın';
 
   @override
   String get apply => 'Müraciət edin';
-
-  @override
-  String newExpense(String currency) {
-    return 'Yeni $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -1003,34 +754,10 @@ class AppLocalizationsAz extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Yeni Eskiz';
-
-  @override
-  String get searchSketches => 'Eskizləri və qovluqları axtarın...';
-
-  @override
   String get noResultsFound => 'Heç bir nəticə tapılmadı';
 
   @override
   String get noItems => 'Element yoxdur';
-
-  @override
-  String get noDrawingsYet => 'Hələ rəsm yoxdur';
-
-  @override
-  String get canvasIntro => 'Kətan üzərində yaradıcılığınızı üzə çıxarın!';
-
-  @override
-  String get newCanvas => 'Yeni Kətan';
 
   @override
   String get rename => 'Adını dəyişdirin';
@@ -1046,13 +773,7 @@ class AppLocalizationsAz extends AppLocalizations {
       'Bu qovluqdakı bütün eskizlər həmişəlik silinəcək.';
 
   @override
-  String get renameFolder => 'Qovluğun adını dəyişdirin';
-
-  @override
   String get chooseColor => 'Rəng seçin';
-
-  @override
-  String get deleteFolderQuestion => 'Qovluq silinsin?';
 
   @override
   String get searchClips => 'Klipləri axtarın...';
@@ -1074,9 +795,6 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'Bu klipi sonra bərpa edə bilərsiniz.';
-
-  @override
-  String get upcomingEvents => 'Qarşıdan gələn hadisələr';
 
   @override
   String get dataDistribution => 'MƏLUMATLARIN PAYLAŞMASI';
@@ -1117,57 +835,6 @@ class AppLocalizationsAz extends AppLocalizations {
   String selectedCount(int count) {
     return '$count Seçildi';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes eskizlər • $folders qovluqlar';
-  }
-
-  @override
-  String get sortItems => 'Elementləri çeşidləyin';
-
-  @override
-  String get sortNameAZ => 'Ad (A-Z)';
-
-  @override
-  String get sortNameZA => 'Ad (Z-A)';
-
-  @override
-  String get createFolder => 'Qovluq yaradın';
-
-  @override
-  String get folderNameHint => 'Qovluq adı...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return '$count eskiz silinsin? Bu geri qaytarıla bilməz.';
-  }
-
-  @override
-  String get noSketchesFound => 'Heç bir eskiz tapılmadı';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Axtarışınızı tənzimləməyə və ya yeni eskiz yaratmağa çalışın.';
-
-  @override
-  String searchInFolder(String folder) {
-    return '$folder-da axtar...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count eskiz';
-  }
-
-  @override
-  String get sortSketches => 'Eskizləri çeşidləyin';
-
-  @override
-  String get calendarScreenTitle => 'Təqvim';
-
-  @override
-  String get dailyActivity => 'Gündəlik Fəaliyyət';
 
   @override
   String get deleteItemQuestion => 'Element silinsin?';
@@ -1269,30 +936,6 @@ class AppLocalizationsAz extends AppLocalizations {
   String get general => 'General';
 
   @override
-  String get saveTransactionQuestion =>
-      'Bu tranzaksiyanı yadda saxlamaq istəyirsiniz?';
-
-  @override
-  String get fillTitleAmount => 'Zəhmət olmasa başlığı və məbləği doldurun';
-
-  @override
-  String get invalidAmount => 'Yanlış məbləğ formatı';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Tranzaksiya Zibil qutusuna köçürülsün?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Bu əməliyyatı daha sonra ayarlardan bərpa edə bilərsiniz.';
-
-  @override
-  String get newTransaction => 'Yeni Əməliyyat';
-
-  @override
-  String get whatIsThisFor => 'Bu nə üçündür?';
-
-  @override
   String get description => 'Təsvir';
 
   @override
@@ -1308,71 +951,10 @@ class AppLocalizationsAz extends AppLocalizations {
   String get yearly => 'İllik';
 
   @override
-  String get totalIncome => 'Ümumi gəlir';
-
-  @override
-  String get totalExpense => 'Ümumi Xərc';
-
-  @override
   String get analysis => 'Təhlil';
 
   @override
   String get transactions => 'Əməliyyatlar';
-
-  @override
-  String get noExpensesFound => 'Bu dövr üçün heç bir xərc tapılmadı.';
-
-  @override
-  String get netBalance => 'Xalis Balans';
-
-  @override
-  String get topCategories => 'Ən yaxşı kateqoriyalar';
-
-  @override
-  String get spendingTrend => 'Xərcləmə Trendi';
-
-  @override
-  String get insights => 'Anlayışlar';
-
-  @override
-  String get noExpensesRecorded => 'Heç bir xərc qeydə alınmayıb';
-
-  @override
-  String get trackSpendingHabits =>
-      'Xərcləmə vərdişlərinizi asanlıqla izləyin.';
-
-  @override
-  String get addExpense => 'Xərc əlavə edin';
-
-  @override
-  String get noDataForPeriod => 'Bu dövr üçün məlumat yoxdur';
-
-  @override
-  String get budget => 'Büdcə';
-
-  @override
-  String get spent => 'Xərcləndi';
-
-  @override
-  String get limit => 'Limit';
-
-  @override
-  String get overBudget => 'Büdcədən artıq!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% qalır';
-  }
-
-  @override
-  String get savingsRate => 'Əmanət dərəcəsi';
-
-  @override
-  String get healthScore => 'Sağlamlıq balı';
-
-  @override
-  String get healthScoreExplanation =>
-      'Bu xal Əmanət Məzənnənizə əsaslanır.\n\n• > 50% qənaət = Əla (100)\n• 0% qənaət = Orta (50)\n• Xərclər > Gəlir = Zəif (<50)';
 
   @override
   String get ok => 'OK';
@@ -1401,19 +983,10 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
   String get todos => 'Görüləcək işlər';
 
   @override
-  String get expenses => 'Xərclər';
-
-  @override
   String get journal => 'Jurnal';
 
   @override
-  String get calendar => 'Təqvim';
-
-  @override
   String get clipboard => 'Bufer';
-
-  @override
-  String get canvas => 'Kətan';
 
   @override
   String get save => 'Saxla';
@@ -1446,24 +1019,6 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
   String get discard => 'Atın';
 
   @override
-  String get createPost => 'Post yaradın';
-
-  @override
-  String get post => 'Post';
-
-  @override
-  String get postingTo => 'ünvanına göndərilir';
-
-  @override
-  String get whatsOnYourMind => 'ağlında nə var?';
-
-  @override
-  String get pickImages => 'Şəkilləri seçin';
-
-  @override
-  String get pickVideo => 'Video seçin';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -1488,16 +1043,6 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
   String error(Object error) {
     return 'Xəta: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Sifariş yalnız \"Bütün Yazılar\" bölməsində mümkündür';
-
-  @override
-  String get deletePost => 'Postu silin';
-
-  @override
-  String get postDeleted => 'Post silindi';
 
   @override
   String get premiumFeatures => 'Premium Xüsusiyyətlər';
@@ -1558,35 +1103,6 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
   String get recycleBinCleared => 'Zibil qutusu uğurla silindi';
 
   @override
-  String get allPostsDeleted => 'Bütün yazılar silindi';
-
-  @override
-  String get newPost => 'Yeni Yazı';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Mətn buferə kopyalandı (Facebook siyasəti)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok paylaşımı video/şəkil tələb edir';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Paylaşım xətası: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return '$platform Hekayə ilə paylaşın';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return '$platform Lentində paylaşın';
-  }
-
-  @override
   String get unlockPermanently => 'Daimi kilidini açın';
 
   @override
@@ -1602,13 +1118,6 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
 
   @override
   String get selectDateTime => 'Tarix və Saat seçin';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Bu postu silmək istədiyinizə əminsiniz?';
-
-  @override
-  String get socialPosts => 'Sosial Yazılar';
 
   @override
   String get watchAdToEarnCoins => 'Pul Qazanmaq üçün Reklama baxın';
@@ -1795,25 +1304,11 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
       'Oyununuzun üstündə qalın. Görüləcək işlər siyahıları yaradın, prioritetlər təyin edin və hədəflərinizi hər dəfə bir işarə ilə qırın.';
 
   @override
-  String get onboardingExpensesTitle => 'Xərclərin İzlənməsi';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
-
-  @override
   String get onboardingJournalTitle => 'Şəxsi Jurnal';
 
   @override
   String get onboardingJournalDesc =>
       'Gününüzü düşünün. Xatirələrinizi, hisslərinizi və gündəlik təcrübələrinizi yazmaq üçün şəxsi məkan.';
-
-  @override
-  String get onboardingCalendarTitle => 'Təqvim və Tədbirlər';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Heç vaxt bir anı qaçırmayın. Cədvəlinizi təşkil edin və qarşıdan gələn mühüm hadisələri izləyin.';
 
   @override
   String get onboardingClipboardTitle => 'Bufer Meneceri';
@@ -1823,70 +1318,22 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
       'Bir dəfə kopyalayın, istənilən yerə yapışdırın. Access your clipboard history to retrieve snippets you copied earlier.';
 
   @override
-  String get onboardingCanvasTitle => 'Yaradıcı Kətan';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Yaradıcılığınızı üzə çıxarın. Sərbəst formada rəqəmsal kətan üzərində fikirlərinizi çəkin, eskiz edin və vizuallaşdırın.';
-
-  @override
   String get featuresNotesDesc => 'Qeydlərinizi yaradın və idarə edin';
 
   @override
   String get featuresTodosDesc => 'Tapşırıqlarınızı izləyin';
 
   @override
-  String get featuresExpensesDesc => 'Xərclərinizə nəzarət edin';
-
-  @override
   String get featuresJournalDesc => 'Fikirlərinizi yazın';
 
   @override
-  String get featuresCalendarDesc => 'Cədvəlinizi təşkil edin';
-
-  @override
   String get featuresClipboardDesc => 'Bufer tarixçənizə daxil olun';
-
-  @override
-  String get featuresCanvasDesc => 'Sərbəst şəkildə çəkin və eskiz edin';
-
-  @override
-  String get featuresSocialPost => 'Sosial Post';
-
-  @override
-  String get featuresSocialPostDesc => 'Maraqlı sosial media məzmunu yaradın';
 
   @override
   String get chooseYourAura => 'Auranızı seçin';
 
   @override
   String get expressYourselfTheme => 'Yeni mövzu rəngi ilə özünüzü ifadə edin!';
-
-  @override
-  String get level => 'Səviyyə';
-
-  @override
-  String get xpToNextLevel => 'Səviyyəyə XP';
-
-  @override
-  String get checkUpcomingEvents => 'Qarşıdan gələn hadisələri yoxlayın';
-
-  @override
-  String get startNewSketch => 'Yeni bir eskizə başlayın';
-
-  @override
-  String get noTransactionsMonth => 'Bu ay əməliyyat yoxdur';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
-  }
 
   @override
   String get autoSaveClipboard => 'Panoya avtomatik saxla';
@@ -1950,15 +1397,6 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
   @override
   String get premiumLayoutsDesc =>
       'Xatirələrinizə baxmaq üçün eksklüziv yollar';
-
-  @override
-  String get calendarTools => 'Təqvim və Alətlər';
-
-  @override
-  String get fullCalendar => 'Tam Təqvim';
-
-  @override
-  String get fullCalendarDesc => 'Tam hadisə idarəetmə sistemi';
 
   @override
   String get clipboardAutoSaveDesc => 'Background clipboard history capture';
@@ -2044,83 +1482,13 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
   String get completed => 'Tamamlandı';
 
   @override
-  String get greatJob => 'Əla iş!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Tapşırıq tamamlandı! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Bütün aktiv tapşırıqlar Zibil qutusuna köçürülsün?';
-
-  @override
-  String get deleteAllPosts => 'Bütün Yazıları Sil';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
-
-  @override
-  String get allPosts => 'Bütün Yazılar';
-
-  @override
-  String get favorites => 'Sevimlilər';
-
-  @override
-  String get drafts => 'Qaralamalar';
-
-  @override
-  String get noFavoritesYet => 'Hələ favorit yoxdur';
-
-  @override
-  String get noDraftsYet => 'Hələ qaralama yoxdur';
-
-  @override
-  String get startSocialJourney => 'Sosial səyahətinizə başlayın!';
-
-  @override
-  String get draft => 'LAYİHƏ';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'Please add some content or media to share';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Error: File not found at $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Facebook tətbiqini yoxlayın';
-
-  @override
-  String get systemShare => 'Sistem Paylaşımı';
-
-  @override
-  String get socialPost => 'Sosial Post';
-
-  @override
-  String get favorite => 'Sevimli';
-
-  @override
-  String get saveDraft => 'Qaralama saxla';
 
   @override
   String get entryCopied => 'Giriş kopyalandı';
@@ -2266,33 +1634,10 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
   String get dueDate => 'İki tarix';
 
   @override
-  String get expenseTitle => 'Xərclər';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Search in $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Çeşidləyin və Filtr edin';
 
   @override
   String get sortBy => 'SORTLAMA';
-
-  @override
-  String get highestAmount => 'Ən yüksək məbləğ';
-
-  @override
-  String get lowestAmount => 'Ən Aşağı Məbləğ';
-
-  @override
-  String get moreFilters => 'More Filters...';
-
-  @override
-  String get filterExpenses => 'Xərcləri süzün';
-
-  @override
-  String get transactionType => 'Əməliyyat növü';
 
   @override
   String get categories => 'Kateqoriyalar';
@@ -2301,21 +1646,10 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
   String get all => 'Hamısı';
 
   @override
-  String get income => 'Gəlir';
-
-  @override
-  String get expense => 'Xərc';
-
-  @override
   String get reset => 'Сбросить';
 
   @override
   String get apply => 'Мüraciət edin';
-
-  @override
-  String newExpense(String currency) {
-    return 'Yeni $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2378,34 +1712,10 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Yeni Eskiz';
-
-  @override
-  String get searchSketches => 'Eskizləri və qovluqları axtarın...';
-
-  @override
   String get noResultsFound => 'Heç bir nəticə tapılmadı';
 
   @override
   String get noItems => 'Element yoxdur';
-
-  @override
-  String get noDrawingsYet => 'Hələ rəsm yoxdur';
-
-  @override
-  String get canvasIntro => 'Kətan üzərində yaradıcılığınızı üzə çıxarın!';
-
-  @override
-  String get newCanvas => 'Yeni Kətan';
 
   @override
   String get rename => 'Adını dəyişdirin';
@@ -2421,13 +1731,7 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
       'Bu qovluqdakı bütün eskizlər həmişəlik silinəcək.';
 
   @override
-  String get renameFolder => 'Qovluğun adını dəyişdirin';
-
-  @override
   String get chooseColor => 'Rəng seçin';
-
-  @override
-  String get deleteFolderQuestion => 'Qovluq silinsin?';
 
   @override
   String get searchClips => 'Klipləri axtarın...';
@@ -2449,9 +1753,6 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
 
   @override
   String get restoreClipLater => 'You can restore this clip later.';
-
-  @override
-  String get upcomingEvents => 'Qarşıdan gələn hadisələr';
 
   @override
   String get dataDistribution => 'MƏLUMATLARIN PAYLAŞMASI';
@@ -2492,57 +1793,6 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
   String selectedCount(int count) {
     return '$count Seçildi';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes eskizlər • $folders qovluqlar';
-  }
-
-  @override
-  String get sortItems => 'Elementləri çeşidləyin';
-
-  @override
-  String get sortNameAZ => 'Ad (A-Z)';
-
-  @override
-  String get sortNameZA => 'Ad (Z-A)';
-
-  @override
-  String get createFolder => 'Qovluq yaradın';
-
-  @override
-  String get folderNameHint => 'Folder name...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
-  }
-
-  @override
-  String get noSketchesFound => 'Heç bir eskiz tapılmadı';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Search in $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count eskiz';
-  }
-
-  @override
-  String get sortSketches => 'Eskizləri çeşidləyin';
-
-  @override
-  String get calendarScreenTitle => 'Təqvim';
-
-  @override
-  String get dailyActivity => 'Gündəlik Fəaliyyət';
 
   @override
   String get deleteItemQuestion => 'Element silinsin?';
@@ -2645,28 +1895,6 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
   String get general => 'General';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
-
-  @override
-  String get fillTitleAmount => 'Please fill in title and amount';
-
-  @override
-  String get invalidAmount => 'Invalid amount format';
-
-  @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
-
-  @override
-  String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
-
-  @override
-  String get newTransaction => 'Yeni Əməliyyat';
-
-  @override
-  String get whatIsThisFor => 'Bu nə üçündür?';
-
-  @override
   String get description => 'Təsvir';
 
   @override
@@ -2682,70 +1910,10 @@ class AppLocalizationsAzAz extends AppLocalizationsAz {
   String get yearly => 'İllik';
 
   @override
-  String get totalIncome => 'Ümumi gəlir';
-
-  @override
-  String get totalExpense => 'Ümumi Xərc';
-
-  @override
   String get analysis => 'Təhlil';
 
   @override
   String get transactions => 'Əməliyyatlar';
-
-  @override
-  String get noExpensesFound => 'No expenses found for this period.';
-
-  @override
-  String get netBalance => 'Xalis Balans';
-
-  @override
-  String get topCategories => 'Ən yaxşı kateqoriyalar';
-
-  @override
-  String get spendingTrend => 'Xərcləmə Trendi';
-
-  @override
-  String get insights => 'Anlayışlar';
-
-  @override
-  String get noExpensesRecorded => 'No expenses recorded';
-
-  @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
-
-  @override
-  String get addExpense => 'Xərc əlavə edin';
-
-  @override
-  String get noDataForPeriod => 'No data for this period';
-
-  @override
-  String get budget => 'Büdcə';
-
-  @override
-  String get spent => 'Xərcləndi';
-
-  @override
-  String get limit => 'Limit';
-
-  @override
-  String get overBudget => 'Büdcədən artıq!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% qalır';
-  }
-
-  @override
-  String get savingsRate => 'Əmanət dərəcəsi';
-
-  @override
-  String get healthScore => 'Sağlamlıq balı';
-
-  @override
-  String get healthScoreExplanation =>
-      'Bu xal Əmanət Məzənnənizə əsaslanır.\n\n• > 50% qənaət = Əla (100)\n• 0% qənaət = Orta (50)\n• Xərclər > Gəlir = Zəif (<50)';
 
   @override
   String get ok => 'OK';

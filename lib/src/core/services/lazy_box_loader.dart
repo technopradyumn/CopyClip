@@ -2,12 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:copyclip/src/features/notes/data/note_model.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
-import 'package:copyclip/src/features/expenses/data/expense_model.dart';
 import 'package:copyclip/src/features/journal/data/journal_model.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
-import 'package:copyclip/src/features/social_post/data/social_post_model.dart'; // Added
-import 'package:copyclip/src/features/calendar/data/calendar_event_model.dart';
-import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
 
 /// \u2705 PERFORMANCE OPTIMIZATION: Lazy Box Loader
 /// This service ensures Hive boxes are only opened when needed,
@@ -77,14 +73,8 @@ class LazyBoxLoader {
     final loaders = <Future<void>>[
       _safeLoad<Note>('notes_box'),
       _safeLoad<Todo>('todos_box'),
-      _safeLoad<Expense>('expenses_box'),
       _safeLoad<JournalEntry>('journal_box'),
       _safeLoad<ClipboardItem>('clipboard_box'),
-      _safeLoad<SocialPost>('social_posts_box'),
-      _safeLoad<CalendarEvent>('calendar_events_box'),
-      CanvasDatabase().init().catchError((e) {
-        debugPrint('\u{26A0}\uFE0F Error loading CanvasDatabase: $e');
-      }),
     ];
     await Future.wait(loaders);
     debugPrint('\u2705 All boxes loaded');

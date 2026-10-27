@@ -13,6 +13,7 @@ import 'package:share_plus/share_plus.dart';
 // Core
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/navigation_drawer.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:copyclip/src/core/const/constant.dart';
@@ -290,6 +291,8 @@ class _NotesScreenState extends State<NotesScreen> {
       child: GlassScaffold(
         showBackArrow: false,
         title: null,
+        showDrawer: true,
+        drawer: const CopyClipDrawer(),
         floatingActionButton: _isSelectionMode
             ? null
             : FloatingActionButton(

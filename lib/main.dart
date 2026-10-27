@@ -6,7 +6,6 @@ import 'package:copyclip/src/core/providers/locale_provider.dart';
 import 'package:copyclip/src/core/services/bg_worker.dart';
 import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart';
 import 'package:copyclip/src/core/services/notification_engine.dart';
-import 'package:copyclip/src/features/canvas/data/canvas_adapter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:copyclip/src/core/theme/bloc/theme_bloc.dart';
@@ -26,12 +25,9 @@ import 'package:copyclip/src/core/services/app_update_service.dart';
 import 'package:copyclip/src/core/services/notification_service.dart'; // Added
 
 import 'package:copyclip/src/core/theme/app_theme.dart';
-import 'package:copyclip/src/core/services/gamification_service.dart';
-import 'package:copyclip/src/core/models/gamification_model.dart';
 
 import 'package:copyclip/src/features/clipboard/data/clipboard_adapter.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
-import 'package:copyclip/src/features/expenses/data/expense_adapter.dart';
 
 import 'package:copyclip/src/features/journal/data/journal_adapter.dart';
 
@@ -39,9 +35,6 @@ import 'package:copyclip/src/features/notes/data/note_adapter.dart';
 
 import 'package:copyclip/src/features/todos/data/todo_adapter.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
-import 'package:copyclip/src/features/social_post/data/social_post_model.dart'; // Added
-import 'package:copyclip/src/features/calendar/data/calendar_event_adapter.dart';
-import 'package:copyclip/src/features/calendar/data/calendar_event_model.dart';
 import 'package:copyclip/src/core/const/languages.dart';
 import 'src/l10n/app_localizations.dart';
 
@@ -59,11 +52,8 @@ Future<void> homeWidgetBackgroundCallback(Uri? uri) async {
   final routesMap = {
     'notes': AppRouter.notes,
     'todos': AppRouter.todos,
-    'expenses': AppRouter.expenses,
     'journal': AppRouter.journal,
-    'calendar': AppRouter.calendar,
     'clipboard': AppRouter.clipboard,
-    'canvas': AppRouter.canvas,
   };
 
   final route = routesMap[featureId];
@@ -108,7 +98,6 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
-        ChangeNotifierProvider(create: (_) => GamificationService()..init()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -144,8 +133,6 @@ Future<void> _initializeApp() async {
     await Future.wait([
       _openBoxSafely('settings'),
       _openBoxSafely('theme_box'),
-      _openBoxSafely<CalendarEvent>('calendar_events_box'),
-      CanvasDatabase().init(),
     ]);
 
     debugPrint("✅ Critical initialization complete");
@@ -157,12 +144,8 @@ Future<void> _initializeApp() async {
 void _registerAdapters() {
   Hive.registerAdapter(NoteAdapter());
   Hive.registerAdapter(TodoAdapter());
-  Hive.registerAdapter(ExpenseAdapter());
   Hive.registerAdapter(JournalEntryAdapter());
   Hive.registerAdapter(ClipboardItemAdapter());
-  Hive.registerAdapter(SocialPostAdapter());
-  Hive.registerAdapter(GamificationModelAdapter());
-  Hive.registerAdapter(CalendarEventAdapter());
 }
 
 /// Helper to safely open a Hive box.
@@ -332,21 +315,12 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         // Mark-done action handled via stream, no navigation needed
         return;
       }
-      if (payload.startsWith('event:')) {
-        final String id = payload.split(':')[1];
-        router.push('/calendar/detail/$id');
-      } else if (payload == 'daily_planning') {
-        router.push(AppRouter.calendar);
-      } else if (payload == 'todos') {
+      if (payload == 'todos') {
         router.push(AppRouter.todos);
-      } else if (payload == 'expenses') {
-        router.push(AppRouter.expenses);
       } else if (payload == 'journal') {
         router.push(AppRouter.journal);
       } else if (payload == 'clipboard') {
         router.push(AppRouter.clipboard);
-      } else if (payload == 'calendar') {
-        router.push(AppRouter.calendar);
       } else {
         // Fallback: go to dashboard
         debugPrint('⚠️ Unhandled notification payload: $payload');
@@ -381,11 +355,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     final routesMap = {
       'notes': AppRouter.notes,
       'todos': AppRouter.todos,
-      'expenses': AppRouter.expenses,
       'journal': AppRouter.journal,
-      'calendar': AppRouter.calendar,
       'clipboard': AppRouter.clipboard,
-      'canvas': AppRouter.canvas,
     };
 
     final route = routesMap[host];
@@ -620,13 +591,6 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       debugPrint('✅ Auto-saved clipboard item: ${newItem.id}');
       await WidgetSyncService.syncClipboard();
 
-      // Award XP for clipboard save
-      if (mounted) {
-        try {
-          final gamification = Provider.of<GamificationService>(context, listen: false);
-          gamification.recordFeatureUsage('clipboard');
-        } catch (_) {}
-      }
     } catch (e) {
       debugPrint('❌ Clipboard check error: $e');
     }

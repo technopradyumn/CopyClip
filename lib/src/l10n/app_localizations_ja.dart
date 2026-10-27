@@ -24,19 +24,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get todos => 'ToDo';
 
   @override
-  String get expenses => '支出';
-
-  @override
   String get journal => 'ジャーナル';
 
   @override
-  String get calendar => 'カレンダー';
-
-  @override
   String get clipboard => 'クリップボード';
-
-  @override
-  String get canvas => 'キャンバス';
 
   @override
   String get save => '保存';
@@ -69,24 +60,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get discard => '破棄';
 
   @override
-  String get createPost => '投稿を作成';
-
-  @override
-  String get post => '投稿';
-
-  @override
-  String get postingTo => '投稿先';
-
-  @override
-  String get whatsOnYourMind => 'いまどうしてる？';
-
-  @override
-  String get pickImages => '画像を選択';
-
-  @override
-  String get pickVideo => '動画を選択';
-
-  @override
   String get camera => 'カメラ';
 
   @override
@@ -111,15 +84,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String error(Object error) {
     return 'エラー: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts => '並べ替えは「すべての投稿」でのみ利用可能です';
-
-  @override
-  String get deletePost => '投稿を削除';
-
-  @override
-  String get postDeleted => '投稿が削除されました';
 
   @override
   String get premiumFeatures => 'プレミアム機能';
@@ -179,34 +143,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get recycleBinCleared => 'ゴミ箱が空になりました';
 
   @override
-  String get allPostsDeleted => 'すべての投稿が削除されました';
-
-  @override
-  String get newPost => '新しい投稿';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'テキストがクリップボードにコピーされました（Facebookポリシー）';
-
-  @override
-  String get tiktokSharingRequiresVideoImage => 'TikTok共有には動画または画像が必要です';
-
-  @override
-  String errorSharing(Object error) {
-    return '共有エラー: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return '$platformストーリーで共有';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return '$platformフィードで共有';
-  }
-
-  @override
   String get unlockPermanently => '永久にアンロック';
 
   @override
@@ -222,12 +158,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get selectDateTime => '日時を選択';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost => 'この投稿を削除してもよろしいですか？';
-
-  @override
-  String get socialPosts => 'ソーシャル投稿';
 
   @override
   String get watchAdToEarnCoins => '広告を見てコインを獲得';
@@ -411,23 +341,11 @@ class AppLocalizationsJa extends AppLocalizations {
       '常に一歩先へ。ToDoリストを作成し、優先順位を設定し、目標を一つずつ達成しましょう。';
 
   @override
-  String get onboardingExpensesTitle => '支出の追跡';
-
-  @override
-  String get onboardingExpensesDesc => '家計をコントロール。収入と支出を簡単に追跡して、支出の習慣を理解しましょう。';
-
-  @override
   String get onboardingJournalTitle => 'パーソナルジャーナル';
 
   @override
   String get onboardingJournalDesc =>
       '一日を振り返る。思い出、感情、日々の体験を書き留めるためのプライベートな空間です。';
-
-  @override
-  String get onboardingCalendarTitle => 'カレンダーとイベント';
-
-  @override
-  String get onboardingCalendarDesc => '一瞬を逃さない。スケジュールを整理し、今後の重要なイベントを追跡しましょう。';
 
   @override
   String get onboardingClipboardTitle => 'クリップボード管理';
@@ -437,64 +355,22 @@ class AppLocalizationsJa extends AppLocalizations {
       '一度コピーすればどこでもペースト。クリップボードの履歴にアクセスして、前にコピーしたスニペットを取り出せます。';
 
   @override
-  String get onboardingCanvasTitle => 'クリエイティブキャンパス';
-
-  @override
-  String get onboardingCanvasDesc =>
-      '創造性を解き放つ。自由形式のデジタルキャンバスでアイデアを描き、スケッチし、視覚化しましょう。';
-
-  @override
   String get featuresNotesDesc => 'ノートの作成と管理';
 
   @override
   String get featuresTodosDesc => 'タスクの追跡';
 
   @override
-  String get featuresExpensesDesc => '支出の監視';
-
-  @override
   String get featuresJournalDesc => '考えを書き留める';
 
   @override
-  String get featuresCalendarDesc => 'スケジュールの整理';
-
-  @override
   String get featuresClipboardDesc => 'クリップボード履歴へのアクセス';
-
-  @override
-  String get featuresCanvasDesc => '自由に描画とスケッチ';
-
-  @override
-  String get featuresSocialPost => 'ソーシャル投稿';
-
-  @override
-  String get featuresSocialPostDesc => '魅力的なソーシャルメディアコンテンツを作成';
 
   @override
   String get chooseYourAura => 'あなたのオーラを選択';
 
   @override
   String get expressYourselfTheme => '新しいテーマカラーで自分を表現しましょう！';
-
-  @override
-  String get level => 'レベル';
-
-  @override
-  String get xpToNextLevel => '次のレベルまでのXP';
-
-  @override
-  String get checkUpcomingEvents => '今後のイベントを確認';
-
-  @override
-  String get startNewSketch => '新しいスケッチを開始';
-
-  @override
-  String get noTransactionsMonth => '今月の取引はありません';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return '今月は$count件の取引があります';
-  }
 
   @override
   String get autoSaveClipboard => 'クリップボードの自動保存';
@@ -554,15 +430,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get premiumLayoutsDesc => '思い出を表示する特別な方法';
-
-  @override
-  String get calendarTools => 'カレンダーとツール';
-
-  @override
-  String get fullCalendar => 'フルカレンダー';
-
-  @override
-  String get fullCalendarDesc => '完全なイベント管理システム';
 
   @override
   String get clipboardAutoSaveDesc => 'バックグラウンドでのクリップボード履歴取得';
@@ -648,76 +515,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get completed => '完了';
 
   @override
-  String get greatJob => '素晴らしい！';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return '$amount XPを獲得しました！次のタスク: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'タスク完了！ +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin => 'すべてのアクティブなタスクをゴミ箱に移動しますか？';
-
-  @override
-  String get deleteAllPosts => 'すべての投稿を削除';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      '本当にすべてのソーシャル投稿を削除しますか？この操作は取り消せません。';
-
-  @override
-  String get allPosts => 'すべての投稿';
-
-  @override
-  String get favorites => 'お気に入り';
-
-  @override
-  String get drafts => '下書き';
-
-  @override
-  String get noFavoritesYet => 'お気に入りはまだありません';
-
-  @override
-  String get noDraftsYet => '下書きはまだありません';
-
-  @override
-  String get startSocialJourney => 'ソーシャルジャーニーを始めましょう！';
-
-  @override
-  String get draft => '下書き';
-
-  @override
-  String attachmentCount(num count) {
-    return '添付ファイル $count件';
-  }
-
-  @override
-  String get pleaseAddContent => '共有するコンテンツまたはメディアを追加してください';
 
   @override
   String fileNotFoundError(Object path) {
     return 'エラー: $path にファイルが見つかりません';
   }
-
-  @override
-  String get checkFacebookApp => 'Facebookアプリを確認してください';
-
-  @override
-  String get systemShare => 'システム共有';
-
-  @override
-  String get socialPost => 'ソーシャル投稿';
-
-  @override
-  String get favorite => 'お気に入り';
-
-  @override
-  String get saveDraft => '下書きを保存';
 
   @override
   String get entryCopied => 'エントリをコピーしました';
@@ -860,33 +663,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get dueDate => '期限';
 
   @override
-  String get expenseTitle => '支出';
-
-  @override
-  String searchInCurrency(String currency) {
-    return '$currency で検索...';
-  }
-
-  @override
   String get sortAndFilter => '並べ替えとフィルター';
 
   @override
   String get sortBy => '並べ替え:';
-
-  @override
-  String get highestAmount => '金額が高い順';
-
-  @override
-  String get lowestAmount => '金額が低い順';
-
-  @override
-  String get moreFilters => '詳細フィルター...';
-
-  @override
-  String get filterExpenses => '支出をフィルター';
-
-  @override
-  String get transactionType => '取引タイプ';
 
   @override
   String get categories => 'カテゴリー';
@@ -895,21 +675,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get all => 'すべて';
 
   @override
-  String get income => '収入';
-
-  @override
-  String get expense => '支出';
-
-  @override
   String get reset => 'リセット';
 
   @override
   String get apply => '適用';
-
-  @override
-  String newExpense(String currency) {
-    return '新しい $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -970,34 +739,10 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => '新しいスケッチ';
-
-  @override
-  String get searchSketches => 'スケッチやフォルダを検索...';
-
-  @override
   String get noResultsFound => '結果が見つかりません';
 
   @override
   String get noItems => '項目なし';
-
-  @override
-  String get noDrawingsYet => '描画はまだありません';
-
-  @override
-  String get canvasIntro => 'キャンバスで創造性を解き放ちましょう！';
-
-  @override
-  String get newCanvas => '新しいキャンバス';
 
   @override
   String get rename => '名前を変更';
@@ -1012,13 +757,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deleteFolderConfirmation => 'このフォルダ内のすべてのスケッチは永久に削除されます。';
 
   @override
-  String get renameFolder => 'フォルダ名を変更';
-
-  @override
   String get chooseColor => '色を選択';
-
-  @override
-  String get deleteFolderQuestion => 'フォルダを削除しますか？';
 
   @override
   String get searchClips => 'クリップを検索...';
@@ -1040,9 +779,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'このクリップは後で復元できます。';
-
-  @override
-  String get upcomingEvents => '今後のイベント';
 
   @override
   String get dataDistribution => 'データ分布';
@@ -1083,56 +819,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String selectedCount(int count) {
     return '$count個選択済み';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return 'スケッチ $notes個 ・ フォルダ $folders個';
-  }
-
-  @override
-  String get sortItems => '項目を並べ替え';
-
-  @override
-  String get sortNameAZ => '名前 (A-Z)';
-
-  @override
-  String get sortNameZA => '名前 (Z-A)';
-
-  @override
-  String get createFolder => 'フォルダを作成';
-
-  @override
-  String get folderNameHint => 'フォルダ名...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return '$count個のスケッチを削除しますか？この操作は取り消せません。';
-  }
-
-  @override
-  String get noSketchesFound => 'スケッチが見つかりません';
-
-  @override
-  String get noSketchesFoundSub => '検索条件を調整するか、新しいスケッチを作成してください。';
-
-  @override
-  String searchInFolder(String folder) {
-    return '$folder 内を検索...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return 'スケッチ $count個';
-  }
-
-  @override
-  String get sortSketches => 'スケッチを並べ替え';
-
-  @override
-  String get calendarScreenTitle => 'カレンダー';
-
-  @override
-  String get dailyActivity => '今日のアクティビティ';
 
   @override
   String get deleteItemQuestion => '項目を削除しますか？';
@@ -1234,27 +920,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get general => '全般';
 
   @override
-  String get saveTransactionQuestion => 'この取引を保存しますか？';
-
-  @override
-  String get fillTitleAmount => 'タイトルと金額を入力してください';
-
-  @override
-  String get invalidAmount => '金額の形式が無効です';
-
-  @override
-  String get moveTransactionToBinTitle => '取引をゴミ箱に移動しますか？';
-
-  @override
-  String get restoreTransactionLater => 'この取引は後で設定から復元できます。';
-
-  @override
-  String get newTransaction => '新しい取引';
-
-  @override
-  String get whatIsThisFor => '何のための取引ですか？';
-
-  @override
   String get description => '説明';
 
   @override
@@ -1270,70 +935,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get yearly => '毎年';
 
   @override
-  String get totalIncome => '総収入';
-
-  @override
-  String get totalExpense => '総支出';
-
-  @override
   String get analysis => '分析';
 
   @override
   String get transactions => '取引';
-
-  @override
-  String get noExpensesFound => 'この期間の支出は見つかりません。';
-
-  @override
-  String get netBalance => '純残高';
-
-  @override
-  String get topCategories => '主なカテゴリー';
-
-  @override
-  String get spendingTrend => '支出トレンド';
-
-  @override
-  String get insights => 'インサイト';
-
-  @override
-  String get noExpensesRecorded => '支出は記録されていません';
-
-  @override
-  String get trackSpendingHabits => '支出の習慣を簡単に追跡しましょう。';
-
-  @override
-  String get addExpense => '支出を追加';
-
-  @override
-  String get noDataForPeriod => 'この期間のデータはありません';
-
-  @override
-  String get budget => '予算';
-
-  @override
-  String get spent => '使用済み';
-
-  @override
-  String get limit => '制限';
-
-  @override
-  String get overBudget => '予算超過！';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '残り $percent%';
-  }
-
-  @override
-  String get savingsRate => '貯蓄率';
-
-  @override
-  String get healthScore => '健康スコア';
-
-  @override
-  String get healthScoreExplanation =>
-      'このスコアは貯蓄率に基づいています。\n\n・50%以上の貯蓄 = 優秀 (100)\n・0%の貯蓄 = 平均 (50)\n・支出 > 収入 = 不足 (<50)';
 
   @override
   String get ok => 'OK';
@@ -1362,19 +967,10 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
   String get todos => 'ToDo';
 
   @override
-  String get expenses => '支出';
-
-  @override
   String get journal => 'ジャーナル';
 
   @override
-  String get calendar => 'カレンダー';
-
-  @override
   String get clipboard => 'クリップボード';
-
-  @override
-  String get canvas => 'キャンバス';
 
   @override
   String get save => '保存';
@@ -1407,24 +1003,6 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
   String get discard => '破棄';
 
   @override
-  String get createPost => '投稿を作成';
-
-  @override
-  String get post => '投稿';
-
-  @override
-  String get postingTo => '投稿先';
-
-  @override
-  String get whatsOnYourMind => 'いまどうしてる？';
-
-  @override
-  String get pickImages => '画像を選択';
-
-  @override
-  String get pickVideo => '動画を選択';
-
-  @override
   String get camera => 'カメラ';
 
   @override
@@ -1449,15 +1027,6 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
   String error(Object error) {
     return 'エラー: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts => '並べ替えは「すべての投稿」でのみ利用可能です';
-
-  @override
-  String get deletePost => '投稿を削除';
-
-  @override
-  String get postDeleted => '投稿が削除されました';
 
   @override
   String get premiumFeatures => 'プレミアム機能';
@@ -1517,34 +1086,6 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
   String get recycleBinCleared => 'ゴミ箱が空になりました';
 
   @override
-  String get allPostsDeleted => 'すべての投稿が削除されました';
-
-  @override
-  String get newPost => '新しい投稿';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'テキストがクリップボードにコピーされました（Facebookポリシー）';
-
-  @override
-  String get tiktokSharingRequiresVideoImage => 'TikTok共有には動画または画像が必要です';
-
-  @override
-  String errorSharing(Object error) {
-    return '共有エラー: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return '$platformストーリーで共有';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return '$platformフィードで共有';
-  }
-
-  @override
   String get unlockPermanently => '永久にアンロック';
 
   @override
@@ -1560,12 +1101,6 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
 
   @override
   String get selectDateTime => '日時を選択';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost => 'この投稿を削除してもよろしいですか？';
-
-  @override
-  String get socialPosts => 'ソーシャル投稿';
 
   @override
   String get watchAdToEarnCoins => '広告を見てコインを獲得';
@@ -1749,23 +1284,11 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
       '常に一歩先へ。ToDoリストを作成し、優先順位を設定し、目標を一つずつ達成しましょう。';
 
   @override
-  String get onboardingExpensesTitle => '支出の追跡';
-
-  @override
-  String get onboardingExpensesDesc => '家計をコントロール。収入と支出を簡単に追跡して、支出の習慣を理解しましょう。';
-
-  @override
   String get onboardingJournalTitle => 'パーソナルジャーナル';
 
   @override
   String get onboardingJournalDesc =>
       '一日を振り返る。思い出、感情、日々の体験を書き留めるためのプライベートな空間です。';
-
-  @override
-  String get onboardingCalendarTitle => 'カレンダーとイベント';
-
-  @override
-  String get onboardingCalendarDesc => '一瞬を逃さない。スケジュールを整理し、今後の重要なイベントを追跡しましょう。';
 
   @override
   String get onboardingClipboardTitle => 'クリップボード管理';
@@ -1775,64 +1298,22 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
       '一度コピーすればどこでもペースト。クリップボードの履歴にアクセスして、前にコピーしたスニペットを取り出せます。';
 
   @override
-  String get onboardingCanvasTitle => 'クリエイティブキャンパス';
-
-  @override
-  String get onboardingCanvasDesc =>
-      '創造性を解き放つ。自由形式のデジタルキャンバスでアイデアを描き、スケッチし、視覚化しましょう。';
-
-  @override
   String get featuresNotesDesc => 'ノートの作成と管理';
 
   @override
   String get featuresTodosDesc => 'タスクの追跡';
 
   @override
-  String get featuresExpensesDesc => '支出の監視';
-
-  @override
   String get featuresJournalDesc => '考えを書き留める';
 
   @override
-  String get featuresCalendarDesc => 'スケジュールの整理';
-
-  @override
   String get featuresClipboardDesc => 'クリップボード履歴へのアクセス';
-
-  @override
-  String get featuresCanvasDesc => '自由に描画とスケッチ';
-
-  @override
-  String get featuresSocialPost => 'ソーシャル投稿';
-
-  @override
-  String get featuresSocialPostDesc => '魅力的なソーシャルメディアコンテンツを作成';
 
   @override
   String get chooseYourAura => 'あなたのオーラを選択';
 
   @override
   String get expressYourselfTheme => '新しいテーマカラーで自分を表現しましょう！';
-
-  @override
-  String get level => 'レベル';
-
-  @override
-  String get xpToNextLevel => '次のレベルまでのXP';
-
-  @override
-  String get checkUpcomingEvents => '今後のイベントを確認';
-
-  @override
-  String get startNewSketch => '新しいスケッチを開始';
-
-  @override
-  String get noTransactionsMonth => '今月の取引はありません';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return '今月は$count件の取引があります';
-  }
 
   @override
   String get autoSaveClipboard => 'クリップボードの自動保存';
@@ -1892,15 +1373,6 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
 
   @override
   String get premiumLayoutsDesc => '思い出を表示する特別な方法';
-
-  @override
-  String get calendarTools => 'カレンダーとツール';
-
-  @override
-  String get fullCalendar => 'フルカレンダー';
-
-  @override
-  String get fullCalendarDesc => '完全なイベント管理システム';
 
   @override
   String get clipboardAutoSaveDesc => 'バックグラウンドでのクリップボード履歴取得';
@@ -1986,76 +1458,12 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
   String get completed => '完了';
 
   @override
-  String get greatJob => '素晴らしい！';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return '$amount XPを獲得しました！次のタスク: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'タスク完了！ +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin => 'すべてのアクティブなタスクをゴミ箱に移動しますか？';
-
-  @override
-  String get deleteAllPosts => 'すべての投稿を削除';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      '本当にすべてのソーシャル投稿を削除しますか？この操作は取り消せません。';
-
-  @override
-  String get allPosts => 'すべての投稿';
-
-  @override
-  String get favorites => 'お気に入り';
-
-  @override
-  String get drafts => '下書き';
-
-  @override
-  String get noFavoritesYet => 'お気に入りはまだありません';
-
-  @override
-  String get noDraftsYet => '下書きはまだありません';
-
-  @override
-  String get startSocialJourney => 'ソーシャルジャーニーを始めましょう！';
-
-  @override
-  String get draft => '下書き';
-
-  @override
-  String attachmentCount(num count) {
-    return '添付ファイル $count件';
-  }
-
-  @override
-  String get pleaseAddContent => '共有するコンテンツまたはメディアを追加してください';
 
   @override
   String fileNotFoundError(Object path) {
     return 'エラー: $path にファイルが見つかりません';
   }
-
-  @override
-  String get checkFacebookApp => 'Facebookアプリを確認してください';
-
-  @override
-  String get systemShare => 'システム共有';
-
-  @override
-  String get socialPost => 'ソーシャル投稿';
-
-  @override
-  String get favorite => 'お気に入り';
-
-  @override
-  String get saveDraft => '下書きを保存';
 
   @override
   String get entryCopied => 'エントリをコピーしました';
@@ -2198,33 +1606,10 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
   String get dueDate => '期限';
 
   @override
-  String get expenseTitle => '支出';
-
-  @override
-  String searchInCurrency(String currency) {
-    return '$currency で検索...';
-  }
-
-  @override
   String get sortAndFilter => '並べ替えとフィルター';
 
   @override
   String get sortBy => '並べ替え:';
-
-  @override
-  String get highestAmount => '金額が高い順';
-
-  @override
-  String get lowestAmount => '金額が低い順';
-
-  @override
-  String get moreFilters => '詳細フィルター...';
-
-  @override
-  String get filterExpenses => '支出をフィルター';
-
-  @override
-  String get transactionType => '取引タイプ';
 
   @override
   String get categories => 'カテゴリー';
@@ -2233,21 +1618,10 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
   String get all => 'すべて';
 
   @override
-  String get income => '収入';
-
-  @override
-  String get expense => '支出';
-
-  @override
   String get reset => 'リセット';
 
   @override
   String get apply => '適用';
-
-  @override
-  String newExpense(String currency) {
-    return '新しい $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2308,34 +1682,10 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => '新しいスケッチ';
-
-  @override
-  String get searchSketches => 'スケッチやフォルダを検索...';
-
-  @override
   String get noResultsFound => '結果が見つかりません';
 
   @override
   String get noItems => '項目なし';
-
-  @override
-  String get noDrawingsYet => '描画はまだありません';
-
-  @override
-  String get canvasIntro => 'キャンバスで創造性を解き放ちましょう！';
-
-  @override
-  String get newCanvas => '新しいキャンバス';
 
   @override
   String get rename => '名前を変更';
@@ -2350,13 +1700,7 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
   String get deleteFolderConfirmation => 'このフォルダ内のすべてのスケッチは永久に削除されます。';
 
   @override
-  String get renameFolder => 'フォルダ名を変更';
-
-  @override
   String get chooseColor => '色を選択';
-
-  @override
-  String get deleteFolderQuestion => 'フォルダを削除しますか？';
 
   @override
   String get searchClips => 'クリップを検索...';
@@ -2378,9 +1722,6 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
 
   @override
   String get restoreClipLater => 'このクリップは後で復元できます。';
-
-  @override
-  String get upcomingEvents => '今後のイベント';
 
   @override
   String get dataDistribution => 'データ分布';
@@ -2421,56 +1762,6 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
   String selectedCount(int count) {
     return '$count個選択済み';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return 'スケッチ $notes個 ・ フォルダ $folders個';
-  }
-
-  @override
-  String get sortItems => '項目を並べ替え';
-
-  @override
-  String get sortNameAZ => '名前 (A-Z)';
-
-  @override
-  String get sortNameZA => '名前 (Z-A)';
-
-  @override
-  String get createFolder => 'フォルダを作成';
-
-  @override
-  String get folderNameHint => 'フォルダ名...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return '$count個のスケッチを削除しますか？この操作は取り消せません。';
-  }
-
-  @override
-  String get noSketchesFound => 'スケッチが見つかりません';
-
-  @override
-  String get noSketchesFoundSub => '検索条件を調整するか、新しいスケッチを作成してください。';
-
-  @override
-  String searchInFolder(String folder) {
-    return '$folder 内を検索...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return 'スケッチ $count個';
-  }
-
-  @override
-  String get sortSketches => 'スケッチを並べ替え';
-
-  @override
-  String get calendarScreenTitle => 'カレンダー';
-
-  @override
-  String get dailyActivity => '今日のアクティビティ';
 
   @override
   String get deleteItemQuestion => '項目を削除しますか？';
@@ -2572,27 +1863,6 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
   String get general => '全般';
 
   @override
-  String get saveTransactionQuestion => 'この取引を保存しますか？';
-
-  @override
-  String get fillTitleAmount => 'タイトルと金額を入力してください';
-
-  @override
-  String get invalidAmount => '金額の形式が無効です';
-
-  @override
-  String get moveTransactionToBinTitle => '取引をゴミ箱に移動しますか？';
-
-  @override
-  String get restoreTransactionLater => 'この取引は後で設定から復元できます。';
-
-  @override
-  String get newTransaction => '新しい取引';
-
-  @override
-  String get whatIsThisFor => '何のための取引ですか？';
-
-  @override
   String get description => '説明';
 
   @override
@@ -2608,70 +1878,10 @@ class AppLocalizationsJaJp extends AppLocalizationsJa {
   String get yearly => '毎年';
 
   @override
-  String get totalIncome => '総収入';
-
-  @override
-  String get totalExpense => '総支出';
-
-  @override
   String get analysis => '分析';
 
   @override
   String get transactions => '取引';
-
-  @override
-  String get noExpensesFound => 'この期間の支出は見つかりません。';
-
-  @override
-  String get netBalance => '純残高';
-
-  @override
-  String get topCategories => '主なカテゴリー';
-
-  @override
-  String get spendingTrend => '支出トレンド';
-
-  @override
-  String get insights => 'インサイト';
-
-  @override
-  String get noExpensesRecorded => '支出は記録されていません';
-
-  @override
-  String get trackSpendingHabits => '支出の習慣を簡単に追跡しましょう。';
-
-  @override
-  String get addExpense => '支出を追加';
-
-  @override
-  String get noDataForPeriod => 'この期間のデータはありません';
-
-  @override
-  String get budget => '予算';
-
-  @override
-  String get spent => '使用済み';
-
-  @override
-  String get limit => '制限';
-
-  @override
-  String get overBudget => '予算超過！';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '残り $percent%';
-  }
-
-  @override
-  String get savingsRate => '貯蓄率';
-
-  @override
-  String get healthScore => '健康スコア';
-
-  @override
-  String get healthScoreExplanation =>
-      'このスコアは貯蓄率に基づいています。\n\n・50%以上の貯蓄 = 優秀 (100)\n・0%の貯蓄 = 平均 (50)\n・支出 > 収入 = 不足 (<50)';
 
   @override
   String get ok => 'OK';

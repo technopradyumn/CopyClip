@@ -24,19 +24,10 @@ class AppLocalizationsEl extends AppLocalizations {
   String get todos => 'To-Dos';
 
   @override
-  String get expenses => 'Εξοδα';
-
-  @override
   String get journal => 'Εφημερίδα';
 
   @override
-  String get calendar => 'Ημερολόγιο';
-
-  @override
   String get clipboard => 'Πρόχειρο';
-
-  @override
-  String get canvas => 'Καμβάς';
 
   @override
   String get save => 'Εκτός';
@@ -69,24 +60,6 @@ class AppLocalizationsEl extends AppLocalizations {
   String get discard => 'Απορρίπτω';
 
   @override
-  String get createPost => 'Δημιουργία ανάρτησης';
-
-  @override
-  String get post => 'Θέση';
-
-  @override
-  String get postingTo => 'Δημοσίευση σε';
-
-  @override
-  String get whatsOnYourMind => 'Τι έχεις στο μυαλό σου;';
-
-  @override
-  String get pickImages => 'Επιλέξτε Εικόνες';
-
-  @override
-  String get pickVideo => 'Επιλέξτε βίντεο';
-
-  @override
   String get camera => 'Κάμερα';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsEl extends AppLocalizations {
   String error(Object error) {
     return 'Σφάλμα: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Η παραγγελία είναι διαθέσιμη μόνο σε \"Όλες οι αναρτήσεις\"';
-
-  @override
-  String get deletePost => 'Διαγραφή ανάρτησης';
-
-  @override
-  String get postDeleted => 'Η ανάρτηση διαγράφηκε';
 
   @override
   String get premiumFeatures => 'Premium Χαρακτηριστικά';
@@ -182,35 +145,6 @@ class AppLocalizationsEl extends AppLocalizations {
       'Ο Κάδος Ανακύκλωσης εκκαθαρίστηκε με επιτυχία';
 
   @override
-  String get allPostsDeleted => 'Όλες οι αναρτήσεις διαγράφηκαν';
-
-  @override
-  String get newPost => 'Νέα ανάρτηση';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Το κείμενο αντιγράφηκε στο πρόχειρο (πολιτική Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Η κοινή χρήση TikTok απαιτεί βίντεο/εικόνα';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Κοινοποίηση σφάλματος: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Κοινοποίηση στο $platform Story';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Κοινή χρήση στη ροή $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Ξεκλείδωμα μόνιμα';
 
   @override
@@ -226,13 +160,6 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Επιλέξτε Ημερομηνία & Ώρα';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την ανάρτηση;';
-
-  @override
-  String get socialPosts => 'Κοινωνικές αναρτήσεις';
 
   @override
   String get watchAdToEarnCoins =>
@@ -423,25 +350,11 @@ class AppLocalizationsEl extends AppLocalizations {
       'Μείνετε στην κορυφή του παιχνιδιού σας. Δημιουργήστε λίστες υποχρεώσεων, ορίστε προτεραιότητες και συντρίψτε τους στόχους σας ένα σημάδι επιλογής κάθε φορά.';
 
   @override
-  String get onboardingExpensesTitle => 'Παρακολούθηση Εξόδων';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Πάρτε τον έλεγχο των οικονομικών σας. Παρακολουθήστε εύκολα τα έσοδα και τα έξοδα για να κατανοήσετε τις συνήθειες δαπανών σας.';
-
-  @override
   String get onboardingJournalTitle => 'Προσωπική Εφημερίδα';
 
   @override
   String get onboardingJournalDesc =>
       'Σκεφτείτε τη μέρα σας. Ένας ιδιωτικός χώρος για να καταγράψετε τις αναμνήσεις, τα συναισθήματα και τις καθημερινές σας εμπειρίες.';
-
-  @override
-  String get onboardingCalendarTitle => 'Ημερολόγιο & Εκδηλώσεις';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Μην χάσετε ποτέ μια στιγμή. Οργανώστε το πρόγραμμά σας και παρακολουθήστε σημαντικά επερχόμενα γεγονότα.';
 
   @override
   String get onboardingClipboardTitle => 'Διαχείριση προχείρου';
@@ -451,13 +364,6 @@ class AppLocalizationsEl extends AppLocalizations {
       'Αντιγράψτε μία φορά, επικολλήστε οπουδήποτε. Αποκτήστε πρόσβαση στο ιστορικό του προχείρου σας για να ανακτήσετε αποσπάσματα που αντιγράψατε νωρίτερα.';
 
   @override
-  String get onboardingCanvasTitle => 'Δημιουργικός καμβάς';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Απελευθερώστε τη δημιουργικότητά σας. Σχεδιάστε, σκιαγραφήστε και οπτικοποιήστε τις ιδέες σας σε έναν ψηφιακό καμβά ελεύθερης μορφής.';
-
-  @override
   String get featuresNotesDesc =>
       'Δημιουργήστε και διαχειριστείτε τις σημειώσεις σας';
 
@@ -465,58 +371,16 @@ class AppLocalizationsEl extends AppLocalizations {
   String get featuresTodosDesc => 'Παρακολουθήστε τις εργασίες σας';
 
   @override
-  String get featuresExpensesDesc => 'Παρακολουθήστε τα έξοδά σας';
-
-  @override
   String get featuresJournalDesc => 'Γράψτε τις σκέψεις σας';
 
   @override
-  String get featuresCalendarDesc => 'Οργανώστε το πρόγραμμά σας';
-
-  @override
   String get featuresClipboardDesc => 'Πρόσβαση στο ιστορικό του προχείρου σας';
-
-  @override
-  String get featuresCanvasDesc => 'Ζωγράφισε και σκιαγράφησε ελεύθερα';
-
-  @override
-  String get featuresSocialPost => 'Κοινωνική ανάρτηση';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Δημιουργήστε ελκυστικό περιεχόμενο κοινωνικής δικτύωσης';
 
   @override
   String get chooseYourAura => 'Επιλέξτε την Αύρα σας';
 
   @override
   String get expressYourselfTheme => 'Εκφραστείτε με ένα νέο χρώμα θέματος!';
-
-  @override
-  String get level => 'Επίπεδο';
-
-  @override
-  String get xpToNextLevel => 'XP σε επίπεδο';
-
-  @override
-  String get checkUpcomingEvents => 'Ελέγξτε τις επερχόμενες εκδηλώσεις';
-
-  @override
-  String get startNewSketch => 'Ξεκινήστε ένα νέο σκίτσο';
-
-  @override
-  String get noTransactionsMonth => 'Δεν υπάρχουν συναλλαγές αυτόν τον μήνα';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count συναλλαγή$_temp0 αυτόν τον μήνα';
-  }
 
   @override
   String get autoSaveClipboard => 'Αυτόματη αποθήκευση του Πρόχειρου';
@@ -581,15 +445,6 @@ class AppLocalizationsEl extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'Αποκλειστικοί τρόποι για να δείτε τις αναμνήσεις σας';
-
-  @override
-  String get calendarTools => 'Ημερολόγιο & Εργαλεία';
-
-  @override
-  String get fullCalendar => 'Πλήρες Ημερολόγιο';
-
-  @override
-  String get fullCalendarDesc => 'Ολοκληρωμένο σύστημα διαχείρισης εκδηλώσεων';
 
   @override
   String get clipboardAutoSaveDesc => 'Λήψη ιστορικού προχείρου φόντου';
@@ -679,84 +534,13 @@ class AppLocalizationsEl extends AppLocalizations {
   String get completed => 'Ολοκληρώθηκε το';
 
   @override
-  String get greatJob => 'Μεγάλη δουλειά!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Κερδίσατε $amount XP! Επόμενη εργασία: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Η εργασία ολοκληρώθηκε! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Μετακίνηση όλων των ενεργών εργασιών στον Κάδο Ανακύκλωσης;';
-
-  @override
-  String get deleteAllPosts => 'Διαγραφή όλων των αναρτήσεων';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Είστε βέβαιοι ότι θέλετε να διαγράψετε ΟΛΕΣ τις αναρτήσεις στα κοινωνικά δίκτυα; Αυτό δεν μπορεί να αναιρεθεί.';
-
-  @override
-  String get allPosts => 'Όλες οι αναρτήσεις';
-
-  @override
-  String get favorites => 'Αγαπημένα';
-
-  @override
-  String get drafts => 'Προσχέδια';
-
-  @override
-  String get noFavoritesYet => 'Δεν υπάρχουν ακόμα αγαπημένα';
-
-  @override
-  String get noDraftsYet => 'Δεν υπάρχουν ακόμη προσχέδια';
-
-  @override
-  String get startSocialJourney => 'Ξεκινήστε το κοινωνικό σας ταξίδι!';
-
-  @override
-  String get draft => 'ΠΡΟΣΧΕΔΙΟ';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count συνημμένο$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Προσθέστε κάποιο περιεχόμενο ή πολυμέσα για κοινή χρήση';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Σφάλμα: Το αρχείο δεν βρέθηκε στο $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Ελέγξτε την εφαρμογή Facebook';
-
-  @override
-  String get systemShare => 'Κοινή χρήση συστήματος';
-
-  @override
-  String get socialPost => 'Κοινωνική ανάρτηση';
-
-  @override
-  String get favorite => 'Ευνοούμενος';
-
-  @override
-  String get saveDraft => 'Αποθήκευση σχεδίου';
 
   @override
   String get entryCopied => 'Η καταχώρηση αντιγράφηκε';
@@ -902,33 +686,10 @@ class AppLocalizationsEl extends AppLocalizations {
   String get dueDate => 'Δύο ραντεβού';
 
   @override
-  String get expenseTitle => 'Εξοδα';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Αναζήτηση σε $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Ταξινόμηση & Φιλτράρισμα';
 
   @override
   String get sortBy => 'ΤΑΞΙΝΟΜΗΣΗ ΚΑΤΑ';
-
-  @override
-  String get highestAmount => 'Υψηλότερο Ποσό';
-
-  @override
-  String get lowestAmount => 'Χαμηλότερο ποσό';
-
-  @override
-  String get moreFilters => 'Περισσότερα φίλτρα...';
-
-  @override
-  String get filterExpenses => 'Φιλτράρισμα εξόδων';
-
-  @override
-  String get transactionType => 'Τύπος συναλλαγής';
 
   @override
   String get categories => 'Κατηγορίες';
@@ -937,21 +698,10 @@ class AppLocalizationsEl extends AppLocalizations {
   String get all => 'Ολοι';
 
   @override
-  String get income => 'Εισόδημα';
-
-  @override
-  String get expense => 'Δαπάνη';
-
-  @override
   String get reset => 'Επαναφορά';
 
   @override
   String get apply => 'Εφαρμόζω';
-
-  @override
-  String newExpense(String currency) {
-    return 'Νέο $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -1015,34 +765,10 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Νέο Σκίτσο';
-
-  @override
-  String get searchSketches => 'Αναζήτηση σκίτσων και φακέλων...';
-
-  @override
   String get noResultsFound => 'Δεν βρέθηκαν αποτελέσματα';
 
   @override
   String get noItems => 'Δεν υπάρχουν στοιχεία';
-
-  @override
-  String get noDrawingsYet => 'Δεν υπάρχουν σχέδια ακόμα';
-
-  @override
-  String get canvasIntro => 'Απελευθερώστε τη δημιουργικότητά σας στον καμβά!';
-
-  @override
-  String get newCanvas => 'Νέος καμβάς';
 
   @override
   String get rename => 'Μετονομάζω';
@@ -1058,13 +784,7 @@ class AppLocalizationsEl extends AppLocalizations {
       'Όλα τα σκίτσα σε αυτόν τον φάκελο θα διαγραφούν οριστικά.';
 
   @override
-  String get renameFolder => 'Μετονομασία φακέλου';
-
-  @override
   String get chooseColor => 'Επιλέξτε Χρώμα';
-
-  @override
-  String get deleteFolderQuestion => 'Διαγραφή φακέλου;';
 
   @override
   String get searchClips => 'Αναζήτηση κλιπ...';
@@ -1087,9 +807,6 @@ class AppLocalizationsEl extends AppLocalizations {
   @override
   String get restoreClipLater =>
       'Μπορείτε να επαναφέρετε αυτό το κλιπ αργότερα.';
-
-  @override
-  String get upcomingEvents => 'Προσεχείς Εκδηλώσεις';
 
   @override
   String get dataDistribution => 'ΔΙΑΝΟΜΗ ΔΕΔΟΜΕΝΩΝ';
@@ -1130,57 +847,6 @@ class AppLocalizationsEl extends AppLocalizations {
   String selectedCount(int count) {
     return '$count Επιλέχτηκε';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes σκίτσα • $folders φάκελοι';
-  }
-
-  @override
-  String get sortItems => 'Ταξινόμηση αντικειμένων';
-
-  @override
-  String get sortNameAZ => 'Όνομα (A-Z)';
-
-  @override
-  String get sortNameZA => 'Όνομα (Z-A)';
-
-  @override
-  String get createFolder => 'Δημιουργία φακέλου';
-
-  @override
-  String get folderNameHint => 'Όνομα φακέλου...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Διαγραφή $count σκίτσων; Αυτό δεν μπορεί να αναιρεθεί.';
-  }
-
-  @override
-  String get noSketchesFound => 'Δεν βρέθηκαν σκίτσα';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Δοκιμάστε να προσαρμόσετε την αναζήτησή σας ή να δημιουργήσετε ένα νέο σκίτσο.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Αναζήτηση στο $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count σκίτσα';
-  }
-
-  @override
-  String get sortSketches => 'Ταξινόμηση σκίτσων';
-
-  @override
-  String get calendarScreenTitle => 'Ημερολόγιο';
-
-  @override
-  String get dailyActivity => 'Καθημερινή Δραστηριότητα';
 
   @override
   String get deleteItemQuestion => 'Διαγραφή στοιχείου;';
@@ -1285,30 +951,6 @@ class AppLocalizationsEl extends AppLocalizations {
   String get general => 'Γενικός';
 
   @override
-  String get saveTransactionQuestion =>
-      'Θέλετε να αποθηκεύσετε αυτήν τη συναλλαγή;';
-
-  @override
-  String get fillTitleAmount => 'Συμπληρώστε τον τίτλο και το ποσό';
-
-  @override
-  String get invalidAmount => 'Μη έγκυρη μορφή ποσού';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Μετακίνηση συναλλαγής στον Κάδο Ανακύκλωσης;';
-
-  @override
-  String get restoreTransactionLater =>
-      'Μπορείτε να επαναφέρετε αυτήν τη συναλλαγή αργότερα από τις ρυθμίσεις.';
-
-  @override
-  String get newTransaction => 'Νέα συναλλαγή';
-
-  @override
-  String get whatIsThisFor => 'Σε τι χρησιμεύει αυτό;';
-
-  @override
   String get description => 'Περιγραφή';
 
   @override
@@ -1324,71 +966,10 @@ class AppLocalizationsEl extends AppLocalizations {
   String get yearly => 'Ετήσια';
 
   @override
-  String get totalIncome => 'Συνολικό εισόδημα';
-
-  @override
-  String get totalExpense => 'Συνολικές δαπάνες';
-
-  @override
   String get analysis => 'Ανάλυση';
 
   @override
   String get transactions => 'Συναλλαγές';
-
-  @override
-  String get noExpensesFound => 'Δεν βρέθηκαν έξοδα για αυτήν την περίοδο.';
-
-  @override
-  String get netBalance => 'Καθαρό Υπόλοιπο';
-
-  @override
-  String get topCategories => 'Κορυφαίες Κατηγορίες';
-
-  @override
-  String get spendingTrend => 'Τάση δαπανών';
-
-  @override
-  String get insights => 'Insights';
-
-  @override
-  String get noExpensesRecorded => 'Δεν καταγράφηκαν έξοδα';
-
-  @override
-  String get trackSpendingHabits =>
-      'Παρακολουθήστε εύκολα τις συνήθειες δαπανών σας.';
-
-  @override
-  String get addExpense => 'Προσθήκη εξόδων';
-
-  @override
-  String get noDataForPeriod => 'Δεν υπάρχουν δεδομένα για αυτήν την περίοδο';
-
-  @override
-  String get budget => 'Προϋπολογισμός';
-
-  @override
-  String get spent => 'Ξοδεύτηκε';
-
-  @override
-  String get limit => 'Οριο';
-
-  @override
-  String get overBudget => 'Πάνω από τον προϋπολογισμό!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return 'Απομένει $percent%.';
-  }
-
-  @override
-  String get savingsRate => 'Ποσοστό Αποταμίευσης';
-
-  @override
-  String get healthScore => 'Βαθμολογία υγείας';
-
-  @override
-  String get healthScoreExplanation =>
-      'Αυτή η βαθμολογία βασίζεται στο ποσοστό αποταμίευσης.\n\n• > 50% αποθηκευμένο = Εξαιρετικό (100)\n• 0% αποθηκευμένο = Μέσος όρος (50)\n• Δαπάνες > Εισόδημα = Κακή (<50)';
 
   @override
   String get ok => 'ΕΝΤΑΞΕΙ';
@@ -1417,19 +998,10 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   String get todos => 'To-Dos';
 
   @override
-  String get expenses => 'Εξοδα';
-
-  @override
   String get journal => 'Εφημερίδα';
 
   @override
-  String get calendar => 'Ημερολόγιο';
-
-  @override
   String get clipboard => 'Πρόχειρο';
-
-  @override
-  String get canvas => 'Καμβάς';
 
   @override
   String get save => 'Εκτός';
@@ -1462,24 +1034,6 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   String get discard => 'Απορρίπτω';
 
   @override
-  String get createPost => 'Δημιουργία ανάρτησης';
-
-  @override
-  String get post => 'Θέση';
-
-  @override
-  String get postingTo => 'Δημοσίευση σε';
-
-  @override
-  String get whatsOnYourMind => 'Τι έχεις στο μυαλό σου;';
-
-  @override
-  String get pickImages => 'Επιλέξτε Εικόνες';
-
-  @override
-  String get pickVideo => 'Επιλέξτε βίντεο';
-
-  @override
   String get camera => 'Κάμερα';
 
   @override
@@ -1504,16 +1058,6 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   String error(Object error) {
     return 'Σφάλμα: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Η παραγγελία είναι διαθέσιμη μόνο σε \"Όλες οι αναρτήσεις\"';
-
-  @override
-  String get deletePost => 'Διαγραφή ανάρτησης';
-
-  @override
-  String get postDeleted => 'Η ανάρτηση διαγράφηκε';
 
   @override
   String get premiumFeatures => 'Premium Χαρακτηριστικά';
@@ -1575,35 +1119,6 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
       'Ο Κάδος Ανακύκλωσης εκκαθαρίστηκε με επιτυχία';
 
   @override
-  String get allPostsDeleted => 'Όλες οι αναρτήσεις διαγράφηκαν';
-
-  @override
-  String get newPost => 'Νέα ανάρτηση';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Το κείμενο αντιγράφηκε στο πρόχειρο (πολιτική Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Η κοινή χρήση TikTok απαιτεί βίντεο/εικόνα';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Κοινοποίηση σφάλματος: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Κοινοποίηση στο $platform Story';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Κοινή χρήση στη ροή $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Ξεκλείδωμα μόνιμα';
 
   @override
@@ -1619,13 +1134,6 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
 
   @override
   String get selectDateTime => 'Επιλέξτε Ημερομηνία & Ώρα';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την ανάρτηση;';
-
-  @override
-  String get socialPosts => 'Κοινωνικές αναρτήσεις';
 
   @override
   String get watchAdToEarnCoins =>
@@ -1816,25 +1324,11 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
       'Μείνετε στην κορυφή του παιχνιδιού σας. Δημιουργήστε λίστες υποχρεώσεων, ορίστε προτεραιότητες και συντρίψτε τους στόχους σας ένα σημάδι επιλογής κάθε φορά.';
 
   @override
-  String get onboardingExpensesTitle => 'Παρακολούθηση Εξόδων';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Πάρτε τον έλεγχο των οικονομικών σας. Παρακολουθήστε εύκολα τα έσοδα και τα έξοδα για να κατανοήσετε τις συνήθειες δαπανών σας.';
-
-  @override
   String get onboardingJournalTitle => 'Προσωπική Εφημερίδα';
 
   @override
   String get onboardingJournalDesc =>
       'Σκεφτείτε τη μέρα σας. Ένας ιδιωτικός χώρος για να καταγράψετε τις αναμνήσεις, τα συναισθήματα και τις καθημερινές σας εμπειρίες.';
-
-  @override
-  String get onboardingCalendarTitle => 'Ημερολόγιο & Εκδηλώσεις';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Μην χάσετε ποτέ μια στιγμή. Οργανώστε το πρόγραμμά σας και παρακολουθήστε σημαντικά επερχόμενα γεγονότα.';
 
   @override
   String get onboardingClipboardTitle => 'Διαχείριση προχείρου';
@@ -1844,13 +1338,6 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
       'Αντιγράψτε μία φορά, επικολλήστε οπουδήποτε. Αποκτήστε πρόσβαση στο ιστορικό του προχείρου σας για να ανακτήσετε αποσπάσματα που αντιγράψατε νωρίτερα.';
 
   @override
-  String get onboardingCanvasTitle => 'Δημιουργικός καμβάς';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Απελευθερώστε τη δημιουργικότητά σας. Σχεδιάστε, σκιαγραφήστε και οπτικοποιήστε τις ιδέες σας σε έναν ψηφιακό καμβά ελεύθερης μορφής.';
-
-  @override
   String get featuresNotesDesc =>
       'Δημιουργήστε και διαχειριστείτε τις σημειώσεις σας';
 
@@ -1858,58 +1345,16 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   String get featuresTodosDesc => 'Παρακολουθήστε τις εργασίες σας';
 
   @override
-  String get featuresExpensesDesc => 'Παρακολουθήστε τα έξοδά σας';
-
-  @override
   String get featuresJournalDesc => 'Γράψτε τις σκέψεις σας';
 
   @override
-  String get featuresCalendarDesc => 'Οργανώστε το πρόγραμμά σας';
-
-  @override
   String get featuresClipboardDesc => 'Πρόσβαση στο ιστορικό του προχείρου σας';
-
-  @override
-  String get featuresCanvasDesc => 'Ζωγράφισε και σκιαγράφησε ελεύθερα';
-
-  @override
-  String get featuresSocialPost => 'Κοινωνική ανάρτηση';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Δημιουργήστε ελκυστικό περιεχόμενο κοινωνικής δικτύωσης';
 
   @override
   String get chooseYourAura => 'Επιλέξτε την Αύρα σας';
 
   @override
   String get expressYourselfTheme => 'Εκφραστείτε με ένα νέο χρώμα θέματος!';
-
-  @override
-  String get level => 'Επίπεδο';
-
-  @override
-  String get xpToNextLevel => 'XP σε επίπεδο';
-
-  @override
-  String get checkUpcomingEvents => 'Ελέγξτε τις επερχόμενες εκδηλώσεις';
-
-  @override
-  String get startNewSketch => 'Ξεκινήστε ένα νέο σκίτσο';
-
-  @override
-  String get noTransactionsMonth => 'Δεν υπάρχουν συναλλαγές αυτόν τον μήνα';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count συναλλαγή$_temp0 αυτόν τον μήνα';
-  }
 
   @override
   String get autoSaveClipboard => 'Αυτόματη αποθήκευση του Πρόχειρου';
@@ -1974,15 +1419,6 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   @override
   String get premiumLayoutsDesc =>
       'Αποκλειστικοί τρόποι για να δείτε τις αναμνήσεις σας';
-
-  @override
-  String get calendarTools => 'Ημερολόγιο & Εργαλεία';
-
-  @override
-  String get fullCalendar => 'Πλήρες Ημερολόγιο';
-
-  @override
-  String get fullCalendarDesc => 'Ολοκληρωμένο σύστημα διαχείρισης εκδηλώσεων';
 
   @override
   String get clipboardAutoSaveDesc => 'Λήψη ιστορικού προχείρου φόντου';
@@ -2072,84 +1508,13 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   String get completed => 'Ολοκληρώθηκε το';
 
   @override
-  String get greatJob => 'Μεγάλη δουλειά!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Κερδίσατε $amount XP! Επόμενη εργασία: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Η εργασία ολοκληρώθηκε! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Μετακίνηση όλων των ενεργών εργασιών στον Κάδο Ανακύκλωσης;';
-
-  @override
-  String get deleteAllPosts => 'Διαγραφή όλων των αναρτήσεων';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Είστε βέβαιοι ότι θέλετε να διαγράψετε ΟΛΕΣ τις αναρτήσεις στα κοινωνικά δίκτυα; Αυτό δεν μπορεί να αναιρεθεί.';
-
-  @override
-  String get allPosts => 'Όλες οι αναρτήσεις';
-
-  @override
-  String get favorites => 'Αγαπημένα';
-
-  @override
-  String get drafts => 'Προσχέδια';
-
-  @override
-  String get noFavoritesYet => 'Δεν υπάρχουν ακόμα αγαπημένα';
-
-  @override
-  String get noDraftsYet => 'Δεν υπάρχουν ακόμη προσχέδια';
-
-  @override
-  String get startSocialJourney => 'Ξεκινήστε το κοινωνικό σας ταξίδι!';
-
-  @override
-  String get draft => 'ΠΡΟΣΧΕΔΙΟ';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count συνημμένο$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Προσθέστε κάποιο περιεχόμενο ή πολυμέσα για κοινή χρήση';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Σφάλμα: Το αρχείο δεν βρέθηκε στο $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Ελέγξτε την εφαρμογή Facebook';
-
-  @override
-  String get systemShare => 'Κοινή χρήση συστήματος';
-
-  @override
-  String get socialPost => 'Κοινωνική ανάρτηση';
-
-  @override
-  String get favorite => 'Ευνοούμενος';
-
-  @override
-  String get saveDraft => 'Αποθήκευση σχεδίου';
 
   @override
   String get entryCopied => 'Η καταχώρηση αντιγράφηκε';
@@ -2295,33 +1660,10 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   String get dueDate => 'Δύο ραντεβού';
 
   @override
-  String get expenseTitle => 'Εξοδα';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Αναζήτηση σε $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Ταξινόμηση & Φιλτράρισμα';
 
   @override
   String get sortBy => 'ΤΑΞΙΝΟΜΗΣΗ ΚΑΤΑ';
-
-  @override
-  String get highestAmount => 'Υψηλότερο Ποσό';
-
-  @override
-  String get lowestAmount => 'Χαμηλότερο ποσό';
-
-  @override
-  String get moreFilters => 'Περισσότερα φίλτρα...';
-
-  @override
-  String get filterExpenses => 'Φιλτράρισμα εξόδων';
-
-  @override
-  String get transactionType => 'Τύπος συναλλαγής';
 
   @override
   String get categories => 'Κατηγορίες';
@@ -2330,21 +1672,10 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   String get all => 'Ολοι';
 
   @override
-  String get income => 'Εισόδημα';
-
-  @override
-  String get expense => 'Δαπάνη';
-
-  @override
   String get reset => 'Επαναφορά';
 
   @override
   String get apply => 'Εφαρμόζω';
-
-  @override
-  String newExpense(String currency) {
-    return 'Νέο $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2408,34 +1739,10 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Νέο Σκίτσο';
-
-  @override
-  String get searchSketches => 'Αναζήτηση σκίτσων και φακέλων...';
-
-  @override
   String get noResultsFound => 'Δεν βρέθηκαν αποτελέσματα';
 
   @override
   String get noItems => 'Δεν υπάρχουν στοιχεία';
-
-  @override
-  String get noDrawingsYet => 'Δεν υπάρχουν σχέδια ακόμα';
-
-  @override
-  String get canvasIntro => 'Απελευθερώστε τη δημιουργικότητά σας στον καμβά!';
-
-  @override
-  String get newCanvas => 'Νέος καμβάς';
 
   @override
   String get rename => 'Μετονομάζω';
@@ -2451,13 +1758,7 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
       'Όλα τα σκίτσα σε αυτόν τον φάκελο θα διαγραφούν οριστικά.';
 
   @override
-  String get renameFolder => 'Μετονομασία φακέλου';
-
-  @override
   String get chooseColor => 'Επιλέξτε Χρώμα';
-
-  @override
-  String get deleteFolderQuestion => 'Διαγραφή φακέλου;';
 
   @override
   String get searchClips => 'Αναζήτηση κλιπ...';
@@ -2480,9 +1781,6 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   @override
   String get restoreClipLater =>
       'Μπορείτε να επαναφέρετε αυτό το κλιπ αργότερα.';
-
-  @override
-  String get upcomingEvents => 'Προσεχείς Εκδηλώσεις';
 
   @override
   String get dataDistribution => 'ΔΙΑΝΟΜΗ ΔΕΔΟΜΕΝΩΝ';
@@ -2523,57 +1821,6 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   String selectedCount(int count) {
     return '$count Επιλέχτηκε';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes σκίτσα • $folders φάκελοι';
-  }
-
-  @override
-  String get sortItems => 'Ταξινόμηση αντικειμένων';
-
-  @override
-  String get sortNameAZ => 'Όνομα (A-Z)';
-
-  @override
-  String get sortNameZA => 'Όνομα (Z-A)';
-
-  @override
-  String get createFolder => 'Δημιουργία φακέλου';
-
-  @override
-  String get folderNameHint => 'Όνομα φακέλου...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Διαγραφή $count σκίτσων; Αυτό δεν μπορεί να αναιρεθεί.';
-  }
-
-  @override
-  String get noSketchesFound => 'Δεν βρέθηκαν σκίτσα';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Δοκιμάστε να προσαρμόσετε την αναζήτησή σας ή να δημιουργήσετε ένα νέο σκίτσο.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Αναζήτηση στο $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count σκίτσα';
-  }
-
-  @override
-  String get sortSketches => 'Ταξινόμηση σκίτσων';
-
-  @override
-  String get calendarScreenTitle => 'Ημερολόγιο';
-
-  @override
-  String get dailyActivity => 'Καθημερινή Δραστηριότητα';
 
   @override
   String get deleteItemQuestion => 'Διαγραφή στοιχείου;';
@@ -2678,30 +1925,6 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   String get general => 'Γενικός';
 
   @override
-  String get saveTransactionQuestion =>
-      'Θέλετε να αποθηκεύσετε αυτήν τη συναλλαγή;';
-
-  @override
-  String get fillTitleAmount => 'Συμπληρώστε τον τίτλο και το ποσό';
-
-  @override
-  String get invalidAmount => 'Μη έγκυρη μορφή ποσού';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Μετακίνηση συναλλαγής στον Κάδο Ανακύκλωσης;';
-
-  @override
-  String get restoreTransactionLater =>
-      'Μπορείτε να επαναφέρετε αυτήν τη συναλλαγή αργότερα από τις ρυθμίσεις.';
-
-  @override
-  String get newTransaction => 'Νέα συναλλαγή';
-
-  @override
-  String get whatIsThisFor => 'Σε τι χρησιμεύει αυτό;';
-
-  @override
   String get description => 'Περιγραφή';
 
   @override
@@ -2717,71 +1940,10 @@ class AppLocalizationsElGr extends AppLocalizationsEl {
   String get yearly => 'Ετήσια';
 
   @override
-  String get totalIncome => 'Συνολικό εισόδημα';
-
-  @override
-  String get totalExpense => 'Συνολικές δαπάνες';
-
-  @override
   String get analysis => 'Ανάλυση';
 
   @override
   String get transactions => 'Συναλλαγές';
-
-  @override
-  String get noExpensesFound => 'Δεν βρέθηκαν έξοδα για αυτήν την περίοδο.';
-
-  @override
-  String get netBalance => 'Καθαρό Υπόλοιπο';
-
-  @override
-  String get topCategories => 'Κορυφαίες Κατηγορίες';
-
-  @override
-  String get spendingTrend => 'Τάση δαπανών';
-
-  @override
-  String get insights => 'Insights';
-
-  @override
-  String get noExpensesRecorded => 'Δεν καταγράφηκαν έξοδα';
-
-  @override
-  String get trackSpendingHabits =>
-      'Παρακολουθήστε εύκολα τις συνήθειες δαπανών σας.';
-
-  @override
-  String get addExpense => 'Προσθήκη εξόδων';
-
-  @override
-  String get noDataForPeriod => 'Δεν υπάρχουν δεδομένα για αυτήν την περίοδο';
-
-  @override
-  String get budget => 'Προϋπολογισμός';
-
-  @override
-  String get spent => 'Ξοδεύτηκε';
-
-  @override
-  String get limit => 'Οριο';
-
-  @override
-  String get overBudget => 'Πάνω από τον προϋπολογισμό!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return 'Απομένει $percent%.';
-  }
-
-  @override
-  String get savingsRate => 'Ποσοστό Αποταμίευσης';
-
-  @override
-  String get healthScore => 'Βαθμολογία υγείας';
-
-  @override
-  String get healthScoreExplanation =>
-      'Αυτή η βαθμολογία βασίζεται στο ποσοστό αποταμίευσης.\n\n• > 50% αποθηκευμένο = Εξαιρετικό (100)\n• 0% αποθηκευμένο = Μέσος όρος (50)\n• Δαπάνες > Εισόδημα = Κακή (<50)';
 
   @override
   String get ok => 'ΕΝΤΑΞΕΙ';

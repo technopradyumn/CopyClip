@@ -56,16 +56,6 @@ class NotificationEngine {
       channelId: 'journal',
     );
 
-    // 4. Lunch Break / Expenses (12:30 PM)
-    await _scheduleDaily(
-      id: 1004,
-      title: "Lunch Break & Budget 🍽️",
-      body: "Enjoy your meal! Don't forget to log your lunch expense.",
-      hour: 12,
-      minute: 30,
-      channelId: 'expenses',
-    );
-
     // 5. Afternoon Todos (1:30 PM)
     await _scheduleDaily(
       id: 1005,
@@ -83,16 +73,6 @@ class NotificationEngine {
       hour: 18,
       minute: 0,
       channelId: 'clipboard',
-    );
-
-    // 7. Expense Update (7:00 PM)
-    await _scheduleDaily(
-      id: 1007,
-      title: "Expense Tracker 💰",
-      body: "Update your tracker with today's spending.",
-      hour: 19,
-      minute: 0,
-      channelId: 'expenses',
     );
 
     // 8. Tomorrow Planning (8:00 PM)
@@ -114,15 +94,6 @@ class NotificationEngine {
       channelId: 'journal',
     );
 
-    // 10. Goodnight (10:00 PM)
-    await _scheduleDaily(
-      id: 1010,
-      title: "Goodnight! 😴",
-      body: "Rest well. See your calendar preview for tomorrow.",
-      hour: 22,
-      minute: 0,
-      channelId: 'calendar',
-    );
   }
 
   Future<void> _scheduleDaily({

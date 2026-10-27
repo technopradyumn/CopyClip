@@ -24,19 +24,10 @@ class AppLocalizationsDa extends AppLocalizations {
   String get todos => 'To-Dos';
 
   @override
-  String get expenses => 'Udgifter';
-
-  @override
   String get journal => 'Tidsskrift';
 
   @override
-  String get calendar => 'Kalender';
-
-  @override
   String get clipboard => 'Udklipsholder';
-
-  @override
-  String get canvas => 'Lærred';
 
   @override
   String get save => 'Spare';
@@ -69,24 +60,6 @@ class AppLocalizationsDa extends AppLocalizations {
   String get discard => 'Kassér';
 
   @override
-  String get createPost => 'Opret indlæg';
-
-  @override
-  String get post => 'Stolpe';
-
-  @override
-  String get postingTo => 'Sender til';
-
-  @override
-  String get whatsOnYourMind => 'Hvad tænker du på?';
-
-  @override
-  String get pickImages => 'Vælg billeder';
-
-  @override
-  String get pickVideo => 'Vælg video';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsDa extends AppLocalizations {
   String error(Object error) {
     return 'Fejl: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Bestilling kun tilgængelig i \'\'Alle indlæg\'\'';
-
-  @override
-  String get deletePost => 'Slet indlæg';
-
-  @override
-  String get postDeleted => 'Indlæg slettet';
 
   @override
   String get premiumFeatures => 'Premium funktioner';
@@ -181,35 +144,6 @@ class AppLocalizationsDa extends AppLocalizations {
   String get recycleBinCleared => 'Papirkurven blev ryddet';
 
   @override
-  String get allPostsDeleted => 'Alle indlæg slettet';
-
-  @override
-  String get newPost => 'Nyt indlæg';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Tekst kopieret til udklipsholder (Facebook-politik)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok-deling kræver en video/billede';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Fejl ved deling: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Del til $platform-historie';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Del til $platform feed';
-  }
-
-  @override
   String get unlockPermanently => 'Lås op permanent';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Vælg dato og tid';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Er du sikker på, at du vil slette dette indlæg?';
-
-  @override
-  String get socialPosts => 'Sociale indlæg';
 
   @override
   String get watchAdToEarnCoins => 'Se annonce for at tjene mønter';
@@ -418,25 +345,11 @@ class AppLocalizationsDa extends AppLocalizations {
       'Hold dig på toppen af ​​dit spil. Opret to-do-lister, sæt prioriteter og knus dine mål et flueben ad gangen.';
 
   @override
-  String get onboardingExpensesTitle => 'Udgiftssporing';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Tag kontrol over din økonomi. Spor indtægter og udgifter nemt for at forstå dine forbrugsvaner.';
-
-  @override
   String get onboardingJournalTitle => 'Personlig Journal';
 
   @override
   String get onboardingJournalDesc =>
       'Reflekter over din dag. Et privat rum til at skrive dine minder, følelser og daglige oplevelser ned.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalender og begivenheder';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Gå aldrig glip af et øjeblik. Organiser din tidsplan og hold styr på vigtige kommende begivenheder.';
 
   @override
   String get onboardingClipboardTitle => 'Udklipsholder';
@@ -446,71 +359,22 @@ class AppLocalizationsDa extends AppLocalizations {
       'Kopiér én gang, indsæt hvor som helst. Få adgang til din udklipsholderhistorik for at hente uddrag, du har kopieret tidligere.';
 
   @override
-  String get onboardingCanvasTitle => 'Kreativt lærred';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Slip din kreativitet løs. Tegn, skitser og visualiser dine ideer på et digitalt lærred i frit format.';
-
-  @override
   String get featuresNotesDesc => 'Opret og administrer dine noter';
 
   @override
   String get featuresTodosDesc => 'Hold styr på dine opgaver';
 
   @override
-  String get featuresExpensesDesc => 'Overvåg dine udgifter';
-
-  @override
   String get featuresJournalDesc => 'Skriv dine tanker ned';
 
   @override
-  String get featuresCalendarDesc => 'Organiser din tidsplan';
-
-  @override
   String get featuresClipboardDesc => 'Få adgang til din udklipsholderhistorik';
-
-  @override
-  String get featuresCanvasDesc => 'Tegn og skitser frit';
-
-  @override
-  String get featuresSocialPost => 'Social post';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Skab engagerende indhold på sociale medier';
 
   @override
   String get chooseYourAura => 'Vælg din aura';
 
   @override
   String get expressYourselfTheme => 'Udtryk dig selv med en ny temafarve!';
-
-  @override
-  String get level => 'Niveau';
-
-  @override
-  String get xpToNextLevel => 'XP til niveau';
-
-  @override
-  String get checkUpcomingEvents => 'Tjek kommende begivenheder';
-
-  @override
-  String get startNewSketch => 'Start en ny skitse';
-
-  @override
-  String get noTransactionsMonth => 'Ingen transaktioner denne måned';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
-  }
 
   @override
   String get autoSaveClipboard => 'Gem automatisk udklipsholder';
@@ -572,15 +436,6 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get premiumLayoutsDesc => 'Eksklusive måder at se dine minder på';
-
-  @override
-  String get calendarTools => 'Kalender og værktøjer';
-
-  @override
-  String get fullCalendar => 'Fuld kalender';
-
-  @override
-  String get fullCalendarDesc => 'Komplet event management system';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -667,84 +522,13 @@ class AppLocalizationsDa extends AppLocalizations {
   String get completed => 'Afsluttet';
 
   @override
-  String get greatJob => 'Godt arbejde!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Du har optjent $amount XP! Næste opgave: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Opgave afsluttet! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Flytte alle aktive opgaver til papirkurven?';
-
-  @override
-  String get deleteAllPosts => 'Slet alle indlæg';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Er du sikker på, at du vil slette ALLE sociale opslag? Dette kan ikke fortrydes.';
-
-  @override
-  String get allPosts => 'Alle indlæg';
-
-  @override
-  String get favorites => 'Favoritter';
-
-  @override
-  String get drafts => 'Udkast';
-
-  @override
-  String get noFavoritesYet => 'Ingen favoritter endnu';
-
-  @override
-  String get noDraftsYet => 'Ingen udkast endnu';
-
-  @override
-  String get startSocialJourney => 'Start din sociale rejse!';
-
-  @override
-  String get draft => 'UDKAST';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Tilføj noget indhold eller medier for at dele';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Fejl: Filen blev ikke fundet på $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Tjek Facebook-appen';
-
-  @override
-  String get systemShare => 'Systemdeling';
-
-  @override
-  String get socialPost => 'Social post';
-
-  @override
-  String get favorite => 'Favorit';
-
-  @override
-  String get saveDraft => 'Gem udkast';
 
   @override
   String get entryCopied => 'Indlæg kopieret';
@@ -889,33 +673,10 @@ class AppLocalizationsDa extends AppLocalizations {
   String get dueDate => 'To datoer';
 
   @override
-  String get expenseTitle => 'Udgifter';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Søg i $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Sorter og filtrer';
 
   @override
   String get sortBy => 'SORTERT EFTER';
-
-  @override
-  String get highestAmount => 'Højeste beløb';
-
-  @override
-  String get lowestAmount => 'Laveste Beløb';
-
-  @override
-  String get moreFilters => 'Flere filtre...';
-
-  @override
-  String get filterExpenses => 'Filtrere udgifter';
-
-  @override
-  String get transactionType => 'Transaktionstype';
 
   @override
   String get categories => 'Kategorier';
@@ -924,21 +685,10 @@ class AppLocalizationsDa extends AppLocalizations {
   String get all => 'Alle';
 
   @override
-  String get income => 'Indkomst';
-
-  @override
-  String get expense => 'Bekostning';
-
-  @override
   String get reset => 'Nulstil';
 
   @override
   String get apply => 'Anvende';
-
-  @override
-  String newExpense(String currency) {
-    return 'Ny $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -1001,34 +751,10 @@ class AppLocalizationsDa extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Ny skitse';
-
-  @override
-  String get searchSketches => 'Søg i skitser og mapper...';
-
-  @override
   String get noResultsFound => 'Ingen resultater fundet';
 
   @override
   String get noItems => 'Ingen varer';
-
-  @override
-  String get noDrawingsYet => 'Ingen tegninger endnu';
-
-  @override
-  String get canvasIntro => 'Slip din kreativitet løs på lærredet!';
-
-  @override
-  String get newCanvas => 'Nyt lærred';
 
   @override
   String get rename => 'Omdøb';
@@ -1044,13 +770,7 @@ class AppLocalizationsDa extends AppLocalizations {
       'Alle skitser i denne mappe vil blive slettet permanent.';
 
   @override
-  String get renameFolder => 'Omdøb mappe';
-
-  @override
   String get chooseColor => 'Vælg Farve';
-
-  @override
-  String get deleteFolderQuestion => 'Slet mappe?';
 
   @override
   String get searchClips => 'Søg efter klip...';
@@ -1072,9 +792,6 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'Du kan gendanne dette klip senere.';
-
-  @override
-  String get upcomingEvents => 'Kommende begivenheder';
 
   @override
   String get dataDistribution => 'DATADISTRIBUTION';
@@ -1115,57 +832,6 @@ class AppLocalizationsDa extends AppLocalizations {
   String selectedCount(int count) {
     return '$count valgt';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes skitser • $folders mapper';
-  }
-
-  @override
-  String get sortItems => 'Sorter genstande';
-
-  @override
-  String get sortNameAZ => 'Navn (A-Z)';
-
-  @override
-  String get sortNameZA => 'Navn (Z-A)';
-
-  @override
-  String get createFolder => 'Opret mappe';
-
-  @override
-  String get folderNameHint => 'Mappenavn...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Vil du slette $count skitser? Dette kan ikke fortrydes.';
-  }
-
-  @override
-  String get noSketchesFound => 'Ingen skitser fundet';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Prøv at justere din søgning eller oprette en ny skitse.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Søg i $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count skitser';
-  }
-
-  @override
-  String get sortSketches => 'Sorter skitser';
-
-  @override
-  String get calendarScreenTitle => 'Kalender';
-
-  @override
-  String get dailyActivity => 'Daglig aktivitet';
 
   @override
   String get deleteItemQuestion => 'Slet element?';
@@ -1268,29 +934,6 @@ class AppLocalizationsDa extends AppLocalizations {
   String get general => 'Generel';
 
   @override
-  String get saveTransactionQuestion => 'Vil du gemme denne transaktion?';
-
-  @override
-  String get fillTitleAmount => 'Udfyld venligst titel og beløb';
-
-  @override
-  String get invalidAmount => 'Ugyldigt beløbsformat';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Flytte transaktionen til papirkurven?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Du kan gendanne denne transaktion senere fra indstillingerne.';
-
-  @override
-  String get newTransaction => 'Ny transaktion';
-
-  @override
-  String get whatIsThisFor => 'Hvad er dette til for?';
-
-  @override
   String get description => 'Beskrivelse';
 
   @override
@@ -1306,70 +949,10 @@ class AppLocalizationsDa extends AppLocalizations {
   String get yearly => 'Årligt';
 
   @override
-  String get totalIncome => 'Samlet indkomst';
-
-  @override
-  String get totalExpense => 'Samlet udgift';
-
-  @override
   String get analysis => 'Analyse';
 
   @override
   String get transactions => 'Transaktioner';
-
-  @override
-  String get noExpensesFound => 'Ingen udgifter fundet for denne periode.';
-
-  @override
-  String get netBalance => 'Nettobalance';
-
-  @override
-  String get topCategories => 'Topkategorier';
-
-  @override
-  String get spendingTrend => 'Udgiftstrend';
-
-  @override
-  String get insights => 'Indsigt';
-
-  @override
-  String get noExpensesRecorded => 'Ingen udgifter registreret';
-
-  @override
-  String get trackSpendingHabits => 'Spor dine forbrugsvaner nemt.';
-
-  @override
-  String get addExpense => 'Tilføj udgift';
-
-  @override
-  String get noDataForPeriod => 'Ingen data for denne periode';
-
-  @override
-  String get budget => 'Budget';
-
-  @override
-  String get spent => 'Brugt';
-
-  @override
-  String get limit => 'Begrænse';
-
-  @override
-  String get overBudget => 'Over budget!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent % tilbage';
-  }
-
-  @override
-  String get savingsRate => 'Besparelsesrate';
-
-  @override
-  String get healthScore => 'Sundhedsscore';
-
-  @override
-  String get healthScoreExplanation =>
-      'Denne score er baseret på din opsparingsrate.\n\n• > 50 % sparet = Fremragende (100)\n• 0 % sparet = Gennemsnit (50)\n• Udgifter > Indkomst = Dårlig (<50)';
 
   @override
   String get ok => 'OK';
@@ -1398,19 +981,10 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   String get todos => 'To-Dos';
 
   @override
-  String get expenses => 'Udgifter';
-
-  @override
   String get journal => 'Tidsskrift';
 
   @override
-  String get calendar => 'Kalender';
-
-  @override
   String get clipboard => 'Udklipsholder';
-
-  @override
-  String get canvas => 'Lærred';
 
   @override
   String get save => 'Spare';
@@ -1443,24 +1017,6 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   String get discard => 'Kassér';
 
   @override
-  String get createPost => 'Opret indlæg';
-
-  @override
-  String get post => 'Stolpe';
-
-  @override
-  String get postingTo => 'Sender til';
-
-  @override
-  String get whatsOnYourMind => 'Hvad tænker du på?';
-
-  @override
-  String get pickImages => 'Vælg billeder';
-
-  @override
-  String get pickVideo => 'Vælg video';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -1485,16 +1041,6 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   String error(Object error) {
     return 'Fejl: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Bestilling kun tilgængelig i \'\'Alle indlæg\'\'';
-
-  @override
-  String get deletePost => 'Slet indlæg';
-
-  @override
-  String get postDeleted => 'Indlæg slettet';
 
   @override
   String get premiumFeatures => 'Premium funktioner';
@@ -1555,35 +1101,6 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   String get recycleBinCleared => 'Papirkurven blev ryddet';
 
   @override
-  String get allPostsDeleted => 'Alle indlæg slettet';
-
-  @override
-  String get newPost => 'Nyt indlæg';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Tekst kopieret til udklipsholder (Facebook-politik)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok-deling kræver en video/billede';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Fejl ved deling: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Del til $platform-historie';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Del til $platform feed';
-  }
-
-  @override
   String get unlockPermanently => 'Lås op permanent';
 
   @override
@@ -1599,13 +1116,6 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
 
   @override
   String get selectDateTime => 'Vælg dato og tid';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Er du sikker på, at du vil slette dette indlæg?';
-
-  @override
-  String get socialPosts => 'Sociale indlæg';
 
   @override
   String get watchAdToEarnCoins => 'Se annonce for at tjene mønter';
@@ -1792,25 +1302,11 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
       'Hold dig på toppen af ​​dit spil. Opret to-do-lister, sæt prioriteter og knus dine mål et flueben ad gangen.';
 
   @override
-  String get onboardingExpensesTitle => 'Udgiftssporing';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Tag kontrol over din økonomi. Spor indtægter og udgifter nemt for at forstå dine forbrugsvaner.';
-
-  @override
   String get onboardingJournalTitle => 'Personlig Journal';
 
   @override
   String get onboardingJournalDesc =>
       'Reflekter over din dag. Et privat rum til at skrive dine minder, følelser og daglige oplevelser ned.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalender og begivenheder';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Gå aldrig glip af et øjeblik. Organiser din tidsplan og hold styr på vigtige kommende begivenheder.';
 
   @override
   String get onboardingClipboardTitle => 'Udklipsholder';
@@ -1820,71 +1316,22 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
       'Kopiér én gang, indsæt hvor som helst. Få adgang til din udklipsholderhistorik for at hente uddrag, du har kopieret tidligere.';
 
   @override
-  String get onboardingCanvasTitle => 'Kreativt lærred';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Slip din kreativitet løs. Tegn, skitser og visualiser dine ideer på et digitalt lærred i frit format.';
-
-  @override
   String get featuresNotesDesc => 'Opret og administrer dine noter';
 
   @override
   String get featuresTodosDesc => 'Hold styr på dine opgaver';
 
   @override
-  String get featuresExpensesDesc => 'Overvåg dine udgifter';
-
-  @override
   String get featuresJournalDesc => 'Skriv dine tanker ned';
 
   @override
-  String get featuresCalendarDesc => 'Organiser din tidsplan';
-
-  @override
   String get featuresClipboardDesc => 'Få adgang til din udklipsholderhistorik';
-
-  @override
-  String get featuresCanvasDesc => 'Tegn og skitser frit';
-
-  @override
-  String get featuresSocialPost => 'Social post';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Skab engagerende indhold på sociale medier';
 
   @override
   String get chooseYourAura => 'Vælg din aura';
 
   @override
   String get expressYourselfTheme => 'Udtryk dig selv med en ny temafarve!';
-
-  @override
-  String get level => 'Niveau';
-
-  @override
-  String get xpToNextLevel => 'XP til niveau';
-
-  @override
-  String get checkUpcomingEvents => 'Tjek kommende begivenheder';
-
-  @override
-  String get startNewSketch => 'Start en ny skitse';
-
-  @override
-  String get noTransactionsMonth => 'Ingen transaktioner denne måned';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
-  }
 
   @override
   String get autoSaveClipboard => 'Gem automatisk udklipsholder';
@@ -1946,15 +1393,6 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
 
   @override
   String get premiumLayoutsDesc => 'Eksklusive måder at se dine minder på';
-
-  @override
-  String get calendarTools => 'Kalender og værktøjer';
-
-  @override
-  String get fullCalendar => 'Fuld kalender';
-
-  @override
-  String get fullCalendarDesc => 'Komplet event management system';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -2041,84 +1479,13 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   String get completed => 'Afsluttet';
 
   @override
-  String get greatJob => 'Godt arbejde!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Du har optjent $amount XP! Næste opgave: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Opgave afsluttet! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Flytte alle aktive opgaver til papirkurven?';
-
-  @override
-  String get deleteAllPosts => 'Slet alle indlæg';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Er du sikker på, at du vil slette ALLE sociale opslag? Dette kan ikke fortrydes.';
-
-  @override
-  String get allPosts => 'Alle indlæg';
-
-  @override
-  String get favorites => 'Favoritter';
-
-  @override
-  String get drafts => 'Udkast';
-
-  @override
-  String get noFavoritesYet => 'Ingen favoritter endnu';
-
-  @override
-  String get noDraftsYet => 'Ingen udkast endnu';
-
-  @override
-  String get startSocialJourney => 'Start din sociale rejse!';
-
-  @override
-  String get draft => 'UDKAST';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Tilføj noget indhold eller medier for at dele';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Fejl: Filen blev ikke fundet på $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Tjek Facebook-appen';
-
-  @override
-  String get systemShare => 'Systemdeling';
-
-  @override
-  String get socialPost => 'Social post';
-
-  @override
-  String get favorite => 'Favorit';
-
-  @override
-  String get saveDraft => 'Gem udkast';
 
   @override
   String get entryCopied => 'Indlæg kopieret';
@@ -2263,33 +1630,10 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   String get dueDate => 'To datoer';
 
   @override
-  String get expenseTitle => 'Udgifter';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Søg i $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Sorter og filtrer';
 
   @override
   String get sortBy => 'SORTERT EFTER';
-
-  @override
-  String get highestAmount => 'Højeste beløb';
-
-  @override
-  String get lowestAmount => 'Laveste Beløb';
-
-  @override
-  String get moreFilters => 'Flere filtre...';
-
-  @override
-  String get filterExpenses => 'Filtrere udgifter';
-
-  @override
-  String get transactionType => 'Transaktionstype';
 
   @override
   String get categories => 'Kategorier';
@@ -2298,21 +1642,10 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   String get all => 'Alle';
 
   @override
-  String get income => 'Indkomst';
-
-  @override
-  String get expense => 'Bekostning';
-
-  @override
   String get reset => 'Nulstil';
 
   @override
   String get apply => 'Anvende';
-
-  @override
-  String newExpense(String currency) {
-    return 'Ny $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2375,34 +1708,10 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Ny skitse';
-
-  @override
-  String get searchSketches => 'Søg i skitser og mapper...';
-
-  @override
   String get noResultsFound => 'Ingen resultater fundet';
 
   @override
   String get noItems => 'Ingen varer';
-
-  @override
-  String get noDrawingsYet => 'Ingen tegninger endnu';
-
-  @override
-  String get canvasIntro => 'Slip din kreativitet løs på lærredet!';
-
-  @override
-  String get newCanvas => 'Nyt lærred';
 
   @override
   String get rename => 'Omdøb';
@@ -2418,13 +1727,7 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
       'Alle skitser i denne mappe vil blive slettet permanent.';
 
   @override
-  String get renameFolder => 'Omdøb mappe';
-
-  @override
   String get chooseColor => 'Vælg Farve';
-
-  @override
-  String get deleteFolderQuestion => 'Slet mappe?';
 
   @override
   String get searchClips => 'Søg efter klip...';
@@ -2446,9 +1749,6 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
 
   @override
   String get restoreClipLater => 'Du kan gendanne dette klip senere.';
-
-  @override
-  String get upcomingEvents => 'Kommende begivenheder';
 
   @override
   String get dataDistribution => 'DATADISTRIBUTION';
@@ -2489,57 +1789,6 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   String selectedCount(int count) {
     return '$count valgt';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes skitser • $folders mapper';
-  }
-
-  @override
-  String get sortItems => 'Sorter genstande';
-
-  @override
-  String get sortNameAZ => 'Navn (A-Z)';
-
-  @override
-  String get sortNameZA => 'Navn (Z-A)';
-
-  @override
-  String get createFolder => 'Opret mappe';
-
-  @override
-  String get folderNameHint => 'Mappenavn...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Vil du slette $count skitser? Dette kan ikke fortrydes.';
-  }
-
-  @override
-  String get noSketchesFound => 'Ingen skitser fundet';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Prøv at justere din søgning eller oprette en ny skitse.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Søg i $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count skitser';
-  }
-
-  @override
-  String get sortSketches => 'Sorter skitser';
-
-  @override
-  String get calendarScreenTitle => 'Kalender';
-
-  @override
-  String get dailyActivity => 'Daglig aktivitet';
 
   @override
   String get deleteItemQuestion => 'Slet element?';
@@ -2642,29 +1891,6 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   String get general => 'Generel';
 
   @override
-  String get saveTransactionQuestion => 'Vil du gemme denne transaktion?';
-
-  @override
-  String get fillTitleAmount => 'Udfyld venligst titel og beløb';
-
-  @override
-  String get invalidAmount => 'Ugyldigt beløbsformat';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Flytte transaktionen til papirkurven?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Du kan gendanne denne transaktion senere fra indstillingerne.';
-
-  @override
-  String get newTransaction => 'Ny transaktion';
-
-  @override
-  String get whatIsThisFor => 'Hvad er dette til for?';
-
-  @override
   String get description => 'Beskrivelse';
 
   @override
@@ -2680,70 +1906,10 @@ class AppLocalizationsDaDk extends AppLocalizationsDa {
   String get yearly => 'Årligt';
 
   @override
-  String get totalIncome => 'Samlet indkomst';
-
-  @override
-  String get totalExpense => 'Samlet udgift';
-
-  @override
   String get analysis => 'Analyse';
 
   @override
   String get transactions => 'Transaktioner';
-
-  @override
-  String get noExpensesFound => 'Ingen udgifter fundet for denne periode.';
-
-  @override
-  String get netBalance => 'Nettobalance';
-
-  @override
-  String get topCategories => 'Topkategorier';
-
-  @override
-  String get spendingTrend => 'Udgiftstrend';
-
-  @override
-  String get insights => 'Indsigt';
-
-  @override
-  String get noExpensesRecorded => 'Ingen udgifter registreret';
-
-  @override
-  String get trackSpendingHabits => 'Spor dine forbrugsvaner nemt.';
-
-  @override
-  String get addExpense => 'Tilføj udgift';
-
-  @override
-  String get noDataForPeriod => 'Ingen data for denne periode';
-
-  @override
-  String get budget => 'Budget';
-
-  @override
-  String get spent => 'Brugt';
-
-  @override
-  String get limit => 'Begrænse';
-
-  @override
-  String get overBudget => 'Over budget!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent % tilbage';
-  }
-
-  @override
-  String get savingsRate => 'Besparelsesrate';
-
-  @override
-  String get healthScore => 'Sundhedsscore';
-
-  @override
-  String get healthScoreExplanation =>
-      'Denne score er baseret på din opsparingsrate.\n\n• > 50 % sparet = Fremragende (100)\n• 0 % sparet = Gennemsnit (50)\n• Udgifter > Indkomst = Dårlig (<50)';
 
   @override
   String get ok => 'OK';

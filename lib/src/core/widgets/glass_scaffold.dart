@@ -17,6 +17,8 @@ class GlassScaffold extends StatelessWidget {
   final bool centerTitle;
   final double? titleSpacing;
   final Widget? leading;
+  final bool showDrawer;
+  final Widget? drawer;
 
   const GlassScaffold({
     super.key,
@@ -31,6 +33,8 @@ class GlassScaffold extends StatelessWidget {
     this.centerTitle = true,
     this.titleSpacing,
     this.leading,
+    this.showDrawer = false,
+    this.drawer,
   });
 
   @override
@@ -50,6 +54,7 @@ class GlassScaffold extends StatelessWidget {
         backgroundColor: baseColor,
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         extendBodyBehindAppBar: true,
+        drawer: drawer,
         appBar: title != null
             ? AppBar(
                 backgroundColor: Colors.transparent,
@@ -58,24 +63,32 @@ class GlassScaffold extends StatelessWidget {
                 centerTitle: centerTitle,
                 titleSpacing: titleSpacing,
                 systemOverlayStyle: overlayStyle,
-                leading:
-                    leading ??
-                    (showBackArrow
+                leading: leading ??
+                    (showDrawer
                         ? IconButton(
-                            icon: Icon(
-                              CupertinoIcons.back,
+                            icon: const Icon(
+                              CupertinoIcons.line_horizontal_3,
                               size: 20,
-                              color: contentColor,
                             ),
-                            onPressed: () {
-                              if (context.canPop()) {
-                                context.pop();
-                              } else {
-                                context.go('/');
-                              }
-                            },
+                            color: contentColor,
+                            onPressed: () => Scaffold.of(context).openDrawer(),
                           )
-                        : null),
+                        : (showBackArrow
+                            ? IconButton(
+                                icon: Icon(
+                                  CupertinoIcons.back,
+                                  size: 20,
+                                  color: contentColor,
+                                ),
+                                onPressed: () {
+                                  if (context.canPop()) {
+                                    context.pop();
+                                  } else {
+                                    context.go('/');
+                                  }
+                                },
+                              )
+                            : null)),
                 title: title is Widget
                     ? title as Widget
                     : Text(

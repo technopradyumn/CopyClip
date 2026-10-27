@@ -24,19 +24,10 @@ class AppLocalizationsKa extends AppLocalizations {
   String get todos => 'დავალებები';
 
   @override
-  String get expenses => 'ხარჯები';
-
-  @override
   String get journal => 'ჟურნალი';
 
   @override
-  String get calendar => 'კალენდარი';
-
-  @override
   String get clipboard => 'ბუფერი';
-
-  @override
-  String get canvas => 'ტილო';
 
   @override
   String get save => 'შენახვა';
@@ -69,24 +60,6 @@ class AppLocalizationsKa extends AppLocalizations {
   String get discard => 'უარყოფა';
 
   @override
-  String get createPost => 'პოსტის შექმნა';
-
-  @override
-  String get post => 'გამოქვეყნება';
-
-  @override
-  String get postingTo => 'ქვეყნდება აქ:';
-
-  @override
-  String get whatsOnYourMind => 'რაზე ფიქრობთ?';
-
-  @override
-  String get pickImages => 'სურათების არჩევა';
-
-  @override
-  String get pickVideo => 'ვიდეოს არჩევა';
-
-  @override
   String get camera => 'კამერა';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsKa extends AppLocalizations {
   String error(Object error) {
     return 'შეცდომა: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'დახარისხება ხელმისაწვდომია მხოლოდ \'ყველა პოსტში\'';
-
-  @override
-  String get deletePost => 'პოსტის წაშლა';
-
-  @override
-  String get postDeleted => 'პოსტი წაშლილია';
 
   @override
   String get premiumFeatures => 'პრემიუმ ფუნქციები';
@@ -181,35 +144,6 @@ class AppLocalizationsKa extends AppLocalizations {
   String get recycleBinCleared => 'ნაგვის ყუთი წარმატებით გასუფთავდა';
 
   @override
-  String get allPostsDeleted => 'ყველა პოსტი წაშლილია';
-
-  @override
-  String get newPost => 'ახალი პოსტი';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'ტექსტი კოპირებულია (Facebook-ის პოლიტიკა)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok-ზე გასაზიარებლად საჭიროა ვიდეო ან სურათი';
-
-  @override
-  String errorSharing(Object error) {
-    return 'გაზიარების შეცდომა: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'გაზიარება $platform Story-ში';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'გაზიარება $platform Feed-ში';
-  }
-
-  @override
   String get unlockPermanently => 'სამუდამოდ განბლოკვა';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsKa extends AppLocalizations {
 
   @override
   String get selectDateTime => 'აირჩიეთ თარიღი და დრო';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'დარწმუნებული ხართ, რომ გსურთ ამ პოსტის წაშლა?';
-
-  @override
-  String get socialPosts => 'სოციალური პოსტები';
 
   @override
   String get watchAdToEarnCoins => 'უყურეთ რეკლამას მონეტების მისაღებად';
@@ -419,25 +346,11 @@ class AppLocalizationsKa extends AppLocalizations {
       'იყავით მოვლენების ეპიცენტრში. შექმენით დავალებების სიები, განსაზღვრეთ პრიორიტეტები და მიაღწიეთ მიზნებს.';
 
   @override
-  String get onboardingExpensesTitle => 'ხარჯების კონტროლი';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'აკონტროლეთ თქვენი ფინანსები. მარტივად ადევნეთ თვალი შემოსავლებსა და ხარჯებს.';
-
-  @override
   String get onboardingJournalTitle => 'პირადი ჟურნალი';
 
   @override
   String get onboardingJournalDesc =>
       'გააანალიზეთ თქვენი დღე. პირადი სივრცე თქვენი მოგონებების, გრძნობების და ყოველდღიური გამოცდილების ჩასაწერად.';
-
-  @override
-  String get onboardingCalendarTitle => 'კალენდარი და მოვლენები';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'არასოდეს გამოტოვოთ მომენტი. დააორგანიზეთ თქვენი განრიგი და თვალი ადევნეთ მნიშვნელოვან მოვლენებს.';
 
   @override
   String get onboardingClipboardTitle => 'ბუფერის მენეჯერი';
@@ -447,65 +360,22 @@ class AppLocalizationsKa extends AppLocalizations {
       'დააკოპირეთ ერთხელ, ჩასვით ყველგან. წვდომა ბუფერის ისტორიასთან ადრე კოპირებული ფრაგმენტების ამოსაღებად.';
 
   @override
-  String get onboardingCanvasTitle => 'კრეატიული ტილო';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'გამოავლინეთ თქვენი კრეატიულობა. ხატეთ, ჩაინიშნეთ და მოახდინეთ იდეების ვიზუალიზაცია ციფრულ ტილოზე.';
-
-  @override
   String get featuresNotesDesc => 'შექმენით და მართეთ თქვენი შენიშვნები';
 
   @override
   String get featuresTodosDesc => 'თვალი ადევნეთ თქვენს დავალებებს';
 
   @override
-  String get featuresExpensesDesc => 'აკონტროლეთ თქვენი ხარჯები';
-
-  @override
   String get featuresJournalDesc => 'ჩაწერეთ თქვენი აზრები';
 
   @override
-  String get featuresCalendarDesc => 'დააორგანიზეთ თქვენი განრიგი';
-
-  @override
   String get featuresClipboardDesc => 'წვდომა ბუფერის ისტორიასთან';
-
-  @override
-  String get featuresCanvasDesc => 'ხატეთ და ჩაინიშნეთ თავისუფლად';
-
-  @override
-  String get featuresSocialPost => 'სოციალური პოსტი';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'შექმენით მიმზიდველი კონტენტი სოციალური მედიისთვის';
 
   @override
   String get chooseYourAura => 'აირჩიეთ თქვენი აურა';
 
   @override
   String get expressYourselfTheme => 'გამოხატეთ თქვენი თავი თემის ახალი ფერით!';
-
-  @override
-  String get level => 'დონე';
-
-  @override
-  String get xpToNextLevel => 'XP შემდეგ დონემდე';
-
-  @override
-  String get checkUpcomingEvents => 'შეამოწმეთ მომავალი მოვლენები';
-
-  @override
-  String get startNewSketch => 'დაიწყეთ ახალი ესკიზი';
-
-  @override
-  String get noTransactionsMonth => 'ამ თვეში ტრანზაქციები არ არის';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return '$count ტრანზაქცია ამ თვეში';
-  }
 
   @override
   String get autoSaveClipboard => 'ბუფერის ავტომატური შენახვა';
@@ -570,15 +440,6 @@ class AppLocalizationsKa extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'თქვენი მოგონებების ნახვის ექსკლუზიური გზები';
-
-  @override
-  String get calendarTools => 'კალენდარი და ხელსაწყოები';
-
-  @override
-  String get fullCalendar => 'სრული კალენდარი';
-
-  @override
-  String get fullCalendarDesc => 'მოვლენების მართვის სრული სისტემა';
 
   @override
   String get clipboardAutoSaveDesc => 'ბუფერის ისტორიის ფონური ჩაწერა';
@@ -666,77 +527,13 @@ class AppLocalizationsKa extends AppLocalizations {
   String get completed => 'დასრულებული';
 
   @override
-  String get greatJob => 'კარგი სამუშაოა!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'თქვენ დაიმსახურეთ $amount XP! შემდეგი დავალება: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'დავალება დასრულდა! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'გადავიდეს ყველა აქტიური დავალება ნაგვის ყუთში?';
-
-  @override
-  String get deleteAllPosts => 'ყველა პოსტის წაშლა';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'დარწმუნებული ხართ, რომ გსურთ ყველა სოციალური პოსტის წაშლა? მოქმედების გაუქმება შეუძლებელია.';
-
-  @override
-  String get allPosts => 'ყველა პოსტი';
-
-  @override
-  String get favorites => 'რჩეულები';
-
-  @override
-  String get drafts => 'შავნახატები';
-
-  @override
-  String get noFavoritesYet => 'ჯერ არ არის რჩეულები';
-
-  @override
-  String get noDraftsYet => 'ჯერ არ არის შავნახატები';
-
-  @override
-  String get startSocialJourney => 'დაიწყეთ თქვენი სოციალური მოგზაურობა!';
-
-  @override
-  String get draft => 'შავნახატი';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count მიმაგრებული ფაილი';
-  }
-
-  @override
-  String get pleaseAddContent => 'გთხოვთ, დაამატოთ კონტენტი გასაზიარებლად';
 
   @override
   String fileNotFoundError(Object path) {
     return 'შეცდომა: ფაილი ვერ მოიძებნა აქ: $path';
   }
-
-  @override
-  String get checkFacebookApp => 'შეამოწმეთ Facebook აპლიკაცია';
-
-  @override
-  String get systemShare => 'სისტემური გაზიარება';
-
-  @override
-  String get socialPost => 'სოციალური პოსტი';
-
-  @override
-  String get favorite => 'რჩეული';
-
-  @override
-  String get saveDraft => 'შავნახატის შენახვა';
 
   @override
   String get entryCopied => 'ჩანაწერი კოპირებულია';
@@ -882,33 +679,10 @@ class AppLocalizationsKa extends AppLocalizations {
   String get dueDate => 'ვადის თარიღი';
 
   @override
-  String get expenseTitle => 'ხარჯები';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'ძებნა $currency-ში...';
-  }
-
-  @override
   String get sortAndFilter => 'დახარისხება და ფილტრი';
 
   @override
   String get sortBy => 'დახარისხება:';
-
-  @override
-  String get highestAmount => 'ყველაზე მაღალი თანხა';
-
-  @override
-  String get lowestAmount => 'ყველაზე დაბალი თანხა';
-
-  @override
-  String get moreFilters => 'მეტი ფილტრი...';
-
-  @override
-  String get filterExpenses => 'ხარჯების ფილტრი';
-
-  @override
-  String get transactionType => 'ტრანზაქციის ტიპი';
 
   @override
   String get categories => 'კატეგორიები';
@@ -917,21 +691,10 @@ class AppLocalizationsKa extends AppLocalizations {
   String get all => 'ყველა';
 
   @override
-  String get income => 'შემოსავალი';
-
-  @override
-  String get expense => 'ხარჯი';
-
-  @override
   String get reset => 'გასუფთავება';
 
   @override
   String get apply => 'გამოყენება';
-
-  @override
-  String newExpense(String currency) {
-    return 'ახალი $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -995,34 +758,10 @@ class AppLocalizationsKa extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'ახალი ესკიზი';
-
-  @override
-  String get searchSketches => 'ძებნა ესკიზებსა და საქაღალდეებში...';
-
-  @override
   String get noResultsFound => 'შედეგები ვერ მოიძებნა';
 
   @override
   String get noItems => 'ელემენტები არ არის';
-
-  @override
-  String get noDrawingsYet => 'ნახატები ჯერ არ არის';
-
-  @override
-  String get canvasIntro => 'გამოავლინეთ თქვენი კრეატიულობა ტილოზე!';
-
-  @override
-  String get newCanvas => 'ახალი ტილო';
 
   @override
   String get rename => 'სახელის შეცვლა';
@@ -1038,13 +777,7 @@ class AppLocalizationsKa extends AppLocalizations {
       'ამ საქაღალდეში არსებული ყველა ესკიზი სამუდამოდ წაიშლება.';
 
   @override
-  String get renameFolder => 'საქაღალდის სახელის შეცვლა';
-
-  @override
   String get chooseColor => 'ფერის არჩევა';
-
-  @override
-  String get deleteFolderQuestion => 'წაიშალოს საქაღალდე?';
 
   @override
   String get searchClips => 'კლიპების ძებნა...';
@@ -1067,9 +800,6 @@ class AppLocalizationsKa extends AppLocalizations {
   @override
   String get restoreClipLater =>
       'თქვენ შეგიძლიათ აღადგინოთ ეს კლიპი მოგვიანებით.';
-
-  @override
-  String get upcomingEvents => 'მომავალი მოვლენები';
 
   @override
   String get dataDistribution => 'მონაცემთა განაწილება';
@@ -1110,57 +840,6 @@ class AppLocalizationsKa extends AppLocalizations {
   String selectedCount(int count) {
     return '$count არჩეული';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes ესკიზი • $folders საქაღალდე';
-  }
-
-  @override
-  String get sortItems => 'დახარისხება';
-
-  @override
-  String get sortNameAZ => 'სახელი (ა-ჰ)';
-
-  @override
-  String get sortNameZA => 'სახელი (ჰ-ა)';
-
-  @override
-  String get createFolder => 'საქაღალდის შექმნა';
-
-  @override
-  String get folderNameHint => 'საქაღალდის სახელი...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'წაიშალოს $count ესკიზი? მოქმედების გაუქმება შეუძლებელია.';
-  }
-
-  @override
-  String get noSketchesFound => 'ესკიზები ვერ მოიძებნა';
-
-  @override
-  String get noSketchesFoundSub =>
-      'სცადეთ ძებნის შეცვლა ან ახალი ესკიზის შექმნა.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'ძებნა $folder-ში...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count ესკიზი';
-  }
-
-  @override
-  String get sortSketches => 'ესკიზების დახარისხება';
-
-  @override
-  String get calendarScreenTitle => 'კალენდარი';
-
-  @override
-  String get dailyActivity => 'დღიური აქტივობა';
 
   @override
   String get deleteItemQuestion => 'წაიშალოს ელემენტი?';
@@ -1263,28 +942,6 @@ class AppLocalizationsKa extends AppLocalizations {
   String get general => 'ზოგადი';
 
   @override
-  String get saveTransactionQuestion => 'გსურთ ამ ტრანზაქციის შენახვა?';
-
-  @override
-  String get fillTitleAmount => 'გთხოვთ, შეავსოთ სათაური და თანხა';
-
-  @override
-  String get invalidAmount => 'თანხის არასწორი ფორმატი';
-
-  @override
-  String get moveTransactionToBinTitle => 'გადავიდეს ტრანზაქცია ნაგვის ყუთში?';
-
-  @override
-  String get restoreTransactionLater =>
-      'თქვენ შეგიძლიათ აღადგინოთ ეს ტრანზაქცია მოგვიანებით პარამეტრებიდან.';
-
-  @override
-  String get newTransaction => 'ახალი ტრანზაქცია';
-
-  @override
-  String get whatIsThisFor => 'რისთვის არის ეს?';
-
-  @override
   String get description => 'აღწერა';
 
   @override
@@ -1300,71 +957,10 @@ class AppLocalizationsKa extends AppLocalizations {
   String get yearly => 'ყოველწლიური';
 
   @override
-  String get totalIncome => 'მთლიანი შემოსავალი';
-
-  @override
-  String get totalExpense => 'მთლიანი ხარჯი';
-
-  @override
   String get analysis => 'ანალიზი';
 
   @override
   String get transactions => 'ტრანზაქციები';
-
-  @override
-  String get noExpensesFound => 'ამ პერიოდში ხარჯები ვერ მოიძებნა.';
-
-  @override
-  String get netBalance => 'წმინდა ბალანსი';
-
-  @override
-  String get topCategories => 'ტოპ კატეგორიები';
-
-  @override
-  String get spendingTrend => 'ხარჯვის ტრენდი';
-
-  @override
-  String get insights => 'ინსაიტები';
-
-  @override
-  String get noExpensesRecorded => 'ხარჯები არ არის ჩაწერილი';
-
-  @override
-  String get trackSpendingHabits =>
-      'მარტივად ადევნეთ თვალი თქვენს ხარჯვის ჩვევებს.';
-
-  @override
-  String get addExpense => 'ხარჯის დამატება';
-
-  @override
-  String get noDataForPeriod => 'მონაცემები ამ პერიოდისთვის არ არის';
-
-  @override
-  String get budget => 'ბიუჯეტი';
-
-  @override
-  String get spent => 'დახარჯული';
-
-  @override
-  String get limit => 'ლიმიტი';
-
-  @override
-  String get overBudget => 'ბიუჯეტს გადაცილებულია!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return 'დარჩენილია $percent%';
-  }
-
-  @override
-  String get savingsRate => 'დაზოგვის მაჩვენებელი';
-
-  @override
-  String get healthScore => 'ჯანმრთელობის ქულა';
-
-  @override
-  String get healthScoreExplanation =>
-      'ეს ქულა ეფუძნება თქვენს დაზოგვის მაჩვენებელს.\n\n• > 50% დაზოგილი = შესანიშნავი (100)\n• 0% დაზოგილი = საშუალო (50)\n• ხარჯი > შემოსავალი = ცუდი (<50)';
 
   @override
   String get ok => 'კარგი';
@@ -1393,19 +989,10 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   String get todos => 'დავალებები';
 
   @override
-  String get expenses => 'ხარჯები';
-
-  @override
   String get journal => 'ჟურნალი';
 
   @override
-  String get calendar => 'კალენდარი';
-
-  @override
   String get clipboard => 'ბუფერი';
-
-  @override
-  String get canvas => 'ტილო';
 
   @override
   String get save => 'შენახვა';
@@ -1438,24 +1025,6 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   String get discard => 'უარყოფა';
 
   @override
-  String get createPost => 'პოსტის შექმნა';
-
-  @override
-  String get post => 'გამოქვეყნება';
-
-  @override
-  String get postingTo => 'ქვეყნდება აქ:';
-
-  @override
-  String get whatsOnYourMind => 'რაზე ფიქრობთ?';
-
-  @override
-  String get pickImages => 'სურათების არჩევა';
-
-  @override
-  String get pickVideo => 'ვიდეოს არჩევა';
-
-  @override
   String get camera => 'კამერა';
 
   @override
@@ -1480,16 +1049,6 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   String error(Object error) {
     return 'შეცდომა: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'დახარისხება ხელმისაწვდომია მხოლოდ \'ყველა პოსტში\'';
-
-  @override
-  String get deletePost => 'პოსტის წაშლა';
-
-  @override
-  String get postDeleted => 'პოსტი წაშლილია';
 
   @override
   String get premiumFeatures => 'პრემიუმ ფუნქციები';
@@ -1550,35 +1109,6 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   String get recycleBinCleared => 'ნაგვის ყუთი წარმატებით გასუფთავდა';
 
   @override
-  String get allPostsDeleted => 'ყველა პოსტი წაშლილია';
-
-  @override
-  String get newPost => 'ახალი პოსტი';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'ტექსტი კოპირებულია (Facebook-ის პოლიტიკა)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok-ზე გასაზიარებლად საჭიროა ვიდეო ან სურათი';
-
-  @override
-  String errorSharing(Object error) {
-    return 'გაზიარების შეცდომა: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'გაზიარება $platform Story-ში';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'გაზიარება $platform Feed-ში';
-  }
-
-  @override
   String get unlockPermanently => 'სამუდამოდ განბლოკვა';
 
   @override
@@ -1594,13 +1124,6 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
 
   @override
   String get selectDateTime => 'აირჩიეთ თარიღი და დრო';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'დარწმუნებული ხართ, რომ გსურთ ამ პოსტის წაშლა?';
-
-  @override
-  String get socialPosts => 'სოციალური პოსტები';
 
   @override
   String get watchAdToEarnCoins => 'უყურეთ რეკლამას მონეტების მისაღებად';
@@ -1788,25 +1311,11 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
       'იყავით მოვლენების ეპიცენტრში. შექმენით დავალებების სიები, განსაზღვრეთ პრიორიტეტები და მიაღწიეთ მიზნებს.';
 
   @override
-  String get onboardingExpensesTitle => 'ხარჯების კონტროლი';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'აკონტროლეთ თქვენი ფინანსები. მარტივად ადევნეთ თვალი შემოსავლებსა და ხარჯებს.';
-
-  @override
   String get onboardingJournalTitle => 'პირადი ჟურნალი';
 
   @override
   String get onboardingJournalDesc =>
       'გააანალიზეთ თქვენი დღე. პირადი სივრცე თქვენი მოგონებების, გრძნობების და ყოველდღიური გამოცდილების ჩასაწერად.';
-
-  @override
-  String get onboardingCalendarTitle => 'კალენდარი და მოვლენები';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'არასოდეს გამოტოვოთ მომენტი. დააორგანიზეთ თქვენი განრიგი და თვალი ადევნეთ მნიშვნელოვან მოვლენებს.';
 
   @override
   String get onboardingClipboardTitle => 'ბუფერის მენეჯერი';
@@ -1816,65 +1325,22 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
       'დააკოპირეთ ერთხელ, ჩასვით ყველგან. წვდომა ბუფერის ისტორიასთან ადრე კოპირებული ფრაგმენტების ამოსაღებად.';
 
   @override
-  String get onboardingCanvasTitle => 'კრეატიული ტილო';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'გამოავლინეთ თქვენი კრეატიულობა. ხატეთ, ჩაინიშნეთ და მოახდინეთ იდეების ვიზუალიზაცია ციფრულ ტილოზე.';
-
-  @override
   String get featuresNotesDesc => 'შექმენით და მართეთ თქვენი შენიშვნები';
 
   @override
   String get featuresTodosDesc => 'თვალი ადევნეთ თქვენს დავალებებს';
 
   @override
-  String get featuresExpensesDesc => 'აკონტროლეთ თქვენი ხარჯები';
-
-  @override
   String get featuresJournalDesc => 'ჩაწერეთ თქვენი აზრები';
 
   @override
-  String get featuresCalendarDesc => 'დააორგანიზეთ თქვენი განრიგი';
-
-  @override
   String get featuresClipboardDesc => 'წვდომა ბუფერის ისტორიასთან';
-
-  @override
-  String get featuresCanvasDesc => 'ხატეთ და ჩაინიშნეთ თავისუფლად';
-
-  @override
-  String get featuresSocialPost => 'სოციალური პოსტი';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'შექმენით მიმზიდველი კონტენტი სოციალური მედიისთვის';
 
   @override
   String get chooseYourAura => 'აირჩიეთ თქვენი აურა';
 
   @override
   String get expressYourselfTheme => 'გამოხატეთ თქვენი თავი თემის ახალი ფერით!';
-
-  @override
-  String get level => 'დონე';
-
-  @override
-  String get xpToNextLevel => 'XP შემდეგ დონემდე';
-
-  @override
-  String get checkUpcomingEvents => 'შეამოწმეთ მომავალი მოვლენები';
-
-  @override
-  String get startNewSketch => 'დაიწყეთ ახალი ესკიზი';
-
-  @override
-  String get noTransactionsMonth => 'ამ თვეში ტრანზაქციები არ არის';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return '$count ტრანზაქცია ამ თვეში';
-  }
 
   @override
   String get autoSaveClipboard => 'ბუფერის ავტომატური შენახვა';
@@ -1939,15 +1405,6 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   @override
   String get premiumLayoutsDesc =>
       'თქვენი მოგონებების ნახვის ექსკლუზიური გზები';
-
-  @override
-  String get calendarTools => 'კალენდარი და ხელსაწყოები';
-
-  @override
-  String get fullCalendar => 'სრული კალენდარი';
-
-  @override
-  String get fullCalendarDesc => 'მოვლენების მართვის სრული სისტემა';
 
   @override
   String get clipboardAutoSaveDesc => 'ბუფერის ისტორიის ფონური ჩაწერა';
@@ -2035,77 +1492,13 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   String get completed => 'დასრულებული';
 
   @override
-  String get greatJob => 'კარგი სამუშაოა!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'თქვენ დაიმსახურეთ $amount XP! შემდეგი დავალება: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'დავალება დასრულდა! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'გადავიდეს ყველა აქტიური დავალება ნაგვის ყუთში?';
-
-  @override
-  String get deleteAllPosts => 'ყველა პოსტის წაშლა';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'დარწმუნებული ხართ, რომ გსურთ ყველა სოციალური პოსტის წაშლა? მოქმედების გაუქმება შეუძლებელია.';
-
-  @override
-  String get allPosts => 'ყველა პოსტი';
-
-  @override
-  String get favorites => 'რჩეულები';
-
-  @override
-  String get drafts => 'შავნახატები';
-
-  @override
-  String get noFavoritesYet => 'ჯერ არ არის რჩეულები';
-
-  @override
-  String get noDraftsYet => 'ჯერ არ არის შავნახატები';
-
-  @override
-  String get startSocialJourney => 'დაიწყეთ თქვენი სოციალური მოგზაურობა!';
-
-  @override
-  String get draft => 'შავნახატი';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count მიმაგრებული ფაილი';
-  }
-
-  @override
-  String get pleaseAddContent => 'გთხოვთ, დაამატოთ კონტენტი გასაზიარებლად';
 
   @override
   String fileNotFoundError(Object path) {
     return 'შეცდომა: ფაილი ვერ მოიძებნა აქ: $path';
   }
-
-  @override
-  String get checkFacebookApp => 'შეამოწმეთ Facebook აპლიკაცია';
-
-  @override
-  String get systemShare => 'სისტემური გაზიარება';
-
-  @override
-  String get socialPost => 'სოციალური პოსტი';
-
-  @override
-  String get favorite => 'რჩეული';
-
-  @override
-  String get saveDraft => 'შავნახატის შენახვა';
 
   @override
   String get entryCopied => 'ჩანაწერი კოპირებულია';
@@ -2251,33 +1644,10 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   String get dueDate => 'ვადის თარიღი';
 
   @override
-  String get expenseTitle => 'ხარჯები';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'ძებნა $currency-ში...';
-  }
-
-  @override
   String get sortAndFilter => 'დახარისხება და ფილტრი';
 
   @override
   String get sortBy => 'დახარისხება:';
-
-  @override
-  String get highestAmount => 'ყველაზე მაღალი თანხა';
-
-  @override
-  String get lowestAmount => 'ყველაზე დაბალი თანხა';
-
-  @override
-  String get moreFilters => 'მეტი ფილტრი...';
-
-  @override
-  String get filterExpenses => 'ხარჯების ფილტრი';
-
-  @override
-  String get transactionType => 'ტრანზაქციის ტიპი';
 
   @override
   String get categories => 'კატეგორიები';
@@ -2286,21 +1656,10 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   String get all => 'ყველა';
 
   @override
-  String get income => 'შემოსავალი';
-
-  @override
-  String get expense => 'ხარჯი';
-
-  @override
   String get reset => 'გასუფთავება';
 
   @override
   String get apply => 'გამოყენება';
-
-  @override
-  String newExpense(String currency) {
-    return 'ახალი $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2364,34 +1723,10 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'ახალი ესკიზი';
-
-  @override
-  String get searchSketches => 'ძებნა ესკიზებსა და საქაღალდეებში...';
-
-  @override
   String get noResultsFound => 'შედეგები ვერ მოიძებნა';
 
   @override
   String get noItems => 'ელემენტები არ არის';
-
-  @override
-  String get noDrawingsYet => 'ნახატები ჯერ არ არის';
-
-  @override
-  String get canvasIntro => 'გამოავლინეთ თქვენი კრეატიულობა ტილოზე!';
-
-  @override
-  String get newCanvas => 'ახალი ტილო';
 
   @override
   String get rename => 'სახელის შეცვლა';
@@ -2407,13 +1742,7 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
       'ამ საქაღალდეში არსებული ყველა ესკიზი სამუდამოდ წაიშლება.';
 
   @override
-  String get renameFolder => 'საქაღალდის სახელის შეცვლა';
-
-  @override
   String get chooseColor => 'ფერის არჩევა';
-
-  @override
-  String get deleteFolderQuestion => 'წაიშალოს საქაღალდე?';
 
   @override
   String get searchClips => 'კლიპების ძებნა...';
@@ -2436,9 +1765,6 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   @override
   String get restoreClipLater =>
       'თქვენ შეგიძლიათ აღადგინოთ ეს კლიპი მოგვიანებით.';
-
-  @override
-  String get upcomingEvents => 'მომავალი მოვლენები';
 
   @override
   String get dataDistribution => 'მონაცემთა განაწილება';
@@ -2479,57 +1805,6 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   String selectedCount(int count) {
     return '$count არჩეული';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes ესკიზი • $folders საქაღალდე';
-  }
-
-  @override
-  String get sortItems => 'დახარისხება';
-
-  @override
-  String get sortNameAZ => 'სახელი (ა-ჰ)';
-
-  @override
-  String get sortNameZA => 'სახელი (ჰ-ა)';
-
-  @override
-  String get createFolder => 'საქაღალდის შექმნა';
-
-  @override
-  String get folderNameHint => 'საქაღალდის სახელი...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'წაიშალოს $count ესკიზი? მოქმედების გაუქმება შეუძლებელია.';
-  }
-
-  @override
-  String get noSketchesFound => 'ესკიზები ვერ მოიძებნა';
-
-  @override
-  String get noSketchesFoundSub =>
-      'სცადეთ ძებნის შეცვლა ან ახალი ესკიზის შექმნა.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'ძებნა $folder-ში...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count ესკიზი';
-  }
-
-  @override
-  String get sortSketches => 'ესკიზების დახარისხება';
-
-  @override
-  String get calendarScreenTitle => 'კალენდარი';
-
-  @override
-  String get dailyActivity => 'დღიური აქტივობა';
 
   @override
   String get deleteItemQuestion => 'წაიშალოს ელემენტი?';
@@ -2632,28 +1907,6 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   String get general => 'ზოგადი';
 
   @override
-  String get saveTransactionQuestion => 'გსურთ ამ ტრანზაქციის შენახვა?';
-
-  @override
-  String get fillTitleAmount => 'გთხოვთ, შეავსოთ სათაური და თანხა';
-
-  @override
-  String get invalidAmount => 'თანხის არასწორი ფორმატი';
-
-  @override
-  String get moveTransactionToBinTitle => 'გადავიდეს ტრანზაქცია ნაგვის ყუთში?';
-
-  @override
-  String get restoreTransactionLater =>
-      'თქვენ შეგიძლიათ აღადგინოთ ეს ტრანზაქცია მოგვიანებით პარამეტრებიდან.';
-
-  @override
-  String get newTransaction => 'ახალი ტრანზაქცია';
-
-  @override
-  String get whatIsThisFor => 'რისთვის არის ეს?';
-
-  @override
   String get description => 'აღწერა';
 
   @override
@@ -2669,71 +1922,10 @@ class AppLocalizationsKaGe extends AppLocalizationsKa {
   String get yearly => 'ყოველწლიური';
 
   @override
-  String get totalIncome => 'მთლიანი შემოსავალი';
-
-  @override
-  String get totalExpense => 'მთლიანი ხარჯი';
-
-  @override
   String get analysis => 'ანალიზი';
 
   @override
   String get transactions => 'ტრანზაქციები';
-
-  @override
-  String get noExpensesFound => 'ამ პერიოდში ხარჯები ვერ მოიძებნა.';
-
-  @override
-  String get netBalance => 'წმინდა ბალანსი';
-
-  @override
-  String get topCategories => 'ტოპ კატეგორიები';
-
-  @override
-  String get spendingTrend => 'ხარჯვის ტრენდი';
-
-  @override
-  String get insights => 'ინსაიტები';
-
-  @override
-  String get noExpensesRecorded => 'ხარჯები არ არის ჩაწერილი';
-
-  @override
-  String get trackSpendingHabits =>
-      'მარტივად ადევნეთ თვალი თქვენს ხარჯვის ჩვევებს.';
-
-  @override
-  String get addExpense => 'ხარჯის დამატება';
-
-  @override
-  String get noDataForPeriod => 'მონაცემები ამ პერიოდისთვის არ არის';
-
-  @override
-  String get budget => 'ბიუჯეტი';
-
-  @override
-  String get spent => 'დახარჯული';
-
-  @override
-  String get limit => 'ლიმიტი';
-
-  @override
-  String get overBudget => 'ბიუჯეტს გადაცილებულია!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return 'დარჩენილია $percent%';
-  }
-
-  @override
-  String get savingsRate => 'დაზოგვის მაჩვენებელი';
-
-  @override
-  String get healthScore => 'ჯანმრთელობის ქულა';
-
-  @override
-  String get healthScoreExplanation =>
-      'ეს ქულა ეფუძნება თქვენს დაზოგვის მაცივენებელს.\n\n• > 50% დაზოგილი = შესანიშნავი (100)\n• 0% დაზოგილი = საშუალო (50)\n• ხარჯი > შემოსავალი = ცუდი (<50)';
 
   @override
   String get ok => 'კარგი';

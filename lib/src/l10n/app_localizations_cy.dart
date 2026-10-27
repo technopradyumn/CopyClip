@@ -24,19 +24,10 @@ class AppLocalizationsCy extends AppLocalizations {
   String get todos => 'I-Dos';
 
   @override
-  String get expenses => 'Treuliau';
-
-  @override
   String get journal => 'Dyddlyfr';
 
   @override
-  String get calendar => 'Calendr';
-
-  @override
   String get clipboard => 'Clipfwrdd';
-
-  @override
-  String get canvas => 'Cynfas';
 
   @override
   String get save => 'Arbed';
@@ -69,24 +60,6 @@ class AppLocalizationsCy extends AppLocalizations {
   String get discard => 'Taflwch';
 
   @override
-  String get createPost => 'Creu Post';
-
-  @override
-  String get post => 'Post';
-
-  @override
-  String get postingTo => 'Postio i';
-
-  @override
-  String get whatsOnYourMind => 'Beth sydd ar eich meddwl?';
-
-  @override
-  String get pickImages => 'Dewiswch Delweddau';
-
-  @override
-  String get pickVideo => 'Dewiswch Fideo';
-
-  @override
   String get camera => 'Camera';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsCy extends AppLocalizations {
   String error(Object error) {
     return 'Gwall: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Archebu ar gael yn \'\'Pob Post\'\' yn unig';
-
-  @override
-  String get deletePost => 'Dileu Post';
-
-  @override
-  String get postDeleted => 'Postiad wedi\'\'i ddileu';
 
   @override
   String get premiumFeatures => 'Nodweddion Premiwm';
@@ -181,35 +144,6 @@ class AppLocalizationsCy extends AppLocalizations {
   String get recycleBinCleared => 'Clirio\'\'r Bin Ailgylchu yn llwyddiannus';
 
   @override
-  String get allPostsDeleted => 'Pob post wedi\'\'i ddileu';
-
-  @override
-  String get newPost => 'Post Newydd';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Testun wedi\'\'i gopïo i\'\'r clipfwrdd (polisi Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Mae angen fideo / delwedd i rannu TikTok';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Gwall wrth rannu: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Rhannu i $platform Story';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Rhannu i $platform Feed';
-  }
-
-  @override
   String get unlockPermanently => 'Datgloi\'\'n Barhaol';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Dewiswch Dyddiad ac Amser';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Ydych chi\'\'n siŵr eich bod am ddileu\'\'r post hwn?';
-
-  @override
-  String get socialPosts => 'Swyddi Cymdeithasol';
 
   @override
   String get watchAdToEarnCoins => 'Gwylio Hysbyseb i Ennill Darnau Arian';
@@ -417,25 +344,11 @@ class AppLocalizationsCy extends AppLocalizations {
       'Arhoswch ar ben eich gêm. Creu rhestrau o bethau i\'\'w gwneud, gosod blaenoriaethau, a mathru\'\'ch nodau un marc gwirio ar y tro.';
 
   @override
-  String get onboardingExpensesTitle => 'Tracio Traul';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Cymerwch reolaeth ar eich arian. Traciwch incwm a threuliau yn hawdd i ddeall eich arferion gwario.';
-
-  @override
   String get onboardingJournalTitle => 'Cylchgrawn Personol';
 
   @override
   String get onboardingJournalDesc =>
       'Myfyriwch ar eich diwrnod. Gofod preifat i ysgrifennu eich atgofion, eich teimladau a\'\'ch profiadau dyddiol.';
-
-  @override
-  String get onboardingCalendarTitle => 'Calendr a Digwyddiadau';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Peidiwch byth â cholli eiliad. Trefnwch eich amserlen a chadwch olwg ar ddigwyddiadau pwysig sydd i ddod.';
 
   @override
   String get onboardingClipboardTitle => 'Rheolwr Clipfwrdd';
@@ -445,39 +358,16 @@ class AppLocalizationsCy extends AppLocalizations {
       'Copïwch unwaith, pastiwch unrhyw le. Cyrchwch hanes eich clipfwrdd i adalw pytiau y gwnaethoch eu copïo\'\'n gynharach.';
 
   @override
-  String get onboardingCanvasTitle => 'Cynfas Creadigol';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Rhyddhewch eich creadigrwydd. Tynnwch lun, brasluniwch a delweddwch eich syniadau ar gynfas digidol ffurf rydd.';
-
-  @override
   String get featuresNotesDesc => 'Creu a rheoli eich nodiadau';
 
   @override
   String get featuresTodosDesc => 'Cadwch olwg ar eich tasgau';
 
   @override
-  String get featuresExpensesDesc => 'Monitro eich treuliau';
-
-  @override
   String get featuresJournalDesc => 'Ysgrifennwch eich meddyliau';
 
   @override
-  String get featuresCalendarDesc => 'Trefnwch eich amserlen';
-
-  @override
   String get featuresClipboardDesc => 'Mynediad i\'\'ch hanes clipfwrdd';
-
-  @override
-  String get featuresCanvasDesc => 'Tynnwch lun a braslun yn rhydd';
-
-  @override
-  String get featuresSocialPost => 'Post Cymdeithasol';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Creu cynnwys cyfryngau cymdeithasol deniadol';
 
   @override
   String get chooseYourAura => 'Dewiswch Eich Aura';
@@ -485,32 +375,6 @@ class AppLocalizationsCy extends AppLocalizations {
   @override
   String get expressYourselfTheme =>
       'Mynegwch eich hun gyda lliw thema newydd!';
-
-  @override
-  String get level => 'Lefel';
-
-  @override
-  String get xpToNextLevel => 'XP i Lefel';
-
-  @override
-  String get checkUpcomingEvents => 'Gwiriwch y digwyddiadau sydd i ddod';
-
-  @override
-  String get startNewSketch => 'Dechrau braslun newydd';
-
-  @override
-  String get noTransactionsMonth => 'Dim trafodion y mis hwn';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
-  }
 
   @override
   String get autoSaveClipboard => 'Auto-arbed Clipfwrdd';
@@ -574,15 +438,6 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get premiumLayoutsDesc => 'Ffyrdd unigryw o weld eich atgofion';
-
-  @override
-  String get calendarTools => 'Calendr ac Offer';
-
-  @override
-  String get fullCalendar => 'Calendr Llawn';
-
-  @override
-  String get fullCalendarDesc => 'System rheoli digwyddiadau gyflawn';
 
   @override
   String get clipboardAutoSaveDesc => 'Cipio hanes clipfwrdd cefndir';
@@ -671,84 +526,13 @@ class AppLocalizationsCy extends AppLocalizations {
   String get completed => 'Cwblhawyd';
 
   @override
-  String get greatJob => 'Gwaith gwych!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Fe wnaethoch chi ennill $amount XP! Tasg nesaf: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Tasg wedi\'\'i chwblhau! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Symud pob tasg weithredol i Recycle Bin?';
-
-  @override
-  String get deleteAllPosts => 'Dileu Pob Post';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Ydych chi\'\'n siŵr eich bod am ddileu POB post cymdeithasol? Ni ellir dadwneud hyn.';
-
-  @override
-  String get allPosts => 'Pob Post';
-
-  @override
-  String get favorites => 'Ffefrynnau';
-
-  @override
-  String get drafts => 'Drafftiau';
-
-  @override
-  String get noFavoritesYet => 'Dim ffefrynnau eto';
-
-  @override
-  String get noDraftsYet => 'Dim drafftiau eto';
-
-  @override
-  String get startSocialJourney => 'Dechreuwch eich taith gymdeithasol!';
-
-  @override
-  String get draft => 'DRAFFT';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Ychwanegwch rywfaint o gynnwys neu gyfrwng i\'\'w rannu';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Gwall: Ni chanfuwyd y ffeil yn $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Gwiriwch app Facebook';
-
-  @override
-  String get systemShare => 'Rhannu System';
-
-  @override
-  String get socialPost => 'Post Cymdeithasol';
-
-  @override
-  String get favorite => 'Hoff';
-
-  @override
-  String get saveDraft => 'Cadw Drafft';
 
   @override
   String get entryCopied => 'Cafodd y cofnod ei gopïo';
@@ -894,33 +678,10 @@ class AppLocalizationsCy extends AppLocalizations {
   String get dueDate => 'Dau Ddyddiad';
 
   @override
-  String get expenseTitle => 'Treuliau';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Chwilio yn $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Trefnu a Hidlo';
 
   @override
   String get sortBy => 'SORT GAN';
-
-  @override
-  String get highestAmount => 'Swm Uchaf';
-
-  @override
-  String get lowestAmount => 'Swm Isaf';
-
-  @override
-  String get moreFilters => 'Mwy o hidlwyr...';
-
-  @override
-  String get filterExpenses => 'Treuliau Hidlo';
-
-  @override
-  String get transactionType => 'Math o Drafodiad';
 
   @override
   String get categories => 'Categorïau';
@@ -929,21 +690,10 @@ class AppLocalizationsCy extends AppLocalizations {
   String get all => 'Pawb';
 
   @override
-  String get income => 'Incwm';
-
-  @override
-  String get expense => 'Traul';
-
-  @override
   String get reset => 'Ailosod';
 
   @override
   String get apply => 'Ymgeisiwch';
-
-  @override
-  String newExpense(String currency) {
-    return '$currency newydd';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -1006,34 +756,10 @@ class AppLocalizationsCy extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Braslun Newydd';
-
-  @override
-  String get searchSketches => 'Chwilio brasluniau a ffolderi...';
-
-  @override
   String get noResultsFound => 'Heb ganfod canlyniadau';
 
   @override
   String get noItems => 'Dim eitemau';
-
-  @override
-  String get noDrawingsYet => 'Dim lluniadau eto';
-
-  @override
-  String get canvasIntro => 'Rhyddhewch eich creadigrwydd ar y cynfas!';
-
-  @override
-  String get newCanvas => 'Cynfas Newydd';
 
   @override
   String get rename => 'Ailenwi';
@@ -1049,13 +775,7 @@ class AppLocalizationsCy extends AppLocalizations {
       'Bydd pob braslun yn y ffolder hwn yn cael ei ddileu yn barhaol.';
 
   @override
-  String get renameFolder => 'Ail-enwi Ffolder';
-
-  @override
   String get chooseColor => 'Dewiswch Lliw';
-
-  @override
-  String get deleteFolderQuestion => 'Dileu Ffolder?';
 
   @override
   String get searchClips => 'Chwilio clipiau...';
@@ -1077,9 +797,6 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'Gallwch adfer y clip hwn yn ddiweddarach.';
-
-  @override
-  String get upcomingEvents => 'Digwyddiadau i ddod';
 
   @override
   String get dataDistribution => 'DOSBARTHU DATA';
@@ -1120,57 +837,6 @@ class AppLocalizationsCy extends AppLocalizations {
   String selectedCount(int count) {
     return '$count Wedi\'\'i ddewis';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes brasluniau • $folders ffolderi';
-  }
-
-  @override
-  String get sortItems => 'Didoli Eitemau';
-
-  @override
-  String get sortNameAZ => 'Enw (A-Z)';
-
-  @override
-  String get sortNameZA => 'Enw (Z-A)';
-
-  @override
-  String get createFolder => 'Creu Ffolder';
-
-  @override
-  String get folderNameHint => 'Enw\'\'r ffolder...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Dileu $count braslun? Ni ellir dadwneud hyn.';
-  }
-
-  @override
-  String get noSketchesFound => 'Heb ganfod brasluniau';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Ceisiwch addasu eich chwiliad neu greu braslun newydd.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Chwilio mewn $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count brasluniau';
-  }
-
-  @override
-  String get sortSketches => 'Sort Sketches';
-
-  @override
-  String get calendarScreenTitle => 'Calendr';
-
-  @override
-  String get dailyActivity => 'Gweithgaredd Dyddiol';
 
   @override
   String get deleteItemQuestion => 'Dileu Eitem?';
@@ -1274,28 +940,6 @@ class AppLocalizationsCy extends AppLocalizations {
   String get general => 'Cyffredinol';
 
   @override
-  String get saveTransactionQuestion => 'Ydych chi am gadw\'\'r trafodyn hwn?';
-
-  @override
-  String get fillTitleAmount => 'Cwblhewch y teitl a\'\'r swm';
-
-  @override
-  String get invalidAmount => 'Fformat swm annilys';
-
-  @override
-  String get moveTransactionToBinTitle => 'Symud Trafodyn i Bin Ailgylchu?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Gallwch adfer y trafodiad hwn yn ddiweddarach o\'\'r gosodiadau.';
-
-  @override
-  String get newTransaction => 'Trafodiad Newydd';
-
-  @override
-  String get whatIsThisFor => 'Beth yw pwrpas hwn?';
-
-  @override
   String get description => 'Disgrifiad';
 
   @override
@@ -1311,71 +955,10 @@ class AppLocalizationsCy extends AppLocalizations {
   String get yearly => 'Yn flynyddol';
 
   @override
-  String get totalIncome => 'Cyfanswm Incwm';
-
-  @override
-  String get totalExpense => 'Cyfanswm y Traul';
-
-  @override
   String get analysis => 'Dadansoddi';
 
   @override
   String get transactions => 'Trafodion';
-
-  @override
-  String get noExpensesFound =>
-      'Ni chanfuwyd unrhyw dreuliau ar gyfer y cyfnod hwn.';
-
-  @override
-  String get netBalance => 'Balans Net';
-
-  @override
-  String get topCategories => 'Categorïau Uchaf';
-
-  @override
-  String get spendingTrend => 'Tuedd Gwariant';
-
-  @override
-  String get insights => 'Mewnwelediadau';
-
-  @override
-  String get noExpensesRecorded => 'Dim treuliau wedi\'\'u cofnodi';
-
-  @override
-  String get trackSpendingHabits => 'Traciwch eich arferion gwario yn hawdd.';
-
-  @override
-  String get addExpense => 'Ychwanegu Traul';
-
-  @override
-  String get noDataForPeriod => 'Dim data ar gyfer y cyfnod hwn';
-
-  @override
-  String get budget => 'Cyllideb';
-
-  @override
-  String get spent => 'Wedi gwario';
-
-  @override
-  String get limit => 'Terfyn';
-
-  @override
-  String get overBudget => 'Dros y Gyllideb!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% yn weddill';
-  }
-
-  @override
-  String get savingsRate => 'Cyfradd Arbedion';
-
-  @override
-  String get healthScore => 'Sgôr Iechyd';
-
-  @override
-  String get healthScoreExplanation =>
-      'Mae\'\'r sgôr hwn yn seiliedig ar eich Cyfradd Cynilion.\n\n• > 50% wedi\'\'i gadw = Ardderchog (100)\n• 0% wedi\'\'i gadw = Cyfartaledd (50)\n• Gwariant > Incwm = Gwael (<50)';
 
   @override
   String get ok => 'iawn';

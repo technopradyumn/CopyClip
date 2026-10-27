@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:copyclip/main.dart';
 import 'package:copyclip/src/core/theme/bloc/theme_bloc.dart';
+import 'package:copyclip/src/core/providers/locale_provider.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -27,18 +29,21 @@ void main() {
 
   testWidgets('App launches without crashing', (tester) async {
     await tester.pumpWidget(
-      MultiProvider(
+      MultiBlocProvider(
         providers: [
-          // Basic mocks for providers expected by MainApp if accessed
+          BlocProvider(create: (_) => ThemeBloc()),
+          BlocProvider(create: (_) => PremiumBloc()),
         ],
-        child: BlocProvider(
-          create: (_) => ThemeBloc(),
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => LocaleProvider()),
+          ],
           child: ScreenUtilInit(
             designSize: const Size(390, 844),
             minTextAdapt: true,
             splitScreenMode: true,
             builder: (_, __) {
-              return const MainApp(); // MainApp uses ThemeBloc
+              return const MainApp(); // MainApp uses ThemeBloc, PremiumBloc, LocaleProvider
             },
           ),
         ),

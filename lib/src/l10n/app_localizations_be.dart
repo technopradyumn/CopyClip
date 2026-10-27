@@ -24,19 +24,10 @@ class AppLocalizationsBe extends AppLocalizations {
   String get todos => 'Задачы';
 
   @override
-  String get expenses => 'Выдаткі';
-
-  @override
   String get journal => 'часопіс';
 
   @override
-  String get calendar => 'Каляндар';
-
-  @override
   String get clipboard => 'Буфер абмену';
-
-  @override
-  String get canvas => 'Палатно';
 
   @override
   String get save => 'Захаваць';
@@ -69,24 +60,6 @@ class AppLocalizationsBe extends AppLocalizations {
   String get discard => 'Адкідаць';
 
   @override
-  String get createPost => 'Стварыць паведамленне';
-
-  @override
-  String get post => 'Паведамленне';
-
-  @override
-  String get postingTo => 'Размяшчэнне на';
-
-  @override
-  String get whatsOnYourMind => 'Што ў вас на галаве?';
-
-  @override
-  String get pickImages => 'Выберыце выявы';
-
-  @override
-  String get pickVideo => 'Выберыце відэа';
-
-  @override
   String get camera => 'Камера';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsBe extends AppLocalizations {
   String error(Object error) {
     return 'Памылка: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Заказ даступны толькі ў раздзеле \"Усе паведамленні\"';
-
-  @override
-  String get deletePost => 'Выдаліць паведамленне';
-
-  @override
-  String get postDeleted => 'Паведамленне выдалена';
 
   @override
   String get premiumFeatures => 'Прэміум-функцыі';
@@ -181,35 +144,6 @@ class AppLocalizationsBe extends AppLocalizations {
   String get recycleBinCleared => 'Сметніца паспяхова ачышчана';
 
   @override
-  String get allPostsDeleted => 'Усе паведамленні выдалены';
-
-  @override
-  String get newPost => 'Новы пост';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Тэкст скапіраваны ў буфер абмену (палітыка Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Для абагульвання TikTok патрабуецца відэа/малюнак';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Памылка абагульвання: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Падзяліцеся гісторыяй на $platform';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Абагуліць у стужцы $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Разблакіраваць назаўжды';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsBe extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Выберыце Дата і час';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Вы ўпэўнены, што хочаце выдаліць гэты пост?';
-
-  @override
-  String get socialPosts => 'Паведамленні ў сацыяльных сетках';
 
   @override
   String get watchAdToEarnCoins => 'Глядзіце рэкламу, каб зарабіць манеты';
@@ -417,25 +344,11 @@ class AppLocalizationsBe extends AppLocalizations {
       'Будзьце ў курсе сваёй гульні. Стварайце спісы спраў, расстаўляйце прыярытэты і разбівайце свае мэты па адной галачцы.';
 
   @override
-  String get onboardingExpensesTitle => 'Адсочванне выдаткаў';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Вазьміце пад кантроль свае фінансы. Лёгка адсочвайце даходы і выдаткі, каб зразумець свае звычкі выдаткаў.';
-
-  @override
   String get onboardingJournalTitle => 'Асабісты часопіс';
 
   @override
   String get onboardingJournalDesc =>
       'Паразважайце пра свой дзень. Прыватная прастора, дзе можна запісаць свае ўспаміны, пачуцці і штодзённы вопыт.';
-
-  @override
-  String get onboardingCalendarTitle => 'Каляндар і падзеі';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Ніколі не прапусціце момант. Арганізуйце свой графік і адсочвайце важныя будучыя падзеі.';
 
   @override
   String get onboardingClipboardTitle => 'Менеджэр буфера абмену';
@@ -445,71 +358,22 @@ class AppLocalizationsBe extends AppLocalizations {
       'Скапіруйце адзін раз, устаўце куды заўгодна. Доступ да гісторыі буфера абмену, каб атрымаць фрагменты, якія вы скапіравалі раней.';
 
   @override
-  String get onboardingCanvasTitle => 'Творчае палатно';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Дайце волю сваёй творчасці. Малюйце, малюйце і візуалізуйце свае ідэі на лічбавым палатне свабоднай формы.';
-
-  @override
   String get featuresNotesDesc => 'Стварайце свае нататкі і кіруйце імі';
 
   @override
   String get featuresTodosDesc => 'Сачыце за сваімі задачамі';
 
   @override
-  String get featuresExpensesDesc => 'Сачыце за сваімі выдаткамі';
-
-  @override
   String get featuresJournalDesc => 'Запішыце свае думкі';
 
   @override
-  String get featuresCalendarDesc => 'Арганізуйце свой графік';
-
-  @override
   String get featuresClipboardDesc => 'Доступ да гісторыі буфера абмену';
-
-  @override
-  String get featuresCanvasDesc => 'Малюйце і малюйце свабодна';
-
-  @override
-  String get featuresSocialPost => 'Сацыяльны пост';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Стварайце цікавы кантэнт у сацыяльных сетках';
 
   @override
   String get chooseYourAura => 'Выберыце сваю аўру';
 
   @override
   String get expressYourselfTheme => 'Выкажыце сябе з новым колерам тэмы!';
-
-  @override
-  String get level => 'Узровень';
-
-  @override
-  String get xpToNextLevel => 'XP да ўзроўню';
-
-  @override
-  String get checkUpcomingEvents => 'Праверце будучыя падзеі';
-
-  @override
-  String get startNewSketch => 'Пачніце новы эскіз';
-
-  @override
-  String get noTransactionsMonth => 'Няма транзакцый у гэтым месяцы';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count транзакцыя$_temp0 у гэтым месяцы';
-  }
 
   @override
   String get autoSaveClipboard => 'Аўтазахаванне буфера абмену';
@@ -574,15 +438,6 @@ class AppLocalizationsBe extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'Эксклюзіўныя спосабы прагляду вашых успамінаў';
-
-  @override
-  String get calendarTools => 'Каляндар і інструменты';
-
-  @override
-  String get fullCalendar => 'Поўны каляндар';
-
-  @override
-  String get fullCalendarDesc => 'Поўная сістэма кіравання падзеямі';
 
   @override
   String get clipboardAutoSaveDesc => 'Фонавы запіс гісторыі буфера абмену';
@@ -669,84 +524,13 @@ class AppLocalizationsBe extends AppLocalizations {
   String get completed => 'Завершана';
 
   @override
-  String get greatJob => 'Выдатная праца!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Вы зарабілі $amount XP! Наступнае заданне: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Заданне выканана! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Перамясціць усе актыўныя задачы ў кошык?';
-
-  @override
-  String get deleteAllPosts => 'Выдаліць усе паведамленні';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Вы ўпэўнены, што хочаце выдаліць УСЕ паведамленні ў сацыяльных сетках? Гэта нельга адмяніць.';
-
-  @override
-  String get allPosts => 'Усе паведамленні';
-
-  @override
-  String get favorites => 'Выбранае';
-
-  @override
-  String get drafts => 'Чарнавікі';
-
-  @override
-  String get noFavoritesYet => 'Пакуль няма абраных';
-
-  @override
-  String get noDraftsYet => 'Чарнавікоў пакуль няма';
-
-  @override
-  String get startSocialJourney => 'Пачніце сваё сацыяльнае падарожжа!';
-
-  @override
-  String get draft => 'ЧАРНАК';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count укладанняў$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Калі ласка, дадайце змесціва або мультымедыя, каб абагуліць';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Памылка: файл не знойдзены на $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Праверце праграму Facebook';
-
-  @override
-  String get systemShare => 'Сістэмны агульны доступ';
-
-  @override
-  String get socialPost => 'Сацыяльны пост';
-
-  @override
-  String get favorite => 'Любімая';
-
-  @override
-  String get saveDraft => 'Захаваць чарнавік';
 
   @override
   String get entryCopied => 'Запіс скапіраваны';
@@ -891,33 +675,10 @@ class AppLocalizationsBe extends AppLocalizations {
   String get dueDate => 'Два спаткання';
 
   @override
-  String get expenseTitle => 'Выдаткі';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Шукаць у $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Сартаваць і фільтраваць';
 
   @override
   String get sortBy => 'САРТАВАЦЬ ПА';
-
-  @override
-  String get highestAmount => 'Самая высокая сума';
-
-  @override
-  String get lowestAmount => 'Самая нізкая сума';
-
-  @override
-  String get moreFilters => 'Іншыя фільтры...';
-
-  @override
-  String get filterExpenses => 'Фільтр выдаткаў';
-
-  @override
-  String get transactionType => 'Тып транзакцыі';
 
   @override
   String get categories => 'Катэгорыі';
@@ -926,21 +687,10 @@ class AppLocalizationsBe extends AppLocalizations {
   String get all => 'Усе';
 
   @override
-  String get income => 'даход';
-
-  @override
-  String get expense => 'Расход';
-
-  @override
   String get reset => 'Скінуць';
 
   @override
   String get apply => 'Ужыць';
-
-  @override
-  String newExpense(String currency) {
-    return 'Новы $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -1002,34 +752,10 @@ class AppLocalizationsBe extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Новы эскіз';
-
-  @override
-  String get searchSketches => 'Пошук эскізаў і тэчак...';
-
-  @override
   String get noResultsFound => 'Нічога не знойдзена';
 
   @override
   String get noItems => 'Няма элементаў';
-
-  @override
-  String get noDrawingsYet => 'Чарцяжоў пакуль няма';
-
-  @override
-  String get canvasIntro => 'Дайце волю сваёй творчасці на палатне!';
-
-  @override
-  String get newCanvas => 'Новае палатно';
 
   @override
   String get rename => 'Перайменаваць';
@@ -1045,13 +771,7 @@ class AppLocalizationsBe extends AppLocalizations {
       'Усе эскізы ў гэтай папцы будуць выдалены назаўсёды.';
 
   @override
-  String get renameFolder => 'Перайменаваць тэчку';
-
-  @override
   String get chooseColor => 'Выберыце колер';
-
-  @override
-  String get deleteFolderQuestion => 'Выдаліць тэчку?';
 
   @override
   String get searchClips => 'Пошук кліпаў...';
@@ -1073,9 +793,6 @@ class AppLocalizationsBe extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'Вы можаце аднавіць гэты кліп пазней.';
-
-  @override
-  String get upcomingEvents => 'Бліжэйшыя падзеі';
 
   @override
   String get dataDistribution => 'РАСПАЎСЁД ДАННЫХ';
@@ -1116,57 +833,6 @@ class AppLocalizationsBe extends AppLocalizations {
   String selectedCount(int count) {
     return '$count выбрана';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes эскізы • $folders папкі';
-  }
-
-  @override
-  String get sortItems => 'Сартаванне элементаў';
-
-  @override
-  String get sortNameAZ => 'Імя (А-Я)';
-
-  @override
-  String get sortNameZA => 'Імя (Я-А)';
-
-  @override
-  String get createFolder => 'Стварыць тэчку';
-
-  @override
-  String get folderNameHint => 'Імя папкі...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Выдаліць $count эскізаў? Гэта нельга адмяніць.';
-  }
-
-  @override
-  String get noSketchesFound => 'Эскізы не знойдзены';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Паспрабуйце наладзіць пошук або стварыць новы эскіз.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Шукаць у $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count эскізаў';
-  }
-
-  @override
-  String get sortSketches => 'Сартаваць эскізы';
-
-  @override
-  String get calendarScreenTitle => 'Каляндар';
-
-  @override
-  String get dailyActivity => 'Штодзённая актыўнасць';
 
   @override
   String get deleteItemQuestion => 'Выдаліць элемент?';
@@ -1269,28 +935,6 @@ class AppLocalizationsBe extends AppLocalizations {
   String get general => 'Генерал';
 
   @override
-  String get saveTransactionQuestion => 'Вы хочаце захаваць гэту транзакцыю?';
-
-  @override
-  String get fillTitleAmount => 'Калі ласка, увядзіце назву і суму';
-
-  @override
-  String get invalidAmount => 'Няправільны фармат сумы';
-
-  @override
-  String get moveTransactionToBinTitle => 'Перамясціць транзакцыю ў кошык?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Вы можаце аднавіць гэту транзакцыю пазней у наладах.';
-
-  @override
-  String get newTransaction => 'Новая транзакцыя';
-
-  @override
-  String get whatIsThisFor => 'Для чаго гэта?';
-
-  @override
   String get description => 'Апісанне';
 
   @override
@@ -1306,70 +950,10 @@ class AppLocalizationsBe extends AppLocalizations {
   String get yearly => 'Штогод';
 
   @override
-  String get totalIncome => 'Агульны даход';
-
-  @override
-  String get totalExpense => 'Агульныя выдаткі';
-
-  @override
   String get analysis => 'Аналіз';
 
   @override
   String get transactions => 'транзакцыі';
-
-  @override
-  String get noExpensesFound => 'Выдаткаў за гэты перыяд не знойдзена.';
-
-  @override
-  String get netBalance => 'Чысты баланс';
-
-  @override
-  String get topCategories => 'Лепшыя катэгорыі';
-
-  @override
-  String get spendingTrend => 'Тэндэнцыя выдаткаў';
-
-  @override
-  String get insights => 'Інсайты';
-
-  @override
-  String get noExpensesRecorded => 'Ніякіх выдаткаў не зафіксавана';
-
-  @override
-  String get trackSpendingHabits => 'Лёгка адсочвайце свае звычкі выдаткаў.';
-
-  @override
-  String get addExpense => 'Дадайце выдаткі';
-
-  @override
-  String get noDataForPeriod => 'Няма дадзеных за гэты перыяд';
-
-  @override
-  String get budget => 'Бюджэт';
-
-  @override
-  String get spent => 'Вытрачаны';
-
-  @override
-  String get limit => 'Ліміт';
-
-  @override
-  String get overBudget => 'Над бюджэтам!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% засталося';
-  }
-
-  @override
-  String get savingsRate => 'Стаўка зберажэнняў';
-
-  @override
-  String get healthScore => 'Ацэнка здароўя';
-
-  @override
-  String get healthScoreExplanation =>
-      'Гэты бал заснаваны на вашай норме эканоміі.\n\n• > 50% эканоміі = Выдатна (100)\n• 0% эканоміі = Сярэдняе (50)\n• Выдаткі > Даход = Дрэнна (<50)';
 
   @override
   String get ok => 'добра';
@@ -1398,19 +982,10 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
   String get todos => 'Задачы';
 
   @override
-  String get expenses => 'Выдаткі';
-
-  @override
   String get journal => 'часопіс';
 
   @override
-  String get calendar => 'Каляндар';
-
-  @override
   String get clipboard => 'Буфер абмену';
-
-  @override
-  String get canvas => 'Палатно';
 
   @override
   String get save => 'Захаваць';
@@ -1443,24 +1018,6 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
   String get discard => 'Адкідаць';
 
   @override
-  String get createPost => 'Стварыць паведамленне';
-
-  @override
-  String get post => 'Паведамленне';
-
-  @override
-  String get postingTo => 'Размяшчэнне на';
-
-  @override
-  String get whatsOnYourMind => 'Што ў вас на галаве?';
-
-  @override
-  String get pickImages => 'Выберыце выявы';
-
-  @override
-  String get pickVideo => 'Выберыце відэа';
-
-  @override
   String get camera => 'Камера';
 
   @override
@@ -1485,16 +1042,6 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
   String error(Object error) {
     return 'Памылка: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Заказ даступны толькі ў раздзеле \"Усе паведамленні\"';
-
-  @override
-  String get deletePost => 'Выдаліць паведамленне';
-
-  @override
-  String get postDeleted => 'Паведамленне выдалена';
 
   @override
   String get premiumFeatures => 'Прэміум-функцыі';
@@ -1555,35 +1102,6 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
   String get recycleBinCleared => 'Сметніца паспяхова ачышчана';
 
   @override
-  String get allPostsDeleted => 'Усе паведамленні выдалены';
-
-  @override
-  String get newPost => 'Новы пост';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Тэкст скапіраваны ў буфер абмену (палітыка Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Для абагульвання TikTok патрабуецца відэа/малюнак';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Памылка абагульвання: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Падзяліцеся гісторыяй на $platform';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Абагуліць у стужцы $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Разблакіраваць назаўжды';
 
   @override
@@ -1599,13 +1117,6 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
 
   @override
   String get selectDateTime => 'Выберыце Дата і час';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Вы ўпэўнены, што хочаце выдаліць гэты пост?';
-
-  @override
-  String get socialPosts => 'Паведамленні ў сацыяльных сетках';
 
   @override
   String get watchAdToEarnCoins => 'Глядзіце рэкламу, каб зарабіць манеты';
@@ -1791,25 +1302,11 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
       'Будзьце ў курсе сваёй гульні. Стварайце спісы спраў, расстаўляйце прыярытэты і разбівайце свае мэты па адной галачцы.';
 
   @override
-  String get onboardingExpensesTitle => 'Адсочванне выдаткаў';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Вазьміце пад кантроль свае фінансы. Лёгка адсочвайце даходы і выдаткі, каб зразумець свае звычкі выдаткаў.';
-
-  @override
   String get onboardingJournalTitle => 'Асабісты часопіс';
 
   @override
   String get onboardingJournalDesc =>
       'Паразважайце пра свой дзень. Прыватная прастора, дзе можна запісаць свае ўспаміны, пачуцці і штодзённы вопыт.';
-
-  @override
-  String get onboardingCalendarTitle => 'Каляндар і падзеі';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Ніколі не прапусціце момант. Арганізуйце свой графік і адсочвайце важныя будучыя падзеі.';
 
   @override
   String get onboardingClipboardTitle => 'Менеджэр буфера абмену';
@@ -1819,71 +1316,22 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
       'Скапіруйце адзін раз, устаўце куды заўгодна. Доступ да гісторыі буфера абмену, каб атрымаць фрагменты, якія вы скапіравалі раней.';
 
   @override
-  String get onboardingCanvasTitle => 'Творчае палатно';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Дайце волю сваёй творчасці. Малюйце, малюйце і візуалізуйце свае ідэі на лічбавым палатне свабоднай формы.';
-
-  @override
   String get featuresNotesDesc => 'Стварайце свае нататкі і кіруйце імі';
 
   @override
   String get featuresTodosDesc => 'Сачыце за сваімі задачамі';
 
   @override
-  String get featuresExpensesDesc => 'Сачыце за сваімі выдаткамі';
-
-  @override
   String get featuresJournalDesc => 'Запішыце свае думкі';
 
   @override
-  String get featuresCalendarDesc => 'Арганізуйце свой графік';
-
-  @override
   String get featuresClipboardDesc => 'Доступ да гісторыі буфера абмену';
-
-  @override
-  String get featuresCanvasDesc => 'Малюйце і малюйце свабодна';
-
-  @override
-  String get featuresSocialPost => 'Сацыяльны пост';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Стварайце цікавы кантэнт у сацыяльных сетках';
 
   @override
   String get chooseYourAura => 'Выберыце сваю аўру';
 
   @override
   String get expressYourselfTheme => 'Выкажыце сябе з новым колерам тэмы!';
-
-  @override
-  String get level => 'Узровень';
-
-  @override
-  String get xpToNextLevel => 'XP да ўзроўню';
-
-  @override
-  String get checkUpcomingEvents => 'Праверце будучыя падзеі';
-
-  @override
-  String get startNewSketch => 'Пачніце новы эскіз';
-
-  @override
-  String get noTransactionsMonth => 'Няма транзакцый у гэтым месяцы';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count транзакцыя$_temp0 у гэтым месяцы';
-  }
 
   @override
   String get autoSaveClipboard => 'Аўтазахаванне буфера абмену';
@@ -1948,15 +1396,6 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
   @override
   String get premiumLayoutsDesc =>
       'Эксклюзіўныя спосабы прагляду вашых успамінаў';
-
-  @override
-  String get calendarTools => 'Каляндар і інструменты';
-
-  @override
-  String get fullCalendar => 'Поўны каляндар';
-
-  @override
-  String get fullCalendarDesc => 'Поўная сістэма кіравання падзеямі';
 
   @override
   String get clipboardAutoSaveDesc => 'Фонавы запіс гісторыі буфера абмену';
@@ -2043,84 +1482,13 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
   String get completed => 'Завершана';
 
   @override
-  String get greatJob => 'Выдатная праца!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Вы зарабілі $amount XP! Наступнае заданне: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Заданне выканана! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Перамясціць усе актыўныя задачы ў кошык?';
-
-  @override
-  String get deleteAllPosts => 'Выдаліць усе паведамленні';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Вы ўпэўнены, што хочаце выдаліць УСЕ паведамленні ў сацыяльных сетках? Гэта нельга адмяніць.';
-
-  @override
-  String get allPosts => 'Усе паведамленні';
-
-  @override
-  String get favorites => 'Выбранае';
-
-  @override
-  String get drafts => 'Чарнавікі';
-
-  @override
-  String get noFavoritesYet => 'Пакуль няма абраных';
-
-  @override
-  String get noDraftsYet => 'Чарнавікоў пакуль няма';
-
-  @override
-  String get startSocialJourney => 'Пачніце сваё сацыяльнае падарожжа!';
-
-  @override
-  String get draft => 'ЧАРНАК';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count укладанняў$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Калі ласка, дадайце змесціва або мультымедыя, каб абагуліць';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Памылка: файл не знойдзены на $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Праверце праграму Facebook';
-
-  @override
-  String get systemShare => 'Сістэмны агульны доступ';
-
-  @override
-  String get socialPost => 'Сацыяльны пост';
-
-  @override
-  String get favorite => 'Любімая';
-
-  @override
-  String get saveDraft => 'Захаваць чарнавік';
 
   @override
   String get entryCopied => 'Запіс скапіраваны';
@@ -2265,33 +1633,10 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
   String get dueDate => 'Два спаткання';
 
   @override
-  String get expenseTitle => 'Выдаткі';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Шукаць у $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Сартаваць і фільтраваць';
 
   @override
   String get sortBy => 'САРТАВАЦЬ ПА';
-
-  @override
-  String get highestAmount => 'Самая высокая сума';
-
-  @override
-  String get lowestAmount => 'Самая нізкая сума';
-
-  @override
-  String get moreFilters => 'Іншыя фільтры...';
-
-  @override
-  String get filterExpenses => 'Фільтр выдаткаў';
-
-  @override
-  String get transactionType => 'Тып транзакцыі';
 
   @override
   String get categories => 'Катэгорыі';
@@ -2300,21 +1645,10 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
   String get all => 'Усе';
 
   @override
-  String get income => 'даход';
-
-  @override
-  String get expense => 'Расход';
-
-  @override
   String get reset => 'Скінуць';
 
   @override
   String get apply => 'Ужыць';
-
-  @override
-  String newExpense(String currency) {
-    return 'Новы $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2376,34 +1710,10 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Новы эскіз';
-
-  @override
-  String get searchSketches => 'Пошук эскізаў і тэчак...';
-
-  @override
   String get noResultsFound => 'Нічога не знойдзена';
 
   @override
   String get noItems => 'Няма элементаў';
-
-  @override
-  String get noDrawingsYet => 'Чарцяжоў пакуль няма';
-
-  @override
-  String get canvasIntro => 'Дайце волю сваёй творчасці на палатне!';
-
-  @override
-  String get newCanvas => 'Новае палатно';
 
   @override
   String get rename => 'Перайменаваць';
@@ -2419,13 +1729,7 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
       'Усе эскізы ў гэтай папцы будуць выдалены назаўсёды.';
 
   @override
-  String get renameFolder => 'Перайменаваць тэчку';
-
-  @override
   String get chooseColor => 'Выберыце колер';
-
-  @override
-  String get deleteFolderQuestion => 'Выдаліць тэчку?';
 
   @override
   String get searchClips => 'Пошук кліпаў...';
@@ -2447,9 +1751,6 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
 
   @override
   String get restoreClipLater => 'Вы можаце аднавіць гэты кліп пазней.';
-
-  @override
-  String get upcomingEvents => 'Бліжэйшыя падзеі';
 
   @override
   String get dataDistribution => 'РАСПАЎСЁД ДАННЫХ';
@@ -2490,57 +1791,6 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
   String selectedCount(int count) {
     return '$count выбрана';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes эскізы • $folders папкі';
-  }
-
-  @override
-  String get sortItems => 'Сартаванне элементаў';
-
-  @override
-  String get sortNameAZ => 'Імя (А-Я)';
-
-  @override
-  String get sortNameZA => 'Імя (Я-А)';
-
-  @override
-  String get createFolder => 'Стварыць тэчку';
-
-  @override
-  String get folderNameHint => 'Імя папкі...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Выдаліць $count эскізаў? Гэта нельга адмяніць.';
-  }
-
-  @override
-  String get noSketchesFound => 'Эскізы не знойдзены';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Паспрабуйце наладзіць пошук або стварыць новы эскіз.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Шукаць у $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count эскізаў';
-  }
-
-  @override
-  String get sortSketches => 'Сартаваць эскізы';
-
-  @override
-  String get calendarScreenTitle => 'Каляндар';
-
-  @override
-  String get dailyActivity => 'Штодзённая актыўнасць';
 
   @override
   String get deleteItemQuestion => 'Выдаліць элемент?';
@@ -2643,28 +1893,6 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
   String get general => 'Генерал';
 
   @override
-  String get saveTransactionQuestion => 'Вы хочаце захаваць гэту транзакцыю?';
-
-  @override
-  String get fillTitleAmount => 'Калі ласка, увядзіце назву і суму';
-
-  @override
-  String get invalidAmount => 'Няправільны фармат сумы';
-
-  @override
-  String get moveTransactionToBinTitle => 'Перамясціць транзакцыю ў кошык?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Вы можаце аднавіць гэту транзакцыю пазней у наладах.';
-
-  @override
-  String get newTransaction => 'Новая транзакцыя';
-
-  @override
-  String get whatIsThisFor => 'Для чаго гэта?';
-
-  @override
   String get description => 'Апісанне';
 
   @override
@@ -2680,70 +1908,10 @@ class AppLocalizationsBeBy extends AppLocalizationsBe {
   String get yearly => 'Штогод';
 
   @override
-  String get totalIncome => 'Агульны даход';
-
-  @override
-  String get totalExpense => 'Агульныя выдаткі';
-
-  @override
   String get analysis => 'Аналіз';
 
   @override
   String get transactions => 'транзакцыі';
-
-  @override
-  String get noExpensesFound => 'Выдаткаў за гэты перыяд не знойдзена.';
-
-  @override
-  String get netBalance => 'Чысты баланс';
-
-  @override
-  String get topCategories => 'Лепшыя катэгорыі';
-
-  @override
-  String get spendingTrend => 'Тэндэнцыя выдаткаў';
-
-  @override
-  String get insights => 'Інсайты';
-
-  @override
-  String get noExpensesRecorded => 'Ніякіх выдаткаў не зафіксавана';
-
-  @override
-  String get trackSpendingHabits => 'Лёгка адсочвайце свае звычкі выдаткаў.';
-
-  @override
-  String get addExpense => 'Дадайце выдаткі';
-
-  @override
-  String get noDataForPeriod => 'Няма дадзеных за гэты перыяд';
-
-  @override
-  String get budget => 'Бюджэт';
-
-  @override
-  String get spent => 'Вытрачаны';
-
-  @override
-  String get limit => 'Ліміт';
-
-  @override
-  String get overBudget => 'Над бюджэтам!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% засталося';
-  }
-
-  @override
-  String get savingsRate => 'Стаўка зберажэнняў';
-
-  @override
-  String get healthScore => 'Ацэнка здароўя';
-
-  @override
-  String get healthScoreExplanation =>
-      'Гэты бал заснаваны на вашай норме эканоміі.\n\n• > 50% эканоміі = Выдатна (100)\n• 0% эканоміі = Сярэдняе (50)\n• Выдаткі > Даход = Дрэнна (<50)';
 
   @override
   String get ok => 'добра';

@@ -24,19 +24,10 @@ class AppLocalizationsHy extends AppLocalizations {
   String get todos => 'Անելիքներ';
 
   @override
-  String get expenses => 'Ծախսեր';
-
-  @override
   String get journal => 'Օրագիր';
 
   @override
-  String get calendar => 'Օրացույց';
-
-  @override
   String get clipboard => 'Բուֆեր';
-
-  @override
-  String get canvas => 'Կտավ';
 
   @override
   String get save => 'Պահպանել';
@@ -69,24 +60,6 @@ class AppLocalizationsHy extends AppLocalizations {
   String get discard => 'Չեղարկել';
 
   @override
-  String get createPost => 'Ստեղծել հրապարակում';
-
-  @override
-  String get post => 'Հրապարակել';
-
-  @override
-  String get postingTo => 'Հրապարակումը՝';
-
-  @override
-  String get whatsOnYourMind => 'Ի՞նչ կա ձեր մտքում:';
-
-  @override
-  String get pickImages => 'Ընտրել նկարներ';
-
-  @override
-  String get pickVideo => 'Ընտրել տեսանյութ';
-
-  @override
   String get camera => 'Տեսախցիկ';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsHy extends AppLocalizations {
   String error(Object error) {
     return 'Սխալ՝ $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Դասավորումը հասանելի է միայն «Բոլոր հրապարակումներում»';
-
-  @override
-  String get deletePost => 'Ջնջել հրապարակումը';
-
-  @override
-  String get postDeleted => 'Հրապարակումը ջնջված է';
 
   @override
   String get premiumFeatures => 'Պրեմիում հնարավորություններ';
@@ -181,35 +144,6 @@ class AppLocalizationsHy extends AppLocalizations {
   String get recycleBinCleared => 'Աղբամանը հաջողությամբ դատարկվեց';
 
   @override
-  String get allPostsDeleted => 'Բոլոր հրապարակումները ջնջված են';
-
-  @override
-  String get newPost => 'Նոր հրապարակում';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Տեքստը պատճենված է բուֆերում (Facebook-ի քաղաքականություն)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok-ով կիսվելու համար անհրաժեշտ է տեսանյութ/նկար';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Կիսվելու սխալ՝ $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Կիսվել $platform Story-ում';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Կիսվել $platform Feed-ում';
-  }
-
-  @override
   String get unlockPermanently => 'Ապակողպել ընդմիշտ';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsHy extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Ընտրել ամսաթիվը և ժամը';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Վստա՞հ եք, որ ցանկանում եք ջնջել այս հրապարակումը:';
-
-  @override
-  String get socialPosts => 'Սոցիալական հրապարակումներ';
 
   @override
   String get watchAdToEarnCoins =>
@@ -420,25 +347,11 @@ class AppLocalizationsHy extends AppLocalizations {
       'Մնացեք խաղի մեջ: Ստեղծեք անելիքների ցուցակներ, սահմանեք առաջնահերթություններ և հասեք ձեր նպատակներին քայլ առ քայլ:';
 
   @override
-  String get onboardingExpensesTitle => 'Ծախսերի հետևում';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Վերահսկեք ձեր ֆինանսները: Հեշտությամբ հետևեք եկամուտներին և ծախսերին՝ ձեր ծախսային սովորությունները հասկանալու համար:';
-
-  @override
   String get onboardingJournalTitle => 'Անձնական օրագիր';
 
   @override
   String get onboardingJournalDesc =>
       'Մտորեք ձեր օրվա մասին: Մասնավոր տարածք ձեր հիշողությունները, զգացմունքները և ամենօրյա փորձառությունները գրի առնելու համար:';
-
-  @override
-  String get onboardingCalendarTitle => 'Օրացույց և Իրադարձություններ';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Երբեք բաց մի թողեք ոչ մի պահ: Կազմակերպեք ձեր ժամանակացույցը և հետևեք կարևոր գալիք իրադարձություններին:';
 
   @override
   String get onboardingClipboardTitle => 'Բուֆերի կառավարիչ';
@@ -448,65 +361,22 @@ class AppLocalizationsHy extends AppLocalizations {
       'Պատճենեք մեկ անգամ, տեղադրեք ցանկացած տեղ: Մուտք գործեք ձեր բուֆերի պատմություն՝ նախկինում պատճենված հատվածները վերականգնելու համար:';
 
   @override
-  String get onboardingCanvasTitle => 'Ստեղծագործական կտավ';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Սանձազերծեք ձեր ստեղծագործական ունակությունները: Նկարեք, էսքիզներ արեք և վիզուալացրեք ձեր գաղափարները թվային կտավի վրա:';
-
-  @override
   String get featuresNotesDesc => 'Ստեղծեք և կառավարեք ձեր նշումները';
 
   @override
   String get featuresTodosDesc => 'Հետևեք ձեր առաջադրանքներին';
 
   @override
-  String get featuresExpensesDesc => 'Վերահսկեք ձեր ծախսերը';
-
-  @override
   String get featuresJournalDesc => 'Գրի առեք ձեր մտքերը';
 
   @override
-  String get featuresCalendarDesc => 'Կազմակերպեք ձեր ժամանակացույցը';
-
-  @override
   String get featuresClipboardDesc => 'Մուտք գործեք բուֆերի պատմություն';
-
-  @override
-  String get featuresCanvasDesc => 'Նկարեք և էսքիզներ արեք ազատորեն';
-
-  @override
-  String get featuresSocialPost => 'Սոցիալական հրապարակում';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Ստեղծեք գրավիչ սոցիալական մեդիա բովանդակություն';
 
   @override
   String get chooseYourAura => 'Ընտրեք ձեր աուրան';
 
   @override
   String get expressYourselfTheme => 'Արտահայտվեք թեմայի նոր գույնով:';
-
-  @override
-  String get level => 'Մակարդակ';
-
-  @override
-  String get xpToNextLevel => 'XP մինչև հաջորդ մակարդակ';
-
-  @override
-  String get checkUpcomingEvents => 'Ստուգել գալիք իրադարձությունները';
-
-  @override
-  String get startNewSketch => 'Սկսել նոր էսքիզ';
-
-  @override
-  String get noTransactionsMonth => 'Այս ամիս գործարքներ չկան';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return '$count գործարք այս ամիս';
-  }
 
   @override
   String get autoSaveClipboard => 'Բուֆերի ավտոմատ պահպանում';
@@ -571,16 +441,6 @@ class AppLocalizationsHy extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'Ձեր հիշողությունները դիտելու բացառիկ եղանակներ';
-
-  @override
-  String get calendarTools => 'Օրացույց և Գործիքներ';
-
-  @override
-  String get fullCalendar => 'Լրիվ օրացույց';
-
-  @override
-  String get fullCalendarDesc =>
-      'Իրադարձությունների կառավարման ամբողջական համակարգ';
 
   @override
   String get clipboardAutoSaveDesc => 'Բուֆերի պատմության ֆոնային ձայնագրում';
@@ -669,78 +529,13 @@ class AppLocalizationsHy extends AppLocalizations {
   String get completed => 'Ավարտված է';
 
   @override
-  String get greatJob => 'Հիանալի աշխատանք:';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Դուք վաստակեցիք $amount XP: Հաջորդ առաջադրանքը՝ $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Առաջադրանքն ավարտված է: +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Տեղափոխե՞լ բոլոր ակտիվ առաջադրանքները աղբաման:';
-
-  @override
-  String get deleteAllPosts => 'Ջնջել բոլոր հրապարակումները';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Վստա՞հ եք, որ ցանկանում եք ջնջել ԲՈԼՈՐ սոցիալական հրապարակումները: Սա հնարավոր չէ չեղարկել:';
-
-  @override
-  String get allPosts => 'Բոլոր հրապարակումները';
-
-  @override
-  String get favorites => 'Ֆավորիտներ';
-
-  @override
-  String get drafts => 'Սևագրեր';
-
-  @override
-  String get noFavoritesYet => 'Դեռ ֆավորիտներ չկան';
-
-  @override
-  String get noDraftsYet => 'Դեռ սևագրեր չկան';
-
-  @override
-  String get startSocialJourney => 'Սկսեք ձեր սոցիալական ճանապարհորդությունը:';
-
-  @override
-  String get draft => 'Սևագիր';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count կցորդ';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Խնդրում ենք ավելացնել որոշակի բովանդակություն կամ մեդիա կիսվելու համար';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Սխալ՝ ֆայլը չի գտնվել $path հասցեում';
   }
-
-  @override
-  String get checkFacebookApp => 'Ստուգեք Facebook հավելվածը';
-
-  @override
-  String get systemShare => 'Համակարգային կիսվել';
-
-  @override
-  String get socialPost => 'Սոցիալական հրապարակում';
-
-  @override
-  String get favorite => 'Ֆավորիտ';
-
-  @override
-  String get saveDraft => 'Պահպանել սևագիրը';
 
   @override
   String get entryCopied => 'Գրառումը պատճենված է';
@@ -886,33 +681,10 @@ class AppLocalizationsHy extends AppLocalizations {
   String get dueDate => 'Վերջնաժամկետ';
 
   @override
-  String get expenseTitle => 'Ծախսեր';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Որոնել $currency-ով...';
-  }
-
-  @override
   String get sortAndFilter => 'Տեսակավորել և Ֆիլտրել';
 
   @override
   String get sortBy => 'ՏԵՍԱԿԱՎՈՐԵԼ ԸՍՏ';
-
-  @override
-  String get highestAmount => 'Ամենաբարձր գումարը';
-
-  @override
-  String get lowestAmount => 'Ամենացածր գումարը';
-
-  @override
-  String get moreFilters => 'Այլ ֆիլտրեր...';
-
-  @override
-  String get filterExpenses => 'Ֆիլտրել ծախսերը';
-
-  @override
-  String get transactionType => 'Գործարքի տեսակ';
 
   @override
   String get categories => 'Կատեգորիաներ';
@@ -921,21 +693,10 @@ class AppLocalizationsHy extends AppLocalizations {
   String get all => 'Բոլորը';
 
   @override
-  String get income => 'Եկամուտ';
-
-  @override
-  String get expense => 'Ծախս';
-
-  @override
   String get reset => 'Վերակայել';
 
   @override
   String get apply => 'Կիրառել';
-
-  @override
-  String newExpense(String currency) {
-    return 'Նոր $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -998,35 +759,10 @@ class AppLocalizationsHy extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Նոր էսքիզ';
-
-  @override
-  String get searchSketches => 'Որոնել էսքիզներ և թղթապանակներ...';
-
-  @override
   String get noResultsFound => 'Արդյունքներ չեն գտնվել';
 
   @override
   String get noItems => 'Տարրեր չկան';
-
-  @override
-  String get noDrawingsYet => 'Դեռ նկարներ չկան';
-
-  @override
-  String get canvasIntro =>
-      'Սանձազերծեք ձեր ստեղծագործական ունակությունները կտավի վրա:';
-
-  @override
-  String get newCanvas => 'Նոր կտավ';
 
   @override
   String get rename => 'Վերանվանել';
@@ -1042,13 +778,7 @@ class AppLocalizationsHy extends AppLocalizations {
       'Այս թղթապանակի բոլոր էսքիզները վերջնականապես կջնջվեն:';
 
   @override
-  String get renameFolder => 'Վերանվանել թղթապանակը';
-
-  @override
   String get chooseColor => 'Ընտրել գույնը';
-
-  @override
-  String get deleteFolderQuestion => 'Ջնջե՞լ թղթապանակը';
 
   @override
   String get searchClips => 'Որոնել հատվածներ...';
@@ -1071,9 +801,6 @@ class AppLocalizationsHy extends AppLocalizations {
   @override
   String get restoreClipLater =>
       'Դուք կարող եք վերականգնել այս հատվածը ավելի ուշ:';
-
-  @override
-  String get upcomingEvents => 'Գալիք իրադարձություններ';
 
   @override
   String get dataDistribution => 'ՏՎՅԱԼՆԵՐԻ ԲԱՇԽՈՒՄ';
@@ -1114,57 +841,6 @@ class AppLocalizationsHy extends AppLocalizations {
   String selectedCount(int count) {
     return '$count ընտրված է';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes էսքիզ • $folders թղթապանակ';
-  }
-
-  @override
-  String get sortItems => 'Տեսակավորել տարրերը';
-
-  @override
-  String get sortNameAZ => 'Անուն (Ա-Ֆ)';
-
-  @override
-  String get sortNameZA => 'Անուն (Ֆ-Ա)';
-
-  @override
-  String get createFolder => 'Ստեղծել թղթապանակ';
-
-  @override
-  String get folderNameHint => 'Թղթապանակի անունը...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Ջնջե՞լ $count էսքիզ: Սա հնարավոր չէ չեղարկել:';
-  }
-
-  @override
-  String get noSketchesFound => 'Էսքիզներ չեն գտնվել';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Փորձեք կարգավորել որոնումը կամ ստեղծել նոր էսքիզ:';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Որոնել $folder-ում...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count էսքիզ';
-  }
-
-  @override
-  String get sortSketches => 'Տեսակավորել էսքիզները';
-
-  @override
-  String get calendarScreenTitle => 'Օրացույց';
-
-  @override
-  String get dailyActivity => 'Ամենօրյա գործունեություն';
 
   @override
   String get deleteItemQuestion => 'Ջնջե՞լ տարրը';
@@ -1268,28 +944,6 @@ class AppLocalizationsHy extends AppLocalizations {
   String get general => 'Ընդհանուր';
 
   @override
-  String get saveTransactionQuestion => 'Ցանկանու՞մ եք պահպանել այս գործարքը:';
-
-  @override
-  String get fillTitleAmount => 'Խնդրում ենք լրացնել վերնագիրը և գումարը';
-
-  @override
-  String get invalidAmount => 'Գումարի անվավեր ձևաչափ';
-
-  @override
-  String get moveTransactionToBinTitle => 'Տեղափոխե՞լ գործարքը աղբաման:';
-
-  @override
-  String get restoreTransactionLater =>
-      'Դուք կարող եք վերականգնել այս գործարքը ավելի ուշ կարգավորումներից:';
-
-  @override
-  String get newTransaction => 'Նոր գործարք';
-
-  @override
-  String get whatIsThisFor => 'What is this for?';
-
-  @override
   String get description => 'Նկարագրություն';
 
   @override
@@ -1305,71 +959,10 @@ class AppLocalizationsHy extends AppLocalizations {
   String get yearly => 'Տարեկան';
 
   @override
-  String get totalIncome => 'Ընդհանուր եկամուտ';
-
-  @override
-  String get totalExpense => 'Ընդհանուր ծախս';
-
-  @override
   String get analysis => 'Վերլուծություն';
 
   @override
   String get transactions => 'Գործարքներ';
-
-  @override
-  String get noExpensesFound => 'Այս ժամանակահատվածի համար ծախսեր չեն գտնվել:';
-
-  @override
-  String get netBalance => 'Զուտ հաշվեկշիռ';
-
-  @override
-  String get topCategories => 'Հիմնական կատեգորիաներ';
-
-  @override
-  String get spendingTrend => 'Ծախսերի միտումը';
-
-  @override
-  String get insights => 'Խորհուրդներ';
-
-  @override
-  String get noExpensesRecorded => 'Ծախսեր չեն գրանցվել';
-
-  @override
-  String get trackSpendingHabits =>
-      'Հեշտությամբ հետևեք ձեր ծախսային սովորություններին:';
-
-  @override
-  String get addExpense => 'Ավելացնել ծախս';
-
-  @override
-  String get noDataForPeriod => 'Այս ժամանակահատվածի համար տվյալներ չկան';
-
-  @override
-  String get budget => 'Բյուջե';
-
-  @override
-  String get spent => 'Ծախսված է';
-
-  @override
-  String get limit => 'Սահմանաչափ';
-
-  @override
-  String get overBudget => 'Բյուջեն գերազանցված է:';
-
-  @override
-  String remainingBudget(Object percent) {
-    return 'մնացել է $percent%';
-  }
-
-  @override
-  String get savingsRate => 'Խնայողության չափը';
-
-  @override
-  String get healthScore => 'Առողջության միավոր';
-
-  @override
-  String get healthScoreExplanation =>
-      'Այս միավորը հիմնված է ձեր խնայողության չափի վրա:\n\n• > 50% խնայված = Գերազանց (100)\n• 0% խնայված = Միջին (50)\n• Ծախսերը > Եկամուտները = Վատ (<50)';
 
   @override
   String get ok => 'Լավ';
@@ -1398,19 +991,10 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   String get todos => 'Անելիքներ';
 
   @override
-  String get expenses => 'Ծախսեր';
-
-  @override
   String get journal => 'Օրագիր';
 
   @override
-  String get calendar => 'Օրացույց';
-
-  @override
   String get clipboard => 'Բուֆեր';
-
-  @override
-  String get canvas => 'Կտավ';
 
   @override
   String get save => 'Պահպանել';
@@ -1443,24 +1027,6 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   String get discard => 'Չեղարկել';
 
   @override
-  String get createPost => 'Ստեղծել հրապարակում';
-
-  @override
-  String get post => 'Հրապարակել';
-
-  @override
-  String get postingTo => 'Հրապարակումը՝';
-
-  @override
-  String get whatsOnYourMind => 'Ի՞նչ կա ձեր մտքում:';
-
-  @override
-  String get pickImages => 'Ընտրել նկարներ';
-
-  @override
-  String get pickVideo => 'Ընտրել տեսանյութ';
-
-  @override
   String get camera => 'Տեսախցիկ';
 
   @override
@@ -1485,16 +1051,6 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   String error(Object error) {
     return 'Սխալ՝ $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Դասավորումը հասանելի է միայն «Բոլոր հրապարակումներում»';
-
-  @override
-  String get deletePost => 'Ջնջել հրապարակումը';
-
-  @override
-  String get postDeleted => 'Հրապարակումը ջնջված է';
 
   @override
   String get premiumFeatures => 'Պրեմիում հնարավորություններ';
@@ -1555,35 +1111,6 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   String get recycleBinCleared => 'Աղբամանը հաջողությամբ դատարկվեց';
 
   @override
-  String get allPostsDeleted => 'Բոլոր հրապարակումները ջնջված են';
-
-  @override
-  String get newPost => 'Նոր հրապարակում';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Տեքստը պատճենված է բուֆերում (Facebook-ի քաղաքականություն)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok-ով կիսվելու համար անհրաժեշտ է տեսանյութ/նկար';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Կիսվելու սխալ՝ $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Կիսվել $platform Story-ում';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Կիսվել $platform Feed-ում';
-  }
-
-  @override
   String get unlockPermanently => 'Ապակողպել ընդմիշտ';
 
   @override
@@ -1599,13 +1126,6 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
 
   @override
   String get selectDateTime => 'Ընտրել ամսաթիվը և ժամը';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Վստա՞հ եք, որ ցանկանում եք ջնջել այս հրապարակումը:';
-
-  @override
-  String get socialPosts => 'Սոցիալական հրապարակումներ';
 
   @override
   String get watchAdToEarnCoins =>
@@ -1794,25 +1314,11 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
       'Մնացեք խաղի մեջ: Ստեղծեք անելիքների ցուցակներ, սահմանեք առաջնահերթություններ և հասեք ձեր նպատակներին քայլ առ քայլ:';
 
   @override
-  String get onboardingExpensesTitle => 'Ծախսերի հետևում';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Վերահսկեք ձեր ֆինանսները: Հեշտությամբ հետևեք եկամուտներին և ծախսերին՝ ձեր ծախսային սովորությունները հասկանալու համար:';
-
-  @override
   String get onboardingJournalTitle => 'Անձնական օրագիր';
 
   @override
   String get onboardingJournalDesc =>
       'Մտորեք ձեր օրվա մասին: Մասնավոր տարածք ձեր հիշողությունները, զգացմունքները և ամենօրյա փորձառությունները գրի առնելու համար:';
-
-  @override
-  String get onboardingCalendarTitle => 'Օրացույց և Իրադարձություններ';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Երբեք բաց մի թողեք ոչ մի պահ: Կազմակերպեք ձեր ժամանակացույցը և հետևեք կարևոր գալիք իրադարձություններին:';
 
   @override
   String get onboardingClipboardTitle => 'Բուֆերի կառավարիչ';
@@ -1822,65 +1328,22 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
       'Պատճենեք մեկ անգամ, տեղադրեք ցանկացած տեղ: Մուտք գործեք ձեր բուֆերի պատմություն՝ նախկինում պատճենված հատվածները վերականգնելու համար:';
 
   @override
-  String get onboardingCanvasTitle => 'Ստեղծագործական կտավ';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Սանձազերծեք ձեր ստեղծագործական ունակությունները: Նկարեք, էսքիզներ արեք և վիզուալացրեք ձեր գաղափարները թվային կտավի վրա:';
-
-  @override
   String get featuresNotesDesc => 'Ստեղծեք և կառավարեք ձեր նշումները';
 
   @override
   String get featuresTodosDesc => 'Հետևեք ձեր առաջադրանքներին';
 
   @override
-  String get featuresExpensesDesc => 'Վերահսկեք ձեր ծախսերը';
-
-  @override
   String get featuresJournalDesc => 'Գրի առեք ձեր մտքերը';
 
   @override
-  String get featuresCalendarDesc => 'Կազմակերպեք ձեր ժամանակացույցը';
-
-  @override
   String get featuresClipboardDesc => 'Մուտք գործեք բուֆերի պատմություն';
-
-  @override
-  String get featuresCanvasDesc => 'Նկարեք և էսքիզներ արեք ազատորեն';
-
-  @override
-  String get featuresSocialPost => 'Սոցիալական հրապարակում';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Ստեղծեք գրավիչ սոցիալական մեդիա բովանդակություն';
 
   @override
   String get chooseYourAura => 'Ընտրեք ձեր աուրան';
 
   @override
   String get expressYourselfTheme => 'Արտահայտվեք թեմայի նոր գույնով:';
-
-  @override
-  String get level => 'Մակարդակ';
-
-  @override
-  String get xpToNextLevel => 'XP մինչև հաջորդ մակարդակ';
-
-  @override
-  String get checkUpcomingEvents => 'Ստուգել գալիք իրադարձությունները';
-
-  @override
-  String get startNewSketch => 'Սկսել նոր էսքիզ';
-
-  @override
-  String get noTransactionsMonth => 'Այս ամիս գործարքներ չկան';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return '$count գործարք այս ամիս';
-  }
 
   @override
   String get autoSaveClipboard => 'Բուֆերի ավտոմատ պահպանում';
@@ -1945,16 +1408,6 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   @override
   String get premiumLayoutsDesc =>
       'Ձեր հիշողությունները դիտելու բացառիկ եղանակներ';
-
-  @override
-  String get calendarTools => 'Օրացույց և Գործիքներ';
-
-  @override
-  String get fullCalendar => 'Լրիվ օրացույց';
-
-  @override
-  String get fullCalendarDesc =>
-      'Իրադարձությունների կառավարման ամբողջական համակարգ';
 
   @override
   String get clipboardAutoSaveDesc => 'Բուֆերի պատմության ֆոնային ձայնագրում';
@@ -2043,78 +1496,13 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   String get completed => 'Ավարտված է';
 
   @override
-  String get greatJob => 'Հիանալի աշխատանք:';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Դուք վաստակեցիք $amount XP: Հաջորդ առաջադրանքը՝ $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Առաջադրանքն ավարտված է: +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Տեղափոխե՞լ բոլոր ակտիվ առաջադրանքները աղբաման:';
-
-  @override
-  String get deleteAllPosts => 'Ջնջել բոլոր հրապարակումները';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Վստա՞հ եք, որ ցանկանում եք ջնջել ԲՈԼՈՐ սոցիալական հրապարակումները: Սա հնարավոր չէ չեղարկել:';
-
-  @override
-  String get allPosts => 'Բոլոր հրապարակումները';
-
-  @override
-  String get favorites => 'Ֆավորիտներ';
-
-  @override
-  String get drafts => 'Սևագրեր';
-
-  @override
-  String get noFavoritesYet => 'Դեռ ֆավորիտներ չկան';
-
-  @override
-  String get noDraftsYet => 'Դեռ սևագրեր չկան';
-
-  @override
-  String get startSocialJourney => 'Սկսեք ձեր սոցիալական ճանապարհորդությունը:';
-
-  @override
-  String get draft => 'Սևագիր';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count կցորդ';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Խնդրում ենք ավելացնել որոշակի բովանդակություն կամ մեդիա կիսվելու համար';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Սխալ՝ ֆայլը չի գտնվել $path հասցեում';
   }
-
-  @override
-  String get checkFacebookApp => 'Ստուգեք Facebook հավելվածը';
-
-  @override
-  String get systemShare => 'Համակարգային կիսվել';
-
-  @override
-  String get socialPost => 'Սոցիալական հրապարակում';
-
-  @override
-  String get favorite => 'Ֆավորիտ';
-
-  @override
-  String get saveDraft => 'Պահպանել սևագիրը';
 
   @override
   String get entryCopied => 'Գրառումը պատճենված է';
@@ -2260,33 +1648,10 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   String get dueDate => 'Վերջնաժամկետ';
 
   @override
-  String get expenseTitle => 'Ծախսեր';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Որոնել $currency-ով...';
-  }
-
-  @override
   String get sortAndFilter => 'Տեսակավորել և Ֆիլտրել';
 
   @override
   String get sortBy => 'ՏԵՍԱԿԱՎՈՐԵԼ ԸՍՏ';
-
-  @override
-  String get highestAmount => 'Ամենաբարձր գումարը';
-
-  @override
-  String get lowestAmount => 'Ամենացածր գումարը';
-
-  @override
-  String get moreFilters => 'Այլ ֆիլտրեր...';
-
-  @override
-  String get filterExpenses => 'Ֆիլտրել ծախսերը';
-
-  @override
-  String get transactionType => 'Գործարքի տեսակ';
 
   @override
   String get categories => 'Կատեգորիաներ';
@@ -2295,21 +1660,10 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   String get all => 'Բոլորը';
 
   @override
-  String get income => 'Եկամուտ';
-
-  @override
-  String get expense => 'Ծախս';
-
-  @override
   String get reset => 'Վերակայել';
 
   @override
   String get apply => 'Կիրառել';
-
-  @override
-  String newExpense(String currency) {
-    return 'Նոր $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2372,35 +1726,10 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Նոր էսքիզ';
-
-  @override
-  String get searchSketches => 'Որոնել էսքիզներ և թղթապանակներ...';
-
-  @override
   String get noResultsFound => 'Արդյունքներ չեն գտնվել';
 
   @override
   String get noItems => 'Տարրեր չկան';
-
-  @override
-  String get noDrawingsYet => 'Դեռ նկարներ չկան';
-
-  @override
-  String get canvasIntro =>
-      'Սանձազերծեք ձեր ստեղծագործական ունակությունները կտավի վրա:';
-
-  @override
-  String get newCanvas => 'Նոր կտավ';
 
   @override
   String get rename => 'Վերանվանել';
@@ -2416,13 +1745,7 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
       'Այս թղթապանակի բոլոր էսքիզները վերջնականապես կջնջվեն:';
 
   @override
-  String get renameFolder => 'Վերանվանել թղթապանակը';
-
-  @override
   String get chooseColor => 'Ընտրել գույնը';
-
-  @override
-  String get deleteFolderQuestion => 'Ջնջե՞լ թղթապանակը';
 
   @override
   String get searchClips => 'Որոնել հատվածներ...';
@@ -2445,9 +1768,6 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   @override
   String get restoreClipLater =>
       'Դուք կարող եք վերականգնել այս հատվածը ավելի ուշ:';
-
-  @override
-  String get upcomingEvents => 'Գալիք իրադարձություններ';
 
   @override
   String get dataDistribution => 'ՏՎՅԱԼՆԵՐԻ ԲԱՇԽՈՒՄ';
@@ -2488,57 +1808,6 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   String selectedCount(int count) {
     return '$count ընտրված է';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes էսքիզ • $folders թղթապանակ';
-  }
-
-  @override
-  String get sortItems => 'Տեսակավորել տարրերը';
-
-  @override
-  String get sortNameAZ => 'Անուն (Ա-Ֆ)';
-
-  @override
-  String get sortNameZA => 'Անուն (Ֆ-Ա)';
-
-  @override
-  String get createFolder => 'Ստեղծել թղթապանակ';
-
-  @override
-  String get folderNameHint => 'Թղթապանակի անունը...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Ջնջե՞լ $count էսքիզ: Սա հնարավոր չէ չեղարկել:';
-  }
-
-  @override
-  String get noSketchesFound => 'Էսքիզներ չեն գտնվել';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Փորձեք կարգավորել որոնումը կամ ստեղծել նոր էսքիզ:';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Որոնել $folder-ում...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count էսքիզ';
-  }
-
-  @override
-  String get sortSketches => 'Տեսակավորել էսքիզները';
-
-  @override
-  String get calendarScreenTitle => 'Օրացույց';
-
-  @override
-  String get dailyActivity => 'Ամենօրյա գործունեություն';
 
   @override
   String get deleteItemQuestion => 'Ջնջե՞լ տարրը';
@@ -2642,28 +1911,6 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   String get general => 'Ընդհուր';
 
   @override
-  String get saveTransactionQuestion => 'Ցանկանու՞մ եք պահպանել այս գործարքը:';
-
-  @override
-  String get fillTitleAmount => 'Խնդրում ենք լրացնել վերնագիրը և գումարը';
-
-  @override
-  String get invalidAmount => 'Գումարի անվավեր ձևաչափ';
-
-  @override
-  String get moveTransactionToBinTitle => 'Տեղափոխե՞լ գործարքը աղբաման:';
-
-  @override
-  String get restoreTransactionLater =>
-      'Դուք կարող եք վերականգնել այս գործարքը ավելի ուշ կարգավորումներից:';
-
-  @override
-  String get newTransaction => 'Նոր գործարք';
-
-  @override
-  String get whatIsThisFor => 'Ինչի՞ համար է սա:';
-
-  @override
   String get description => 'Նկարագրություն';
 
   @override
@@ -2679,71 +1926,10 @@ class AppLocalizationsHyAm extends AppLocalizationsHy {
   String get yearly => 'Տարեկան';
 
   @override
-  String get totalIncome => 'Ընդհանուր եկամուտ';
-
-  @override
-  String get totalExpense => 'Ընդհանուր ծախս';
-
-  @override
   String get analysis => 'Վերլուծություն';
 
   @override
   String get transactions => 'Գործարքներ';
-
-  @override
-  String get noExpensesFound => 'Այս ժամանակահատվածի համար ծախսեր չեն գտնվել:';
-
-  @override
-  String get netBalance => 'Զուտ հաշվեկշիռ';
-
-  @override
-  String get topCategories => 'Հիմնական կատեգորիաներ';
-
-  @override
-  String get spendingTrend => 'Ծախսերի միտումը';
-
-  @override
-  String get insights => 'Խորհուրդներ';
-
-  @override
-  String get noExpensesRecorded => 'Ծախսեր չեն գրանցվել';
-
-  @override
-  String get trackSpendingHabits =>
-      'Հեշտությամբ հետևեք ձեր ծախսային սովորություններին:';
-
-  @override
-  String get addExpense => 'Ավելացնել ծախս';
-
-  @override
-  String get noDataForPeriod => 'Այս ժամանակահատվածի համար տվյալներ չկան';
-
-  @override
-  String get budget => 'Բյուջե';
-
-  @override
-  String get spent => 'Ծախսված է';
-
-  @override
-  String get limit => 'Սահմանաչափ';
-
-  @override
-  String get overBudget => 'Բյուջեն գերազանցված է:';
-
-  @override
-  String remainingBudget(Object percent) {
-    return 'մնացել է $percent%';
-  }
-
-  @override
-  String get savingsRate => 'Խնայողության չափը';
-
-  @override
-  String get healthScore => 'Առողջության միավոր';
-
-  @override
-  String get healthScoreExplanation =>
-      'Այս միավորը հիմնված է ձեր խնայողության չափի վրա:\n\n• > 50% խնայված = Գերազանց (100)\n• 0% խնայված = Միջին (50)\n• Ծախսերը > Եկամուտները = Վատ (<50)';
 
   @override
   String get ok => 'Լավ';

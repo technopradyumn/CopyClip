@@ -24,19 +24,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get todos => 'To-Dos';
 
   @override
-  String get expenses => 'Výdaje';
-
-  @override
   String get journal => 'Časopis';
 
   @override
-  String get calendar => 'Kalendář';
-
-  @override
   String get clipboard => 'Schránka';
-
-  @override
-  String get canvas => 'Plátno';
 
   @override
   String get save => 'Uložit';
@@ -69,24 +60,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get discard => 'Vyřadit';
 
   @override
-  String get createPost => 'Vytvořit příspěvek';
-
-  @override
-  String get post => 'Zveřejnit';
-
-  @override
-  String get postingTo => 'Odesílání do';
-
-  @override
-  String get whatsOnYourMind => 'co máš na srdci?';
-
-  @override
-  String get pickImages => 'Vyberte obrázky';
-
-  @override
-  String get pickVideo => 'Vyberte Video';
-
-  @override
   String get camera => 'Fotoaparát';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String error(Object error) {
     return 'Chyba: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Objednávání je k dispozici pouze ve \'\'Všechny příspěvky\'\'';
-
-  @override
-  String get deletePost => 'Smazat příspěvek';
-
-  @override
-  String get postDeleted => 'Příspěvek smazán';
 
   @override
   String get premiumFeatures => 'Prémiové funkce';
@@ -181,35 +144,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get recycleBinCleared => 'Koš byl úspěšně vymazán';
 
   @override
-  String get allPostsDeleted => 'Všechny příspěvky smazány';
-
-  @override
-  String get newPost => 'Nový příspěvek';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Text zkopírován do schránky (zásady Facebooku)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Sdílení TikTok vyžaduje video/obrázek';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Chyba sdílení: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Sdílejte na $platform příběh';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Sdílet ve zdroji $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Odemknout trvale';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Vyberte Datum a čas';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Opravdu chcete tento příspěvek smazat?';
-
-  @override
-  String get socialPosts => 'Sociální příspěvky';
 
   @override
   String get watchAdToEarnCoins => 'Sledujte reklamu a vydělávejte coiny';
@@ -417,25 +344,11 @@ class AppLocalizationsCs extends AppLocalizations {
       'Zůstaňte na vrcholu své hry. Vytvářejte seznamy úkolů, stanovujte priority a rušte své cíle po jednom zaškrtnutí.';
 
   @override
-  String get onboardingExpensesTitle => 'Sledování výdajů';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Převezměte kontrolu nad svými financemi. Snadno sledujte příjmy a výdaje, abyste porozuměli svým výdajovým návykům.';
-
-  @override
   String get onboardingJournalTitle => 'Osobní deník';
 
   @override
   String get onboardingJournalDesc =>
       'Zamyslete se nad svým dnem. Soukromý prostor pro zapsání vašich vzpomínek, pocitů a každodenních zážitků.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalendář a události';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Nezmeškejte ani okamžik. Uspořádejte si svůj rozvrh a sledujte důležité nadcházející události.';
 
   @override
   String get onboardingClipboardTitle => 'Správce schránky';
@@ -445,71 +358,22 @@ class AppLocalizationsCs extends AppLocalizations {
       'Zkopírujte jednou, vložte kamkoli. Přístup k historii schránky a načtení dříve zkopírovaných úryvků.';
 
   @override
-  String get onboardingCanvasTitle => 'Kreativní plátno';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Popusťte uzdu své kreativitě. Nakreslete, skicujte a vizualizujte své nápady na volném digitálním plátně.';
-
-  @override
   String get featuresNotesDesc => 'Vytvářejte a spravujte své poznámky';
 
   @override
   String get featuresTodosDesc => 'Sledujte své úkoly';
 
   @override
-  String get featuresExpensesDesc => 'Sledujte své výdaje';
-
-  @override
   String get featuresJournalDesc => 'Zapište si své myšlenky';
 
   @override
-  String get featuresCalendarDesc => 'Uspořádejte si rozvrh';
-
-  @override
   String get featuresClipboardDesc => 'Přístup k historii schránky';
-
-  @override
-  String get featuresCanvasDesc => 'Kreslit a skicovat volně';
-
-  @override
-  String get featuresSocialPost => 'Sociální příspěvek';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Vytvářejte poutavý obsah sociálních médií';
 
   @override
   String get chooseYourAura => 'Vyberte si svou auru';
 
   @override
   String get expressYourselfTheme => 'Vyjádřete se pomocí nové barvy motivu!';
-
-  @override
-  String get level => 'Úroveň';
-
-  @override
-  String get xpToNextLevel => 'XP na úroveň';
-
-  @override
-  String get checkUpcomingEvents => 'Zkontrolujte nadcházející události';
-
-  @override
-  String get startNewSketch => 'Začněte nový náčrt';
-
-  @override
-  String get noTransactionsMonth => 'Tento měsíc žádné transakce';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transakce$_temp0 tento měsíc';
-  }
 
   @override
   String get autoSaveClipboard => 'Automatické ukládání schránky';
@@ -573,15 +437,6 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'Exkluzivní způsoby zobrazení vašich vzpomínek';
-
-  @override
-  String get calendarTools => 'Kalendář a nástroje';
-
-  @override
-  String get fullCalendar => 'Plný kalendář';
-
-  @override
-  String get fullCalendarDesc => 'Kompletní systém správy událostí';
 
   @override
   String get clipboardAutoSaveDesc => 'Záznam historie schránky na pozadí';
@@ -667,83 +522,13 @@ class AppLocalizationsCs extends AppLocalizations {
   String get completed => 'Dokončeno';
 
   @override
-  String get greatJob => 'Skvělá práce!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Získali jste $amount XP! Další úkol: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Úkol splněn! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Přesunout všechny aktivní úkoly do koše?';
-
-  @override
-  String get deleteAllPosts => 'Smazat všechny příspěvky';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Opravdu chcete smazat VŠECHNY příspěvky na sociálních sítích? Toto nelze vrátit zpět.';
-
-  @override
-  String get allPosts => 'Všechny příspěvky';
-
-  @override
-  String get favorites => 'Oblíbené';
-
-  @override
-  String get drafts => 'Koncepty';
-
-  @override
-  String get noFavoritesYet => 'Zatím žádné oblíbené';
-
-  @override
-  String get noDraftsYet => 'Zatím žádné koncepty';
-
-  @override
-  String get startSocialJourney => 'Začněte svou společenskou cestu!';
-
-  @override
-  String get draft => 'NÁVRH';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count příloha$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'Přidejte nějaký obsah nebo média ke sdílení';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Chyba: Soubor nebyl nalezen na $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Zkontrolujte aplikaci Facebook';
-
-  @override
-  String get systemShare => 'Sdílení systému';
-
-  @override
-  String get socialPost => 'Sociální příspěvek';
-
-  @override
-  String get favorite => 'Oblíbený';
-
-  @override
-  String get saveDraft => 'Uložit koncept';
 
   @override
   String get entryCopied => 'Záznam zkopírován';
@@ -889,33 +674,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get dueDate => 'Dvě data';
 
   @override
-  String get expenseTitle => 'Výdaje';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Hledat v $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Řadit a filtrovat';
 
   @override
   String get sortBy => 'ŘADIT PODLE';
-
-  @override
-  String get highestAmount => 'Nejvyšší částka';
-
-  @override
-  String get lowestAmount => 'Nejnižší částka';
-
-  @override
-  String get moreFilters => 'Další filtry...';
-
-  @override
-  String get filterExpenses => 'Filtrovat výdaje';
-
-  @override
-  String get transactionType => 'Typ transakce';
 
   @override
   String get categories => 'Kategorie';
@@ -924,21 +686,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get all => 'Vše';
 
   @override
-  String get income => 'Příjem';
-
-  @override
-  String get expense => 'Výdaj';
-
-  @override
   String get reset => 'Resetovat';
 
   @override
   String get apply => 'Použít';
-
-  @override
-  String newExpense(String currency) {
-    return 'Nová $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -1001,34 +752,10 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Nová skica';
-
-  @override
-  String get searchSketches => 'Hledat náčrty a složky...';
-
-  @override
   String get noResultsFound => 'Nebyly nalezeny žádné výsledky';
 
   @override
   String get noItems => 'Žádné položky';
-
-  @override
-  String get noDrawingsYet => 'Zatím žádné kresby';
-
-  @override
-  String get canvasIntro => 'Popusťte uzdu své kreativitě na plátně!';
-
-  @override
-  String get newCanvas => 'Nové plátno';
 
   @override
   String get rename => 'Přejmenovat';
@@ -1044,13 +771,7 @@ class AppLocalizationsCs extends AppLocalizations {
       'Všechny skici v této složce budou trvale odstraněny.';
 
   @override
-  String get renameFolder => 'Přejmenovat složku';
-
-  @override
   String get chooseColor => 'Vyberte Barva';
-
-  @override
-  String get deleteFolderQuestion => 'Smazat složku?';
 
   @override
   String get searchClips => 'Hledat klipy...';
@@ -1072,9 +793,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'Tento klip můžete později obnovit.';
-
-  @override
-  String get upcomingEvents => 'Nadcházející události';
 
   @override
   String get dataDistribution => 'DISTRIBUCE DAT';
@@ -1115,57 +833,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String selectedCount(int count) {
     return '$count Vybráno';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes skici • $folders složky';
-  }
-
-  @override
-  String get sortItems => 'Seřadit položky';
-
-  @override
-  String get sortNameAZ => 'Jméno (A–Z)';
-
-  @override
-  String get sortNameZA => 'Jméno (Z-A)';
-
-  @override
-  String get createFolder => 'Vytvořit složku';
-
-  @override
-  String get folderNameHint => 'Název složky...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Smazat $count náčrtů? Toto nelze vrátit zpět.';
-  }
-
-  @override
-  String get noSketchesFound => 'Nebyly nalezeny žádné skici';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Zkuste upravit vyhledávání nebo vytvořit nový náčrt.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Hledat ve složce $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count skic';
-  }
-
-  @override
-  String get sortSketches => 'Třídit skici';
-
-  @override
-  String get calendarScreenTitle => 'Kalendář';
-
-  @override
-  String get dailyActivity => 'Denní aktivita';
 
   @override
   String get deleteItemQuestion => 'Smazat položku?';
@@ -1267,28 +934,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get general => 'Generál';
 
   @override
-  String get saveTransactionQuestion => 'Chcete tuto transakci uložit?';
-
-  @override
-  String get fillTitleAmount => 'Vyplňte název a částku';
-
-  @override
-  String get invalidAmount => 'Neplatný formát částky';
-
-  @override
-  String get moveTransactionToBinTitle => 'Přesunout transakci do koše?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Tuto transakci můžete později obnovit z nastavení.';
-
-  @override
-  String get newTransaction => 'Nová transakce';
-
-  @override
-  String get whatIsThisFor => 'k čemu to je?';
-
-  @override
   String get description => 'Popis';
 
   @override
@@ -1304,70 +949,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get yearly => 'Roční';
 
   @override
-  String get totalIncome => 'Celkový příjem';
-
-  @override
-  String get totalExpense => 'Celkové náklady';
-
-  @override
   String get analysis => 'Analýza';
 
   @override
   String get transactions => 'Transakce';
-
-  @override
-  String get noExpensesFound => 'Za toto období nebyly nalezeny žádné výdaje.';
-
-  @override
-  String get netBalance => 'Čistý zůstatek';
-
-  @override
-  String get topCategories => 'Nejlepší kategorie';
-
-  @override
-  String get spendingTrend => 'Trend výdajů';
-
-  @override
-  String get insights => 'Postřehy';
-
-  @override
-  String get noExpensesRecorded => 'Žádné evidované výdaje';
-
-  @override
-  String get trackSpendingHabits => 'Snadno sledujte své výdajové návyky.';
-
-  @override
-  String get addExpense => 'Přidat výdaje';
-
-  @override
-  String get noDataForPeriod => 'Žádné údaje pro toto období';
-
-  @override
-  String get budget => 'Rozpočet';
-
-  @override
-  String get spent => 'Utraceno';
-
-  @override
-  String get limit => 'Omezit';
-
-  @override
-  String get overBudget => 'Přes rozpočet!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return 'Zbývá $percent %.';
-  }
-
-  @override
-  String get savingsRate => 'Míra úspor';
-
-  @override
-  String get healthScore => 'Skóre zdraví';
-
-  @override
-  String get healthScoreExplanation =>
-      'Toto skóre je založeno na vaší míře úspor.\n\n• Ušetřeno > 50 % = Vynikající (100)\n• 0 % uloženo = průměr (50)\n• Výdaje > Příjem = Slabé (<50)';
 
   @override
   String get ok => 'OK';
@@ -1396,19 +981,10 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
   String get todos => 'To-Dos';
 
   @override
-  String get expenses => 'Výdaje';
-
-  @override
   String get journal => 'Časopis';
 
   @override
-  String get calendar => 'Kalendář';
-
-  @override
   String get clipboard => 'Schránka';
-
-  @override
-  String get canvas => 'Plátno';
 
   @override
   String get save => 'Uložit';
@@ -1441,24 +1017,6 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
   String get discard => 'Vyřadit';
 
   @override
-  String get createPost => 'Vytvořit příspěvek';
-
-  @override
-  String get post => 'Zveřejnit';
-
-  @override
-  String get postingTo => 'Odesílání do';
-
-  @override
-  String get whatsOnYourMind => 'co máš na srdci?';
-
-  @override
-  String get pickImages => 'Vyberte obrázky';
-
-  @override
-  String get pickVideo => 'Vyberte Video';
-
-  @override
   String get camera => 'Fotoaparát';
 
   @override
@@ -1483,16 +1041,6 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
   String error(Object error) {
     return 'Chyba: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Objednávání je k dispozici pouze ve \'\'Všechny příspěvky\'\'';
-
-  @override
-  String get deletePost => 'Smazat příspěvek';
-
-  @override
-  String get postDeleted => 'Příspěvek smazán';
 
   @override
   String get premiumFeatures => 'Prémiové funkce';
@@ -1553,35 +1101,6 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
   String get recycleBinCleared => 'Koš byl úspěšně vymazán';
 
   @override
-  String get allPostsDeleted => 'Všechny příspěvky smazány';
-
-  @override
-  String get newPost => 'Nový příspěvek';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Text zkopírován do schránky (zásady Facebooku)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Sdílení TikTok vyžaduje video/obrázek';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Chyba sdílení: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Sdílejte na $platform příběh';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Sdílet ve zdroji $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Odemknout trvale';
 
   @override
@@ -1597,13 +1116,6 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
 
   @override
   String get selectDateTime => 'Vyberte Datum a čas';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Opravdu chcete tento příspěvek smazat?';
-
-  @override
-  String get socialPosts => 'Sociální příspěvky';
 
   @override
   String get watchAdToEarnCoins => 'Sledujte reklamu a vydělávejte coiny';
@@ -1789,25 +1301,11 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
       'Zůstaňte na vrcholu své hry. Vytvářejte seznamy úkolů, stanovujte priority a rušte své cíle po jednom zaškrtnutí.';
 
   @override
-  String get onboardingExpensesTitle => 'Sledování výdajů';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Převezměte kontrolu nad svými financemi. Snadno sledujte příjmy a výdaje, abyste porozuměli svým výdajovým návykům.';
-
-  @override
   String get onboardingJournalTitle => 'Osobní deník';
 
   @override
   String get onboardingJournalDesc =>
       'Zamyslete se nad svým dnem. Soukromý prostor pro zapsání vašich vzpomínek, pocitů a každodenních zážitků.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalendář a události';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Nezmeškejte ani okamžik. Uspořádejte si svůj rozvrh a sledujte důležité nadcházející události.';
 
   @override
   String get onboardingClipboardTitle => 'Správce schránky';
@@ -1817,71 +1315,22 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
       'Zkopírujte jednou, vložte kamkoli. Přístup k historii schránky a načtení dříve zkopírovaných úryvků.';
 
   @override
-  String get onboardingCanvasTitle => 'Kreativní plátno';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Popusťte uzdu své kreativitě. Nakreslete, skicujte a vizualizujte své nápady na volném digitálním plátně.';
-
-  @override
   String get featuresNotesDesc => 'Vytvářejte a spravujte své poznámky';
 
   @override
   String get featuresTodosDesc => 'Sledujte své úkoly';
 
   @override
-  String get featuresExpensesDesc => 'Sledujte své výdaje';
-
-  @override
   String get featuresJournalDesc => 'Zapište si své myšlenky';
 
   @override
-  String get featuresCalendarDesc => 'Uspořádejte si rozvrh';
-
-  @override
   String get featuresClipboardDesc => 'Přístup k historii schránky';
-
-  @override
-  String get featuresCanvasDesc => 'Kreslit a skicovat volně';
-
-  @override
-  String get featuresSocialPost => 'Sociální příspěvek';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Vytvářejte poutavý obsah sociálních médií';
 
   @override
   String get chooseYourAura => 'Vyberte si svou auru';
 
   @override
   String get expressYourselfTheme => 'Vyjádřete se pomocí nové barvy motivu!';
-
-  @override
-  String get level => 'Úroveň';
-
-  @override
-  String get xpToNextLevel => 'XP na úroveň';
-
-  @override
-  String get checkUpcomingEvents => 'Zkontrolujte nadcházející události';
-
-  @override
-  String get startNewSketch => 'Začněte nový náčrt';
-
-  @override
-  String get noTransactionsMonth => 'Tento měsíc žádné transakce';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transakce$_temp0 tento měsíc';
-  }
 
   @override
   String get autoSaveClipboard => 'Automatické ukládání schránky';
@@ -1945,15 +1394,6 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
   @override
   String get premiumLayoutsDesc =>
       'Exkluzivní způsoby zobrazení vašich vzpomínek';
-
-  @override
-  String get calendarTools => 'Kalendář a nástroje';
-
-  @override
-  String get fullCalendar => 'Plný kalendář';
-
-  @override
-  String get fullCalendarDesc => 'Kompletní systém správy událostí';
 
   @override
   String get clipboardAutoSaveDesc => 'Záznam historie schránky na pozadí';
@@ -2039,83 +1479,13 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
   String get completed => 'Dokončeno';
 
   @override
-  String get greatJob => 'Skvělá práce!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Získali jste $amount XP! Další úkol: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Úkol splněn! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Přesunout všechny aktivní úkoly do koše?';
-
-  @override
-  String get deleteAllPosts => 'Smazat všechny příspěvky';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Opravdu chcete smazat VŠECHNY příspěvky na sociálních sítích? Toto nelze vrátit zpět.';
-
-  @override
-  String get allPosts => 'Všechny příspěvky';
-
-  @override
-  String get favorites => 'Oblíbené';
-
-  @override
-  String get drafts => 'Koncepty';
-
-  @override
-  String get noFavoritesYet => 'Zatím žádné oblíbené';
-
-  @override
-  String get noDraftsYet => 'Zatím žádné koncepty';
-
-  @override
-  String get startSocialJourney => 'Začněte svou společenskou cestu!';
-
-  @override
-  String get draft => 'NÁVRH';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count příloha$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'Přidejte nějaký obsah nebo média ke sdílení';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Chyba: Soubor nebyl nalezen na $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Zkontrolujte aplikaci Facebook';
-
-  @override
-  String get systemShare => 'Sdílení systému';
-
-  @override
-  String get socialPost => 'Sociální příspěvek';
-
-  @override
-  String get favorite => 'Oblíbený';
-
-  @override
-  String get saveDraft => 'Uložit koncept';
 
   @override
   String get entryCopied => 'Záznam zkopírován';
@@ -2261,33 +1631,10 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
   String get dueDate => 'Dvě data';
 
   @override
-  String get expenseTitle => 'Výdaje';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Hledat v $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Řadit a filtrovat';
 
   @override
   String get sortBy => 'ŘADIT PODLE';
-
-  @override
-  String get highestAmount => 'Nejvyšší částka';
-
-  @override
-  String get lowestAmount => 'Nejnižší částka';
-
-  @override
-  String get moreFilters => 'Další filtry...';
-
-  @override
-  String get filterExpenses => 'Filtrovat výdaje';
-
-  @override
-  String get transactionType => 'Typ transakce';
 
   @override
   String get categories => 'Kategorie';
@@ -2296,21 +1643,10 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
   String get all => 'Vše';
 
   @override
-  String get income => 'Příjem';
-
-  @override
-  String get expense => 'Výdaj';
-
-  @override
   String get reset => 'Resetovat';
 
   @override
   String get apply => 'Použít';
-
-  @override
-  String newExpense(String currency) {
-    return 'Nová $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2373,34 +1709,10 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Nová skica';
-
-  @override
-  String get searchSketches => 'Hledat náčrty a složky...';
-
-  @override
   String get noResultsFound => 'Nebyly nalezeny žádné výsledky';
 
   @override
   String get noItems => 'Žádné položky';
-
-  @override
-  String get noDrawingsYet => 'Zatím žádné kresby';
-
-  @override
-  String get canvasIntro => 'Popusťte uzdu své kreativitě na plátně!';
-
-  @override
-  String get newCanvas => 'Nové plátno';
 
   @override
   String get rename => 'Přejmenovat';
@@ -2416,13 +1728,7 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
       'Všechny skici v této složce budou trvale odstraněny.';
 
   @override
-  String get renameFolder => 'Přejmenovat složku';
-
-  @override
   String get chooseColor => 'Vyberte Barva';
-
-  @override
-  String get deleteFolderQuestion => 'Smazat složku?';
 
   @override
   String get searchClips => 'Hledat klipy...';
@@ -2444,9 +1750,6 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
 
   @override
   String get restoreClipLater => 'Tento klip můžete později obnovit.';
-
-  @override
-  String get upcomingEvents => 'Nadcházející události';
 
   @override
   String get dataDistribution => 'DISTRIBUCE DAT';
@@ -2487,57 +1790,6 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
   String selectedCount(int count) {
     return '$count Vybráno';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes skici • $folders složky';
-  }
-
-  @override
-  String get sortItems => 'Seřadit položky';
-
-  @override
-  String get sortNameAZ => 'Jméno (A–Z)';
-
-  @override
-  String get sortNameZA => 'Jméno (Z-A)';
-
-  @override
-  String get createFolder => 'Vytvořit složku';
-
-  @override
-  String get folderNameHint => 'Název složky...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Smazat $count náčrtů? Toto nelze vrátit zpět.';
-  }
-
-  @override
-  String get noSketchesFound => 'Nebyly nalezeny žádné skici';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Zkuste upravit vyhledávání nebo vytvořit nový náčrt.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Hledat ve složce $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count skic';
-  }
-
-  @override
-  String get sortSketches => 'Třídit skici';
-
-  @override
-  String get calendarScreenTitle => 'Kalendář';
-
-  @override
-  String get dailyActivity => 'Denní aktivita';
 
   @override
   String get deleteItemQuestion => 'Smazat položku?';
@@ -2639,28 +1891,6 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
   String get general => 'Generál';
 
   @override
-  String get saveTransactionQuestion => 'Chcete tuto transakci uložit?';
-
-  @override
-  String get fillTitleAmount => 'Vyplňte název a částku';
-
-  @override
-  String get invalidAmount => 'Neplatný formát částky';
-
-  @override
-  String get moveTransactionToBinTitle => 'Přesunout transakci do koše?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Tuto transakci můžete později obnovit z nastavení.';
-
-  @override
-  String get newTransaction => 'Nová transakce';
-
-  @override
-  String get whatIsThisFor => 'k čemu to je?';
-
-  @override
   String get description => 'Popis';
 
   @override
@@ -2676,70 +1906,10 @@ class AppLocalizationsCsCz extends AppLocalizationsCs {
   String get yearly => 'Roční';
 
   @override
-  String get totalIncome => 'Celkový příjem';
-
-  @override
-  String get totalExpense => 'Celkové náklady';
-
-  @override
   String get analysis => 'Analýza';
 
   @override
   String get transactions => 'Transakce';
-
-  @override
-  String get noExpensesFound => 'Za toto období nebyly nalezeny žádné výdaje.';
-
-  @override
-  String get netBalance => 'Čistý zůstatek';
-
-  @override
-  String get topCategories => 'Nejlepší kategorie';
-
-  @override
-  String get spendingTrend => 'Trend výdajů';
-
-  @override
-  String get insights => 'Postřehy';
-
-  @override
-  String get noExpensesRecorded => 'Žádné evidované výdaje';
-
-  @override
-  String get trackSpendingHabits => 'Snadno sledujte své výdajové návyky.';
-
-  @override
-  String get addExpense => 'Přidat výdaje';
-
-  @override
-  String get noDataForPeriod => 'Žádné údaje pro toto období';
-
-  @override
-  String get budget => 'Rozpočet';
-
-  @override
-  String get spent => 'Utraceno';
-
-  @override
-  String get limit => 'Omezit';
-
-  @override
-  String get overBudget => 'Přes rozpočet!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return 'Zbývá $percent %.';
-  }
-
-  @override
-  String get savingsRate => 'Míra úspor';
-
-  @override
-  String get healthScore => 'Skóre zdraví';
-
-  @override
-  String get healthScoreExplanation =>
-      'Toto skóre je založeno na vaší míře úspor.\n\n• Ušetřeno > 50 % = Vynikající (100)\n• 0 % uloženo = průměr (50)\n• Výdaje > Příjem = Slabé (<50)';
 
   @override
   String get ok => 'OK';

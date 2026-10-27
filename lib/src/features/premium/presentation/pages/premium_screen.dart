@@ -7,6 +7,7 @@ import 'package:copyclip/src/core/common_widgets/mascot_character.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:copyclip/src/core/const/premium_constants.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/navigation_drawer.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_event.dart';
@@ -39,6 +40,8 @@ class _PremiumScreenState extends State<PremiumScreen> {
         return GlassScaffold(
           title: null,
           showBackArrow: false,
+          showDrawer: true,
+          drawer: const CopyClipDrawer(),
           body: Column(
             children: [
               SeamlessHeader(
@@ -233,16 +236,6 @@ class _PremiumScreenState extends State<PremiumScreen> {
 
                       const SizedBox(height: 24),
 
-                      _SectionHeader(
-                        title: AppLocalizations.of(context)!.calendarTools,
-                      ),
-                      _PremiumFeatureTile(
-                        icon: Icons.calendar_month,
-                        title: AppLocalizations.of(context)!.fullCalendar,
-                        description: AppLocalizations.of(
-                          context,
-                        )!.fullCalendarDesc,
-                      ),
                       _PremiumFeatureTile(
                         icon: Icons.copy_all,
                         title: AppLocalizations.of(context)!.autoSaveClipboard,

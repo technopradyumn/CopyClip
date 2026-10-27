@@ -79,11 +79,11 @@ void main() {
 
     verifyNever(
       mockNotificationService.showInstantNotification(
-        id: any,
-        title: any,
-        body: any,
-        channelId: any,
-        payload: any,
+        id: anyNamed('id'),
+        title: anyNamed('title'),
+        body: anyNamed('body'),
+        channelId: anyNamed('channelId'),
+        payload: anyNamed('payload'),
       ),
     );
   });

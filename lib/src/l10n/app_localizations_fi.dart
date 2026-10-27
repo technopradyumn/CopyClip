@@ -24,19 +24,10 @@ class AppLocalizationsFi extends AppLocalizations {
   String get todos => 'Tehtävät';
 
   @override
-  String get expenses => 'Kulut';
-
-  @override
   String get journal => 'Journal';
 
   @override
-  String get calendar => 'Kalenteri';
-
-  @override
   String get clipboard => 'Leikepöytä';
-
-  @override
-  String get canvas => 'Kangas';
 
   @override
   String get save => 'Tallentaa';
@@ -69,24 +60,6 @@ class AppLocalizationsFi extends AppLocalizations {
   String get discard => 'Hävitä';
 
   @override
-  String get createPost => 'Luo viesti';
-
-  @override
-  String get post => 'Lähettää';
-
-  @override
-  String get postingTo => 'Lähetetään osoitteeseen';
-
-  @override
-  String get whatsOnYourMind => 'Mitä sinulla on mielessäsi?';
-
-  @override
-  String get pickImages => 'Valitse kuvat';
-
-  @override
-  String get pickVideo => 'Valitse Video';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsFi extends AppLocalizations {
   String error(Object error) {
     return 'Virhe: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Tilaus saatavilla vain \"Kaikki viestit\"';
-
-  @override
-  String get deletePost => 'Poista viesti';
-
-  @override
-  String get postDeleted => 'Viesti poistettu';
 
   @override
   String get premiumFeatures => 'Premium-ominaisuudet';
@@ -181,35 +144,6 @@ class AppLocalizationsFi extends AppLocalizations {
   String get recycleBinCleared => 'Roskakori tyhjennetty onnistuneesti';
 
   @override
-  String get allPostsDeleted => 'Kaikki viestit poistettu';
-
-  @override
-  String get newPost => 'Uusi viesti';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Teksti kopioitu leikepöydälle (Facebook-käytäntö)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTokin jakaminen vaatii videon/kuvan';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Virhe jakamisessa: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Jaa tarinaan $platform';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Jaa $platform-syötteeseen';
-  }
-
-  @override
   String get unlockPermanently => 'Avaa lukitus pysyvästi';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Valitse Päivämäärä ja aika';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Haluatko varmasti poistaa tämän viestin?';
-
-  @override
-  String get socialPosts => 'Sosiaaliset viestit';
 
   @override
   String get watchAdToEarnCoins => 'Katso mainos ansaitaksesi kolikoita';
@@ -420,25 +347,11 @@ class AppLocalizationsFi extends AppLocalizations {
       'Pysy pelisi kärjessä. Luo tehtäväluetteloita, aseta prioriteetteja ja murskaa tavoitteesi valintamerkki kerrallaan.';
 
   @override
-  String get onboardingExpensesTitle => 'Kulujen seuranta';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Ota taloutesi hallintaan. Seuraa tuloja ja menoja helposti ymmärtääksesi kulutustottumuksiasi.';
-
-  @override
   String get onboardingJournalTitle => 'Henkilökohtainen päiväkirja';
 
   @override
   String get onboardingJournalDesc =>
       'Mieti päivääsi. Yksityinen tila, jossa voit kirjoittaa muistiin muistosi, tunteesi ja päivittäiset kokemuksesi.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalenteri ja tapahtumat';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Älä koskaan missaa hetkeäkään. Järjestä aikataulusi ja seuraa tärkeitä tulevia tapahtumia.';
 
   @override
   String get onboardingClipboardTitle => 'Leikepöydän hallinta';
@@ -448,71 +361,22 @@ class AppLocalizationsFi extends AppLocalizations {
       'Kopioi kerran, liitä mihin tahansa. Käytä leikepöydän historiaa hakeaksesi aiemmin kopioituja katkelmia.';
 
   @override
-  String get onboardingCanvasTitle => 'Luova kangas';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Päästä luovuutesi valloilleen. Piirrä, luonnostele ja visualisoi ideasi vapaamuotoiselle digitaaliselle kankaalle.';
-
-  @override
   String get featuresNotesDesc => 'Luo ja hallinnoi muistiinpanojasi';
 
   @override
   String get featuresTodosDesc => 'Pidä kirjaa tehtävistäsi';
 
   @override
-  String get featuresExpensesDesc => 'Valvo kulujasi';
-
-  @override
   String get featuresJournalDesc => 'Kirjoita ajatuksesi muistiin';
 
   @override
-  String get featuresCalendarDesc => 'Järjestä aikataulusi';
-
-  @override
   String get featuresClipboardDesc => 'Käytä leikepöydän historiaa';
-
-  @override
-  String get featuresCanvasDesc => 'Piirrä ja luonnostele vapaasti';
-
-  @override
-  String get featuresSocialPost => 'Sosiaalinen viesti';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Luo kiinnostavaa sosiaalisen median sisältöä';
 
   @override
   String get chooseYourAura => 'Valitse Aurasi';
 
   @override
   String get expressYourselfTheme => 'Ilmaise itseäsi uudella teemavärillä!';
-
-  @override
-  String get level => 'Taso';
-
-  @override
-  String get xpToNextLevel => 'XP tasolle';
-
-  @override
-  String get checkUpcomingEvents => 'Tarkista tulevat tapahtumat';
-
-  @override
-  String get startNewSketch => 'Aloita uusi luonnos';
-
-  @override
-  String get noTransactionsMonth => 'Ei tapahtumia tässä kuussa';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
-  }
 
   @override
   String get autoSaveClipboard => 'Tallenna leikepöytä automaattisesti';
@@ -577,15 +441,6 @@ class AppLocalizationsFi extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'Ainutlaatuisia tapoja tarkastella muistojasi';
-
-  @override
-  String get calendarTools => 'Kalenteri ja työkalut';
-
-  @override
-  String get fullCalendar => 'Täysi kalenteri';
-
-  @override
-  String get fullCalendarDesc => 'Täydellinen tapahtumanhallintajärjestelmä';
 
   @override
   String get clipboardAutoSaveDesc => 'Taustaleikepöydän historian kaappaus';
@@ -672,83 +527,13 @@ class AppLocalizationsFi extends AppLocalizations {
   String get completed => 'Valmis';
 
   @override
-  String get greatJob => 'Hienoa työtä!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Ansaitsit $amount XP:tä! Seuraava tehtävä: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Tehtävä suoritettu! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Siirretäänkö kaikki aktiiviset tehtävät roskakoriin?';
-
-  @override
-  String get deleteAllPosts => 'Poista kaikki viestit';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? Tätä ei voi kumota.';
-
-  @override
-  String get allPosts => 'Kaikki viestit';
-
-  @override
-  String get favorites => 'Suosikit';
-
-  @override
-  String get drafts => 'Luonnokset';
-
-  @override
-  String get noFavoritesYet => 'Ei vielä suosikkeja';
-
-  @override
-  String get noDraftsYet => 'Ei luonnoksia vielä';
-
-  @override
-  String get startSocialJourney => 'Aloita sosiaalinen matkasi!';
-
-  @override
-  String get draft => 'LUONNOS';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'Lisää sisältöä tai mediaa jaettavaksi';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Virhe: tiedostoa ei löydy osoitteesta $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Tarkista Facebook-sovellus';
-
-  @override
-  String get systemShare => 'Järjestelmän jako';
-
-  @override
-  String get socialPost => 'Sosiaalinen viesti';
-
-  @override
-  String get favorite => 'Suosikki';
-
-  @override
-  String get saveDraft => 'Tallenna luonnos';
 
   @override
   String get entryCopied => 'Merkintä kopioitu';
@@ -893,33 +678,10 @@ class AppLocalizationsFi extends AppLocalizations {
   String get dueDate => 'Kaksi päivämäärää';
 
   @override
-  String get expenseTitle => 'Kulut';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Hae kielellä $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Lajittele & Suodata';
 
   @override
   String get sortBy => 'LAJITTELU';
-
-  @override
-  String get highestAmount => 'Suurin määrä';
-
-  @override
-  String get lowestAmount => 'Pienin summa';
-
-  @override
-  String get moreFilters => 'Lisää suodattimia...';
-
-  @override
-  String get filterExpenses => 'Suodatuskulut';
-
-  @override
-  String get transactionType => 'Tapahtumatyyppi';
 
   @override
   String get categories => 'Luokat';
@@ -928,21 +690,10 @@ class AppLocalizationsFi extends AppLocalizations {
   String get all => 'Kaikki';
 
   @override
-  String get income => 'Tulot';
-
-  @override
-  String get expense => 'Kustannukset';
-
-  @override
   String get reset => 'Nollaa';
 
   @override
   String get apply => 'Käytä';
-
-  @override
-  String newExpense(String currency) {
-    return 'Uusi $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -1005,34 +756,10 @@ class AppLocalizationsFi extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Uusi Sketch';
-
-  @override
-  String get searchSketches => 'Hae luonnoksia ja kansioita...';
-
-  @override
   String get noResultsFound => 'Tuloksia ei löytynyt';
 
   @override
   String get noItems => 'Ei kohteita';
-
-  @override
-  String get noDrawingsYet => 'Ei vielä piirustuksia';
-
-  @override
-  String get canvasIntro => 'Päästä luovuutesi valloilleen kankaalla!';
-
-  @override
-  String get newCanvas => 'Uusi kangas';
 
   @override
   String get rename => 'Nimeä uudelleen';
@@ -1048,13 +775,7 @@ class AppLocalizationsFi extends AppLocalizations {
       'Kaikki tämän kansion luonnokset poistetaan pysyvästi.';
 
   @override
-  String get renameFolder => 'Nimeä kansio uudelleen';
-
-  @override
   String get chooseColor => 'Valitse Väri';
-
-  @override
-  String get deleteFolderQuestion => 'Poistetaanko kansio?';
 
   @override
   String get searchClips => 'Hae leikkeitä...';
@@ -1076,9 +797,6 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'Voit palauttaa tämän leikkeen myöhemmin.';
-
-  @override
-  String get upcomingEvents => 'Tulevat tapahtumat';
 
   @override
   String get dataDistribution => 'TIETOJEN JAKELU';
@@ -1119,57 +837,6 @@ class AppLocalizationsFi extends AppLocalizations {
   String selectedCount(int count) {
     return '$count valittu';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes luonnokset • $folders kansiot';
-  }
-
-  @override
-  String get sortItems => 'Lajittele kohteet';
-
-  @override
-  String get sortNameAZ => 'Nimi (A-Z)';
-
-  @override
-  String get sortNameZA => 'Nimi (Z-A)';
-
-  @override
-  String get createFolder => 'Luo kansio';
-
-  @override
-  String get folderNameHint => 'Kansion nimi...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Poistetaanko $count luonnosta? Tätä ei voi kumota.';
-  }
-
-  @override
-  String get noSketchesFound => 'Luonnoksia ei löytynyt';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Yritä muokata hakuasi tai luoda uusi luonnos.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Hae hakemistosta $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count luonnosta';
-  }
-
-  @override
-  String get sortSketches => 'Lajittele luonnokset';
-
-  @override
-  String get calendarScreenTitle => 'Kalenteri';
-
-  @override
-  String get dailyActivity => 'Päivittäinen toiminta';
 
   @override
   String get deleteItemQuestion => 'Poistetaanko kohde?';
@@ -1271,28 +938,6 @@ class AppLocalizationsFi extends AppLocalizations {
   String get general => 'Kenraali';
 
   @override
-  String get saveTransactionQuestion => 'Haluatko tallentaa tämän tapahtuman?';
-
-  @override
-  String get fillTitleAmount => 'Täytä otsikko ja summa';
-
-  @override
-  String get invalidAmount => 'Virheellinen summan muoto';
-
-  @override
-  String get moveTransactionToBinTitle => 'Siirretäänkö tapahtuma roskakoriin?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Voit palauttaa tämän tapahtuman myöhemmin asetuksista.';
-
-  @override
-  String get newTransaction => 'Uusi tapahtuma';
-
-  @override
-  String get whatIsThisFor => 'Mitä varten tämä on?';
-
-  @override
   String get description => 'Kuvaus';
 
   @override
@@ -1308,70 +953,10 @@ class AppLocalizationsFi extends AppLocalizations {
   String get yearly => 'Vuosittain';
 
   @override
-  String get totalIncome => 'Kokonaistulot';
-
-  @override
-  String get totalExpense => 'Kokonaiskulut';
-
-  @override
   String get analysis => 'Analyysi';
 
   @override
   String get transactions => 'Tapahtumat';
-
-  @override
-  String get noExpensesFound => 'Kuluja ei löytynyt tälle ajanjaksolle.';
-
-  @override
-  String get netBalance => 'Nettosaldo';
-
-  @override
-  String get topCategories => 'Parhaat luokat';
-
-  @override
-  String get spendingTrend => 'Kulutustrendi';
-
-  @override
-  String get insights => 'Näkemyksiä';
-
-  @override
-  String get noExpensesRecorded => 'Ei kirjattu kuluja';
-
-  @override
-  String get trackSpendingHabits => 'Seuraa kulutustottumuksiasi helposti.';
-
-  @override
-  String get addExpense => 'Lisää kuluja';
-
-  @override
-  String get noDataForPeriod => 'Ei tietoja tälle ajanjaksolle';
-
-  @override
-  String get budget => 'Budjetti';
-
-  @override
-  String get spent => 'Käytetty';
-
-  @override
-  String get limit => 'Rajoittaa';
-
-  @override
-  String get overBudget => 'Yli budjetin!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent % jäljellä';
-  }
-
-  @override
-  String get savingsRate => 'Säästöprosentti';
-
-  @override
-  String get healthScore => 'Terveyspisteet';
-
-  @override
-  String get healthScoreExplanation =>
-      'Tämä pistemäärä perustuu säästöprosenttiisi.\n\n• > 50 % säästetty = Erinomainen (100)\n• 0 % säästetty = keskiarvo (50)\n• Kulutus > Tulot = Huono (<50)';
 
   @override
   String get ok => 'OK';
@@ -1400,19 +985,10 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   String get todos => 'Tehtävät';
 
   @override
-  String get expenses => 'Kulut';
-
-  @override
   String get journal => 'Journal';
 
   @override
-  String get calendar => 'Kalenteri';
-
-  @override
   String get clipboard => 'Leikepöytä';
-
-  @override
-  String get canvas => 'Kangas';
 
   @override
   String get save => 'Tallentaa';
@@ -1445,24 +1021,6 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   String get discard => 'Hävitä';
 
   @override
-  String get createPost => 'Loo viesti';
-
-  @override
-  String get post => 'Lähettää';
-
-  @override
-  String get postingTo => 'Lähetetään osoitteeseen';
-
-  @override
-  String get whatsOnYourMind => 'Mitä sinulla on mielessäsi?';
-
-  @override
-  String get pickImages => 'Valitse kuvat';
-
-  @override
-  String get pickVideo => 'Valitse Video';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -1487,16 +1045,6 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   String error(Object error) {
     return 'Virhe: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Tilaus saatavilla vain \"Kaikki viestit\"';
-
-  @override
-  String get deletePost => 'Poista viesti';
-
-  @override
-  String get postDeleted => 'Viesti poistettu';
 
   @override
   String get premiumFeatures => 'Premium-ominaisuudet';
@@ -1557,35 +1105,6 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   String get recycleBinCleared => 'Roskakori tyhjennetty onnistuneesti';
 
   @override
-  String get allPostsDeleted => 'Kaikki viestit poistettu';
-
-  @override
-  String get newPost => 'Uusi viesti';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Teksti kopioitu leikepöydälle (Facebook-käytäntö)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTokin jakaminen vaatii videon/kuvan';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Virhe jakamisessa: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Jaa tarinaan $platform';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Jaa $platform-syötteeseen';
-  }
-
-  @override
   String get unlockPermanently => 'Avaa lukitus pysyvästi';
 
   @override
@@ -1601,13 +1120,6 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
 
   @override
   String get selectDateTime => 'Valitse Päivämäärä ja aika';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Haluatko varmasti poistaa tämän viestin?';
-
-  @override
-  String get socialPosts => 'Sosiaaliset viestit';
 
   @override
   String get watchAdToEarnCoins => 'Katso mainos ansaitaksesi kolikoita';
@@ -1796,25 +1308,11 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
       'Pysy pelisi kärjessä. Luo tehtäväluetteloita, aseta prioriteetteja ja murskaa tavoitteesi valintamerkki kerrallaan.';
 
   @override
-  String get onboardingExpensesTitle => 'Kulujen seuranta';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Ota taloutesi hallintaan. Seuraa tuloja ja menoja helposti ymmärtääksesi kulutustottumuksiasi.';
-
-  @override
   String get onboardingJournalTitle => 'Henkilökohtainen päiväkirja';
 
   @override
   String get onboardingJournalDesc =>
       'Mieti päivääsi. Yksityinen tila, jossa voit kirjoittaa muistiin muistosi, tunteesi ja päivittäiset kokemuksesi.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalenteri ja tapahtumat';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Älä koskaan missaa hetkeäkään. Järjestä aikataulusi ja seuraa tärkeitä tulevia tapahtumia.';
 
   @override
   String get onboardingClipboardTitle => 'Leikepöydän hallinta';
@@ -1824,71 +1322,22 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
       'Kopioi kerran, liitä mihin tahansa. Käytä leikepöydän historiaa hakeaksesi aiemmin kopioituja katkelmia.';
 
   @override
-  String get onboardingCanvasTitle => 'Luova kangas';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Päästä luovuutesi valloilleen. Piirrä, luonnostele ja visualisoi ideasi vapaamuotoiselle digitaaliselle kankaalle.';
-
-  @override
   String get featuresNotesDesc => 'Luo ja hallinnoi muistiinpanojasi';
 
   @override
   String get featuresTodosDesc => 'Pidä kirjaa tehtävistäsi';
 
   @override
-  String get featuresExpensesDesc => 'Valvo kulujasi';
-
-  @override
   String get featuresJournalDesc => 'Kirjoita ajatuksesi muistiin';
 
   @override
-  String get featuresCalendarDesc => 'Järjestä aikataulusi';
-
-  @override
   String get featuresClipboardDesc => 'Käytä leikepöydän historiaa';
-
-  @override
-  String get featuresCanvasDesc => 'Piirrä ja luonnostele vapaasti';
-
-  @override
-  String get featuresSocialPost => 'Sosiaalinen viesti';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Luo kiinnostavaa sosiaalisen median sisältöä';
 
   @override
   String get chooseYourAura => 'Valitse Aurasi';
 
   @override
   String get expressYourselfTheme => 'Ilmaise itseäsi uudella teemavärillä!';
-
-  @override
-  String get level => 'Taso';
-
-  @override
-  String get xpToNextLevel => 'XP tasolle';
-
-  @override
-  String get checkUpcomingEvents => 'Tarkista tulevat tapahtumat';
-
-  @override
-  String get startNewSketch => 'Aloita uusi luonnos';
-
-  @override
-  String get noTransactionsMonth => 'Ei tapahtumia tässä kuussa';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
-  }
 
   @override
   String get autoSaveClipboard => 'Tallenna leikepöytä automaattisesti';
@@ -1953,15 +1402,6 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   @override
   String get premiumLayoutsDesc =>
       'Ainutlaatuisia tapoja tarkastella muistojasi';
-
-  @override
-  String get calendarTools => 'Kalenteri ja työkalut';
-
-  @override
-  String get fullCalendar => 'Täysi kalenteri';
-
-  @override
-  String get fullCalendarDesc => 'Täydellinen tapahtumanhallintajärjestelmä';
 
   @override
   String get clipboardAutoSaveDesc => 'Taustaleikepöydän historian kaappaus';
@@ -2048,83 +1488,13 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   String get completed => 'Valmis';
 
   @override
-  String get greatJob => 'Hienoa työtä!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Ansaitsit $amount XP:tä! Seuraava tehtävä: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Tehtävä suoritettu! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Siirretäänkö kaikki aktiiviset tehtävät roskakoriin?';
-
-  @override
-  String get deleteAllPosts => 'Poista kaikki viestit';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? Tätä ei voi kumota.';
-
-  @override
-  String get allPosts => 'Kaikki viestit';
-
-  @override
-  String get favorites => 'Suosikit';
-
-  @override
-  String get drafts => 'Luonnokset';
-
-  @override
-  String get noFavoritesYet => 'Ei vielä suosikkeja';
-
-  @override
-  String get noDraftsYet => 'Ei luonnoksia vielä';
-
-  @override
-  String get startSocialJourney => 'Aloita sosiaalinen matkasi!';
-
-  @override
-  String get draft => 'LUONNOS';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'Lisää sisältöä tai mediaa jaettavaksi';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Virhe: tiedostoa ei löydy osoitteesta $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Tarkista Facebook-sovellus';
-
-  @override
-  String get systemShare => 'Järjestelmän jako';
-
-  @override
-  String get socialPost => 'Sosiaalinen viesti';
-
-  @override
-  String get favorite => 'Suosikki';
-
-  @override
-  String get saveDraft => 'Tallenna luonnos';
 
   @override
   String get entryCopied => 'Merkintä kopioitu';
@@ -2269,33 +1639,10 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   String get dueDate => 'Kaksi päivämäärää';
 
   @override
-  String get expenseTitle => 'Kulut';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Hae kielellä $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Lajittele & Suodata';
 
   @override
   String get sortBy => 'LAJITTELU';
-
-  @override
-  String get highestAmount => 'Suurin määrä';
-
-  @override
-  String get lowestAmount => 'Pienin summa';
-
-  @override
-  String get moreFilters => 'Lisää suodattimia...';
-
-  @override
-  String get filterExpenses => 'Suodatuskulut';
-
-  @override
-  String get transactionType => 'Tapahtumatyyppi';
 
   @override
   String get categories => 'Luokat';
@@ -2304,21 +1651,10 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   String get all => 'Kaikki';
 
   @override
-  String get income => 'Tulot';
-
-  @override
-  String get expense => 'Kustannukset';
-
-  @override
   String get reset => 'Nollaa';
 
   @override
   String get apply => 'Käytä';
-
-  @override
-  String newExpense(String currency) {
-    return 'Uusi $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2381,34 +1717,10 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Uusi Sketch';
-
-  @override
-  String get searchSketches => 'Hae luonnoksia ja kansioita...';
-
-  @override
   String get noResultsFound => 'Tuloksia ei löytynyt';
 
   @override
   String get noItems => 'Ei kohteita';
-
-  @override
-  String get noDrawingsYet => 'Ei vielä piirustuksia';
-
-  @override
-  String get canvasIntro => 'Päästä luovuutesi valloilleen kankaalla!';
-
-  @override
-  String get newCanvas => 'Uusi kangas';
 
   @override
   String get rename => 'Nimeä uudelleen';
@@ -2424,13 +1736,7 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
       'Kaikki tämän kansion luonnokset poistetaan pysyvästi.';
 
   @override
-  String get renameFolder => 'Nimeä kansio uudelleen';
-
-  @override
   String get chooseColor => 'Valitse Väri';
-
-  @override
-  String get deleteFolderQuestion => 'Poistetaanko kansio?';
 
   @override
   String get searchClips => 'Hae leikkeitä...';
@@ -2452,9 +1758,6 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
 
   @override
   String get restoreClipLater => 'Voit palauttaa tämän leikkeen myöhemmin.';
-
-  @override
-  String get upcomingEvents => 'Tulevat tapahtumat';
 
   @override
   String get dataDistribution => 'TIETOJEN JAKELU';
@@ -2495,57 +1798,6 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   String selectedCount(int count) {
     return '$count valittu';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes luonnokset • $folders kansiot';
-  }
-
-  @override
-  String get sortItems => 'Lajittele kohteet';
-
-  @override
-  String get sortNameAZ => 'Nimi (A-Z)';
-
-  @override
-  String get sortNameZA => 'Nimi (Z-A)';
-
-  @override
-  String get createFolder => 'Loo kansio';
-
-  @override
-  String get folderNameHint => 'Kansion nimi...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Poistetaanko $count luonnosta? Tätä ei voi kumota.';
-  }
-
-  @override
-  String get noSketchesFound => 'Luonnoksia ei löytynyt';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Yritä muokata hakuasi tai luoda uusi luonnos.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Hae hakemistosta $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count luonnosta';
-  }
-
-  @override
-  String get sortSketches => 'Lajittele luonnokset';
-
-  @override
-  String get calendarScreenTitle => 'Kalenteri';
-
-  @override
-  String get dailyActivity => 'Päivittäinen toiminta';
 
   @override
   String get deleteItemQuestion => 'Poistetaanko kohde?';
@@ -2647,28 +1899,6 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   String get general => 'Kenraali';
 
   @override
-  String get saveTransactionQuestion => 'Haluatko tallentaa tämän tapahtuman?';
-
-  @override
-  String get fillTitleAmount => 'Täytä otsikko ja summa';
-
-  @override
-  String get invalidAmount => 'Virheellinen summan muoto';
-
-  @override
-  String get moveTransactionToBinTitle => 'Siirretäänkö tapahtuma roskakoriin?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Voit palauttaa tämän tapahtuman myöhemmin asetuksista.';
-
-  @override
-  String get newTransaction => 'Uusi tapahtuma';
-
-  @override
-  String get whatIsThisFor => 'Mitä varten tämä on?';
-
-  @override
   String get description => 'Kuvaus';
 
   @override
@@ -2684,70 +1914,10 @@ class AppLocalizationsFiFi extends AppLocalizationsFi {
   String get yearly => 'Vuosittain';
 
   @override
-  String get totalIncome => 'Kokonaistulot';
-
-  @override
-  String get totalExpense => 'Kokonaiskulut';
-
-  @override
   String get analysis => 'Analyysi';
 
   @override
   String get transactions => 'Tapahtumat';
-
-  @override
-  String get noExpensesFound => 'Kuluja ei löytynyt tälle ajanjaksolle.';
-
-  @override
-  String get netBalance => 'Nettosaldo';
-
-  @override
-  String get topCategories => 'Parhaat luokat';
-
-  @override
-  String get spendingTrend => 'Kulutustrendi';
-
-  @override
-  String get insights => 'Näkemyksiä';
-
-  @override
-  String get noExpensesRecorded => 'Ei kirjattu kuluja';
-
-  @override
-  String get trackSpendingHabits => 'Seuraa kulutustottumuksiasi helposti.';
-
-  @override
-  String get addExpense => 'Lisää kuluja';
-
-  @override
-  String get noDataForPeriod => 'Ei tietoja tälle ajanjaksolle';
-
-  @override
-  String get budget => 'Budjetti';
-
-  @override
-  String get spent => 'Käytetty';
-
-  @override
-  String get limit => 'Rajoittaa';
-
-  @override
-  String get overBudget => 'Yli budjetin!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent % jäljellä';
-  }
-
-  @override
-  String get savingsRate => 'Säästöprosentti';
-
-  @override
-  String get healthScore => 'Terveyspisteet';
-
-  @override
-  String get healthScoreExplanation =>
-      'Tämä pistemäärä perustuu säästöprosenttiisi.\n\n• > 50 % säästetty = Erinomainen (100)\n• 0 % säästetty = keskiarvo (50)\n• Kulutus > Tulot = Huono (<50)';
 
   @override
   String get ok => 'OK';

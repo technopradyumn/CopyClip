@@ -24,19 +24,10 @@ class AppLocalizationsAf extends AppLocalizations {
   String get todos => 'To-Dos';
 
   @override
-  String get expenses => 'Uitgawes';
-
-  @override
   String get journal => 'Joernaal';
 
   @override
-  String get calendar => 'Kalender';
-
-  @override
   String get clipboard => 'Knipbord';
-
-  @override
-  String get canvas => 'Canvas';
 
   @override
   String get save => 'Stoor';
@@ -69,24 +60,6 @@ class AppLocalizationsAf extends AppLocalizations {
   String get discard => 'Gooi weg';
 
   @override
-  String get createPost => 'Skep plasing';
-
-  @override
-  String get post => 'Plaas';
-
-  @override
-  String get postingTo => 'Plaas na';
-
-  @override
-  String get whatsOnYourMind => 'Wat dink jy?';
-
-  @override
-  String get pickImages => 'Kies prente';
-
-  @override
-  String get pickVideo => 'Kies video';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsAf extends AppLocalizations {
   String error(Object error) {
     return 'Fout: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Bestelling slegs beskikbaar in \'Alle plasings\'';
-
-  @override
-  String get deletePost => 'Vee plasing uit';
-
-  @override
-  String get postDeleted => 'Pos uitgevee';
 
   @override
   String get premiumFeatures => 'Premium kenmerke';
@@ -181,35 +144,6 @@ class AppLocalizationsAf extends AppLocalizations {
   String get recycleBinCleared => 'Asblik is suksesvol skoongemaak';
 
   @override
-  String get allPostsDeleted => 'Alle plasings is uitgevee';
-
-  @override
-  String get newPost => 'Nuwe Pos';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Teks na knipbord gekopieer (Facebook-beleid)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok-deling vereis \'n video/prent';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Fout met deel: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Deel na $platform-verhaal';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Deel na $platform-stroom';
-  }
-
-  @override
   String get unlockPermanently => 'Ontsluit Permanent';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Kies Datum en Tyd';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Is jy seker jy wil hierdie plasing uitvee?';
-
-  @override
-  String get socialPosts => 'Sosiale plasings';
 
   @override
   String get watchAdToEarnCoins => 'Kyk na advertensie om munte te verdien';
@@ -417,25 +344,11 @@ class AppLocalizationsAf extends AppLocalizations {
       'Bly op hoogte van jou spel. Skep doenlyste, stel prioriteite en verpletter jou doelwitte een vinkje op \'n slag.';
 
   @override
-  String get onboardingExpensesTitle => 'Uitgawe dop';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Neem beheer van jou finansies. Volg inkomste en uitgawes maklik om jou bestedingsgewoontes te verstaan.';
-
-  @override
   String get onboardingJournalTitle => 'Persoonlike Joernaal';
 
   @override
   String get onboardingJournalDesc =>
       'Besin oor jou dag. \'n Privaat ruimte om jou herinneringe, gevoelens en daaglikse ervarings neer te skryf.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalender en gebeure';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Moet nooit \'n oomblik mis nie. Organiseer jou skedule en hou tred met belangrike komende gebeure.';
 
   @override
   String get onboardingClipboardTitle => 'Knipbord Bestuurder';
@@ -445,64 +358,22 @@ class AppLocalizationsAf extends AppLocalizations {
       'Kopieer een keer, plak enige plek. Kry toegang tot jou knipbordgeskiedenis om brokkies wat jy vroeër gekopieer het, op te spoor.';
 
   @override
-  String get onboardingCanvasTitle => 'Kreatiewe doek';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Laat jou kreatiwiteit los. Teken, skets en visualiseer jou idees op \'n vryvorm digitale doek.';
-
-  @override
   String get featuresNotesDesc => 'Skep en bestuur jou notas';
 
   @override
   String get featuresTodosDesc => 'Bly op hoogte van jou take';
 
   @override
-  String get featuresExpensesDesc => 'Monitor jou uitgawes';
-
-  @override
   String get featuresJournalDesc => 'Skryf jou gedagtes neer';
 
   @override
-  String get featuresCalendarDesc => 'Organiseer jou skedule';
-
-  @override
   String get featuresClipboardDesc => 'Toegang tot jou knipbordgeskiedenis';
-
-  @override
-  String get featuresCanvasDesc => 'Teken en skets vrylik';
-
-  @override
-  String get featuresSocialPost => 'Sosiale Pos';
-
-  @override
-  String get featuresSocialPostDesc => 'Skep boeiende sosiale media-inhoud';
 
   @override
   String get chooseYourAura => 'Kies jou aura';
 
   @override
   String get expressYourselfTheme => 'Druk jouself uit met \'n nuwe temakleur!';
-
-  @override
-  String get level => 'Vlak';
-
-  @override
-  String get xpToNextLevel => 'XP na vlak';
-
-  @override
-  String get checkUpcomingEvents => 'Gaan komende gebeure na';
-
-  @override
-  String get startNewSketch => 'Begin \'n nuwe skets';
-
-  @override
-  String get noTransactionsMonth => 'Geen transaksies hierdie maand nie';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return '$count transaksies hierdie maand';
-  }
 
   @override
   String get autoSaveClipboard => 'Outo-stoor knipbord';
@@ -565,15 +436,6 @@ class AppLocalizationsAf extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'Eksklusiewe maniere om jou herinneringe te sien';
-
-  @override
-  String get calendarTools => 'Kalender en Gereedskap';
-
-  @override
-  String get fullCalendar => 'Volledige kalender';
-
-  @override
-  String get fullCalendarDesc => 'Volledige gebeurtenisbestuurstelsel';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -660,76 +522,12 @@ class AppLocalizationsAf extends AppLocalizations {
   String get completed => 'Voltooi';
 
   @override
-  String get greatJob => 'Puik werk!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Jy het $amount XP verdien! Volgende taak: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Taak voltooi! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin => 'Skuif alle aktiewe take na asblik?';
-
-  @override
-  String get deleteAllPosts => 'Vee alle plasings uit';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Is jy seker jy wil ALLE sosiale plasings uitvee? Dit kan nie ongedaan gemaak word nie.';
-
-  @override
-  String get allPosts => 'Alle plasings';
-
-  @override
-  String get favorites => 'Gunstelinge';
-
-  @override
-  String get drafts => 'Konsepte';
-
-  @override
-  String get noFavoritesYet => 'Nog geen gunstelinge nie';
-
-  @override
-  String get noDraftsYet => 'Nog geen konsepte nie';
-
-  @override
-  String get startSocialJourney => 'Begin jou sosiale reis!';
-
-  @override
-  String get draft => 'KONSEP';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count aanhangsels';
-  }
-
-  @override
-  String get pleaseAddContent => 'Voeg asseblief inhoud of media by om te deel';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Fout: Lêer nie gevind by $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Gaan Facebook-toepassing na';
-
-  @override
-  String get systemShare => 'Stelseldeel';
-
-  @override
-  String get socialPost => 'Sosiale Pos';
-
-  @override
-  String get favorite => 'Gunsteling';
-
-  @override
-  String get saveDraft => 'Stoor konsep';
 
   @override
   String get entryCopied => 'Inskrywing gekopieer';
@@ -875,33 +673,10 @@ class AppLocalizationsAf extends AppLocalizations {
   String get dueDate => 'Sperdatum';
 
   @override
-  String get expenseTitle => 'Uitgawes';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Soek in $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Sorteer & Filter';
 
   @override
   String get sortBy => 'SORTEER VOLGENS';
-
-  @override
-  String get highestAmount => 'Hoogste bedrag';
-
-  @override
-  String get lowestAmount => 'Laagste bedrag';
-
-  @override
-  String get moreFilters => 'Meer filters...';
-
-  @override
-  String get filterExpenses => 'Filter uitgawes';
-
-  @override
-  String get transactionType => 'Soort transaksie';
 
   @override
   String get categories => 'Kategorieë';
@@ -910,21 +685,10 @@ class AppLocalizationsAf extends AppLocalizations {
   String get all => 'Almal';
 
   @override
-  String get income => 'Inkomste';
-
-  @override
-  String get expense => 'Uitgawe';
-
-  @override
   String get reset => 'Stel terug';
 
   @override
   String get apply => 'Pas toe';
-
-  @override
-  String newExpense(String currency) {
-    return 'Nuwe $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -988,34 +752,10 @@ class AppLocalizationsAf extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Nuwe Skets';
-
-  @override
-  String get searchSketches => 'Soek sketse en dopgehou...';
-
-  @override
   String get noResultsFound => 'Geen resultate gevind nie';
 
   @override
   String get noItems => 'Geen items';
-
-  @override
-  String get noDrawingsYet => 'Nog geen tekeninge nie';
-
-  @override
-  String get canvasIntro => 'Laat jou kreatiwiteit op die doek los!';
-
-  @override
-  String get newCanvas => 'Nuwe Canvas';
 
   @override
   String get rename => 'Hernoem';
@@ -1031,13 +771,7 @@ class AppLocalizationsAf extends AppLocalizations {
       'Alle sketse in hierdie vouer sal permanent uitgevee word.';
 
   @override
-  String get renameFolder => 'Hernoem gids';
-
-  @override
   String get chooseColor => 'Kies Kleur';
-
-  @override
-  String get deleteFolderQuestion => 'Vee vouer uit?';
 
   @override
   String get searchClips => 'Soek snitte...';
@@ -1059,9 +793,6 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'Jy kan hierdie snit later herstel.';
-
-  @override
-  String get upcomingEvents => 'Komende gebeure';
 
   @override
   String get dataDistribution => 'DATA VERSPREIDING';
@@ -1102,57 +833,6 @@ class AppLocalizationsAf extends AppLocalizations {
   String selectedCount(int count) {
     return '$count Gekies';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes sketse • $folders dopgehou';
-  }
-
-  @override
-  String get sortItems => 'Sorteer items';
-
-  @override
-  String get sortNameAZ => 'Naam (A-Z)';
-
-  @override
-  String get sortNameZA => 'Naam (Z-A)';
-
-  @override
-  String get createFolder => 'Skep gids';
-
-  @override
-  String get folderNameHint => 'Vouernaam...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Vee $count sketse uit? Dit kan nie ongedaan gemaak word nie.';
-  }
-
-  @override
-  String get noSketchesFound => 'Geen sketse gevind nie';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Probeer jou soektog aanpas of \'n nuwe skets skep.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Soek in $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count sketse';
-  }
-
-  @override
-  String get sortSketches => 'Sorteer sketse';
-
-  @override
-  String get calendarScreenTitle => 'Kalender';
-
-  @override
-  String get dailyActivity => 'Daaglikse aktiwiteit';
 
   @override
   String get deleteItemQuestion => 'Vee item uit?';
@@ -1255,28 +935,6 @@ class AppLocalizationsAf extends AppLocalizations {
   String get general => 'Algemeen';
 
   @override
-  String get saveTransactionQuestion => 'Wil jy hierdie transaksie stoor?';
-
-  @override
-  String get fillTitleAmount => 'Vul asseblief titel en bedrag in';
-
-  @override
-  String get invalidAmount => 'Ongeldige bedragformaat';
-
-  @override
-  String get moveTransactionToBinTitle => 'Skuif transaksie na asblik?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Jy kan hierdie transaksie later vanaf instellings herstel.';
-
-  @override
-  String get newTransaction => 'Nuwe transaksie';
-
-  @override
-  String get whatIsThisFor => 'Waarvoor is dit?';
-
-  @override
   String get description => 'Beskrywing';
 
   @override
@@ -1292,70 +950,10 @@ class AppLocalizationsAf extends AppLocalizations {
   String get yearly => 'Jaarliks';
 
   @override
-  String get totalIncome => 'Totale inkomste';
-
-  @override
-  String get totalExpense => 'Totale uitgawe';
-
-  @override
   String get analysis => 'Ontleding';
 
   @override
   String get transactions => 'Transaksies';
-
-  @override
-  String get noExpensesFound => 'Geen uitgawes vir hierdie tydperk gevind nie.';
-
-  @override
-  String get netBalance => 'Netto balans';
-
-  @override
-  String get topCategories => 'Top kategorieë';
-
-  @override
-  String get spendingTrend => 'Bestedingstendens';
-
-  @override
-  String get insights => 'Insigte';
-
-  @override
-  String get noExpensesRecorded => 'Geen uitgawes aangeteken nie';
-
-  @override
-  String get trackSpendingHabits => 'Volg jou bestedingsgewoontes maklik.';
-
-  @override
-  String get addExpense => 'Voeg uitgawe by';
-
-  @override
-  String get noDataForPeriod => 'Geen data vir hierdie tydperk nie';
-
-  @override
-  String get budget => 'Begroting';
-
-  @override
-  String get spent => 'Spandeer';
-
-  @override
-  String get limit => 'Beperk';
-
-  @override
-  String get overBudget => 'Oor begroting!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% oor';
-  }
-
-  @override
-  String get savingsRate => 'Spaarkoers';
-
-  @override
-  String get healthScore => 'Gesondheid telling';
-
-  @override
-  String get healthScoreExplanation =>
-      'Hierdie telling is gebaseer op jou Spaarkoers.\n\n• > 50% gespaar = Uitstekend (100)\n• 0% gestoor = Gemiddeld (50)\n• Besteding > Inkomste = Swak (<50)';
 
   @override
   String get ok => 'OK';
@@ -1384,19 +982,10 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get todos => 'To-Dos';
 
   @override
-  String get expenses => 'Uitgawes';
-
-  @override
   String get journal => 'Joernaal';
 
   @override
-  String get calendar => 'Kalender';
-
-  @override
   String get clipboard => 'Knipbord';
-
-  @override
-  String get canvas => 'Canvas';
 
   @override
   String get save => 'Stoor';
@@ -1429,24 +1018,6 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get discard => 'Gooi weg';
 
   @override
-  String get createPost => 'Skep plasing';
-
-  @override
-  String get post => 'Plaas';
-
-  @override
-  String get postingTo => 'Plaas na';
-
-  @override
-  String get whatsOnYourMind => 'Wat dink jy?';
-
-  @override
-  String get pickImages => 'Kies prente';
-
-  @override
-  String get pickVideo => 'Kies video';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -1471,16 +1042,6 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String error(Object error) {
     return 'Fout: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Bestelling slegs beskikbaar in \'Alle plasings\'';
-
-  @override
-  String get deletePost => 'Vee plasing uit';
-
-  @override
-  String get postDeleted => 'Pos uitgevee';
 
   @override
   String get premiumFeatures => 'Premium kenmerke';
@@ -1541,35 +1102,6 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get recycleBinCleared => 'Asblik is suksesvol skoongemaak';
 
   @override
-  String get allPostsDeleted => 'Alle plasings is uitgevee';
-
-  @override
-  String get newPost => 'Nuwe Pos';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Teks na knipbord gekopieer (Facebook-beleid)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok-deling vereis \'n video/prent';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Fout met deel: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Deel na $platform-verhaal';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Deel na $platform-stroom';
-  }
-
-  @override
   String get unlockPermanently => 'Ontsluit Permanent';
 
   @override
@@ -1585,13 +1117,6 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String get selectDateTime => 'Kies Datum en Tyd';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Is jy seker jy wil hierdie plasing uitvee?';
-
-  @override
-  String get socialPosts => 'Sosiale plasings';
 
   @override
   String get watchAdToEarnCoins => 'Kyk na advertensie om munte te verdien';
@@ -1777,25 +1302,11 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
       'Bly op hoogte van jou spel. Skep doenlyste, stel prioriteite en verpletter jou doelwitte een vinkje op \'n slag.';
 
   @override
-  String get onboardingExpensesTitle => 'Uitgawe dop';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Neem beheer van jou finansies. Volg inkomste en uitgawes maklik om jou bestedingsgewoontes te verstaan.';
-
-  @override
   String get onboardingJournalTitle => 'Persoonlike Joernaal';
 
   @override
   String get onboardingJournalDesc =>
       'Besin oor jou dag. \'n Privaat ruimte om jou herinneringe, gevoelens en daaglikse ervarings neer te skryf.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalender en gebeure';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Moet nooit \'n oomblik mis nie. Organiseer jou skedule en hou tred met belangrike komende gebeure.';
 
   @override
   String get onboardingClipboardTitle => 'Knipbord Bestuurder';
@@ -1805,64 +1316,22 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
       'Kopieer een keer, plak enige plek. Kry toegang tot jou knipbordgeskiedenis om brokkies wat jy vroeër gekopieer het, op te spoor.';
 
   @override
-  String get onboardingCanvasTitle => 'Kreatiewే doek';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Laat jou kreatiwiteit los. Teken, skets en visualiseer jou idees op \'n vryvorm digitale doek.';
-
-  @override
   String get featuresNotesDesc => 'Skep en bestuur jou notas';
 
   @override
   String get featuresTodosDesc => 'Bly op hoogte van jou take';
 
   @override
-  String get featuresExpensesDesc => 'Monitor jou uitగవలు';
-
-  @override
   String get featuresJournalDesc => 'Skryf jou gedagtes neer';
 
   @override
-  String get featuresCalendarDesc => 'Organiseer jou skedule';
-
-  @override
   String get featuresClipboardDesc => 'Toegang tot jou knipbordgeskiedenis';
-
-  @override
-  String get featuresCanvasDesc => 'Teken en skets vrylik';
-
-  @override
-  String get featuresSocialPost => 'Sosiale Pos';
-
-  @override
-  String get featuresSocialPostDesc => 'Skep boeiende sosiale media-inhoud';
 
   @override
   String get chooseYourAura => 'Kies jou aura';
 
   @override
   String get expressYourselfTheme => 'Druk jouself uit met \'n nuwe temakleur!';
-
-  @override
-  String get level => 'Vlak';
-
-  @override
-  String get xpToNextLevel => 'XP na vlak';
-
-  @override
-  String get checkUpcomingEvents => 'Gaan komende gebeure na';
-
-  @override
-  String get startNewSketch => 'Begin \'n nuwe skets';
-
-  @override
-  String get noTransactionsMonth => 'Geen transaksies hierdie maand nie';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return '$count transaksies hierdie maand';
-  }
 
   @override
   String get autoSaveClipboard => 'Outo-stoor knipbord';
@@ -1925,15 +1394,6 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   @override
   String get premiumLayoutsDesc =>
       'Eksklusiewe maniere om jou herinneringe te sien';
-
-  @override
-  String get calendarTools => 'Kalender en Gereedskap';
-
-  @override
-  String get fullCalendar => 'Volledige kalender';
-
-  @override
-  String get fullCalendarDesc => 'Volledige gebeurtenisbestuurstelsel';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -2020,76 +1480,12 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get completed => 'Voltooi';
 
   @override
-  String get greatJob => 'Puik werk!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Jy het $amount XP verdien! Volgende taak: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Taak voltooi! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin => 'Skuif alle aktiewe take na asblik?';
-
-  @override
-  String get deleteAllPosts => 'Vee alle plasings uit';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Is jy seker jy wil ALLE sosiale plasings uitvee? Dit kan nie ongedaan gemaak word nie.';
-
-  @override
-  String get allPosts => 'Alle plasings';
-
-  @override
-  String get favorites => 'Gunstelinge';
-
-  @override
-  String get drafts => 'Konsepte';
-
-  @override
-  String get noFavoritesYet => 'Nog geen gunstelinge nie';
-
-  @override
-  String get noDraftsYet => 'Nog geen konsepte nie';
-
-  @override
-  String get startSocialJourney => 'Begin jou sosiale reis!';
-
-  @override
-  String get draft => 'KONSEP';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count aanhangsels';
-  }
-
-  @override
-  String get pleaseAddContent => 'Voeg asseblief inhoud of media by om te deel';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Fout: Lêer nie gevind by $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Gaan Facebook-toepassing na';
-
-  @override
-  String get systemShare => 'Stelseldeel';
-
-  @override
-  String get socialPost => 'Sosiale Pos';
-
-  @override
-  String get favorite => 'Gunsteling';
-
-  @override
-  String get saveDraft => 'Stoor konsep';
 
   @override
   String get entryCopied => 'Inskrywing gekopieer';
@@ -2235,33 +1631,10 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get dueDate => 'Sperdatum';
 
   @override
-  String get expenseTitle => 'Uitgawes';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Soek in $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Sorteer & Filter';
 
   @override
   String get sortBy => 'SORTEER VOLGENS';
-
-  @override
-  String get highestAmount => 'Hoogste bedrag';
-
-  @override
-  String get lowestAmount => 'Laagste bedrag';
-
-  @override
-  String get moreFilters => 'Meer filters...';
-
-  @override
-  String get filterExpenses => 'Filter uitgawes';
-
-  @override
-  String get transactionType => 'Soort transaksie';
 
   @override
   String get categories => 'Kategorieë';
@@ -2270,21 +1643,10 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get all => 'Almal';
 
   @override
-  String get income => 'Inkomste';
-
-  @override
-  String get expense => 'Uitgawe';
-
-  @override
   String get reset => 'Stel terug';
 
   @override
   String get apply => 'Pas toe';
-
-  @override
-  String newExpense(String currency) {
-    return 'Nuwe $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2348,34 +1710,10 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Nuwe Skets';
-
-  @override
-  String get searchSketches => 'Soek sketse en dopgehou...';
-
-  @override
   String get noResultsFound => 'Geen resultate gevind nie';
 
   @override
   String get noItems => 'Geen items';
-
-  @override
-  String get noDrawingsYet => 'Nog geen tekeninge nie';
-
-  @override
-  String get canvasIntro => 'Laat jou kreatiwiteit op die doek los!';
-
-  @override
-  String get newCanvas => 'Nuwe Canvas';
 
   @override
   String get rename => 'Hernoem';
@@ -2391,13 +1729,7 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
       'Alle sketse in hierdie vouer sal permanent uitgevee word.';
 
   @override
-  String get renameFolder => 'Hernoem gids';
-
-  @override
   String get chooseColor => 'Kies Kleur';
-
-  @override
-  String get deleteFolderQuestion => 'Vee vouer uit?';
 
   @override
   String get searchClips => 'Soek snitte...';
@@ -2419,9 +1751,6 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
 
   @override
   String get restoreClipLater => 'Jy kan hierdie snit later herstel.';
-
-  @override
-  String get upcomingEvents => 'Komende gebeure';
 
   @override
   String get dataDistribution => 'DATA VERSPREIDING';
@@ -2462,57 +1791,6 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String selectedCount(int count) {
     return '$count Gekies';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes sketse • $folders dopgehou';
-  }
-
-  @override
-  String get sortItems => 'Sorteer items';
-
-  @override
-  String get sortNameAZ => 'Naam (A-Z)';
-
-  @override
-  String get sortNameZA => 'Naam (Z-A)';
-
-  @override
-  String get createFolder => 'Skep gids';
-
-  @override
-  String get folderNameHint => 'Vouernaam...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Vee $count sketse uit? Dit kan nie ongedaan gemaak word nie.';
-  }
-
-  @override
-  String get noSketchesFound => 'Geen sketse gevind nie';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Probeer jou soektog aanpas of \'n nuwe skets skep.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Soek in $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count sketse';
-  }
-
-  @override
-  String get sortSketches => 'Sorteer sketse';
-
-  @override
-  String get calendarScreenTitle => 'Kalender';
-
-  @override
-  String get dailyActivity => 'Daaglikse aktiwiteit';
 
   @override
   String get deleteItemQuestion => 'Vee item uit?';
@@ -2615,28 +1893,6 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get general => 'Algemeen';
 
   @override
-  String get saveTransactionQuestion => 'Wil jy hierdie transaksie stoor?';
-
-  @override
-  String get fillTitleAmount => 'Vul asseblief titel en bedrag in';
-
-  @override
-  String get invalidAmount => 'Ongeldige bedragformaat';
-
-  @override
-  String get moveTransactionToBinTitle => 'Skuif transaksie na asblik?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Jy kan hierdie transaksie later vanaf instellings herstel.';
-
-  @override
-  String get newTransaction => 'Nuwe transaksie';
-
-  @override
-  String get whatIsThisFor => 'Waarvoor is dit?';
-
-  @override
   String get description => 'Beskrywing';
 
   @override
@@ -2652,70 +1908,10 @@ class AppLocalizationsAfZa extends AppLocalizationsAf {
   String get yearly => 'Jaarliks';
 
   @override
-  String get totalIncome => 'Totale inkomste';
-
-  @override
-  String get totalExpense => 'Totale uitgawe';
-
-  @override
   String get analysis => 'Ontleding';
 
   @override
   String get transactions => 'Transaksies';
-
-  @override
-  String get noExpensesFound => 'Geen uitgawes vir hierdie tydperk gevind nie.';
-
-  @override
-  String get netBalance => 'Netto balans';
-
-  @override
-  String get topCategories => 'Top kategorieë';
-
-  @override
-  String get spendingTrend => 'Bestedingstendens';
-
-  @override
-  String get insights => 'Insigte';
-
-  @override
-  String get noExpensesRecorded => 'Geen uitgawes aangeteken nie';
-
-  @override
-  String get trackSpendingHabits => 'Volg jou bestedingsgewoontes maklik.';
-
-  @override
-  String get addExpense => 'Voeg uitgawe by';
-
-  @override
-  String get noDataForPeriod => 'Geen data vir hierdie tydperk nie';
-
-  @override
-  String get budget => 'Begroting';
-
-  @override
-  String get spent => 'Spandeer';
-
-  @override
-  String get limit => 'Beperk';
-
-  @override
-  String get overBudget => 'Oor begroting!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% oor';
-  }
-
-  @override
-  String get savingsRate => 'Spaarkoers';
-
-  @override
-  String get healthScore => 'Gesondheid telling';
-
-  @override
-  String get healthScoreExplanation =>
-      'Hierdie telling is gebaseer op jou Spaarkoers.\n\n• > 50% gespaar = Uitstekend (100)\n• 0% gestoor = Gemiddeld (50)\n• Besteding > Inkomste = Swak (<50)';
 
   @override
   String get ok => 'OK';

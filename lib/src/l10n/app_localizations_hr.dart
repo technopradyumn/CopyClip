@@ -24,19 +24,10 @@ class AppLocalizationsHr extends AppLocalizations {
   String get todos => 'To-Dos';
 
   @override
-  String get expenses => 'Expenses';
-
-  @override
   String get journal => 'Journal';
 
   @override
-  String get calendar => 'Calendar';
-
-  @override
   String get clipboard => 'Clipboard';
-
-  @override
-  String get canvas => 'Canvas';
 
   @override
   String get save => 'Save';
@@ -69,24 +60,6 @@ class AppLocalizationsHr extends AppLocalizations {
   String get discard => 'Discard';
 
   @override
-  String get createPost => 'Create Post';
-
-  @override
-  String get post => 'Post';
-
-  @override
-  String get postingTo => 'Posting to';
-
-  @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
-
-  @override
-  String get pickImages => 'Pick Images';
-
-  @override
-  String get pickVideo => 'Pick Video';
-
-  @override
   String get camera => 'Camera';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsHr extends AppLocalizations {
   String error(Object error) {
     return 'Error: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
-
-  @override
-  String get deletePost => 'Delete Post';
-
-  @override
-  String get postDeleted => 'Post deleted';
 
   @override
   String get premiumFeatures => 'Premium Features';
@@ -180,35 +143,6 @@ class AppLocalizationsHr extends AppLocalizations {
   String get recycleBinCleared => 'Recycle Bin cleared successfully';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
-
-  @override
-  String get newPost => 'New Post';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Error sharing: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Share to $platform Story';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
-  }
-
-  @override
   String get unlockPermanently => 'Unlock Permanently';
 
   @override
@@ -224,13 +158,6 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Select Date & Time';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
-
-  @override
-  String get socialPosts => 'Social Posts';
 
   @override
   String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
@@ -415,25 +342,11 @@ class AppLocalizationsHr extends AppLocalizations {
       'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
-
-  @override
   String get onboardingJournalTitle => 'Personal Journal';
 
   @override
   String get onboardingJournalDesc =>
       'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
-
-  @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
 
   @override
   String get onboardingClipboardTitle => 'Clipboard Manager';
@@ -443,70 +356,22 @@ class AppLocalizationsHr extends AppLocalizations {
       'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
-
-  @override
   String get featuresNotesDesc => 'Create and manage your notes';
 
   @override
   String get featuresTodosDesc => 'Keep track of your tasks';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
-
-  @override
   String get featuresJournalDesc => 'Write down your thoughts';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
-
-  @override
   String get featuresClipboardDesc => 'Access your clipboard history';
-
-  @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
-
-  @override
-  String get featuresSocialPost => 'Social Post';
-
-  @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
 
   @override
   String get chooseYourAura => 'Choose Your Aura';
 
   @override
   String get expressYourselfTheme => 'Express yourself with a new theme color!';
-
-  @override
-  String get level => 'Level';
-
-  @override
-  String get xpToNextLevel => 'XP to Level';
-
-  @override
-  String get checkUpcomingEvents => 'Check upcoming events';
-
-  @override
-  String get startNewSketch => 'Start a new sketch';
-
-  @override
-  String get noTransactionsMonth => 'No transactions this month';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
-  }
 
   @override
   String get autoSaveClipboard => 'Auto-save Clipboard';
@@ -568,15 +433,6 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
-
-  @override
-  String get calendarTools => 'Calendar & Tools';
-
-  @override
-  String get fullCalendar => 'Full Calendar';
-
-  @override
-  String get fullCalendarDesc => 'Complete event management system';
 
   @override
   String get clipboardAutoSaveDesc => 'Background clipboard history capture';
@@ -662,82 +518,12 @@ class AppLocalizationsHr extends AppLocalizations {
   String get completed => 'Completed';
 
   @override
-  String get greatJob => 'Great job!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
-
-  @override
-  String get deleteAllPosts => 'Delete All Posts';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
-
-  @override
-  String get allPosts => 'All Posts';
-
-  @override
-  String get favorites => 'Favorites';
-
-  @override
-  String get drafts => 'Drafts';
-
-  @override
-  String get noFavoritesYet => 'No favorites yet';
-
-  @override
-  String get noDraftsYet => 'No drafts yet';
-
-  @override
-  String get startSocialJourney => 'Start your social journey!';
-
-  @override
-  String get draft => 'DRAFT';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'Please add some content or media to share';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Error: File not found at $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Check Facebook app';
-
-  @override
-  String get systemShare => 'System Share';
-
-  @override
-  String get socialPost => 'Social Post';
-
-  @override
-  String get favorite => 'Favorite';
-
-  @override
-  String get saveDraft => 'Save Draft';
 
   @override
   String get entryCopied => 'Entry copied';
@@ -882,33 +668,10 @@ class AppLocalizationsHr extends AppLocalizations {
   String get dueDate => 'Due Date';
 
   @override
-  String get expenseTitle => 'Expenses';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Search in $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Sort & Filter';
 
   @override
   String get sortBy => 'SORT BY';
-
-  @override
-  String get highestAmount => 'Highest Amount';
-
-  @override
-  String get lowestAmount => 'Lowest Amount';
-
-  @override
-  String get moreFilters => 'More Filters...';
-
-  @override
-  String get filterExpenses => 'Filter Expenses';
-
-  @override
-  String get transactionType => 'Transaction Type';
 
   @override
   String get categories => 'Categories';
@@ -917,21 +680,10 @@ class AppLocalizationsHr extends AppLocalizations {
   String get all => 'All';
 
   @override
-  String get income => 'Income';
-
-  @override
-  String get expense => 'Expense';
-
-  @override
   String get reset => 'Reset';
 
   @override
   String get apply => 'Apply';
-
-  @override
-  String newExpense(String currency) {
-    return 'New $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -994,34 +746,10 @@ class AppLocalizationsHr extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'New Sketch';
-
-  @override
-  String get searchSketches => 'Search sketches and folders...';
-
-  @override
   String get noResultsFound => 'No results found';
 
   @override
   String get noItems => 'No items';
-
-  @override
-  String get noDrawingsYet => 'No drawings yet';
-
-  @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
-
-  @override
-  String get newCanvas => 'New Canvas';
 
   @override
   String get rename => 'Rename';
@@ -1037,13 +765,7 @@ class AppLocalizationsHr extends AppLocalizations {
       'All sketches in this folder will be deleted permanently.';
 
   @override
-  String get renameFolder => 'Rename Folder';
-
-  @override
   String get chooseColor => 'Choose Color';
-
-  @override
-  String get deleteFolderQuestion => 'Delete Folder?';
 
   @override
   String get searchClips => 'Search clips...';
@@ -1065,9 +787,6 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'You can restore this clip later.';
-
-  @override
-  String get upcomingEvents => 'Upcoming Events';
 
   @override
   String get dataDistribution => 'DATA DISTRIBUTION';
@@ -1108,57 +827,6 @@ class AppLocalizationsHr extends AppLocalizations {
   String selectedCount(int count) {
     return '$count Selected';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
-  }
-
-  @override
-  String get sortItems => 'Sort Items';
-
-  @override
-  String get sortNameAZ => 'Name (A-Z)';
-
-  @override
-  String get sortNameZA => 'Name (Z-A)';
-
-  @override
-  String get createFolder => 'Create Folder';
-
-  @override
-  String get folderNameHint => 'Folder name...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
-  }
-
-  @override
-  String get noSketchesFound => 'No sketches found';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Search in $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count sketches';
-  }
-
-  @override
-  String get sortSketches => 'Sort Sketches';
-
-  @override
-  String get calendarScreenTitle => 'Calendar';
-
-  @override
-  String get dailyActivity => 'Daily Activity';
 
   @override
   String get deleteItemQuestion => 'Delete Item?';
@@ -1261,28 +929,6 @@ class AppLocalizationsHr extends AppLocalizations {
   String get general => 'General';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
-
-  @override
-  String get fillTitleAmount => 'Please fill in title and amount';
-
-  @override
-  String get invalidAmount => 'Invalid amount format';
-
-  @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
-
-  @override
-  String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
-
-  @override
-  String get newTransaction => 'New Transaction';
-
-  @override
-  String get whatIsThisFor => 'What is this for?';
-
-  @override
   String get description => 'Description';
 
   @override
@@ -1298,70 +944,10 @@ class AppLocalizationsHr extends AppLocalizations {
   String get yearly => 'Yearly';
 
   @override
-  String get totalIncome => 'Total Income';
-
-  @override
-  String get totalExpense => 'Total Expense';
-
-  @override
   String get analysis => 'Analysis';
 
   @override
   String get transactions => 'Transactions';
-
-  @override
-  String get noExpensesFound => 'No expenses found for this period.';
-
-  @override
-  String get netBalance => 'Net Balance';
-
-  @override
-  String get topCategories => 'Top Categories';
-
-  @override
-  String get spendingTrend => 'Spending Trend';
-
-  @override
-  String get insights => 'Insights';
-
-  @override
-  String get noExpensesRecorded => 'No expenses recorded';
-
-  @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
-
-  @override
-  String get addExpense => 'Add Expense';
-
-  @override
-  String get noDataForPeriod => 'No data for this period';
-
-  @override
-  String get budget => 'Budget';
-
-  @override
-  String get spent => 'Spent';
-
-  @override
-  String get limit => 'Limit';
-
-  @override
-  String get overBudget => 'Over Budget!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% remaining';
-  }
-
-  @override
-  String get savingsRate => 'Savings Rate';
-
-  @override
-  String get healthScore => 'Health Score';
-
-  @override
-  String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
 
   @override
   String get ok => 'OK';
@@ -1390,19 +976,10 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   String get todos => 'Zadaci';
 
   @override
-  String get expenses => 'Troškovi';
-
-  @override
   String get journal => 'Dnevnik';
 
   @override
-  String get calendar => 'Kalendar';
-
-  @override
   String get clipboard => 'Međuspremnik';
-
-  @override
-  String get canvas => 'Platno';
 
   @override
   String get save => 'Spremi';
@@ -1435,24 +1012,6 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   String get discard => 'Odbaci';
 
   @override
-  String get createPost => 'Izradi objavu';
-
-  @override
-  String get post => 'Objavi';
-
-  @override
-  String get postingTo => 'Objavljivanje na';
-
-  @override
-  String get whatsOnYourMind => 'Što vam je na umu?';
-
-  @override
-  String get pickImages => 'Odaberi slike';
-
-  @override
-  String get pickVideo => 'Odaberi video';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -1477,16 +1036,6 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   String error(Object error) {
     return 'Pogreška: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Naručivanje je dostupno samo u \'Svim objavama\'';
-
-  @override
-  String get deletePost => 'Obriši objavu';
-
-  @override
-  String get postDeleted => 'Objava obrisana';
 
   @override
   String get premiumFeatures => 'Premium značajke';
@@ -1547,35 +1096,6 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   String get recycleBinCleared => 'Otpad uspješno ispražnjen';
 
   @override
-  String get allPostsDeleted => 'Sve objave obrisane';
-
-  @override
-  String get newPost => 'Nova objava';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Tekst kopiran u međuspremnik (Facebook pravila)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Dijeljenje na TikTok zahtijeva video/sliku';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Pogreška pri dijeljenju: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Podijeli na $platform Story';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Podijeli na $platform Feed';
-  }
-
-  @override
   String get unlockPermanently => 'Otključaj trajno';
 
   @override
@@ -1591,13 +1111,6 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
 
   @override
   String get selectDateTime => 'Odaberi datum i vrijeme';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Jeste li sigurni da želite obrisati ovu objavu?';
-
-  @override
-  String get socialPosts => 'Društvene objave';
 
   @override
   String get watchAdToEarnCoins => 'Gledaj oglas za novčiće';
@@ -1783,25 +1296,11 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
       'Ostanite na vrhu svoje igre. Izradite popise obaveza, postavite prioritete i ostvarite svoje ciljeve jedan po jedan.';
 
   @override
-  String get onboardingExpensesTitle => 'Praćenje troškova';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Preuzmite kontrolu nad svojim financijama. Jednostavno pratite prihode i troškove kako biste razumjeli svoje potrošačke navike.';
-
-  @override
   String get onboardingJournalTitle => 'Osobni dnevnik';
 
   @override
   String get onboardingJournalDesc =>
       'Razmislite o svom danu. Privatni prostor za zapisivanje vaših sjećanja, osjećaja i dnevnih iskustava.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalendar i događaji';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Nikada ne propustite trenutak. Organizirajte svoj raspored i pratite važne nadolazeće događaje.';
 
   @override
   String get onboardingClipboardTitle => 'Upravitelj međuspremnika';
@@ -1811,71 +1310,22 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
       'Kopiraj jednom, zalijepi bilo gdje. Pristupite povijesti međuspremnika kako biste preuzeli isječke koje ste ranije kopirali.';
 
   @override
-  String get onboardingCanvasTitle => 'Kreativno platno';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Oslobodite svoju kreativnost. Crtajte, skicirajte i vizualizirajte svoje ideje na platnu slobodnog oblika.';
-
-  @override
   String get featuresNotesDesc => 'Izradite i upravljajte svojim bilješkama';
 
   @override
   String get featuresTodosDesc => 'Pratite svoje zadatke';
 
   @override
-  String get featuresExpensesDesc => 'Pratite svoje troškove';
-
-  @override
   String get featuresJournalDesc => 'Zapišite svoje misli';
 
   @override
-  String get featuresCalendarDesc => 'Organizirajte svoj raspored';
-
-  @override
   String get featuresClipboardDesc => 'Pristupite povijesti međuspremnika';
-
-  @override
-  String get featuresCanvasDesc => 'Crtajte i skicirajte slobodno';
-
-  @override
-  String get featuresSocialPost => 'Društvena objava';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Stvarajte zanimljiv sadržaj za društvene mreže';
 
   @override
   String get chooseYourAura => 'Odaberite svoju auru';
 
   @override
   String get expressYourselfTheme => 'Izrazite se novom bojom teme!';
-
-  @override
-  String get level => 'Razina';
-
-  @override
-  String get xpToNextLevel => 'XP do razine';
-
-  @override
-  String get checkUpcomingEvents => 'Provjeri nadolazeće događaje';
-
-  @override
-  String get startNewSketch => 'Započni novu skicu';
-
-  @override
-  String get noTransactionsMonth => 'Nema transakcija ovog mjeseca';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'e',
-      one: '',
-    );
-    return '$count transakcija$_temp0 ovog mjeseca';
-  }
 
   @override
   String get autoSaveClipboard => 'Automatsko spremanje međuspremnika';
@@ -1938,15 +1388,6 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
 
   @override
   String get premiumLayoutsDesc => 'Ekskluzivni načini pregleda vaših sjećanja';
-
-  @override
-  String get calendarTools => 'Kalendar i alati';
-
-  @override
-  String get fullCalendar => 'Puni kalendar';
-
-  @override
-  String get fullCalendarDesc => 'Kompletan sustav upravljanja događajima';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -2035,82 +1476,12 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   String get completed => 'Dovršeno';
 
   @override
-  String get greatJob => 'Odličan posao!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Zaradili ste $amount XP! Sljedeći zadatak: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Zadatak dovršen! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin => 'Premjesti sve aktivne zadatke u otpad?';
-
-  @override
-  String get deleteAllPosts => 'Obriši sve objave';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Jeste li sigurni da želite obrisati SVE društvene objave? To se ne može poništiti.';
-
-  @override
-  String get allPosts => 'Sve objave';
-
-  @override
-  String get favorites => 'Favoriti';
-
-  @override
-  String get drafts => 'Skice';
-
-  @override
-  String get noFavoritesYet => 'Još nema favorita';
-
-  @override
-  String get noDraftsYet => 'Još nema skica';
-
-  @override
-  String get startSocialJourney => 'Započnite svoje društveno putovanje!';
-
-  @override
-  String get draft => 'SKICA';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'a',
-      one: '',
-    );
-    return '$count privitak$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'Dodajte neki sadržaj ili medij za dijeljenje';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Pogreška: Datoteka nije pronađena na $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Provjeri Facebook aplikaciju';
-
-  @override
-  String get systemShare => 'Sustavsko dijeljenje';
-
-  @override
-  String get socialPost => 'Društvena objava';
-
-  @override
-  String get favorite => 'Favorit';
-
-  @override
-  String get saveDraft => 'Spremi skicu';
 
   @override
   String get entryCopied => 'Unos kopiran';
@@ -2253,33 +1624,10 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   String get dueDate => 'Datum dospijeća';
 
   @override
-  String get expenseTitle => 'Troškovi';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Pretraži u $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Sortiraj i filtriraj';
 
   @override
   String get sortBy => 'SORTIRAJ PO';
-
-  @override
-  String get highestAmount => 'Najviši iznos';
-
-  @override
-  String get lowestAmount => 'Najniži iznos';
-
-  @override
-  String get moreFilters => 'Više filtara...';
-
-  @override
-  String get filterExpenses => 'Filtriraj troškove';
-
-  @override
-  String get transactionType => 'Vrsta transakcije';
 
   @override
   String get categories => 'Kategorije';
@@ -2288,21 +1636,10 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   String get all => 'Sve';
 
   @override
-  String get income => 'Prihod';
-
-  @override
-  String get expense => 'Trošak';
-
-  @override
   String get reset => 'Resetiraj';
 
   @override
   String get apply => 'Primijeni';
-
-  @override
-  String newExpense(String currency) {
-    return 'Novo $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2365,34 +1702,10 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Nova skica';
-
-  @override
-  String get searchSketches => 'Pretraži skice i mape...';
-
-  @override
   String get noResultsFound => 'Nema pronađenih rezultata';
 
   @override
   String get noItems => 'Nema stavki';
-
-  @override
-  String get noDrawingsYet => 'Još nema crteža';
-
-  @override
-  String get canvasIntro => 'Oslobodite svoju kreativnost na platnu!';
-
-  @override
-  String get newCanvas => 'Novo platno';
 
   @override
   String get rename => 'Preimenuj';
@@ -2408,13 +1721,7 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
       'Sve skice u ovoj mapi bit će trajno obrisane.';
 
   @override
-  String get renameFolder => 'Preimenuj mapu';
-
-  @override
   String get chooseColor => 'Odaberi boju';
-
-  @override
-  String get deleteFolderQuestion => 'Obriši mapu?';
 
   @override
   String get searchClips => 'Pretraži isječke...';
@@ -2436,9 +1743,6 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
 
   @override
   String get restoreClipLater => 'Ovaj isječak možete vratiti kasnije.';
-
-  @override
-  String get upcomingEvents => 'Nadolazeći događaji';
 
   @override
   String get dataDistribution => 'DISTRIBUCIJA PODATAKA';
@@ -2479,57 +1783,6 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   String selectedCount(int count) {
     return '$count odabrano';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes skica • $folders mapa';
-  }
-
-  @override
-  String get sortItems => 'Sortiraj stavke';
-
-  @override
-  String get sortNameAZ => 'Naziv (A-Z)';
-
-  @override
-  String get sortNameZA => 'Naziv (Z-A)';
-
-  @override
-  String get createFolder => 'Izradi mapu';
-
-  @override
-  String get folderNameHint => 'Naziv mape...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Obrisati $count skica? To se ne može poništiti.';
-  }
-
-  @override
-  String get noSketchesFound => 'Nema pronađenih skica';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Pokušajte prilagoditi pretraživanje ili izraditi novu skicu.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Pretraži u $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count skica';
-  }
-
-  @override
-  String get sortSketches => 'Sortiraj skice';
-
-  @override
-  String get calendarScreenTitle => 'Kalendar';
-
-  @override
-  String get dailyActivity => 'Dnevna aktivnost';
 
   @override
   String get deleteItemQuestion => 'Obrisati stavku?';
@@ -2631,28 +1884,6 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   String get general => 'Općenito';
 
   @override
-  String get saveTransactionQuestion => 'Želite li spremiti ovu transakciju?';
-
-  @override
-  String get fillTitleAmount => 'Molimo ispunite naslov i iznos';
-
-  @override
-  String get invalidAmount => 'Nevažeći format iznosa';
-
-  @override
-  String get moveTransactionToBinTitle => 'Premjestiti transakciju u otpad?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Ovu transakciju možete kasnije vratiti iz postavki.';
-
-  @override
-  String get newTransaction => 'Nova transakcija';
-
-  @override
-  String get whatIsThisFor => 'Za što je ovo?';
-
-  @override
   String get description => 'Opis';
 
   @override
@@ -2668,71 +1899,10 @@ class AppLocalizationsHrHr extends AppLocalizationsHr {
   String get yearly => 'Godišnje';
 
   @override
-  String get totalIncome => 'Ukupni prihod';
-
-  @override
-  String get totalExpense => 'Ukupni trošak';
-
-  @override
   String get analysis => 'Analiza';
 
   @override
   String get transactions => 'Transakcije';
-
-  @override
-  String get noExpensesFound => 'Nema pronađenih troškova za ovo razdoblje.';
-
-  @override
-  String get netBalance => 'Neto saldo';
-
-  @override
-  String get topCategories => 'Glavne kategorije';
-
-  @override
-  String get spendingTrend => 'Trend potrošnje';
-
-  @override
-  String get insights => 'Uvidi';
-
-  @override
-  String get noExpensesRecorded => 'Nema zabilježenih troškova';
-
-  @override
-  String get trackSpendingHabits =>
-      'Jednostavno pratite svoje potrošačke navike.';
-
-  @override
-  String get addExpense => 'Dodaj trošak';
-
-  @override
-  String get noDataForPeriod => 'Nema podataka za ovo razdoblje';
-
-  @override
-  String get budget => 'Proračun';
-
-  @override
-  String get spent => 'Potrošeno';
-
-  @override
-  String get limit => 'Granica';
-
-  @override
-  String get overBudget => 'Prekoračen proračun!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return 'preostalo $percent%';
-  }
-
-  @override
-  String get savingsRate => 'Stopa štednje';
-
-  @override
-  String get healthScore => 'Zdravstveni rezultat';
-
-  @override
-  String get healthScoreExplanation =>
-      'Ovaj rezultat temelji se na vašoj stopi štednje.\n\n• > 50% ušteđeno = Izvrsno (100)\n• 0% ušteđeno = Prosječno (50)\n• Potrošnja > Prihod = Loše (<50)';
 
   @override
   String get ok => 'U redu';

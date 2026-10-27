@@ -24,19 +24,10 @@ class AppLocalizationsIs extends AppLocalizations {
   String get todos => 'Verkefni';
 
   @override
-  String get expenses => 'Útgjöld';
-
-  @override
   String get journal => 'Dagbók';
 
   @override
-  String get calendar => 'Dagatal';
-
-  @override
   String get clipboard => 'Klemmuspjald';
-
-  @override
-  String get canvas => 'Striga';
 
   @override
   String get save => 'Vista';
@@ -69,24 +60,6 @@ class AppLocalizationsIs extends AppLocalizations {
   String get discard => 'Henda';
 
   @override
-  String get createPost => 'Búa til færslu';
-
-  @override
-  String get post => 'Senda';
-
-  @override
-  String get postingTo => 'Senda á';
-
-  @override
-  String get whatsOnYourMind => 'Hvað er þér efst í huga?';
-
-  @override
-  String get pickImages => 'Velja myndir';
-
-  @override
-  String get pickVideo => 'Velja myndband';
-
-  @override
   String get camera => 'Myndavél';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsIs extends AppLocalizations {
   String error(Object error) {
     return 'Villa: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Röðun er aðeins í boði í \'Allar færslur\'';
-
-  @override
-  String get deletePost => 'Eyða færslu';
-
-  @override
-  String get postDeleted => 'Færslu eytt';
 
   @override
   String get premiumFeatures => 'Premium eiginleikar';
@@ -181,35 +144,6 @@ class AppLocalizationsIs extends AppLocalizations {
   String get recycleBinCleared => 'Ruslakörfa tæmd';
 
   @override
-  String get allPostsDeleted => 'Öllum færslum eytt';
-
-  @override
-  String get newPost => 'Ný færsla';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Texti afritaður á klemmuspjald (Facebook stefna)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok deiling krefst myndbands eða myndar';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Villa við deilingu: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Deila í $platform sögu';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Deila í $platform straum';
-  }
-
-  @override
   String get unlockPermanently => 'Opna varanlega';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Velja dagsetningu og tíma';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Ertu viss um að þú viljir eyða þessari færslu?';
-
-  @override
-  String get socialPosts => 'Samfélagsfærslur';
 
   @override
   String get watchAdToEarnCoins => 'Horfa á auglýsingu til að vinna mynt';
@@ -417,25 +344,11 @@ class AppLocalizationsIs extends AppLocalizations {
       'Haltu utan um hlutina. Búðu til verkefnalista, forgangsraðaðu og náðu markmiðum þínum eitt af öðru.';
 
   @override
-  String get onboardingExpensesTitle => 'Útgjaldaskráning';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Náðu stjórn á fjármálunum. Fylgstu með tekjum og gjöldum til að skilja eyðsluaðferðir þínar.';
-
-  @override
   String get onboardingJournalTitle => 'Persónuleg dagbók';
 
   @override
   String get onboardingJournalDesc =>
       'Hugleiddu daginn. Einkarými til að skrifa niður minningar, tilfinningar og daglega upplifun.';
-
-  @override
-  String get onboardingCalendarTitle => 'Dagatal og viðburðir';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Missa aldrei af neinu. Skipuleggðu áætlun þína og haltu utan um mikilvæga viðburði framundan.';
 
   @override
   String get onboardingClipboardTitle => 'Klemmuspjaldstjóri';
@@ -445,71 +358,22 @@ class AppLocalizationsIs extends AppLocalizations {
       'Afritaðu einu sinni, límdu hvar sem er. Fáðu aðgang að klemmuspjaldssögunni þinni.';
 
   @override
-  String get onboardingCanvasTitle => 'Skapandi striga';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Slepptu sköpunargáfunni lausri. Teiknaðu, skissaðu og sjáðu hugmyndir þínar á stafrænum striga.';
-
-  @override
   String get featuresNotesDesc => 'Búa til og sýsla með glósurnar þínar';
 
   @override
   String get featuresTodosDesc => 'Haltu utan um verkefnin þín';
 
   @override
-  String get featuresExpensesDesc => 'Fylgstu með útgjöldum þínum';
-
-  @override
   String get featuresJournalDesc => 'Skrifaðu niður hugsanir þínar';
 
   @override
-  String get featuresCalendarDesc => 'Skipuleggðu áætlun þína';
-
-  @override
   String get featuresClipboardDesc => 'Fáðu aðgang að klemmuspjaldssögu þinni';
-
-  @override
-  String get featuresCanvasDesc => 'Teiknaðu og skissaðu frjálst';
-
-  @override
-  String get featuresSocialPost => 'Samfélagsfærsla';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Búðu til grípandi efni fyrir samfélagsmiðla';
 
   @override
   String get chooseYourAura => 'Veldu þína áru';
 
   @override
   String get expressYourselfTheme => 'Tjáðu þig með nýjum þemaliti!';
-
-  @override
-  String get level => 'Stig';
-
-  @override
-  String get xpToNextLevel => 'XP í stig';
-
-  @override
-  String get checkUpcomingEvents => 'Skoða viðburði framundan';
-
-  @override
-  String get startNewSketch => 'Byrja á nýrri skissu';
-
-  @override
-  String get noTransactionsMonth => 'Engar færslur í þessum mánuði';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'ur',
-      one: '',
-    );
-    return '$count færsla$_temp0 í þessum mánuði';
-  }
 
   @override
   String get autoSaveClipboard => 'Sjálfvirk vistun klemmuspjalds';
@@ -573,15 +437,6 @@ class AppLocalizationsIs extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'Einkaréttar leiðir til að skoða minningar þínar';
-
-  @override
-  String get calendarTools => 'Dagatal og verkfæri';
-
-  @override
-  String get fullCalendar => 'Fullt dagatal';
-
-  @override
-  String get fullCalendarDesc => 'Heildstætt kerfi til að sýsla með viðburði';
 
   @override
   String get clipboardAutoSaveDesc => 'Bakgrunnsvistun á klemmuspjaldssögu';
@@ -668,77 +523,12 @@ class AppLocalizationsIs extends AppLocalizations {
   String get completed => 'Lokið';
 
   @override
-  String get greatJob => 'Vel gert!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Þú fékkst $amount XP! Næsta verkefni: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Verkefni lokið! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin => 'Færa öll virk verkefni í ruslakörfuna?';
-
-  @override
-  String get deleteAllPosts => 'Eyða öllum færslum';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Ertu viss um að þú viljir eyða ÖLLUM samfélagsfærslum? Þessu er ekki hægt að hneppa aftur.';
-
-  @override
-  String get allPosts => 'Allar færslur';
-
-  @override
-  String get favorites => 'Uppáhalds';
-
-  @override
-  String get drafts => 'Uppköst';
-
-  @override
-  String get noFavoritesYet => 'Ekkert í uppáhaldi ennþá';
-
-  @override
-  String get noDraftsYet => 'Engin uppköst ennþá';
-
-  @override
-  String get startSocialJourney => 'Byrjaðu samfélagsvegferðina þína!';
-
-  @override
-  String get draft => 'UPPKAST';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count viðhengi';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Vinsamlegast bættu við efni eða miðli til að deila';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Villa: Skrá fannst ekki á $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Athugaðu Facebook appið';
-
-  @override
-  String get systemShare => 'Kerfisdeiling';
-
-  @override
-  String get socialPost => 'Samfélagsfærsla';
-
-  @override
-  String get favorite => 'Uppáhald';
-
-  @override
-  String get saveDraft => 'Vista uppkast';
 
   @override
   String get entryCopied => 'Færsla afrituð';
@@ -884,33 +674,10 @@ class AppLocalizationsIs extends AppLocalizations {
   String get dueDate => 'Gjalddagi';
 
   @override
-  String get expenseTitle => 'Útgjöld';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Leita í $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Raða og sía';
 
   @override
   String get sortBy => 'RAÐA EFTIR';
-
-  @override
-  String get highestAmount => 'Hæsta upphæð';
-
-  @override
-  String get lowestAmount => 'Lægsta upphæð';
-
-  @override
-  String get moreFilters => 'Fleiri síur...';
-
-  @override
-  String get filterExpenses => 'Sía útgjöld';
-
-  @override
-  String get transactionType => 'Tegund færslu';
 
   @override
   String get categories => 'Flokkar';
@@ -919,21 +686,10 @@ class AppLocalizationsIs extends AppLocalizations {
   String get all => 'Allt';
 
   @override
-  String get income => 'Tekjur';
-
-  @override
-  String get expense => 'Gjöld';
-
-  @override
   String get reset => 'Frumstilla';
 
   @override
   String get apply => 'Virkja';
-
-  @override
-  String newExpense(String currency) {
-    return 'Nýtt $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -997,34 +753,10 @@ class AppLocalizationsIs extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Ný skissa';
-
-  @override
-  String get searchSketches => 'Leita í skissum og möppum...';
-
-  @override
   String get noResultsFound => 'Engar niðurstöður fundust';
 
   @override
   String get noItems => 'Engin atriði';
-
-  @override
-  String get noDrawingsYet => 'Engar teikningar ennþá';
-
-  @override
-  String get canvasIntro => 'Slepptu sköpunargáfunni lausri á striganum!';
-
-  @override
-  String get newCanvas => 'Nýr strigi';
 
   @override
   String get rename => 'Endurnefna';
@@ -1040,13 +772,7 @@ class AppLocalizationsIs extends AppLocalizations {
       'Öllum skissum í þessari möppu verður eytt varanlega.';
 
   @override
-  String get renameFolder => 'Endurnefna möppu';
-
-  @override
   String get chooseColor => 'Velja lit';
-
-  @override
-  String get deleteFolderQuestion => 'Eyða möppu?';
 
   @override
   String get searchClips => 'Leita í bútum...';
@@ -1068,9 +794,6 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'Þú getur endurheimt þennan bút síðar.';
-
-  @override
-  String get upcomingEvents => 'Viðburðir framundan';
 
   @override
   String get dataDistribution => 'DREIFING GAGNA';
@@ -1111,57 +834,6 @@ class AppLocalizationsIs extends AppLocalizations {
   String selectedCount(int count) {
     return '$count valið';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes skissur • $folders möppur';
-  }
-
-  @override
-  String get sortItems => 'Raða atriðum';
-
-  @override
-  String get sortNameAZ => 'Nafn (A-Ö)';
-
-  @override
-  String get sortNameZA => 'Nafn (Ö-A)';
-
-  @override
-  String get createFolder => 'Búa til möppu';
-
-  @override
-  String get folderNameHint => 'Nafn möppu...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Eyða $count skissum? Þessu er ekki hægt að hneppa aftur.';
-  }
-
-  @override
-  String get noSketchesFound => 'Engar skissur fundust';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Prófaðu að breyta leitinni eða búðu til nýja skissu.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Leita í $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count skissur';
-  }
-
-  @override
-  String get sortSketches => 'Raða skissum';
-
-  @override
-  String get calendarScreenTitle => 'Dagatal';
-
-  @override
-  String get dailyActivity => 'Dagleg virkni';
 
   @override
   String get deleteItemQuestion => 'Eyða atriði?';
@@ -1264,28 +936,6 @@ class AppLocalizationsIs extends AppLocalizations {
   String get general => 'Almennt';
 
   @override
-  String get saveTransactionQuestion => 'Viltu vista þessa færslu?';
-
-  @override
-  String get fillTitleAmount => 'Vinsamlegast fylltu út titil og upphæð';
-
-  @override
-  String get invalidAmount => 'Ógilt snið upphæðar';
-
-  @override
-  String get moveTransactionToBinTitle => 'Færa færslu í ruslakörfuna?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Þú getur endurheimt þessa færslu síðar í stillingum.';
-
-  @override
-  String get newTransaction => 'Ný færsla';
-
-  @override
-  String get whatIsThisFor => 'Fyrir hvað er þetta?';
-
-  @override
   String get description => 'Lýsing';
 
   @override
@@ -1301,70 +951,10 @@ class AppLocalizationsIs extends AppLocalizations {
   String get yearly => 'Árlega';
 
   @override
-  String get totalIncome => 'Heildartekjur';
-
-  @override
-  String get totalExpense => 'Heildarútgjöld';
-
-  @override
   String get analysis => 'Greining';
 
   @override
   String get transactions => 'Færslur';
-
-  @override
-  String get noExpensesFound => 'Engin útgjöld fundust fyrir þetta tímabil.';
-
-  @override
-  String get netBalance => 'Hrein staða';
-
-  @override
-  String get topCategories => 'Helstu flokkar';
-
-  @override
-  String get spendingTrend => 'Eyðslubreytni';
-
-  @override
-  String get insights => 'Innsýn';
-
-  @override
-  String get noExpensesRecorded => 'Engin útgjöld skráð';
-
-  @override
-  String get trackSpendingHabits => 'Fylgstu auðveldlega með eyðslunni þinni.';
-
-  @override
-  String get addExpense => 'Bæta við útgjaldi';
-
-  @override
-  String get noDataForPeriod => 'Engin gögn fyrir þetta tímabil';
-
-  @override
-  String get budget => 'Fjárhagsáætlun';
-
-  @override
-  String get spent => 'Eytt';
-
-  @override
-  String get limit => 'Hámark';
-
-  @override
-  String get overBudget => 'Yfir áætlun!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% eftir';
-  }
-
-  @override
-  String get savingsRate => 'Sparnaðarhlutfall';
-
-  @override
-  String get healthScore => 'Heilsustig';
-
-  @override
-  String get healthScoreExplanation =>
-      'Þetta stig byggist á sparnaðarhlutfalli þínu.\n\n• > 50% sparað = Frábært (100)\n• 0% sparað = Meðallag (50)\n• Eyðsla > Tekjur = Lélegt (<50)';
 
   @override
   String get ok => 'LOKIÐ';
@@ -1393,19 +983,10 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   String get todos => 'Verkefni';
 
   @override
-  String get expenses => 'Útgjöld';
-
-  @override
   String get journal => 'Dagbók';
 
   @override
-  String get calendar => 'Dagatal';
-
-  @override
   String get clipboard => 'Klemmuspjald';
-
-  @override
-  String get canvas => 'Striga';
 
   @override
   String get save => 'Vista';
@@ -1438,24 +1019,6 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   String get discard => 'Henda';
 
   @override
-  String get createPost => 'Búa til færslu';
-
-  @override
-  String get post => 'Senda';
-
-  @override
-  String get postingTo => 'Senda á';
-
-  @override
-  String get whatsOnYourMind => 'Hvað er þér efst í huga?';
-
-  @override
-  String get pickImages => 'Velja myndir';
-
-  @override
-  String get pickVideo => 'Velja myndband';
-
-  @override
   String get camera => 'Myndavél';
 
   @override
@@ -1480,16 +1043,6 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   String error(Object error) {
     return 'Villa: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Röðun er aðeins í boði í \'Allar færslur\'';
-
-  @override
-  String get deletePost => 'Eyða færslu';
-
-  @override
-  String get postDeleted => 'Færslu eytt';
 
   @override
   String get premiumFeatures => 'Premium eiginleikar';
@@ -1550,35 +1103,6 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   String get recycleBinCleared => 'Ruslakörfa tæmd';
 
   @override
-  String get allPostsDeleted => 'Öllum færslum eytt';
-
-  @override
-  String get newPost => 'Ný færsla';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok deiling krefst myndbands eða myndar';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Villa við deilingu: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Deila í $platform sögu';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Deila í $platform straum';
-  }
-
-  @override
   String get unlockPermanently => 'Opna varanlega';
 
   @override
@@ -1594,13 +1118,6 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
 
   @override
   String get selectDateTime => 'Velja dagsetningu og tíma';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Ertu viss um að þú viljir eyða þessari færslu?';
-
-  @override
-  String get socialPosts => 'Samfélagsfærslur';
 
   @override
   String get watchAdToEarnCoins => 'Horfa á auglýsingu til að vinna mynt';
@@ -1786,25 +1303,11 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
       'Haltu utan um hlutina. Búðu til verkefnalista, forgangsraðaðu og náðu markmiðum þínum eitt af öðru.';
 
   @override
-  String get onboardingExpensesTitle => 'Útgjaldaskráning';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Náðu stjórn á fjármálunum. Fylgstu með tekjum og gjöldum til að skilja eyðsluaðferðir þínar.';
-
-  @override
   String get onboardingJournalTitle => 'Persónuleg dagbók';
 
   @override
   String get onboardingJournalDesc =>
       'Hugleiddu daginn. Einkarými til að skrifa niður minningar, tilfinningar og daglega upplifun.';
-
-  @override
-  String get onboardingCalendarTitle => 'Dagatal og viðburðir';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Missa aldrei af neinu. Skipuleggðu áætlun þína og haltu utan um mikilvæga viðburði framundan.';
 
   @override
   String get onboardingClipboardTitle => 'Klemmuspjaldstjóri';
@@ -1814,71 +1317,22 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
       'Afritaðu einu sinni, límdu hvar sem er. Fáðu aðgang að klemmuspjaldssögunni þinni.';
 
   @override
-  String get onboardingCanvasTitle => 'Skapandi striga';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Slepptu sköpunargáfunni lausri. Teiknaðu, skissaðu og sjáðu hugmyndir þínar á stafrænum striga.';
-
-  @override
   String get featuresNotesDesc => 'Búa til og sýsla með glósurnar þínar';
 
   @override
   String get featuresTodosDesc => 'Haltu utan um verkefnin þín';
 
   @override
-  String get featuresExpensesDesc => 'Fylgstu með útgjöldum þínum';
-
-  @override
   String get featuresJournalDesc => 'Skrifaðu niður hugsanir þínar';
 
   @override
-  String get featuresCalendarDesc => 'Skipuleggðu áætlun þína';
-
-  @override
   String get featuresClipboardDesc => 'Fáðu aðgang að klemmuspjaldssögu þinni';
-
-  @override
-  String get featuresCanvasDesc => 'Teiknaðu og skissaðu frjálst';
-
-  @override
-  String get featuresSocialPost => 'Samfélagsfærsla';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Búðu til grípandi efni fyrir samfélagsmiðla';
 
   @override
   String get chooseYourAura => 'Veldu þína áru';
 
   @override
   String get expressYourselfTheme => 'Tjáðu þig með nýjum þemaliti!';
-
-  @override
-  String get level => 'Stig';
-
-  @override
-  String get xpToNextLevel => 'XP í stig';
-
-  @override
-  String get checkUpcomingEvents => 'Skoða viðburði framundan';
-
-  @override
-  String get startNewSketch => 'Byrja á nýrri skissu';
-
-  @override
-  String get noTransactionsMonth => 'Engar færslur í þessum mánuði';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'ur',
-      one: '',
-    );
-    return '$count færsla$_temp0 í þessum mánuði';
-  }
 
   @override
   String get autoSaveClipboard => 'Sjálfvirk vistun klemmuspjalds';
@@ -1942,15 +1396,6 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   @override
   String get premiumLayoutsDesc =>
       'Einkaréttar leiðir til að skoða minningar þínar';
-
-  @override
-  String get calendarTools => 'Dagatal og verkfæri';
-
-  @override
-  String get fullCalendar => 'Fullt dagatal';
-
-  @override
-  String get fullCalendarDesc => 'Heildstætt kerfi til að sýsla með viðburði';
 
   @override
   String get clipboardAutoSaveDesc => 'Bakgrunnsvistun á klemmuspjaldssögu';
@@ -2037,77 +1482,12 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   String get completed => 'Lokið';
 
   @override
-  String get greatJob => 'Vel gert!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Þú fékkst $amount XP! Næsta verkefni: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Verkefni lokið! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin => 'Færa öll virk verkefni í ruslakörfuna?';
-
-  @override
-  String get deleteAllPosts => 'Eyða öllum færslum';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Ertu viss um að þú viljir eyða ÖLLUM samfélagsfærslum? Þessu er ekki hægt að hneppa aftur.';
-
-  @override
-  String get allPosts => 'Allar færslur';
-
-  @override
-  String get favorites => 'Uppáhalds';
-
-  @override
-  String get drafts => 'Uppköst';
-
-  @override
-  String get noFavoritesYet => 'Ekkert í uppáhaldi ennþá';
-
-  @override
-  String get noDraftsYet => 'Engin uppköst ennþá';
-
-  @override
-  String get startSocialJourney => 'Byrjaðu samfélagsvegferðina þína!';
-
-  @override
-  String get draft => 'UPPKAST';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count viðhengi';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Vinsamlegast bættu við efni eða miðli til að deila';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Villa: Skrá fannst ekki á $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Athugaðu Facebook appið';
-
-  @override
-  String get systemShare => 'Kerfisdeiling';
-
-  @override
-  String get socialPost => 'Samfélagsfærsla';
-
-  @override
-  String get favorite => 'Uppáhald';
-
-  @override
-  String get saveDraft => 'Vista uppkast';
 
   @override
   String get entryCopied => 'Færsla afrituð';
@@ -2253,33 +1633,10 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   String get dueDate => 'Gjalddagi';
 
   @override
-  String get expenseTitle => 'Útgjöld';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Leita í $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Raða og sía';
 
   @override
   String get sortBy => 'RAÐA EFTIR';
-
-  @override
-  String get highestAmount => 'Hæsta upphæð';
-
-  @override
-  String get lowestAmount => 'Lægsta upphæð';
-
-  @override
-  String get moreFilters => 'Fleiri síur...';
-
-  @override
-  String get filterExpenses => 'Sía útgjöld';
-
-  @override
-  String get transactionType => 'Tegund færslu';
 
   @override
   String get categories => 'Flokkar';
@@ -2288,21 +1645,10 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   String get all => 'Allt';
 
   @override
-  String get income => 'Tekjur';
-
-  @override
-  String get expense => 'Gjöld';
-
-  @override
   String get reset => 'Frumstilla';
 
   @override
   String get apply => 'Virkja';
-
-  @override
-  String newExpense(String currency) {
-    return 'Nýtt $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2366,34 +1712,10 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Ný skissa';
-
-  @override
-  String get searchSketches => 'Leita í skissum og möppum...';
-
-  @override
   String get noResultsFound => 'Engar niðurstöður fundust';
 
   @override
   String get noItems => 'Engin atriði';
-
-  @override
-  String get noDrawingsYet => 'Engar teikningar ennþá';
-
-  @override
-  String get canvasIntro => 'Slepptu sköpunargáfunni lausri á striganum!';
-
-  @override
-  String get newCanvas => 'Nýr strigi';
 
   @override
   String get rename => 'Endurnefna';
@@ -2409,13 +1731,7 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
       'Öllum skissum í þessari möppu verður eytt varanlega.';
 
   @override
-  String get renameFolder => 'Endurnefna möppu';
-
-  @override
   String get chooseColor => 'Velja lit';
-
-  @override
-  String get deleteFolderQuestion => 'Eyða möppu?';
 
   @override
   String get searchClips => 'Leita í bútum...';
@@ -2437,9 +1753,6 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
 
   @override
   String get restoreClipLater => 'Þú getur endurheimt þennan bút síðar.';
-
-  @override
-  String get upcomingEvents => 'Viðburðir framundan';
 
   @override
   String get dataDistribution => 'DREIFING GAGNA';
@@ -2480,57 +1793,6 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   String selectedCount(int count) {
     return '$count valið';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes skissur • $folders möppur';
-  }
-
-  @override
-  String get sortItems => 'Raða atriðum';
-
-  @override
-  String get sortNameAZ => 'Nafn (A-Ö)';
-
-  @override
-  String get sortNameZA => 'Nafn (Ö-A)';
-
-  @override
-  String get createFolder => 'Búa til möppu';
-
-  @override
-  String get folderNameHint => 'Nafn möppu...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Eyða $count skissum? Þessu er ekki hægt að hneppa aftur.';
-  }
-
-  @override
-  String get noSketchesFound => 'Engar skissur fundust';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Prófaðu að breyta leitinni eða búðu til nýja skissu.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Leita í $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count skissur';
-  }
-
-  @override
-  String get sortSketches => 'Raða skissum';
-
-  @override
-  String get calendarScreenTitle => 'Dagatal';
-
-  @override
-  String get dailyActivity => 'Dagleg virkni';
 
   @override
   String get deleteItemQuestion => 'Eyða atriði?';
@@ -2633,28 +1895,6 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   String get general => 'Almennt';
 
   @override
-  String get saveTransactionQuestion => 'Viltu vista þessa færslu?';
-
-  @override
-  String get fillTitleAmount => 'Vinsamlegast fylltu út titil og upphæð';
-
-  @override
-  String get invalidAmount => 'Ógilt snið upphæðar';
-
-  @override
-  String get moveTransactionToBinTitle => 'Færa færslu í ruslakörfuna?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Þú getur endurheimt þessa færslu síðar í stillingum.';
-
-  @override
-  String get newTransaction => 'Ný færsla';
-
-  @override
-  String get whatIsThisFor => 'Fyrir hvað er þetta?';
-
-  @override
   String get description => 'Lýsing';
 
   @override
@@ -2670,70 +1910,10 @@ class AppLocalizationsIsIs extends AppLocalizationsIs {
   String get yearly => 'Árlega';
 
   @override
-  String get totalIncome => 'Heildartekjur';
-
-  @override
-  String get totalExpense => 'Heildarútgjöld';
-
-  @override
   String get analysis => 'Greining';
 
   @override
   String get transactions => 'Færslur';
-
-  @override
-  String get noExpensesFound => 'Engin útgjöld fundust fyrir þetta tímabil.';
-
-  @override
-  String get netBalance => 'Hrein staða';
-
-  @override
-  String get topCategories => 'Helstu flokkar';
-
-  @override
-  String get spendingTrend => 'Eyðslubreytni';
-
-  @override
-  String get insights => 'Innsýn';
-
-  @override
-  String get noExpensesRecorded => 'Engin útgjöld skráð';
-
-  @override
-  String get trackSpendingHabits => 'Fylgstu auðveldlega með eyðslunni þinni.';
-
-  @override
-  String get addExpense => 'Bæta við útgjaldi';
-
-  @override
-  String get noDataForPeriod => 'Engin gögn fyrir þetta tímabil';
-
-  @override
-  String get budget => 'Fjárhagsáætlun';
-
-  @override
-  String get spent => 'Eytt';
-
-  @override
-  String get limit => 'Hámark';
-
-  @override
-  String get overBudget => 'Yfir áætlun!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% eftir';
-  }
-
-  @override
-  String get savingsRate => 'Sparnaðarhlutfall';
-
-  @override
-  String get healthScore => 'Heilsustig';
-
-  @override
-  String get healthScoreExplanation =>
-      'Þetta stig byggist á sparnaðarhlutfalli þínu.\n\n• > 50% sparað = Frábært (100)\n• 0% sparað = Meðallag (50)\n• Eyðsla > Tekjur = Lélegt (<50)';
 
   @override
   String get ok => 'LOKIÐ';

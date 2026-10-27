@@ -1,17 +1,23 @@
 import 'dart:io';
 
+import 'package:copyclip/src/core/providers/locale_provider.dart';
+import 'package:copyclip/src/core/router/app_router.dart';
+import 'package:copyclip/src/core/theme/bloc/theme_bloc.dart';
 import 'package:copyclip/src/features/journal/data/journal_adapter.dart';
 import 'package:copyclip/src/features/journal/data/journal_model.dart';
 import 'package:copyclip/src/features/journal/presentation/pages/journal_screen.dart';
-import 'package:copyclip/src/core/router/app_router.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   late Box<JournalEntry> journalBox;
@@ -45,10 +51,27 @@ void main() {
   });
 
   testWidgets('JournalScreen renders empty state', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: JournalScreen()));
+    await tester.pumpWidget(
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => ThemeBloc()),
+          BlocProvider(create: (_) => PremiumBloc()),
+        ],
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => LocaleProvider()),
+          ],
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: JournalScreen(),
+          ),
+        ),
+      ),
+    );
     await tester.pumpAndSettle();
 
-    expect(find.text('Start writing your story.'), findsOneWidget);
+    expect(find.text('Start writing your story'), findsOneWidget);
     expect(find.byType(FloatingActionButton), findsOneWidget);
     expect(find.text('Journal'), findsOneWidget);
   });
@@ -75,7 +98,11 @@ void main() {
       ],
     );
 
-    await tester.pumpWidget(MaterialApp.router(routerConfig: router));
+    await tester.pumpWidget(MaterialApp.router(
+      routerConfig: router,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+    ));
     await tester.pumpAndSettle();
 
     expect(find.text('My Day'), findsOneWidget);

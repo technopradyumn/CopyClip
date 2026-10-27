@@ -24,19 +24,10 @@ class AppLocalizationsEu extends AppLocalizations {
   String get todos => 'Egin beharrekoak';
 
   @override
-  String get expenses => 'Gastuak';
-
-  @override
   String get journal => 'Aldizkaria';
 
   @override
-  String get calendar => 'Egutegia';
-
-  @override
   String get clipboard => 'Arbela';
-
-  @override
-  String get canvas => 'Mihisea';
 
   @override
   String get save => 'Gorde';
@@ -69,24 +60,6 @@ class AppLocalizationsEu extends AppLocalizations {
   String get discard => 'Baztertu';
 
   @override
-  String get createPost => 'Sortu argitalpena';
-
-  @override
-  String get post => 'Argitalpena';
-
-  @override
-  String get postingTo => 'Hona bidaltzea';
-
-  @override
-  String get whatsOnYourMind => 'Zer duzu buruan?';
-
-  @override
-  String get pickImages => 'Aukeratu Irudiak';
-
-  @override
-  String get pickVideo => 'Aukeratu Bideoa';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsEu extends AppLocalizations {
   String error(Object error) {
     return 'Errorea: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Eskaerak \"Argitalpen guztietan\" soilik eskuragarri';
-
-  @override
-  String get deletePost => 'Ezabatu argitalpena';
-
-  @override
-  String get postDeleted => 'Argitalpena ezabatu da';
 
   @override
   String get premiumFeatures => 'Premium Ezaugarriak';
@@ -181,35 +144,6 @@ class AppLocalizationsEu extends AppLocalizations {
   String get recycleBinCleared => 'Zaborrontzia ondo garbitu da';
 
   @override
-  String get allPostsDeleted => 'Mezu guztiak ezabatu dira';
-
-  @override
-  String get newPost => 'Mezu berria';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Testua arbelean kopiatu da (Facebook gidalerroa)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok partekatzeko bideo/irudi bat behar da';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Errore bat partekatzean: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Partekatu $platform istorioan';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Partekatu $platform jarioan';
-  }
-
-  @override
   String get unlockPermanently => 'Desblokeatu betiko';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsEu extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Hautatu Data eta ordua';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Ziur mezu hau ezabatu nahi duzula?';
-
-  @override
-  String get socialPosts => 'Mezu sozialak';
 
   @override
   String get watchAdToEarnCoins => 'Ikusi iragarkia txanponak irabazteko';
@@ -419,25 +346,11 @@ class AppLocalizationsEu extends AppLocalizations {
       'Egon zure jokoaren gainean. Sortu zereginen zerrendak, ezarri lehentasunak eta zapaldu zure helburuak kontrol-marka bana.';
 
   @override
-  String get onboardingExpensesTitle => 'Gastuen Jarraipena';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Hartu zure finantzak kontrola. Jarraitu diru-sarrerak eta gastuak erraz zure gastu-ohiturak ulertzeko.';
-
-  @override
   String get onboardingJournalTitle => 'Aldizkari pertsonala';
 
   @override
   String get onboardingJournalDesc =>
       'Hausnartu zure egunean. Zure oroitzapenak, sentimenduak eta eguneroko bizipenak idazteko gune pribatua.';
-
-  @override
-  String get onboardingCalendarTitle => 'Egutegia eta Gertaerak';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Inoiz ez galdu une bat. Antolatu zure ordutegia eta egin jarraipena datozen gertaera garrantzitsuen jarraipena.';
 
   @override
   String get onboardingClipboardTitle => 'Arbel kudeatzailea';
@@ -447,39 +360,16 @@ class AppLocalizationsEu extends AppLocalizations {
       'Kopiatu behin, itsatsi edonon. Sartu arbeleko historia lehenago kopiatu dituzun zatiak berreskuratzeko.';
 
   @override
-  String get onboardingCanvasTitle => 'Mihise sortzailea';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Askatu zure sormena. Marraztu, zirriborratu eta ikusi zure ideiak forma libreko mihise digital batean.';
-
-  @override
   String get featuresNotesDesc => 'Sortu eta kudeatu zure oharrak';
 
   @override
   String get featuresTodosDesc => 'Jarrai zure zereginen jarraipena';
 
   @override
-  String get featuresExpensesDesc => 'Kontrolatu zure gastuak';
-
-  @override
   String get featuresJournalDesc => 'Idatzi zure pentsamenduak';
 
   @override
-  String get featuresCalendarDesc => 'Antolatu zure ordutegia';
-
-  @override
   String get featuresClipboardDesc => 'Sartu arbeleko historia';
-
-  @override
-  String get featuresCanvasDesc => 'Marraztu eta zirriborratu libreki';
-
-  @override
-  String get featuresSocialPost => 'Post soziala';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Sortu sare sozialetako eduki erakargarriak';
 
   @override
   String get chooseYourAura => 'Aukeratu zure aura';
@@ -487,32 +377,6 @@ class AppLocalizationsEu extends AppLocalizations {
   @override
   String get expressYourselfTheme =>
       'Adierazi zaitez gaiaren kolore berri batekin!';
-
-  @override
-  String get level => 'Maila';
-
-  @override
-  String get xpToNextLevel => 'XP Mailara';
-
-  @override
-  String get checkUpcomingEvents => 'Ikusi datozen gertaerak';
-
-  @override
-  String get startNewSketch => 'Hasi zirriborro berri bat';
-
-  @override
-  String get noTransactionsMonth => 'Hilabete honetan ez dago transakziorik';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
-  }
 
   @override
   String get autoSaveClipboard => 'Gorde automatikoki arbela';
@@ -577,15 +441,6 @@ class AppLocalizationsEu extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'Zure oroitzapenak ikusteko modu esklusiboak';
-
-  @override
-  String get calendarTools => 'Egutegia eta tresnak';
-
-  @override
-  String get fullCalendar => 'Egutegi osoa';
-
-  @override
-  String get fullCalendarDesc => 'Gertaerak kudeatzeko sistema osoa';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -674,84 +529,13 @@ class AppLocalizationsEu extends AppLocalizations {
   String get completed => 'Osatua';
 
   @override
-  String get greatJob => 'Lan bikaina!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return '$amount XP irabazi duzu! Hurrengo zeregina: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Ataza amaitu da! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Zeregin aktibo guztiak Zaborrontzira eraman nahi dituzu?';
-
-  @override
-  String get deleteAllPosts => 'Ezabatu argitalpen guztiak';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Ziur mezu sozial GUZTIAK ezabatu nahi dituzula? Hau ezin da desegin.';
-
-  @override
-  String get allPosts => 'Mezu guztiak';
-
-  @override
-  String get favorites => 'Gogokoak';
-
-  @override
-  String get drafts => 'Zirriborroak';
-
-  @override
-  String get noFavoritesYet => 'Oraindik ez dago gogokorik';
-
-  @override
-  String get noDraftsYet => 'Oraindik ez dago zirriborrorik';
-
-  @override
-  String get startSocialJourney => 'Hasi zure bidaia soziala!';
-
-  @override
-  String get draft => 'Zirriborroa';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Mesedez, gehitu eduki edo euskarri batzuk partekatzeko';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Errorea: ez da fitxategia aurkitu $path helbidean';
   }
-
-  @override
-  String get checkFacebookApp => 'Egiaztatu Facebook aplikazioa';
-
-  @override
-  String get systemShare => 'Sistema partekatzea';
-
-  @override
-  String get socialPost => 'Post soziala';
-
-  @override
-  String get favorite => 'Gogokoena';
-
-  @override
-  String get saveDraft => 'Gorde zirriborroa';
 
   @override
   String get entryCopied => 'Sarrera kopiatu da';
@@ -897,33 +681,10 @@ class AppLocalizationsEu extends AppLocalizations {
   String get dueDate => 'Bi Data';
 
   @override
-  String get expenseTitle => 'Gastuak';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Bilatu $currency-n...';
-  }
-
-  @override
   String get sortAndFilter => 'Ordenatu eta Iragazi';
 
   @override
   String get sortBy => 'ORDENATU';
-
-  @override
-  String get highestAmount => 'Zenbateko altuena';
-
-  @override
-  String get lowestAmount => 'Zenbateko txikiena';
-
-  @override
-  String get moreFilters => 'Iragazki gehiago...';
-
-  @override
-  String get filterExpenses => 'Iragazi gastuak';
-
-  @override
-  String get transactionType => 'Transakzio mota';
 
   @override
   String get categories => 'Kategoriak';
@@ -932,21 +693,10 @@ class AppLocalizationsEu extends AppLocalizations {
   String get all => 'Denak';
 
   @override
-  String get income => 'Errenta';
-
-  @override
-  String get expense => 'Gastua';
-
-  @override
   String get reset => 'Berrezarri';
 
   @override
   String get apply => 'Aplikatu';
-
-  @override
-  String newExpense(String currency) {
-    return '$currency berria';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -1010,34 +760,10 @@ class AppLocalizationsEu extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Sketch berria';
-
-  @override
-  String get searchSketches => 'Bilatu zirriborroak eta karpetak...';
-
-  @override
   String get noResultsFound => 'Ez da emaitzarik aurkitu';
 
   @override
   String get noItems => 'Ez dago elementurik';
-
-  @override
-  String get noDrawingsYet => 'Oraindik ez dago marrazkirik';
-
-  @override
-  String get canvasIntro => 'Askatu zure sormena mihisean!';
-
-  @override
-  String get newCanvas => 'Mihise berria';
 
   @override
   String get rename => 'Aldatu izena';
@@ -1053,13 +779,7 @@ class AppLocalizationsEu extends AppLocalizations {
       'Karpeta honetako zirriborro guztiak betiko ezabatuko dira.';
 
   @override
-  String get renameFolder => 'Karpeta izena aldatu';
-
-  @override
   String get chooseColor => 'Aukeratu Kolorea';
-
-  @override
-  String get deleteFolderQuestion => 'Karpeta ezabatu?';
 
   @override
   String get searchClips => 'Bilatu klipak...';
@@ -1081,9 +801,6 @@ class AppLocalizationsEu extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'Klip hau geroago leheneratu dezakezu.';
-
-  @override
-  String get upcomingEvents => 'Datozen Gertaerak';
 
   @override
   String get dataDistribution => 'DATUEN BANAKETA';
@@ -1124,57 +841,6 @@ class AppLocalizationsEu extends AppLocalizations {
   String selectedCount(int count) {
     return '$count Hautatuta';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes zirriborroak • $folders karpetak';
-  }
-
-  @override
-  String get sortItems => 'Ordenatu elementuak';
-
-  @override
-  String get sortNameAZ => 'Izena (A-Z)';
-
-  @override
-  String get sortNameZA => 'Izena (Z-A)';
-
-  @override
-  String get createFolder => 'Sortu Karpeta';
-
-  @override
-  String get folderNameHint => 'Karpeta izena...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return '$count zirriborro ezabatu nahi dituzu? Hau ezin da desegin.';
-  }
-
-  @override
-  String get noSketchesFound => 'Ez da zirriborrorik aurkitu';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Saiatu bilaketa doitzen edo zirriborro berri bat sortzen.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Bilatu $folder-n...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count zirriborro';
-  }
-
-  @override
-  String get sortSketches => 'Zirriborroak ordenatu';
-
-  @override
-  String get calendarScreenTitle => 'Egutegia';
-
-  @override
-  String get dailyActivity => 'Eguneroko Jarduera';
 
   @override
   String get deleteItemQuestion => 'Elementua ezabatu?';
@@ -1278,29 +944,6 @@ class AppLocalizationsEu extends AppLocalizations {
   String get general => 'Orokorra';
 
   @override
-  String get saveTransactionQuestion => 'Transakzio hau gorde nahi duzu?';
-
-  @override
-  String get fillTitleAmount => 'Mesedez, bete izenburua eta zenbatekoa';
-
-  @override
-  String get invalidAmount => 'Zenbateko formatu baliogabea';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Transakzioa Zaborrontzira eraman nahi duzu?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Transakzio hau geroago leheneratu dezakezu ezarpenetatik.';
-
-  @override
-  String get newTransaction => 'Transakzio berria';
-
-  @override
-  String get whatIsThisFor => 'Zertarako da hau?';
-
-  @override
   String get description => 'Deskribapena';
 
   @override
@@ -1316,70 +959,10 @@ class AppLocalizationsEu extends AppLocalizations {
   String get yearly => 'Urtero';
 
   @override
-  String get totalIncome => 'Diru-sarrerak guztira';
-
-  @override
-  String get totalExpense => 'Gastu osoa';
-
-  @override
   String get analysis => 'Analisia';
 
   @override
   String get transactions => 'Transakzioak';
-
-  @override
-  String get noExpensesFound => 'Ez da epe honetarako gasturik aurkitu.';
-
-  @override
-  String get netBalance => 'Balantze garbia';
-
-  @override
-  String get topCategories => 'Kategoria nagusiak';
-
-  @override
-  String get spendingTrend => 'Gastuen Joera';
-
-  @override
-  String get insights => 'Ikuspegiak';
-
-  @override
-  String get noExpensesRecorded => 'Ez dago gasturik erregistratu';
-
-  @override
-  String get trackSpendingHabits => 'Jarraitu zure gastu ohiturei erraz.';
-
-  @override
-  String get addExpense => 'Gehitu gastua';
-
-  @override
-  String get noDataForPeriod => 'Ez dago epe honetarako daturik';
-
-  @override
-  String get budget => 'Aurrekontua';
-
-  @override
-  String get spent => 'Pasatu';
-
-  @override
-  String get limit => 'Muga';
-
-  @override
-  String get overBudget => 'Aurrekontua baino gehiago!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% geratzen da';
-  }
-
-  @override
-  String get savingsRate => 'Aurrezki-tasa';
-
-  @override
-  String get healthScore => 'Osasun puntuazioa';
-
-  @override
-  String get healthScoreExplanation =>
-      'Puntuazio hau zure aurrezki-tasan oinarritzen da.\n\n• > %50 aurreztua = Bikaina (100)\n• %0 aurreztua = Batez bestekoa (50)\n• Gastua > Diru-sarrerak = eskasa (<50)';
 
   @override
   String get ok => 'Ados';

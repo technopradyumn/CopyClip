@@ -398,35 +398,17 @@ abstract class AppLocalizations {
   /// **'To-Dos'**
   String get todos;
 
-  /// No description provided for @expenses.
-  ///
-  /// In en, this message translates to:
-  /// **'Expenses'**
-  String get expenses;
-
   /// No description provided for @journal.
   ///
   /// In en, this message translates to:
   /// **'Journal'**
   String get journal;
 
-  /// No description provided for @calendar.
-  ///
-  /// In en, this message translates to:
-  /// **'Calendar'**
-  String get calendar;
-
   /// No description provided for @clipboard.
   ///
   /// In en, this message translates to:
   /// **'Clipboard'**
   String get clipboard;
-
-  /// No description provided for @canvas.
-  ///
-  /// In en, this message translates to:
-  /// **'Canvas'**
-  String get canvas;
 
   /// No description provided for @save.
   ///
@@ -488,42 +470,6 @@ abstract class AppLocalizations {
   /// **'Discard'**
   String get discard;
 
-  /// No description provided for @createPost.
-  ///
-  /// In en, this message translates to:
-  /// **'Create Post'**
-  String get createPost;
-
-  /// No description provided for @post.
-  ///
-  /// In en, this message translates to:
-  /// **'Post'**
-  String get post;
-
-  /// No description provided for @postingTo.
-  ///
-  /// In en, this message translates to:
-  /// **'Posting to'**
-  String get postingTo;
-
-  /// No description provided for @whatsOnYourMind.
-  ///
-  /// In en, this message translates to:
-  /// **'What\'\'s on your mind?'**
-  String get whatsOnYourMind;
-
-  /// No description provided for @pickImages.
-  ///
-  /// In en, this message translates to:
-  /// **'Pick Images'**
-  String get pickImages;
-
-  /// No description provided for @pickVideo.
-  ///
-  /// In en, this message translates to:
-  /// **'Pick Video'**
-  String get pickVideo;
-
   /// No description provided for @camera.
   ///
   /// In en, this message translates to:
@@ -571,24 +517,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error: {error}'**
   String error(Object error);
-
-  /// No description provided for @orderingOnlyAvailableInAllPosts.
-  ///
-  /// In en, this message translates to:
-  /// **'Ordering only available in \'\'All Posts\'\''**
-  String get orderingOnlyAvailableInAllPosts;
-
-  /// No description provided for @deletePost.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete Post'**
-  String get deletePost;
-
-  /// No description provided for @postDeleted.
-  ///
-  /// In en, this message translates to:
-  /// **'Post deleted'**
-  String get postDeleted;
 
   /// No description provided for @premiumFeatures.
   ///
@@ -704,48 +632,6 @@ abstract class AppLocalizations {
   /// **'Recycle Bin cleared successfully'**
   String get recycleBinCleared;
 
-  /// No description provided for @allPostsDeleted.
-  ///
-  /// In en, this message translates to:
-  /// **'All posts deleted'**
-  String get allPostsDeleted;
-
-  /// No description provided for @newPost.
-  ///
-  /// In en, this message translates to:
-  /// **'New Post'**
-  String get newPost;
-
-  /// No description provided for @textCopiedToClipboardFacebook.
-  ///
-  /// In en, this message translates to:
-  /// **'Text copied to clipboard (Facebook policy)'**
-  String get textCopiedToClipboardFacebook;
-
-  /// No description provided for @tiktokSharingRequiresVideoImage.
-  ///
-  /// In en, this message translates to:
-  /// **'TikTok sharing requires a video/image'**
-  String get tiktokSharingRequiresVideoImage;
-
-  /// No description provided for @errorSharing.
-  ///
-  /// In en, this message translates to:
-  /// **'Error sharing: {error}'**
-  String errorSharing(Object error);
-
-  /// No description provided for @shareToStory.
-  ///
-  /// In en, this message translates to:
-  /// **'Share to {platform} Story'**
-  String shareToStory(Object platform);
-
-  /// No description provided for @shareToFeed.
-  ///
-  /// In en, this message translates to:
-  /// **'Share to {platform} Feed'**
-  String shareToFeed(Object platform);
-
   /// No description provided for @unlockPermanently.
   ///
   /// In en, this message translates to:
@@ -775,18 +661,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Date & Time'**
   String get selectDateTime;
-
-  /// No description provided for @areYouSureYouWantToDeleteThisPost.
-  ///
-  /// In en, this message translates to:
-  /// **'Are you sure you want to delete this post?'**
-  String get areYouSureYouWantToDeleteThisPost;
-
-  /// No description provided for @socialPosts.
-  ///
-  /// In en, this message translates to:
-  /// **'Social Posts'**
-  String get socialPosts;
 
   /// No description provided for @watchAdToEarnCoins.
   ///
@@ -1136,18 +1010,6 @@ abstract class AppLocalizations {
   /// **'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.'**
   String get onboardingTodosDesc;
 
-  /// No description provided for @onboardingExpensesTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Expense Tracking'**
-  String get onboardingExpensesTitle;
-
-  /// No description provided for @onboardingExpensesDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Take control of your finances. Track income and expenses easily to understand your spending habits.'**
-  String get onboardingExpensesDesc;
-
   /// No description provided for @onboardingJournalTitle.
   ///
   /// In en, this message translates to:
@@ -1159,18 +1021,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.'**
   String get onboardingJournalDesc;
-
-  /// No description provided for @onboardingCalendarTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Calendar & Events'**
-  String get onboardingCalendarTitle;
-
-  /// No description provided for @onboardingCalendarDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Never miss a moment. Organize your schedule and keep track of important upcoming events.'**
-  String get onboardingCalendarDesc;
 
   /// No description provided for @onboardingClipboardTitle.
   ///
@@ -1184,18 +1034,6 @@ abstract class AppLocalizations {
   /// **'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.'**
   String get onboardingClipboardDesc;
 
-  /// No description provided for @onboardingCanvasTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Creative Canvas'**
-  String get onboardingCanvasTitle;
-
-  /// No description provided for @onboardingCanvasDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.'**
-  String get onboardingCanvasDesc;
-
   /// No description provided for @featuresNotesDesc.
   ///
   /// In en, this message translates to:
@@ -1208,47 +1046,17 @@ abstract class AppLocalizations {
   /// **'Keep track of your tasks'**
   String get featuresTodosDesc;
 
-  /// No description provided for @featuresExpensesDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Monitor your expenses'**
-  String get featuresExpensesDesc;
-
   /// No description provided for @featuresJournalDesc.
   ///
   /// In en, this message translates to:
   /// **'Write down your thoughts'**
   String get featuresJournalDesc;
 
-  /// No description provided for @featuresCalendarDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Organize your schedule'**
-  String get featuresCalendarDesc;
-
   /// No description provided for @featuresClipboardDesc.
   ///
   /// In en, this message translates to:
   /// **'Access your clipboard history'**
   String get featuresClipboardDesc;
-
-  /// No description provided for @featuresCanvasDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Draw and sketch freely'**
-  String get featuresCanvasDesc;
-
-  /// No description provided for @featuresSocialPost.
-  ///
-  /// In en, this message translates to:
-  /// **'Social Post'**
-  String get featuresSocialPost;
-
-  /// No description provided for @featuresSocialPostDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Create engaging social media content'**
-  String get featuresSocialPostDesc;
 
   /// No description provided for @chooseYourAura.
   ///
@@ -1261,42 +1069,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Express yourself with a new theme color!'**
   String get expressYourselfTheme;
-
-  /// No description provided for @level.
-  ///
-  /// In en, this message translates to:
-  /// **'Level'**
-  String get level;
-
-  /// No description provided for @xpToNextLevel.
-  ///
-  /// In en, this message translates to:
-  /// **'XP to Level'**
-  String get xpToNextLevel;
-
-  /// No description provided for @checkUpcomingEvents.
-  ///
-  /// In en, this message translates to:
-  /// **'Check upcoming events'**
-  String get checkUpcomingEvents;
-
-  /// No description provided for @startNewSketch.
-  ///
-  /// In en, this message translates to:
-  /// **'Start a new sketch'**
-  String get startNewSketch;
-
-  /// No description provided for @noTransactionsMonth.
-  ///
-  /// In en, this message translates to:
-  /// **'No transactions this month'**
-  String get noTransactionsMonth;
-
-  /// No description provided for @transactionsThisMonth.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} transaction{count, plural, =1{} other{s}} this month'**
-  String transactionsThisMonth(num count);
 
   /// No description provided for @autoSaveClipboard.
   ///
@@ -1411,24 +1183,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Exclusive ways to view your memories'**
   String get premiumLayoutsDesc;
-
-  /// No description provided for @calendarTools.
-  ///
-  /// In en, this message translates to:
-  /// **'Calendar & Tools'**
-  String get calendarTools;
-
-  /// No description provided for @fullCalendar.
-  ///
-  /// In en, this message translates to:
-  /// **'Full Calendar'**
-  String get fullCalendar;
-
-  /// No description provided for @fullCalendarDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Complete event management system'**
-  String get fullCalendarDesc;
 
   /// No description provided for @clipboardAutoSaveDesc.
   ///
@@ -1592,131 +1346,17 @@ abstract class AppLocalizations {
   /// **'Completed'**
   String get completed;
 
-  /// No description provided for @greatJob.
-  ///
-  /// In en, this message translates to:
-  /// **'Great job!'**
-  String get greatJob;
-
-  /// No description provided for @youEarnedXPNextTask.
-  ///
-  /// In en, this message translates to:
-  /// **'You earned {amount} XP! Next task: {date}'**
-  String youEarnedXPNextTask(Object amount, Object date);
-
-  /// No description provided for @taskCompletedXP.
-  ///
-  /// In en, this message translates to:
-  /// **'Task completed! +{amount} XP'**
-  String taskCompletedXP(Object amount);
-
   /// No description provided for @moveTasksToRecycleBin.
   ///
   /// In en, this message translates to:
   /// **'Move all active tasks to Recycle Bin?'**
   String get moveTasksToRecycleBin;
 
-  /// No description provided for @deleteAllPosts.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete All Posts'**
-  String get deleteAllPosts;
-
-  /// No description provided for @deleteAllPostsConfirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Are you sure you want to delete ALL social posts? This cannot be undone.'**
-  String get deleteAllPostsConfirmation;
-
-  /// No description provided for @allPosts.
-  ///
-  /// In en, this message translates to:
-  /// **'All Posts'**
-  String get allPosts;
-
-  /// No description provided for @favorites.
-  ///
-  /// In en, this message translates to:
-  /// **'Favorites'**
-  String get favorites;
-
-  /// No description provided for @drafts.
-  ///
-  /// In en, this message translates to:
-  /// **'Drafts'**
-  String get drafts;
-
-  /// No description provided for @noFavoritesYet.
-  ///
-  /// In en, this message translates to:
-  /// **'No favorites yet'**
-  String get noFavoritesYet;
-
-  /// No description provided for @noDraftsYet.
-  ///
-  /// In en, this message translates to:
-  /// **'No drafts yet'**
-  String get noDraftsYet;
-
-  /// No description provided for @startSocialJourney.
-  ///
-  /// In en, this message translates to:
-  /// **'Start your social journey!'**
-  String get startSocialJourney;
-
-  /// No description provided for @draft.
-  ///
-  /// In en, this message translates to:
-  /// **'DRAFT'**
-  String get draft;
-
-  /// No description provided for @attachmentCount.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} attachment{count, plural, =1{} other{s}}'**
-  String attachmentCount(num count);
-
-  /// No description provided for @pleaseAddContent.
-  ///
-  /// In en, this message translates to:
-  /// **'Please add some content or media to share'**
-  String get pleaseAddContent;
-
   /// No description provided for @fileNotFoundError.
   ///
   /// In en, this message translates to:
   /// **'Error: File not found at {path}'**
   String fileNotFoundError(Object path);
-
-  /// No description provided for @checkFacebookApp.
-  ///
-  /// In en, this message translates to:
-  /// **'Check Facebook app'**
-  String get checkFacebookApp;
-
-  /// No description provided for @systemShare.
-  ///
-  /// In en, this message translates to:
-  /// **'System Share'**
-  String get systemShare;
-
-  /// No description provided for @socialPost.
-  ///
-  /// In en, this message translates to:
-  /// **'Social Post'**
-  String get socialPost;
-
-  /// No description provided for @favorite.
-  ///
-  /// In en, this message translates to:
-  /// **'Favorite'**
-  String get favorite;
-
-  /// No description provided for @saveDraft.
-  ///
-  /// In en, this message translates to:
-  /// **'Save Draft'**
-  String get saveDraft;
 
   /// No description provided for @entryCopied.
   ///
@@ -1994,18 +1634,6 @@ abstract class AppLocalizations {
   /// **'Due Date'**
   String get dueDate;
 
-  /// No description provided for @expenseTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Expenses'**
-  String get expenseTitle;
-
-  /// No description provided for @searchInCurrency.
-  ///
-  /// In en, this message translates to:
-  /// **'Search in {currency}...'**
-  String searchInCurrency(String currency);
-
   /// No description provided for @sortAndFilter.
   ///
   /// In en, this message translates to:
@@ -2017,36 +1645,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SORT BY'**
   String get sortBy;
-
-  /// No description provided for @highestAmount.
-  ///
-  /// In en, this message translates to:
-  /// **'Highest Amount'**
-  String get highestAmount;
-
-  /// No description provided for @lowestAmount.
-  ///
-  /// In en, this message translates to:
-  /// **'Lowest Amount'**
-  String get lowestAmount;
-
-  /// No description provided for @moreFilters.
-  ///
-  /// In en, this message translates to:
-  /// **'More Filters...'**
-  String get moreFilters;
-
-  /// No description provided for @filterExpenses.
-  ///
-  /// In en, this message translates to:
-  /// **'Filter Expenses'**
-  String get filterExpenses;
-
-  /// No description provided for @transactionType.
-  ///
-  /// In en, this message translates to:
-  /// **'Transaction Type'**
-  String get transactionType;
 
   /// No description provided for @categories.
   ///
@@ -2060,18 +1658,6 @@ abstract class AppLocalizations {
   /// **'All'**
   String get all;
 
-  /// No description provided for @income.
-  ///
-  /// In en, this message translates to:
-  /// **'Income'**
-  String get income;
-
-  /// No description provided for @expense.
-  ///
-  /// In en, this message translates to:
-  /// **'Expense'**
-  String get expense;
-
   /// No description provided for @reset.
   ///
   /// In en, this message translates to:
@@ -2083,12 +1669,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apply'**
   String get apply;
-
-  /// No description provided for @newExpense.
-  ///
-  /// In en, this message translates to:
-  /// **'New {currency}'**
-  String newExpense(String currency);
 
   /// No description provided for @errorLoadingData.
   ///
@@ -2186,36 +1766,6 @@ abstract class AppLocalizations {
   /// **'\nTags: {tags}'**
   String exportTags(String tags);
 
-  /// No description provided for @instagram.
-  ///
-  /// In en, this message translates to:
-  /// **'Instagram'**
-  String get instagram;
-
-  /// No description provided for @facebook.
-  ///
-  /// In en, this message translates to:
-  /// **'Facebook'**
-  String get facebook;
-
-  /// No description provided for @tiktok.
-  ///
-  /// In en, this message translates to:
-  /// **'TikTok'**
-  String get tiktok;
-
-  /// No description provided for @newSketch.
-  ///
-  /// In en, this message translates to:
-  /// **'New Sketch'**
-  String get newSketch;
-
-  /// No description provided for @searchSketches.
-  ///
-  /// In en, this message translates to:
-  /// **'Search sketches and folders...'**
-  String get searchSketches;
-
   /// No description provided for @noResultsFound.
   ///
   /// In en, this message translates to:
@@ -2227,24 +1777,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No items'**
   String get noItems;
-
-  /// No description provided for @noDrawingsYet.
-  ///
-  /// In en, this message translates to:
-  /// **'No drawings yet'**
-  String get noDrawingsYet;
-
-  /// No description provided for @canvasIntro.
-  ///
-  /// In en, this message translates to:
-  /// **'Unleash your creativity on the canvas!'**
-  String get canvasIntro;
-
-  /// No description provided for @newCanvas.
-  ///
-  /// In en, this message translates to:
-  /// **'New Canvas'**
-  String get newCanvas;
 
   /// No description provided for @rename.
   ///
@@ -2270,23 +1802,11 @@ abstract class AppLocalizations {
   /// **'All sketches in this folder will be deleted permanently.'**
   String get deleteFolderConfirmation;
 
-  /// No description provided for @renameFolder.
-  ///
-  /// In en, this message translates to:
-  /// **'Rename Folder'**
-  String get renameFolder;
-
   /// No description provided for @chooseColor.
   ///
   /// In en, this message translates to:
   /// **'Choose Color'**
   String get chooseColor;
-
-  /// No description provided for @deleteFolderQuestion.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete Folder?'**
-  String get deleteFolderQuestion;
 
   /// No description provided for @searchClips.
   ///
@@ -2329,12 +1849,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You can restore this clip later.'**
   String get restoreClipLater;
-
-  /// No description provided for @upcomingEvents.
-  ///
-  /// In en, this message translates to:
-  /// **'Upcoming Events'**
-  String get upcomingEvents;
 
   /// No description provided for @dataDistribution.
   ///
@@ -2407,90 +1921,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} Selected'**
   String selectedCount(int count);
-
-  /// No description provided for @canvasStats.
-  ///
-  /// In en, this message translates to:
-  /// **'{notes} sketches • {folders} folders'**
-  String canvasStats(int notes, int folders);
-
-  /// No description provided for @sortItems.
-  ///
-  /// In en, this message translates to:
-  /// **'Sort Items'**
-  String get sortItems;
-
-  /// No description provided for @sortNameAZ.
-  ///
-  /// In en, this message translates to:
-  /// **'Name (A-Z)'**
-  String get sortNameAZ;
-
-  /// No description provided for @sortNameZA.
-  ///
-  /// In en, this message translates to:
-  /// **'Name (Z-A)'**
-  String get sortNameZA;
-
-  /// No description provided for @createFolder.
-  ///
-  /// In en, this message translates to:
-  /// **'Create Folder'**
-  String get createFolder;
-
-  /// No description provided for @folderNameHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Folder name...'**
-  String get folderNameHint;
-
-  /// No description provided for @deleteSketchesConfirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete {count} sketches? This cannot be undone.'**
-  String deleteSketchesConfirmation(int count);
-
-  /// No description provided for @noSketchesFound.
-  ///
-  /// In en, this message translates to:
-  /// **'No sketches found'**
-  String get noSketchesFound;
-
-  /// No description provided for @noSketchesFoundSub.
-  ///
-  /// In en, this message translates to:
-  /// **'Try adjusting your search or creating a new sketch.'**
-  String get noSketchesFoundSub;
-
-  /// No description provided for @searchInFolder.
-  ///
-  /// In en, this message translates to:
-  /// **'Search in {folder}...'**
-  String searchInFolder(String folder);
-
-  /// No description provided for @sketchesCount.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} sketches'**
-  String sketchesCount(int count);
-
-  /// No description provided for @sortSketches.
-  ///
-  /// In en, this message translates to:
-  /// **'Sort Sketches'**
-  String get sortSketches;
-
-  /// No description provided for @calendarScreenTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Calendar'**
-  String get calendarScreenTitle;
-
-  /// No description provided for @dailyActivity.
-  ///
-  /// In en, this message translates to:
-  /// **'Daily Activity'**
-  String get dailyActivity;
 
   /// No description provided for @deleteItemQuestion.
   ///
@@ -2666,48 +2096,6 @@ abstract class AppLocalizations {
   /// **'General'**
   String get general;
 
-  /// No description provided for @saveTransactionQuestion.
-  ///
-  /// In en, this message translates to:
-  /// **'Do you want to save this transaction?'**
-  String get saveTransactionQuestion;
-
-  /// No description provided for @fillTitleAmount.
-  ///
-  /// In en, this message translates to:
-  /// **'Please fill in title and amount'**
-  String get fillTitleAmount;
-
-  /// No description provided for @invalidAmount.
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid amount format'**
-  String get invalidAmount;
-
-  /// No description provided for @moveTransactionToBinTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Move Transaction to Recycle Bin?'**
-  String get moveTransactionToBinTitle;
-
-  /// No description provided for @restoreTransactionLater.
-  ///
-  /// In en, this message translates to:
-  /// **'You can restore this transaction later from settings.'**
-  String get restoreTransactionLater;
-
-  /// No description provided for @newTransaction.
-  ///
-  /// In en, this message translates to:
-  /// **'New Transaction'**
-  String get newTransaction;
-
-  /// No description provided for @whatIsThisFor.
-  ///
-  /// In en, this message translates to:
-  /// **'What is this for?'**
-  String get whatIsThisFor;
-
   /// No description provided for @description.
   ///
   /// In en, this message translates to:
@@ -2738,18 +2126,6 @@ abstract class AppLocalizations {
   /// **'Yearly'**
   String get yearly;
 
-  /// No description provided for @totalIncome.
-  ///
-  /// In en, this message translates to:
-  /// **'Total Income'**
-  String get totalIncome;
-
-  /// No description provided for @totalExpense.
-  ///
-  /// In en, this message translates to:
-  /// **'Total Expense'**
-  String get totalExpense;
-
   /// No description provided for @analysis.
   ///
   /// In en, this message translates to:
@@ -2761,108 +2137,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transactions'**
   String get transactions;
-
-  /// No description provided for @noExpensesFound.
-  ///
-  /// In en, this message translates to:
-  /// **'No expenses found for this period.'**
-  String get noExpensesFound;
-
-  /// No description provided for @netBalance.
-  ///
-  /// In en, this message translates to:
-  /// **'Net Balance'**
-  String get netBalance;
-
-  /// No description provided for @topCategories.
-  ///
-  /// In en, this message translates to:
-  /// **'Top Categories'**
-  String get topCategories;
-
-  /// No description provided for @spendingTrend.
-  ///
-  /// In en, this message translates to:
-  /// **'Spending Trend'**
-  String get spendingTrend;
-
-  /// No description provided for @insights.
-  ///
-  /// In en, this message translates to:
-  /// **'Insights'**
-  String get insights;
-
-  /// No description provided for @noExpensesRecorded.
-  ///
-  /// In en, this message translates to:
-  /// **'No expenses recorded'**
-  String get noExpensesRecorded;
-
-  /// No description provided for @trackSpendingHabits.
-  ///
-  /// In en, this message translates to:
-  /// **'Track your spending habits easily.'**
-  String get trackSpendingHabits;
-
-  /// No description provided for @addExpense.
-  ///
-  /// In en, this message translates to:
-  /// **'Add Expense'**
-  String get addExpense;
-
-  /// No description provided for @noDataForPeriod.
-  ///
-  /// In en, this message translates to:
-  /// **'No data for this period'**
-  String get noDataForPeriod;
-
-  /// No description provided for @budget.
-  ///
-  /// In en, this message translates to:
-  /// **'Budget'**
-  String get budget;
-
-  /// No description provided for @spent.
-  ///
-  /// In en, this message translates to:
-  /// **'Spent'**
-  String get spent;
-
-  /// No description provided for @limit.
-  ///
-  /// In en, this message translates to:
-  /// **'Limit'**
-  String get limit;
-
-  /// No description provided for @overBudget.
-  ///
-  /// In en, this message translates to:
-  /// **'Over Budget!'**
-  String get overBudget;
-
-  /// No description provided for @remainingBudget.
-  ///
-  /// In en, this message translates to:
-  /// **'{percent}% remaining'**
-  String remainingBudget(Object percent);
-
-  /// No description provided for @savingsRate.
-  ///
-  /// In en, this message translates to:
-  /// **'Savings Rate'**
-  String get savingsRate;
-
-  /// No description provided for @healthScore.
-  ///
-  /// In en, this message translates to:
-  /// **'Health Score'**
-  String get healthScore;
-
-  /// No description provided for @healthScoreExplanation.
-  ///
-  /// In en, this message translates to:
-  /// **'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)'**
-  String get healthScoreExplanation;
 
   /// No description provided for @ok.
   ///

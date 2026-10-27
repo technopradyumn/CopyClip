@@ -24,19 +24,10 @@ class AppLocalizationsFa extends AppLocalizations {
   String get todos => 'کارها';
 
   @override
-  String get expenses => 'مخارج';
-
-  @override
   String get journal => 'مجله';
 
   @override
-  String get calendar => 'تقویم';
-
-  @override
   String get clipboard => 'کلیپ بورد';
-
-  @override
-  String get canvas => 'بوم';
 
   @override
   String get save => 'ذخیره کنید';
@@ -69,24 +60,6 @@ class AppLocalizationsFa extends AppLocalizations {
   String get discard => 'دور انداختن';
 
   @override
-  String get createPost => 'ایجاد پست';
-
-  @override
-  String get post => 'ارسال کنید';
-
-  @override
-  String get postingTo => 'ارسال به';
-
-  @override
-  String get whatsOnYourMind => 'چه چیزی در ذهن شماست؟';
-
-  @override
-  String get pickImages => 'تصاویر را انتخاب کنید';
-
-  @override
-  String get pickVideo => 'ویدیو را انتخاب کنید';
-
-  @override
   String get camera => 'دوربین';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsFa extends AppLocalizations {
   String error(Object error) {
     return 'خطا: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'سفارش فقط در \"همه پست ها\" موجود است';
-
-  @override
-  String get deletePost => 'حذف پست';
-
-  @override
-  String get postDeleted => 'پست حذف شد';
 
   @override
   String get premiumFeatures => 'ویژگی های پرمیوم';
@@ -181,35 +144,6 @@ class AppLocalizationsFa extends AppLocalizations {
   String get recycleBinCleared => 'سطل بازیافت با موفقیت پاک شد';
 
   @override
-  String get allPostsDeleted => 'همه پست ها حذف شد';
-
-  @override
-  String get newPost => 'پست جدید';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'متن در کلیپ بورد کپی شد (خط مشی فیس بوک)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'اشتراک‌گذاری TikTok به یک ویدیو/تصویر نیاز دارد';
-
-  @override
-  String errorSharing(Object error) {
-    return 'اشتراک‌گذاری خطا: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'به اشتراک گذاری در داستان $platform';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'اشتراک‌گذاری در فید $platform';
-  }
-
-  @override
   String get unlockPermanently => 'قفل را برای همیشه باز کنید';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get selectDateTime => 'تاریخ و زمان را انتخاب کنید';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'آیا مطمئن هستید که می خواهید این پست را حذف کنید؟';
-
-  @override
-  String get socialPosts => 'پست های اجتماعی';
 
   @override
   String get watchAdToEarnCoins => 'تبلیغ برای کسب سکه را تماشا کنید';
@@ -417,25 +344,11 @@ class AppLocalizationsFa extends AppLocalizations {
       'در بالای بازی خود بمانید. فهرست کارها را ایجاد کنید، اولویت ها را تعیین کنید، و اهداف خود را یک علامت چک کنید.';
 
   @override
-  String get onboardingExpensesTitle => 'ردیابی هزینه';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'کنترل امور مالی خود را در دست بگیرید. درآمد و هزینه ها را به راحتی پیگیری کنید تا عادات خرج کردن خود را درک کنید.';
-
-  @override
   String get onboardingJournalTitle => 'مجله شخصی';
 
   @override
   String get onboardingJournalDesc =>
       'به روز خود فکر کنید فضایی خصوصی برای نوشتن خاطرات، احساسات و تجربیات روزانه خود.';
-
-  @override
-  String get onboardingCalendarTitle => 'تقویم و رویدادها';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'هرگز لحظه ای را از دست نده. برنامه خود را سازماندهی کنید و رویدادهای مهم آینده را پیگیری کنید.';
 
   @override
   String get onboardingClipboardTitle => 'مدیر کلیپ بورد';
@@ -445,72 +358,23 @@ class AppLocalizationsFa extends AppLocalizations {
       'یکبار کپی کنید، هرجا پیست کنید. برای بازیابی قطعه‌هایی که قبلاً کپی کرده‌اید، به تاریخچه کلیپ‌بورد خود دسترسی داشته باشید.';
 
   @override
-  String get onboardingCanvasTitle => 'بوم خلاقانه';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'خلاقیت خود را آزاد کنید. ایده های خود را روی یک بوم دیجیتال با فرم آزاد ترسیم، ترسیم و تجسم کنید.';
-
-  @override
   String get featuresNotesDesc => 'یادداشت های خود را ایجاد و مدیریت کنید';
 
   @override
   String get featuresTodosDesc => 'وظایف خود را پیگیری کنید';
 
   @override
-  String get featuresExpensesDesc => 'بر هزینه های خود نظارت کنید';
-
-  @override
   String get featuresJournalDesc => 'افکار خود را بنویسید';
-
-  @override
-  String get featuresCalendarDesc => 'برنامه خود را سازماندهی کنید';
 
   @override
   String get featuresClipboardDesc =>
       'به تاریخچه کلیپ بورد خود دسترسی داشته باشید';
 
   @override
-  String get featuresCanvasDesc => 'آزادانه طراحی و ترسیم کنید';
-
-  @override
-  String get featuresSocialPost => 'پست اجتماعی';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'محتوای رسانه های اجتماعی جذاب ایجاد کنید';
-
-  @override
   String get chooseYourAura => 'هاله خود را انتخاب کنید';
 
   @override
   String get expressYourselfTheme => 'خود را با یک رنگ تم جدید بیان کنید!';
-
-  @override
-  String get level => 'سطح';
-
-  @override
-  String get xpToNextLevel => 'XP به Level';
-
-  @override
-  String get checkUpcomingEvents => 'رویدادهای آینده را بررسی کنید';
-
-  @override
-  String get startNewSketch => 'یک طرح جدید شروع کنید';
-
-  @override
-  String get noTransactionsMonth => 'هیچ معامله ای در این ماه وجود ندارد';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count تراکنش$_temp0 در این ماه';
-  }
 
   @override
   String get autoSaveClipboard => 'ذخیره خودکار کلیپ بورد';
@@ -573,15 +437,6 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get premiumLayoutsDesc => 'راه های انحصاری برای مشاهده خاطرات شما';
-
-  @override
-  String get calendarTools => 'تقویم و ابزار';
-
-  @override
-  String get fullCalendar => 'تقویم کامل';
-
-  @override
-  String get fullCalendarDesc => 'سیستم مدیریت رویداد کامل';
 
   @override
   String get clipboardAutoSaveDesc => 'ضبط سابقه کلیپ بورد پس زمینه';
@@ -667,84 +522,13 @@ class AppLocalizationsFa extends AppLocalizations {
   String get completed => 'تکمیل شد';
 
   @override
-  String get greatJob => 'کار عالی!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'شما $amount XP کسب کردید! کار بعدی: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'کار تکمیل شد! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'همه وظایف فعال به سطل بازیافت منتقل شوند؟';
-
-  @override
-  String get deleteAllPosts => 'حذف همه پست ها';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'آیا مطمئن هستید که می خواهید همه پست های اجتماعی را حذف کنید؟ این قابل واگرد نیست.';
-
-  @override
-  String get allPosts => 'همه پست ها';
-
-  @override
-  String get favorites => 'موارد دلخواه';
-
-  @override
-  String get drafts => 'پیش نویس ها';
-
-  @override
-  String get noFavoritesYet => 'هنوز موارد دلخواه وجود ندارد';
-
-  @override
-  String get noDraftsYet => 'هنوز هیچ پیش نویسی وجود ندارد';
-
-  @override
-  String get startSocialJourney => 'سفر اجتماعی خود را شروع کنید!';
-
-  @override
-  String get draft => 'پیش نویس';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'لطفاً مقداری محتوا یا رسانه برای اشتراک گذاری اضافه کنید';
 
   @override
   String fileNotFoundError(Object path) {
     return 'خطا: فایل در $path یافت نشد';
   }
-
-  @override
-  String get checkFacebookApp => 'برنامه فیس بوک را بررسی کنید';
-
-  @override
-  String get systemShare => 'اشتراک گذاری سیستم';
-
-  @override
-  String get socialPost => 'پست اجتماعی';
-
-  @override
-  String get favorite => 'مورد علاقه';
-
-  @override
-  String get saveDraft => 'ذخیره پیش نویس';
 
   @override
   String get entryCopied => 'ورودی کپی شد';
@@ -889,33 +673,10 @@ class AppLocalizationsFa extends AppLocalizations {
   String get dueDate => 'دو تاریخ';
 
   @override
-  String get expenseTitle => 'مخارج';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'جستجو در $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'مرتب سازی و فیلتر کردن';
 
   @override
   String get sortBy => 'مرتب سازی بر اساس';
-
-  @override
-  String get highestAmount => 'بالاترین مقدار';
-
-  @override
-  String get lowestAmount => 'کمترین مقدار';
-
-  @override
-  String get moreFilters => 'فیلترهای بیشتر...';
-
-  @override
-  String get filterExpenses => 'هزینه های فیلتر';
-
-  @override
-  String get transactionType => 'نوع معامله';
 
   @override
   String get categories => 'دسته بندی ها';
@@ -924,21 +685,10 @@ class AppLocalizationsFa extends AppLocalizations {
   String get all => 'همه';
 
   @override
-  String get income => 'درآمد';
-
-  @override
-  String get expense => 'هزینه';
-
-  @override
   String get reset => 'بازنشانی کنید';
 
   @override
   String get apply => 'درخواست کنید';
-
-  @override
-  String newExpense(String currency) {
-    return 'جدید $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -1000,34 +750,10 @@ class AppLocalizationsFa extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'اینستاگرام';
-
-  @override
-  String get facebook => 'فیس بوک';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'طرح جدید';
-
-  @override
-  String get searchSketches => 'جستجوی طرح ها و پوشه ها...';
-
-  @override
   String get noResultsFound => 'هیچ نتیجه ای یافت نشد';
 
   @override
   String get noItems => 'هیچ موردی وجود ندارد';
-
-  @override
-  String get noDrawingsYet => 'هنوز نقشه ای وجود ندارد';
-
-  @override
-  String get canvasIntro => 'خلاقیت خود را بر روی بوم رها کنید!';
-
-  @override
-  String get newCanvas => 'بوم جدید';
 
   @override
   String get rename => 'تغییر نام دهید';
@@ -1043,13 +769,7 @@ class AppLocalizationsFa extends AppLocalizations {
       'تمام طرح های موجود در این پوشه برای همیشه حذف می شوند.';
 
   @override
-  String get renameFolder => 'تغییر نام پوشه';
-
-  @override
   String get chooseColor => 'رنگ را انتخاب کنید';
-
-  @override
-  String get deleteFolderQuestion => 'پوشه حذف شود؟';
 
   @override
   String get searchClips => 'جستجوی کلیپ ها...';
@@ -1071,9 +791,6 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'بعداً می توانید این کلیپ را بازیابی کنید.';
-
-  @override
-  String get upcomingEvents => 'رویدادهای آینده';
 
   @override
   String get dataDistribution => 'توزیع داده ها';
@@ -1114,57 +831,6 @@ class AppLocalizationsFa extends AppLocalizations {
   String selectedCount(int count) {
     return '$count انتخاب شد';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return 'طرح‌های $notes • پوشه‌های $folders';
-  }
-
-  @override
-  String get sortItems => 'مرتب سازی موارد';
-
-  @override
-  String get sortNameAZ => 'نام (A-Z)';
-
-  @override
-  String get sortNameZA => 'نام (Z-A)';
-
-  @override
-  String get createFolder => 'پوشه ایجاد کنید';
-
-  @override
-  String get folderNameHint => 'نام پوشه ...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'طرح $count حذف شود؟ این قابل واگرد نیست.';
-  }
-
-  @override
-  String get noSketchesFound => 'هیچ طرحی یافت نشد';
-
-  @override
-  String get noSketchesFoundSub =>
-      'سعی کنید جستجوی خود را تنظیم کنید یا یک طرح جدید ایجاد کنید.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'جستجو در $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count طرح';
-  }
-
-  @override
-  String get sortSketches => 'طرح ها را مرتب کنید';
-
-  @override
-  String get calendarScreenTitle => 'تقویم';
-
-  @override
-  String get dailyActivity => 'فعالیت روزانه';
 
   @override
   String get deleteItemQuestion => 'مورد حذف شود؟';
@@ -1267,29 +933,6 @@ class AppLocalizationsFa extends AppLocalizations {
   String get general => 'ژنرال';
 
   @override
-  String get saveTransactionQuestion =>
-      'آیا می خواهید این تراکنش را ذخیره کنید؟';
-
-  @override
-  String get fillTitleAmount => 'لطفا عنوان و مبلغ را وارد کنید';
-
-  @override
-  String get invalidAmount => 'قالب مبلغ نامعتبر است';
-
-  @override
-  String get moveTransactionToBinTitle => 'تراکنش به سطل بازیافت منتقل شود؟';
-
-  @override
-  String get restoreTransactionLater =>
-      'بعداً می‌توانید این تراکنش را از تنظیمات بازیابی کنید.';
-
-  @override
-  String get newTransaction => 'معامله جدید';
-
-  @override
-  String get whatIsThisFor => 'این برای چیست؟';
-
-  @override
   String get description => 'توضیحات';
 
   @override
@@ -1305,71 +948,10 @@ class AppLocalizationsFa extends AppLocalizations {
   String get yearly => 'سالانه';
 
   @override
-  String get totalIncome => 'درآمد کل';
-
-  @override
-  String get totalExpense => 'کل هزینه';
-
-  @override
   String get analysis => 'تجزیه و تحلیل';
 
   @override
   String get transactions => 'معاملات';
-
-  @override
-  String get noExpensesFound => 'هیچ هزینه ای برای این دوره پیدا نشد.';
-
-  @override
-  String get netBalance => 'موجودی خالص';
-
-  @override
-  String get topCategories => 'دسته بندی های برتر';
-
-  @override
-  String get spendingTrend => 'روند خرج کردن';
-
-  @override
-  String get insights => 'بینش ها';
-
-  @override
-  String get noExpensesRecorded => 'هیچ هزینه ای ثبت نشده است';
-
-  @override
-  String get trackSpendingHabits =>
-      'عادات خرج کردن خود را به راحتی پیگیری کنید.';
-
-  @override
-  String get addExpense => 'اضافه کردن هزینه';
-
-  @override
-  String get noDataForPeriod => 'هیچ داده ای برای این دوره وجود ندارد';
-
-  @override
-  String get budget => 'بودجه';
-
-  @override
-  String get spent => 'صرف کرد';
-
-  @override
-  String get limit => 'محدود کنید';
-
-  @override
-  String get overBudget => 'بیش از بودجه!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% باقی مانده است';
-  }
-
-  @override
-  String get savingsRate => 'نرخ پس انداز';
-
-  @override
-  String get healthScore => 'نمره سلامتی';
-
-  @override
-  String get healthScoreExplanation =>
-      'این امتیاز بر اساس نرخ پس انداز شما است.\n\n• > 50% ذخیره شده = عالی (100)\n• 0% ذخیره شده = میانگین (50)\n• هزینه > درآمد = ضعیف (<50)';
 
   @override
   String get ok => 'باشه';
@@ -1398,19 +980,10 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   String get todos => 'کارها';
 
   @override
-  String get expenses => 'مخارج';
-
-  @override
   String get journal => 'مجله';
 
   @override
-  String get calendar => 'تقویم';
-
-  @override
   String get clipboard => 'کلیپ بورد';
-
-  @override
-  String get canvas => 'بوم';
 
   @override
   String get save => 'ذخیره کنید';
@@ -1443,24 +1016,6 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   String get discard => 'دور انداختن';
 
   @override
-  String get createPost => 'ایجاد پست';
-
-  @override
-  String get post => 'ارسال کنید';
-
-  @override
-  String get postingTo => 'ارسال به';
-
-  @override
-  String get whatsOnYourMind => 'چه چیزی در ذهن شماست؟';
-
-  @override
-  String get pickImages => 'تصاویر را انتخاب کنید';
-
-  @override
-  String get pickVideo => 'ویدیو را انتخاب کنید';
-
-  @override
   String get camera => 'دوربین';
 
   @override
@@ -1485,16 +1040,6 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   String error(Object error) {
     return 'خطا: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'سفارش فقط در \"همه پست ها\" موجود است';
-
-  @override
-  String get deletePost => 'حذف پست';
-
-  @override
-  String get postDeleted => 'پست حذف شد';
 
   @override
   String get premiumFeatures => 'ویژگی های پرمیوم';
@@ -1555,35 +1100,6 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   String get recycleBinCleared => 'سطل بازیافت با موفقیت پاک شد';
 
   @override
-  String get allPostsDeleted => 'همه پست ها حذف شد';
-
-  @override
-  String get newPost => 'پست جدید';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'متن در کلیپ بورد کپی شد (خط مشی فیس بوک)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'اشتراک‌گذاری TikTok به یک ویدیو/تصویر نیاز دارد';
-
-  @override
-  String errorSharing(Object error) {
-    return 'اشتراک‌گذاری خطا: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'به اشتراک گذاری در داستان $platform';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'اشتراک‌گذاری در فید $platform';
-  }
-
-  @override
   String get unlockPermanently => 'قفل را برای همیشه باز کنید';
 
   @override
@@ -1599,13 +1115,6 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
 
   @override
   String get selectDateTime => 'تاریخ و زمان را انتخاب کنید';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'آیا مطمئن هستید که می خواهید این پست را حذف کنید؟';
-
-  @override
-  String get socialPosts => 'پست های اجتماعی';
 
   @override
   String get watchAdToEarnCoins => 'تبلیغ برای کسب سکه را تماشا کنید';
@@ -1791,25 +1300,11 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
       'در بالای بازی خود بمانید. فهرست کارها را ایجاد کنید، اولویت ها را تعیین کنید، و اهداف خود را یک علامت چک کنید.';
 
   @override
-  String get onboardingExpensesTitle => 'ردیابی هزینه';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'کنترل امور مالی خود را در دست بگیرید. درآمد و هزینه ها را به راحتی پیگیری کنید تا عادات خرج کردن خود را درک کنید.';
-
-  @override
   String get onboardingJournalTitle => 'مجله شخصی';
 
   @override
   String get onboardingJournalDesc =>
       'به روز خود فکر کنید فضایی خصوصی برای نوشتن خاطرات، احساسات و تجربیات روزانه خود.';
-
-  @override
-  String get onboardingCalendarTitle => 'تقویم و رویدادها';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'هرگز لحظه ای را از دست نده. برنامه خود را سازماندهی کنید و رویدادهای مهم آینده را پیگیری کنید.';
 
   @override
   String get onboardingClipboardTitle => 'مدیر کلیپ بورد';
@@ -1819,72 +1314,23 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
       'یکبار کپی کنید، هرجا پیست کنید. برای بازیابی قطعه‌هایی که قبلاً کپی کرده‌اید، به تاریخچه کلیپ‌بورد خود دسترسی داشته باشید.';
 
   @override
-  String get onboardingCanvasTitle => 'بوم خلاقانه';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'خلاقیت خود را آزاد کنید. ایده های خود را روی یک بوم دیجیتال با فرم آزاد ترسیم، ترسیم و تجسم کنید.';
-
-  @override
   String get featuresNotesDesc => 'یادداشت های خود را ایجاد و مدیریت کنید';
 
   @override
   String get featuresTodosDesc => 'وظایف خود را پیگیری کنید';
 
   @override
-  String get featuresExpensesDesc => 'بر هزینه های خود نظارت کنید';
-
-  @override
   String get featuresJournalDesc => 'افکار خود را بنویسید';
-
-  @override
-  String get featuresCalendarDesc => 'برنامه خود را سازماندهی کنید';
 
   @override
   String get featuresClipboardDesc =>
       'به تاریخچه کلیپ بورد خود دسترسی داشته باشید';
 
   @override
-  String get featuresCanvasDesc => 'آزادانه طراحی و ترسیم کنید';
-
-  @override
-  String get featuresSocialPost => 'پست اجتماعی';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'محتوای رسانه های اجتماعی جذاب ایجاد کنید';
-
-  @override
   String get chooseYourAura => 'هاله خود را انتخاب کنید';
 
   @override
   String get expressYourselfTheme => 'خود را با یک رنگ تم جدید بیان کنید!';
-
-  @override
-  String get level => 'سطح';
-
-  @override
-  String get xpToNextLevel => 'XP به Level';
-
-  @override
-  String get checkUpcomingEvents => 'رویدادهای آینده را بررسی کنید';
-
-  @override
-  String get startNewSketch => 'یک طرح جدید شروع کنید';
-
-  @override
-  String get noTransactionsMonth => 'هیچ معامله ای در این ماه وجود ندارد';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count تراکنش$_temp0 در این ماه';
-  }
 
   @override
   String get autoSaveClipboard => 'ذخیره خودکار کلیپ بورد';
@@ -1947,15 +1393,6 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
 
   @override
   String get premiumLayoutsDesc => 'راه های انحصاری برای مشاهده خاطرات شما';
-
-  @override
-  String get calendarTools => 'تقویم و ابزار';
-
-  @override
-  String get fullCalendar => 'تقویم کامل';
-
-  @override
-  String get fullCalendarDesc => 'سیستم مدیریت رویداد کامل';
 
   @override
   String get clipboardAutoSaveDesc => 'ضبط سابقه کلیپ بورد پس زمینه';
@@ -2041,84 +1478,13 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   String get completed => 'تکمیل شد';
 
   @override
-  String get greatJob => 'کار عالی!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'شما $amount XP کسب کردید! کار بعدی: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'کار تکمیل شد! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'همه وظایف فعال به سطل بازیافت منتقل شوند؟';
-
-  @override
-  String get deleteAllPosts => 'حذف همه پست ها';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'آیا مطمئن هستید که می خواهید همه پست های اجتماعی را حذف کنید؟ این قابل واگرد نیست.';
-
-  @override
-  String get allPosts => 'همه پست ها';
-
-  @override
-  String get favorites => 'موارد دلخواه';
-
-  @override
-  String get drafts => 'پیش نویس ها';
-
-  @override
-  String get noFavoritesYet => 'هنوز موارد دلخواه وجود ندارد';
-
-  @override
-  String get noDraftsYet => 'هنوز هیچ پیش نویسی وجود ندارد';
-
-  @override
-  String get startSocialJourney => 'سفر اجتماعی خود را شروع کنید!';
-
-  @override
-  String get draft => 'پیش نویس';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'لطفاً مقداری محتوا یا رسانه برای اشتراک گذاری اضافه کنید';
 
   @override
   String fileNotFoundError(Object path) {
     return 'خطا: فایل در $path یافت نشد';
   }
-
-  @override
-  String get checkFacebookApp => 'برنامه فیس بوک را بررسی کنید';
-
-  @override
-  String get systemShare => 'اشتراک گذاری سیستم';
-
-  @override
-  String get socialPost => 'پست اجتماعی';
-
-  @override
-  String get favorite => 'مورد علاقه';
-
-  @override
-  String get saveDraft => 'ذخیره پیش نویس';
 
   @override
   String get entryCopied => 'ورودی کپی شد';
@@ -2263,33 +1629,10 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   String get dueDate => 'دو تاریخ';
 
   @override
-  String get expenseTitle => 'مخارج';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'جستجو در $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'مرتب سازی و فیلتر کردن';
 
   @override
   String get sortBy => 'مرتب سازی بر اساس';
-
-  @override
-  String get highestAmount => 'بالاترین مقدار';
-
-  @override
-  String get lowestAmount => 'کمترین مقدار';
-
-  @override
-  String get moreFilters => 'فیلترهای بیشتر...';
-
-  @override
-  String get filterExpenses => 'هزینه های فیلتر';
-
-  @override
-  String get transactionType => 'نوع معامله';
 
   @override
   String get categories => 'دسته بندی ها';
@@ -2298,21 +1641,10 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   String get all => 'همه';
 
   @override
-  String get income => 'درآمد';
-
-  @override
-  String get expense => 'هزینه';
-
-  @override
   String get reset => 'بازنشانی کنید';
 
   @override
   String get apply => 'درخواست کنید';
-
-  @override
-  String newExpense(String currency) {
-    return 'جدید $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2374,34 +1706,10 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   }
 
   @override
-  String get instagram => 'اینستاگرام';
-
-  @override
-  String get facebook => 'فیس بوک';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'طرح جدید';
-
-  @override
-  String get searchSketches => 'جستجوی طرح ها و پوشه ها...';
-
-  @override
   String get noResultsFound => 'هیچ نتیجه ای یافت نشد';
 
   @override
   String get noItems => 'هیچ موردی وجود ندارد';
-
-  @override
-  String get noDrawingsYet => 'هنوز نقشه ای وجود ندارد';
-
-  @override
-  String get canvasIntro => 'خلاقیت خود را بر روی بوم رها کنید!';
-
-  @override
-  String get newCanvas => 'بوم جدید';
 
   @override
   String get rename => 'تغییر نام دهید';
@@ -2417,13 +1725,7 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
       'تمام طرح های موجود در این پوشه برای همیشه حذف می شوند.';
 
   @override
-  String get renameFolder => 'تغییر نام پوشه';
-
-  @override
   String get chooseColor => 'رنگ را انتخاب کنید';
-
-  @override
-  String get deleteFolderQuestion => 'پوشه حذف شود؟';
 
   @override
   String get searchClips => 'جستجوی کلیپ ها...';
@@ -2445,9 +1747,6 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
 
   @override
   String get restoreClipLater => 'بعداً می توانید این کلیپ را بازیابی کنید.';
-
-  @override
-  String get upcomingEvents => 'رویدادهای آینده';
 
   @override
   String get dataDistribution => 'توزیع داده ها';
@@ -2488,57 +1787,6 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   String selectedCount(int count) {
     return '$count انتخاب شد';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return 'طرح‌های $notes • پوشه‌های $folders';
-  }
-
-  @override
-  String get sortItems => 'مرتب سازی موارد';
-
-  @override
-  String get sortNameAZ => 'نام (A-Z)';
-
-  @override
-  String get sortNameZA => 'نام (Z-A)';
-
-  @override
-  String get createFolder => 'پوشه ایجاد کنید';
-
-  @override
-  String get folderNameHint => 'نام پوشه ...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'طرح $count حذف شود؟ این قابل واگرد نیست.';
-  }
-
-  @override
-  String get noSketchesFound => 'هیچ طرحی یافت نشد';
-
-  @override
-  String get noSketchesFoundSub =>
-      'سعی کنید جستجوی خود را تنظیم کنید یا یک طرح جدید ایجاد کنید.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'جستجو در $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count طرح';
-  }
-
-  @override
-  String get sortSketches => 'طرح ها را مرتب کنید';
-
-  @override
-  String get calendarScreenTitle => 'تقویم';
-
-  @override
-  String get dailyActivity => 'فعالیت روزانه';
 
   @override
   String get deleteItemQuestion => 'مورد حذف شود؟';
@@ -2641,29 +1889,6 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   String get general => 'ژنرال';
 
   @override
-  String get saveTransactionQuestion =>
-      'آیا می خواهید این تراکنش را ذخیره کنید؟';
-
-  @override
-  String get fillTitleAmount => 'لطفا عنوان و مبلغ را وارد کنید';
-
-  @override
-  String get invalidAmount => 'قالب مبلغ نامعتبر است';
-
-  @override
-  String get moveTransactionToBinTitle => 'تراکنش به سطل بازیافت منتقل شود؟';
-
-  @override
-  String get restoreTransactionLater =>
-      'بعداً می‌توانید این تراکنش را از تنظیمات بازیابی کنید.';
-
-  @override
-  String get newTransaction => 'معامله جدید';
-
-  @override
-  String get whatIsThisFor => 'این برای چیست؟';
-
-  @override
   String get description => 'توضیحات';
 
   @override
@@ -2679,71 +1904,10 @@ class AppLocalizationsFaIr extends AppLocalizationsFa {
   String get yearly => 'سالانه';
 
   @override
-  String get totalIncome => 'درآمد کل';
-
-  @override
-  String get totalExpense => 'کل هزینه';
-
-  @override
   String get analysis => 'تجزیه و تحلیل';
 
   @override
   String get transactions => 'معاملات';
-
-  @override
-  String get noExpensesFound => 'هیچ هزینه ای برای این دوره پیدا نشد.';
-
-  @override
-  String get netBalance => 'موجودی خالص';
-
-  @override
-  String get topCategories => 'دسته بندی های برتر';
-
-  @override
-  String get spendingTrend => 'روند خرج کردن';
-
-  @override
-  String get insights => 'بینش ها';
-
-  @override
-  String get noExpensesRecorded => 'هیچ هزینه ای ثبت نشده است';
-
-  @override
-  String get trackSpendingHabits =>
-      'عادات خرج کردن خود را به راحتی پیگیری کنید.';
-
-  @override
-  String get addExpense => 'اضافه کردن هزینه';
-
-  @override
-  String get noDataForPeriod => 'هیچ داده ای برای این دوره وجود ندارد';
-
-  @override
-  String get budget => 'بودجه';
-
-  @override
-  String get spent => 'صرف کرد';
-
-  @override
-  String get limit => 'محدود کنید';
-
-  @override
-  String get overBudget => 'بیش از بودجه!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% باقی مانده است';
-  }
-
-  @override
-  String get savingsRate => 'نرخ پس انداز';
-
-  @override
-  String get healthScore => 'نمره سلامتی';
-
-  @override
-  String get healthScoreExplanation =>
-      'این امتیاز بر اساس نرخ پس انداز شما است.\n\n• > 50% ذخیره شده = عالی (100)\n• 0% ذخیره شده = میانگین (50)\n• هزینه > درآمد = ضعیف (<50)';
 
   @override
   String get ok => 'باشه';

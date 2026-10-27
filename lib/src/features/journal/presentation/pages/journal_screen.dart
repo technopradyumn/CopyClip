@@ -14,6 +14,7 @@ import '../../../../l10n/app_localizations.dart';
 
 // Core Widgets
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/navigation_drawer.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
@@ -341,6 +342,8 @@ class _JournalScreenState extends State<JournalScreen> {
       },
       child: GlassScaffold(
         title: null,
+        showDrawer: true,
+        drawer: const CopyClipDrawer(),
         floatingActionButton: _isSelectionMode
             ? null
             : FloatingActionButton(

@@ -11,154 +11,10 @@ import 'package:intl/intl.dart';
 // Update these paths to match your project structure
 import '../../features/notes/data/note_model.dart';
 import '../../features/todos/data/todo_model.dart';
-import '../../features/expenses/data/expense_model.dart';
 import '../../features/journal/data/journal_model.dart';
 import '../../features/clipboard/data/clipboard_model.dart';
-import '../../features/canvas/data/canvas_model.dart';
 
 class BackupService {
-  // ==============================================================================
-  // SECTION 1: CANVAS SERIALIZATION HELPERS (Complex Object Mapping)
-  // ==============================================================================
-
-  static Map<String, dynamic> _canvasFolderToMap(CanvasFolder folder) {
-    return {
-      'id': folder.id,
-      'name': folder.name,
-      'parentFolderId': folder.parentFolderId,
-      'color': folder.color.toARGB32(),
-      'createdAt': folder.createdAt.toIso8601String(),
-      'lastModified': folder.lastModified.toIso8601String(),
-      'isDeleted': folder.isDeleted,
-      'deletedAt': folder.deletedAt?.toIso8601String(),
-      'sortIndex': folder.sortIndex,
-    };
-  }
-
-  static CanvasFolder _mapToCanvasFolder(Map<String, dynamic> map) {
-    return CanvasFolder(
-      id: map['id'],
-      name: map['name'],
-      parentFolderId: map['parentFolderId'],
-      color: Color(map['color']),
-      createdAt: DateTime.parse(map['createdAt']),
-      lastModified: DateTime.parse(map['lastModified']),
-      isDeleted: map['isDeleted'] ?? false,
-      deletedAt: map['deletedAt'] != null
-          ? DateTime.parse(map['deletedAt'])
-          : null,
-      sortIndex: map['sortIndex'] ?? 0,
-    );
-  }
-
-  static Map<String, dynamic> _canvasNoteToMap(CanvasNote note) {
-    return {
-      'id': note.id,
-      'title': note.title,
-      'folderId': note.folderId,
-      'description': note.description,
-      'createdAt': note.createdAt.toIso8601String(),
-      'lastModified': note.lastModified.toIso8601String(),
-      'isFavorite': note.isFavorite,
-      'isDeleted': note.isDeleted,
-      'deletedAt': note.deletedAt?.toIso8601String(),
-      'thumbnailPath': note.thumbnailPath,
-      'backgroundColor': note.backgroundColor.toARGB32(),
-      'horizontalScroll': note.horizontalScroll,
-      // Nested Page Serialization
-      'pages': note.pages
-          .map(
-            (p) => {
-              // Serialize Strokes
-              'strokes': p.strokes
-                  .map(
-                    (s) => {
-                      'points': s.points,
-                      'color': s.color,
-                      'strokeWidth': s.strokeWidth,
-                      'createdAt': s.createdAt.toIso8601String(),
-                      'penType': s.penType,
-                    },
-                  )
-                  .toList(),
-              // Serialize Text Elements
-              'textElements': p.textElements
-                  .map(
-                    (t) => {
-                      'id': t.id,
-                      'text': t.text,
-                      'dx': t.position.dx, // Deconstruct Offset
-                      'dy': t.position.dy, // Deconstruct Offset
-                      'color': t.color,
-                      'fontSize': t.fontSize,
-                      'containerWidth': t.containerWidth,
-                      'containerHeight': t.containerHeight,
-                      'bold': t.bold,
-                      'italic': t.italic,
-                      'underline': t.underline,
-                    },
-                  )
-                  .toList(),
-            },
-          )
-          .toList(),
-    };
-  }
-
-  static CanvasNote _mapToCanvasNote(Map<String, dynamic> map) {
-    final pagesList = (map['pages'] as List).map((pMap) {
-      // 1. Parse Strokes
-      final strokes = (pMap['strokes'] as List).map((sMap) {
-        return DrawingStroke(
-          points: List<double>.from(sMap['points']),
-          color: sMap['color'],
-          strokeWidth: (sMap['strokeWidth'] as num).toDouble(),
-          createdAt: DateTime.parse(sMap['createdAt']),
-          penType: sMap['penType'] ?? 0,
-        );
-      }).toList();
-
-      // 2. Parse Text
-      final texts = (pMap['textElements'] as List).map((tMap) {
-        return CanvasText(
-          id: tMap['id'],
-          text: tMap['text'],
-          position: Offset(
-            (tMap['dx'] as num).toDouble(),
-            (tMap['dy'] as num).toDouble(),
-          ), // Reconstruct Offset
-          color: tMap['color'],
-          fontSize: (tMap['fontSize'] as num).toDouble(),
-          containerWidth: (tMap['containerWidth'] as num).toDouble(),
-          containerHeight: (tMap['containerHeight'] as num).toDouble(),
-          bold: tMap['bold'] ?? false,
-          italic: tMap['italic'] ?? false,
-          underline: tMap['underline'] ?? false,
-        );
-      }).toList();
-
-      return CanvasPage(strokes: strokes, textElements: texts);
-    }).toList();
-
-    return CanvasNote(
-      id: map['id'],
-      title: map['title'],
-      folderId: map['folderId'],
-      description: map['description'],
-      pages: pagesList,
-      createdAt: DateTime.parse(map['createdAt']),
-      lastModified: DateTime.parse(map['lastModified']),
-      isFavorite: map['isFavorite'] ?? false,
-      isDeleted: map['isDeleted'] ?? false,
-      deletedAt: map['deletedAt'] != null
-          ? DateTime.parse(map['deletedAt'])
-          : null,
-      thumbnailPath: map['thumbnailPath'],
-      backgroundColor: Color(map['backgroundColor']),
-      horizontalScroll: map['horizontalScroll'] ?? false,
-    );
-  }
-
   // ==============================================================================
   // SECTION 2: IMAGE PROCESSING (For Quill Editors)
   // ==============================================================================
@@ -260,23 +116,6 @@ class BackupService {
         }
       }
 
-      // 3. Process Canvas (Complex serialization)
-      // Ensure boxes are open
-      if (!Hive.isBoxOpen('canvas_notes')) {
-        await Hive.openBox<CanvasNote>('canvas_notes');
-      }
-      if (!Hive.isBoxOpen('canvas_folders')) {
-        await Hive.openBox<CanvasFolder>('canvas_folders');
-      }
-
-      final canvasNotesList = Hive.box<CanvasNote>(
-        'canvas_notes',
-      ).values.map((n) => _canvasNoteToMap(n)).toList();
-
-      final canvasFoldersList = Hive.box<CanvasFolder>(
-        'canvas_folders',
-      ).values.map((f) => _canvasFolderToMap(f)).toList();
-
       // 4. Assemble Final JSON Data
       final Map<String, dynamic> backupData = {
         'version': 1.4,
@@ -284,11 +123,6 @@ class BackupService {
         // Simple Hive Boxes
         'todos': Hive.isBoxOpen('todos_box')
             ? Hive.box<Todo>('todos_box').values.map((e) => e.toJson()).toList()
-            : [],
-        'expenses': Hive.isBoxOpen('expenses_box')
-            ? Hive.box<Expense>(
-                'expenses_box',
-              ).values.map((e) => e.toJson()).toList()
             : [],
         'clipboard': Hive.isBoxOpen('clipboard_box')
             ? Hive.box<ClipboardItem>(
@@ -298,9 +132,6 @@ class BackupService {
         // Processed Lists
         'notes': notesList,
         'journal': journalList,
-        // Canvas Data
-        'canvas_notes': canvasNotesList,
-        'canvas_folders': canvasFoldersList,
       };
 
       // 5. Write to File
@@ -394,20 +225,6 @@ class BackupService {
         }
       }
 
-      if (data.containsKey('expenses')) {
-        if (!Hive.isBoxOpen('expenses_box')) {
-          await Hive.openBox<Expense>('expenses_box');
-        }
-        final box = Hive.box<Expense>('expenses_box');
-        for (var itemMap in data['expenses']) {
-          final obj = Expense.fromJson(itemMap);
-          if (!box.containsKey(obj.id)) {
-            await box.put(obj.id, obj);
-            addedCount++;
-          }
-        }
-      }
-
       if (data.containsKey('clipboard')) {
         if (!Hive.isBoxOpen('clipboard_box')) {
           await Hive.openBox<ClipboardItem>('clipboard_box');
@@ -417,36 +234,6 @@ class BackupService {
           final obj = ClipboardItem.fromJson(itemMap);
           if (!box.containsKey(obj.id)) {
             await box.put(obj.id, obj);
-            addedCount++;
-          }
-        }
-      }
-
-      // 5. Restore Canvas Folders
-      if (data.containsKey('canvas_folders')) {
-        if (!Hive.isBoxOpen('canvas_folders')) {
-          await Hive.openBox<CanvasFolder>('canvas_folders');
-        }
-        final box = Hive.box<CanvasFolder>('canvas_folders');
-        for (var itemMap in data['canvas_folders']) {
-          final folder = _mapToCanvasFolder(itemMap);
-          if (!box.containsKey(folder.id)) {
-            await box.put(folder.id, folder);
-            addedCount++;
-          }
-        }
-      }
-
-      // 6. Restore Canvas Notes
-      if (data.containsKey('canvas_notes')) {
-        if (!Hive.isBoxOpen('canvas_notes')) {
-          await Hive.openBox<CanvasNote>('canvas_notes');
-        }
-        final box = Hive.box<CanvasNote>('canvas_notes');
-        for (var itemMap in data['canvas_notes']) {
-          final note = _mapToCanvasNote(itemMap);
-          if (!box.containsKey(note.id)) {
-            await box.put(note.id, note);
             addedCount++;
           }
         }

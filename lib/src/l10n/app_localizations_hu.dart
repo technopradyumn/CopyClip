@@ -24,19 +24,10 @@ class AppLocalizationsHu extends AppLocalizations {
   String get todos => 'To-Dos';
 
   @override
-  String get expenses => 'Expenses';
-
-  @override
   String get journal => 'Journal';
 
   @override
-  String get calendar => 'Calendar';
-
-  @override
   String get clipboard => 'Clipboard';
-
-  @override
-  String get canvas => 'Canvas';
 
   @override
   String get save => 'Save';
@@ -69,24 +60,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String get discard => 'Discard';
 
   @override
-  String get createPost => 'Create Post';
-
-  @override
-  String get post => 'Post';
-
-  @override
-  String get postingTo => 'Posting to';
-
-  @override
-  String get whatsOnYourMind => 'What\'\'s on your mind?';
-
-  @override
-  String get pickImages => 'Pick Images';
-
-  @override
-  String get pickVideo => 'Pick Video';
-
-  @override
   String get camera => 'Camera';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String error(Object error) {
     return 'Error: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Ordering only available in \'\'All Posts\'\'';
-
-  @override
-  String get deletePost => 'Delete Post';
-
-  @override
-  String get postDeleted => 'Post deleted';
 
   @override
   String get premiumFeatures => 'Premium Features';
@@ -180,35 +143,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String get recycleBinCleared => 'Recycle Bin cleared successfully';
 
   @override
-  String get allPostsDeleted => 'All posts deleted';
-
-  @override
-  String get newPost => 'New Post';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Text copied to clipboard (Facebook policy)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'TikTok sharing requires a video/image';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Error sharing: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Share to $platform Story';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Share to $platform Feed';
-  }
-
-  @override
   String get unlockPermanently => 'Unlock Permanently';
 
   @override
@@ -224,13 +158,6 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Select Date & Time';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Are you sure you want to delete this post?';
-
-  @override
-  String get socialPosts => 'Social Posts';
 
   @override
   String get watchAdToEarnCoins => 'Watch Ad to Earn Coins';
@@ -415,25 +342,11 @@ class AppLocalizationsHu extends AppLocalizations {
       'Stay on top of your game. Create to-do lists, set priorities, and crush your goals one checkmark at a time.';
 
   @override
-  String get onboardingExpensesTitle => 'Expense Tracking';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Take control of your finances. Track income and expenses easily to understand your spending habits.';
-
-  @override
   String get onboardingJournalTitle => 'Personal Journal';
 
   @override
   String get onboardingJournalDesc =>
       'Reflect on your day. A private space to write down your memories, feelings, and daily experiences.';
-
-  @override
-  String get onboardingCalendarTitle => 'Calendar & Events';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Never miss a moment. Organize your schedule and keep track of important upcoming events.';
 
   @override
   String get onboardingClipboardTitle => 'Clipboard Manager';
@@ -443,70 +356,22 @@ class AppLocalizationsHu extends AppLocalizations {
       'Copy once, paste anywhere. Access your clipboard history to retrieve snippets you copied earlier.';
 
   @override
-  String get onboardingCanvasTitle => 'Creative Canvas';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Unleash your creativity. Draw, sketch, and visualize your ideas on a free-form digital canvas.';
-
-  @override
   String get featuresNotesDesc => 'Create and manage your notes';
 
   @override
   String get featuresTodosDesc => 'Keep track of your tasks';
 
   @override
-  String get featuresExpensesDesc => 'Monitor your expenses';
-
-  @override
   String get featuresJournalDesc => 'Write down your thoughts';
 
   @override
-  String get featuresCalendarDesc => 'Organize your schedule';
-
-  @override
   String get featuresClipboardDesc => 'Access your clipboard history';
-
-  @override
-  String get featuresCanvasDesc => 'Draw and sketch freely';
-
-  @override
-  String get featuresSocialPost => 'Social Post';
-
-  @override
-  String get featuresSocialPostDesc => 'Create engaging social media content';
 
   @override
   String get chooseYourAura => 'Choose Your Aura';
 
   @override
   String get expressYourselfTheme => 'Express yourself with a new theme color!';
-
-  @override
-  String get level => 'Level';
-
-  @override
-  String get xpToNextLevel => 'XP to Level';
-
-  @override
-  String get checkUpcomingEvents => 'Check upcoming events';
-
-  @override
-  String get startNewSketch => 'Start a new sketch';
-
-  @override
-  String get noTransactionsMonth => 'No transactions this month';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
-  }
 
   @override
   String get autoSaveClipboard => 'Auto-save Clipboard';
@@ -568,15 +433,6 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get premiumLayoutsDesc => 'Exclusive ways to view your memories';
-
-  @override
-  String get calendarTools => 'Calendar & Tools';
-
-  @override
-  String get fullCalendar => 'Full Calendar';
-
-  @override
-  String get fullCalendarDesc => 'Complete event management system';
 
   @override
   String get clipboardAutoSaveDesc => 'Background clipboard history capture';
@@ -662,82 +518,12 @@ class AppLocalizationsHu extends AppLocalizations {
   String get completed => 'Completed';
 
   @override
-  String get greatJob => 'Great job!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'You earned $amount XP! Next task: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Task completed! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin => 'Move all active tasks to Recycle Bin?';
-
-  @override
-  String get deleteAllPosts => 'Delete All Posts';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Are you sure you want to delete ALL social posts? This cannot be undone.';
-
-  @override
-  String get allPosts => 'All Posts';
-
-  @override
-  String get favorites => 'Favorites';
-
-  @override
-  String get drafts => 'Drafts';
-
-  @override
-  String get noFavoritesYet => 'No favorites yet';
-
-  @override
-  String get noDraftsYet => 'No drafts yet';
-
-  @override
-  String get startSocialJourney => 'Start your social journey!';
-
-  @override
-  String get draft => 'DRAFT';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'Please add some content or media to share';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Error: File not found at $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Check Facebook app';
-
-  @override
-  String get systemShare => 'System Share';
-
-  @override
-  String get socialPost => 'Social Post';
-
-  @override
-  String get favorite => 'Favorite';
-
-  @override
-  String get saveDraft => 'Save Draft';
 
   @override
   String get entryCopied => 'Entry copied';
@@ -882,33 +668,10 @@ class AppLocalizationsHu extends AppLocalizations {
   String get dueDate => 'Due Date';
 
   @override
-  String get expenseTitle => 'Expenses';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Search in $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Sort & Filter';
 
   @override
   String get sortBy => 'SORT BY';
-
-  @override
-  String get highestAmount => 'Highest Amount';
-
-  @override
-  String get lowestAmount => 'Lowest Amount';
-
-  @override
-  String get moreFilters => 'More Filters...';
-
-  @override
-  String get filterExpenses => 'Filter Expenses';
-
-  @override
-  String get transactionType => 'Transaction Type';
 
   @override
   String get categories => 'Categories';
@@ -917,21 +680,10 @@ class AppLocalizationsHu extends AppLocalizations {
   String get all => 'All';
 
   @override
-  String get income => 'Income';
-
-  @override
-  String get expense => 'Expense';
-
-  @override
   String get reset => 'Reset';
 
   @override
   String get apply => 'Apply';
-
-  @override
-  String newExpense(String currency) {
-    return 'New $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -994,34 +746,10 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'New Sketch';
-
-  @override
-  String get searchSketches => 'Search sketches and folders...';
-
-  @override
   String get noResultsFound => 'No results found';
 
   @override
   String get noItems => 'No items';
-
-  @override
-  String get noDrawingsYet => 'No drawings yet';
-
-  @override
-  String get canvasIntro => 'Unleash your creativity on the canvas!';
-
-  @override
-  String get newCanvas => 'New Canvas';
 
   @override
   String get rename => 'Rename';
@@ -1037,13 +765,7 @@ class AppLocalizationsHu extends AppLocalizations {
       'All sketches in this folder will be deleted permanently.';
 
   @override
-  String get renameFolder => 'Rename Folder';
-
-  @override
   String get chooseColor => 'Choose Color';
-
-  @override
-  String get deleteFolderQuestion => 'Delete Folder?';
 
   @override
   String get searchClips => 'Search clips...';
@@ -1065,9 +787,6 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'You can restore this clip later.';
-
-  @override
-  String get upcomingEvents => 'Upcoming Events';
 
   @override
   String get dataDistribution => 'DATA DISTRIBUTION';
@@ -1108,57 +827,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String selectedCount(int count) {
     return '$count Selected';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes sketches • $folders folders';
-  }
-
-  @override
-  String get sortItems => 'Sort Items';
-
-  @override
-  String get sortNameAZ => 'Name (A-Z)';
-
-  @override
-  String get sortNameZA => 'Name (Z-A)';
-
-  @override
-  String get createFolder => 'Create Folder';
-
-  @override
-  String get folderNameHint => 'Folder name...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Delete $count sketches? This cannot be undone.';
-  }
-
-  @override
-  String get noSketchesFound => 'No sketches found';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Try adjusting your search or creating a new sketch.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Search in $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count sketches';
-  }
-
-  @override
-  String get sortSketches => 'Sort Sketches';
-
-  @override
-  String get calendarScreenTitle => 'Calendar';
-
-  @override
-  String get dailyActivity => 'Daily Activity';
 
   @override
   String get deleteItemQuestion => 'Delete Item?';
@@ -1261,28 +929,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String get general => 'General';
 
   @override
-  String get saveTransactionQuestion => 'Do you want to save this transaction?';
-
-  @override
-  String get fillTitleAmount => 'Please fill in title and amount';
-
-  @override
-  String get invalidAmount => 'Invalid amount format';
-
-  @override
-  String get moveTransactionToBinTitle => 'Move Transaction to Recycle Bin?';
-
-  @override
-  String get restoreTransactionLater =>
-      'You can restore this transaction later from settings.';
-
-  @override
-  String get newTransaction => 'New Transaction';
-
-  @override
-  String get whatIsThisFor => 'What is this for?';
-
-  @override
   String get description => 'Description';
 
   @override
@@ -1298,70 +944,10 @@ class AppLocalizationsHu extends AppLocalizations {
   String get yearly => 'Yearly';
 
   @override
-  String get totalIncome => 'Total Income';
-
-  @override
-  String get totalExpense => 'Total Expense';
-
-  @override
   String get analysis => 'Analysis';
 
   @override
   String get transactions => 'Transactions';
-
-  @override
-  String get noExpensesFound => 'No expenses found for this period.';
-
-  @override
-  String get netBalance => 'Net Balance';
-
-  @override
-  String get topCategories => 'Top Categories';
-
-  @override
-  String get spendingTrend => 'Spending Trend';
-
-  @override
-  String get insights => 'Insights';
-
-  @override
-  String get noExpensesRecorded => 'No expenses recorded';
-
-  @override
-  String get trackSpendingHabits => 'Track your spending habits easily.';
-
-  @override
-  String get addExpense => 'Add Expense';
-
-  @override
-  String get noDataForPeriod => 'No data for this period';
-
-  @override
-  String get budget => 'Budget';
-
-  @override
-  String get spent => 'Spent';
-
-  @override
-  String get limit => 'Limit';
-
-  @override
-  String get overBudget => 'Over Budget!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% remaining';
-  }
-
-  @override
-  String get savingsRate => 'Savings Rate';
-
-  @override
-  String get healthScore => 'Health Score';
-
-  @override
-  String get healthScoreExplanation =>
-      'This score is based on your Savings Rate.\n\n• > 50% saved = Excellent (100)\n• 0% saved = Average (50)\n• Spending > Income = Poor (<50)';
 
   @override
   String get ok => 'OK';
@@ -1390,19 +976,10 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   String get todos => 'Teendők';
 
   @override
-  String get expenses => 'Kiadások';
-
-  @override
   String get journal => 'Napló';
 
   @override
-  String get calendar => 'Naptár';
-
-  @override
   String get clipboard => 'Vágólap';
-
-  @override
-  String get canvas => 'Vászon';
 
   @override
   String get save => 'Mentés';
@@ -1435,24 +1012,6 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   String get discard => 'Elvetés';
 
   @override
-  String get createPost => 'Bejegyzés létrehozása';
-
-  @override
-  String get post => 'Közzététel';
-
-  @override
-  String get postingTo => 'Közzététel itt:';
-
-  @override
-  String get whatsOnYourMind => 'Mi jár a fejedben?';
-
-  @override
-  String get pickImages => 'Képek kiválasztása';
-
-  @override
-  String get pickVideo => 'Videó kiválasztása';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -1477,16 +1036,6 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   String error(Object error) {
     return 'Hiba: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'A sorrend csak az \'\'Összes bejegyzés\'\'-nél érhető el';
-
-  @override
-  String get deletePost => 'Bejegyzés törlése';
-
-  @override
-  String get postDeleted => 'Bejegyzés törölve';
 
   @override
   String get premiumFeatures => 'Prémium funkciók';
@@ -1547,35 +1096,6 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   String get recycleBinCleared => 'Lomtár sikeresen kiürítve';
 
   @override
-  String get allPostsDeleted => 'Minden bejegyzés törölve';
-
-  @override
-  String get newPost => 'Új bejegyzés';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Szöveg a vágólapra másolva (Facebook irányelv)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'A TikTok megosztáshoz videó/kép szükséges';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Hiba a megosztáskor: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Megosztás a(z) $platform Történetben';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Megosztás a(z) $platform Hírfolyamban';
-  }
-
-  @override
   String get unlockPermanently => 'Végleges feloldás';
 
   @override
@@ -1591,13 +1111,6 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
 
   @override
   String get selectDateTime => 'Dátum és idő kiválasztása';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Biztosan törölni szeretné ezt a bejegyzést?';
-
-  @override
-  String get socialPosts => 'Közösségi bejegyzések';
 
   @override
   String get watchAdToEarnCoins => 'Nézzen hirdetést érmékért';
@@ -1784,25 +1297,11 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
       'Maradjon a csúcson. Hozzon létre teendőlistákat, állítson be prioritásokat, és érje el céljait pipáról pipára.';
 
   @override
-  String get onboardingExpensesTitle => 'Kiadások nyomon követése';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Irányítsa pénzügyeit. Kövesse nyomon a bevételeit és kiadásait egyszerűen, hogy megértse költési szokásait.';
-
-  @override
   String get onboardingJournalTitle => 'Személyes napló';
 
   @override
   String get onboardingJournalDesc =>
       'Gondolja át a napját. Privát hely az emlékek, érzések és napi tapasztalatok leírására.';
-
-  @override
-  String get onboardingCalendarTitle => 'Naptár és események';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Soha ne maradjon le semmiről. Rendszerezze időbeosztását, és kövesse nyomon a fontos közelgő eseményeket.';
 
   @override
   String get onboardingClipboardTitle => 'Vágólapkezelő';
@@ -1812,65 +1311,22 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
       'Másolja egyszer, illessze be bárhová. Hozzáférés a vágólap előzményeihez a korábban másolt részletek előhívásához.';
 
   @override
-  String get onboardingCanvasTitle => 'Kreatív vászon';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Engedje szabadjára kreativitását. Rajzoljon, vázoljon és vizualizálja ötleteit egy szabad formátumú digitális vásznon.';
-
-  @override
   String get featuresNotesDesc => 'Jegyzetek létrehozása és kezelése';
 
   @override
   String get featuresTodosDesc => 'Kövesse nyomon feladatait';
 
   @override
-  String get featuresExpensesDesc => 'Kövesse nyomon kiadásait';
-
-  @override
   String get featuresJournalDesc => 'Írja le gondolatait';
 
   @override
-  String get featuresCalendarDesc => 'Rendszerezze időbeosztását';
-
-  @override
   String get featuresClipboardDesc => 'Hozzáférés a vágólap előzményeihez';
-
-  @override
-  String get featuresCanvasDesc => 'Rajzoljon és vázoljon szabadon';
-
-  @override
-  String get featuresSocialPost => 'Közösségi bejegyzés';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Készítsen vonzó közösségi média tartalmakat';
 
   @override
   String get chooseYourAura => 'Válassza ki az auráját';
 
   @override
   String get expressYourselfTheme => 'Fejezze ki magát egy új témaszínnel!';
-
-  @override
-  String get level => 'Szint';
-
-  @override
-  String get xpToNextLevel => 'XP a szintig';
-
-  @override
-  String get checkUpcomingEvents => 'Ellenőrizze a közelgő eseményeket';
-
-  @override
-  String get startNewSketch => 'Új vázlat indítása';
-
-  @override
-  String get noTransactionsMonth => 'Nincs tranzakció ebben a hónapban';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return '$count tranzakció ebben a hónapban';
-  }
 
   @override
   String get autoSaveClipboard => 'Vágólap automatikus mentése';
@@ -1932,15 +1388,6 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
 
   @override
   String get premiumLayoutsDesc => 'Exkluzív módok az emlékek megtekintésére';
-
-  @override
-  String get calendarTools => 'Naptár és eszközök';
-
-  @override
-  String get fullCalendar => 'Teljes naptár';
-
-  @override
-  String get fullCalendarDesc => 'Teljes eseménykezelő rendszer';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -2028,78 +1475,13 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   String get completed => 'Befejezve';
 
   @override
-  String get greatJob => 'Szép munka!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Szerzett $amount XP-t! Következő feladat: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Feladat befejezve! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Minden aktív feladat áthelyezése a lomtárba?';
-
-  @override
-  String get deleteAllPosts => 'Minden bejegyzés törlése';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Biztosan törölni szeretné az ÖSSZES közösségi bejegyzést? Ez a művelet nem vonható vissza.';
-
-  @override
-  String get allPosts => 'Minden bejegyzés';
-
-  @override
-  String get favorites => 'Kedvencek';
-
-  @override
-  String get drafts => 'Piszkozatok';
-
-  @override
-  String get noFavoritesYet => 'Még nincsenek kedvencek';
-
-  @override
-  String get noDraftsYet => 'Még nincsenek piszkozatok';
-
-  @override
-  String get startSocialJourney => 'Kezdje el közösségi utazását!';
-
-  @override
-  String get draft => 'PISZKOZAT';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count melléklet';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Kérjük, adjon hozzá tartalmat vagy médiát a megosztáshoz';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Hiba: Fájl nem található itt: $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Ellenőrizze a Facebook alkalmazást';
-
-  @override
-  String get systemShare => 'Rendszer megosztás';
-
-  @override
-  String get socialPost => 'Közösségi bejegyzés';
-
-  @override
-  String get favorite => 'Kedvenc';
-
-  @override
-  String get saveDraft => 'Piszkozat mentése';
 
   @override
   String get entryCopied => 'Bejegyzés másolva';
@@ -2244,33 +1626,10 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   String get dueDate => 'Határidő';
 
   @override
-  String get expenseTitle => 'Kiadások';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Keresés ebben: $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Rendezés és szűrés';
 
   @override
   String get sortBy => 'RENDEZÉS';
-
-  @override
-  String get highestAmount => 'Legmagasabb összeg';
-
-  @override
-  String get lowestAmount => 'Legalacsonyabb összeg';
-
-  @override
-  String get moreFilters => 'További szűrők...';
-
-  @override
-  String get filterExpenses => 'Kiadások szűrése';
-
-  @override
-  String get transactionType => 'Tranzakció típusa';
 
   @override
   String get categories => 'Kategóriák';
@@ -2279,21 +1638,10 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   String get all => 'Összes';
 
   @override
-  String get income => 'Bevétel';
-
-  @override
-  String get expense => 'Kiadás';
-
-  @override
   String get reset => 'Alaphelyzet';
 
   @override
   String get apply => 'Alkalmaz';
-
-  @override
-  String newExpense(String currency) {
-    return 'Új $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2356,34 +1704,10 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Új vázlat';
-
-  @override
-  String get searchSketches => 'Vázlatok és mappák keresése...';
-
-  @override
   String get noResultsFound => 'Nincs találat';
 
   @override
   String get noItems => 'Nincs elem';
-
-  @override
-  String get noDrawingsYet => 'Még nincsenek rajzok';
-
-  @override
-  String get canvasIntro => 'Engedje szabadjára kreativitását a vásznon!';
-
-  @override
-  String get newCanvas => 'Új vászon';
 
   @override
   String get rename => 'Átnevezés';
@@ -2399,13 +1723,7 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
       'Ebben a mappában lévő összes vázlat véglegesen törlődik.';
 
   @override
-  String get renameFolder => 'Mappa átnevezése';
-
-  @override
   String get chooseColor => 'Szín kiválasztása';
-
-  @override
-  String get deleteFolderQuestion => 'Mappa törlése?';
 
   @override
   String get searchClips => 'Klipek keresése...';
@@ -2427,9 +1745,6 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
 
   @override
   String get restoreClipLater => 'Ezt a klipet később visszaállíthatja.';
-
-  @override
-  String get upcomingEvents => 'Közelgő események';
 
   @override
   String get dataDistribution => 'ADATELOSZLÁS';
@@ -2470,57 +1785,6 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   String selectedCount(int count) {
     return '$count kiválasztva';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes vázlat • $folders mappa';
-  }
-
-  @override
-  String get sortItems => 'Elemek rendezése';
-
-  @override
-  String get sortNameAZ => 'Név (A-Z)';
-
-  @override
-  String get sortNameZA => 'Név (Z-A)';
-
-  @override
-  String get createFolder => 'Mappa létrehozása';
-
-  @override
-  String get folderNameHint => 'Mappa neve...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Töröl $count vázlatot? Ez a művelet nem vonható vissza.';
-  }
-
-  @override
-  String get noSketchesFound => 'Nincs talált vázlat';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Próbálja meg módosítani a keresést, vagy hozzon létre egy új vázlatot.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Keresés ebben: $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count vázlat';
-  }
-
-  @override
-  String get sortSketches => 'Vázlatok rendezése';
-
-  @override
-  String get calendarScreenTitle => 'Naptár';
-
-  @override
-  String get dailyActivity => 'Napi tevékenység';
 
   @override
   String get deleteItemQuestion => 'Elem törlése?';
@@ -2622,28 +1886,6 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   String get general => 'Általános';
 
   @override
-  String get saveTransactionQuestion => 'Szeretné elmenteni ezt a tranzakciót?';
-
-  @override
-  String get fillTitleAmount => 'Kérjük, töltse ki a címet és az összeget';
-
-  @override
-  String get invalidAmount => 'Érvénytelen összegformátum';
-
-  @override
-  String get moveTransactionToBinTitle => 'Tranzakció áthelyezése a lomtárba?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Ezt a tranzakciót később visszaállíthatja a beállításokból.';
-
-  @override
-  String get newTransaction => 'Új tranzakció';
-
-  @override
-  String get whatIsThisFor => 'Mire való ez?';
-
-  @override
   String get description => 'Leírás';
 
   @override
@@ -2659,71 +1901,10 @@ class AppLocalizationsHuHu extends AppLocalizationsHu {
   String get yearly => 'Évi';
 
   @override
-  String get totalIncome => 'Összes bevétel';
-
-  @override
-  String get totalExpense => 'Összes kiadás';
-
-  @override
   String get analysis => 'Elemzés';
 
   @override
   String get transactions => 'Tranzakciók';
-
-  @override
-  String get noExpensesFound => 'Nem találhatók kiadások ebben az időszakban.';
-
-  @override
-  String get netBalance => 'Nettó egyenleg';
-
-  @override
-  String get topCategories => 'Legfontosabb kategóriák';
-
-  @override
-  String get spendingTrend => 'Költési trend';
-
-  @override
-  String get insights => 'Betekintések';
-
-  @override
-  String get noExpensesRecorded => 'Nincsenek rögzített kiadások';
-
-  @override
-  String get trackSpendingHabits =>
-      'Kövesse nyomon költési szokásait egyszerűen.';
-
-  @override
-  String get addExpense => 'Kiadás hozzáadása';
-
-  @override
-  String get noDataForPeriod => 'Nincs adat ebben az időszakban';
-
-  @override
-  String get budget => 'Költségvetés';
-
-  @override
-  String get spent => 'Elköltött';
-
-  @override
-  String get limit => 'Határ';
-
-  @override
-  String get overBudget => 'Költségvetés túllépve!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% maradt';
-  }
-
-  @override
-  String get savingsRate => 'Megtakarítási ráta';
-
-  @override
-  String get healthScore => 'Egészségügyi pontszám';
-
-  @override
-  String get healthScoreExplanation =>
-      'Ez a pontszám a megtakarítási rátáján alapul.\n\n• > 50% megtakarítás = Kiváló (100)\n• 0% megtakarítás = Átlagos (50)\n• Költés > Bevétel = Gyenge (<50)';
 
   @override
   String get ok => 'OK';

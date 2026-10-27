@@ -5,11 +5,8 @@
   "systemDefault": "النظام الافتراضي",
   "notes": "ملحوظات",
   "todos": "المهام",
-  "expenses": "نفقات",
   "journal": "مجلة",
-  "calendar": "تقويم",
   "clipboard": "الحافظة",
-  "canvas": "قماش",
   "save": "حفظ",
   "create": "إنشاء",
   "cancel": "إلغاء",
@@ -20,12 +17,6 @@
   "unsavedChanges": "تغييرات غير محفوظة",
   "confirmDelete": "تأكيد الحذف",
   "discard": "تجاهل",
-  "createPost": "إنشاء منشور",
-  "post": "منشور",
-  "postingTo": "النشر في",
-  "whatsOnYourMind": "ماذا يدور في ذهنك؟",
-  "pickImages": "اختر صورًا",
-  "pickVideo": "اختر فيديو",
   "camera": "كاميرا",
   "gallery": "معرض الصور",
   "search": "بحث",
@@ -34,9 +25,6 @@
   "selectItems": "حدد العناصر",
   "deleteAll": "حذف الكل",
   "error": "خطأ: {error}",
-  "orderingOnlyAvailableInAllPosts": "الترتيب متاح فقط في \"جميع المنشورات\"",
-  "deletePost": "حذف المنشور",
-  "postDeleted": "تم حذف المنشور",
   "premiumFeatures": "ميزات بريميوم",
   "manageCoinsAdsPremium": "إدارة العملات والإعلانات وحالة البريميوم",
   "themeMode": "وضع المظهر",
@@ -56,20 +44,11 @@
   "dark": "داكن",
   "itemRestored": "تمت استعادة العنصر",
   "recycleBinCleared": "تم إفراغ سلة المحذوفات بنجاح",
-  "allPostsDeleted": "تم حذف جميع المنشورات",
-  "newPost": "منشور جديد",
-  "textCopiedToClipboardFacebook": "تم نسخ النص إلى الحافظة (سياسة فيسبوك)",
-  "tiktokSharingRequiresVideoImage": "تتطلب مشاركة TikTok فيديو/صورة",
-  "errorSharing": "خطأ في المشاركة: {error}",
-  "shareToStory": "مشاركة في قصة {platform}",
-  "shareToFeed": "مشاركة في موجز {platform}",
   "unlockPermanently": "فتح بشكل دائم",
   "notEnoughCoins": "لا توجد عملات كافية!",
   "youEarnedCoins": "لقد ربحت {amount} من العملات!",
   "contentCopied": "تم نسخ المحتوى",
   "selectDateTime": "حدد التاريخ والوقت",
-  "areYouSureYouWantToDeleteThisPost": "هل أنت متأكد أنك تريد حذف هذا المنشور؟",
-  "socialPosts": "منشورات اجتماعية",
   "watchAdToEarnCoins": "شاهد إعلانًا لربح العملات",
   "premiumUnlocked": "تم فتح البريميوم",
   "removeAds": "إزالة الإعلانات",
@@ -128,32 +107,16 @@
   "onboardingNotesDesc": "التقط الأفكار فورًا بتنسيق نص غني. نظم أفكارك ولا تفقد أي فكرة رائعة مرة أخرى.",
   "onboardingTodosTitle": "إدارة المهام",
   "onboardingTodosDesc": "ابق مطلعاً على أمورك. أنشئ قوائم مهام، وحدد الأولويات، وحقق أهدافك خطوة بخطوة.",
-  "onboardingExpensesTitle": "تتبع النفقات",
-  "onboardingExpensesDesc": "تحكم في أموالك. تتبع الدخل والنفقات بسهولة لفهم عادات الإنفاق الخاصة بك.",
   "onboardingJournalTitle": "يوميات شخصية",
   "onboardingJournalDesc": "تأمل في يومك. مساحة خاصة لتدوين ذكرياتك ومشاعرك وتجاربك اليومية.",
-  "onboardingCalendarTitle": "التقويم والأحداث",
-  "onboardingCalendarDesc": "لا تفوت أي لحظة. نظم جدولك وتابع الأحداث الهامة القادمة.",
   "onboardingClipboardTitle": "مدير الحافظة",
   "onboardingClipboardDesc": "انسخ مرة واحدة، والصق في أي مكان. الوصول إلى سجل الحافظة لاستعادة النصوص التي نسختها سابقاً.",
-  "onboardingCanvasTitle": "لوحة إبداعية",
-  "onboardingCanvasDesc": "أطلق العنان لإبداعك. ارسم وخطط وصور أفكارك على لوحة رقمية حرة.",
   "featuresNotesDesc": "إنشاء وإدارة الملاحظات الخاصة بك",
   "featuresTodosDesc": "تتبع المهام الخاصة بك",
-  "featuresExpensesDesc": "مراقبة النفقات الخاصة بك",
   "featuresJournalDesc": "اكتتب أفكارك",
-  "featuresCalendarDesc": "نظم جدولك الزمني",
   "featuresClipboardDesc": "الوصول إلى سجل الحافظة الخاص بك",
-  "featuresCanvasDesc": "ارسم وخطط بحرية",
-  "featuresSocialPost": "منشور اجتماعي",
-  "featuresSocialPostDesc": "إنشاء محتوى جذاب لوسائل التواصل الاجتماعي",
   "chooseYourAura": "اختر هالتك",
   "expressYourselfTheme": "عبر عن نفسك بلون مظهر جديد!",
-  "level": "المستوى",
-  "xpToNextLevel": "XP للمستوى التالي",
-  "checkUpcomingEvents": "تحقق من الأحداث القادمة",
-  "startNewSketch": "بدأ رسمة جديدة",
-  "noTransactionsMonth": "لا توجد معاملات هذا الشهر",
   "autoSaveClipboard": "حفظ تلقائي للحافظة",
   "autoSaveClipboardDesc": "حفظ العناصر المنسوخة تلقائياً",
   "permissionDeniedSettings": "تم رفض الإذن بشكل دائم. يرجى تفعيله من الإعدادات.",
@@ -173,9 +136,6 @@
   "artisticDesignsDesc": "فتح أكثر من 10 مظاهر فريدة لبطاقات اليوميات",
   "premiumLayouts": "تخطيطات بريميوم",
   "premiumLayoutsDesc": "طرق حصرية لعرض ذكرياتك",
-  "calendarTools": "تقويم وأدوات",
-  "fullCalendar": "تقويم كامل",
-  "fullCalendarDesc": "نظام متكامل لإدارة الأحداث",
   "clipboardAutoSaveDesc": "التقاط سجل الحافظة في الخلفية",
   "proWidgets": "أدوات ذكية للمحترفين",
   "proWidgetsDesc": "جميع الميزات متوفرة على شاشتك الرئيسية",
@@ -203,26 +163,8 @@
   "typeNewTask": "اكتب مهمة جديدة...",
   "addTask": "إضافة مهمة",
   "completed": "مكتمل",
-  "greatJob": "عمل رائع!",
-  "youEarnedXPNextTask": "لقد ربحت {amount} XP! المهمة التالية: {date}",
-  "taskCompletedXP": "تمت المهمة! +{amount} XP",
   "moveTasksToRecycleBin": "نقل جميع المهام النشطة إلى سلة المحذوفات؟",
-  "deleteAllPosts": "حذف جميع المنشورات",
-  "deleteAllPostsConfirmation": "هل أنت متأكد أنك تريد حذف جميع المنشورات الاجتماعية؟ لا يمكن التراجع عن هذا الإجراء.",
-  "allPosts": "جميع المنشورات",
-  "favorites": "المفضلة",
-  "drafts": "المسودات",
-  "noFavoritesYet": "لا توجد مفضلات بعد",
-  "noDraftsYet": "لا توجد مسودات بعد",
-  "startSocialJourney": "ابدأ رحلتك الاجتماعية!",
-  "draft": "مسودة",
-  "pleaseAddContent": "يرجى إضافة بعض المحتوى أو الوسائط للمشاركة",
   "fileNotFoundError": "خطأ: لم يتم العثور على الملف في {path}",
-  "checkFacebookApp": "تحقق من تطبيق فيسبوك",
-  "systemShare": "مشاركة النظام",
-  "socialPost": "منشور اجتماعي",
-  "favorite": "مفضل",
-  "saveDraft": "حفظ المسودة",
   "entryCopied": "تم نسخ المدخل",
   "moveEntriesToRecycleBin": "نقل جميع المدخلات النشطة إلى سلة المحذوفات؟",
   "startWritingStory": "ابدأ بكتابة قصتك",
@@ -269,36 +211,12 @@
   "enterTaskDetails": "أدخل تفاصيل المهمة...",
   "setDueDate": "تحديد موعد الاستحقاق",
   "dueDate": "موعد الاستحقاق",
-  "expenseTitle": "النفقات",
-  "searchInCurrency": "بحث في {currency}...",
-  "@searchInCurrency": {
-    "placeholders": {
-      "currency": {
-        "type": "String"
-      }
-    }
-  },
   "sortAndFilter": "فرز وتصفية",
   "sortBy": "فرز حسب",
-  "highestAmount": "أعلى مبلغ",
-  "lowestAmount": "أقل مبلغ",
-  "moreFilters": "مزيد من الفلاتر...",
-  "filterExpenses": "تصفية النفقات",
-  "transactionType": "نوع المعاملة",
   "categories": "الفئات",
   "all": "الكل",
-  "income": "الدخل",
-  "expense": "المصروفات",
   "reset": "إعادة تعيين",
   "apply": "تطبيق",
-  "newExpense": "جديد {currency}",
-  "@newExpense": {
-    "placeholders": {
-      "currency": {
-        "type": "String"
-      }
-    }
-  },
   "errorLoadingData": "حدث خطأ أثناء تحميل البيانات.\n\n{error}",
   "@errorLoadingData": {
     "placeholders": {
@@ -353,23 +271,13 @@
       }
     }
   },
-  "instagram": "إنستغرام",
-  "facebook": "فيسبوك",
-  "tiktok": "تيك توك",
-  "newSketch": "رسمة جديدة",
-  "searchSketches": "البحث في الرسومات والمجلدات...",
   "noResultsFound": "لم يتم العثور على نتائج",
   "noItems": "لا توجد عناصر",
-  "noDrawingsYet": "لا توجد رسومات بعد",
-  "canvasIntro": "أطلق العنان لإبداعك على اللوحة!",
-  "newCanvas": "لوحة جديدة",
   "rename": "إعادة تسمية",
   "deleteFolder": "حذف المجلد",
   "deleteSketchesQuestion": "حذف الرسومات؟",
   "deleteFolderConfirmation": "سيتم حذف جميع الرسومات في هذا المجلد نهائياً.",
-  "renameFolder": "إعادة تسمية المجلد",
   "chooseColor": "اختر لوناً",
-  "deleteFolderQuestion": "حذف المجلد؟",
   "searchClips": "البحث في القصاصات...",
   "clipboardEmpty": "الحافظة فارغة",
   "addItem": "إضافة عنصر",
@@ -377,7 +285,6 @@
   "newClip": "قصاصة جديدة",
   "editClip": "تعديل القصاصة",
   "restoreClipLater": "يمكنك استعادة هذه القصاصة لاحقاً.",
-  "upcomingEvents": "الأحداث القادمة",
   "dataDistribution": "توزيع البيانات",
   "taskProgress": "تقدم المهمة",
   "quickStats": "إحصائيات سريعة",
@@ -407,51 +314,6 @@
       }
     }
   },
-  "canvasStats": "{notes} رسومات • {folders} مجلدات",
-  "@canvasStats": {
-    "placeholders": {
-      "notes": {
-        "type": "int"
-      },
-      "folders": {
-        "type": "int"
-      }
-    }
-  },
-  "sortItems": "فرز العناصر",
-  "sortNameAZ": "الاسم (أ-ي)",
-  "sortNameZA": "الاسم (ي-أ)",
-  "createFolder": "إنشاء مجلد",
-  "folderNameHint": "اسم المجلد...",
-  "deleteSketchesConfirmation": "حذف {count} رسومات؟ لا يمكن التراجع عن هذا الإجراء.",
-  "@deleteSketchesConfirmation": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "noSketchesFound": "لم يتم العثور على رسومات",
-  "noSketchesFoundSub": "حاول تعديل بحثك أو إنشاء رسمة جديدة.",
-  "searchInFolder": "بحث في {folder}...",
-  "@searchInFolder": {
-    "placeholders": {
-      "folder": {
-        "type": "String"
-      }
-    }
-  },
-  "sketchesCount": "{count} رسومات",
-  "@sketchesCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "sortSketches": "فرز الرسومات",
-  "calendarScreenTitle": "التقويم",
-  "dailyActivity": "النشاط اليومي",
   "deleteItemQuestion": "حذف العنصر؟",
   "deleteItemConfirmation": "سيؤدي هذا إلى نقل العنصر إلى سلة المحذوفات.",
   "moveToBinItem": "نقل إلى السلة؟",
@@ -488,41 +350,13 @@
   "recent": "الأخيرة",
   "categoryLabel": "الفئة: {category}",
   "general": "عام",
-  "saveTransactionQuestion": "هل تريد حفظ هذه المعاملة؟",
-  "fillTitleAmount": "يرجى ملء العنوان والمبلغ",
-  "invalidAmount": "تنسيق المبلغ غير صالح",
-  "moveTransactionToBinTitle": "نقل المعاملة إلى سلة المحذوفات؟",
-  "restoreTransactionLater": "يمكنك استعادة هذه المعاملة لاحقاً من الإعدادات.",
-  "newTransaction": "معاملة جديدة",
-  "whatIsThisFor": "فيما هذا؟",
   "description": "الوصف",
   "daily": "يومياً",
   "weekly": "أسبوعياً",
   "monthly": "شهرياً",
   "yearly": "سنوياً",
-  "totalIncome": "إجمالي الدخل",
-  "totalExpense": "إجمالي النفقات",
   "analysis": "التحليل",
   "transactions": "المعاملات",
-  "noExpensesFound": "لم يتم العثور على نفقات لهذه الفترة.",
-  "netBalance": "صافي الرصيد",
-  "topCategories": "أبرز الفئات",
-  "spendingTrend": "اتجاه الإنفاق",
-  "insights": "رؤى",
-  "noExpensesRecorded": "لم يتم تسجيل أي نفقات",
-  "trackSpendingHabits": "تتبع عادات الإنفاق الخاصة بك بسهولة.",
-  "addExpense": "إضافة نفقة",
-  "noDataForPeriod": "لا توجد بيانات لهذه الفترة",
-  "budget": "الميزانية",
-  "spent": "تم صرفه",
-  "limit": "الحد",
-  "overBudget": "تجاوز الميزانية!",
-  "remainingBudget": "متبقي {percent}%",
-  "savingsRate": "معدل الادخار",
-  "healthScore": "درجة الصحة المالية",
-  "healthScoreExplanation": "هذه الدرجة تعتمد على معدل ادخارك.\n\n• ادخار > 50% = ممتاز (100)\n• ادخار 0% = متوسط (50)\n• الإنفاق > الدخل = ضعيف (<50)",
   "ok": "موافق",
-  "attachmentCount": "{count, plural, =0{لا توجد مرفقات} =1{مرفق واحد} =2{مرفقان} few{{count} مرفقات} other{{count} مرفقات}}",
-  "transactionsThisMonth": "{count, plural, =0{لا توجد معاملات هذا الشهر} =1{معاملة واحدة هذا الشهر} =2{معاملتان هذا الشهر} few{{count} معاملات هذا الشهر} other{{count} معاملات هذا الشهر}}",
   "bulkImport": "استيراد بالجملة"
 }

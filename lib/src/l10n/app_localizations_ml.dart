@@ -24,19 +24,10 @@ class AppLocalizationsMl extends AppLocalizations {
   String get todos => 'ജോലികൾ';
 
   @override
-  String get expenses => 'ചെലവുകൾ';
-
-  @override
   String get journal => 'ഡയറി';
 
   @override
-  String get calendar => 'കലണ്ടർ';
-
-  @override
   String get clipboard => 'ക്ലിപ്പ്ബോർഡ്';
-
-  @override
-  String get canvas => 'ക്യാൻവാസ്';
 
   @override
   String get save => 'സേവ് ചെയ്യുക';
@@ -69,24 +60,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String get discard => 'ഉപേക്ഷിക്കുക';
 
   @override
-  String get createPost => 'പോസ്റ്റ് ഉണ്ടാക്കുക';
-
-  @override
-  String get post => 'പോസ്റ്റ്';
-
-  @override
-  String get postingTo => 'പോസ്റ്റ് ചെയ്യുന്നു';
-
-  @override
-  String get whatsOnYourMind => 'നിങ്ങളുടെ മനസ്സിൽ എന്താണ്?';
-
-  @override
-  String get pickImages => 'ചിത്രങ്ങൾ തിരഞ്ഞെടുക്കുക';
-
-  @override
-  String get pickVideo => 'വീഡിയോ തിരഞ്ഞെടുക്കുക';
-
-  @override
   String get camera => 'ക്യാമറ';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String error(Object error) {
     return 'പിശക്: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      '\'എല്ലാ പോസ്റ്റുകളും\' എന്നതിൽ മാത്രമേ ക്രമീകരണം ലഭ്യമാകൂ';
-
-  @override
-  String get deletePost => 'പോസ്റ്റ് ഡിലീറ്റ് ചെയ്യുക';
-
-  @override
-  String get postDeleted => 'പോസ്റ്റ് ഡിലീറ്റ് ചെയ്തു';
 
   @override
   String get premiumFeatures => 'പ്രീമിയം സവിശേഷതകൾ';
@@ -181,35 +144,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String get recycleBinCleared => 'റീസൈക്കിൾ ബിൻ വിജയകരമായി വൃത്തിയാക്കി';
 
   @override
-  String get allPostsDeleted => 'എല്ലാ പോസ്റ്റുകളും ഡിലീറ്റ് ചെയ്തു';
-
-  @override
-  String get newPost => 'പുതിയ പോസ്റ്റ്';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'ടെക്സ്റ്റ് ക്ലിപ്പ്ബോർഡിലേക്ക് കോപ്പി ചെയ്തു (ഫേസ്ബുക്ക് നയം)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'ടിക് ടോക്ക് പങ്കിടലിന് വീഡിയോ/ചിത്രം ആവശ്യമാണ്';
-
-  @override
-  String errorSharing(Object error) {
-    return 'പങ്കിടുന്നതിൽ പിശക്: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return '$platform സ്റ്റോറിയിലേക്ക് ഷെയർ ചെയ്യുക';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return '$platform ഫീഡിലേക്ക് ഷെയർ ചെയ്യുക';
-  }
-
-  @override
   String get unlockPermanently => 'ശാശ്വതമായി അൺലോക്ക് ചെയ്യുക';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get selectDateTime => 'തീയതിയും സമയവും തിരഞ്ഞെടുക്കുക';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'ഈ പോസ്റ്റ് ഡിലീറ്റ് ചെയ്യണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?';
-
-  @override
-  String get socialPosts => 'സോഷ്യൽ പോസ്റ്റുകൾ';
 
   @override
   String get watchAdToEarnCoins => 'കോയിനുകൾ നേടാൻ പരസ്യം കാണുക';
@@ -421,25 +348,11 @@ class AppLocalizationsMl extends AppLocalizations {
       'നിങ്ങളുടെ ജോലികളിൽ മുന്നേറുക. ടോ-ഡൂ ലിസ്റ്റുകൾ ഉണ്ടാക്കുക, മുൻഗണനകൾ നിശ്ചയിക്കുക, ലക്ഷ്യങ്ങൾ പൂർത്തിയാക്കുക.';
 
   @override
-  String get onboardingExpensesTitle => 'ചെലവ് ട്രാക്കിംഗ്';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'നിങ്ങളുടെ സാമ്പത്തികം നിയന്ത്രിക്കുക. ചെലവുകൾ എളുപ്പത്തിൽ ട്രാക്ക് ചെയ്ത് നിങ്ങളുടെ സാമ്പത്തിക ശീലങ്ങൾ മനസ്സിലാക്കുക.';
-
-  @override
   String get onboardingJournalTitle => 'സ്വകാര്യ ഡയറി';
 
   @override
   String get onboardingJournalDesc =>
       'നിങ്ങളുടെ ദിവസത്തെക്കുറിച്ച് ചിന്തിക്കുക. ഓർമ്മകളും വികാരങ്ങളും രേഖപ്പെടുത്താൻ ഒരു സ്വകാര്യ ഇടം.';
-
-  @override
-  String get onboardingCalendarTitle => 'കലണ്ടറും ഇവന്റുകളും';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'ഒരു നിമിഷവും നഷ്ടപ്പെടുത്തരുത്. നിങ്ങളുടെ ഷെഡ്യൂൾ ക്രമീകരിക്കുകയും പ്രധാനപ്പെട്ട പരിപാടികൾ ട്രാക്ക് ചെയ്യുകയും ചെയ്യുക.';
 
   @override
   String get onboardingClipboardTitle => 'ക്ലിപ്പ്ബോർഡ് മാനേജർ';
@@ -449,13 +362,6 @@ class AppLocalizationsMl extends AppLocalizations {
       'ഒരു തവണ കോപ്പി ചെയ്യുക, എവിടെയും പേസ്റ്റ് ചെയ്യുക. നിങ്ങളുടെ ക്ലിപ്പ്ബോർഡ് ചരിത്രം എളുപ്പത്തിൽ ലഭ്യമാക്കുക.';
 
   @override
-  String get onboardingCanvasTitle => 'ക്രിയേറ്റീവ് ക്യാൻവാസ്';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'നിങ്ങളുടെ സർഗ്ഗാത്മകത പുറത്തെടുക്കുക. ഡിജിറ്റൽ ക്യാൻവാസിൽ നിങ്ങളുടെ ആശയങ്ങൾ വരച്ചു ചേർക്കുക.';
-
-  @override
   String get featuresNotesDesc =>
       'കുറിപ്പുകൾ ഉണ്ടാക്കുകയും നിയന്ത്രിക്കുകയും ചെയ്യുക';
 
@@ -463,26 +369,10 @@ class AppLocalizationsMl extends AppLocalizations {
   String get featuresTodosDesc => 'ജോലികൾ ട്രാക്ക് ചെയ്യുക';
 
   @override
-  String get featuresExpensesDesc => 'ചെലവുകൾ നിരീക്ഷിക്കുക';
-
-  @override
   String get featuresJournalDesc => 'ചിന്തകൾ എഴുതുക';
 
   @override
-  String get featuresCalendarDesc => 'ഷെഡ്യൂൾ ക്രമീകരിക്കുക';
-
-  @override
   String get featuresClipboardDesc => 'ക്ലിപ്പ്ബോർഡ് ചരിത്രം ലഭ്യമാക്കുക';
-
-  @override
-  String get featuresCanvasDesc => 'സ്വതന്ത്രമായി വരയ്ക്കുക';
-
-  @override
-  String get featuresSocialPost => 'സോഷ്യൽ പോസ്റ്റ്';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'മികച്ച സോഷ്യൽ മീഡിയ ഉള്ളടക്കം ഉണ്ടാക്കുക';
 
   @override
   String get chooseYourAura => 'നിങ്ങളുടെ ആഭ തിരഞ്ഞെടുക്കുക';
@@ -490,26 +380,6 @@ class AppLocalizationsMl extends AppLocalizations {
   @override
   String get expressYourselfTheme =>
       'പുതിയ തീം നിറത്തിലൂടെ സ്വയം പ്രകടിപ്പിക്കുക!';
-
-  @override
-  String get level => 'ലെവൽ';
-
-  @override
-  String get xpToNextLevel => 'അടുത്ത ലെവലിലേക്കുള്ള XP';
-
-  @override
-  String get checkUpcomingEvents => 'വരാനിരിക്കുന്ന പരിപാടികൾ നോക്കുക';
-
-  @override
-  String get startNewSketch => 'പുതിയ ചിത്രം തുടങ്ങുക';
-
-  @override
-  String get noTransactionsMonth => 'ഈ മാസം ഇടപാടുകളില്ല';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return 'ഈ മാസം $count ഇടപാട്';
-  }
 
   @override
   String get autoSaveClipboard => 'ക്ലിപ്പ്ബോർഡ് ഓട്ടോ-സേവ്';
@@ -571,15 +441,6 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get premiumLayoutsDesc => 'ഓർമ്മകൾ കാണാൻ മികച്ച വഴികൾ';
-
-  @override
-  String get calendarTools => 'കലണ്ടറും ടൂളുകളും';
-
-  @override
-  String get fullCalendar => 'പൂർണ്ണ കലണ്ടർ';
-
-  @override
-  String get fullCalendarDesc => 'സമ്പൂർണ്ണ ഇവന്റ് മാനേജ്മെന്റ് സിസ്റ്റം';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -669,77 +530,13 @@ class AppLocalizationsMl extends AppLocalizations {
   String get completed => 'പൂർത്തിയായി';
 
   @override
-  String get greatJob => 'അതിമനോഹരം!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'നിങ്ങൾ $amount XP നേടി! അടുത്ത ജോലി: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'ജോലി പൂർത്തിയായി! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'എല്ലാ ജോലികളും റീസൈക്കിൾ ബിന്നിലേക്ക് മാറ്റണോ?';
-
-  @override
-  String get deleteAllPosts => 'എല്ലാ പോസ്റ്റുകളും ഡിലീറ്റ് ചെയ്യുക';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'എല്ലാ സോഷ്യൽ പോസ്റ്റുകളും ഡിലീറ്റ് ചെയ്യണമെന്ന് ഉറപ്പാണോ? ഇത് മാറ്റാനാവില്ല.';
-
-  @override
-  String get allPosts => 'എല്ലാ പോസ്റ്റുകളും';
-
-  @override
-  String get favorites => 'പ്രിയപ്പെട്ടവ';
-
-  @override
-  String get drafts => 'ഡ്രാഫ്റ്റുകൾ';
-
-  @override
-  String get noFavoritesYet => 'പ്രിയപ്പെട്ടവ ഒന്നുമില്ല';
-
-  @override
-  String get noDraftsYet => 'ഡ്രാഫ്റ്റുകൾ ഒന്നുമില്ല';
-
-  @override
-  String get startSocialJourney => 'നിങ്ങളുടെ സോഷ്യൽ യാത്ര തുടങ്ങുക!';
-
-  @override
-  String get draft => 'ഡ്രാഫ്റ്റ്';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count അറ്റാച്ച്‌മെന്റ്';
-  }
-
-  @override
-  String get pleaseAddContent => 'പങ്കിടുന്നതിന് ഉള്ളടക്കമോ മീഡിയയോ ചേർക്കുക';
 
   @override
   String fileNotFoundError(Object path) {
     return 'പിശക്: $path എന്നടത്ത് ഫയൽ കണ്ടില്ല';
   }
-
-  @override
-  String get checkFacebookApp => 'ഫേസ്ബുക്ക് ആപ്പ് പരിശോധിക്കുക';
-
-  @override
-  String get systemShare => 'സിസ്റ്റം ഷെയർ';
-
-  @override
-  String get socialPost => 'സോഷ്യൽ പോസ്റ്റ്';
-
-  @override
-  String get favorite => 'പ്രിയപ്പെട്ടത്';
-
-  @override
-  String get saveDraft => 'ഡ്രാഫ്റ്റ് സേവ് ചെയ്യുക';
 
   @override
   String get entryCopied => 'എൻട്രി കോപ്പി ചെയ്തു';
@@ -885,33 +682,10 @@ class AppLocalizationsMl extends AppLocalizations {
   String get dueDate => 'അവസാന തീയതി';
 
   @override
-  String get expenseTitle => 'ചെലവുകൾ';
-
-  @override
-  String searchInCurrency(String currency) {
-    return '$currency-ൽ തിരയുക...';
-  }
-
-  @override
   String get sortAndFilter => 'ക്രമീകരിക്കുക & ഫിൽട്ടർ ചെയ്യുക';
 
   @override
   String get sortBy => 'ക്രമീകരിക്കുക';
-
-  @override
-  String get highestAmount => 'കൂടിയ തുക';
-
-  @override
-  String get lowestAmount => 'കുറഞ്ഞ തുക';
-
-  @override
-  String get moreFilters => 'കൂടുതൽ ഫിൽട്ടറുകൾ...';
-
-  @override
-  String get filterExpenses => 'ചെലവുകൾ ഫിൽട്ടർ ചെയ്യുക';
-
-  @override
-  String get transactionType => 'ഇടപാട് തരം';
 
   @override
   String get categories => 'വിഭാഗങ്ങൾ';
@@ -920,21 +694,10 @@ class AppLocalizationsMl extends AppLocalizations {
   String get all => 'എല്ലാം';
 
   @override
-  String get income => 'വരവ്';
-
-  @override
-  String get expense => 'ചെലവ്';
-
-  @override
   String get reset => 'റീസെറ്റ്';
 
   @override
   String get apply => 'പ്രയോഗിക്കുക';
-
-  @override
-  String newExpense(String currency) {
-    return 'പുതിയ $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -998,34 +761,10 @@ class AppLocalizationsMl extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'പുതിയ ചിത്രം';
-
-  @override
-  String get searchSketches => 'ചിത്രങ്ങളും ഫോൾഡറുകളും തിരയുക...';
-
-  @override
   String get noResultsFound => 'ഫലങ്ങളൊന്നും കണ്ടെത്തിയില്ല';
 
   @override
   String get noItems => 'ഇനങ്ങളൊന്നുമില്ല';
-
-  @override
-  String get noDrawingsYet => 'ചിത്രങ്ങളൊന്നുമില്ല';
-
-  @override
-  String get canvasIntro => 'നിങ്ങളുടെ സർഗ്ഗാത്മകത പകരുക!';
-
-  @override
-  String get newCanvas => 'പുതിയ ക്യാൻവാസ്';
 
   @override
   String get rename => 'പേര് മാറ്റുക';
@@ -1041,13 +780,7 @@ class AppLocalizationsMl extends AppLocalizations {
       'ഈ ഫോൾഡറിലെ എല്ലാ ചിത്രങ്ങളും സ്ഥിരമായി നീക്കം ചെയ്യപ്പെടും.';
 
   @override
-  String get renameFolder => 'ഫോൾഡറിന്റെ പേര് മാറ്റുക';
-
-  @override
   String get chooseColor => 'നിറം തിരഞ്ഞെടുക്കുക';
-
-  @override
-  String get deleteFolderQuestion => 'ഫോൾഡർ ഡിലീറ്റ് ചെയ്യണോ?';
 
   @override
   String get searchClips => 'ക്ലിപ്പുകൾ തിരയുക...';
@@ -1070,9 +803,6 @@ class AppLocalizationsMl extends AppLocalizations {
   @override
   String get restoreClipLater =>
       'നിങ്ങൾക്ക് ഈ ക്ലിപ്പ് പിന്നീട് പുനഃസ്ഥാപിക്കാം.';
-
-  @override
-  String get upcomingEvents => 'വരാനിരിക്കുന്ന പരിപാടികൾ';
 
   @override
   String get dataDistribution => 'ഡാറ്റാ വിതരണം';
@@ -1113,57 +843,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String selectedCount(int count) {
     return '$count എണ്ണം തിരഞ്ഞെടുത്തു';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes ചിത്രങ്ങൾ • $folders ഫോൾഡറുകൾ';
-  }
-
-  @override
-  String get sortItems => 'ഇനങ്ങൾ ക്രമീകരിക്കുക';
-
-  @override
-  String get sortNameAZ => 'പേര് (A-Z)';
-
-  @override
-  String get sortNameZA => 'പേര് (Z-A)';
-
-  @override
-  String get createFolder => 'ഫോൾഡർ ഉണ്ടാക്കുക';
-
-  @override
-  String get folderNameHint => 'ഫോൾഡറിന്റെ പേര്...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return '$count ചിത്രങ്ങൾ ഡിലീറ്റ് ചെയ്യണോ? ഇത് മാറ്റാനാവില്ല.';
-  }
-
-  @override
-  String get noSketchesFound => 'ചിത്രങ്ങളൊന്നും കണ്ടെത്തിയില്ല';
-
-  @override
-  String get noSketchesFoundSub =>
-      'തിരച്ചിൽ മാറ്റുകയോ പുതിയ ചിത്രം ഉണ്ടാക്കുകയോ ചെയ്യുക.';
-
-  @override
-  String searchInFolder(String folder) {
-    return '$folder-ൽ തിരയുക...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count ചിത്രങ്ങൾ';
-  }
-
-  @override
-  String get sortSketches => 'ചിത്രങ്ങൾ ക്രമീകരിക്കുക';
-
-  @override
-  String get calendarScreenTitle => 'കലണ്ടർ';
-
-  @override
-  String get dailyActivity => 'നിത്യേനയുള്ള പ്രവർത്തനം';
 
   @override
   String get deleteItemQuestion => 'ഐറ്റം ഡിലീറ്റ് ചെയ്യണോ?';
@@ -1267,29 +946,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String get general => 'പൊതുവായവ';
 
   @override
-  String get saveTransactionQuestion => 'ഈ ഇടപാട് സേവ് ചെയ്യണോ?';
-
-  @override
-  String get fillTitleAmount => 'തലക്കെട്ടും തുകയും രേഖപ്പെടുത്തുക';
-
-  @override
-  String get invalidAmount => 'തെറ്റായ തുക';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'ഇടപാട് റീസൈക്കിൾ ബിന്നിലേക്ക് മാറ്റണോ?';
-
-  @override
-  String get restoreTransactionLater =>
-      'നിങ്ങൾക്ക് ഇത് പിന്നീട് ക്രമീകരണങ്ങളിൽ നിന്ന് പുനഃസ്ഥാപിക്കാം.';
-
-  @override
-  String get newTransaction => 'പുതിയ ഇടപാട്';
-
-  @override
-  String get whatIsThisFor => 'ഇത് എന്തിനാണ്?';
-
-  @override
   String get description => 'വിവരണം';
 
   @override
@@ -1305,71 +961,10 @@ class AppLocalizationsMl extends AppLocalizations {
   String get yearly => 'വർഷംതോറും';
 
   @override
-  String get totalIncome => 'ആകെ വരവ്';
-
-  @override
-  String get totalExpense => 'ആകെ ചെലവ്';
-
-  @override
   String get analysis => 'വിശകലനം';
 
   @override
   String get transactions => 'ഇടപാടുകൾ';
-
-  @override
-  String get noExpensesFound => 'ഈ കാലയളവിൽ ചെലവുകൾ ഒന്നുമില്ല.';
-
-  @override
-  String get netBalance => 'ആകെ ബാക്കി';
-
-  @override
-  String get topCategories => 'പ്രധാന വിഭാഗങ്ങൾ';
-
-  @override
-  String get spendingTrend => 'ചെലവ് രീതി';
-
-  @override
-  String get insights => 'നിരീക്ഷണങ്ങൾ';
-
-  @override
-  String get noExpensesRecorded => 'ചെലവുകളൊന്നും രേഖപ്പെടുത്തിയിട്ടില്ല';
-
-  @override
-  String get trackSpendingHabits =>
-      'നിങ്ങളുടെ ചെലവുകൾ എളുപ്പത്തിൽ ട്രാക്ക് ചെയ്യുക.';
-
-  @override
-  String get addExpense => 'ചെലവ് ചേർക്കുക';
-
-  @override
-  String get noDataForPeriod => 'ഈ കാലയളവിൽ ഡാറ്റ ലഭ്യമല്ല';
-
-  @override
-  String get budget => 'ബജറ്റ്';
-
-  @override
-  String get spent => 'ചെലവാക്കിയത്';
-
-  @override
-  String get limit => 'പരിധി';
-
-  @override
-  String get overBudget => 'ബജറ്റ് കവിഞ്ഞു!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% ബാക്കിയുണ്ട്';
-  }
-
-  @override
-  String get savingsRate => 'സമ്പാദ്യ നിരക്ക്';
-
-  @override
-  String get healthScore => 'ഹെൽത്ത് സ്കോർ';
-
-  @override
-  String get healthScoreExplanation =>
-      'ഈ സ്കോർ നിങ്ങളുടെ സമ്പാദ്യ നിരക്കിനെ അടിസ്ഥാനമാക്കിയുള്ളതാണ്.\n\n• > 50% സമ്പാദ്യം = മികച്ചത് (100)\n• 0% സമ്പാദ്യം = ശരാശരി (50)\n• ചെലവ് > വരവ് = മോശം (<50)';
 
   @override
   String get ok => 'ശരി';
@@ -1398,19 +993,10 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   String get todos => 'ജോലികൾ';
 
   @override
-  String get expenses => 'ചെലവുകൾ';
-
-  @override
   String get journal => 'ഡയറി';
 
   @override
-  String get calendar => 'കലണ്ടർ';
-
-  @override
   String get clipboard => 'ക്ലിപ്പ്ബോർഡ്';
-
-  @override
-  String get canvas => 'ക്യാൻവാസ്';
 
   @override
   String get save => 'സേവ് ചെയ്യുക';
@@ -1443,24 +1029,6 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   String get discard => 'ഉപേക്ഷിക്കുക';
 
   @override
-  String get createPost => 'പോസ്റ്റ് ഉണ്ടാക്കുക';
-
-  @override
-  String get post => 'പോസ്റ്റ്';
-
-  @override
-  String get postingTo => 'പോസ്റ്റ് ചെയ്യുന്നു';
-
-  @override
-  String get whatsOnYourMind => 'നിങ്ങളുടെ മനസ്സിൽ എന്താണ്?';
-
-  @override
-  String get pickImages => 'ചിത്രങ്ങൾ തിരഞ്ഞെടുക്കുക';
-
-  @override
-  String get pickVideo => 'വീഡിയോ തിരഞ്ഞെടുക്കുക';
-
-  @override
   String get camera => 'ക്യാമറ';
 
   @override
@@ -1485,16 +1053,6 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   String error(Object error) {
     return 'പിശക്: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      '\'എല്ലാ പോസ്റ്റുകളും\' എന്നതിൽ മാത്രമേ ക്രമീകരണം ലഭ്യമാകൂ';
-
-  @override
-  String get deletePost => 'പോസ്റ്റ് ഡിലീറ്റ് ചെയ്യുക';
-
-  @override
-  String get postDeleted => 'പോസ്റ്റ് ഡിലീറ്റ് ചെയ്തു';
 
   @override
   String get premiumFeatures => 'പ്രീമിയം സവിശേഷതകൾ';
@@ -1555,35 +1113,6 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   String get recycleBinCleared => 'റീസൈക്കിൾ ബിൻ വിജയകരമായി വൃത്തിയാക്കി';
 
   @override
-  String get allPostsDeleted => 'എല്ലാ പോസ്റ്റുകളും ഡിലീറ്റ് ചെയ്തു';
-
-  @override
-  String get newPost => 'പുതിയ പോസ്റ്റ്';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'ടെക്സ്റ്റ് ക്ലിപ്പ്ബോർഡിലേക്ക് കോപ്പി ചെയ്തു (ഫേസ്ബുക്ക് നയം)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'ടിക് ടോക്ക് പങ്കിടലിന് വീഡിയോ/ചിത്രം ആവശ്യമാണ്';
-
-  @override
-  String errorSharing(Object error) {
-    return 'പങ്കിടുന്നതിൽ പിശക്: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return '$platform സ്റ്റോറിയിലേക്ക് ഷെയർ ചെയ്യുക';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return '$platform ഫീഡിലേക്ക് ഷെയർ ചെയ്യുക';
-  }
-
-  @override
   String get unlockPermanently => 'ശാശ്വതമായി അൺലോക്ക് ചെയ്യുക';
 
   @override
@@ -1599,13 +1128,6 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
 
   @override
   String get selectDateTime => 'തീയതിയും സമയവും തിരഞ്ഞെടുക്കുക';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'ഈ പോസ്റ്റ് ഡിലീറ്റ് ചെയ്യണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?';
-
-  @override
-  String get socialPosts => 'സോഷ്യൽ പോസ്റ്റുകൾ';
 
   @override
   String get watchAdToEarnCoins => 'കോയിനുകൾ നേടാൻ പരസ്യം കാണുക';
@@ -1795,25 +1317,11 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
       'നിങ്ങളുടെ ജോലികളിൽ മുന്നേറുക. ടോ-ഡൂ ലിസ്റ്റുകൾ ഉണ്ടാക്കുക, മുൻഗണനകൾ നിശ്ചയിക്കുക, ലക്ഷ്യങ്ങൾ പൂർത്തിയാക്കുക.';
 
   @override
-  String get onboardingExpensesTitle => 'ചെലവ് ട്രാക്കിംഗ്';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'നിങ്ങളുടെ സാമ്പത്തികം നിയന്ത്രിക്കുക. ചെലവുകൾ എളുപ്പത്തിൽ ട്രാക്ക് ചെയ്ത് നിങ്ങളുടെ സാമ്പത്തിക ശീലങ്ങൾ മനസ്സിലാക്കുക.';
-
-  @override
   String get onboardingJournalTitle => 'സ്വകാര്യ ഡയറി';
 
   @override
   String get onboardingJournalDesc =>
       'നിങ്ങളുടെ ദിവസത്തെക്കുറിച്ച് ചിന്തിക്കുക. ഓർമ്മകളും വികാരങ്ങളും രേഖപ്പെടുത്താൻ ഒരു സ്വകാര്യ ഇടം.';
-
-  @override
-  String get onboardingCalendarTitle => 'കലണ്ടറും ഇവന്റുകളും';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'ഒരു നിമിഷവും നഷ്ടപ്പെടുത്തരുത്. നിങ്ങളുടെ ഷെഡ്യൂൾ ക്രമീകരിക്കുകയും പ്രധാനപ്പെട്ട പരിപാടികൾ ട്രാക്ക് ചെയ്യുകയും ചെയ്യുക.';
 
   @override
   String get onboardingClipboardTitle => 'ക്ലിപ്പ്ബോർഡ് മാനേജർ';
@@ -1823,13 +1331,6 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
       'ഒരു തവണ കോപ്പി ചെയ്യുക, എവിടെയും പേസ്റ്റ് ചെയ്യുക. നിങ്ങളുടെ ക്ലിപ്പ്ബോർഡ് ചരിത്രം എളുപ്പത്തിൽ ലഭ്യമാക്കുക.';
 
   @override
-  String get onboardingCanvasTitle => 'ക്രിയേറ്റീവ് ക്യാൻവാസ്';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'നിങ്ങളുടെ സർഗ്ഗാത്മകത പുറത്തെടുക്കുക. ഡിജിറ്റൽ ക്യാൻവാസിൽ നിങ്ങളുടെ ആശയങ്ങൾ വരച്ചു ചേർക്കുക.';
-
-  @override
   String get featuresNotesDesc =>
       'കുറിപ്പുകൾ ഉണ്ടാക്കുകയും നിയന്ത്രിക്കുകയും ചെയ്യുക';
 
@@ -1837,26 +1338,10 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   String get featuresTodosDesc => 'ജോലികൾ ട്രാക്ക് ചെയ്യുക';
 
   @override
-  String get featuresExpensesDesc => 'ചെലവുകൾ നിരീക്ഷിക്കുക';
-
-  @override
   String get featuresJournalDesc => 'ചിന്തകൾ എഴുതുക';
 
   @override
-  String get featuresCalendarDesc => 'ഷെഡ്യൂൾ ക്രമീകരിക്കുക';
-
-  @override
   String get featuresClipboardDesc => 'ക്ലിപ്പ്ബോർഡ് ചരിത്രം ലഭ്യമാക്കുക';
-
-  @override
-  String get featuresCanvasDesc => 'സ്വതന്ത്രമായി വരയ്ക്കുക';
-
-  @override
-  String get featuresSocialPost => 'സോഷ്യൽ പോസ്റ്റ്';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'മികച്ച സോഷ്യൽ മീഡിയ ഉള്ളടക്കം ഉണ്ടാക്കുക';
 
   @override
   String get chooseYourAura => 'നിങ്ങളുടെ ആഭ തിരഞ്ഞെടുക്കുക';
@@ -1864,26 +1349,6 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   @override
   String get expressYourselfTheme =>
       'പുതിയ തീം നിറത്തിലൂടെ സ്വയം പ്രകടിപ്പിക്കുക!';
-
-  @override
-  String get level => 'ലെവൽ';
-
-  @override
-  String get xpToNextLevel => 'അടുത്ത ലെവലിലേക്കുള്ള XP';
-
-  @override
-  String get checkUpcomingEvents => 'വരാനിരിക്കുന്ന പരിപാടികൾ നോക്കുക';
-
-  @override
-  String get startNewSketch => 'പുതിയ ചിത്രം തുടങ്ങുക';
-
-  @override
-  String get noTransactionsMonth => 'ഈ മാസം ഇടപാടുകളില്ല';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return 'ഈ മാസം $count ഇടപാട്';
-  }
 
   @override
   String get autoSaveClipboard => 'ക്ലിപ്പ്ബോർഡ് ഓട്ടോ-സേവ്';
@@ -1945,15 +1410,6 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
 
   @override
   String get premiumLayoutsDesc => 'ഓർമ്മകൾ കാണാൻ മികച്ച വഴികൾ';
-
-  @override
-  String get calendarTools => 'കലണ്ടറും ടൂളുകളും';
-
-  @override
-  String get fullCalendar => 'പൂർണ്ണ കലണ്ടർ';
-
-  @override
-  String get fullCalendarDesc => 'സമ്പൂർണ്ണ ഇവന്റ് മാനേജ്മെന്റ് സിസ്റ്റം';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -2043,77 +1499,13 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   String get completed => 'പൂർത്തിയായി';
 
   @override
-  String get greatJob => 'അതിമനോഹരം!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'നിങ്ങൾ $amount XP നേടി! അടുത്ത ജോലി: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'ജോലി പൂർത്തിയായി! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'എല്ലാ ജോലികളും റീസൈക്കിൾ ബിന്നിലേക്ക് മാറ്റണോ?';
-
-  @override
-  String get deleteAllPosts => 'എല്ലാ പോസ്റ്റുകളും ഡിലീറ്റ് ചെയ്യുക';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'എല്ലാ സോഷ്യൽ പോസ്റ്റുകളും ഡിലീറ്റ് ചെയ്യണമെന്ന് ഉറപ്പാണോ? ഇത് മാറ്റാനാവില്ല.';
-
-  @override
-  String get allPosts => 'എല്ലാ പോസ്റ്റുകളും';
-
-  @override
-  String get favorites => 'പ്രിയപ്പെട്ടവ';
-
-  @override
-  String get drafts => 'ഡ്രാഫ്റ്റുകൾ';
-
-  @override
-  String get noFavoritesYet => 'പ്രിയപ്പെട്ടവ ഒന്നുമില്ല';
-
-  @override
-  String get noDraftsYet => 'ഡ്രാഫ്റ്റുകൾ ഒന്നുമില്ല';
-
-  @override
-  String get startSocialJourney => 'നിങ്ങളുടെ സോഷ്യൽ യാത്ര തുടങ്ങുക!';
-
-  @override
-  String get draft => 'ഡ്രാഫ്റ്റ്';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count അറ്റാച്ച്‌മെന്റ്';
-  }
-
-  @override
-  String get pleaseAddContent => 'പങ്കിടുന്നതിന് ഉള്ളടക്കമോ മീഡിയയോ ചേർക്കുക';
 
   @override
   String fileNotFoundError(Object path) {
     return 'പിശക്: $path എന്നടത്ത് ഫയൽ കണ്ടില്ല';
   }
-
-  @override
-  String get checkFacebookApp => 'ഫേസ്ബുക്ക് ആപ്പ് പരിശോധിക്കുക';
-
-  @override
-  String get systemShare => 'സിസ്റ്റം ഷെയർ';
-
-  @override
-  String get socialPost => 'സോഷ്യൽ പോസ്റ്റ്';
-
-  @override
-  String get favorite => 'പ്രിയപ്പെട്ടത്';
-
-  @override
-  String get saveDraft => 'ഡ്രാഫ്റ്റ് സേവ് ചെയ്യുക';
 
   @override
   String get entryCopied => 'എൻട്രി കോപ്പി ചെയ്തു';
@@ -2259,33 +1651,10 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   String get dueDate => 'അവസാന തീയതി';
 
   @override
-  String get expenseTitle => 'ചെലവുകൾ';
-
-  @override
-  String searchInCurrency(String currency) {
-    return '$currency-ൽ തിരയുക...';
-  }
-
-  @override
   String get sortAndFilter => 'ക്രമീകരിക്കുക & ഫിൽട്ടർ ചെയ്യുക';
 
   @override
   String get sortBy => 'ക്രമീകരിക്കുക';
-
-  @override
-  String get highestAmount => 'കൂടിയ തുക';
-
-  @override
-  String get lowestAmount => 'കുറഞ്ഞ തുക';
-
-  @override
-  String get moreFilters => 'കൂടുതൽ ഫിൽട്ടറുകൾ...';
-
-  @override
-  String get filterExpenses => 'ചെലവുകൾ ഫിൽട്ടർ ചെയ്യുക';
-
-  @override
-  String get transactionType => 'ഇടപാട് തരം';
 
   @override
   String get categories => 'വിഭാഗങ്ങൾ';
@@ -2294,21 +1663,10 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   String get all => 'എല്ലാം';
 
   @override
-  String get income => 'വരവ്';
-
-  @override
-  String get expense => 'ചെലവ്';
-
-  @override
   String get reset => 'റീസെറ്റ്';
 
   @override
   String get apply => 'പ്രയോഗിക്കുക';
-
-  @override
-  String newExpense(String currency) {
-    return 'പുതിയ $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2372,34 +1730,10 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'പുതിയ ചിത്രം';
-
-  @override
-  String get searchSketches => 'ചിത്രങ്ങളും ഫോൾഡറുകളും തിരയുക...';
-
-  @override
   String get noResultsFound => 'ഫലങ്ങളൊന്നും കണ്ടെത്തിയില്ല';
 
   @override
   String get noItems => 'ഇനങ്ങളൊന്നുമില്ല';
-
-  @override
-  String get noDrawingsYet => 'ചിത്രങ്ങളൊന്നുമില്ല';
-
-  @override
-  String get canvasIntro => 'നിങ്ങളുടെ സർഗ്ഗാത്മകത പകരുക!';
-
-  @override
-  String get newCanvas => 'പുതിയ ക്യാൻവാസ്';
 
   @override
   String get rename => 'പേര് മാറ്റുക';
@@ -2415,13 +1749,7 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
       'ഈ ഫോൾഡറിലെ എല്ലാ ചിത്രങ്ങളും സ്ഥിരമായി നീക്കം ചെയ്യപ്പെടും.';
 
   @override
-  String get renameFolder => 'ഫോൾഡറിന്റെ പേര് മാറ്റുക';
-
-  @override
   String get chooseColor => 'നിറം തിരഞ്ഞെടുക്കുക';
-
-  @override
-  String get deleteFolderQuestion => 'ഫോൾഡർ ഡിലീറ്റ് ചെയ്യണോ?';
 
   @override
   String get searchClips => 'ക്ലിപ്പുകൾ തിരയുക...';
@@ -2444,9 +1772,6 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   @override
   String get restoreClipLater =>
       'നിങ്ങൾക്ക് ഈ ക്ലിപ്പ് പിന്നീട് പുനഃസ്ഥാപിക്കാം.';
-
-  @override
-  String get upcomingEvents => 'വരാനിരിക്കുന്ന പരിപാടികൾ';
 
   @override
   String get dataDistribution => 'ഡാറ്റാ വിതരണം';
@@ -2487,57 +1812,6 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   String selectedCount(int count) {
     return '$count എണ്ണം തിരഞ്ഞെടുത്തു';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes ചിത്രങ്ങൾ • $folders ഫോൾഡറുകൾ';
-  }
-
-  @override
-  String get sortItems => 'ഇനങ്ങൾ ക്രമീകരിക്കുക';
-
-  @override
-  String get sortNameAZ => 'പേര് (A-Z)';
-
-  @override
-  String get sortNameZA => 'പേര് (Z-A)';
-
-  @override
-  String get createFolder => 'ഫോൾഡർ ഉണ്ടാക്കുക';
-
-  @override
-  String get folderNameHint => 'ഫോൾഡറിന്റെ പേര്...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return '$count ചിത്രങ്ങൾ ഡിലീറ്റ് ചെയ്യണോ? ഇത് മാറ്റാനാവില്ല.';
-  }
-
-  @override
-  String get noSketchesFound => 'ചിത്രങ്ങളൊന്നും കണ്ടെത്തിയില്ല';
-
-  @override
-  String get noSketchesFoundSub =>
-      'തിരച്ചിൽ മാറ്റുകയോ പുതിയ ചിത്രം ഉണ്ടാക്കുകയോ ചെയ്യുക.';
-
-  @override
-  String searchInFolder(String folder) {
-    return '$folder-ൽ തിരയുക...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count ചിത്രങ്ങൾ';
-  }
-
-  @override
-  String get sortSketches => 'ചിത്രങ്ങൾ ക്രമീകരിക്കുക';
-
-  @override
-  String get calendarScreenTitle => 'കലണ്ടർ';
-
-  @override
-  String get dailyActivity => 'നിത്യേനയുള്ള പ്രവർത്തനം';
 
   @override
   String get deleteItemQuestion => 'ഐറ്റം ഡിലീറ്റ് ചെയ്യണോ?';
@@ -2641,29 +1915,6 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   String get general => 'പൊതുവായവ';
 
   @override
-  String get saveTransactionQuestion => 'ഈ ഇടപാട് സേവ് ചെയ്യണോ?';
-
-  @override
-  String get fillTitleAmount => 'തലക്കെട്ടും തുകയും രേഖപ്പെടുത്തുക';
-
-  @override
-  String get invalidAmount => 'തെറ്റായ തുക';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'ഇടപാട് റീസൈക്കിൾ ബിന്നിലേക്ക് മാറ്റണോ?';
-
-  @override
-  String get restoreTransactionLater =>
-      'നിങ്ങൾക്ക് ഇത് പിന്നീട് ക്രമീകരണങ്ങളിൽ നിന്ന് പുനഃസ്ഥാപിക്കാം.';
-
-  @override
-  String get newTransaction => 'പുതിയ ഇടപാട്';
-
-  @override
-  String get whatIsThisFor => 'ഇത് എന്തിനാണ്?';
-
-  @override
   String get description => 'വിവരണം';
 
   @override
@@ -2679,71 +1930,10 @@ class AppLocalizationsMlIn extends AppLocalizationsMl {
   String get yearly => 'വർഷംതോറും';
 
   @override
-  String get totalIncome => 'ആകെ വരവ്';
-
-  @override
-  String get totalExpense => 'ആകെ ചെലവ്';
-
-  @override
   String get analysis => 'വിശകലനം';
 
   @override
   String get transactions => 'ഇടപാടുകൾ';
-
-  @override
-  String get noExpensesFound => 'ഈ കാലയളവിൽ ചെലവുകൾ ഒന്നുമില്ല.';
-
-  @override
-  String get netBalance => 'ആകെ ബാക്കി';
-
-  @override
-  String get topCategories => 'പ്രധാന വിഭാഗങ്ങൾ';
-
-  @override
-  String get spendingTrend => 'ചെലവ് രീതി';
-
-  @override
-  String get insights => 'നിരീക്ഷണങ്ങൾ';
-
-  @override
-  String get noExpensesRecorded => 'ചെലവുകളൊന്നും രേഖപ്പെടുത്തിയിട്ടില്ല';
-
-  @override
-  String get trackSpendingHabits =>
-      'നിങ്ങളുടെ ചെലവുകൾ എളുപ്പത്തിൽ ട്രാക്ക് ചെയ്യുക.';
-
-  @override
-  String get addExpense => 'ചെലവ് ചേർക്കുക';
-
-  @override
-  String get noDataForPeriod => 'ഈ കാലയളവിൽ ഡാറ്റ ലഭ്യമല്ല';
-
-  @override
-  String get budget => 'ബജറ്റ്';
-
-  @override
-  String get spent => 'ചെലവാക്കിയത്';
-
-  @override
-  String get limit => 'പരിധി';
-
-  @override
-  String get overBudget => 'ബജറ്റ് കവിഞ്ഞു!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% ബാക്കിയുണ്ട്';
-  }
-
-  @override
-  String get savingsRate => 'സമ്പാദ്യ നിരക്ക്';
-
-  @override
-  String get healthScore => 'ഹെൽത്ത് സ്കോർ';
-
-  @override
-  String get healthScoreExplanation =>
-      'ഈ സ്കോർ നിങ്ങളുടെ സമ്പാദ്യ നിരക്കിനെ അടിസ്ഥാനമാക്കിയുള്ളതാണ്.\n\n• > 50% സമ്പാദ്യം = മികച്ചത് (100)\n• 0% സമ്പാദ്യം = ശരാശരി (50)\n• ചെലവ് > വരവ് = മോശം (<50)';
 
   @override
   String get ok => 'ശരി';

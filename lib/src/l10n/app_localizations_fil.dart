@@ -24,19 +24,10 @@ class AppLocalizationsFil extends AppLocalizations {
   String get todos => 'Mga dapat gawin';
 
   @override
-  String get expenses => 'Mga gastos';
-
-  @override
   String get journal => 'Journal';
 
   @override
-  String get calendar => 'Kalendaryo';
-
-  @override
   String get clipboard => 'Clipboard';
-
-  @override
-  String get canvas => 'Canvas';
 
   @override
   String get save => 'I-save';
@@ -69,24 +60,6 @@ class AppLocalizationsFil extends AppLocalizations {
   String get discard => 'Itapon';
 
   @override
-  String get createPost => 'Gumawa ng Post';
-
-  @override
-  String get post => 'Post';
-
-  @override
-  String get postingTo => 'Nagpo-post sa';
-
-  @override
-  String get whatsOnYourMind => 'Ano ang nasa isip mo?';
-
-  @override
-  String get pickImages => 'Pumili ng Mga Larawan';
-
-  @override
-  String get pickVideo => 'Pumili ng Video';
-
-  @override
   String get camera => 'Camera';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsFil extends AppLocalizations {
   String error(Object error) {
     return 'Error: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Available lang ang pag-order sa \'\'Lahat ng Mga Post\'\'';
-
-  @override
-  String get deletePost => 'Tanggalin ang Post';
-
-  @override
-  String get postDeleted => 'Na-delete ang post';
 
   @override
   String get premiumFeatures => 'Mga Premium na Tampok';
@@ -181,35 +144,6 @@ class AppLocalizationsFil extends AppLocalizations {
   String get recycleBinCleared => 'Matagumpay na na-clear ang Recycle Bin';
 
   @override
-  String get allPostsDeleted => 'Ang lahat ng mga post ay tinanggal';
-
-  @override
-  String get newPost => 'Bagong Post';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Nakopya ang teksto sa clipboard (patakaran sa Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Ang pagbabahagi ng TikTok ay nangangailangan ng isang video/larawan';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Error sa pagbabahagi: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Ibahagi sa $platform Story';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Ibahagi sa $platform Feed';
-  }
-
-  @override
   String get unlockPermanently => 'I-unlock nang Permanenteng';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsFil extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Piliin ang Petsa at Oras';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Sigurado ka bang gusto mong tanggalin ang post na ito?';
-
-  @override
-  String get socialPosts => 'Mga Social na Post';
 
   @override
   String get watchAdToEarnCoins => 'Manood ng Ad para Kumita ng Barya';
@@ -419,25 +346,11 @@ class AppLocalizationsFil extends AppLocalizations {
       'Manatili sa tuktok ng iyong laro. Gumawa ng mga listahan ng gagawin, magtakda ng mga priyoridad, at durugin ang iyong mga layunin nang paisa-isa.';
 
   @override
-  String get onboardingExpensesTitle => 'Pagsubaybay sa Gastos';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Kontrolin ang iyong pananalapi. Madaling subaybayan ang kita at mga gastos upang maunawaan ang iyong mga gawi sa paggastos.';
-
-  @override
   String get onboardingJournalTitle => 'Personal na Journal';
 
   @override
   String get onboardingJournalDesc =>
       'Pagnilayan ang iyong araw. Isang pribadong espasyo para isulat ang iyong mga alaala, damdamin, at pang-araw-araw na karanasan.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalendaryo at Mga Kaganapan';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Huwag palampasin ang isang sandali. Ayusin ang iyong iskedyul at subaybayan ang mahahalagang paparating na kaganapan.';
 
   @override
   String get onboardingClipboardTitle => 'Tagapamahala ng Clipboard';
@@ -447,40 +360,17 @@ class AppLocalizationsFil extends AppLocalizations {
       'Isang beses kopyahin, i-paste kahit saan. I-access ang history ng iyong clipboard para makuha ang mga snippet na kinopya mo kanina.';
 
   @override
-  String get onboardingCanvasTitle => 'Malikhaing Canvas';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Ilabas ang iyong pagkamalikhain. Iguhit, i-sketch, at isalarawan ang iyong mga ideya sa isang libreng digital na canvas.';
-
-  @override
   String get featuresNotesDesc => 'Lumikha at pamahalaan ang iyong mga tala';
 
   @override
   String get featuresTodosDesc => 'Subaybayan ang iyong mga gawain';
 
   @override
-  String get featuresExpensesDesc => 'Subaybayan ang iyong mga gastos';
-
-  @override
   String get featuresJournalDesc => 'Isulat ang iyong mga iniisip';
-
-  @override
-  String get featuresCalendarDesc => 'Ayusin ang iyong iskedyul';
 
   @override
   String get featuresClipboardDesc =>
       'I-access ang iyong kasaysayan ng clipboard';
-
-  @override
-  String get featuresCanvasDesc => 'Malayang gumuhit at mag-sketch';
-
-  @override
-  String get featuresSocialPost => 'Social Post';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Lumikha ng nakakaakit na nilalaman ng social media';
 
   @override
   String get chooseYourAura => 'Piliin ang Iyong Aura';
@@ -488,32 +378,6 @@ class AppLocalizationsFil extends AppLocalizations {
   @override
   String get expressYourselfTheme =>
       'Ipahayag ang iyong sarili gamit ang isang bagong kulay ng tema!';
-
-  @override
-  String get level => 'Antas';
-
-  @override
-  String get xpToNextLevel => 'XP sa Antas';
-
-  @override
-  String get checkUpcomingEvents => 'Suriin ang mga paparating na kaganapan';
-
-  @override
-  String get startNewSketch => 'Magsimula ng bagong sketch';
-
-  @override
-  String get noTransactionsMonth => 'Walang transaksyon ngayong buwan';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 this month';
-  }
 
   @override
   String get autoSaveClipboard => 'Awtomatikong i-save ang Clipboard';
@@ -578,16 +442,6 @@ class AppLocalizationsFil extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'Mga eksklusibong paraan upang tingnan ang iyong mga alaala';
-
-  @override
-  String get calendarTools => 'Kalendaryo at Mga Tool';
-
-  @override
-  String get fullCalendar => 'Buong Kalendaryo';
-
-  @override
-  String get fullCalendarDesc =>
-      'Kumpletuhin ang sistema ng pamamahala ng kaganapan';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -680,84 +534,13 @@ class AppLocalizationsFil extends AppLocalizations {
   String get completed => 'Nakumpleto';
 
   @override
-  String get greatJob => 'Mahusay na trabaho!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Nakakuha ka ng $amount XP! Susunod na gawain: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Nakumpleto ang gawain! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Ilipat ang lahat ng aktibong gawain sa Recycle Bin?';
-
-  @override
-  String get deleteAllPosts => 'Tanggalin ang Lahat ng Mga Post';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Sigurado ka bang gusto mong tanggalin ang LAHAT ng mga social post? Hindi na ito maaaring bawiin.';
-
-  @override
-  String get allPosts => 'Lahat ng Post';
-
-  @override
-  String get favorites => 'Mga paborito';
-
-  @override
-  String get drafts => 'Mga draft';
-
-  @override
-  String get noFavoritesYet => 'Wala pang paborito';
-
-  @override
-  String get noDraftsYet => 'Wala pang draft';
-
-  @override
-  String get startSocialJourney => 'Simulan ang iyong panlipunang paglalakbay!';
-
-  @override
-  String get draft => 'DRAFT';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Mangyaring magdagdag ng ilang nilalaman o media na ibabahagi';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Error: Hindi nakita ang file sa $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Suriin ang Facebook app';
-
-  @override
-  String get systemShare => 'System Share';
-
-  @override
-  String get socialPost => 'Social Post';
-
-  @override
-  String get favorite => 'Paborito';
-
-  @override
-  String get saveDraft => 'I-save ang Draft';
 
   @override
   String get entryCopied => 'Kinopya ang entry';
@@ -903,33 +686,10 @@ class AppLocalizationsFil extends AppLocalizations {
   String get dueDate => 'Dalawang Petsa';
 
   @override
-  String get expenseTitle => 'Mga gastos';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Maghanap sa $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Pagbukud-bukurin at Salain';
 
   @override
   String get sortBy => 'PAGSAY-BAYIN NG';
-
-  @override
-  String get highestAmount => 'Pinakamataas na Halaga';
-
-  @override
-  String get lowestAmount => 'Pinakamababang Halaga';
-
-  @override
-  String get moreFilters => 'Higit pang mga Filter...';
-
-  @override
-  String get filterExpenses => 'Salain ang mga Gastos';
-
-  @override
-  String get transactionType => 'Uri ng Transaksyon';
 
   @override
   String get categories => 'Mga kategorya';
@@ -938,21 +698,10 @@ class AppLocalizationsFil extends AppLocalizations {
   String get all => 'Lahat';
 
   @override
-  String get income => 'Kita';
-
-  @override
-  String get expense => 'Gastos';
-
-  @override
   String get reset => 'I-reset';
 
   @override
   String get apply => 'Mag-apply';
-
-  @override
-  String newExpense(String currency) {
-    return 'Bagong $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -1016,34 +765,10 @@ class AppLocalizationsFil extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Bagong Sketch';
-
-  @override
-  String get searchSketches => 'Maghanap ng mga sketch at folder...';
-
-  @override
   String get noResultsFound => 'Walang nakitang resulta';
 
   @override
   String get noItems => 'Walang item';
-
-  @override
-  String get noDrawingsYet => 'Wala pang drawing';
-
-  @override
-  String get canvasIntro => 'Ilabas ang iyong pagkamalikhain sa canvas!';
-
-  @override
-  String get newCanvas => 'Bagong Canvas';
 
   @override
   String get rename => 'Palitan ang pangalan';
@@ -1059,13 +784,7 @@ class AppLocalizationsFil extends AppLocalizations {
       'Ang lahat ng sketch sa folder na ito ay permanenteng tatanggalin.';
 
   @override
-  String get renameFolder => 'Palitan ang pangalan ng Folder';
-
-  @override
   String get chooseColor => 'Pumili ng Kulay';
-
-  @override
-  String get deleteFolderQuestion => 'Tanggalin ang Folder?';
 
   @override
   String get searchClips => 'Maghanap ng mga clip...';
@@ -1088,9 +807,6 @@ class AppLocalizationsFil extends AppLocalizations {
   @override
   String get restoreClipLater =>
       'Maaari mong ibalik ang clip na ito sa ibang pagkakataon.';
-
-  @override
-  String get upcomingEvents => 'Mga Paparating na Kaganapan';
 
   @override
   String get dataDistribution => 'PAGBABIGAY NG DATOS';
@@ -1131,57 +847,6 @@ class AppLocalizationsFil extends AppLocalizations {
   String selectedCount(int count) {
     return '$count Napili';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes sketch • $folders folder';
-  }
-
-  @override
-  String get sortItems => 'Pagbukud-bukurin ang mga Item';
-
-  @override
-  String get sortNameAZ => 'Pangalan (A-Z)';
-
-  @override
-  String get sortNameZA => 'Pangalan (Z-A)';
-
-  @override
-  String get createFolder => 'Lumikha ng Folder';
-
-  @override
-  String get folderNameHint => 'Pangalan ng folder...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Tanggalin ang $count sketch? Hindi na ito maaaring bawiin.';
-  }
-
-  @override
-  String get noSketchesFound => 'Walang nakitang sketch';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Subukang ayusin ang iyong paghahanap o gumawa ng bagong sketch.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Maghanap sa $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count mga sketch';
-  }
-
-  @override
-  String get sortSketches => 'Pagbukud-bukurin ang mga Sketch';
-
-  @override
-  String get calendarScreenTitle => 'Kalendaryo';
-
-  @override
-  String get dailyActivity => 'Pang-araw-araw na Aktibidad';
 
   @override
   String get deleteItemQuestion => 'Tanggalin ang Item?';
@@ -1286,30 +951,6 @@ class AppLocalizationsFil extends AppLocalizations {
   String get general => 'Heneral';
 
   @override
-  String get saveTransactionQuestion =>
-      'Gusto mo bang i-save ang transaksyong ito?';
-
-  @override
-  String get fillTitleAmount => 'Mangyaring punan ang pamagat at halaga';
-
-  @override
-  String get invalidAmount => 'Di-wastong format ng halaga';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Ilipat ang Transaksyon sa Recycle Bin?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Maaari mong ibalik ang transaksyong ito sa ibang pagkakataon mula sa mga setting.';
-
-  @override
-  String get newTransaction => 'Bagong Transaksyon';
-
-  @override
-  String get whatIsThisFor => 'Para saan ito?';
-
-  @override
   String get description => 'Paglalarawan';
 
   @override
@@ -1325,71 +966,10 @@ class AppLocalizationsFil extends AppLocalizations {
   String get yearly => 'Taon-taon';
 
   @override
-  String get totalIncome => 'Kabuuang Kita';
-
-  @override
-  String get totalExpense => 'Kabuuang Gastos';
-
-  @override
   String get analysis => 'Pagsusuri';
 
   @override
   String get transactions => 'Mga transaksyon';
-
-  @override
-  String get noExpensesFound => 'Walang nakitang gastos para sa panahong ito.';
-
-  @override
-  String get netBalance => 'Net Balanse';
-
-  @override
-  String get topCategories => 'Mga Nangungunang Kategorya';
-
-  @override
-  String get spendingTrend => 'Uso sa Paggastos';
-
-  @override
-  String get insights => 'Mga Insight';
-
-  @override
-  String get noExpensesRecorded => 'Walang naitala na gastos';
-
-  @override
-  String get trackSpendingHabits =>
-      'Madaling subaybayan ang iyong mga gawi sa paggastos.';
-
-  @override
-  String get addExpense => 'Magdagdag ng Gastos';
-
-  @override
-  String get noDataForPeriod => 'Walang data para sa panahong ito';
-
-  @override
-  String get budget => 'Badyet';
-
-  @override
-  String get spent => 'Ginastos';
-
-  @override
-  String get limit => 'Limitahan';
-
-  @override
-  String get overBudget => 'Lampas sa Badyet!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% ang natitira';
-  }
-
-  @override
-  String get savingsRate => 'Rate ng Pagtitipid';
-
-  @override
-  String get healthScore => 'Marka ng Kalusugan';
-
-  @override
-  String get healthScoreExplanation =>
-      'Ang markang ito ay batay sa iyong Savings Rate.\n\n• > 50% na na-save = Mahusay (100)\n• 0% na na-save = Karaniwan (50)\n• Paggasta > Kita = Mahina (<50)';
 
   @override
   String get ok => 'OK';
@@ -1418,19 +998,10 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   String get todos => 'Mga dapat gawin';
 
   @override
-  String get expenses => 'Mga gastos';
-
-  @override
   String get journal => 'Journal';
 
   @override
-  String get calendar => 'Kalendaryo';
-
-  @override
   String get clipboard => 'Clipboard';
-
-  @override
-  String get canvas => 'Canvas';
 
   @override
   String get save => 'I-save';
@@ -1463,24 +1034,6 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   String get discard => 'Itapon';
 
   @override
-  String get createPost => 'Gumawa ng Post';
-
-  @override
-  String get post => 'Post';
-
-  @override
-  String get postingTo => 'Nagpo-post sa';
-
-  @override
-  String get whatsOnYourMind => 'Ano ang nasa isip mo?';
-
-  @override
-  String get pickImages => 'Pumili ng Mga Larawan';
-
-  @override
-  String get pickVideo => 'Pumili ng Video';
-
-  @override
   String get camera => 'Camera';
 
   @override
@@ -1505,16 +1058,6 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   String error(Object error) {
     return 'Error: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Available lang ang pag-order sa \"Lahat ng Mga Post\"';
-
-  @override
-  String get deletePost => 'Tanggalin ang Post';
-
-  @override
-  String get postDeleted => 'Na-delete ang post';
 
   @override
   String get premiumFeatures => 'Mga Premium na Tampok';
@@ -1575,35 +1118,6 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   String get recycleBinCleared => 'Matagumpay na na-clear ang Recycle Bin';
 
   @override
-  String get allPostsDeleted => 'Ang lahat ng mga post ay tinanggal';
-
-  @override
-  String get newPost => 'Bagong Post';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Nakopya ang teksto sa clipboard (patakaran sa Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Ang pagbabahagi ng TikTok ay nangangailangan ng isang video/larawan';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Error sa pagbabahagi: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Ibahagi sa $platform Story';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Ibahagi sa $platform Feed';
-  }
-
-  @override
   String get unlockPermanently => 'I-unlock nang Permanenteng';
 
   @override
@@ -1619,13 +1133,6 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
 
   @override
   String get selectDateTime => 'Piliin ang Petsa at Oras';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Sigurado ka bang gusto mong tanggalin ang post na ito?';
-
-  @override
-  String get socialPosts => 'Mga Social na Post';
 
   @override
   String get watchAdToEarnCoins => 'Manood ng Ad para Kumita ng Barya';
@@ -1813,25 +1320,11 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
       'Manatili sa tuktok ng iyong laro. Gumawa ng mga listahan ng gagawin, magtakda ng mga priyoridad, at durugin ang iyong mga layunin nang paisa-isa.';
 
   @override
-  String get onboardingExpensesTitle => 'Pagsubaybay sa Gastos';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Kontrolin ang iyong pananalapi. Madaling subaybayan ang kita at mga gastos upang maunawaan ang iyong mga gawi sa paggastos.';
-
-  @override
   String get onboardingJournalTitle => 'Personal na Journal';
 
   @override
   String get onboardingJournalDesc =>
       'Pagnilayan ang iyong araw. Isang pribadong espasyo para isulat ang iyong mga alaala, damdamin, at pang-araw-araw na karanasan.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalendaryo at Mga Kaganapan';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Huwag palampasin ang isang sandali. Ayusin ang iyong iskedyul at subaybayan ang mahahalagang paparating na kaganapan.';
 
   @override
   String get onboardingClipboardTitle => 'Tagapamahala ng Clipboard';
@@ -1841,40 +1334,17 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
       'Isang beses kopyahin, i-paste kahit saan. I-access ang history ng iyong clipboard para makuha ang mga snippet na kinopya mo kanina.';
 
   @override
-  String get onboardingCanvasTitle => 'Malikhaing Canvas';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Ilabas ang iyong pagkamalikhain. Iguhit, i-sketch, at isalarawan ang iyong mga ideya sa isang libreng digital na canvas.';
-
-  @override
   String get featuresNotesDesc => 'Lumikha at pamahalaan ang iyong mga tala';
 
   @override
   String get featuresTodosDesc => 'Subaybayan ang iyong mga gawain';
 
   @override
-  String get featuresExpensesDesc => 'Subaybayan ang iyong mga gastos';
-
-  @override
   String get featuresJournalDesc => 'Isulat ang iyong mga iniisip';
-
-  @override
-  String get featuresCalendarDesc => 'Ayusin ang iyong iskedyul';
 
   @override
   String get featuresClipboardDesc =>
       'I-access ang iyong kasaysayan ng clipboard';
-
-  @override
-  String get featuresCanvasDesc => 'Malayang gumuhit at mag-sketch';
-
-  @override
-  String get featuresSocialPost => 'Social Post';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Lumikha ng nakakaakit na nilalaman ng social media';
 
   @override
   String get chooseYourAura => 'Piliin ang Iyong Aura';
@@ -1882,32 +1352,6 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   @override
   String get expressYourselfTheme =>
       'Ipahayag ang iyong sarili gamit ang isang bagong kulay ng tema!';
-
-  @override
-  String get level => 'Antas';
-
-  @override
-  String get xpToNextLevel => 'XP sa Antas';
-
-  @override
-  String get checkUpcomingEvents => 'Suriin ang mga paparating na kaganapan';
-
-  @override
-  String get startNewSketch => 'Magsimula ng bagong sketch';
-
-  @override
-  String get noTransactionsMonth => 'Walang transaksyon ngayong buwan';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count transaction$_temp0 ngayong buwan';
-  }
 
   @override
   String get autoSaveClipboard => 'Awtomatikong i-save ang Clipboard';
@@ -1972,16 +1416,6 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   @override
   String get premiumLayoutsDesc =>
       'Mga eksklusibong paraan upang tingnan ang iyong mga alaala';
-
-  @override
-  String get calendarTools => 'Kalendaryo at Mga Tool';
-
-  @override
-  String get fullCalendar => 'Buong Kalendaryo';
-
-  @override
-  String get fullCalendarDesc =>
-      'Kumpletuhin ang sistema ng pamamahala ng kaganapan';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -2074,84 +1508,13 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   String get completed => 'Nakumpleto';
 
   @override
-  String get greatJob => 'Mahusay na trabaho!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Nakakuha ka ng $amount XP! Susunod na gawain: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Nakumpleto ang gawain! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Ilipat ang lahat ng aktibong gawain sa Recycle Bin?';
-
-  @override
-  String get deleteAllPosts => 'Tanggalin ang Lahat ng Mga Post';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Sigurado ka bang gusto mong tanggalin ang LAHAT ng mga social post? Hindi na ito maaaring bawiin.';
-
-  @override
-  String get allPosts => 'Lahat ng Post';
-
-  @override
-  String get favorites => 'Mga paborito';
-
-  @override
-  String get drafts => 'Mga draft';
-
-  @override
-  String get noFavoritesYet => 'Wala pang paborito';
-
-  @override
-  String get noDraftsYet => 'Wala pang draft';
-
-  @override
-  String get startSocialJourney => 'Simulan ang iyong panlipunang paglalakbay!';
-
-  @override
-  String get draft => 'DRAFT';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count attachment$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Mangyaring magdagdag ng ilang nilalaman o media na ibabahagi';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Error: Hindi nakita ang file sa $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Suriin ang Facebook app';
-
-  @override
-  String get systemShare => 'System Share';
-
-  @override
-  String get socialPost => 'Social Post';
-
-  @override
-  String get favorite => 'Paborito';
-
-  @override
-  String get saveDraft => 'I-save ang Draft';
 
   @override
   String get entryCopied => 'Kinopya ang entry';
@@ -2297,33 +1660,10 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   String get dueDate => 'Dalawang Petsa';
 
   @override
-  String get expenseTitle => 'Mga gastos';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Maghanap sa $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Pagbukud-bukurin at Salain';
 
   @override
   String get sortBy => 'PAGSAY-BAYIN NG';
-
-  @override
-  String get highestAmount => 'Pinakamataas na Halaga';
-
-  @override
-  String get lowestAmount => 'Pinakamababang Halaga';
-
-  @override
-  String get moreFilters => 'Higit pang mga Filter...';
-
-  @override
-  String get filterExpenses => 'Salain ang mga Gastos';
-
-  @override
-  String get transactionType => 'Uri ng Transaksyon';
 
   @override
   String get categories => 'Mga kategorya';
@@ -2332,21 +1672,10 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   String get all => 'Lahat';
 
   @override
-  String get income => 'Kita';
-
-  @override
-  String get expense => 'Gastos';
-
-  @override
   String get reset => 'I-reset';
 
   @override
   String get apply => 'Mag-apply';
-
-  @override
-  String newExpense(String currency) {
-    return 'Bagong $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2410,34 +1739,10 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Bagong Sketch';
-
-  @override
-  String get searchSketches => 'Maghanap ng mga sketch at folder...';
-
-  @override
   String get noResultsFound => 'Walang nakitang resulta';
 
   @override
   String get noItems => 'Walang item';
-
-  @override
-  String get noDrawingsYet => 'Wala pang drawing';
-
-  @override
-  String get canvasIntro => 'Ilabas ang iyong pagkamalikhain sa canvas!';
-
-  @override
-  String get newCanvas => 'Bagong Canvas';
 
   @override
   String get rename => 'Palitan ang pangalan';
@@ -2453,13 +1758,7 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
       'Ang lahat ng sketch sa folder na ito ay permanenteng tatanggalin.';
 
   @override
-  String get renameFolder => 'Palitan ang pangalan ng Folder';
-
-  @override
   String get chooseColor => 'Pumili ng Kulay';
-
-  @override
-  String get deleteFolderQuestion => 'Tanggalin ang Folder?';
 
   @override
   String get searchClips => 'Maghanap ng mga clip...';
@@ -2482,9 +1781,6 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   @override
   String get restoreClipLater =>
       'Maaari mong ibalik ang clip na ito sa ibang pagkakataon.';
-
-  @override
-  String get upcomingEvents => 'Mga Paparating na Kaganapan';
 
   @override
   String get dataDistribution => 'PAGBABIGAY NG DATOS';
@@ -2525,57 +1821,6 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   String selectedCount(int count) {
     return '$count Napili';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes sketch • $folders folder';
-  }
-
-  @override
-  String get sortItems => 'Pagbukud-bukurin ang mga Item';
-
-  @override
-  String get sortNameAZ => 'Pangalan (A-Z)';
-
-  @override
-  String get sortNameZA => 'Pangalan (Z-A)';
-
-  @override
-  String get createFolder => 'Lumikha ng Folder';
-
-  @override
-  String get folderNameHint => 'Pangalan ng folder...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Tanggalin ang $count sketch? Hindi na ito maaaring bawiin.';
-  }
-
-  @override
-  String get noSketchesFound => 'Walang nakitang sketch';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Subukang ayusin ang iyong paghahanap o gumawa ng bagong sketch.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Maghanap sa $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count mga sketch';
-  }
-
-  @override
-  String get sortSketches => 'Pagbukud-bukurin ang mga Sketch';
-
-  @override
-  String get calendarScreenTitle => 'Kalendaryo';
-
-  @override
-  String get dailyActivity => 'Pang-araw-araw na Aktibidad';
 
   @override
   String get deleteItemQuestion => 'Tanggalin ang Item?';
@@ -2680,30 +1925,6 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   String get general => 'Heneral';
 
   @override
-  String get saveTransactionQuestion =>
-      'Gusto mo bang i-save ang transaksyong ito?';
-
-  @override
-  String get fillTitleAmount => 'Mangyaring punan ang pamagat at halaga';
-
-  @override
-  String get invalidAmount => 'Di-wastong format ng halaga';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Ilipat ang Transaksyon sa Recycle Bin?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Maaari mong ibalik ang transaksyong ito sa ibang pagkakataon mula sa mga setting.';
-
-  @override
-  String get newTransaction => 'Bagong Transaksyon';
-
-  @override
-  String get whatIsThisFor => 'Para saan ito?';
-
-  @override
   String get description => 'Paglalarawan';
 
   @override
@@ -2719,71 +1940,10 @@ class AppLocalizationsFilPh extends AppLocalizationsFil {
   String get yearly => 'Taon-taon';
 
   @override
-  String get totalIncome => 'Kabuuang Kita';
-
-  @override
-  String get totalExpense => 'Kabuuang Gastos';
-
-  @override
   String get analysis => 'Pagsusuri';
 
   @override
   String get transactions => 'Mga transaksyon';
-
-  @override
-  String get noExpensesFound => 'Walang nakitang gastos para sa panahong ito.';
-
-  @override
-  String get netBalance => 'Net Balanse';
-
-  @override
-  String get topCategories => 'Mga Nangungunang Kategorya';
-
-  @override
-  String get spendingTrend => 'Uso sa Paggastos';
-
-  @override
-  String get insights => 'Mga Insight';
-
-  @override
-  String get noExpensesRecorded => 'Walang naitala na gastos';
-
-  @override
-  String get trackSpendingHabits =>
-      'Madaling subaybayan ang iyong mga gawi sa paggastos.';
-
-  @override
-  String get addExpense => 'Magdagdag ng Gastos';
-
-  @override
-  String get noDataForPeriod => 'Walang data para sa panahong ito';
-
-  @override
-  String get budget => 'Badyet';
-
-  @override
-  String get spent => 'Ginastos';
-
-  @override
-  String get limit => 'Limitahan';
-
-  @override
-  String get overBudget => 'Lampas sa Badyet!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% ang natitira';
-  }
-
-  @override
-  String get savingsRate => 'Rate ng Pagtitipid';
-
-  @override
-  String get healthScore => 'Marka ng Kalusugan';
-
-  @override
-  String get healthScoreExplanation =>
-      'Ang markang ito ay batay sa iyong Savings Rate.\n\n• > 50% na na-save = Mahusay (100)\n• 0% na na-save = Karaniwan (50)\n• Paggasta > Kita = Mahina (<50)';
 
   @override
   String get ok => 'OK';

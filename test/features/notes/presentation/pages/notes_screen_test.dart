@@ -1,16 +1,22 @@
 import 'dart:io';
 
+import 'package:copyclip/src/core/providers/locale_provider.dart';
+import 'package:copyclip/src/core/router/app_router.dart';
+import 'package:copyclip/src/core/theme/bloc/theme_bloc.dart';
 import 'package:copyclip/src/features/notes/presentation/pages/notes_screen.dart';
 import 'package:copyclip/src/features/notes/data/note_adapter.dart';
 import 'package:copyclip/src/features/notes/data/note_model.dart';
-import 'package:copyclip/src/core/router/app_router.dart';
+import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   late Box<Note> noteBox;
@@ -43,10 +49,27 @@ void main() {
   });
 
   testWidgets('NotesScreen renders empty state', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: NotesScreen()));
+    await tester.pumpWidget(
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => ThemeBloc()),
+          BlocProvider(create: (_) => PremiumBloc()),
+        ],
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => LocaleProvider()),
+          ],
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: NotesScreen(),
+          ),
+        ),
+      ),
+    );
     await tester.pumpAndSettle();
 
-    expect(find.text('No notes found.'), findsOneWidget);
+    expect(find.text('No notes found'), findsOneWidget);
     expect(find.byType(FloatingActionButton), findsOneWidget);
   });
 
@@ -71,7 +94,11 @@ void main() {
       ],
     );
 
-    await tester.pumpWidget(MaterialApp.router(routerConfig: router));
+    await tester.pumpWidget(MaterialApp.router(
+      routerConfig: router,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+    ));
     await tester.pumpAndSettle();
 
     expect(find.text('My First Note'), findsOneWidget);
@@ -93,7 +120,13 @@ void main() {
       Note(id: '2', title: 'Beta', content: 'B', updatedAt: DateTime.now()),
     );
 
-    await tester.pumpWidget(MaterialApp(home: NotesScreen()));
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: NotesScreen(),
+      ),
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Alpha'), findsOneWidget);

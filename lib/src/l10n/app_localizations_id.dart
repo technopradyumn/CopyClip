@@ -24,19 +24,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get todos => 'Tugas';
 
   @override
-  String get expenses => 'Pengeluaran';
-
-  @override
   String get journal => 'Jurnal';
 
   @override
-  String get calendar => 'Kalender';
-
-  @override
   String get clipboard => 'Papan Klip';
-
-  @override
-  String get canvas => 'Kanvas';
 
   @override
   String get save => 'Simpan';
@@ -69,24 +60,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get discard => 'Buang';
 
   @override
-  String get createPost => 'Buat Postingan';
-
-  @override
-  String get post => 'Posting';
-
-  @override
-  String get postingTo => 'Memposting ke';
-
-  @override
-  String get whatsOnYourMind => 'Apa yang Anda pikirkan?';
-
-  @override
-  String get pickImages => 'Pilih Gambar';
-
-  @override
-  String get pickVideo => 'Pilih Video';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsId extends AppLocalizations {
   String error(Object error) {
     return 'Kesalahan: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Pengurutan hanya tersedia di \'\'Semua Postingan\'\'';
-
-  @override
-  String get deletePost => 'Hapus Postingan';
-
-  @override
-  String get postDeleted => 'Postingan dihapus';
 
   @override
   String get premiumFeatures => 'Fitur Premium';
@@ -180,35 +143,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get recycleBinCleared => 'Tempat sampah berhasil dikosongkan';
 
   @override
-  String get allPostsDeleted => 'Semua postingan dihapus';
-
-  @override
-  String get newPost => 'Postingan Baru';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Teks disalin ke papan klip (kebijakan Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Berbagi ke TikTok memerlukan video/gambar';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Kesalahan berbagi: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Bagikan ke Story $platform';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Bagikan ke Feed $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Buka Permanen';
 
   @override
@@ -224,13 +158,6 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Pilih Tanggal & Waktu';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Apakah Anda yakin ingin menghapus postingan ini?';
-
-  @override
-  String get socialPosts => 'Postingan Sosial';
 
   @override
   String get watchAdToEarnCoins => 'Tonton Iklan untuk Mendapatkan Koin';
@@ -416,25 +343,11 @@ class AppLocalizationsId extends AppLocalizations {
       'Tetap di atas permainan Anda. Buat daftar tugas, tetapkan prioritas, dan capai tujuan Anda satu per satu.';
 
   @override
-  String get onboardingExpensesTitle => 'Pelacakan Pengeluaran';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Kendalikan keuangan Anda. Lacak pendapatan dan pengeluaran dengan mudah untuk memahami kebiasaan belanja Anda.';
-
-  @override
   String get onboardingJournalTitle => 'Jurnal Pribadi';
 
   @override
   String get onboardingJournalDesc =>
       'Refleksikan hari Anda. Ruang pribadi untuk menuliskan kenangan, perasaan, dan pengalaman harian Anda.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalender & Acara';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Jangan pernah lewatkan momen. Atur jadwal Anda dan pantau acara penting mendatang.';
 
   @override
   String get onboardingClipboardTitle => 'Pengelola Papan Klip';
@@ -444,38 +357,16 @@ class AppLocalizationsId extends AppLocalizations {
       'Salin sekali, tempel di mana saja. Akses riwayat papan klip Anda untuk mengambil potongan yang Anda salin sebelumnya.';
 
   @override
-  String get onboardingCanvasTitle => 'Kanvas Kreatif';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Lepaskan kreativitas Anda. Gambar, sketsa, dan visualisasikan ide Anda pada kanvas digital bentuk bebas.';
-
-  @override
   String get featuresNotesDesc => 'Buat dan kelola catatan Anda';
 
   @override
   String get featuresTodosDesc => 'Pantau tugas-tugas Anda';
 
   @override
-  String get featuresExpensesDesc => 'Pantau pengeluaran Anda';
-
-  @override
   String get featuresJournalDesc => 'Tuliskan pikiran Anda';
 
   @override
-  String get featuresCalendarDesc => 'Atur jadwal Anda';
-
-  @override
   String get featuresClipboardDesc => 'Akses riwayat papan klip Anda';
-
-  @override
-  String get featuresCanvasDesc => 'Gambar dan sketsa dengan bebas';
-
-  @override
-  String get featuresSocialPost => 'Postingan Sosial';
-
-  @override
-  String get featuresSocialPostDesc => 'Buat konten media sosial yang menarik';
 
   @override
   String get chooseYourAura => 'Pilih Aura Anda';
@@ -483,26 +374,6 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get expressYourselfTheme =>
       'Ekspresikan diri Anda dengan warna tema baru!';
-
-  @override
-  String get level => 'Level';
-
-  @override
-  String get xpToNextLevel => 'XP ke Level';
-
-  @override
-  String get checkUpcomingEvents => 'Periksa acara mendatang';
-
-  @override
-  String get startNewSketch => 'Mulai sketsa baru';
-
-  @override
-  String get noTransactionsMonth => 'Tidak ada transaksi bulan ini';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return '$count transaksi bulan ini';
-  }
 
   @override
   String get autoSaveClipboard => 'Simpan otomatis Papan Klip';
@@ -565,15 +436,6 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get premiumLayoutsDesc => 'Eksklusif cara melihat memori Anda';
-
-  @override
-  String get calendarTools => 'Kalender & Alat';
-
-  @override
-  String get fullCalendar => 'Kalender Lengkap';
-
-  @override
-  String get fullCalendarDesc => 'Sistem manajemen acara yang lengkap';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -660,78 +522,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get completed => 'Selesai';
 
   @override
-  String get greatJob => 'Kerja bagus!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Anda mendapatkan $amount XP! Tugas berikutnya: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Tugas selesai! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Pindahkan semua tugas aktif ke Tempat Sampah?';
-
-  @override
-  String get deleteAllPosts => 'Hapus Semua Postingan';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Apakah Anda yakin ingin menghapus SEMUA postingan sosial? Ini tidak bisa dibatalkan.';
-
-  @override
-  String get allPosts => 'Semua Postingan';
-
-  @override
-  String get favorites => 'Favorit';
-
-  @override
-  String get drafts => 'Draf';
-
-  @override
-  String get noFavoritesYet => 'Belum ada favorit';
-
-  @override
-  String get noDraftsYet => 'Belum ada draf';
-
-  @override
-  String get startSocialJourney => 'Mulai perjalanan sosial Anda!';
-
-  @override
-  String get draft => 'DRAF';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count lampiran';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Harap tambahkan konten atau media untuk dibagikan';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Kesalahan: File tidak ditemukan di $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Periksa aplikasi Facebook';
-
-  @override
-  String get systemShare => 'Berbagi Sistem';
-
-  @override
-  String get socialPost => 'Postingan Sosial';
-
-  @override
-  String get favorite => 'Favorit';
-
-  @override
-  String get saveDraft => 'Simpan Draf';
 
   @override
   String get entryCopied => 'Entri disalin';
@@ -876,33 +673,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get dueDate => 'Tanggal Jatuh Tempo';
 
   @override
-  String get expenseTitle => 'Pengeluaran';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Cari dalam $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Urutkan & Filter';
 
   @override
   String get sortBy => 'URUTKAN BERDASARKAN';
-
-  @override
-  String get highestAmount => 'Jumlah Tertinggi';
-
-  @override
-  String get lowestAmount => 'Jumlah Terendah';
-
-  @override
-  String get moreFilters => 'Filter Lainnya...';
-
-  @override
-  String get filterExpenses => 'Filter Pengeluaran';
-
-  @override
-  String get transactionType => 'Tipe Transaksi';
 
   @override
   String get categories => 'Kategori';
@@ -911,21 +685,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get all => 'Semua';
 
   @override
-  String get income => 'Pemasukan';
-
-  @override
-  String get expense => 'Pengeluaran';
-
-  @override
   String get reset => 'Reset';
 
   @override
   String get apply => 'Terapkan';
-
-  @override
-  String newExpense(String currency) {
-    return '$currency Baru';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -989,34 +752,10 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Sketsa Baru';
-
-  @override
-  String get searchSketches => 'Cari sketsa dan folder...';
-
-  @override
   String get noResultsFound => 'Hasil tidak ditemukan';
 
   @override
   String get noItems => 'Tidak ada item';
-
-  @override
-  String get noDrawingsYet => 'Belum ada gambar';
-
-  @override
-  String get canvasIntro => 'Lepaskan kreativitas Anda di kanvas!';
-
-  @override
-  String get newCanvas => 'Kanvas Baru';
 
   @override
   String get rename => 'Ubah Nama';
@@ -1032,13 +771,7 @@ class AppLocalizationsId extends AppLocalizations {
       'Semua sketsa di folder ini akan dihapus secara permanen.';
 
   @override
-  String get renameFolder => 'Ubah Nama Folder';
-
-  @override
   String get chooseColor => 'Pilih Warna';
-
-  @override
-  String get deleteFolderQuestion => 'Hapus Folder?';
 
   @override
   String get searchClips => 'Cari klip...';
@@ -1060,9 +793,6 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'Anda dapat memulihkan klip ini nanti.';
-
-  @override
-  String get upcomingEvents => 'Acara Mendatang';
 
   @override
   String get dataDistribution => 'DISTRIBUSI DATA';
@@ -1103,57 +833,6 @@ class AppLocalizationsId extends AppLocalizations {
   String selectedCount(int count) {
     return '$count Terpilih';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes sketsa • $folders folder';
-  }
-
-  @override
-  String get sortItems => 'Urutkan Item';
-
-  @override
-  String get sortNameAZ => 'Nama (A-Z)';
-
-  @override
-  String get sortNameZA => 'Nama (Z-A)';
-
-  @override
-  String get createFolder => 'Buat Folder';
-
-  @override
-  String get folderNameHint => 'Nama folder...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Hapus $count sketsa? Ini tidak bisa dibatalkan.';
-  }
-
-  @override
-  String get noSketchesFound => 'Sketsa tidak ditemukan';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Coba sesuaikan pencarian Anda atau buat sketsa baru.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Cari di $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count sketsa';
-  }
-
-  @override
-  String get sortSketches => 'Urutkan Sketsa';
-
-  @override
-  String get calendarScreenTitle => 'Kalender';
-
-  @override
-  String get dailyActivity => 'Aktivitas Harian';
 
   @override
   String get deleteItemQuestion => 'Hapus Item?';
@@ -1256,30 +935,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get general => 'Umum';
 
   @override
-  String get saveTransactionQuestion =>
-      'Apakah Anda ingin menyimpan transaksi ini?';
-
-  @override
-  String get fillTitleAmount => 'Harap isi judul dan jumlah';
-
-  @override
-  String get invalidAmount => 'Format jumlah tidak valid';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Pindahkan Transaksi ke Tempat Sampah?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Anda dapat memulihkan transaksi ini nanti dari pengaturan.';
-
-  @override
-  String get newTransaction => 'Transaksi Baru';
-
-  @override
-  String get whatIsThisFor => 'Untuk apa ini?';
-
-  @override
   String get description => 'Deskripsi';
 
   @override
@@ -1295,72 +950,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get yearly => 'Tahunan';
 
   @override
-  String get totalIncome => 'Total Pemasukan';
-
-  @override
-  String get totalExpense => 'Total Pengeluaran';
-
-  @override
   String get analysis => 'Analisis';
 
   @override
   String get transactions => 'Transaksi';
-
-  @override
-  String get noExpensesFound =>
-      'Tidak ada pengeluaran ditemukan untuk periode ini.';
-
-  @override
-  String get netBalance => 'Saldo Bersih';
-
-  @override
-  String get topCategories => 'Kategori Teratas';
-
-  @override
-  String get spendingTrend => 'Tren Belanja';
-
-  @override
-  String get insights => 'Wawasan';
-
-  @override
-  String get noExpensesRecorded => 'Tidak ada pengeluaran yang dicatat';
-
-  @override
-  String get trackSpendingHabits =>
-      'Lacak kebiasaan belanja Anda dengan mudah.';
-
-  @override
-  String get addExpense => 'Tambah Pengeluaran';
-
-  @override
-  String get noDataForPeriod => 'Tidak ada data untuk periode ini';
-
-  @override
-  String get budget => 'Anggaran';
-
-  @override
-  String get spent => 'Terpakai';
-
-  @override
-  String get limit => 'Batas';
-
-  @override
-  String get overBudget => 'Melebihi Anggaran!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return 'Sisa $percent%';
-  }
-
-  @override
-  String get savingsRate => 'Tingkat Tabungan';
-
-  @override
-  String get healthScore => 'Skor Kesehatan';
-
-  @override
-  String get healthScoreExplanation =>
-      'Skor ini didasarkan pada Tingkat Tabungan Anda.\n\n• > 50% ditabung = Sangat Baik (100)\n• 0% ditabung = Rata-rata (50)\n• Belanja > Pemasukan = Kurang (<50)';
 
   @override
   String get ok => 'OKE';
@@ -1389,19 +982,10 @@ class AppLocalizationsIdId extends AppLocalizationsId {
   String get todos => 'Tugas';
 
   @override
-  String get expenses => 'Pengeluaran';
-
-  @override
   String get journal => 'Jurnal';
 
   @override
-  String get calendar => 'Kalender';
-
-  @override
   String get clipboard => 'Papan Klip';
-
-  @override
-  String get canvas => 'Kanvas';
 
   @override
   String get save => 'Simpan';
@@ -1434,24 +1018,6 @@ class AppLocalizationsIdId extends AppLocalizationsId {
   String get discard => 'Buang';
 
   @override
-  String get createPost => 'Buat Postingan';
-
-  @override
-  String get post => 'Posting';
-
-  @override
-  String get postingTo => 'Memposting ke';
-
-  @override
-  String get whatsOnYourMind => 'Apa yang Anda pikirkan?';
-
-  @override
-  String get pickImages => 'Pilih Gambar';
-
-  @override
-  String get pickVideo => 'Pilih Video';
-
-  @override
   String get camera => 'Kamera';
 
   @override
@@ -1476,16 +1042,6 @@ class AppLocalizationsIdId extends AppLocalizationsId {
   String error(Object error) {
     return 'Kesalahan: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Pengurutan hanya tersedia di \'\'Semua Postingan\'\'';
-
-  @override
-  String get deletePost => 'Hapus Postingan';
-
-  @override
-  String get postDeleted => 'Postingan dihapus';
 
   @override
   String get premiumFeatures => 'Fitur Premium';
@@ -1545,35 +1101,6 @@ class AppLocalizationsIdId extends AppLocalizationsId {
   String get recycleBinCleared => 'Tempat sampah berhasil dikosongkan';
 
   @override
-  String get allPostsDeleted => 'Semua postingan dihapus';
-
-  @override
-  String get newPost => 'Postingan Baru';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Teks disalin ke papan klip (kebijakan Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'Berbagi ke TikTok memerlukan video/gambar';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Kesalahan berbagi: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Bagikan ke Story $platform';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Bagikan ke Feed $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Buka Permanen';
 
   @override
@@ -1589,13 +1116,6 @@ class AppLocalizationsIdId extends AppLocalizationsId {
 
   @override
   String get selectDateTime => 'Pilih Tanggal & Waktu';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Apakah Anda yakin ingin menghapus postingan ini?';
-
-  @override
-  String get socialPosts => 'Postingan Sosial';
 
   @override
   String get watchAdToEarnCoins => 'Tonton Iklan untuk Mendapatkan Koin';
@@ -1781,25 +1301,11 @@ class AppLocalizationsIdId extends AppLocalizationsId {
       'Tetap di atas permainan Anda. Buat daftar tugas, tetapkan prioritas, dan capai tujuan Anda satu per satu.';
 
   @override
-  String get onboardingExpensesTitle => 'Pelacakan Pengeluaran';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Kendalikan keuangan Anda. Lacak pendapatan dan pengeluaran dengan mudah untuk memahami kebiasaan belanja Anda.';
-
-  @override
   String get onboardingJournalTitle => 'Jurnal Pribadi';
 
   @override
   String get onboardingJournalDesc =>
       'Refleksikan hari Anda. Ruang pribadi untuk menuliskan kenangan, perasaan, dan pengalaman harian Anda.';
-
-  @override
-  String get onboardingCalendarTitle => 'Kalender & Acara';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Jangan pernah lewatkan momen. Atur jadwal Anda dan pantau acara penting mendatang.';
 
   @override
   String get onboardingClipboardTitle => 'Pengelola Papan Klip';
@@ -1809,38 +1315,16 @@ class AppLocalizationsIdId extends AppLocalizationsId {
       'Salin sekali, tempel di mana saja. Akses riwayat papan klip Anda untuk mengambil potongan yang Anda salin sebelumnya.';
 
   @override
-  String get onboardingCanvasTitle => 'Kanvas Kreatif';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Lepaskan kreativitas Anda. Gambar, sketsa, dan visualisasikan ide Anda pada kanvas digital bentuk bebas.';
-
-  @override
   String get featuresNotesDesc => 'Buat dan kelola catatan Anda';
 
   @override
   String get featuresTodosDesc => 'Pantau tugas-tugas Anda';
 
   @override
-  String get featuresExpensesDesc => 'Pantau pengeluaran Anda';
-
-  @override
   String get featuresJournalDesc => 'Tuliskan pikiran Anda';
 
   @override
-  String get featuresCalendarDesc => 'Atur jadwal Anda';
-
-  @override
   String get featuresClipboardDesc => 'Akses riwayat papan klip Anda';
-
-  @override
-  String get featuresCanvasDesc => 'Gambar dan sketsa dengan bebas';
-
-  @override
-  String get featuresSocialPost => 'Postingan Sosial';
-
-  @override
-  String get featuresSocialPostDesc => 'Buat konten media sosial yang menarik';
 
   @override
   String get chooseYourAura => 'Pilih Aura Anda';
@@ -1848,26 +1332,6 @@ class AppLocalizationsIdId extends AppLocalizationsId {
   @override
   String get expressYourselfTheme =>
       'Ekspresikan diri Anda dengan warna tema baru!';
-
-  @override
-  String get level => 'Level';
-
-  @override
-  String get xpToNextLevel => 'XP ke Level';
-
-  @override
-  String get checkUpcomingEvents => 'Periksa acara mendatang';
-
-  @override
-  String get startNewSketch => 'Mulai sketsa baru';
-
-  @override
-  String get noTransactionsMonth => 'Tidak ada transaksi bulan ini';
-
-  @override
-  String transactionsThisMonth(num count) {
-    return '$count transaksi bulan ini';
-  }
 
   @override
   String get autoSaveClipboard => 'Simpan otomatis Papan Klip';
@@ -1930,15 +1394,6 @@ class AppLocalizationsIdId extends AppLocalizationsId {
 
   @override
   String get premiumLayoutsDesc => 'Cara eksklusif untuk melihat kenangan Anda';
-
-  @override
-  String get calendarTools => 'Kalender & Alat';
-
-  @override
-  String get fullCalendar => 'Kalender Lengkap';
-
-  @override
-  String get fullCalendarDesc => 'Sistem manajemen acara yang lengkap';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -2025,78 +1480,13 @@ class AppLocalizationsIdId extends AppLocalizationsId {
   String get completed => 'Selesai';
 
   @override
-  String get greatJob => 'Kerja bagus!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Anda mendapatkan $amount XP! Tugas berikutnya: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Tugas selesai! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Pindahkan semua tugas aktif ke Tempat Sampah?';
-
-  @override
-  String get deleteAllPosts => 'Hapus Semua Postingan';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Apakah Anda yakin ingin menghapus SEMUA postingan sosial? Ini tidak bisa dibatalkan.';
-
-  @override
-  String get allPosts => 'Semua Postingan';
-
-  @override
-  String get favorites => 'Favorit';
-
-  @override
-  String get drafts => 'Draf';
-
-  @override
-  String get noFavoritesYet => 'Belum ada favorit';
-
-  @override
-  String get noDraftsYet => 'Belum ada draf';
-
-  @override
-  String get startSocialJourney => 'Mulai perjalanan sosial Anda!';
-
-  @override
-  String get draft => 'DRAF';
-
-  @override
-  String attachmentCount(num count) {
-    return '$count lampiran';
-  }
-
-  @override
-  String get pleaseAddContent =>
-      'Harap tambahkan konten atau media untuk dibagikan';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Kesalahan: File tidak ditemukan di $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Periksa aplikasi Facebook';
-
-  @override
-  String get systemShare => 'Berbagi Sistem';
-
-  @override
-  String get socialPost => 'Postingan Sosial';
-
-  @override
-  String get favorite => 'Favorit';
-
-  @override
-  String get saveDraft => 'Simpan Draf';
 
   @override
   String get entryCopied => 'Entri disalin';
@@ -2241,33 +1631,10 @@ class AppLocalizationsIdId extends AppLocalizationsId {
   String get dueDate => 'Tanggal Jatuh Tempo';
 
   @override
-  String get expenseTitle => 'Pengeluaran';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Cari dalam $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Urutkan & Filter';
 
   @override
   String get sortBy => 'URUTKAN BERDASARKAN';
-
-  @override
-  String get highestAmount => 'Jumlah Tertinggi';
-
-  @override
-  String get lowestAmount => 'Jumlah Terendah';
-
-  @override
-  String get moreFilters => 'Filter Lainnya...';
-
-  @override
-  String get filterExpenses => 'Filter Pengeluaran';
-
-  @override
-  String get transactionType => 'Tipe Transaksi';
 
   @override
   String get categories => 'Kategori';
@@ -2276,21 +1643,10 @@ class AppLocalizationsIdId extends AppLocalizationsId {
   String get all => 'Semua';
 
   @override
-  String get income => 'Pemasukan';
-
-  @override
-  String get expense => 'Pengeluaran';
-
-  @override
   String get reset => 'Reset';
 
   @override
   String get apply => 'Terapkan';
-
-  @override
-  String newExpense(String currency) {
-    return '$currency Baru';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2354,34 +1710,10 @@ class AppLocalizationsIdId extends AppLocalizationsId {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Sketsa Baru';
-
-  @override
-  String get searchSketches => 'Cari sketsa dan folder...';
-
-  @override
   String get noResultsFound => 'Hasil tidak ditemukan';
 
   @override
   String get noItems => 'Tidak ada item';
-
-  @override
-  String get noDrawingsYet => 'Belum ada gambar';
-
-  @override
-  String get canvasIntro => 'Lepaskan kreativitas Anda di kanvas!';
-
-  @override
-  String get newCanvas => 'Kanvas Baru';
 
   @override
   String get rename => 'Ubah Nama';
@@ -2397,13 +1729,7 @@ class AppLocalizationsIdId extends AppLocalizationsId {
       'Semua sketsa di folder ini akan dihapus secara permanen.';
 
   @override
-  String get renameFolder => 'Ubah Nama Folder';
-
-  @override
   String get chooseColor => 'Pilih Warna';
-
-  @override
-  String get deleteFolderQuestion => 'Hapus Folder?';
 
   @override
   String get searchClips => 'Cari klip...';
@@ -2425,9 +1751,6 @@ class AppLocalizationsIdId extends AppLocalizationsId {
 
   @override
   String get restoreClipLater => 'Anda dapat memulihkan klip ini nanti.';
-
-  @override
-  String get upcomingEvents => 'Acara Mendatang';
 
   @override
   String get dataDistribution => 'DISTRIBUSI DATA';
@@ -2468,57 +1791,6 @@ class AppLocalizationsIdId extends AppLocalizationsId {
   String selectedCount(int count) {
     return '$count Terpilih';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes sketsa • $folders folder';
-  }
-
-  @override
-  String get sortItems => 'Urutkan Item';
-
-  @override
-  String get sortNameAZ => 'Nama (A-Z)';
-
-  @override
-  String get sortNameZA => 'Nama (Z-A)';
-
-  @override
-  String get createFolder => 'Buat Folder';
-
-  @override
-  String get folderNameHint => 'Nama folder...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Hapus $count sketsa? Ini tidak bisa dibatalkan.';
-  }
-
-  @override
-  String get noSketchesFound => 'Sketsa tidak ditemukan';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Coba sesuaikan pencarian Anda atau buat sketsa baru.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Cari di $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count sketsa';
-  }
-
-  @override
-  String get sortSketches => 'Urutkan Sketsa';
-
-  @override
-  String get calendarScreenTitle => 'Kalender';
-
-  @override
-  String get dailyActivity => 'Aktivitas Harian';
 
   @override
   String get deleteItemQuestion => 'Hapus Item?';
@@ -2621,30 +1893,6 @@ class AppLocalizationsIdId extends AppLocalizationsId {
   String get general => 'Umum';
 
   @override
-  String get saveTransactionQuestion =>
-      'Apakah Anda ingin menyimpan transaksi ini?';
-
-  @override
-  String get fillTitleAmount => 'Harap isi judul dan jumlah';
-
-  @override
-  String get invalidAmount => 'Format jumlah tidak valid';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Pindahkan Transaksi ke Tempat Sampah?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Anda dapat memulihkan transaksi ini nanti dari pengaturan.';
-
-  @override
-  String get newTransaction => 'Transaksi Baru';
-
-  @override
-  String get whatIsThisFor => 'Untuk apa ini?';
-
-  @override
   String get description => 'Deskripsi';
 
   @override
@@ -2660,72 +1908,10 @@ class AppLocalizationsIdId extends AppLocalizationsId {
   String get yearly => 'Tahunan';
 
   @override
-  String get totalIncome => 'Total Pemasukan';
-
-  @override
-  String get totalExpense => 'Total Pengeluaran';
-
-  @override
   String get analysis => 'Analisis';
 
   @override
   String get transactions => 'Transaksi';
-
-  @override
-  String get noExpensesFound =>
-      'Tidak ada pengeluaran ditemukan untuk periode ini.';
-
-  @override
-  String get netBalance => 'Saldo Bersih';
-
-  @override
-  String get topCategories => 'Kategori Teratas';
-
-  @override
-  String get spendingTrend => 'Tren Belanja';
-
-  @override
-  String get insights => 'Wawasan';
-
-  @override
-  String get noExpensesRecorded => 'Tidak ada pengeluaran yang dicatat';
-
-  @override
-  String get trackSpendingHabits =>
-      'Lacak kebiasaan belanja Anda dengan mudah.';
-
-  @override
-  String get addExpense => 'Tambah Pengeluaran';
-
-  @override
-  String get noDataForPeriod => 'Tidak ada data untuk periode ini';
-
-  @override
-  String get budget => 'Anggaran';
-
-  @override
-  String get spent => 'Terpakai';
-
-  @override
-  String get limit => 'Batas';
-
-  @override
-  String get overBudget => 'Melebihi Anggaran!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return 'Sisa $percent%';
-  }
-
-  @override
-  String get savingsRate => 'Tingkat Tabungan';
-
-  @override
-  String get healthScore => 'Skor Kesehatan';
-
-  @override
-  String get healthScoreExplanation =>
-      'Skor ini didasarkan pada Tingkat Tabungan Anda.\n\n• > 50% ditabung = Sangat Baik (100)\n• 0% ditabung = Rata-rata (50)\n• Belanja > Pemasukan = Kurang (<50)';
 
   @override
   String get ok => 'OKE';

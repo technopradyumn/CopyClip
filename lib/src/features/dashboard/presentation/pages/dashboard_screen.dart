@@ -13,8 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:copyclip/src/core/common_widgets/mascot_character.dart';
 import 'package:copyclip/src/core/common_widgets/micro_animation.dart';
-import 'package:copyclip/src/core/services/gamification_service.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/navigation_drawer.dart';
 import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
@@ -23,12 +23,8 @@ import '../../../notes/data/note_model.dart';
 import '../../../todos/data/todo_model.dart';
 import '../../../journal/data/journal_model.dart';
 import '../../../clipboard/data/clipboard_model.dart';
-import '../../../calendar/data/calendar_event_model.dart';
-import '../../../expenses/data/expense_model.dart';
-import '../../../canvas/data/canvas_adapter.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
-import 'package:copyclip/src/features/gamification/presentation/widgets/medal_widget.dart';
 import '../widgets/aura_picker_sheet.dart';
 
 class FeatureItem {
@@ -165,46 +161,6 @@ class _DashboardScreenState extends State<DashboardScreen>
         AppRouter.journal,
         l10n.featuresJournalDesc,
       ),
-      'expenses': FeatureItem(
-        'expenses',
-        l10n.expenses,
-        CupertinoIcons.money_dollar,
-        FeatureColors.expenses,
-        AppRouter.expenses,
-        l10n.featuresExpensesDesc,
-      ),
-      'calendar': FeatureItem(
-        'calendar',
-        l10n.calendar,
-        CupertinoIcons.calendar,
-        FeatureColors.calendar,
-        AppRouter.calendar,
-        l10n.featuresCalendarDesc,
-      ),
-      'canvas': FeatureItem(
-        'canvas',
-        l10n.canvas,
-        CupertinoIcons.scribble,
-        FeatureColors.canvas,
-        AppRouter.canvas,
-        l10n.featuresCanvasDesc,
-      ),
-      'social_post': FeatureItem(
-        'social_post',
-        l10n.featuresSocialPost,
-        CupertinoIcons.share_up,
-        FeatureColors.socialPost,
-        AppRouter.socialPost,
-        l10n.featuresSocialPostDesc,
-      ),
-'events': FeatureItem(
-        'events',
-        'Events',
-        CupertinoIcons.calendar_today,
-        const Color(0xFFAB47BC), // Distinct events purple
-        AppRouter.allEvents,
-        'View all your events',
-      ),
     };
 
     _onboardingData = [
@@ -227,34 +183,16 @@ class _DashboardScreenState extends State<DashboardScreen>
         color: FeatureColors.todos,
       ),
       OnboardingContent(
-        title: l10n.onboardingExpensesTitle,
-        description: l10n.onboardingExpensesDesc,
-        icon: CupertinoIcons.money_dollar,
-        color: FeatureColors.expenses,
-      ),
-      OnboardingContent(
         title: l10n.onboardingJournalTitle,
         description: l10n.onboardingJournalDesc,
         icon: CupertinoIcons.book,
         color: FeatureColors.journal,
       ),
       OnboardingContent(
-        title: l10n.onboardingCalendarTitle,
-        description: l10n.onboardingCalendarDesc,
-        icon: CupertinoIcons.calendar,
-        color: FeatureColors.calendar,
-      ),
-      OnboardingContent(
         title: l10n.onboardingClipboardTitle,
         description: l10n.onboardingClipboardDesc,
         icon: CupertinoIcons.doc_on_clipboard,
         color: FeatureColors.clipboard,
-      ),
-      OnboardingContent(
-        title: l10n.onboardingCanvasTitle,
-        description: l10n.onboardingCanvasDesc,
-        icon: CupertinoIcons.scribble,
-        color: FeatureColors.canvas,
       ),
     ];
   }
@@ -285,8 +223,6 @@ class _DashboardScreenState extends State<DashboardScreen>
         Hive.openBox<JournalEntry>('journal_box'),
       if (!Hive.isBoxOpen('clipboard_box'))
         Hive.openBox<ClipboardItem>('clipboard_box'),
-      if (!Hive.isBoxOpen('expenses_box'))
-        Hive.openBox<Expense>('expenses_box'),
     ]);
 
     final settingsBox = Hive.box('settings');
@@ -326,16 +262,12 @@ class _DashboardScreenState extends State<DashboardScreen>
     _updatePreview('todos');
     _updatePreview('journal');
     _updatePreview('clipboard');
-    _updatePreview('expenses');
-    _updatePreview('events');
 
     // Setup listeners for real-time updates without re-sorting everything on every frame
     _boxSubscriptions['notes'] = Hive.box<Note>('notes_box').watch().listen((_) => _updatePreview('notes'));
     _boxSubscriptions['todos'] = Hive.box<Todo>('todos_box').watch().listen((_) => _updatePreview('todos'));
     _boxSubscriptions['journal'] = Hive.box<JournalEntry>('journal_box').watch().listen((_) => _updatePreview('journal'));
     _boxSubscriptions['clipboard'] = Hive.box<ClipboardItem>('clipboard_box').watch().listen((_) => _updatePreview('clipboard'));
-    _boxSubscriptions['expenses'] = Hive.box<Expense>('expenses_box').watch().listen((_) => _updatePreview('expenses'));
-    _boxSubscriptions['events'] = Hive.box<CalendarEvent>('calendar_events_box').watch().listen((_) => _updatePreview('events'));
   }
 
   void _updatePreview(String id) {
@@ -345,12 +277,10 @@ class _DashboardScreenState extends State<DashboardScreen>
       case 'notes': preview = _getLatestNote(); break;
       case 'todos': preview = _getLatestTodo(); break;
       case 'journal': preview = _getLatestJournal(); break;
-      case 'clipboard': 
+      case 'clipboard':
         final clip = _getLatestClipboard();
         preview = clip != null ? _extractPlainText(clip.content) : null;
         break;
-      case 'expenses': preview = _getExpensesSummary(); break;
-      case 'events': preview = _getLatestEventPreview(); break;
     }
     setState(() => _previews[id] = preview);
   }
@@ -433,40 +363,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     if (items.isEmpty) return null;
     items.sort((a, b) => b.createdAt.compareTo(a.createdAt));
     return items.first;
-  }
-
-  String? _getExpensesSummary() {
-    if (!Hive.isBoxOpen('expenses_box')) return null;
-    final box = Hive.box<Expense>('expenses_box');
-    final now = DateTime.now();
-    final thisMonth = box.values
-        .where(
-          (e) =>
-              !e.isDeleted &&
-              e.date.year == now.year &&
-              e.date.month == now.month,
-        )
-        .toList();
-    if (thisMonth.isEmpty)
-      return AppLocalizations.of(context)!.noTransactionsMonth;
-    final count = thisMonth.length;
-    return AppLocalizations.of(context)!.transactionsThisMonth(count);
-  }
-
-  CalendarEvent? _getLatestEvent() {
-    if (!Hive.isBoxOpen('calendar_events_box')) return null;
-    final box = Hive.box<CalendarEvent>('calendar_events_box');
-    final events = box.values.where((e) => !e.isDeleted).toList();
-    if (events.isEmpty) return null;
-    events.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-    return events.first;
-  }
-
-  String? _getLatestEventPreview() {
-    final event = _getLatestEvent();
-    if (event == null) return null;
-    final format = DateFormat('MMM d, h:mm a');
-    return '${event.title} • ${format.format(event.startDate)}';
   }
 
   void _completeOnboarding() {
@@ -669,9 +565,6 @@ class _DashboardScreenState extends State<DashboardScreen>
       case 'notes':
       case 'todos':
       case 'journal':
-      case 'canvas':
-      case 'expenses':
-      case 'events':
         return IconButton(
           style: style,
           icon: Icon(CupertinoIcons.add, color: baseColor, size: 20),
@@ -685,22 +578,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                 break;
               case 'journal':
                 context.push(AppRouter.journalEdit);
-                break;
-              case 'canvas':
-                final rootFolders = CanvasDatabase().getRootFolders();
-                final defaultFolderId = rootFolders.isEmpty
-                    ? 'default'
-                    : rootFolders.first.id;
-                context.push(
-                  AppRouter.canvasEdit,
-                  extra: {'folderId': defaultFolderId},
-                );
-                break;
-              case 'expenses':
-                context.push(AppRouter.expenseEdit);
-                break;
-              case 'events':
-                context.push(AppRouter.calendarEventEdit);
                 break;
             }
           },
@@ -824,22 +701,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                               ),
                             ),
                           ),
-                          // Premium Tag for Calendar
-                          if (id == 'calendar') ...[
-                            SizedBox(width: 4),
-                            BlocBuilder<PremiumBloc, PremiumState>(
-                              builder: (context, state) {
-                                if (!state.isPremium) {
-                                  return Icon(
-                                    CupertinoIcons.star_fill,
-                                    color: Colors.amber,
-                                    size: 14,
-                                  );
-                                }
-                                return SizedBox.shrink();
-                              },
-                            ),
-                          ],
                         ],
                       ),
                       if (!isSmall && preview != null) ...[
@@ -881,6 +742,8 @@ class _DashboardScreenState extends State<DashboardScreen>
         child: Image.asset('assets/logo/copyclip_logo.png'),
       ),
       backgroundColor: theme.scaffoldBackgroundColor,
+      showDrawer: true,
+      drawer: const CopyClipDrawer(),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -947,7 +810,6 @@ class _DashboardScreenState extends State<DashboardScreen>
             ? const Center(child: CircularProgressIndicator())
             : Column(
                 children: [
-                  _buildGamificationHeader(theme),
                   Expanded(
                     child: LayoutBuilder(
                       builder: (context, constraints) {
@@ -1291,102 +1153,6 @@ class _DashboardScreenState extends State<DashboardScreen>
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildGamificationHeader(ThemeData theme) {
-    return Consumer<GamificationService>(
-      builder: (context, service, _) {
-        final model = service.model;
-        final medal = GamificationService.getMedalTier(model.level);
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: RepaintBoundary(
-            child: Row(
-              children: [
-                Hero(
-                  tag: 'mascot_hero',
-                  child: MascotCharacter(
-                    size: 80,
-                    state: MascotState.values[Hive.box('settings').get(
-                        'mascot_state',
-                        defaultValue: MascotState.happy.index)],
-                    color: Color(Hive.box('settings').get(
-                        'mascot_aura_color',
-                        defaultValue: theme.colorScheme.primary.value)),
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        builder: (context) => Container(
-                          decoration: BoxDecoration(
-                            color: theme.colorScheme.surface,
-                            borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(32),
-                            ),
-                          ),
-                          child: const AuraPickerSheet(),
-                        ),
-                      ).then((_) {
-                        if (mounted) setState(() {});
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () => context.push(AppRouter.xpDetail),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          children: [
-                            MedalWidget(level: model.level, size: 28),
-                            const SizedBox(width: 8),
-                            Text(
-                              'Level ${model.level} ($medal)',
-                              style: theme.textTheme.displaySmall?.copyWith(
-                                fontSize: 18,
-                                color: theme.colorScheme.primary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: LinearProgressIndicator(
-                            value: model.progressToNextLevel,
-                            minHeight: 6,
-                            backgroundColor:
-                                theme.colorScheme.primary.withOpacity(0.1),
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                theme.colorScheme.primary),
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '${model.totalXp} / ${model.xpToNextLevel} XP to Level ${model.level + 1}',
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: theme.colorScheme.onSurface.withOpacity(0.6),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                _buildStreakIndicator(model.streak, theme),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 

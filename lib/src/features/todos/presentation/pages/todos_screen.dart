@@ -1,6 +1,7 @@
 import 'package:copyclip/src/core/theme/custom_selection_controls.dart';
 import 'package:copyclip/src/core/services/notification_service.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/navigation_drawer.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,8 +14,6 @@ import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:provider/provider.dart';
-import 'package:copyclip/src/core/services/gamification_service.dart';
 import 'package:copyclip/src/core/common_widgets/mascot_character.dart';
 import 'package:copyclip/src/core/common_widgets/micro_animation.dart';
 
@@ -431,11 +430,6 @@ class _TodosScreenState extends State<TodosScreen>
     final theme = Theme.of(context);
     // Feedback for Next Instance
     if (result != null && mounted) {
-      // Award XP
-      final gamification = context.read<GamificationService>();
-      await gamification.addXp(10, feature: 'todo');
-      await gamification.recordActivity();
-
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -453,22 +447,10 @@ class _TodosScreenState extends State<TodosScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.greatJob,
+                        'Great job!',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        AppLocalizations.of(context)!.youEarnedXPNextTask(
-                          10,
-                          DateFormat('MMM d').format(result.dueDate!),
-                        ),
-                        style: TextStyle(
-                          color: theme.colorScheme.onSurface.withValues(
-                            alpha: 0.8,
-                          ),
-                          fontSize: 13,
                         ),
                       ),
                     ],
@@ -481,11 +463,6 @@ class _TodosScreenState extends State<TodosScreen>
         );
       }
     } else if (todo.isDone && mounted) {
-      // Award XP for single tasks too
-      final gamification = context.read<GamificationService>();
-      await gamification.addXp(10, feature: 'todo');
-      await gamification.recordActivity();
-
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -498,9 +475,9 @@ class _TodosScreenState extends State<TodosScreen>
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: Text(
-                    AppLocalizations.of(context)!.taskCompletedXP(10),
-                    style: const TextStyle(
+                  child: const Text(
+                    'Task completed.',
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
                     ),
@@ -655,6 +632,8 @@ class _TodosScreenState extends State<TodosScreen>
 
       child: GlassScaffold(
         title: null,
+        showDrawer: true,
+        drawer: const CopyClipDrawer(),
         floatingActionButton: _isSelectionMode
             ? null
             : FloatingActionButton(

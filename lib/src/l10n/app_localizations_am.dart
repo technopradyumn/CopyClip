@@ -24,19 +24,10 @@ class AppLocalizationsAm extends AppLocalizations {
   String get todos => 'ቶ-ዶስ';
 
   @override
-  String get expenses => 'ወጪዎች';
-
-  @override
   String get journal => 'ጆርናል';
 
   @override
-  String get calendar => 'የቀን መቁጠሪያ';
-
-  @override
   String get clipboard => 'ክሊፕቦርድ';
-
-  @override
-  String get canvas => 'ሸራ';
 
   @override
   String get save => 'አስቀምጥ';
@@ -69,24 +60,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String get discard => 'አስወግድ';
 
   @override
-  String get createPost => 'ልጥፍ ይፍጠሩ';
-
-  @override
-  String get post => 'ለጥፍ';
-
-  @override
-  String get postingTo => 'በመለጠፍ ላይ';
-
-  @override
-  String get whatsOnYourMind => 'ምን እያሰብክ ነው?';
-
-  @override
-  String get pickImages => 'ምስሎችን ይምረጡ';
-
-  @override
-  String get pickVideo => 'ቪዲዮ ይምረጡ';
-
-  @override
   String get camera => 'ካሜራ';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String error(Object error) {
     return 'ስህተት፡ $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'ማዘዝ የሚገኘው በ \'\'ሁሉም ልጥፎች\'\' ውስጥ ብቻ ነው';
-
-  @override
-  String get deletePost => 'ልጥፍ ሰርዝ';
-
-  @override
-  String get postDeleted => 'ልጥፍ ተሰርዟል።';
 
   @override
   String get premiumFeatures => 'ፕሪሚየም ባህሪዎች';
@@ -180,34 +143,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String get recycleBinCleared => 'ሪሳይክል ቢን በተሳካ ሁኔታ ጸድቷል።';
 
   @override
-  String get allPostsDeleted => 'ሁሉም ልጥፎች ተሰርዘዋል';
-
-  @override
-  String get newPost => 'አዲስ ፖስት';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'ጽሑፍ ወደ ቅንጥብ ሰሌዳ ተቀድቷል (የፌስቡክ ፖሊሲ)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage => 'TikTok ማጋራት ቪዲዮ/ምስል ያስፈልገዋል';
-
-  @override
-  String errorSharing(Object error) {
-    return 'በማጋራት ላይ ስህተት፡ $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'ለ$platform ታሪክ አጋራ';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'ለ$platform ምግብ አጋራ';
-  }
-
-  @override
   String get unlockPermanently => 'በቋሚነት ይክፈቱ';
 
   @override
@@ -223,13 +158,6 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get selectDateTime => 'ቀን እና ሰዓት ይምረጡ';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'እርግጠኛ ነዎት ይህን ልጥፍ መሰረዝ ይፈልጋሉ?';
-
-  @override
-  String get socialPosts => 'ማህበራዊ ልጥፎች';
 
   @override
   String get watchAdToEarnCoins => 'ሳንቲም ለማግኘት ማስታወቂያ ይመልከቱ';
@@ -413,25 +341,11 @@ class AppLocalizationsAm extends AppLocalizations {
       'በጨዋታዎ አናት ላይ ይቆዩ። የስራ ዝርዝሮችን ይፍጠሩ፣ ቅድሚያ የሚሰጧቸውን ነገሮች ያዘጋጁ እና ግቦችዎን በአንድ ጊዜ ምልክት ያድርጉ።';
 
   @override
-  String get onboardingExpensesTitle => 'የወጪ ክትትል';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'ፋይናንስዎን ይቆጣጠሩ። የእርስዎን የወጪ ልማዶች ለመረዳት ገቢን እና ወጪዎችን በቀላሉ ይከታተሉ።';
-
-  @override
   String get onboardingJournalTitle => 'የግል ጆርናል';
 
   @override
   String get onboardingJournalDesc =>
       'ቀንህን አስብ። ትውስታዎችዎን፣ ስሜቶችዎን እና የዕለት ተዕለት ገጠመኞቻችሁን ለመፃፍ የግል ቦታ።';
-
-  @override
-  String get onboardingCalendarTitle => 'የቀን መቁጠሪያ እና ክስተቶች';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'አንድ አፍታ አያምልጥዎ። መርሐግብርዎን ያደራጁ እና አስፈላጊ መጪ ክስተቶችን ይከታተሉ።';
 
   @override
   String get onboardingClipboardTitle => 'የቅንጥብ ሰሌዳ አስተዳዳሪ';
@@ -441,70 +355,22 @@ class AppLocalizationsAm extends AppLocalizations {
       'አንዴ ገልብጥ፣ የትም ቦታ ለጥፍ። ቀደም ብለው የገለበጧቸውን ቅንጣቢዎች ለማውጣት የቅንጥብ ሰሌዳ ታሪክዎን ይድረሱ።';
 
   @override
-  String get onboardingCanvasTitle => 'የፈጠራ ሸራ';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'ፈጠራዎን ይልቀቁ። በነጻ ዲጂታል ሸራ ላይ ሃሳቦችዎን ይሳሉ፣ ይሳሉ እና ይሳሉ።';
-
-  @override
   String get featuresNotesDesc => 'ማስታወሻዎችዎን ይፍጠሩ እና ያስተዳድሩ';
 
   @override
   String get featuresTodosDesc => 'ተግባሮችዎን ይከታተሉ';
 
   @override
-  String get featuresExpensesDesc => 'ወጪዎችዎን ይቆጣጠሩ';
-
-  @override
   String get featuresJournalDesc => 'ሃሳብህን ጻፍ';
 
   @override
-  String get featuresCalendarDesc => 'መርሐግብርዎን ያደራጁ';
-
-  @override
   String get featuresClipboardDesc => 'የቅንጥብ ሰሌዳ ታሪክህን ይድረስ';
-
-  @override
-  String get featuresCanvasDesc => 'በነጻ ይሳሉ እና ይሳሉ';
-
-  @override
-  String get featuresSocialPost => 'ማህበራዊ ፖስት';
-
-  @override
-  String get featuresSocialPostDesc => 'አሳታፊ የማህበራዊ ሚዲያ ይዘት ይፍጠሩ';
 
   @override
   String get chooseYourAura => 'የእርስዎን ኦራ ይምረጡ';
 
   @override
   String get expressYourselfTheme => 'በአዲስ ጭብጥ ቀለም እራስዎን ይግለጹ!';
-
-  @override
-  String get level => 'ደረጃ';
-
-  @override
-  String get xpToNextLevel => 'ኤክስፒ ወደ ደረጃ';
-
-  @override
-  String get checkUpcomingEvents => 'መጪ ክስተቶችን ያረጋግጡ';
-
-  @override
-  String get startNewSketch => 'አዲስ ንድፍ ጀምር';
-
-  @override
-  String get noTransactionsMonth => 'በዚህ ወር ምንም ግብይቶች የሉም';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count ግብይቶች',
-      one: '$count ግብይት',
-    );
-    return '$_temp0 በዚህ ወር';
-  }
 
   @override
   String get autoSaveClipboard => 'ቅንጥብ ሰሌዳን በራስ-አስቀምጥ';
@@ -565,15 +431,6 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get premiumLayoutsDesc => 'ትውስታዎችዎን የሚመለከቱበት ልዩ መንገዶች';
-
-  @override
-  String get calendarTools => 'የቀን መቁጠሪያ እና መሳሪያዎች';
-
-  @override
-  String get fullCalendar => 'ሙሉ የቀን መቁጠሪያ';
-
-  @override
-  String get fullCalendarDesc => 'የተሟላ የክስተት አስተዳደር ስርዓት';
 
   @override
   String get clipboardAutoSaveDesc => 'የበስተጀርባ ቅንጥብ ሰሌዳ ታሪክ ቀረጻ';
@@ -659,82 +516,12 @@ class AppLocalizationsAm extends AppLocalizations {
   String get completed => 'ተጠናቀቀ';
 
   @override
-  String get greatJob => 'ምርጥ ስራ!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return '$amount XP አግኝተዋል! ቀጣዩ ተግባር: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'ተግባር ተጠናቅቋል! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin => 'ሁሉም ንቁ ተግባራት ወደ ሪሳይክል ቢን ይወሰዱ?';
-
-  @override
-  String get deleteAllPosts => 'ሁሉንም ልጥፎች ሰርዝ';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'እርግጠኛ ነዎት ሁሉንም ማህበራዊ ልጥፎች መሰረዝ ይፈልጋሉ? ይህ ሊቀለበስ አይችልም።';
-
-  @override
-  String get allPosts => 'ሁሉም ልጥፎች';
-
-  @override
-  String get favorites => 'ተወዳጆች';
-
-  @override
-  String get drafts => 'ረቂቆች';
-
-  @override
-  String get noFavoritesYet => 'እስካሁን ምንም ተወዳጆች የሉም';
-
-  @override
-  String get noDraftsYet => 'እስካሁን ምንም ረቂቆች የሉም';
-
-  @override
-  String get startSocialJourney => 'ማህበራዊ ጉዞዎን ይጀምሩ!';
-
-  @override
-  String get draft => 'ረቂቅ';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count ዓባሪዎች',
-      one: '$count ዓባሪ',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'እባክዎ ለማጋራት አንዳንድ ይዘት ወይም ሚዲያ ያክሉ';
 
   @override
   String fileNotFoundError(Object path) {
     return 'ስህተት፡ ፋይል በ$path ላይ አልተገኘም';
   }
-
-  @override
-  String get checkFacebookApp => 'የፌስቡክ መተግበሪያን ይፈትሹ';
-
-  @override
-  String get systemShare => 'የስርዓት አጋራ';
-
-  @override
-  String get socialPost => 'ማህበራዊ ፖስት';
-
-  @override
-  String get favorite => 'ተወዳጅ';
-
-  @override
-  String get saveDraft => 'ረቂቅ አስቀምጥ';
 
   @override
   String get entryCopied => 'መግቢያ ተቀድቷል።';
@@ -877,33 +664,10 @@ class AppLocalizationsAm extends AppLocalizations {
   String get dueDate => 'የማለቂያ ቀን';
 
   @override
-  String get expenseTitle => 'ወጪዎች';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'በ$currency ፈልግ...';
-  }
-
-  @override
   String get sortAndFilter => 'ደርድር እና አጣራ';
 
   @override
   String get sortBy => 'በ ደርድር';
-
-  @override
-  String get highestAmount => 'ከፍተኛው መጠን';
-
-  @override
-  String get lowestAmount => 'ዝቅተኛው መጠን';
-
-  @override
-  String get moreFilters => 'ተጨማሪ ማጣሪያዎች...';
-
-  @override
-  String get filterExpenses => 'የማጣሪያ ወጪዎች';
-
-  @override
-  String get transactionType => 'የግብይት አይነት';
 
   @override
   String get categories => 'ምድቦች';
@@ -912,21 +676,10 @@ class AppLocalizationsAm extends AppLocalizations {
   String get all => 'ሁሉም';
 
   @override
-  String get income => 'ገቢ';
-
-  @override
-  String get expense => 'ወጪ';
-
-  @override
   String get reset => 'ዳግም አስጀምር';
 
   @override
   String get apply => 'ተግብር';
-
-  @override
-  String newExpense(String currency) {
-    return 'አዲስ $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -987,34 +740,10 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'ኢንስታግራም';
-
-  @override
-  String get facebook => 'ፌስቡክ';
-
-  @override
-  String get tiktok => 'ቲክቶክ';
-
-  @override
-  String get newSketch => 'አዲስ ንድፍ';
-
-  @override
-  String get searchSketches => 'ንድፎችን እና አቃፊዎችን ፈልግ...';
-
-  @override
   String get noResultsFound => 'ምንም ውጤቶች አልተገኙም።';
 
   @override
   String get noItems => 'ምንም እቃዎች የሉም';
-
-  @override
-  String get noDrawingsYet => 'እስካሁን ምንም ስዕሎች የሉም';
-
-  @override
-  String get canvasIntro => 'ፈጠራዎን በሸራው ላይ ይልቀቁ!';
-
-  @override
-  String get newCanvas => 'አዲስ ሸራ';
 
   @override
   String get rename => 'እንደገና ይሰይሙ';
@@ -1030,13 +759,7 @@ class AppLocalizationsAm extends AppLocalizations {
       'በዚህ አቃፊ ውስጥ ያሉት ሁሉም ንድፎች እስከመጨረሻው ይሰረዛሉ።';
 
   @override
-  String get renameFolder => 'አቃፊ እንደገና ይሰይሙ';
-
-  @override
   String get chooseColor => 'ቀለም ይምረጡ';
-
-  @override
-  String get deleteFolderQuestion => 'አቃፊ ይሰረዝ?';
 
   @override
   String get searchClips => 'ቅንጥቦችን ፈልግ...';
@@ -1058,9 +781,6 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'ይህን ቅንጥብ በኋላ ወደነበረበት መመለስ ትችላለህ።';
-
-  @override
-  String get upcomingEvents => 'መጪ ክስተቶች';
 
   @override
   String get dataDistribution => 'የውሂብ ስርጭት';
@@ -1101,56 +821,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String selectedCount(int count) {
     return '$count ተመርጧል';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes ንድፎች • $folders አቃፊዎች';
-  }
-
-  @override
-  String get sortItems => 'እቃዎችን ደርድር';
-
-  @override
-  String get sortNameAZ => 'ስም (A-Z)';
-
-  @override
-  String get sortNameZA => 'ስም (Z-A)';
-
-  @override
-  String get createFolder => 'አቃፊ ፍጠር';
-
-  @override
-  String get folderNameHint => 'የአቃፊ ስም...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'የ$count ንድፎች ይሰረዙ? ይህ ሊቀለበስ አይችልም።';
-  }
-
-  @override
-  String get noSketchesFound => 'ምንም ንድፎች አልተገኙም።';
-
-  @override
-  String get noSketchesFoundSub => 'ፍለጋዎን ለማስተካከል ወይም አዲስ ንድፍ ለመፍጠር ይሞክሩ።';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'በ$folder ውስጥ ፈልግ...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count ንድፎች';
-  }
-
-  @override
-  String get sortSketches => 'ንድፎችን ደርድር';
-
-  @override
-  String get calendarScreenTitle => 'የቀን መቁጠሪያ';
-
-  @override
-  String get dailyActivity => 'የዕለት ተዕለት እንቅስቃሴ';
 
   @override
   String get deleteItemQuestion => 'ንጥል ይሰረዝ?';
@@ -1252,28 +922,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String get general => 'አጠቃላይ';
 
   @override
-  String get saveTransactionQuestion => 'ይህን ግብይት ማስቀመጥ ይፈልጋሉ?';
-
-  @override
-  String get fillTitleAmount => 'እባክዎን ርዕስ እና መጠን ይሙሉ';
-
-  @override
-  String get invalidAmount => 'ልክ ያልሆነ መጠን ቅርጸት';
-
-  @override
-  String get moveTransactionToBinTitle => 'ግብይት ወደ ሪሳይክል ቢን ይወሰድ?';
-
-  @override
-  String get restoreTransactionLater =>
-      'ይህን ግብይት ከቅንብሮች በኋላ ወደነበረበት መመለስ ይችላሉ።';
-
-  @override
-  String get newTransaction => 'አዲስ ግብይት';
-
-  @override
-  String get whatIsThisFor => 'ይህ ምንድን ነው?';
-
-  @override
   String get description => 'መግለጫ';
 
   @override
@@ -1289,70 +937,10 @@ class AppLocalizationsAm extends AppLocalizations {
   String get yearly => 'በየአመቱ';
 
   @override
-  String get totalIncome => 'ጠቅላላ ገቢ';
-
-  @override
-  String get totalExpense => 'ጠቅላላ ወጪ';
-
-  @override
   String get analysis => 'ትንተና';
 
   @override
   String get transactions => 'ግብይቶች';
-
-  @override
-  String get noExpensesFound => 'ለዚህ ጊዜ ምንም ወጪዎች አልተገኙም።';
-
-  @override
-  String get netBalance => 'የተጣራ ሚዛን';
-
-  @override
-  String get topCategories => 'ከፍተኛ ምድቦች';
-
-  @override
-  String get spendingTrend => 'የወጪ አዝማሚያ';
-
-  @override
-  String get insights => 'ግንዛቤዎች';
-
-  @override
-  String get noExpensesRecorded => 'ምንም ወጪዎች አልተመዘገቡም።';
-
-  @override
-  String get trackSpendingHabits => 'የወጪ ልማዶችዎን በቀላሉ ይከታተሉ።';
-
-  @override
-  String get addExpense => 'ወጪ ጨምር';
-
-  @override
-  String get noDataForPeriod => 'ለዚህ ጊዜ ምንም ውሂብ የለም።';
-
-  @override
-  String get budget => 'በጀት';
-
-  @override
-  String get spent => 'አሳልፈዋል';
-
-  @override
-  String get limit => 'ገደብ';
-
-  @override
-  String get overBudget => 'ከበጀት በላይ!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% ቀርቷል';
-  }
-
-  @override
-  String get savingsRate => 'የቁጠባ መጠን';
-
-  @override
-  String get healthScore => 'የጤና ነጥብ';
-
-  @override
-  String get healthScoreExplanation =>
-      'ይህ ነጥብ በእርስዎ የቁጠባ መጠን ላይ የተመሰረተ ነው።\n\n• > 50% ተቀምጧል = በጣም ጥሩ (100)\n• 0% ተቀምጧል = አማካኝ (50)\n• ወጪ > ገቢ = ድሃ (<50)';
 
   @override
   String get ok => 'እሺ';
@@ -1381,19 +969,10 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   String get todos => 'ቶ-ዶስ';
 
   @override
-  String get expenses => 'ወጪዎች';
-
-  @override
   String get journal => 'ጆርናል';
 
   @override
-  String get calendar => 'የቀን መቁጠሪያ';
-
-  @override
   String get clipboard => 'ክሊፕቦርድ';
-
-  @override
-  String get canvas => 'ሸራ';
 
   @override
   String get save => 'አስቀምጥ';
@@ -1426,24 +1005,6 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   String get discard => 'አስወግድ';
 
   @override
-  String get createPost => 'ልጥፍ ይፍጠሩ';
-
-  @override
-  String get post => 'ለጥፍ';
-
-  @override
-  String get postingTo => 'በመለጠፍ ላይ';
-
-  @override
-  String get whatsOnYourMind => 'ምን እያሰብክ ነው?';
-
-  @override
-  String get pickImages => 'ምስሎችን ይምረጡ';
-
-  @override
-  String get pickVideo => 'ቪዲዮ ይምረጡ';
-
-  @override
   String get camera => 'ካሜራ';
 
   @override
@@ -1468,16 +1029,6 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   String error(Object error) {
     return 'ስህተት፡ $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'ማዘዝ የሚገኘው በ \'\'ሁሉም ልጥፎች\'\' ውስጥ ብቻ ነው';
-
-  @override
-  String get deletePost => 'ልጥፍ ሰርዝ';
-
-  @override
-  String get postDeleted => 'ልጥፍ ተሰርዟል።';
 
   @override
   String get premiumFeatures => 'ፕሪሚየም ባህሪዎች';
@@ -1537,34 +1088,6 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   String get recycleBinCleared => 'ሪሳይክል ቢን በተሳካ ሁኔታ ጸድቷል።';
 
   @override
-  String get allPostsDeleted => 'ሁሉም ልጥፎች ተሰርዘዋል';
-
-  @override
-  String get newPost => 'አዲስ ፖስት';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'ጽሑፍ ወደ ቅንጥብ ሰሌዳ ተቀድቷል (የፌስቡክ ፖሊሲ)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage => 'TikTok ማጋራት ቪዲዮ/ምስል ያስፈልገዋል';
-
-  @override
-  String errorSharing(Object error) {
-    return 'በማጋራት ላይ ስህተት፡ $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'ለ$platform ታሪክ አጋራ';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'ለ$platform ምግብ አጋራ';
-  }
-
-  @override
   String get unlockPermanently => 'በቋሚነት ይክፈቱ';
 
   @override
@@ -1580,13 +1103,6 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String get selectDateTime => 'ቀን እና ሰዓት ይምረጡ';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'እርግጠኛ ነዎት ይህን ልጥፍ መሰረዝ ይፈልጋሉ?';
-
-  @override
-  String get socialPosts => 'ማህበራዊ ልጥፎች';
 
   @override
   String get watchAdToEarnCoins => 'ሳንቲም ለማግኘት ማስታወቂያ ይመልከቱ';
@@ -1770,25 +1286,11 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
       'በጨዋታዎ አናት ላይ ይቆዩ። የስራ ዝርዝሮችን ይፍጠሩ፣ ቅድሚያ የሚሰጧቸውን ነገሮች ያዘጋጁ እና ግቦችዎን በአንድ ጊዜ ምልክት ያድርጉ።';
 
   @override
-  String get onboardingExpensesTitle => 'የወጪ ክትትል';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'ፋይናንስዎን ይቆጣጠሩ። የእርስዎን የወጪ ልማዶች ለመረዳት ገቢን እና ወጪዎችን በቀላሉ ይከታተሉ።';
-
-  @override
   String get onboardingJournalTitle => 'የግል ጆርናል';
 
   @override
   String get onboardingJournalDesc =>
       'ቀንህን አስብ። ትውስታዎችዎን፣ ስሜቶችዎን እና የዕለት ተዕለት ገጠመኞቻችሁን ለመፃፍ የግል ቦታ።';
-
-  @override
-  String get onboardingCalendarTitle => 'የቀን መቁጠሪያ እና ክስተቶች';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'አንድ አፍታ አያምልጥዎ። መርሐግብርዎን ያደራጁ እና አስፈላጊ መጪ ክስተቶችን ይከታተሉ።';
 
   @override
   String get onboardingClipboardTitle => 'የቅንጥብ ሰሌዳ አስተዳዳሪ';
@@ -1798,70 +1300,22 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
       'አንዴ ገልብጥ፣ የትም ቦታ ለጥፍ። ቀደም ብለው የገለበጧቸውን ቅንጣቢዎች ለማውጣት የቅንጥብ ሰሌዳ ታሪክዎን ይድረሱ።';
 
   @override
-  String get onboardingCanvasTitle => 'የፈጠራ ሸራ';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'ፈጠራዎን ይልቀቁ። በነጻ ዲጂታል ሸራ ላይ ሃሳቦችዎን ይሳሉ፣ ይሳሉ እና ይሳሉ።';
-
-  @override
   String get featuresNotesDesc => 'ማስታወሻዎችዎን ይፍጠሩ እና ያስተዳድሩ';
 
   @override
   String get featuresTodosDesc => 'ተግባሮችዎን ይከታተሉ';
 
   @override
-  String get featuresExpensesDesc => 'ወጪዎችዎን ይቆጣጠሩ';
-
-  @override
   String get featuresJournalDesc => 'ሃሳብህን ጻፍ';
 
   @override
-  String get featuresCalendarDesc => 'መርሐግብርዎን ያደራጁ';
-
-  @override
   String get featuresClipboardDesc => 'የቅንጥብ ሰሌዳ ታሪክህን ይድረስ';
-
-  @override
-  String get featuresCanvasDesc => 'በነጻ ይሳሉ እና ይሳሉ';
-
-  @override
-  String get featuresSocialPost => 'ማህበራዊ ፖስት';
-
-  @override
-  String get featuresSocialPostDesc => 'አሳታፊ የማህበራዊ ሚዲያ ይዘት ይፍጠሩ';
 
   @override
   String get chooseYourAura => 'የእርስዎን ኦራ ይምረጡ';
 
   @override
   String get expressYourselfTheme => 'በአዲስ ጭብጥ ቀለም እራስዎን ይግለጹ!';
-
-  @override
-  String get level => 'ደረጃ';
-
-  @override
-  String get xpToNextLevel => 'ኤክስፒ ወደ ደረጃ';
-
-  @override
-  String get checkUpcomingEvents => 'መጪ ክስተቶችን ያረጋግጡ';
-
-  @override
-  String get startNewSketch => 'አዲስ ንድፍ ጀምር';
-
-  @override
-  String get noTransactionsMonth => 'በዚህ ወር ምንም ግብይቶች የሉም';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count ግብይቶች',
-      one: '$count ግብይት',
-    );
-    return '$_temp0 በዚህ ወር';
-  }
 
   @override
   String get autoSaveClipboard => 'ቅንጥብ ሰሌዳን በራስ-አስቀምጥ';
@@ -1922,15 +1376,6 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String get premiumLayoutsDesc => 'ትውስታዎችዎን የሚመለከቱበት ልዩ መንገዶች';
-
-  @override
-  String get calendarTools => 'የቀን መቁጠሪያ እና መሳሪያዎች';
-
-  @override
-  String get fullCalendar => 'ሙሉ የቀን መቁጠሪያ';
-
-  @override
-  String get fullCalendarDesc => 'የተሟላ የክስተት አስተዳደር ስርዓት';
 
   @override
   String get clipboardAutoSaveDesc => 'የበስተጀርባ ቅንጥብ ሰሌዳ ታሪክ ቀረጻ';
@@ -2016,82 +1461,12 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   String get completed => 'ተጠናቀቀ';
 
   @override
-  String get greatJob => 'ምርጥ ስራ!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return '$amount XP አግኝተዋል! ቀጣዩ ተግባር: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'ተግባር ተጠናቅቋል! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin => 'ሁሉም ንቁ ተግባራት ወደ ሪሳይክል ቢን ይወሰዱ?';
-
-  @override
-  String get deleteAllPosts => 'ሁሉንም ልጥፎች ሰርዝ';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'እርግጠኛ ነዎት ሁሉንም ማህበራዊ ልጥፎች መሰረዝ ይፈልጋሉ? ይህ ሊቀለበስ አይችልም።';
-
-  @override
-  String get allPosts => 'ሁሉም ልጥፎች';
-
-  @override
-  String get favorites => 'ተወዳጆች';
-
-  @override
-  String get drafts => 'ረቂቆች';
-
-  @override
-  String get noFavoritesYet => 'እስካሁን ምንም ተወዳጆች የሉም';
-
-  @override
-  String get noDraftsYet => 'እስካሁን ምንም ረቂቆች የሉም';
-
-  @override
-  String get startSocialJourney => 'ማህበራዊ ጉዞዎን ይጀምሩ!';
-
-  @override
-  String get draft => 'ረቂቅ';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count ዓባሪዎች',
-      one: '$count ዓባሪ',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'እባክዎ ለማጋራት አንዳንድ ይዘት ወይም ሚዲያ ያክሉ';
 
   @override
   String fileNotFoundError(Object path) {
     return 'ስህተት፡ ፋይል በ$path ላይ አልተገኘም';
   }
-
-  @override
-  String get checkFacebookApp => 'የፌስቡክ መተግበሪያን ይፈትሹ';
-
-  @override
-  String get systemShare => 'የስርዓት አጋራ';
-
-  @override
-  String get socialPost => 'ማህበራዊ ፖስት';
-
-  @override
-  String get favorite => 'ተወዳጅ';
-
-  @override
-  String get saveDraft => 'ረቂቅ አስቀምጥ';
 
   @override
   String get entryCopied => 'መግቢያ ተቀድቷል።';
@@ -2234,33 +1609,10 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   String get dueDate => 'የማለቂያ ቀን';
 
   @override
-  String get expenseTitle => 'ወጪዎች';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'በ$currency ፈልግ...';
-  }
-
-  @override
   String get sortAndFilter => 'ደርድር እና አጣራ';
 
   @override
   String get sortBy => 'በ ደርድር';
-
-  @override
-  String get highestAmount => 'ከፍተኛው መጠን';
-
-  @override
-  String get lowestAmount => 'ዝቅተኛው መጠን';
-
-  @override
-  String get moreFilters => 'ተጨማሪ ማጣሪያዎች...';
-
-  @override
-  String get filterExpenses => 'የማጣሪያ ወጪዎች';
-
-  @override
-  String get transactionType => 'የግብይት አይነት';
 
   @override
   String get categories => 'ምድቦች';
@@ -2269,21 +1621,10 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   String get all => 'ሁሉም';
 
   @override
-  String get income => 'ገቢ';
-
-  @override
-  String get expense => 'ወጪ';
-
-  @override
   String get reset => 'ዳግም አስጀምር';
 
   @override
   String get apply => 'ተግብር';
-
-  @override
-  String newExpense(String currency) {
-    return 'አዲስ $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2344,34 +1685,10 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   }
 
   @override
-  String get instagram => 'ኢንስታግራም';
-
-  @override
-  String get facebook => 'ፌስቡክ';
-
-  @override
-  String get tiktok => 'ቲክቶክ';
-
-  @override
-  String get newSketch => 'አዲስ ንድፍ';
-
-  @override
-  String get searchSketches => 'ንድፎችን እና አቃፊዎችን ፈልግ...';
-
-  @override
   String get noResultsFound => 'ምንም ውጤቶች አልተገኙም።';
 
   @override
   String get noItems => 'ምንም እቃዎች የሉም';
-
-  @override
-  String get noDrawingsYet => 'እስካሁን ምንም ስዕሎች የሉም';
-
-  @override
-  String get canvasIntro => 'ፈጠራዎን በሸራው ላይ ይልቀቁ!';
-
-  @override
-  String get newCanvas => 'አዲስ ሸራ';
 
   @override
   String get rename => 'እንደገና ይሰይሙ';
@@ -2387,13 +1704,7 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
       'በዚህ አቃፊ ውስጥ ያሉት ሁሉም ንድፎች እስከመጨረሻው ይሰረዛሉ።';
 
   @override
-  String get renameFolder => 'አቃፊ እንደገና ይሰይሙ';
-
-  @override
   String get chooseColor => 'ቀለም ይምረጡ';
-
-  @override
-  String get deleteFolderQuestion => 'አቃፊ ይሰረዝ?';
 
   @override
   String get searchClips => 'ቅንጥቦችን ፈልግ...';
@@ -2415,9 +1726,6 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
 
   @override
   String get restoreClipLater => 'ይህን ቅንጥብ በኋላ ወደነበረበት መመለስ ትችላለህ።';
-
-  @override
-  String get upcomingEvents => 'መጪ ክስተቶች';
 
   @override
   String get dataDistribution => 'የውሂብ ስርጭት';
@@ -2458,56 +1766,6 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   String selectedCount(int count) {
     return '$count ተመርጧል';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes ንድፎች • $folders አቃፊዎች';
-  }
-
-  @override
-  String get sortItems => 'እቃዎችን ደርድር';
-
-  @override
-  String get sortNameAZ => 'ስም (A-Z)';
-
-  @override
-  String get sortNameZA => 'ስም (Z-A)';
-
-  @override
-  String get createFolder => 'አቃፊ ፍጠር';
-
-  @override
-  String get folderNameHint => 'የአቃፊ ስም...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'የ$count ንድፎች ይሰረዙ? ይህ ሊቀለበስ አይችልም።';
-  }
-
-  @override
-  String get noSketchesFound => 'ምንም ንድፎች አልተገኙም።';
-
-  @override
-  String get noSketchesFoundSub => 'ፍለጋዎን ለማስተካከል ወይም አዲስ ንድፍ ለመፍጠር ይሞክሩ።';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'በ$folder ውስጥ ፈልግ...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count ንድፎች';
-  }
-
-  @override
-  String get sortSketches => 'ንድፎችን ደርድር';
-
-  @override
-  String get calendarScreenTitle => 'የቀን መቁጠሪያ';
-
-  @override
-  String get dailyActivity => 'የዕለት ተዕለት እንቅስቃሴ';
 
   @override
   String get deleteItemQuestion => 'ንጥል ይሰረዝ?';
@@ -2609,28 +1867,6 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   String get general => 'አጠቃላይ';
 
   @override
-  String get saveTransactionQuestion => 'ይህን ግብይት ማስቀመጥ ይፈልጋሉ?';
-
-  @override
-  String get fillTitleAmount => 'እባክዎን ርዕስ እና መጠን ይሙሉ';
-
-  @override
-  String get invalidAmount => 'ልክ ያልሆነ መጠን ቅርጸት';
-
-  @override
-  String get moveTransactionToBinTitle => 'ግብይት ወደ ሪሳይክል ቢን ይወሰድ?';
-
-  @override
-  String get restoreTransactionLater =>
-      'ይህን ግብይት ከቅንብሮች በኋላ ወደነበረበት መመለስ ይችላሉ።';
-
-  @override
-  String get newTransaction => 'አዲስ ግብይት';
-
-  @override
-  String get whatIsThisFor => 'ይህ ምንድን ነው?';
-
-  @override
   String get description => 'መግለጫ';
 
   @override
@@ -2646,70 +1882,10 @@ class AppLocalizationsAmEt extends AppLocalizationsAm {
   String get yearly => 'በየአመቱ';
 
   @override
-  String get totalIncome => 'ጠቅላላ ገቢ';
-
-  @override
-  String get totalExpense => 'ጠቅላላ ወጪ';
-
-  @override
   String get analysis => 'ትንተና';
 
   @override
   String get transactions => 'ግብይቶች';
-
-  @override
-  String get noExpensesFound => 'ለዚህ ጊዜ ምንም ወጪዎች አልተገኙም።';
-
-  @override
-  String get netBalance => 'የተጣራ ሚዛን';
-
-  @override
-  String get topCategories => 'ከፍተኛ ምድቦች';
-
-  @override
-  String get spendingTrend => 'የወጪ አዝማሚያ';
-
-  @override
-  String get insights => 'ግንዛቤዎች';
-
-  @override
-  String get noExpensesRecorded => 'ምንም ወጪዎች አልተመዘገቡም።';
-
-  @override
-  String get trackSpendingHabits => 'የወጪ ልማዶችዎን በቀላሉ ይከታተሉ።';
-
-  @override
-  String get addExpense => 'ወጪ ጨምር';
-
-  @override
-  String get noDataForPeriod => 'ለዚህ ጊዜ ምንም ውሂብ የለም።';
-
-  @override
-  String get budget => 'በጀት';
-
-  @override
-  String get spent => 'አሳልፈዋል';
-
-  @override
-  String get limit => 'ገደብ';
-
-  @override
-  String get overBudget => 'ከበጀት በላይ!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% ቀርቷል';
-  }
-
-  @override
-  String get savingsRate => 'የቁጠባ መጠን';
-
-  @override
-  String get healthScore => 'የጤና ነጥብ';
-
-  @override
-  String get healthScoreExplanation =>
-      'ይህ ነጥብ በእርስዎ የቁጠባ መጠን ላይ የተመሰረተ ነው።\n\n• > 50% ተቀምጧል = በጣም ጥሩ (100)\n• 0% ተቀምጧል = አማካኝ (50)\n• ወጪ > ገቢ = ድሃ (<50)';
 
   @override
   String get ok => 'እሺ';

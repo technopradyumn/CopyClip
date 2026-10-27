@@ -26,7 +26,7 @@ void callbackDispatcher() {
           Hive.registerAdapter(TodoAdapter());
         }
         // Register other adapters needed for checks
-        // Expense(3), Journal(4) - assuming IDs based on context.
+        // Journal(4) - assuming IDs based on context.
         // We'll trust LazyBoxLoader logic or manual reg here?
         // Let's register them if needed. Safer to use try/catch or check registry.
       }

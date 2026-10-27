@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:copyclip/src/features/canvas/data/canvas_model.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
-import 'package:copyclip/src/features/expenses/data/expense_model.dart';
 
 import 'package:copyclip/src/features/journal/data/journal_model.dart';
 import 'package:copyclip/src/features/notes/data/note_model.dart';
@@ -21,11 +19,8 @@ class WidgetSyncService {
     await Future.wait([
       syncNotes(),
       syncTodos(),
-      syncFinance(),
       syncJournal(),
       syncClipboard(),
-      syncCalendar(),
-      syncCanvas(),
     ]);
 
     // Note: Individual syncX() methods already call updateWidget(), 
@@ -173,91 +168,6 @@ class WidgetSyncService {
       await HomeWidget.updateWidget(androidName: 'TodosWidgetProvider');
     } catch (e) {
       debugPrint('Error syncing todos: $e');
-    }
-  }
-
-  // --- FINANCE ---
-  static Future<void> syncFinance() async {
-    try {
-      final box = Hive.isBoxOpen('expenses_box')
-          ? Hive.box<Expense>('expenses_box')
-          : await Hive.openBox<Expense>('expenses_box');
-
-      // Get Selected Currency (Fallback only)
-      final settingsBox = Hive.isBoxOpen('settings')
-          ? Hive.box('settings')
-          : await Hive.openBox('settings');
-      final fallbackCurrency = settingsBox.get(
-        'last_currency',
-        defaultValue: '\$',
-      );
-
-      // Group totals by currency
-      final Map<String, double> balances = {};
-
-      for (var e in box.values) {
-        if (e.isDeleted) continue;
-
-        final curr = e.currency;
-        if (!balances.containsKey(curr)) balances[curr] = 0;
-
-        if (e.isIncome) {
-          balances[curr] = balances[curr]! + e.amount;
-        } else {
-          balances[curr] = balances[curr]! - e.amount;
-        }
-      }
-
-      // Build Display String
-      final buffer = StringBuffer();
-      if (balances.isEmpty) {
-        buffer.write('$fallbackCurrency 0.00');
-      } else {
-        int count = 0;
-        balances.forEach((curr, amount) {
-          if (count > 0) buffer.writeln();
-          buffer.write('$curr ${amount.toStringAsFixed(2)}');
-          count++;
-        });
-      }
-
-      await HomeWidget.saveWidgetData<String>(
-        'total_balance',
-        buffer.toString(),
-      );
-
-      // Clear specific amounts as they don't make sense in aggregate w/o currency
-      await HomeWidget.saveWidgetData<String>('income_amount', '');
-      await HomeWidget.saveWidgetData<String>('expense_amount', '');
-
-      // Save raw values for Progress Bars
-      await HomeWidget.saveWidgetData<String>('income_val', '0');
-      await HomeWidget.saveWidgetData<String>('expense_val', '0');
-
-      // Save Transaction List (Top 5) - All Currencies
-      final allTx = box.values.where((e) => !e.isDeleted).toList()
-        ..sort((a, b) => b.date.compareTo(a.date));
-
-      final recentTx = allTx.take(5).map((e) {
-        return {
-          'title': e.title.isEmpty ? 'Transaction' : e.title,
-          'amount':
-              '${e.isIncome ? '+' : '-'}${e.currency} ${e.amount.toStringAsFixed(0)}',
-          'isIncome': e.isIncome,
-          'date': DateFormat('MMM d').format(e.date),
-          'id': e.id,
-        };
-      }).toList();
-
-      await HomeWidget.saveWidgetData<String>(
-        'expenses_data',
-        jsonEncode(recentTx),
-      );
-      await HomeWidget.saveWidgetData<int>('expenses_count', allTx.length);
-
-      await HomeWidget.updateWidget(androidName: 'ExpensesWidgetProvider');
-    } catch (e) {
-      debugPrint('Error syncing finance: $e');
     }
   }
 
@@ -427,131 +337,4 @@ class WidgetSyncService {
     }
   }
 
-  // --- CALENDAR ---
-  static Future<void> syncCalendar() async {
-    try {
-      final now = DateTime.now();
-      final dateKey = DateFormat('yyyy-MM-dd').format(now);
-      List<Map<String, String>> events = [];
-
-      // --- FETCH DATA (Mirroring CalendarScreen logic) ---
-
-      // 1. Notes (Updated Today)
-      // Note: We need to manually handle types because the generic helper above is a bit tricky with sync/async mixed.
-      // Let's just do inline for simplicity and reliability.
-
-      // Notes
-      if (!Hive.isBoxOpen('notes_box')) await Hive.openBox<Note>('notes_box');
-      final notesBox = Hive.box<Note>('notes_box');
-      final notes = notesBox.values.where(
-        (n) =>
-            !n.isDeleted &&
-            DateFormat('yyyy-MM-dd').format(n.updatedAt) == dateKey,
-      );
-      for (var n in notes) {
-        events.add({
-          'title': n.title.isEmpty ? 'Untitled Note' : n.title,
-          'time': 'Note',
-        });
-      }
-
-      // Todos (Due Today)
-      if (!Hive.isBoxOpen('todos_box')) {
-        await Hive.openBox<Todo>('todos_box'); // correct box name
-      }
-      final todosBox = Hive.box<Todo>('todos_box');
-      final todos = todosBox.values.where(
-        (t) =>
-            !t.isDeleted &&
-            t.dueDate != null &&
-            DateFormat('yyyy-MM-dd').format(t.dueDate!) == dateKey,
-      );
-      for (var t in todos) {
-        events.add({'title': t.task, 'time': t.isDone ? 'Done' : 'Todo'});
-      }
-
-      // Expenses (Today)
-      if (!Hive.isBoxOpen('expenses_box')) {
-        await Hive.openBox<Expense>('expenses_box');
-      }
-      final expBox = Hive.box<Expense>('expenses_box');
-      final expenses = expBox.values.where(
-        (e) =>
-            !e.isDeleted && DateFormat('yyyy-MM-dd').format(e.date) == dateKey,
-      );
-      for (var e in expenses) {
-        final amount = '${e.currency} ${e.amount.toStringAsFixed(0)}';
-        events.add({
-          'title': e.title.isEmpty ? 'Expense' : e.title,
-          'time': amount,
-        });
-      }
-
-      // Journal (Today)
-      if (!Hive.isBoxOpen('journal_box')) {
-        await Hive.openBox<JournalEntry>('journal_box');
-      }
-      final journalBox = Hive.box<JournalEntry>('journal_box');
-      final journals = journalBox.values.where(
-        (j) =>
-            !j.isDeleted && DateFormat('yyyy-MM-dd').format(j.date) == dateKey,
-      );
-      for (var j in journals) {
-        events.add({
-          'title': j.title.isEmpty ? 'Journal Entry' : j.title,
-          'time': 'Journal',
-        });
-      }
-
-      // Save Data
-      await HomeWidget.saveWidgetData<String>(
-        'events_count',
-        '${events.length} events',
-      );
-      await HomeWidget.saveWidgetData<bool>('has_events', events.isNotEmpty);
-      await HomeWidget.saveWidgetData<String>(
-        'calendar_data',
-        jsonEncode(events),
-      );
-
-      await HomeWidget.updateWidget(androidName: 'CalendarWidgetProvider');
-    } catch (e) {
-      debugPrint('Error syncing calendar: $e');
-    }
-  }
-
-  // --- CANVAS ---
-  static Future<void> syncCanvas() async {
-    try {
-      final box = Hive.isBoxOpen('canvas_notes')
-          ? Hive.box<CanvasNote>('canvas_notes')
-          : await Hive.openBox<CanvasNote>('canvas_notes');
-      final count = box.length;
-
-      await HomeWidget.saveWidgetData<String>(
-        'canvas_count',
-        '$count sketches',
-      );
-
-      // Save List Data (Top 5)
-      final sketches = box.values.where((e) => !e.isDeleted).toList()
-        ..sort((a, b) => b.lastModified.compareTo(a.lastModified));
-
-      final topSketches = sketches.take(5).map((e) {
-        return {
-          'title': e.title.isEmpty ? 'Untitled Sketch' : e.title,
-          'date': DateFormat('MMM d').format(e.lastModified),
-          'id': e.id,
-        };
-      }).toList();
-
-      await HomeWidget.saveWidgetData<String>(
-        'canvas_data',
-        jsonEncode(topSketches),
-      );
-      await HomeWidget.updateWidget(androidName: 'CanvasWidgetProvider');
-    } catch (e) {
-      debugPrint('Error syncing canvas: $e');
-    }
-  }
 }

@@ -24,19 +24,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get todos => 'To-Do';
 
   @override
-  String get expenses => 'Spese';
-
-  @override
   String get journal => 'Diario';
 
   @override
-  String get calendar => 'Calendario';
-
-  @override
   String get clipboard => 'Appunti';
-
-  @override
-  String get canvas => 'Tela';
 
   @override
   String get save => 'Salva';
@@ -69,24 +60,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get discard => 'Scarta';
 
   @override
-  String get createPost => 'Crea post';
-
-  @override
-  String get post => 'Pubblica';
-
-  @override
-  String get postingTo => 'Pubblicazione su';
-
-  @override
-  String get whatsOnYourMind => 'A cosa stai pensando?';
-
-  @override
-  String get pickImages => 'Scegli immagini';
-
-  @override
-  String get pickVideo => 'Scegli video';
-
-  @override
   String get camera => 'Fotocamera';
 
   @override
@@ -111,16 +84,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String error(Object error) {
     return 'Errore: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Ordinamento disponibile solo in \'Tutti i post\'';
-
-  @override
-  String get deletePost => 'Elimina post';
-
-  @override
-  String get postDeleted => 'Post eliminato';
 
   @override
   String get premiumFeatures => 'Funzioni Premium';
@@ -181,35 +144,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get recycleBinCleared => 'Cestino svuotato con successo';
 
   @override
-  String get allPostsDeleted => 'Tutti i post eliminati';
-
-  @override
-  String get newPost => 'Nuovo post';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Testo copiato negli appunti (policy di Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'La condivisione su TikTok richiede un video o un\'immagine';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Errore durante la condivisione: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Condividi nella Storia di $platform';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Condividi nel Feed di $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Sblocca permanentemente';
 
   @override
@@ -225,13 +159,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get selectDateTime => 'Seleziona data e ora';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Sei sicuro di voler eliminare questo post?';
-
-  @override
-  String get socialPosts => 'Post social';
 
   @override
   String get watchAdToEarnCoins => 'Guarda l\'annuncio per guadagnare monete';
@@ -418,25 +345,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Rimani al top. Crea liste di cose da fare, imposta le priorità e raggiungi i tuoi obiettivi un segno di spunta alla volta.';
 
   @override
-  String get onboardingExpensesTitle => 'Monitoraggio spese';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Prendi il controllo delle tue finanze. Monitora entrate e uscite facilmente per capire le tue abitudini di spesa.';
-
-  @override
   String get onboardingJournalTitle => 'Diario personale';
 
   @override
   String get onboardingJournalDesc =>
       'Rifletti sulla tua giornata. Uno spazio privato per annotare i tuoi ricordi, sentimenti ed esperienze quotidiane.';
-
-  @override
-  String get onboardingCalendarTitle => 'Calendario ed Eventi';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Non perdere mai un momento. Organizza il tuo programma e tieni traccia degli eventi importanti imminenti.';
 
   @override
   String get onboardingClipboardTitle => 'Gestore appunti';
@@ -446,71 +359,22 @@ class AppLocalizationsIt extends AppLocalizations {
       'Copia una volta, incolla ovunque. Accedi alla cronologia degli appunti per recuperare i frammenti che hai copiato in precedenza.';
 
   @override
-  String get onboardingCanvasTitle => 'Tela creativa';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Scatena la tua creatività. Disegna, schizza e visualizza le tue idee su una tela digitale a forma libera.';
-
-  @override
   String get featuresNotesDesc => 'Crea e gestisci le tue note';
 
   @override
   String get featuresTodosDesc => 'Tieni traccia delle tue attività';
 
   @override
-  String get featuresExpensesDesc => 'Monitora le tue spese';
-
-  @override
   String get featuresJournalDesc => 'Annota i tuoi pensieri';
 
   @override
-  String get featuresCalendarDesc => 'Organizza il tuo programma';
-
-  @override
   String get featuresClipboardDesc => 'Accedi alla cronologia degli appunti';
-
-  @override
-  String get featuresCanvasDesc => 'Disegna e schizza liberamente';
-
-  @override
-  String get featuresSocialPost => 'Post social';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Crea contenuti coinvolgenti per i social media';
 
   @override
   String get chooseYourAura => 'Scegli la tua aura';
 
   @override
   String get expressYourselfTheme => 'Esprimiti con un nuovo colore del tema!';
-
-  @override
-  String get level => 'Livello';
-
-  @override
-  String get xpToNextLevel => 'XP al livello';
-
-  @override
-  String get checkUpcomingEvents => 'Controlla gli eventi imminenti';
-
-  @override
-  String get startNewSketch => 'Inizia un nuovo schizzo';
-
-  @override
-  String get noTransactionsMonth => 'Nessuna transazione questo mese';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'i',
-      one: '',
-    );
-    return '$count transazione$_temp0 questo mese';
-  }
 
   @override
   String get autoSaveClipboard => 'Salvataggio automatico appunti';
@@ -575,15 +439,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get premiumLayoutsDesc =>
       'Modi esclusivi per visualizzare i tuoi ricordi';
-
-  @override
-  String get calendarTools => 'Calendario e Strumenti';
-
-  @override
-  String get fullCalendar => 'Calendario completo';
-
-  @override
-  String get fullCalendarDesc => 'Sistema completo di gestione eventi';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -673,83 +528,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get completed => 'Completato';
 
   @override
-  String get greatJob => 'Ottimo lavoro!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Hai guadagnato $amount XP! Prossima attività: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Attività completata! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Spostare tutte le attività attive nel cestino?';
-
-  @override
-  String get deleteAllPosts => 'Elimina tutti i post';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Sei sicuro di voler eliminare TUTTI i post social? L\'azione non può essere annullata.';
-
-  @override
-  String get allPosts => 'Tutti i post';
-
-  @override
-  String get favorites => 'Preferiti';
-
-  @override
-  String get drafts => 'Bozze';
-
-  @override
-  String get noFavoritesYet => 'Ancora nessun preferito';
-
-  @override
-  String get noDraftsYet => 'Ancora nessuna bozza';
-
-  @override
-  String get startSocialJourney => 'Inizia il tuo viaggio social!';
-
-  @override
-  String get draft => 'BOZZA';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'i',
-      one: '',
-    );
-    return '$count allegato$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'Aggiungi contenuti o media da condividere';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Errore: File non trovato in $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Controlla l\'app di Facebook';
-
-  @override
-  String get systemShare => 'Condivisione di sistema';
-
-  @override
-  String get socialPost => 'Post social';
-
-  @override
-  String get favorite => 'Preferito';
-
-  @override
-  String get saveDraft => 'Salva bozza';
 
   @override
   String get entryCopied => 'Voce copiata';
@@ -895,33 +680,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get dueDate => 'Data di scadenza';
 
   @override
-  String get expenseTitle => 'Spese';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Cerca in $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Ordina e Filtra';
 
   @override
   String get sortBy => 'ORDINA PER';
-
-  @override
-  String get highestAmount => 'Importo più alto';
-
-  @override
-  String get lowestAmount => 'Importo più basso';
-
-  @override
-  String get moreFilters => 'Altri filtri...';
-
-  @override
-  String get filterExpenses => 'Filtra spese';
-
-  @override
-  String get transactionType => 'Tipo di transazione';
 
   @override
   String get categories => 'Categorie';
@@ -930,21 +692,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get all => 'Tutti';
 
   @override
-  String get income => 'Entrate';
-
-  @override
-  String get expense => 'Uscite';
-
-  @override
   String get reset => 'Reset';
 
   @override
   String get apply => 'Applica';
-
-  @override
-  String newExpense(String currency) {
-    return 'Nuova $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -1007,34 +758,10 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Nuovo schizzo';
-
-  @override
-  String get searchSketches => 'Cerca schizzi e cartelle...';
-
-  @override
   String get noResultsFound => 'Nessun risultato trovato';
 
   @override
   String get noItems => 'Nessun elemento';
-
-  @override
-  String get noDrawingsYet => 'Ancora nessun disegno';
-
-  @override
-  String get canvasIntro => 'Scatena la tua creatività sulla tela!';
-
-  @override
-  String get newCanvas => 'Nuova tela';
 
   @override
   String get rename => 'Rinomina';
@@ -1050,13 +777,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Tutti gli schizzi in questa cartella verranno eliminati permanentemente.';
 
   @override
-  String get renameFolder => 'Rinomina cartella';
-
-  @override
   String get chooseColor => 'Scegli colore';
-
-  @override
-  String get deleteFolderQuestion => 'Elimina cartella?';
 
   @override
   String get searchClips => 'Cerca clip...';
@@ -1078,9 +799,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get restoreClipLater => 'Puoi ripristinare questa clip più tardi.';
-
-  @override
-  String get upcomingEvents => 'Eventi imminenti';
 
   @override
   String get dataDistribution => 'DISTRIBUZIONE DATI';
@@ -1121,57 +839,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String selectedCount(int count) {
     return '$count selezionati';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes schizzi • $folders cartelle';
-  }
-
-  @override
-  String get sortItems => 'Ordina elementi';
-
-  @override
-  String get sortNameAZ => 'Nome (A-Z)';
-
-  @override
-  String get sortNameZA => 'Nome (Z-A)';
-
-  @override
-  String get createFolder => 'Crea cartella';
-
-  @override
-  String get folderNameHint => 'Nome cartella...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Eliminare $count schizzi? L\'\'azione non può essere annullata.';
-  }
-
-  @override
-  String get noSketchesFound => 'Nessun schizzo trovato';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Prova a regolare la ricerca o a creare un nuovo schizzo.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Cerca in $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count schizzi';
-  }
-
-  @override
-  String get sortSketches => 'Ordina schizzi';
-
-  @override
-  String get calendarScreenTitle => 'Calendario';
-
-  @override
-  String get dailyActivity => 'Attività quotidiana';
 
   @override
   String get deleteItemQuestion => 'Eliminare l\'elemento?';
@@ -1276,29 +943,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get general => 'Generale';
 
   @override
-  String get saveTransactionQuestion => 'Vuoi salvare questa transazione?';
-
-  @override
-  String get fillTitleAmount => 'Compila titolo e importo';
-
-  @override
-  String get invalidAmount => 'Formato importo non valido';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Spostare la transazione nel cestino?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Puoi ripristinare questa transazione più tardi dalle impostazioni.';
-
-  @override
-  String get newTransaction => 'Nuova transazione';
-
-  @override
-  String get whatIsThisFor => 'Per cosa è questo?';
-
-  @override
   String get description => 'Descrizione';
 
   @override
@@ -1314,71 +958,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get yearly => 'Annuale';
 
   @override
-  String get totalIncome => 'Entrate totali';
-
-  @override
-  String get totalExpense => 'Uscite totali';
-
-  @override
   String get analysis => 'Analisi';
 
   @override
   String get transactions => 'Transazioni';
-
-  @override
-  String get noExpensesFound => 'Nessuna spesa trovata per questo periodo.';
-
-  @override
-  String get netBalance => 'Saldo netto';
-
-  @override
-  String get topCategories => 'Categorie principali';
-
-  @override
-  String get spendingTrend => 'Trend di spesa';
-
-  @override
-  String get insights => 'Approfondimenti';
-
-  @override
-  String get noExpensesRecorded => 'Nessuna spesa registrata';
-
-  @override
-  String get trackSpendingHabits =>
-      'Monitora le tue abitudini di spesa facilmente.';
-
-  @override
-  String get addExpense => 'Aggiungi spesa';
-
-  @override
-  String get noDataForPeriod => 'Nessun dato per questo periodo';
-
-  @override
-  String get budget => 'Budget';
-
-  @override
-  String get spent => 'Speso';
-
-  @override
-  String get limit => 'Limite';
-
-  @override
-  String get overBudget => 'Fuori budget!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% rimanente';
-  }
-
-  @override
-  String get savingsRate => 'Tasso di risparmio';
-
-  @override
-  String get healthScore => 'Punteggio salute';
-
-  @override
-  String get healthScoreExplanation =>
-      'Questo punteggio si basa sul tuo tasso di risparmio.\n\n• > 50% risparmiato = Eccellente (100)\n• 0% risparmiato = Medio (50)\n• Spesa > Entrate = Scarso (<50)';
 
   @override
   String get ok => 'OK';
@@ -1407,19 +990,10 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
   String get todos => 'To-Do';
 
   @override
-  String get expenses => 'Spese';
-
-  @override
   String get journal => 'Diario';
 
   @override
-  String get calendar => 'Calendario';
-
-  @override
   String get clipboard => 'Appunti';
-
-  @override
-  String get canvas => 'Tela';
 
   @override
   String get save => 'Salva';
@@ -1452,24 +1026,6 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
   String get discard => 'Scarta';
 
   @override
-  String get createPost => 'Crea post';
-
-  @override
-  String get post => 'Pubblica';
-
-  @override
-  String get postingTo => 'Pubblicazione su';
-
-  @override
-  String get whatsOnYourMind => 'A cosa stai pensando?';
-
-  @override
-  String get pickImages => 'Scegli immagini';
-
-  @override
-  String get pickVideo => 'Scegli video';
-
-  @override
   String get camera => 'Fotocamera';
 
   @override
@@ -1494,16 +1050,6 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
   String error(Object error) {
     return 'Errore: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Ordinamento disponibile solo in \'Tutti i post\'';
-
-  @override
-  String get deletePost => 'Elimina post';
-
-  @override
-  String get postDeleted => 'Post eliminato';
 
   @override
   String get premiumFeatures => 'Funzioni Premium';
@@ -1564,35 +1110,6 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
   String get recycleBinCleared => 'Cestino svuotato con successo';
 
   @override
-  String get allPostsDeleted => 'Tutti i post eliminati';
-
-  @override
-  String get newPost => 'Nuovo post';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Testo copiato negli appunti (policy di Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'La condivisione su TikTok richiede un video o un\'immagine';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Errore durante la condivisione: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Condividi nella Storia di $platform';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Condividi nel Feed di $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Sblocca permanentemente';
 
   @override
@@ -1608,13 +1125,6 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
 
   @override
   String get selectDateTime => 'Seleziona data e ora';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Sei sicuro di voler eliminare questo post?';
-
-  @override
-  String get socialPosts => 'Post social';
 
   @override
   String get watchAdToEarnCoins => 'Guarda l\'annuncio per guadagnare monete';
@@ -1801,25 +1311,11 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
       'Rimani al top. Crea liste di cose da fare, imposta le priorità e raggiungi i tuoi obiettivi un segno di spunta alla volta.';
 
   @override
-  String get onboardingExpensesTitle => 'Monitoraggio spese';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Prendi il controllo delle tue finanze. Monitora entrate e uscite facilmente per capire le tue abitudini di spesa.';
-
-  @override
   String get onboardingJournalTitle => 'Diario personale';
 
   @override
   String get onboardingJournalDesc =>
       'Rifletti sulla tua giornata. Uno spazio privato per annotare i tuoi ricordi, sentimenti ed esperienze quotidiane.';
-
-  @override
-  String get onboardingCalendarTitle => 'Calendario ed Eventi';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Non perdere mai un momento. Organizza il tuo programma e tieni traccia degli eventi importanti imminenti.';
 
   @override
   String get onboardingClipboardTitle => 'Gestore appunti';
@@ -1829,71 +1325,22 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
       'Copia una volta, incolla ovunque. Accedi alla cronologia degli appunti per recuperare i frammenti che hai copiato in precedenza.';
 
   @override
-  String get onboardingCanvasTitle => 'Tela creativa';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Scatena la tua creatività. Disegna, schizza e visualizza le tue idee su una tela digitale a forma libera.';
-
-  @override
   String get featuresNotesDesc => 'Crea e gestisci le tue note';
 
   @override
   String get featuresTodosDesc => 'Tieni traccia delle tue attività';
 
   @override
-  String get featuresExpensesDesc => 'Monitora le tue spese';
-
-  @override
   String get featuresJournalDesc => 'Annota i tuoi pensieri';
 
   @override
-  String get featuresCalendarDesc => 'Organizza il tuo programma';
-
-  @override
   String get featuresClipboardDesc => 'Accedi alla cronologia degli appunti';
-
-  @override
-  String get featuresCanvasDesc => 'Disegna e schizza liberamente';
-
-  @override
-  String get featuresSocialPost => 'Post social';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Crea contenuti coinvolgenti per i social media';
 
   @override
   String get chooseYourAura => 'Scegli la tua aura';
 
   @override
   String get expressYourselfTheme => 'Esprimiti con un nuovo colore del tema!';
-
-  @override
-  String get level => 'Livello';
-
-  @override
-  String get xpToNextLevel => 'XP al livello';
-
-  @override
-  String get checkUpcomingEvents => 'Controlla gli eventi imminenti';
-
-  @override
-  String get startNewSketch => 'Inizia un nuovo schizzo';
-
-  @override
-  String get noTransactionsMonth => 'Nessuna transazione questo mese';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'i',
-      one: '',
-    );
-    return '$count transazione$_temp0 questo mese';
-  }
 
   @override
   String get autoSaveClipboard => 'Salvataggio automatico appunti';
@@ -1958,15 +1405,6 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
   @override
   String get premiumLayoutsDesc =>
       'Modi esclusivi per visualizzare i tuoi ricordi';
-
-  @override
-  String get calendarTools => 'Calendario e Strumenti';
-
-  @override
-  String get fullCalendar => 'Calendario completo';
-
-  @override
-  String get fullCalendarDesc => 'Sistema completo di gestione eventi';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -2056,83 +1494,13 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
   String get completed => 'Completato';
 
   @override
-  String get greatJob => 'Ottimo lavoro!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Hai guadagnato $amount XP! Prossima attività: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Attività completata! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Spostare tutte le attività attive nel cestino?';
-
-  @override
-  String get deleteAllPosts => 'Elimina tutti i post';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Sei sicuro di voler eliminare TUTTI i post social? L\'azione non può essere annullata.';
-
-  @override
-  String get allPosts => 'Tutti i post';
-
-  @override
-  String get favorites => 'Preferiti';
-
-  @override
-  String get drafts => 'Bozze';
-
-  @override
-  String get noFavoritesYet => 'Ancora nessun preferito';
-
-  @override
-  String get noDraftsYet => 'Ancora nessuna bozza';
-
-  @override
-  String get startSocialJourney => 'Inizia il tuo viaggio social!';
-
-  @override
-  String get draft => 'BOZZA';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'i',
-      one: '',
-    );
-    return '$count allegato$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'Aggiungi contenuti o media da condividere';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Errore: File non trovato in $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Controlla l\'app di Facebook';
-
-  @override
-  String get systemShare => 'Condivisione di sistema';
-
-  @override
-  String get socialPost => 'Post social';
-
-  @override
-  String get favorite => 'Preferito';
-
-  @override
-  String get saveDraft => 'Salva bozza';
 
   @override
   String get entryCopied => 'Voce copiata';
@@ -2278,33 +1646,10 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
   String get dueDate => 'Data di scadenza';
 
   @override
-  String get expenseTitle => 'Spese';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Cerca in $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Ordina e Filtra';
 
   @override
   String get sortBy => 'ORDINA PER';
-
-  @override
-  String get highestAmount => 'Importo più alto';
-
-  @override
-  String get lowestAmount => 'Importo più basso';
-
-  @override
-  String get moreFilters => 'Altri filtri...';
-
-  @override
-  String get filterExpenses => 'Filtra spese';
-
-  @override
-  String get transactionType => 'Tipo di transazione';
 
   @override
   String get categories => 'Categorie';
@@ -2313,21 +1658,10 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
   String get all => 'Tutti';
 
   @override
-  String get income => 'Entrate';
-
-  @override
-  String get expense => 'Uscite';
-
-  @override
   String get reset => 'Reset';
 
   @override
   String get apply => 'Applica';
-
-  @override
-  String newExpense(String currency) {
-    return 'Nuova $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -2390,34 +1724,10 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Nuovo schizzo';
-
-  @override
-  String get searchSketches => 'Cerca schizzi e cartelle...';
-
-  @override
   String get noResultsFound => 'Nessun risultato trovato';
 
   @override
   String get noItems => 'Nessun elemento';
-
-  @override
-  String get noDrawingsYet => 'Ancora nessun disegno';
-
-  @override
-  String get canvasIntro => 'Scatena la tua creatività sulla tela!';
-
-  @override
-  String get newCanvas => 'Nuova tela';
 
   @override
   String get rename => 'Rinomina';
@@ -2433,13 +1743,7 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
       'Tutti gli schizzi in questa cartella verranno eliminati permanentemente.';
 
   @override
-  String get renameFolder => 'Rinomina cartella';
-
-  @override
   String get chooseColor => 'Scegli colore';
-
-  @override
-  String get deleteFolderQuestion => 'Elimina cartella?';
 
   @override
   String get searchClips => 'Cerca clip...';
@@ -2461,9 +1765,6 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
 
   @override
   String get restoreClipLater => 'Puoi ripristinare questa clip più tardi.';
-
-  @override
-  String get upcomingEvents => 'Eventi imminenti';
 
   @override
   String get dataDistribution => 'DISTRIBUZIONE DATI';
@@ -2504,57 +1805,6 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
   String selectedCount(int count) {
     return '$count selezionati';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes schizzi • $folders cartelle';
-  }
-
-  @override
-  String get sortItems => 'Ordina elementi';
-
-  @override
-  String get sortNameAZ => 'Nome (A-Z)';
-
-  @override
-  String get sortNameZA => 'Nome (Z-A)';
-
-  @override
-  String get createFolder => 'Crea cartella';
-
-  @override
-  String get folderNameHint => 'Nome cartella...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Eliminare $count schizzi? L\'\'azione non può essere annullata.';
-  }
-
-  @override
-  String get noSketchesFound => 'Nessun schizzo trovato';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Prova a regolare la ricerca o a creare un nuovo schizzo.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Cerca in $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count schizzi';
-  }
-
-  @override
-  String get sortSketches => 'Ordina schizzi';
-
-  @override
-  String get calendarScreenTitle => 'Calendario';
-
-  @override
-  String get dailyActivity => 'Attività quotidiana';
 
   @override
   String get deleteItemQuestion => 'Eliminare l\'elemento?';
@@ -2659,29 +1909,6 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
   String get general => 'Generale';
 
   @override
-  String get saveTransactionQuestion => 'Vuoi salvare questa transazione?';
-
-  @override
-  String get fillTitleAmount => 'Compila titolo e importo';
-
-  @override
-  String get invalidAmount => 'Formato importo non valido';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Spostare la transazione nel cestino?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Puoi ripristinare questa transazione più tardi dalle impostazioni.';
-
-  @override
-  String get newTransaction => 'Nuova transazione';
-
-  @override
-  String get whatIsThisFor => 'Per cosa è questo?';
-
-  @override
   String get description => 'Descrizione';
 
   @override
@@ -2697,71 +1924,10 @@ class AppLocalizationsItCh extends AppLocalizationsIt {
   String get yearly => 'Annuale';
 
   @override
-  String get totalIncome => 'Entrate totali';
-
-  @override
-  String get totalExpense => 'Uscite totali';
-
-  @override
   String get analysis => 'Analisi';
 
   @override
   String get transactions => 'Transazioni';
-
-  @override
-  String get noExpensesFound => 'Nessuna spesa trovata per questo periodo.';
-
-  @override
-  String get netBalance => 'Saldo netto';
-
-  @override
-  String get topCategories => 'Categorie principali';
-
-  @override
-  String get spendingTrend => 'Trend di spesa';
-
-  @override
-  String get insights => 'Approfondimenti';
-
-  @override
-  String get noExpensesRecorded => 'Nessuna spesa registrata';
-
-  @override
-  String get trackSpendingHabits =>
-      'Monitora le tue abitudini di spesa facilmente.';
-
-  @override
-  String get addExpense => 'Aggiungi spesa';
-
-  @override
-  String get noDataForPeriod => 'Nessun dato per questo periodo';
-
-  @override
-  String get budget => 'Budget';
-
-  @override
-  String get spent => 'Speso';
-
-  @override
-  String get limit => 'Limite';
-
-  @override
-  String get overBudget => 'Fuori budget!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% rimanente';
-  }
-
-  @override
-  String get savingsRate => 'Tasso di risparmio';
-
-  @override
-  String get healthScore => 'Punteggio salute';
-
-  @override
-  String get healthScoreExplanation =>
-      'Questo punteggio si basa sul tuo tasso di risparmio.\n\n• > 50% risparmiato = Eccellente (100)\n• 0% risparmiato = Medio (50)\n• Spesa > Entrate = Scarso (<50)';
 
   @override
   String get ok => 'OK';
@@ -2790,19 +1956,10 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
   String get todos => 'To-Do';
 
   @override
-  String get expenses => 'Spese';
-
-  @override
   String get journal => 'Diario';
 
   @override
-  String get calendar => 'Calendario';
-
-  @override
   String get clipboard => 'Appunti';
-
-  @override
-  String get canvas => 'Tela';
 
   @override
   String get save => 'Salva';
@@ -2835,24 +1992,6 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
   String get discard => 'Scarta';
 
   @override
-  String get createPost => 'Crea post';
-
-  @override
-  String get post => 'Pubblica';
-
-  @override
-  String get postingTo => 'Pubblicazione su';
-
-  @override
-  String get whatsOnYourMind => 'A cosa stai pensando?';
-
-  @override
-  String get pickImages => 'Scegli immagini';
-
-  @override
-  String get pickVideo => 'Scegli video';
-
-  @override
   String get camera => 'Fotocamera';
 
   @override
@@ -2877,16 +2016,6 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
   String error(Object error) {
     return 'Errore: $error';
   }
-
-  @override
-  String get orderingOnlyAvailableInAllPosts =>
-      'Ordinamento disponibile solo in \'Tutti i post\'';
-
-  @override
-  String get deletePost => 'Elimina post';
-
-  @override
-  String get postDeleted => 'Post eliminato';
 
   @override
   String get premiumFeatures => 'Funzioni Premium';
@@ -2947,35 +2076,6 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
   String get recycleBinCleared => 'Cestino svuotato con successo';
 
   @override
-  String get allPostsDeleted => 'Tutti i post eliminati';
-
-  @override
-  String get newPost => 'Nuovo post';
-
-  @override
-  String get textCopiedToClipboardFacebook =>
-      'Testo copiato negli appunti (policy di Facebook)';
-
-  @override
-  String get tiktokSharingRequiresVideoImage =>
-      'La condivisione su TikTok richiede un video o un\'immagine';
-
-  @override
-  String errorSharing(Object error) {
-    return 'Errore durante la condivisione: $error';
-  }
-
-  @override
-  String shareToStory(Object platform) {
-    return 'Condividi nella Storia di $platform';
-  }
-
-  @override
-  String shareToFeed(Object platform) {
-    return 'Condividi nel Feed di $platform';
-  }
-
-  @override
   String get unlockPermanently => 'Sblocca permanentemente';
 
   @override
@@ -2991,13 +2091,6 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
 
   @override
   String get selectDateTime => 'Seleziona data e ora';
-
-  @override
-  String get areYouSureYouWantToDeleteThisPost =>
-      'Sei sicuro di voler eliminare questo post?';
-
-  @override
-  String get socialPosts => 'Post social';
 
   @override
   String get watchAdToEarnCoins => 'Guarda l\'annuncio per guadagnare monete';
@@ -3184,25 +2277,11 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
       'Rimani al top. Crea liste di cose da fare, imposta le priorità e raggiungi i tuoi obiettivi un segno di spunta alla volta.';
 
   @override
-  String get onboardingExpensesTitle => 'Monitoraggio spese';
-
-  @override
-  String get onboardingExpensesDesc =>
-      'Prendi il controllo delle tue finanze. Monitora entrate e uscite facilmente per capire le tue abitudini di spesa.';
-
-  @override
   String get onboardingJournalTitle => 'Diario personale';
 
   @override
   String get onboardingJournalDesc =>
       'Rifletti sulla tua giornata. Uno spazio privato per annotare i tuoi ricordi, sentimenti ed esperienze quotidiane.';
-
-  @override
-  String get onboardingCalendarTitle => 'Calendario ed Eventi';
-
-  @override
-  String get onboardingCalendarDesc =>
-      'Non perdere mai un momento. Organizza il tuo programma e tieni traccia degli eventi importanti imminenti.';
 
   @override
   String get onboardingClipboardTitle => 'Gestore appunti';
@@ -3212,71 +2291,22 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
       'Copia una volta, incolla ovunque. Accedi alla cronologia degli appunti per recuperare i frammenti che hai copiato in precedenza.';
 
   @override
-  String get onboardingCanvasTitle => 'Tela creativa';
-
-  @override
-  String get onboardingCanvasDesc =>
-      'Scatena la tua creatività. Disegna, schizza e visualizza le tue idee su una tela digitale a forma libera.';
-
-  @override
   String get featuresNotesDesc => 'Crea e gestisci le tue note';
 
   @override
   String get featuresTodosDesc => 'Tieni traccia delle tue attività';
 
   @override
-  String get featuresExpensesDesc => 'Monitora le tue spese';
-
-  @override
   String get featuresJournalDesc => 'Annota i tuoi pensieri';
 
   @override
-  String get featuresCalendarDesc => 'Organizza il tuo programma';
-
-  @override
   String get featuresClipboardDesc => 'Accedi alla cronologia degli appunti';
-
-  @override
-  String get featuresCanvasDesc => 'Disegna e schizza liberamente';
-
-  @override
-  String get featuresSocialPost => 'Post social';
-
-  @override
-  String get featuresSocialPostDesc =>
-      'Crea contenuti coinvolgenti per i social media';
 
   @override
   String get chooseYourAura => 'Scegli la tua aura';
 
   @override
   String get expressYourselfTheme => 'Esprimiti con un nuovo colore del tema!';
-
-  @override
-  String get level => 'Livello';
-
-  @override
-  String get xpToNextLevel => 'XP al livello';
-
-  @override
-  String get checkUpcomingEvents => 'Controlla gli eventi imminenti';
-
-  @override
-  String get startNewSketch => 'Inizia un nuovo schizzo';
-
-  @override
-  String get noTransactionsMonth => 'Nessuna transazione questo mese';
-
-  @override
-  String transactionsThisMonth(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'i',
-      one: '',
-    );
-    return '$count transazione$_temp0 questo mese';
-  }
 
   @override
   String get autoSaveClipboard => 'Salvataggio automatico appunti';
@@ -3341,15 +2371,6 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
   @override
   String get premiumLayoutsDesc =>
       'Modi esclusivi per visualizzare i tuoi ricordi';
-
-  @override
-  String get calendarTools => 'Calendario e Strumenti';
-
-  @override
-  String get fullCalendar => 'Calendario completo';
-
-  @override
-  String get fullCalendarDesc => 'Sistema completo di gestione eventi';
 
   @override
   String get clipboardAutoSaveDesc =>
@@ -3439,83 +2460,13 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
   String get completed => 'Completato';
 
   @override
-  String get greatJob => 'Ottimo lavoro!';
-
-  @override
-  String youEarnedXPNextTask(Object amount, Object date) {
-    return 'Hai guadagnato $amount XP! Prossima attività: $date';
-  }
-
-  @override
-  String taskCompletedXP(Object amount) {
-    return 'Attività completata! +$amount XP';
-  }
-
-  @override
   String get moveTasksToRecycleBin =>
       'Spostare tutte le attività attive nel cestino?';
-
-  @override
-  String get deleteAllPosts => 'Elimina tutti i post';
-
-  @override
-  String get deleteAllPostsConfirmation =>
-      'Sei sicuro di voler eliminare TUTTI i post social? L\'azione non può essere annullata.';
-
-  @override
-  String get allPosts => 'Tutti i post';
-
-  @override
-  String get favorites => 'Preferiti';
-
-  @override
-  String get drafts => 'Bozze';
-
-  @override
-  String get noFavoritesYet => 'Ancora nessun preferito';
-
-  @override
-  String get noDraftsYet => 'Ancora nessuna bozza';
-
-  @override
-  String get startSocialJourney => 'Inizia il tuo viaggio social!';
-
-  @override
-  String get draft => 'BOZZA';
-
-  @override
-  String attachmentCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'i',
-      one: '',
-    );
-    return '$count allegato$_temp0';
-  }
-
-  @override
-  String get pleaseAddContent => 'Aggiungi contenuti o media da condividere';
 
   @override
   String fileNotFoundError(Object path) {
     return 'Errore: File non trovato in $path';
   }
-
-  @override
-  String get checkFacebookApp => 'Controlla l\'app di Facebook';
-
-  @override
-  String get systemShare => 'Condivisione di sistema';
-
-  @override
-  String get socialPost => 'Post social';
-
-  @override
-  String get favorite => 'Preferito';
-
-  @override
-  String get saveDraft => 'Salva bozza';
 
   @override
   String get entryCopied => 'Voce copiata';
@@ -3661,33 +2612,10 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
   String get dueDate => 'Data di scadenza';
 
   @override
-  String get expenseTitle => 'Spese';
-
-  @override
-  String searchInCurrency(String currency) {
-    return 'Cerca in $currency...';
-  }
-
-  @override
   String get sortAndFilter => 'Ordina e Filtra';
 
   @override
   String get sortBy => 'ORDINA PER';
-
-  @override
-  String get highestAmount => 'Importo più alto';
-
-  @override
-  String get lowestAmount => 'Importo più basso';
-
-  @override
-  String get moreFilters => 'Altri filtri...';
-
-  @override
-  String get filterExpenses => 'Filtra spese';
-
-  @override
-  String get transactionType => 'Tipo di transazione';
 
   @override
   String get categories => 'Categorie';
@@ -3696,21 +2624,10 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
   String get all => 'Tutti';
 
   @override
-  String get income => 'Entrate';
-
-  @override
-  String get expense => 'Uscite';
-
-  @override
   String get reset => 'Reset';
 
   @override
   String get apply => 'Applica';
-
-  @override
-  String newExpense(String currency) {
-    return 'Nuova $currency';
-  }
 
   @override
   String errorLoadingData(String error) {
@@ -3773,34 +2690,10 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
   }
 
   @override
-  String get instagram => 'Instagram';
-
-  @override
-  String get facebook => 'Facebook';
-
-  @override
-  String get tiktok => 'TikTok';
-
-  @override
-  String get newSketch => 'Nuovo schizzo';
-
-  @override
-  String get searchSketches => 'Cerca schizzi e cartelle...';
-
-  @override
   String get noResultsFound => 'Nessun risultato trovato';
 
   @override
   String get noItems => 'Nessun elemento';
-
-  @override
-  String get noDrawingsYet => 'Ancora nessun disegno';
-
-  @override
-  String get canvasIntro => 'Scatena la tua creatività sulla tela!';
-
-  @override
-  String get newCanvas => 'Nuova tela';
 
   @override
   String get rename => 'Rinomina';
@@ -3816,13 +2709,7 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
       'Tutti gli schizzi in questa cartella verranno eliminati permanentemente.';
 
   @override
-  String get renameFolder => 'Rinomina cartella';
-
-  @override
   String get chooseColor => 'Scegli colore';
-
-  @override
-  String get deleteFolderQuestion => 'Elimina cartella?';
 
   @override
   String get searchClips => 'Cerca clip...';
@@ -3844,9 +2731,6 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
 
   @override
   String get restoreClipLater => 'Puoi ripristinare questa clip più tardi.';
-
-  @override
-  String get upcomingEvents => 'Eventi imminenti';
 
   @override
   String get dataDistribution => 'DISTRIBUZIONE DATI';
@@ -3887,57 +2771,6 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
   String selectedCount(int count) {
     return '$count selezionati';
   }
-
-  @override
-  String canvasStats(int notes, int folders) {
-    return '$notes schizzi • $folders cartelle';
-  }
-
-  @override
-  String get sortItems => 'Ordina elementi';
-
-  @override
-  String get sortNameAZ => 'Nome (A-Z)';
-
-  @override
-  String get sortNameZA => 'Nome (Z-A)';
-
-  @override
-  String get createFolder => 'Crea cartella';
-
-  @override
-  String get folderNameHint => 'Nome cartella...';
-
-  @override
-  String deleteSketchesConfirmation(int count) {
-    return 'Eliminare $count schizzi? L\'\'azione non può essere annullata.';
-  }
-
-  @override
-  String get noSketchesFound => 'Nessun schizzo trovato';
-
-  @override
-  String get noSketchesFoundSub =>
-      'Prova a regolare la ricerca o a creare un nuovo schizzo.';
-
-  @override
-  String searchInFolder(String folder) {
-    return 'Cerca in $folder...';
-  }
-
-  @override
-  String sketchesCount(int count) {
-    return '$count schizzi';
-  }
-
-  @override
-  String get sortSketches => 'Ordina schizzi';
-
-  @override
-  String get calendarScreenTitle => 'Calendario';
-
-  @override
-  String get dailyActivity => 'Attività quotidiana';
 
   @override
   String get deleteItemQuestion => 'Eliminare l\'elemento?';
@@ -4042,29 +2875,6 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
   String get general => 'Generale';
 
   @override
-  String get saveTransactionQuestion => 'Vuoi salvare questa transazione?';
-
-  @override
-  String get fillTitleAmount => 'Compila titolo e importo';
-
-  @override
-  String get invalidAmount => 'Formato importo non valido';
-
-  @override
-  String get moveTransactionToBinTitle =>
-      'Spostare la transazione nel cestino?';
-
-  @override
-  String get restoreTransactionLater =>
-      'Puoi ripristinare questa transazione più tardi dalle impostazioni.';
-
-  @override
-  String get newTransaction => 'Nuova transazione';
-
-  @override
-  String get whatIsThisFor => 'Per cosa è questo?';
-
-  @override
   String get description => 'Descrizione';
 
   @override
@@ -4080,71 +2890,10 @@ class AppLocalizationsItIt extends AppLocalizationsIt {
   String get yearly => 'Annuale';
 
   @override
-  String get totalIncome => 'Entrate totali';
-
-  @override
-  String get totalExpense => 'Uscite totali';
-
-  @override
   String get analysis => 'Analisi';
 
   @override
   String get transactions => 'Transazioni';
-
-  @override
-  String get noExpensesFound => 'Nessuna spesa trovata per questo periodo.';
-
-  @override
-  String get netBalance => 'Saldo netto';
-
-  @override
-  String get topCategories => 'Categorie principali';
-
-  @override
-  String get spendingTrend => 'Trend di spesa';
-
-  @override
-  String get insights => 'Approfondimenti';
-
-  @override
-  String get noExpensesRecorded => 'Nessuna spesa registrata';
-
-  @override
-  String get trackSpendingHabits =>
-      'Monitora le tue abitudini di spesa facilmente.';
-
-  @override
-  String get addExpense => 'Aggiungi spesa';
-
-  @override
-  String get noDataForPeriod => 'Nessun dato per questo periodo';
-
-  @override
-  String get budget => 'Budget';
-
-  @override
-  String get spent => 'Speso';
-
-  @override
-  String get limit => 'Limite';
-
-  @override
-  String get overBudget => 'Fuori budget!';
-
-  @override
-  String remainingBudget(Object percent) {
-    return '$percent% rimanente';
-  }
-
-  @override
-  String get savingsRate => 'Tasso di risparmio';
-
-  @override
-  String get healthScore => 'Punteggio salute';
-
-  @override
-  String get healthScoreExplanation =>
-      'Questo punteggio si basa sul tuo tasso di risparmio.\n\n• > 50% risparmiato = Eccellente (100)\n• 0% risparmiato = Medio (50)\n• Spesa > Entrate = Scarso (<50)';
 
   @override
   String get ok => 'OK';

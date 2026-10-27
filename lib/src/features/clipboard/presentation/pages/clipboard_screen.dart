@@ -16,6 +16,7 @@ import 'package:share_plus/share_plus.dart';
 // Core
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/navigation_drawer.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/widgets/empty_state_widget.dart'; // Added
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
@@ -289,6 +290,8 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
       child: GlassScaffold(
         showBackArrow: false,
         title: null,
+        showDrawer: true,
+        drawer: const CopyClipDrawer(),
         floatingActionButton: _isSelectionMode
             ? null
             : FloatingActionButton(
@@ -542,7 +545,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
         // SORT MENU
         PopupMenuButton<ClipSortOption>(
           icon: Icon(CupertinoIcons.slider_horizontal_3, color: onSurfaceColor),
-          tooltip: AppLocalizations.of(context)!.sortItems,
+          tooltip: 'Sort By',
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

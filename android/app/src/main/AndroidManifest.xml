@@ -73,19 +73,10 @@
                     android:host="todos" />
                 <data
                     android:scheme="copyclip"
-                    android:host="expenses" />
-                <data
-                    android:scheme="copyclip"
                     android:host="journal" />
                 <data
                     android:scheme="copyclip"
-                    android:host="calendar" />
-                <data
-                    android:scheme="copyclip"
                     android:host="clipboard" />
-                <data
-                    android:scheme="copyclip"
-                    android:host="canvas" />
                 <data
                     android:scheme="copyclip"
                     android:host="app" />
@@ -156,15 +147,6 @@
                 android:resource="@xml/todos_widget_info" />
         </receiver>
 
-        <!-- Expenses Widget -->
-        <receiver android:name=".ExpensesWidgetProvider" android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/expenses_widget_info" />
-        </receiver>
-
         <service
             android:name=".JournalWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
@@ -189,29 +171,6 @@
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/clipboard_widget_info" />
-        </receiver>
-
-        <!-- Calendar Widget -->
-        <receiver android:name=".CalendarWidgetProvider" android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/calendar_widget_info" />
-        </receiver>
-
-        <service android:name=".CanvasWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS"
-            android:exported="false"/>
-        <service android:name=".ExpensesWidgetService" android:permission="android.permission.BIND_REMOTEVIEWS" android:exported="false"/>
-
-        <!-- Canvas Widget -->
-        <receiver android:name=".CanvasWidgetProvider" android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/canvas_widget_info" />
         </receiver>
 
         <receiver

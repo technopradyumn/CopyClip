@@ -134,19 +134,11 @@ class NotificationService {
         importance = Importance.defaultImportance;
         priority = Priority.defaultPriority;
         break;
-      case 'expenses':
-        channelName = 'Finance';
-        channelDesc = 'Expense and salary reminders';
-        break;
       case 'clipboard':
         channelName = 'Clipboard';
         channelDesc = 'Clipboard background updates';
         importance = Importance.low;
         priority = Priority.low;
-        break;
-      case 'calendar':
-        channelName = 'Calendar Events';
-        channelDesc = 'Calendar event reminders';
         break;
     }
 

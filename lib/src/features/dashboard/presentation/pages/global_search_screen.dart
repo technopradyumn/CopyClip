@@ -8,30 +8,24 @@ import 'package:share_plus/share_plus.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
+import 'package:copyclip/src/core/widgets/navigation_drawer.dart';
 import 'package:copyclip/src/core/widgets/dynamic_background.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:copyclip/src/core/widgets/empty_state_widget.dart'; // Added
+import 'package:copyclip/src/core/models/global_search_result.dart';
 
 // Models
 import '../../../../core/app_content_palette.dart';
 import '../../../clipboard/data/clipboard_model.dart';
-import '../../../expenses/data/expense_model.dart';
 import '../../../journal/data/journal_model.dart';
 import '../../../notes/data/note_model.dart';
 import '../../../todos/data/todo_model.dart';
 
 // Cards
 import '../../../clipboard/presentation/widgets/clipboard_card.dart';
-import '../../../expenses/presentation/widgets/expense_card.dart';
 import '../../../journal/presentation/widgets/journal_list_card.dart';
 import '../../../notes/presentation/widgets/note_card.dart';
 import '../../../todos/presentation/widgets/todo_card.dart';
-import '../../../calendar/presentation/widgets/event_card.dart';
-import '../../../social_post/presentation/widgets/social_post_card.dart';
-import '../../../calendar/data/calendar_event_model.dart';
-import '../../../social_post/data/social_post_model.dart';
-
-import 'dashboard_screen.dart';
 
 class SearchResult extends GlobalSearchResult {
   final DateTime dateTime;
@@ -83,13 +77,10 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
 
   final List<String> _filterTypes = [
     "All",
-    "Event",
     "Note",
     "Todo",
-    "Expense",
     "Journal",
     "Clipboard",
-    "Social",
   ];
 
   @override
@@ -224,45 +215,6 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
         ),
       );
 
-      await safeAdd<Expense>(
-        'expenses_box',
-        (e) => SearchResult(
-          id: e.id,
-          title: e.title,
-          subtitle: "${e.currency}${e.amount}",
-          type: 'Expense',
-          route: AppRouter.expenseEdit,
-          argument: e,
-          dateTime: e.date,
-        ),
-      );
-
-      await safeAdd<CalendarEvent>(
-        'calendar_events_box',
-        (e) => SearchResult(
-          id: e.id,
-          title: e.title,
-          subtitle: e.description.isNotEmpty ? e.description : "Event",
-          type: 'Event',
-          route: AppRouter.calendarEventEdit,
-          argument: e,
-          dateTime: e.startDate,
-        ),
-      );
-
-      await safeAdd<SocialPost>(
-        'social_posts_box',
-        (e) => SearchResult(
-          id: e.id,
-          title: e.content,
-          subtitle: "Social Post",
-          type: 'Social',
-          route: AppRouter.socialPostEdit,
-          argument: e,
-          dateTime: e.createdAt,
-        ),
-      );
-
       _allData = results;
       _applyFilters();
     } catch (e) {
@@ -375,6 +327,8 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     return GlassScaffold(
       showBackArrow: false,
       title: null,
+      showDrawer: true,
+      drawer: const CopyClipDrawer(),
       body: DynamicBackground(
         child: Column(
           children: [
@@ -546,11 +500,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                 ),
               ),
               child: Text(
-                type == "Todo"
-                    ? "To-Dos"
-                    : type == "Expense"
-                    ? "Finance"
-                    : type,
+                type == "Todo" ? "To-Dos" : type,
                 style: TextStyle(
                   color: isSelected
                       ? Colors.white
@@ -743,32 +693,6 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   Widget _buildResultCard(SearchResult res) {
     final theme = Theme.of(context);
     switch (res.type) {
-      case 'Event':
-        return _wrapWithCategory(
-          Hero(
-            tag: 'event_${res.id}',
-            child: Material(
-              type: MaterialType.transparency,
-              child: EventCard(
-                event: res.argument,
-                onTap: () async {
-                  await context.push('/calendar/detail/${res.id}', extra: res.argument);
-                  _loadAllData();
-                },
-                onDelete: () {
-                  try {
-                    final event = res.argument as CalendarEvent;
-                    event.isDeleted = true;
-                    event.save();
-                  } catch (_) {}
-                  _loadAllData();
-                },
-              ),
-            ),
-          ),
-          res.type,
-          theme,
-        );
       case 'Note':
         return _wrapWithCategory(
           NoteCard(
@@ -802,19 +726,6 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             onToggleDone: () {
               (res.argument as Todo).isDone = !(res.argument as Todo).isDone;
               (res.argument as Todo).save();
-              _loadAllData();
-            },
-          ),
-          res.type,
-          theme,
-        );
-      case 'Expense':
-        return _wrapWithCategory(
-          ExpenseCard(
-            expense: res.argument,
-            isSelected: false,
-            onTap: () async {
-              await context.push(res.route, extra: res.argument);
               _loadAllData();
             },
           ),
@@ -859,18 +770,6 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             },
             onCopy: () => _copy(res),
             onShare: () => _share(res),
-          ),
-          res.type,
-          theme,
-        );
-      case 'Social':
-        return _wrapWithCategory(
-          SocialPostCard(
-            post: res.argument,
-            onTap: () async {
-              await context.push(res.route, extra: res.argument);
-              _loadAllData();
-            },
           ),
           res.type,
           theme,
