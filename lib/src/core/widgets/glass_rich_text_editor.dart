@@ -329,10 +329,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor>
         if (currentSize == null) return 'Normal';
         final size = _fontSizes.firstWhere(
           (s) => s['value']?.toString() == currentSize,
-          orElse: () => {
-            'label': currentSize ?? 'Normal',
-            'value': currentSize,
-          },
+          orElse: () => {'label': currentSize, 'value': currentSize},
         );
         return size['label'];
       case 'fontFamily':
@@ -351,7 +348,7 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor>
         final height = _lineHeights.firstWhere(
           (h) => h['value'].toString() == currentLineHeight,
           orElse: () => {
-            'label': currentLineHeight ?? 'Normal',
+            'label': currentLineHeight,
             'value': currentLineHeight,
           },
         );
@@ -821,25 +818,6 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor>
     );
   }
 
-  void _sortLines() {
-    final sel = widget.controller.selection;
-    if (sel.isCollapsed) return;
-
-    final selectedText = widget.controller.document.getPlainText(
-      sel.start,
-      sel.end - sel.start,
-    );
-    final lines = selectedText.split('\n')..sort();
-    final sortedText = lines.join('\n');
-
-    widget.controller.replaceText(
-      sel.start,
-      sel.end - sel.start,
-      sortedText,
-      null,
-    );
-  }
-
   void _insertRandomQuote() {
     const quotes = [
       'The journey of a thousand miles begins with a single step.',
@@ -851,15 +829,10 @@ class _GlassRichTextEditorState extends State<GlassRichTextEditor>
     widget.controller.replaceText(index, 0, '"$quote"', null);
   }
 
-  void _toggleFullscreen() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     final defaultTextStyle = DefaultTextStyle.of(context);
 
     // ✅ FIX: Calculate text color based on the ACTUAL background color of the card/note

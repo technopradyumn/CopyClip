@@ -9,7 +9,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:copyclip/src/core/services/lazy_box_loader.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:copyclip/src/core/utils/widget_sync_service.dart';
 import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
@@ -208,7 +207,6 @@ class _TodosScreenState extends State<TodosScreen>
       Hive.box<Todo>('todos_box').listenable().addListener(_refreshTodos);
     }
   }
-
 
   @override
   void dispose() {
@@ -428,7 +426,6 @@ class _TodosScreenState extends State<TodosScreen>
     // ✅ REFACTORED: Use Central Scheduler Service
     final result = await TodoSchedulerService().completeTodo(todo);
 
-    final theme = Theme.of(context);
     // Feedback for Next Instance
     if (result != null && mounted) {
       if (mounted) {
@@ -437,9 +434,14 @@ class _TodosScreenState extends State<TodosScreen>
             content: Row(
               children: [
                 MascotCharacter(
-                  size: 44, 
+                  size: 44,
                   state: MascotState.happy,
-                  color: Color(Hive.box('settings').get('mascot_aura_color', defaultValue: const Color(0xFF6C63FF).value)),
+                  color: Color(
+                    Hive.box('settings').get(
+                      'mascot_aura_color',
+                      defaultValue: const Color(0xFF6C63FF).value,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -470,18 +472,20 @@ class _TodosScreenState extends State<TodosScreen>
             content: Row(
               children: [
                 MascotCharacter(
-                  size: 44, 
+                  size: 44,
                   state: MascotState.happy,
-                  color: Color(Hive.box('settings').get('mascot_aura_color', defaultValue: const Color(0xFF6C63FF).value)),
+                  color: Color(
+                    Hive.box('settings').get(
+                      'mascot_aura_color',
+                      defaultValue: const Color(0xFF6C63FF).value,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: const Text(
                     'Task completed.',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                 ),
               ],
@@ -859,6 +863,7 @@ class _TodosScreenState extends State<TodosScreen>
           ),
         ),
         child: TextField(
+          key: ValueKey('quick_input_${item.category}'),
           selectionControls: CustomSelectionControls(),
           controller: _quickAddController,
           focusNode: _quickAddFocus,

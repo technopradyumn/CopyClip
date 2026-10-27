@@ -75,7 +75,9 @@ class _NotesScreenState extends State<NotesScreen> {
 
   @override
   void dispose() {
-    Hive.box<Note>('notes_box').listenable().removeListener(_refreshNotes);
+    if (Hive.isBoxOpen('notes_box')) {
+      Hive.box<Note>('notes_box').listenable().removeListener(_refreshNotes);
+    }
     _searchController.dispose();
     _filteredNotesNotifier.dispose();
     super.dispose();

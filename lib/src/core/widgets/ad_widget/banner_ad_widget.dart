@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:copyclip/src/core/const/premium_constants.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_state.dart';
 
@@ -38,7 +39,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Load ad here to have valid MediaQuery context for Adaptive Size
-    if (_bannerAd == null) {
+    if (_bannerAd == null && !PremiumConstants.isPremiumFree) {
       _loadAd();
     }
   }

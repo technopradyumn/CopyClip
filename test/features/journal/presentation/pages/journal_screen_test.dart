@@ -46,7 +46,6 @@ void main() {
   });
 
   tearDown(() async {
-    await journalBox.clear();
     await journalBox.close();
   });
 
@@ -58,9 +57,7 @@ void main() {
           BlocProvider(create: (_) => PremiumBloc()),
         ],
         child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => LocaleProvider()),
-          ],
+          providers: [ChangeNotifierProvider(create: (_) => LocaleProvider())],
           child: MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
@@ -69,11 +66,12 @@ void main() {
         ),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.text('Start writing your story'), findsOneWidget);
     expect(find.byType(FloatingActionButton), findsOneWidget);
     expect(find.text('Journal'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox.shrink());
   });
 
   testWidgets('JournalScreen renders entries', (WidgetTester tester) async {
@@ -84,7 +82,7 @@ void main() {
       date: DateTime.now(),
       mood: 'Happy',
     );
-    await journalBox.put(entry.id, entry);
+    await tester.runAsync(() => journalBox.put(entry.id, entry));
 
     final router = GoRouter(
       initialLocation: '/',
@@ -98,15 +96,27 @@ void main() {
       ],
     );
 
-    await tester.pumpWidget(MaterialApp.router(
-      routerConfig: router,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-    ));
-    await tester.pumpAndSettle();
+    await tester.pumpWidget(
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => ThemeBloc()),
+          BlocProvider(create: (_) => PremiumBloc()),
+        ],
+        child: MultiProvider(
+          providers: [ChangeNotifierProvider(create: (_) => LocaleProvider())],
+          child: MaterialApp.router(
+            routerConfig: router,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
+        ),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.text('My Day'), findsOneWidget);
     // Mood emoji for Happy is 😊
     expect(find.text('😊'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox.shrink());
   });
 }

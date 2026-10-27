@@ -1,8 +1,8 @@
-import 'dart:math' as math;
+import 'dart:async';
 
 import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
-import 'package:copyclip/src/core/theme/bloc/theme_bloc.dart';
+import 'package:copyclip/src/core/services/navigation_preference_service.dart';
 import 'package:copyclip/src/core/utils/app_assets.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:copyclip/src/l10n/app_localizations.dart';
@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class CopyClipDrawer extends StatefulWidget {
   const CopyClipDrawer({super.key});
@@ -21,12 +22,13 @@ class CopyClipDrawer extends StatefulWidget {
 class _CopyClipDrawerState extends State<CopyClipDrawer> {
   final _searchController = TextEditingController();
   late final GoRouter _router;
-  bool _isThemeTransitionRunning = false;
+  late final Future<PackageInfo> _packageInfoFuture;
 
   @override
   void initState() {
     super.initState();
     _router = GoRouter.of(context);
+    _packageInfoFuture = PackageInfo.fromPlatform();
     // Rebuild whenever the route changes so the active drawer item stays in sync
     _router.routeInformationProvider.addListener(_onRouteChanged);
   }
@@ -48,41 +50,10 @@ class _CopyClipDrawerState extends State<CopyClipDrawer> {
   /// Always synchronize the visible section with the selected drawer item.
   void _navigate(BuildContext context, String route) {
     Scaffold.of(context).closeDrawer();
-    context.go(route);
-  }
-
-  void _changeThemeMode(ThemeMode mode, Offset globalPosition) {
-    if (_isThemeTransitionRunning) return;
-
-    final themeBloc = context.read<ThemeBloc>();
-    if (themeBloc.state.themeMode == mode) return;
-
-    final oldBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
-    final overlay = Overlay.of(context, rootOverlay: true);
-    final overlayObject = overlay.context.findRenderObject();
-    if (overlayObject is! RenderBox) {
-      themeBloc.add(ChangeThemeMode(mode));
-      return;
+    _router.go(route);
+    if (AppRouter.overviewRoutes.contains(route)) {
+      unawaited(NavigationPreferenceService.saveLastDrawerRoute(route));
     }
-
-    final origin = overlayObject.globalToLocal(globalPosition);
-    late final OverlayEntry entry;
-    setState(() => _isThemeTransitionRunning = true);
-    entry = OverlayEntry(
-      builder: (_) => _CircularThemeReveal(
-        origin: origin,
-        backgroundColor: oldBackgroundColor,
-        onCompleted: () {
-          entry.remove();
-          entry.dispose();
-          if (mounted) {
-            setState(() => _isThemeTransitionRunning = false);
-          }
-        },
-      ),
-    );
-    overlay.insert(entry);
-    themeBloc.add(ChangeThemeMode(mode));
   }
 
   @override
@@ -97,8 +68,6 @@ class _CopyClipDrawerState extends State<CopyClipDrawer> {
     // Current route used to highlight the active item in the panel.
     final currentLocation = _routeLocation();
 
-    // Keep the toggle in sync with the theme bloc.
-    final themeMode = context.read<ThemeBloc>().state.themeMode;
     final isPremium = context.watch<PremiumBloc>().state.isPremium;
 
     return Drawer(
@@ -253,25 +222,6 @@ class _CopyClipDrawerState extends State<CopyClipDrawer> {
                 isActive: currentLocation == AppRouter.recycleBin,
                 onTap: () => _navigate(context, AppRouter.recycleBin),
               ),
-              _DrawerItem(
-                context: context,
-                icon: CupertinoIcons.doc_text,
-                title: l10n?.privacyPolicy ?? 'Privacy Policy',
-                color: colorScheme.onSurface.withValues(alpha: 0.6),
-                route: AppRouter.privacyPolicy,
-                isActive: currentLocation == AppRouter.privacyPolicy,
-                onTap: () => _navigate(context, AppRouter.privacyPolicy),
-              ),
-              _DrawerItem(
-                context: context,
-                icon: CupertinoIcons.chat_bubble,
-                title: l10n?.sendFeedback ?? 'Send Feedback',
-                color: colorScheme.primary,
-                route: AppRouter.feedback,
-                isActive: currentLocation == AppRouter.feedback,
-                onTap: () => _navigate(context, AppRouter.feedback),
-              ),
-
               // _DrawerItem(
               //   context: context,
               //   icon: CupertinoIcons.star,
@@ -281,18 +231,8 @@ class _CopyClipDrawerState extends State<CopyClipDrawer> {
               //   route: AppRouter.premium,
               //   onTap: () => _navigate(context, AppRouter.premium),
               // ),
-              const SizedBox(height: 16),
-              _DrawerDivider(label: 'Appearance'),
-
-              _ThemeModeTile(
-                title: l10n?.themeMode ?? 'Theme Mode',
-                selectedMode: themeMode,
-                accent: FeatureColors.journal,
-                onSelected: _isThemeTransitionRunning ? null : _changeThemeMode,
-              ),
-
               const SizedBox(height: 22),
-              _DrawerFooter(context),
+              _DrawerFooter(packageInfoFuture: _packageInfoFuture),
               const SizedBox(height: 30),
             ],
           ),
@@ -300,254 +240,6 @@ class _CopyClipDrawerState extends State<CopyClipDrawer> {
       ),
     );
   }
-}
-
-class _ThemeModeTile extends StatelessWidget {
-  const _ThemeModeTile({
-    required this.title,
-    required this.selectedMode,
-    required this.accent,
-    required this.onSelected,
-  });
-
-  final String title;
-  final ThemeMode selectedMode;
-  final Color accent;
-  final void Function(ThemeMode mode, Offset globalPosition)? onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final onSurface = colorScheme.onSurface;
-    final l10n = AppLocalizations.of(context);
-    final options = [
-      (mode: ThemeMode.system, label: l10n?.system ?? 'System'),
-      (mode: ThemeMode.light, label: l10n?.light ?? 'Light'),
-      (mode: ThemeMode.dark, label: l10n?.dark ?? 'Dark'),
-    ];
-
-    return Container(
-      key: const ValueKey('theme_mode_tile'),
-      margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
-      decoration: BoxDecoration(
-        color: onSurface.withValues(alpha: 0.045),
-        borderRadius: BorderRadius.circular(17),
-        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.12)),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: accent.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                alignment: Alignment.center,
-                child: Icon(
-                  switch (selectedMode) {
-                    ThemeMode.system => CupertinoIcons.device_phone_portrait,
-                    ThemeMode.light => CupertinoIcons.sun_max,
-                    ThemeMode.dark => CupertinoIcons.moon,
-                  },
-                  color: accent,
-                  size: 21,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  title,
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    color: onSurface,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              for (final option in options)
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2),
-                    child: _ThemeModeOption(
-                      key: ValueKey('theme_mode_${option.mode.name}'),
-                      label: option.label,
-                      selected: selectedMode == option.mode,
-                      accent: accent,
-                      onTap: onSelected == null
-                          ? null
-                          : (position) => onSelected!(option.mode, position),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ThemeModeOption extends StatelessWidget {
-  const _ThemeModeOption({
-    super.key,
-    required this.label,
-    required this.selected,
-    required this.accent,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final Color accent;
-  final ValueChanged<Offset>? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(11),
-        onTapUp: onTap == null
-            ? null
-            : (details) => onTap!(details.globalPosition),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 4),
-          decoration: BoxDecoration(
-            color: selected
-                ? accent.withValues(alpha: 0.16)
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(11),
-            border: Border.all(
-              color: selected
-                  ? accent.withValues(alpha: 0.42)
-                  : colorScheme.outline.withValues(alpha: 0.13),
-            ),
-          ),
-          child: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              color: selected
-                  ? accent
-                  : colorScheme.onSurface.withValues(alpha: 0.72),
-              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CircularThemeReveal extends StatefulWidget {
-  const _CircularThemeReveal({
-    required this.origin,
-    required this.backgroundColor,
-    required this.onCompleted,
-  });
-
-  final Offset origin;
-  final Color backgroundColor;
-  final VoidCallback onCompleted;
-
-  @override
-  State<_CircularThemeReveal> createState() => _CircularThemeRevealState();
-}
-
-class _CircularThemeRevealState extends State<_CircularThemeReveal>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _progress;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 650),
-    );
-    _progress = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOutCubic,
-    );
-    _controller
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) widget.onCompleted();
-      })
-      ..forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned.fill(
-      child: IgnorePointer(
-        child: AnimatedBuilder(
-          animation: _progress,
-          builder: (context, _) => CustomPaint(
-            painter: _CircularThemeRevealPainter(
-              progress: _progress.value,
-              origin: widget.origin,
-              backgroundColor: widget.backgroundColor,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CircularThemeRevealPainter extends CustomPainter {
-  const _CircularThemeRevealPainter({
-    required this.progress,
-    required this.origin,
-    required this.backgroundColor,
-  });
-
-  final double progress;
-  final Offset origin;
-  final Color backgroundColor;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final farthestX = math.max(origin.dx, size.width - origin.dx);
-    final farthestY = math.max(origin.dy, size.height - origin.dy);
-    final radius = math.sqrt(farthestX * farthestX + farthestY * farthestY);
-
-    canvas.saveLayer(Offset.zero & size, Paint());
-    canvas.drawRect(Offset.zero & size, Paint()..color = backgroundColor);
-    canvas.drawCircle(
-      origin,
-      radius * progress,
-      Paint()..blendMode = BlendMode.clear,
-    );
-    canvas.restore();
-  }
-
-  @override
-  bool shouldRepaint(_CircularThemeRevealPainter oldDelegate) =>
-      progress != oldDelegate.progress ||
-      origin != oldDelegate.origin ||
-      backgroundColor != oldDelegate.backgroundColor;
 }
 
 class _DrawerHeader extends StatelessWidget {
@@ -593,7 +285,7 @@ class _DrawerHeader extends StatelessWidget {
                   ],
                 ),
                 alignment: Alignment.center,
-                child: Image.asset(AppAssets.imageGround),
+                child: Image.asset(AppAssets.logo),
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -752,40 +444,6 @@ class _DrawerSectionLabel extends StatelessWidget {
   }
 }
 
-class _DrawerDivider extends StatelessWidget {
-  final String label;
-
-  const _DrawerDivider({this.label = ''});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final color = theme.colorScheme.outline.withValues(alpha: 0.14);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-      child: Row(
-        children: [
-          Expanded(child: Divider(color: color, height: 1)),
-          if (label.isNotEmpty) ...[
-            const SizedBox(width: 12),
-            Text(
-              label.toUpperCase(),
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.45),
-                fontWeight: FontWeight.w800,
-                fontSize: 10.5,
-                letterSpacing: 1.6,
-              ),
-            ),
-            const SizedBox(width: 12),
-          ],
-          Expanded(child: Divider(color: color, height: 1)),
-        ],
-      ),
-    );
-  }
-}
-
 class _DrawerItem extends StatelessWidget {
   final BuildContext context;
   final IconData icon;
@@ -919,9 +577,9 @@ class _DrawerItem extends StatelessWidget {
 }
 
 class _DrawerFooter extends StatelessWidget {
-  final BuildContext context;
+  const _DrawerFooter({required this.packageInfoFuture});
 
-  const _DrawerFooter(this.context);
+  final Future<PackageInfo> packageInfoFuture;
 
   @override
   Widget build(BuildContext context) {
@@ -959,12 +617,42 @@ class _DrawerFooter extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 3),
-                Text(
-                  '1.0.0 · build 100',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.38),
-                    fontSize: 12,
-                  ),
+                FutureBuilder<PackageInfo>(
+                  future: packageInfoFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text(
+                        'Version info unavailable',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.38,
+                          ),
+                          fontSize: 12,
+                        ),
+                      );
+                    }
+                    if (!snapshot.hasData) {
+                      return Text(
+                        'Loading version info...',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.38,
+                          ),
+                          fontSize: 12,
+                        ),
+                      );
+                    }
+                    final info = snapshot.data!;
+                    return Text(
+                      'v${info.version} · build ${info.buildNumber}',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: 0.55,
+                        ),
+                        fontSize: 12,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

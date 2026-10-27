@@ -88,17 +88,15 @@ class RateUpgraderMessages extends UpgraderMessages {
 // ✅ TEST HELPER
 bool isIntegrationTesting = false;
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // ✅ INITIALIZATION: Perform all critical startup tasks BEFORE first frame
   await _initializeApp();
 
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => LocaleProvider()),
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => LocaleProvider())],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => ThemeBloc()..add(LoadTheme())),
@@ -242,6 +240,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
+    if (isIntegrationTesting) return;
+
     // ✅ Load Premium Data (Safe place after Hive Init)
     context.read<PremiumBloc>().add(LoadPremiumData());
 
@@ -257,21 +257,20 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     _initializeBackgroundTasks();
 
     // ✅ NEW: Handle notifications
-    _notificationSubscription = NotificationService().onNotifications.stream.listen(
-      _handleNotificationPayload,
-    );
+    _notificationSubscription = NotificationService().onNotifications.stream
+        .listen(_handleNotificationPayload);
 
     // ✅ OPTIMIZATION: Delay heavy background initialization to prevent ANRs
     // This allows the UI to render and become interactive FIRST.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 1), () {
         if (!mounted) return;
-        
+
         // Initialize background tasks
         _initializeBackgroundTasks();
 
         // Initial Clipboard Check
-        _checkClipboard(); 
+        _checkClipboard();
         _startClipboardTimer();
 
         // App Update Service
@@ -502,14 +501,14 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       final int totalCount = clipboardBox.length;
       // Scan only the last 50 items (most likely duplicates)
       final int start = (totalCount - 50).clamp(0, totalCount);
-      
+
       for (int i = totalCount - 1; i >= start; i--) {
         final item = clipboardBox.getAt(i);
         if (item != null && _getPlainText(item.content) == trimmedContent) {
           matchingItems.add(item);
         }
       }
-      
+
       matchingItems.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
       if (matchingItems.isNotEmpty) {
@@ -518,7 +517,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         // Check if this item is already at the very top of the list
         // and there are no other duplicates to clean up.
         // Again, limit check for performance
-        final newestItemInBox = clipboardBox.isEmpty ? null : clipboardBox.getAt(totalCount - 1);
+        final newestItemInBox = clipboardBox.isEmpty
+            ? null
+            : clipboardBox.getAt(totalCount - 1);
 
         if (newestItemInBox != null &&
             newestItemInBox.id == keptItem.id &&
@@ -590,7 +591,6 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
       debugPrint('✅ Auto-saved clipboard item: ${newItem.id}');
       await WidgetSyncService.syncClipboard();
-
     } catch (e) {
       debugPrint('❌ Clipboard check error: $e');
     }
@@ -614,7 +614,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   @override
   void dispose() {
     _stopClipboardTimer();
-    _notificationSubscription?.cancel(); // Added: Tearing down notification listener
+    _notificationSubscription
+        ?.cancel(); // Added: Tearing down notification listener
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -633,6 +634,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
             return MaterialApp.router(
               title: 'CopyClip',
               debugShowCheckedModeBanner: false,
+              themeAnimationDuration: Duration.zero,
 
               // ✅ Locale Support
               locale: localeProvider.locale,

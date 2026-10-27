@@ -1,6 +1,3 @@
 class AppAssets {
-  static const String _baseLogoPath = 'assets/logo/';
-
-  // Ground Images
-  static const String imageGround = '${_baseLogoPath}copyclip_logo.png';
+  static const String logo = 'assets/logo/copyclip_logo.png';
 }

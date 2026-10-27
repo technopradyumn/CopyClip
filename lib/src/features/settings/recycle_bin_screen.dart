@@ -10,6 +10,8 @@ import 'package:copyclip/src/core/widgets/navigation_drawer.dart';
 import 'package:copyclip/src/core/widgets/glass_dialog.dart';
 import 'package:copyclip/src/core/widgets/seamless_header.dart';
 import 'package:copyclip/src/core/widgets/empty_state_widget.dart';
+import 'package:copyclip/src/core/router/app_router.dart';
+import 'package:go_router/go_router.dart';
 
 import '../clipboard/data/clipboard_model.dart';
 import '../journal/data/journal_model.dart';
@@ -236,12 +238,17 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
     final theme = Theme.of(context);
     final items = _getAllDeleted();
 
-    return GlassScaffold(
-      title: null,
-      showBackArrow: false,
-      showDrawer: true,
-      drawer: const CopyClipDrawer(),
-      body: Column(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) context.go(AppRouter.settings);
+      },
+      child: GlassScaffold(
+        title: null,
+        showBackArrow: false,
+        showDrawer: true,
+        drawer: const CopyClipDrawer(),
+        body: Column(
         children: [
           SeamlessHeader(
             title: AppLocalizations.of(context)!.recycleBin,
@@ -251,6 +258,7 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
             icon: CupertinoIcons.trash,
             iconColor: Colors.redAccent,
             heroTagPrefix: 'recycle_bin',
+            onBackTap: () => context.go(AppRouter.settings),
             actions: [
               if (items.isNotEmpty)
                 IconButton(
@@ -406,6 +414,7 @@ class _RecycleBinScreenState extends State<RecycleBinScreen> {
                   ),
           ),
         ],
+        ),
       ),
     );
   }

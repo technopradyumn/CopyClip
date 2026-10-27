@@ -91,9 +91,11 @@ class _JournalScreenState extends State<JournalScreen> {
 
   @override
   void dispose() {
-    Hive.box<JournalEntry>(
-      'journal_box',
-    ).listenable().removeListener(_refreshEntries);
+    if (Hive.isBoxOpen('journal_box')) {
+      Hive.box<JournalEntry>(
+        'journal_box',
+      ).listenable().removeListener(_refreshEntries);
+    }
     _searchController.dispose();
     _filteredEntriesNotifier.dispose();
     super.dispose();

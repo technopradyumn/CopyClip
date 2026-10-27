@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../services/navigation_preference_service.dart';
 import '../../features/clipboard/data/clipboard_model.dart';
 import '../../features/clipboard/presentation/pages/clipboard_edit_screen.dart';
 import '../../features/dashboard/presentation/pages/global_search_screen.dart';
@@ -44,22 +45,32 @@ class AppRouter {
 
   static const String globalSearch = "/global-search";
   static const String premium = "/premium";
+
+  static const List<String> overviewRoutes = [notes, todos, journal, clipboard];
+
+  static const List<String> drawerRoutes = [
+    ...overviewRoutes,
+    settings,
+    recycleBin,
+  ];
+
+  static String get lastDrawerRoute {
+    final lastRoute = NavigationPreferenceService.getLastDrawerRoute();
+    return overviewRoutes.contains(lastRoute) ? lastRoute! : notes;
+  }
 }
 
 List<GoRoute> getAuthRoutes() {
   return [
     GoRoute(
       path: AppRouter.root,
-      redirect: (context, state) => AppRouter.notes,
+      redirect: (context, state) => AppRouter.lastDrawerRoute,
     ),
     GoRoute(
       path: AppRouter.premium,
       builder: (context, state) => PremiumScreen(),
     ),
-    GoRoute(
-      path: AppRouter.notes,
-      builder: (context, state) => NotesScreen(),
-    ),
+    GoRoute(path: AppRouter.notes, builder: (context, state) => NotesScreen()),
     GoRoute(
       path: AppRouter.noteEdit,
       builder: (context, state) {
@@ -69,10 +80,7 @@ List<GoRoute> getAuthRoutes() {
         return NoteEditScreen(note: note, noteId: id);
       },
     ),
-    GoRoute(
-      path: AppRouter.todos,
-      builder: (context, state) => TodosScreen(),
-    ),
+    GoRoute(path: AppRouter.todos, builder: (context, state) => TodosScreen()),
     GoRoute(
       path: AppRouter.todoEdit,
       builder: (context, state) {

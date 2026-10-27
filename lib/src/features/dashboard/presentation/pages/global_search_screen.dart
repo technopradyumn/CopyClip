@@ -333,27 +333,14 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
       title: 'Search',
       showDrawer: true,
       drawer: const CopyClipDrawer(),
-      leading: IconButton(
-        key: const ValueKey('global_search_back'),
-        icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
-        tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-        onPressed: () {
-          if (context.canPop()) {
-            context.pop();
-          } else {
-            context.go(AppRouter.notes);
-          }
-        },
-      ),
-      actions: [
-        Builder(
-          builder: (scaffoldContext) => IconButton(
-            icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            onPressed: () => Scaffold.of(scaffoldContext).openDrawer(),
-          ),
+      leading: Builder(
+        builder: (scaffoldContext) => IconButton(
+          key: const ValueKey('global_search_menu'),
+          icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
+          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          onPressed: () => Scaffold.of(scaffoldContext).openDrawer(),
         ),
-      ],
+      ),
       body: DynamicBackground(
         child: Column(
           children: [

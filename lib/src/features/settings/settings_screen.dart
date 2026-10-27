@@ -780,13 +780,15 @@ class _SettingsScreenState extends State<SettingsScreen>
             onTap: () => state._showLanguageSelector(context),
           ),
           const Divider(indent: 50),
-          ListTile(
-            leading: Icon(CupertinoIcons.sun_max, color: primaryColor),
-            title: Text(
-              AppLocalizations.of(context)!.themeMode,
-              style: theme.textTheme.bodyLarge,
+          BlocBuilder<ThemeBloc, ThemeState>(
+            builder: (context, themeState) => ListTile(
+              leading: _ThemeModeAnimationIcon(mode: themeState.themeMode),
+              title: Text(
+                AppLocalizations.of(context)!.themeMode,
+                style: theme.textTheme.bodyLarge,
+              ),
+              trailing: const _ThemeDropdown(),
             ),
-            trailing: const _ThemeDropdown(),
           ),
           const Divider(indent: 50),
           ListTile(
@@ -1345,6 +1347,103 @@ class _ThemeDropdown extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _ThemeModeAnimationIcon extends StatefulWidget {
+  const _ThemeModeAnimationIcon({required this.mode});
+
+  final ThemeMode mode;
+
+  @override
+  State<_ThemeModeAnimationIcon> createState() =>
+      _ThemeModeAnimationIconState();
+}
+
+class _ThemeModeAnimationIconState extends State<_ThemeModeAnimationIcon>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _scale;
+  late final Animation<double> _opacity;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 520),
+    );
+    _scale = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween(begin: 0.45, end: 1.35).chain(
+          CurveTween(curve: Curves.easeOutCubic),
+        ),
+        weight: 50,
+      ),
+      TweenSequenceItem(
+        tween: Tween(begin: 1.35, end: 0.45).chain(
+          CurveTween(curve: Curves.easeInCubic),
+        ),
+        weight: 50,
+      ),
+    ]).animate(_controller);
+    _opacity = TweenSequence<double>([
+      TweenSequenceItem(tween: Tween(begin: 0, end: 0.55), weight: 50),
+      TweenSequenceItem(tween: Tween(begin: 0.55, end: 0), weight: 50),
+    ]).animate(_controller);
+  }
+
+  @override
+  void didUpdateWidget(covariant _ThemeModeAnimationIcon oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.mode != widget.mode) _controller.forward(from: 0);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final icon = switch (widget.mode) {
+      ThemeMode.system => CupertinoIcons.device_phone_portrait,
+      ThemeMode.light => CupertinoIcons.sun_max,
+      ThemeMode.dark => CupertinoIcons.moon,
+    };
+
+    return SizedBox(
+      width: 40,
+      height: 40,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, _) => Stack(
+          alignment: Alignment.center,
+          children: [
+            Transform.scale(
+              scale: _scale.value,
+              child: Opacity(
+                opacity: _opacity.value,
+                child: Container(
+                  width: 28,
+                  height: 28,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: theme.colorScheme.primary,
+                      width: 2,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Icon(icon, color: theme.colorScheme.primary),
+          ],
+        ),
+      ),
     );
   }
 }

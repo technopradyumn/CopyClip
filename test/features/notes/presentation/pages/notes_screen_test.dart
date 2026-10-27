@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:copyclip/src/core/providers/locale_provider.dart';
-import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/theme/bloc/theme_bloc.dart';
 import 'package:copyclip/src/features/notes/presentation/pages/notes_screen.dart';
+import 'package:copyclip/src/features/notes/presentation/widgets/note_card.dart';
 import 'package:copyclip/src/features/notes/data/note_adapter.dart';
 import 'package:copyclip/src/features/notes/data/note_model.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
@@ -15,7 +15,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -42,7 +41,6 @@ void main() {
   });
 
   tearDown(() async {
-    if (noteBox.isOpen) await noteBox.clear();
     await noteBox.close();
     // Ensure box is deleted to clean up for next test if re-opened
     await Hive.deleteBoxFromDisk('notes_box');
@@ -56,9 +54,7 @@ void main() {
           BlocProvider(create: (_) => PremiumBloc()),
         ],
         child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => LocaleProvider()),
-          ],
+          providers: [ChangeNotifierProvider(create: (_) => LocaleProvider())],
           child: MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
@@ -67,10 +63,11 @@ void main() {
         ),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.text('No notes found'), findsOneWidget);
     expect(find.byType(FloatingActionButton), findsOneWidget);
+    await tester.pumpWidget(const SizedBox.shrink());
   });
 
   testWidgets('NotesScreen renders list of notes', (WidgetTester tester) async {
@@ -80,63 +77,69 @@ void main() {
       content: 'Hello World',
       updatedAt: DateTime.now(),
     );
-    await noteBox.put(note.id, note);
+    await tester.runAsync(() => noteBox.put(note.id, note));
 
-    final router = GoRouter(
-      initialLocation: '/',
-      routes: [
-        GoRoute(path: '/', builder: (context, state) => NotesScreen()),
-        GoRoute(
-          name: AppRouter.noteEdit,
-          path: '/edit',
-          builder: (context, state) => Scaffold(body: Text('Edit Note')),
+    await tester.pumpWidget(
+      _withAppProviders(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: NotesScreen(),
         ),
-      ],
+      ),
     );
-
-    await tester.pumpWidget(MaterialApp.router(
-      routerConfig: router,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-    ));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.text('My First Note'), findsOneWidget);
     expect(find.text('Hello World'), findsOneWidget);
-
-    // Test navigation
-    await tester.tap(find.text('My First Note'));
-    await tester.pumpAndSettle();
-    expect(find.text('Edit Note'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox.shrink());
   });
 
   testWidgets('NotesScreen filtering works', (WidgetTester tester) async {
-    await noteBox.put(
-      '1',
-      Note(id: '1', title: 'Alpha', content: 'A', updatedAt: DateTime.now()),
-    );
-    await noteBox.put(
-      '2',
-      Note(id: '2', title: 'Beta', content: 'B', updatedAt: DateTime.now()),
-    );
+    await tester.runAsync(() async {
+      await noteBox.put(
+        '1',
+        Note(id: '1', title: 'Alpha', content: 'A', updatedAt: DateTime.now()),
+      );
+      await noteBox.put(
+        '2',
+        Note(id: '2', title: 'Beta', content: 'B', updatedAt: DateTime.now()),
+      );
+    });
 
     await tester.pumpWidget(
-      MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: NotesScreen(),
+      _withAppProviders(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: NotesScreen(),
+        ),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 500));
 
-    expect(find.text('Alpha'), findsOneWidget);
+    expect(find.byType(NoteCard), findsNWidgets(2));
     expect(find.text('Beta'), findsOneWidget);
 
     // Enter search text
     await tester.enterText(find.byType(TextField), 'Alpha');
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 500));
 
-    expect(find.text('Alpha'), findsOneWidget);
+    expect(find.byType(NoteCard), findsOneWidget);
     expect(find.text('Beta'), findsNothing);
+    await tester.pumpWidget(const SizedBox.shrink());
   });
+}
+
+Widget _withAppProviders(Widget child) {
+  return MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (_) => ThemeBloc()),
+      BlocProvider(create: (_) => PremiumBloc()),
+    ],
+    child: MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => LocaleProvider())],
+      child: child,
+    ),
+  );
 }

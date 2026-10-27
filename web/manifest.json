@@ -3,7 +3,7 @@
     "short_name": "copyclip",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
+    "background_color": "#FFFFFF",
     "theme_color": "#0175C2",
     "description": "A note and todos App",
     "orientation": "portrait-primary",

@@ -1,30 +1,46 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:copyclip/main.dart';
 import 'package:copyclip/src/core/theme/bloc/theme_bloc.dart';
 import 'package:copyclip/src/core/providers/locale_provider.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
+import 'package:copyclip/src/features/notes/data/note_adapter.dart';
+import 'package:copyclip/src/features/notes/data/note_model.dart';
+import 'package:copyclip/src/features/todos/data/todo_adapter.dart';
+import 'package:copyclip/src/features/journal/data/journal_adapter.dart';
+import 'package:copyclip/src/features/clipboard/data/clipboard_adapter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() async {
-    const pathChannel = MethodChannel('plugins.flutter.io/path_provider');
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(pathChannel, (_) async => '.');
-
-    const adsChannel = MethodChannel('plugins.flutter.io/google_mobile_ads');
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(adsChannel, (_) async => null);
-
-    await Hive.initFlutter();
+    GoogleFonts.config.allowRuntimeFetching = false;
+    final tempDir = await Directory.systemTemp.createTemp(
+      'copyclip_widget_test_',
+    );
+    Hive.init(tempDir.path);
+    Hive.registerAdapter(NoteAdapter());
+    Hive.registerAdapter(TodoAdapter());
+    Hive.registerAdapter(JournalEntryAdapter());
+    Hive.registerAdapter(ClipboardItemAdapter());
     await Hive.openBox('settings');
     await Hive.openBox('theme_box');
+    await Hive.openBox<Note>('notes_box');
+  });
+
+  setUp(() {
+    isIntegrationTesting = true;
+  });
+
+  tearDown(() {
+    isIntegrationTesting = false;
   });
 
   testWidgets('App launches without crashing', (tester) async {
@@ -35,9 +51,7 @@ void main() {
           BlocProvider(create: (_) => PremiumBloc()),
         ],
         child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => LocaleProvider()),
-          ],
+          providers: [ChangeNotifierProvider(create: (_) => LocaleProvider())],
           child: ScreenUtilInit(
             designSize: const Size(390, 844),
             minTextAdapt: true,
@@ -50,13 +64,7 @@ void main() {
       ),
     );
 
-    // Initial pump
-    await tester.pump();
-
-    // Note: MainApp has logic that might require other providers or fail if boxes aren't handled perfectly.
-    // Ideally we mock everything. But for "Launch without crashing", this might suffice if MainApp handles nulls or defaults.
-    // MainApp accesses Provider.of<ThemeManager> (removed).
-    // MainApp accesses Provider.of<PremiumProvider> (missing here!).
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.byType(MaterialApp), findsOneWidget);
   });
