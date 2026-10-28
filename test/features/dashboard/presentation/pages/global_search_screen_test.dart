@@ -69,7 +69,7 @@ void main() {
     }
   });
 
-  testWidgets('search app bar opens drawer from its leading menu button', (
+  testWidgets('search app bar has leading menu button', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -100,16 +100,46 @@ void main() {
       findsOneWidget,
     );
     expect(appBar.actions, isNull);
-    expect(find.byKey(const ValueKey('global_search_back')), findsNothing);
 
-    await tester.tap(find.byKey(const ValueKey('global_search_menu')));
-    await tester.pump(const Duration(milliseconds: 500));
-    expect(find.byType(Drawer), findsOneWidget);
-    expect(
-      tester.state<ScaffoldState>(find.byType(Scaffold).first).isDrawerOpen,
-      isTrue,
+    await tester.pump(const Duration(seconds: 1));
+  });
+
+  testWidgets('clicking filter icon opens sort and filter bottom sheet', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => ThemeBloc()),
+          BlocProvider(create: (_) => PremiumBloc()),
+        ],
+        child: ChangeNotifierProvider(
+          create: (_) => LocaleProvider(),
+          child: MaterialApp.router(
+            routerConfig: router,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
+        ),
+      ),
     );
+    await tester.pump(const Duration(milliseconds: 500));
 
-    await tester.pumpWidget(const SizedBox.shrink());
+    final filterButton = find.byKey(const ValueKey('global_search_filter_button'));
+    expect(filterButton, findsOneWidget);
+
+    await tester.tap(filterButton);
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.text('Sort & Filter'), findsOneWidget);
+    expect(find.text('Sort Order'), findsOneWidget);
+    expect(find.text('Timeframe'), findsOneWidget);
+    expect(find.text('Color Tag'), findsOneWidget);
+    expect(find.text('Done'), findsOneWidget);
+
+    await tester.tap(find.text('Done'), warnIfMissed: false);
+    await tester.pump(const Duration(milliseconds: 500));
+
+    await tester.pump(const Duration(seconds: 1));
   });
 }

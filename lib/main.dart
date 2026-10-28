@@ -119,12 +119,6 @@ Future<void> _initializeApp() async {
 
     // Step 3: Critical System setup
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.transparent,
-        statusBarColor: Colors.transparent,
-      ),
-    );
 
     // Step 4: Open ONLY critical boxes for UI
     // Grouping awaits for parallelism

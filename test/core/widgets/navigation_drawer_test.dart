@@ -60,7 +60,8 @@ void main() {
         ),
         GoRoute(
           path: AppRouter.todos,
-          builder: (context, state) => _featureScreen(state.uri.path),
+          builder: (context, state) =>
+              _featureScreen(state.uri.path, useCustomLeading: true),
         ),
         GoRoute(
           path: AppRouter.recycleBin,
@@ -86,15 +87,10 @@ void main() {
     await tester.pumpWidget(_testApp(router, themeBloc));
     await tester.pump();
 
-    expect(
-      tester
-          .widget<Scaffold>(find.byType(Scaffold).first)
-          .drawerEnableOpenDragGesture,
-      isTrue,
-    );
     await tester.dragFrom(const Offset(1, 200), const Offset(260, 0));
     await tester.pumpAndSettle();
 
+    expect(find.byType(TextField), findsOneWidget);
     expect(find.text('Privacy Policy'), findsNothing);
     expect(find.text('Send Feedback'), findsNothing);
     expect(find.text('Theme Mode'), findsNothing);
@@ -117,6 +113,107 @@ void main() {
 
     await tester.tap(find.text('Notes'));
     await tester.pumpAndSettle();
+    expect(find.text('Route: /notes'), findsOneWidget);
+  });
+
+  testWidgets(
+    'drawer opens from a swipe that starts away from the screen edge',
+    (tester) async {
+      await tester.pumpWidget(_testApp(router, themeBloc));
+      await tester.pump();
+
+      final screenBounds = tester.getRect(
+        find.byKey(const ValueKey('mainScreenContent')),
+      );
+      await tester.dragFrom(const Offset(400, 200), const Offset(260, 0));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(TextField), findsOneWidget);
+      expect(
+        tester.getRect(find.byKey(const ValueKey('mainScreenContent'))),
+        screenBounds,
+      );
+    },
+  );
+
+  testWidgets('toolbar menu opens the drawer at 70% of screen width', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_testApp(router, themeBloc));
+    await tester.pump();
+
+    await tester.tap(find.byType(IconButton).first);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TextField), findsOneWidget);
+    final scaffoldWidth = tester.getSize(find.byType(Scaffold).first).width;
+    expect(
+      tester.widget<Drawer>(find.byType(Drawer)).width,
+      scaffoldWidth * GlassScaffold.drawerWidthFraction,
+    );
+    expect(
+      tester.getSize(find.byType(Drawer)).width,
+      closeTo(scaffoldWidth * GlassScaffold.drawerWidthFraction, 1),
+    );
+  });
+
+  testWidgets('screen-provided toolbar menu opens the custom drawer', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_testApp(router, themeBloc));
+    router.go(AppRouter.todos);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(IconButton).first);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TextField), findsOneWidget);
+  });
+
+  testWidgets('drawer closes on a right-to-left swipe', (tester) async {
+    await tester.pumpWidget(_testApp(router, themeBloc));
+    await tester.pump();
+    await tester.dragFrom(const Offset(1, 200), const Offset(260, 0));
+    await tester.pumpAndSettle();
+    expect(find.byType(TextField), findsOneWidget);
+
+    await tester.dragFrom(const Offset(500, 200), const Offset(-400, 0));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TextField), findsNothing);
+  });
+
+  testWidgets('drawer closes when tapping outside it', (tester) async {
+    await tester.pumpWidget(_testApp(router, themeBloc));
+    await tester.pump();
+    await tester.dragFrom(const Offset(1, 200), const Offset(260, 0));
+    await tester.pumpAndSettle();
+    expect(find.byType(TextField), findsOneWidget);
+
+    final scaffoldRect = tester.getRect(find.byType(Scaffold).first);
+    final outsidePoint = Offset(
+      scaffoldRect.right - 20,
+      scaffoldRect.center.dy,
+    );
+    await tester.tapAt(outsidePoint);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TextField), findsNothing);
+  });
+
+  testWidgets('system back closes the drawer without leaving the screen', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_testApp(router, themeBloc));
+    await tester.pump();
+    await tester.dragFrom(const Offset(1, 200), const Offset(260, 0));
+    await tester.pumpAndSettle();
+    expect(find.byType(TextField), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TextField), findsNothing);
     expect(find.text('Route: /notes'), findsOneWidget);
   });
 
@@ -212,10 +309,22 @@ Widget _recycleTestApp(GoRouter router) {
   );
 }
 
-Widget _featureScreen(String path) {
+Widget _featureScreen(String path, {bool useCustomLeading = false}) {
   return GlassScaffold(
+    title: path,
+    leading: useCustomLeading
+        ? Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => GlassScaffold.openDrawer(context),
+            ),
+          )
+        : null,
     showDrawer: true,
     drawer: const CopyClipDrawer(),
-    body: Center(child: Text('Route: $path')),
+    body: Center(
+      key: const ValueKey('mainScreenContent'),
+      child: Text('Route: $path'),
+    ),
   );
 }
