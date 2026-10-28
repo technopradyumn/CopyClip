@@ -35,7 +35,6 @@ import '../clipboard/data/clipboard_model.dart';
 import '../journal/data/journal_model.dart';
 import '../notes/data/note_model.dart';
 import '../todos/data/todo_model.dart';
-import 'recycle_bin_screen.dart';
 import '../premium/presentation/widgets/premium_lock_dialog.dart';
 import '../premium/presentation/bloc/premium_bloc.dart';
 
@@ -324,12 +323,7 @@ class _SettingsScreenState extends State<SettingsScreen>
   }
 
   Future<void> _runAutoCleanup() async {
-    const boxes = [
-      'notes_box',
-      'todos_box',
-      'journal_box',
-      'clipboard_box',
-    ];
+    const boxes = ['notes_box', 'todos_box', 'journal_box', 'clipboard_box'];
     final now = DateTime.now();
     for (final boxName in boxes) {
       if (Hive.isBoxOpen(boxName)) {
@@ -802,47 +796,57 @@ class _SettingsScreenState extends State<SettingsScreen>
                 return Wrap(
                   spacing: 14,
                   runSpacing: 14,
-                  children: [
-                    Colors.blue,
-                    Colors.indigo,
-                    Colors.purple,
-                    Colors.pink,
-                    const Color(0xFFFF5252), // Modern Red
-                    const Color(0xFFFFAB40), // Modern Orange
-                    const Color(0xFFFFD740), // Modern Amber
-                    Colors.green,
-                    Colors.teal,
-                    Colors.cyan,
-                    const Color(0xFF7E57C2), // Deep Purple
-                  ].map((color) {
-                    final isSelected = themeState.primaryColor.value == color.value;
-                    return GestureDetector(
-                      onTap: () => context.read<ThemeBloc>().add(ChangePrimaryColor(color)),
-                      child: Container(
-                        width: 32,
-                        height: 32,
-                        decoration: BoxDecoration(
-                          color: color,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: isSelected ? theme.colorScheme.onSurface : Colors.transparent,
-                            width: 2,
+                  children:
+                      [
+                        Colors.blue,
+                        Colors.indigo,
+                        Colors.purple,
+                        Colors.pink,
+                        const Color(0xFFFF5252), // Modern Red
+                        const Color(0xFFFFAB40), // Modern Orange
+                        const Color(0xFFFFD740), // Modern Amber
+                        Colors.green,
+                        Colors.teal,
+                        Colors.cyan,
+                        const Color(0xFF7E57C2), // Deep Purple
+                      ].map((color) {
+                        final isSelected =
+                            themeState.primaryColor.value == color.value;
+                        return GestureDetector(
+                          onTap: () => context.read<ThemeBloc>().add(
+                            ChangePrimaryColor(color),
                           ),
-                          boxShadow: [
-                            if (isSelected)
-                              BoxShadow(
-                                color: color.withOpacity(0.4),
-                                blurRadius: 8,
-                                spreadRadius: 1,
+                          child: Container(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              color: color,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: isSelected
+                                    ? theme.colorScheme.onSurface
+                                    : Colors.transparent,
+                                width: 2,
                               ),
-                          ],
-                        ),
-                        child: isSelected 
-                          ? const Icon(Icons.check, color: Colors.white, size: 16) 
-                          : null,
-                      ),
-                    );
-                  }).toList(),
+                              boxShadow: [
+                                if (isSelected)
+                                  BoxShadow(
+                                    color: color.withOpacity(0.4),
+                                    blurRadius: 8,
+                                    spreadRadius: 1,
+                                  ),
+                              ],
+                            ),
+                            child: isSelected
+                                ? const Icon(
+                                    Icons.check,
+                                    color: Colors.white,
+                                    size: 16,
+                                  )
+                                : null,
+                          ),
+                        );
+                      }).toList(),
                 );
               },
             ),
@@ -990,11 +994,8 @@ class _SettingsScreenState extends State<SettingsScreen>
         ),
         trailing: const Icon(CupertinoIcons.chevron_forward, size: 14),
         onTap: () async {
-          await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const RecycleBinScreen()),
-          );
-          state.setState(() {});
+          await context.push(AppRouter.recycleBin);
+          if (state.mounted) state.setState(() {});
         },
       ),
     );
@@ -1204,64 +1205,67 @@ class _SettingsScreenState extends State<SettingsScreen>
         SystemNavigator.pop();
       },
       child: GlassScaffold(
-      title: null,
-      showBackArrow: false,
-      showDrawer: true,
-      drawer: CopyClipDrawer(),
-      body: DynamicBackground(
-        child: Column(
-          children: [
-            SeamlessHeader(
-              title: AppLocalizations.of(context)!.settings,
-              subtitle: AppLocalizations.of(context)!.settingsSubtitle,
-              icon: CupertinoIcons.settings,
-              iconColor: theme.colorScheme.primary,
-              heroTagPrefix: 'settings',
-              showBackButton: false,
-              leading: Builder(
-                builder: (context) => IconButton(
-                  icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
-                  tooltip: 'Open menu',
-                  onPressed: () => Scaffold.of(context).openDrawer(),
+        title: null,
+        showBackArrow: false,
+        showDrawer: true,
+        drawer: CopyClipDrawer(),
+        body: DynamicBackground(
+          child: Column(
+            children: [
+              SeamlessHeader(
+                title: AppLocalizations.of(context)!.settings,
+                subtitle: AppLocalizations.of(context)!.settingsSubtitle,
+                icon: CupertinoIcons.settings,
+                iconColor: theme.colorScheme.primary,
+                heroTagPrefix: 'settings',
+                showBackButton: false,
+                leading: Builder(
+                  builder: (context) => IconButton(
+                    icon: const Icon(
+                      CupertinoIcons.line_horizontal_3,
+                      size: 20,
+                    ),
+                    tooltip: 'Open menu',
+                    onPressed: () => GlassScaffold.openDrawer(context),
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: CustomScrollView(
-                controller: _scrollController,
-                cacheExtent: 2000,
-                physics: const BouncingScrollPhysics(),
-                slivers: [
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
-                    sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        final sections = _createSections(context);
-                        final section = sections[index];
-                        return RepaintBoundary(
-                          key: ValueKey(section.type),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if (section.title != null)
-                                _SectionHeader(
-                                  title: section.title!,
-                                  color: primaryColor,
-                                ),
-                              section.builder(context, this),
-                              const SizedBox(height: 24),
-                            ],
-                          ),
-                        );
-                      }, childCount: _createSections(context).length),
+              Expanded(
+                child: CustomScrollView(
+                  controller: _scrollController,
+                  cacheExtent: 2000,
+                  physics: const BouncingScrollPhysics(),
+                  slivers: [
+                    SliverPadding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
+                      sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          final sections = _createSections(context);
+                          final section = sections[index];
+                          return RepaintBoundary(
+                            key: ValueKey(section.type),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (section.title != null)
+                                  _SectionHeader(
+                                    title: section.title!,
+                                    color: primaryColor,
+                                  ),
+                                section.builder(context, this),
+                                const SizedBox(height: 24),
+                              ],
+                            ),
+                          );
+                        }, childCount: _createSections(context).length),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -1376,15 +1380,17 @@ class _ThemeModeAnimationIconState extends State<_ThemeModeAnimationIcon>
     );
     _scale = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween(begin: 0.45, end: 1.35).chain(
-          CurveTween(curve: Curves.easeOutCubic),
-        ),
+        tween: Tween(
+          begin: 0.45,
+          end: 1.35,
+        ).chain(CurveTween(curve: Curves.easeOutCubic)),
         weight: 50,
       ),
       TweenSequenceItem(
-        tween: Tween(begin: 1.35, end: 0.45).chain(
-          CurveTween(curve: Curves.easeInCubic),
-        ),
+        tween: Tween(
+          begin: 1.35,
+          end: 0.45,
+        ).chain(CurveTween(curve: Curves.easeInCubic)),
         weight: 50,
       ),
     ]).animate(_controller);

@@ -4,6 +4,7 @@ import 'package:copyclip/src/core/const/constant.dart';
 import 'package:copyclip/src/core/router/app_router.dart';
 import 'package:copyclip/src/core/services/navigation_preference_service.dart';
 import 'package:copyclip/src/core/utils/app_assets.dart';
+import 'package:copyclip/src/core/widgets/glass_scaffold.dart';
 import 'package:copyclip/src/features/premium/presentation/bloc/premium_bloc.dart';
 import 'package:copyclip/src/l10n/app_localizations.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,16 +22,26 @@ class CopyClipDrawer extends StatefulWidget {
 
 class _CopyClipDrawerState extends State<CopyClipDrawer> {
   final _searchController = TextEditingController();
-  late final GoRouter _router;
+  GoRouter? _router;
   late final Future<PackageInfo> _packageInfoFuture;
 
   @override
   void initState() {
     super.initState();
-    _router = GoRouter.of(context);
     _packageInfoFuture = PackageInfo.fromPlatform();
-    // Rebuild whenever the route changes so the active drawer item stays in sync
-    _router.routeInformationProvider.addListener(_onRouteChanged);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    try {
+      final router = GoRouter.of(context);
+      if (router != _router) {
+        _router?.routeInformationProvider.removeListener(_onRouteChanged);
+        _router = router;
+        _router?.routeInformationProvider.addListener(_onRouteChanged);
+      }
+    } catch (_) {}
   }
 
   void _onRouteChanged() {
@@ -39,18 +50,28 @@ class _CopyClipDrawerState extends State<CopyClipDrawer> {
 
   @override
   void dispose() {
-    _router.routeInformationProvider.removeListener(_onRouteChanged);
+    _router?.routeInformationProvider.removeListener(_onRouteChanged);
     _searchController.dispose();
     super.dispose();
   }
 
   /// The current route path (e.g. `/notes`, `/todos`).
-  String _routeLocation() => _router.routeInformationProvider.value.uri.path;
+  String _routeLocation() {
+    try {
+      return _router?.routeInformationProvider.value.uri.path ?? '';
+    } catch (_) {
+      return '';
+    }
+  }
 
   /// Always synchronize the visible section with the selected drawer item.
   void _navigate(BuildContext context, String route) {
-    Scaffold.of(context).closeDrawer();
-    _router.go(route);
+    GlassScaffold.closeDrawer(context);
+    if (_router != null) {
+      _router!.go(route);
+    } else {
+      context.go(route);
+    }
     if (AppRouter.overviewRoutes.contains(route)) {
       unawaited(NavigationPreferenceService.saveLastDrawerRoute(route));
     }
@@ -70,15 +91,14 @@ class _CopyClipDrawerState extends State<CopyClipDrawer> {
 
     final isPremium = context.watch<PremiumBloc>().state.isPremium;
 
+    final drawerWidth =
+        MediaQuery.sizeOf(context).width * GlassScaffold.drawerWidthFraction;
     return Drawer(
+      width: drawerWidth,
       elevation: 0,
       backgroundColor: Colors.transparent,
       child: Container(
-        constraints: BoxConstraints(
-          maxWidth: (MediaQuery.of(
-            context,
-          ).size.width.clamp(240, 320)).toDouble(),
-        ),
+        constraints: BoxConstraints(maxWidth: drawerWidth),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -141,7 +161,7 @@ class _CopyClipDrawerState extends State<CopyClipDrawer> {
                   onSubmitted: (query) {
                     _searchController.clear();
                     if (query.trim().isNotEmpty) {
-                      Scaffold.of(context).closeDrawer();
+                      GlassScaffold.closeDrawer(context);
                       context.push(
                         Uri(
                           path: AppRouter.globalSearch,

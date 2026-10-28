@@ -514,7 +514,7 @@ class _NotesScreenState extends State<NotesScreen> {
           builder: (context) => IconButton(
             icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
             tooltip: 'Open menu',
-            onPressed: () => Scaffold.of(context).openDrawer(),
+            onPressed: () => GlassScaffold.openDrawer(context),
           ),
         ),
         actions: [
@@ -541,7 +541,7 @@ class _NotesScreenState extends State<NotesScreen> {
         builder: (context) => IconButton(
           icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
           tooltip: 'Open menu',
-          onPressed: () => Scaffold.of(context).openDrawer(),
+          onPressed: () => GlassScaffold.openDrawer(context),
         ),
       ),
       actions: [

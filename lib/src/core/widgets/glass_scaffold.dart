@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show CupertinoIcons;
+import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:copyclip/src/core/widgets/ad_widget/banner_ad_widget.dart';
 
 class GlassScaffold extends StatefulWidget {
+  static const double drawerWidthFraction = 0.7;
+
+  static void openDrawer(BuildContext context) {
+    final state = context.findAncestorStateOfType<_GlassScaffoldState>();
+    if (state == null) {
+      throw FlutterError('No GlassScaffold found above this context.');
+    }
+    state._animateDrawerOpen();
+  }
+
+  static void closeDrawer(BuildContext context) {
+    final state = context.findAncestorStateOfType<_GlassScaffoldState>();
+    if (state == null) {
+      throw FlutterError('No GlassScaffold found above this context.');
+    }
+    state._animateDrawerClose();
+  }
+
   final Widget body;
   final Widget? floatingActionButton;
   final dynamic title;
@@ -18,6 +37,7 @@ class GlassScaffold extends StatefulWidget {
   final Widget? leading;
   final bool showDrawer;
   final Widget? drawer;
+
   /// If true, enables real-time finger-following drawer swipe gesture.
   /// The drawer will move smoothly with your finger as you swipe.
   final bool enableRealTimeSwipeDrawer;
@@ -44,19 +64,24 @@ class GlassScaffold extends StatefulWidget {
   State<GlassScaffold> createState() => _GlassScaffoldState();
 }
 
-class _GlassScaffoldState extends State<GlassScaffold> with SingleTickerProviderStateMixin {
+class _GlassScaffoldState extends State<GlassScaffold>
+    with SingleTickerProviderStateMixin {
   late AnimationController _drawerController;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Real-time swipe tracking
+  int? _activePointer;
+  Offset? _pointerStartPosition;
+  double _progressAtPointerStart = 0.0;
+  VelocityTracker? _velocityTracker;
   double _dragProgress = 0.0; // 0.0 = closed, 1.0 = fully open
   bool _isDragging = false;
-  double _dragStartX = 0;
-  bool _wasDrawerOpen = false;
+  bool _pointerStartedOutsideDrawer = false;
 
-  static const double _drawerWidth = 320.0; // Max drawer width
-  static const double _minSwipeDistance = 20.0; // Min distance to start tracking
-  static const double _maxVerticalDeviation = 80.0;
+  static const double _minSwipeDistance =
+      20.0; // Min distance to start tracking
+
+  double get _drawerWidth =>
+      MediaQuery.sizeOf(context).width * GlassScaffold.drawerWidthFraction;
 
   @override
   void initState() {
@@ -66,7 +91,7 @@ class _GlassScaffoldState extends State<GlassScaffold> with SingleTickerProvider
       duration: const Duration(milliseconds: 250),
     );
     _drawerController.addListener(() {
-      if (!_isDragging) {
+      if (!_isDragging && mounted) {
         setState(() {
           _dragProgress = _drawerController.value;
         });
@@ -80,50 +105,76 @@ class _GlassScaffoldState extends State<GlassScaffold> with SingleTickerProvider
     super.dispose();
   }
 
-  void _handleDragStart(DragStartDetails details) {
-    if (!widget.showDrawer || widget.drawer == null || !widget.enableRealTimeSwipeDrawer) return;
+  bool get _canHandleDrawerGestures =>
+      widget.showDrawer &&
+      widget.drawer != null &&
+      widget.enableRealTimeSwipeDrawer;
 
-    _dragStartX = details.globalPosition.dx;
-    _wasDrawerOpen = _dragProgress > 0.5;
-    _isDragging = true;
+  void _handlePointerDown(PointerDownEvent event) {
+    if (!_canHandleDrawerGestures || _activePointer != null) return;
+
+    _activePointer = event.pointer;
+    _pointerStartPosition = event.position;
+    _progressAtPointerStart = _dragProgress;
+    _pointerStartedOutsideDrawer =
+        _dragProgress > 0.001 &&
+        event.localPosition.dx >= _drawerWidth * _dragProgress;
+    _velocityTracker = VelocityTracker.withKind(event.kind)
+      ..addPosition(event.timeStamp, event.position);
   }
 
-  void _handleDragUpdate(DragUpdateDetails details) {
-    if (!_isDragging || !widget.showDrawer || widget.drawer == null) return;
-
-    final currentX = details.globalPosition.dx;
-    final deltaX = currentX - _dragStartX;
-    final verticalDelta = (details.globalPosition.dy - details.globalPosition.dy).abs();
-
-    // Cancel if vertical scroll detected
-    if (verticalDelta > _maxVerticalDeviation) {
-      _cancelDrag();
+  void _handlePointerMove(PointerMoveEvent event) {
+    if (event.pointer != _activePointer || _pointerStartPosition == null) {
       return;
     }
 
-    // Only allow rightward swipe to open, leftward to close
-    if (deltaX < -_minSwipeDistance && _dragProgress <= 0.01) {
-      // Swiping left from closed position - ignore
-      return;
+    _velocityTracker?.addPosition(event.timeStamp, event.position);
+    final offset = event.position - _pointerStartPosition!;
+
+    if (!_isDragging) {
+      if (offset.distance < _minSwipeDistance) return;
+      if (offset.dy.abs() > offset.dx.abs()) {
+        _resetPointerTracking();
+        return;
+      }
+
+      final drawerIsOpen = _progressAtPointerStart > 0.001;
+      if ((!drawerIsOpen && offset.dx <= 0) ||
+          (drawerIsOpen && offset.dx >= 0)) {
+        _resetPointerTracking();
+        return;
+      }
+
+      _drawerController.stop();
+      _isDragging = true;
     }
 
-    // Calculate progress (0.0 to 1.0)
-    // Drawer opens as finger moves right
-    final targetProgress = (_dragProgress + deltaX / _drawerWidth).clamp(0.0, 1.0);
-
+    final progress = (_progressAtPointerStart + offset.dx / _drawerWidth).clamp(
+      0.0,
+      1.0,
+    );
+    _drawerController.value = progress;
     setState(() {
-      _dragProgress = targetProgress;
+      _dragProgress = progress;
     });
   }
 
-  void _handleDragEnd(DragEndDetails details) {
-    if (!_isDragging || !widget.showDrawer || widget.drawer == null) return;
+  void _handlePointerUp(PointerEvent event) {
+    if (event.pointer != _activePointer) return;
+    _velocityTracker?.addPosition(event.timeStamp, event.position);
+    final velocity = _velocityTracker?.getVelocity().pixelsPerSecond.dx ?? 0;
+    final wasDragging = _isDragging;
+    final shouldCloseFromOutsideTap =
+        _pointerStartedOutsideDrawer && !wasDragging;
+    _resetPointerTracking();
 
-    final velocity = details.velocity.pixelsPerSecond.dx;
-    final shouldOpen = velocity > 300 || _dragProgress > 0.4;
+    if (!wasDragging) {
+      if (shouldCloseFromOutsideTap) _animateDrawerClose();
+      return;
+    }
 
-    _isDragging = false;
-
+    final shouldOpen =
+        velocity > 300 || (velocity >= -300 && _dragProgress > 0.4);
     if (shouldOpen) {
       _animateDrawerOpen();
     } else {
@@ -131,16 +182,29 @@ class _GlassScaffoldState extends State<GlassScaffold> with SingleTickerProvider
     }
   }
 
-  void _handleDragCancel() {
-    _cancelDrag();
-  }
+  void _handlePointerCancel(PointerCancelEvent event) {
+    if (event.pointer != _activePointer) return;
+    final wasDragging = _isDragging;
+    _resetPointerTracking();
+    if (!wasDragging) return;
 
-  void _cancelDrag() {
-    if (!_isDragging) return;
-    _isDragging = false;
-    if (_wasDrawerOpen || _dragProgress > 0.4) {
+    if (_dragProgress > 0.4) {
       _animateDrawerOpen();
     } else {
+      _animateDrawerClose();
+    }
+  }
+
+  void _resetPointerTracking() {
+    _activePointer = null;
+    _pointerStartPosition = null;
+    _velocityTracker = null;
+    _isDragging = false;
+    _pointerStartedOutsideDrawer = false;
+  }
+
+  void _handleBackNavigation(bool didPop) {
+    if (!didPop && _dragProgress > 0.001) {
       _animateDrawerClose();
     }
   }
@@ -182,275 +246,173 @@ class _GlassScaffoldState extends State<GlassScaffold> with SingleTickerProvider
 
     final bool hasDrawer = widget.showDrawer && widget.drawer != null;
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: overlayStyle.copyWith(statusBarColor: Colors.transparent),
-      child: Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: baseColor,
-        resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
-        extendBodyBehindAppBar: true,
-        // Disable built-in drawer since we use custom real-time drawer
-        drawer: null,
-        drawerEnableOpenDragGesture: false,
-        appBar: widget.title != null
-            ? AppBar(
-                backgroundColor: Colors.transparent,
-                surfaceTintColor: Colors.transparent,
-                elevation: 0,
-                centerTitle: widget.centerTitle,
-                titleSpacing: widget.titleSpacing,
-                systemOverlayStyle: overlayStyle,
-                leading:
-                    widget.leading ??
-                    (widget.showDrawer
-                        ? Builder(
-                            builder: (scaffoldContext) => IconButton(
-                              icon: const Icon(
-                                CupertinoIcons.line_horizontal_3,
-                                size: 20,
+    return PopScope<Object?>(
+      canPop: !hasDrawer || _dragProgress <= 0.001,
+      onPopInvokedWithResult: (didPop, _) => _handleBackNavigation(didPop),
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: overlayStyle,
+        child: Listener(
+          behavior: HitTestBehavior.translucent,
+          onPointerDown: _handlePointerDown,
+          onPointerMove: _handlePointerMove,
+          onPointerUp: _handlePointerUp,
+          onPointerCancel: _handlePointerCancel,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Scaffold(
+                key: _scaffoldKey,
+                backgroundColor: baseColor,
+                resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+                extendBodyBehindAppBar: true,
+                drawer: null,
+                drawerEnableOpenDragGesture: false,
+                appBar: widget.title != null
+                    ? AppBar(
+                        backgroundColor: Colors.transparent,
+                        surfaceTintColor: Colors.transparent,
+                        elevation: 0,
+                        centerTitle: widget.centerTitle,
+                        titleSpacing: widget.titleSpacing,
+                        systemOverlayStyle: overlayStyle,
+                        leading:
+                            widget.leading ??
+                            (widget.showDrawer
+                                ? Builder(
+                                    builder: (scaffoldContext) => IconButton(
+                                      icon: const Icon(
+                                        CupertinoIcons.line_horizontal_3,
+                                        size: 20,
+                                      ),
+                                      color: contentColor,
+                                      onPressed: _toggleDrawer,
+                                    ),
+                                  )
+                                : (widget.showBackArrow
+                                      ? IconButton(
+                                          icon: const Icon(
+                                            CupertinoIcons.back,
+                                            size: 20,
+                                          ),
+                                          color: contentColor,
+                                          onPressed: () {
+                                            if (context.canPop()) {
+                                              context.pop();
+                                            } else {
+                                              context.go('/');
+                                            }
+                                          },
+                                        )
+                                      : null)),
+                        title: widget.title is Widget
+                            ? widget.title as Widget
+                            : Text(
+                                widget.title.toString(),
+                                style: theme.textTheme.titleLarge?.copyWith(
+                                  color: contentColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
                               ),
-                              color: contentColor,
-                              onPressed: _toggleDrawer,
+                        actions: widget.actions,
+                      )
+                    : null,
+                body: SizedBox.expand(
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Positioned.fill(child: ColoredBox(color: baseColor)),
+                      if (widget.enableGlassEffect)
+                        Positioned.fill(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: isDark
+                                    ? [
+                                        Colors.white.withValues(alpha: 0.05),
+                                        Colors.transparent,
+                                      ]
+                                    : [
+                                        Colors.white.withValues(alpha: 0.4),
+                                        Colors.white.withValues(alpha: 0.1),
+                                      ],
+                              ),
                             ),
-                          )
-                        : (widget.showBackArrow
-                              ? IconButton(
-                                  icon: Icon(
-                                    CupertinoIcons.back,
-                                    size: 20,
-                                    color: contentColor,
-                                  ),
-                                  onPressed: () {
-                                    if (context.canPop()) {
-                                      context.pop();
-                                    } else {
-                                      context.go('/');
-                                    }
-                                  },
-                                )
-                              : null)),
-                title: widget.title is Widget
-                    ? widget.title as Widget
-                    : Text(
-                        widget.title.toString(),
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          color: contentColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          ),
+                        ),
+                      Positioned.fill(
+                        child: SafeArea(
+                          bottom: false,
+                          child: Column(children: [Expanded(child: widget.body)]),
                         ),
                       ),
-                actions: widget.actions,
-              )
-            : null,
-        body: Stack(
-          children: [
-            // 1. Solid Background
-            Positioned.fill(child: ColoredBox(color: baseColor)),
-
-            // 2. High-Performance Gradient Overlay (Replaces Blur)
-            if (widget.enableGlassEffect)
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: isDark
-                          ? [
-                              Colors.white.withValues(alpha: 0.05),
-                              Colors.transparent,
-                            ]
-                          : [
-                              Colors.white.withValues(alpha: 0.4),
-                              Colors.white.withValues(alpha: 0.1),
-                            ],
-                    ),
+                    ],
                   ),
                 ),
+                floatingActionButton: widget.floatingActionButton,
+                bottomNavigationBar: const BannerAdWidget(hideOnKeyboard: true),
               ),
-
-            // 3. Main Body Content with Real-Time Swipe Detection
-            Positioned.fill(
-              child: SafeArea(
-                bottom: false,
-                child: hasDrawer && widget.enableRealTimeSwipeDrawer
-                    ? _RealTimeSwipeDetector(
-                        onDragStart: _handleDragStart,
-                        onDragUpdate: _handleDragUpdate,
-                        onDragEnd: _handleDragEnd,
-                        onDragCancel: _handleDragCancel,
-                        child: Column(
-                          children: [
-                            Expanded(child: widget.body),
-                          ],
-                        ),
-                      )
-                    : Column(
-                        children: [
-                          Expanded(child: widget.body),
-                        ],
-                      ),
-              ),
-            ),
-
-            // 4. Custom Real-Time Drawer Overlay
-            if (hasDrawer)
-              _RealTimeDrawer(
-                progress: _dragProgress,
-                drawerWidth: _drawerWidth,
-                isDark: isDark,
-                drawer: widget.drawer!,
-                onTapClose: _animateDrawerClose,
-              ),
-
-            // 5. Dimmed backdrop when drawer is opening
-            if (hasDrawer && _dragProgress > 0)
-              _DrawerBackdrop(
-                progress: _dragProgress,
-                onTap: _animateDrawerClose,
-              ),
-          ],
+              if (hasDrawer)
+                Positioned.fill(
+                  child: _DrawerBackdrop(
+                    progress: _dragProgress,
+                    onTap: _animateDrawerClose,
+                  ),
+                ),
+              if (hasDrawer)
+                Positioned.fill(
+                  child: _RealTimeDrawer(
+                    progress: _dragProgress,
+                    drawerWidth: _drawerWidth,
+                    isDark: isDark,
+                    drawer: widget.drawer!,
+                  ),
+                ),
+            ],
+          ),
         ),
-        floatingActionButton: widget.floatingActionButton,
-        bottomNavigationBar: const BannerAdWidget(hideOnKeyboard: true),
       ),
     );
   }
 }
 
-/// Real-time swipe detector that only handles horizontal drag
-/// Allows vertical scroll to pass through to child
-class _RealTimeSwipeDetector extends StatefulWidget {
-  final Widget child;
-  final GestureDragStartCallback onDragStart;
-  final GestureDragUpdateCallback onDragUpdate;
-  final GestureDragEndCallback onDragEnd;
-  final GestureDragCancelCallback onDragCancel;
-
-  const _RealTimeSwipeDetector({
-    required this.child,
-    required this.onDragStart,
-    required this.onDragUpdate,
-    required this.onDragEnd,
-    required this.onDragCancel,
-  });
-
-  @override
-  State<_RealTimeSwipeDetector> createState() => _RealTimeSwipeDetectorState();
-}
-
-class _RealTimeSwipeDetectorState extends State<_RealTimeSwipeDetector> {
-  // Use a horizontal drag gesture recognizer that competes with child scrollables
-  @override
-  Widget build(BuildContext context) {
-    return Listener(
-      behavior: HitTestBehavior.translucent,
-      onPointerDown: (event) {
-        // Start tracking for horizontal drag
-      },
-      child: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        // Only handle horizontal drag, let vertical scroll pass through
-        onHorizontalDragStart: widget.onDragStart,
-        onHorizontalDragUpdate: widget.onDragUpdate,
-        onHorizontalDragEnd: widget.onDragEnd,
-        onHorizontalDragCancel: widget.onDragCancel,
-        child: widget.child,
-      ),
-    );
-  }
-}
-
-/// Custom drawer that animates position/scale/opacity based on progress
+/// Custom drawer that slides over the current screen without resizing it.
+/// Uses Transform.translate for smooth off-screen positioning
 class _RealTimeDrawer extends StatelessWidget {
   final double progress;
   final double drawerWidth;
   final bool isDark;
   final Widget drawer;
-  final VoidCallback onTapClose;
 
   const _RealTimeDrawer({
     required this.progress,
     required this.drawerWidth,
     required this.isDark,
     required this.drawer,
-    required this.onTapClose,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (progress <= 0) return const SizedBox.shrink();
-
-    // Calculate drawer position - slides in from left
+    final bool isClosed = progress <= 0.001;
     final double translateX = -drawerWidth * (1.0 - progress);
-    // Scale effect for depth
-    final double scale = 0.95 + (0.05 * progress);
-    // Opacity
-    final double opacity = progress;
+    final double opacity = progress.clamp(0.0, 1.0);
 
-    return AnimatedPositioned(
-      duration: Duration.zero, // We control animation via progress value
-      left: translateX,
-      top: 0,
-      bottom: 0,
-      width: drawerWidth,
-      child: Transform.scale(
-        scale: scale,
-        alignment: Alignment.centerLeft,
-        child: Opacity(
-          opacity: opacity,
-          child: Material(
-            color: Colors.transparent,
-            child: GestureDetector(
-              onTap: onTapClose,
-              behavior: HitTestBehavior.translucent,
-              // Prevent taps on drawer from closing it
-              child: Container(
-                constraints: BoxConstraints(
-                  maxWidth: drawerWidth,
-                ),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: isDark
-                        ? [
-                            const Color(0xFF0E0E12).withValues(alpha: 0.98),
-                            const Color(0xFF16161C).withValues(alpha: 0.98),
-                          ]
-                        : [
-                            const Color(0xFFFFFFFF).withValues(alpha: 0.98),
-                            const Color(0xFFF5F6F9).withValues(alpha: 0.98),
-                          ],
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(26),
-                    bottomRight: Radius.circular(26),
-                  ),
-                  border: Border(
-                    right: BorderSide(
-                      color: Theme.of(context).colorScheme.outline.withValues(
-                            alpha: isDark ? 0.28 : 0.12,
-                          ),
-                      width: 1,
-                    ),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: isDark ? 0.6 : 0.2),
-                      blurRadius: 50,
-                      offset: const Offset(20, 0),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(26),
-                    bottomRight: Radius.circular(26),
-                  ),
-                  child: drawer,
-                ),
+    return Offstage(
+      offstage: isClosed,
+      child: IgnorePointer(
+        ignoring: isClosed,
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: Transform.translate(
+            offset: Offset(translateX, 0),
+            child: Opacity(
+              opacity: opacity,
+              child: SizedBox(
+                width: drawerWidth,
+                height: MediaQuery.of(context).size.height,
+                child: drawer,
               ),
             ),
           ),
@@ -465,23 +427,24 @@ class _DrawerBackdrop extends StatelessWidget {
   final double progress;
   final VoidCallback onTap;
 
-  const _DrawerBackdrop({
-    required this.progress,
-    required this.onTap,
-  });
+  const _DrawerBackdrop({required this.progress, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    if (progress <= 0) return const SizedBox.shrink();
+    final bool isClosed = progress <= 0.001;
 
-    return AnimatedOpacity(
-      opacity: progress * 0.4, // Max 40% dim
-      duration: Duration.zero,
-      child: GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.translucent,
-        child: ColoredBox(
-          color: Colors.black,
+    return Offstage(
+      offstage: isClosed,
+      child: IgnorePointer(
+        ignoring: isClosed,
+        child: GestureDetector(
+          onTap: onTap,
+          behavior: HitTestBehavior.opaque,
+          child: AnimatedOpacity(
+            opacity: (progress * 0.4).clamp(0.0, 0.4), // Max 40% dim
+            duration: Duration.zero,
+            child: const ColoredBox(color: Colors.black),
+          ),
         ),
       ),
     );

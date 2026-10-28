@@ -95,6 +95,15 @@ flutter {
     source = "../.."
 }
 
+configurations.configureEach {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "androidx.datastore") {
+            useVersion("1.3.0")
+            because("Use 16 KB page-size-compatible DataStore native libraries")
+        }
+    }
+}
+
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.1.0"))
     implementation("com.google.firebase:firebase-analytics")

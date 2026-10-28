@@ -338,7 +338,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           key: const ValueKey('global_search_menu'),
           icon: const Icon(CupertinoIcons.line_horizontal_3, size: 20),
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-          onPressed: () => Scaffold.of(scaffoldContext).openDrawer(),
+          onPressed: () => GlassScaffold.openDrawer(scaffoldContext),
         ),
       ),
       body: DynamicBackground(
@@ -467,6 +467,8 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             ),
           ),
           IconButton(
+            key: const ValueKey('global_search_filter_button'),
+            tooltip: 'Sort & Filter',
             icon: Icon(
               Icons.tune_rounded,
               color: hasActiveFilters ? theme.colorScheme.primary : null,
@@ -525,42 +527,72 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     );
   }
 
-  // ✅ IMPROVED VISIBILITY: Dialog for Sort & Filter
+  // ✅ IMPROVED VISIBILITY: Bottom sheet for Sort & Filter
   void _showSortFilterSheet() {
+    // Dismiss keyboard so sheet opens cleanly without soft keyboard overlap
+    FocusScope.of(context).unfocus();
+
     final theme = Theme.of(context);
-    showDialog(
+
+    showModalBottomSheet(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setSheetState) {
-          return AlertDialog(
-            backgroundColor: theme.colorScheme.surface,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (sheetContext) => StatefulBuilder(
+        builder: (sheetContext, setSheetState) {
+          return Container(
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(24),
+              ),
             ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text("Sort & Filter"),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _sortBy = "Newest";
-                      _dateRange = "All Time";
-                      _filterColor = null;
-                    });
-                    _applyFilters();
-                    setSheetState(() {});
-                    // Don't close, just reset
-                  },
-                  child: const Text("Reset"),
-                ),
-              ],
+            padding: EdgeInsets.only(
+              left: 20,
+              right: 20,
+              top: 16,
+              bottom: MediaQuery.of(sheetContext).padding.bottom + 20,
             ),
-            content: SingleChildScrollView(
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Center(
+                    child: Container(
+                      width: 36,
+                      height: 4,
+                      margin: const EdgeInsets.only(bottom: 16),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Sort & Filter",
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            _sortBy = "Newest";
+                            _dateRange = "All Time";
+                            _filterColor = null;
+                          });
+                          _applyFilters();
+                          setSheetState(() {});
+                        },
+                        child: const Text("Reset"),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
                   _sheetSectionTitle("Sort Order"),
                   Wrap(
                     spacing: 8,
@@ -578,7 +610,6 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                         )
                         .toList(),
                   ),
-
                   const SizedBox(height: 16),
                   _sheetSectionTitle("Timeframe"),
                   Wrap(
@@ -597,19 +628,31 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                         )
                         .toList(),
                   ),
-
                   const SizedBox(height: 16),
                   _sheetSectionTitle("Color Tag"),
                   _buildColorFilterRow(setSheetState),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: theme.colorScheme.primary,
+                        foregroundColor: theme.colorScheme.onPrimary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      onPressed: () => Navigator.pop(sheetContext),
+                      child: const Text(
+                        "Done",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text("Done"),
-              ),
-            ],
           );
         },
       ),
