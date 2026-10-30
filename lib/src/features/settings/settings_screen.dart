@@ -31,6 +31,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../../core/services/backup_service.dart';
 import '../../core/services/home_widget_service.dart';
+import 'widgets/home_widget_preview_sheet.dart';
 import '../clipboard/data/clipboard_model.dart';
 import '../journal/data/journal_model.dart';
 import '../notes/data/note_model.dart';
@@ -323,24 +324,40 @@ class _SettingsScreenState extends State<SettingsScreen>
   }
 
   Future<void> _runAutoCleanup() async {
-    const boxes = ['notes_box', 'todos_box', 'journal_box', 'clipboard_box'];
     final now = DateTime.now();
-    for (final boxName in boxes) {
-      if (Hive.isBoxOpen(boxName)) {
-        final box = Hive.box(boxName);
-        final toDelete = box.values.where((item) {
-          try {
-            final dynamic dItem = item;
-            if (dItem.isDeleted == true && dItem.deletedAt != null) {
-              return now.difference(dItem.deletedAt!).inDays >= 30;
-            }
-          } catch (e) {}
-          return false;
-        }).toList();
-        for (final item in toDelete) {
+
+    Future<void> cleanupItems(Iterable<dynamic> values) async {
+      final toDelete = values.where((item) {
+        try {
+          final dynamic dItem = item;
+          if (dItem.isDeleted == true && dItem.deletedAt != null) {
+            return now.difference(dItem.deletedAt!).inDays >= 30;
+          }
+        } catch (_) {}
+        return false;
+      }).toList();
+      for (final item in toDelete) {
+        try {
           await (item as HiveObject).delete();
-        }
+        } catch (_) {}
       }
+    }
+
+    try {
+      if (Hive.isBoxOpen('notes_box')) {
+        await cleanupItems(Hive.box<Note>('notes_box').values);
+      }
+      if (Hive.isBoxOpen('todos_box')) {
+        await cleanupItems(Hive.box<Todo>('todos_box').values);
+      }
+      if (Hive.isBoxOpen('journal_box')) {
+        await cleanupItems(Hive.box<JournalEntry>('journal_box').values);
+      }
+      if (Hive.isBoxOpen('clipboard_box')) {
+        await cleanupItems(Hive.box<ClipboardItem>('clipboard_box').values);
+      }
+    } catch (e) {
+      debugPrint('Error running auto cleanup: $e');
     }
   }
 
@@ -536,6 +553,12 @@ class _SettingsScreenState extends State<SettingsScreen>
     final l10n = AppLocalizations.of(context)!;
     final widgets = [
       {
+        'id': 'copyclip',
+        'title': 'CopyClip',
+        'icon': CupertinoIcons.paperclip,
+        'color': theme.colorScheme.primary,
+      },
+      {
         'id': 'notes',
         'title': l10n.notes,
         'icon': CupertinoIcons.doc_text,
@@ -564,54 +587,114 @@ class _SettingsScreenState extends State<SettingsScreen>
     return PremiumBadge(
       child: _SectionCard(
         color: theme.colorScheme.primary,
-        child: SizedBox(
-          height: 100,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            itemCount: widgets.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 12),
-            itemBuilder: (context, index) {
-              final item = widgets[index];
-              final color = item['color'] as Color;
-              return GestureDetector(
-                onTap: () => state._handleWidgetAdd(
-                  item['id'] as String,
-                  item['title'] as String,
-                ),
-                child: Container(
-                  width: 70,
-                  decoration: BoxDecoration(
-                    color: color.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(
-                      AppConstants.cornerRadius * 0.5,
-                    ),
-                    border: Border.all(
-                      color: color.withValues(alpha: 0.3),
-                      width: AppConstants.borderWidth,
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(item['icon'] as IconData, color: color, size: 28),
-                      const SizedBox(height: 8),
-                      Text(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 110,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                itemCount: widgets.length,
+                separatorBuilder: (_, __) => const SizedBox(width: 12),
+                itemBuilder: (context, index) {
+                  final item = widgets[index];
+                  final color = item['color'] as Color;
+                  return GestureDetector(
+                    onTap: () => HomeWidgetPreviewSheet.show(
+                      context,
+                      widgetId: item['id'] as String,
+                      title: item['title'] as String,
+                      icon: item['icon'] as IconData,
+                      color: color,
+                      onAdd: () => state._handleWidgetAdd(
+                        item['id'] as String,
                         item['title'] as String,
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
-                    ],
+                    ),
+                    child: Container(
+                      width: 82,
+                      decoration: BoxDecoration(
+                        color: color.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(
+                          AppConstants.cornerRadius * 0.6,
+                        ),
+                        border: Border.all(
+                          color: color.withValues(alpha: 0.35),
+                          width: AppConstants.borderWidth,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(item['icon'] as IconData, color: color, size: 26),
+                          const SizedBox(height: 6),
+                          Text(
+                            item['title'] as String,
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 3),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                            decoration: BoxDecoration(
+                              color: color.withValues(alpha: 0.18),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              'Preview',
+                              style: TextStyle(
+                                fontSize: 8.5,
+                                fontWeight: FontWeight.w700,
+                                color: color,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Divider(height: 1, indent: 16, endIndent: 16, color: theme.dividerColor.withValues(alpha: 0.15)),
+            BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, state) {
+                return SwitchListTile.adaptive(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                  secondary: Icon(
+                    CupertinoIcons.square_stack_3d_up,
+                    color: theme.colorScheme.primary,
+                    size: 20,
                   ),
-                ),
-              );
-            },
-          ),
+                  title: Text(
+                    "Apply Background to Widgets",
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  subtitle: Text(
+                    "Use selected app wallpaper on mobile home screen widgets",
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                      fontSize: 11,
+                    ),
+                  ),
+                  value: state.applyBackgroundToWidgets,
+                  activeColor: theme.colorScheme.primary,
+                  onChanged: (val) {
+                    context
+                        .read<ThemeBloc>()
+                        .add(ToggleApplyBackgroundToWidgets(val));
+                  },
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

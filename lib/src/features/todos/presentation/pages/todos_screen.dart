@@ -20,6 +20,7 @@ import 'package:copyclip/src/core/common_widgets/micro_animation.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/widgets/glass_dialog.dart';
+import '../../../../core/widgets/empty_state_widget.dart';
 import '../widgets/todo_card.dart';
 
 enum TodoSortOption { custom, dateNewest, dateOldest, nameAZ, nameZA }
@@ -722,13 +723,12 @@ class _TodosScreenState extends State<TodosScreen>
                   valueListenable: _listItemsNotifier,
                   builder: (context, items, _) {
                     if (items.isEmpty) {
-                      return Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.noTasksFound,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurface.withValues(alpha: 0.4),
-                          ),
-                        ),
+                      return EmptyStateWidget(
+                        assetPath: 'assets/images/todos_empty.svg',
+                        message: AppLocalizations.of(context)!.noTasksFound,
+                        subMessage: 'All clear! Tap below to add a new task',
+                        actionLabel: 'Add Task',
+                        onAction: () => context.push(AppRouter.todoEdit),
                       );
                     }
 

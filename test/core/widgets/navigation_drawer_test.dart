@@ -280,6 +280,7 @@ ThemeState _themeState(ThemeMode mode) {
     primaryColor: Colors.blue,
     backgroundDesign: BackgroundDesign.classicBubbles,
     themeData: ThemeData(),
+    applyBackgroundToWidgets: true
   );
 }
 

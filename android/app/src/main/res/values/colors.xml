@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="widget_background">#F5F5F7</color> <!-- iOS Light BG -->
-    <color name="widget_surface">#FFFFFF</color> <!-- Card BG -->
-    <color name="text_primary">#000000</color>
-    <color name="text_secondary">#8E8E93</color>
-    <color name="text_tertiary">#C7C7CC</color>
-    <color name="accent_primary">#007AFF</color> <!-- iOS Blue -->
+    <color name="widget_background">#FFFFFF</color> <!-- Pure White for Light Mode -->
+    <color name="widget_surface">#FFFFFF</color> <!-- White Card Surface -->
+    <color name="widget_surface_translucent">#F8FAFC</color>
+    <color name="widget_card_border">#1A000000</color> <!-- Subtle Light Border -->
+    <color name="text_primary">#1F2937</color> <!-- Light Text Primary -->
+    <color name="text_secondary">#6B7280</color> <!-- Light Text Secondary -->
+    <color name="text_tertiary">#9CA3AF</color>
+    <color name="accent_primary">#6366F1</color>
     <color name="header_bg">#FFFFFF</color>
     <color name="divider_line">#00000000</color>
+    <color name="widget_divider">#12000000</color>
     <color name="todo_done">#34C759</color>
     <color name="todo_pending">#FF3B30</color>
-    <color name="widget_shadow">#1A000000</color>
+    <color name="widget_shadow">#0D000000</color>
 </resources>

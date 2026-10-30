@@ -148,9 +148,17 @@ class _TodoEditScreenState extends State<TodoEditScreen> {
       debugPrint(
         "TodoEditScreen: Received Todo via widget: ${_editingTodo?.task} (${_editingTodo?.category})",
       );
-    } else if (widget.todoId != null) {
+    } else if (widget.todoId != null && widget.todoId!.isNotEmpty) {
       debugPrint("TodoEditScreen: Resolving ID ${widget.todoId}");
-      _editingTodo = Hive.box<Todo>('todos_box').get(widget.todoId);
+      final box = Hive.box<Todo>('todos_box');
+      _editingTodo = box.get(widget.todoId);
+      if (_editingTodo == null) {
+        try {
+          _editingTodo = box.values.firstWhere(
+            (t) => t.id == widget.todoId,
+          );
+        } catch (_) {}
+      }
       debugPrint(
         "TodoEditScreen: Found Todo from Box? ${_editingTodo != null} - ${_editingTodo?.task}",
       );

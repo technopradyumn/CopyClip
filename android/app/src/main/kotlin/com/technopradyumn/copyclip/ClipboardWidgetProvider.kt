@@ -20,12 +20,14 @@ class ClipboardWidgetProvider : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.clipboard_widget_layout)
             updateWidget(context, views, widgetId)
             appWidgetManager.updateAppWidget(widgetId, views)
+            appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, R.id.clipboard_list)
         }
     }
 
     private fun updateWidget(context: Context, views: RemoteViews, widgetId: Int) {
         try {
             val widgetData = HomeWidgetPlugin.getData(context)
+            WidgetBackgroundHelper.applyBackground(context, views, widgetData)
             views.setTextViewText(R.id.widget_title, "Clipboard")
 
             // Bind List Adapter
@@ -36,8 +38,8 @@ class ClipboardWidgetProvider : AppWidgetProvider() {
             views.setRemoteAdapter(R.id.clipboard_list, serviceIntent)
             
             // Check for list data
-            val jsonStr = widgetData.getString("clipboard_data", "[]")
-            val hasList = jsonStr != "[]" && jsonStr != null && jsonStr.length > 2
+            val jsonStr = widgetData.getString("clipboard_data", "[]") ?: "[]"
+            val hasList = jsonStr != "[]" && jsonStr.length > 2
 
             if (hasList) {
                 views.setViewVisibility(R.id.clipboard_list, View.VISIBLE)
@@ -50,13 +52,10 @@ class ClipboardWidgetProvider : AppWidgetProvider() {
                 views.setTextViewText(R.id.latest_clip_content, latestClip)
             }
 
-            // Template for List Items
-            val itemIntent = Intent(context, MainActivity::class.java).apply {
-                action = Intent.ACTION_VIEW
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            }
-            val itemPendingIntent = PendingIntent.getActivity(
-                context, 102, itemIntent, // Unique Request Code
+            // Template for List Items (Item Click & Copy handled via WidgetActionReceiver)
+            val templateIntent = Intent(context, WidgetActionReceiver::class.java)
+            val itemPendingIntent = PendingIntent.getBroadcast(
+                context, 102, templateIntent, // Unique Request Code
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
             )
             views.setPendingIntentTemplate(R.id.clipboard_list, itemPendingIntent)

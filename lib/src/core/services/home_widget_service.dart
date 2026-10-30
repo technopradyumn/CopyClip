@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:copyclip/src/features/settings/widgets/home_widget_preview_sheet.dart';
+import 'package:copyclip/src/core/utils/widget_sync_service.dart';
+import 'package:copyclip/src/features/notes/data/note_model.dart';
+import 'package:copyclip/src/features/todos/data/todo_model.dart';
+import 'package:copyclip/src/features/journal/data/journal_model.dart';
+import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
 
 // ============================================
 // HOME WIDGET SERVICE
@@ -57,19 +63,25 @@ class HomeWidgetService {
     }
   }
 
-  /// ✅ ULTIMATE FIX: Get box without type parameters
-  /// This uses Hive's internal box access which bypasses type checking
+  /// ✅ Safely get box with appropriate type parameters
   static Box? _getBoxSafely(String boxName) {
     try {
-      // Check if box is open first
       if (!Hive.isBoxOpen(boxName)) {
         debugPrint('⚠️ Box $boxName is not open');
         return null;
       }
-
-      // Access the box directly without type parameter
-      // This works because we're accessing an already-open box
-      return Hive.box(boxName);
+      switch (boxName) {
+        case 'notes_box':
+          return Hive.box<Note>('notes_box');
+        case 'todos_box':
+          return Hive.box<Todo>('todos_box');
+        case 'journal_box':
+          return Hive.box<JournalEntry>('journal_box');
+        case 'clipboard_box':
+          return Hive.box<ClipboardItem>('clipboard_box');
+        default:
+          return Hive.box(boxName);
+      }
     } catch (e) {
       debugPrint('❌ Error accessing box $boxName: $e');
       return null;
@@ -79,195 +91,44 @@ class HomeWidgetService {
   /// Update Notes Widget
   static Future<bool> updateNotesWidget() async {
     try {
-      // ✅ Get box without type - works with already open Box<Note>
-      final notesBox = _getBoxSafely('notes_box');
-
-      if (notesBox == null) {
-        debugPrint('⚠️ Notes box not available, using default data');
-        return await updateWidget(
-          widgetType: 'notes',
-          title: 'Recent Notes',
-          data: {'notes': [], 'count': 0},
-        );
-      }
-
-      final recentNotes = <Map<String, String>>[];
-
-      // Safely iterate through values
-      for (var note in notesBox.values.take(3)) {
-        try {
-          recentNotes.add({
-            'title': note.title?.toString() ?? 'Untitled',
-            'preview': (note.content?.toString() ?? '').substring(
-              0,
-              (note.content?.toString() ?? '').length > 50
-                  ? 50
-                  : (note.content?.toString() ?? '').length,
-            ),
-          });
-        } catch (e) {
-          debugPrint('Error processing note: $e');
-          recentNotes.add({
-            'title': 'Note',
-            'preview': 'Unable to load preview',
-          });
-        }
-      }
-
-      return await updateWidget(
-        widgetType: 'notes',
-        title: 'Recent Notes',
-        data: {'notes': recentNotes, 'count': notesBox.length},
-      );
+      await WidgetSyncService.syncNotes();
+      return true;
     } catch (e) {
       debugPrint('❌ Error updating notes widget: $e');
-      // Fallback to default data
-      return await updateWidget(
-        widgetType: 'notes',
-        title: 'Recent Notes',
-        data: {'notes': [], 'count': 0},
-      );
+      return false;
     }
   }
 
   /// Update Todos Widget
   static Future<bool> updateTodosWidget() async {
     try {
-      final todosBox = _getBoxSafely('todos_box');
-
-      if (todosBox == null) {
-        return await updateWidget(
-          widgetType: 'todos',
-          title: 'To-Do List',
-          data: {'todos': [], 'completed': 0, 'total': 0},
-        );
-      }
-
-      final pendingTodos = <Map<String, String>>[];
-      int completedCount = 0;
-
-      for (var todo in todosBox.values) {
-        try {
-          final isCompleted = todo.isCompleted ?? false;
-
-          if (isCompleted) {
-            completedCount++;
-          } else if (pendingTodos.length < 5) {
-            pendingTodos.add({
-              'title': todo.title?.toString() ?? 'Task',
-              'priority': todo.priority?.toString() ?? 'normal',
-            });
-          }
-        } catch (e) {
-          debugPrint('Error processing todo: $e');
-        }
-      }
-
-      return await updateWidget(
-        widgetType: 'todos',
-        title: 'To-Do List',
-        data: {
-          'todos': pendingTodos,
-          'completed': completedCount,
-          'total': todosBox.length,
-        },
-      );
+      await WidgetSyncService.syncTodos();
+      return true;
     } catch (e) {
       debugPrint('❌ Error updating todos widget: $e');
-      return await updateWidget(
-        widgetType: 'todos',
-        title: 'To-Do List',
-        data: {'todos': [], 'completed': 0, 'total': 0},
-      );
+      return false;
     }
   }
 
   /// Update Journal Widget
   static Future<bool> updateJournalWidget() async {
     try {
-      final journalBox = _getBoxSafely('journal_box');
-
-      if (journalBox == null) {
-        return await updateWidget(
-          widgetType: 'journal',
-          title: 'Journal',
-          data: {'lastEntry': '', 'totalEntries': 0, 'streak': 0},
-        );
-      }
-
-      String lastEntry = '';
-      if (journalBox.isNotEmpty) {
-        try {
-          final lastJournal = journalBox.values.last;
-          lastEntry = lastJournal.date?.toIso8601String() ?? '';
-        } catch (e) {
-          debugPrint('Error getting last entry: $e');
-        }
-      }
-
-      return await updateWidget(
-        widgetType: 'journal',
-        title: 'Journal',
-        data: {
-          'lastEntry': lastEntry,
-          'totalEntries': journalBox.length,
-          'streak': _calculateJournalStreak(journalBox),
-        },
-      );
+      await WidgetSyncService.syncJournal();
+      return true;
     } catch (e) {
       debugPrint('❌ Error updating journal widget: $e');
-      return await updateWidget(
-        widgetType: 'journal',
-        title: 'Journal',
-        data: {'lastEntry': '', 'totalEntries': 0, 'streak': 0},
-      );
+      return false;
     }
   }
 
   /// Update Clipboard Widget
   static Future<bool> updateClipboardWidget() async {
     try {
-      // ✅ Use untyped access for already-open Box<ClipboardItem>
-      final clipboardBox = _getBoxSafely('clipboard_box');
-
-      if (clipboardBox == null) {
-        debugPrint('⚠️ Clipboard box not available, using default data');
-        return await updateWidget(
-          widgetType: 'clipboard',
-          title: 'Recent Clips',
-          data: {'clips': [], 'count': 0},
-        );
-      }
-
-      final recentClips = <Map<String, String>>[];
-
-      // Safely iterate through clipboard items
-      for (var clip in clipboardBox.values.take(3)) {
-        try {
-          final text = clip.text?.toString() ?? 'Clipboard item';
-          recentClips.add({
-            'text': text.substring(0, text.length > 30 ? 30 : text.length),
-            'type': clip.type?.toString() ?? 'text',
-          });
-        } catch (e) {
-          debugPrint('Error processing clip: $e');
-          recentClips.add({'text': 'Clipboard item', 'type': 'text'});
-        }
-      }
-
-      return await updateWidget(
-        widgetType: 'clipboard',
-        title: 'Recent Clips',
-        data: {'clips': recentClips, 'count': clipboardBox.length},
-      );
+      await WidgetSyncService.syncClipboard();
+      return true;
     } catch (e) {
       debugPrint('❌ Error updating clipboard widget: $e');
-      // Always return true with fallback data
-      return await updateWidget(
-        widgetType: 'clipboard',
-        title: 'Recent Clips',
-        data: {'clips': [], 'count': 0},
-      );
+      return false;
     }
   }
 
@@ -657,15 +518,11 @@ void showWidgetBottomSheet(
   IconData featureIcon,
   Color featureColor,
 ) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: Colors.transparent,
-    builder: (context) => HomeWidgetBottomSheet(
-      featureId: featureId,
-      featureTitle: featureTitle,
-      featureIcon: featureIcon,
-      featureColor: featureColor,
-    ),
+  HomeWidgetPreviewSheet.show(
+    context,
+    widgetId: featureId,
+    title: featureTitle,
+    icon: featureIcon,
+    color: featureColor,
   );
 }

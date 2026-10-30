@@ -72,8 +72,15 @@ class _ClipboardEditScreenState extends State<ClipboardEditScreen> {
 
       // Resolve Item
       _editingItem = widget.item;
-      if (_editingItem == null && widget.itemId != null) {
+      if (_editingItem == null && widget.itemId != null && widget.itemId!.isNotEmpty) {
         _editingItem = _clipboardBox.get(widget.itemId);
+        if (_editingItem == null) {
+          try {
+            _editingItem = _clipboardBox.values.firstWhere(
+              (c) => c.id == widget.itemId,
+            );
+          } catch (_) {}
+        }
       }
 
       if (_editingItem != null) {

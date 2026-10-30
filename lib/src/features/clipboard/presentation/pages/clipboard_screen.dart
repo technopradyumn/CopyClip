@@ -139,6 +139,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
     }
 
     // Update the UI
+    if (!mounted) return;
     _filteredClipsNotifier.value = result;
   }
 
@@ -152,6 +153,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> {
     currentList.insert(newIndex, item);
 
     // Update UI immediately
+    if (!mounted) return;
     _filteredClipsNotifier.value = currentList;
 
     // Update DB in background

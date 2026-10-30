@@ -20,12 +20,14 @@ class TodosWidgetProvider : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.todo_widget_layout)
             updateWidget(context, views, widgetId)
             appWidgetManager.updateAppWidget(widgetId, views)
+            appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, R.id.todos_list)
         }
     }
 
     private fun updateWidget(context: Context, views: RemoteViews, widgetId: Int) {
         try {
             val widgetData = HomeWidgetPlugin.getData(context)
+            WidgetBackgroundHelper.applyBackground(context, views, widgetData)
             val progress = widgetData.getString("todos_progress", "0/0 Done")
 
             // Set Header & Title
@@ -50,8 +52,8 @@ class TodosWidgetProvider : AppWidgetProvider() {
             // We can read "todos_data" string length or check if "0/0" -> likely empty?
             // Actually, in WidgetSyncService, we saved "todos_data".
             // Let's check if the json is empty.
-            val jsonStr = widgetData.getString("todos_data", "[]")
-            val hasTodos = jsonStr != "[]" && jsonStr != null && jsonStr.length > 2
+            val jsonStr = widgetData.getString("todos_data", "[]") ?: "[]"
+            val hasTodos = jsonStr != "[]" && jsonStr.length > 2
 
             if (hasTodos) {
                 views.setViewVisibility(R.id.todos_list, View.VISIBLE)
@@ -61,13 +63,10 @@ class TodosWidgetProvider : AppWidgetProvider() {
                 views.setViewVisibility(R.id.empty_state, View.VISIBLE)
             }
 
-            // Template for List Items (Edit & Toggle)
-            val itemIntent = Intent(context, MainActivity::class.java).apply {
-                action = Intent.ACTION_VIEW
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            }
-            val itemPendingIntent = PendingIntent.getActivity(
-                context, 101, itemIntent, // Unique Request Code
+            // Template for List Items (Edit & Toggle handled via WidgetActionReceiver)
+            val templateIntent = Intent(context, WidgetActionReceiver::class.java)
+            val itemPendingIntent = PendingIntent.getBroadcast(
+                context, 101, templateIntent, // Unique Request Code
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
             )
             views.setPendingIntentTemplate(R.id.todos_list, itemPendingIntent)

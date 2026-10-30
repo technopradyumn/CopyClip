@@ -166,6 +166,7 @@ class _JournalScreenState extends State<JournalScreen> {
     }
 
     // Update UI via Notifier
+    if (!mounted) return;
     _filteredEntriesNotifier.value = result;
   }
 
@@ -182,6 +183,7 @@ class _JournalScreenState extends State<JournalScreen> {
     currentList.insert(newIndex, item);
 
     // Update UI immediately (Smoothness)
+    if (!mounted) return;
     _filteredEntriesNotifier.value = currentList;
 
     // Update DB in background
@@ -464,6 +466,7 @@ class _JournalScreenState extends State<JournalScreen> {
                     if (entries.isEmpty) {
                       return Center(
                         child: EmptyStateWidget(
+                          assetPath: 'assets/images/journal_empty.svg',
                           message: AppLocalizations.of(
                             context,
                           )!.startWritingStory,

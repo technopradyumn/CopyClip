@@ -27,6 +27,7 @@ class CopyClipWidgetProvider : AppWidgetProvider() {
         appWidgetIds.forEach { widgetId ->
             try {
                 val views = RemoteViews(context.packageName, R.layout.widget_layout)
+                WidgetBackgroundHelper.applyBackground(context, views)
                 updateWidgetContent(context, views)
                 appWidgetManager.updateAppWidget(widgetId, views)
                 Log.d(TAG, "Widget $widgetId updated successfully")

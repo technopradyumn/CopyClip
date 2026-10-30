@@ -1,0 +1,42 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Body -->
+  <path d="M100 180C100 180 60 160 40 100C20 40 60 20 80 20C100 20 140 40 160 100C180 160 140 180 100 180Z" fill="#FFE135"/>
+  <path d="M40 100C35 85 35 70 45 60" stroke="#E6C200" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Stem -->
+  <path d="M75 25L85 10L115 10L125 25" fill="#8B4513"/>
+
+  <!-- Party Hat -->
+  <path d="M90 22L120 2L128 32Z" fill="#FF5252"/>
+  <circle cx="120" cy="2" r="4" fill="#FFD54F"/>
+  <path d="M96 24L124 16" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Face (Happy Joyful Eyes) -->
+  <path d="M68 85Q76 75 84 85" stroke="black" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M116 85Q124 75 132 85" stroke="black" stroke-width="3" stroke-linecap="round" fill="none"/>
+  
+  <!-- Rosy Cheeks -->
+  <ellipse cx="65" cy="94" rx="7" ry="4" fill="#FF8A80" fill-opacity="0.6"/>
+  <ellipse cx="135" cy="94" rx="7" ry="4" fill="#FF8A80" fill-opacity="0.6"/>
+
+  <!-- Happy Smile -->
+  <path d="M92 100Q100 112 108 100" stroke="black" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+  <!-- Checkmark Badge in front -->
+  <circle cx="100" cy="140" r="24" fill="#00C853" stroke="#FFFFFF" stroke-width="3"/>
+  <path d="M90 140L97 147L112 132" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Little hands -->
+  <circle cx="70" cy="142" r="7" fill="#FFE135"/>
+  <circle cx="130" cy="142" r="7" fill="#FFE135"/>
+
+  <!-- Confetti / Sparkles -->
+  <path d="M35 75L38 80L43 82L38 84L35 89L33 84L28 82L33 80Z" fill="#00E676"/>
+  <path d="M165 65L167 70L172 72L167 74L165 79L163 74L158 72L163 70Z" fill="#29B6F6"/>
+  <circle cx="45" cy="45" r="3.5" fill="#FF4081"/>
+  <circle cx="155" cy="110" r="3.5" fill="#FFD700"/>
+  <circle cx="160" cy="40" r="4" fill="#7C4DFF"/>
+
+  <!-- Shadow -->
+  <ellipse cx="100" cy="190" rx="60" ry="10" fill="black" fill-opacity="0.1"/>
+</svg>

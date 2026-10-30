@@ -132,6 +132,7 @@ class _NotesScreenState extends State<NotesScreen> {
     }
 
     // Update the UI
+    if (!mounted) return;
     _filteredNotesNotifier.value = result;
   }
 
@@ -145,6 +146,7 @@ class _NotesScreenState extends State<NotesScreen> {
     currentList.insert(newIndex, item);
 
     // Update UI immediately for smoothness
+    if (!mounted) return;
     _filteredNotesNotifier.value = currentList;
 
     // Update Database in background
@@ -369,6 +371,7 @@ class _NotesScreenState extends State<NotesScreen> {
                           return SliverFillRemaining(
                             hasScrollBody: false,
                             child: EmptyStateWidget(
+                              assetPath: 'assets/images/notes_empty.svg',
                               message: AppLocalizations.of(
                                 context,
                               )!.noNotesFound,

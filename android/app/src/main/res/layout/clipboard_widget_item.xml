@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- ✅ PREMIUM CLIPBOARD WIDGET ITEM - Matches in-app ClipboardCard design -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp">
+    android:paddingBottom="6dp">
 
     <LinearLayout
         android:id="@+id/clipboard_item_root"
@@ -10,8 +11,61 @@
         android:layout_height="wrap_content"
         android:background="@drawable/widget_card_background"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="11dp">
 
+        <!-- Header: Type Badge & Date -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="6dp">
+
+            <!-- Type Badge (Text / Link / Phone) -->
+            <TextView
+                android:id="@+id/clipboard_item_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clip_type_badge"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp"
+                android:text="TEXT"
+                android:textSize="9sp"
+                android:textColor="#90CAF9"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:letterSpacing="0.05" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/clipboard_item_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oct 29 • 10:00 AM"
+                android:textSize="10.5sp"
+                android:textColor="@color/text_secondary"
+                android:fontFamily="sans-serif"
+                android:layout_marginEnd="6dp" />
+
+            <!-- Copy Button -->
+            <ImageView
+                android:id="@+id/clipboard_item_copy"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:padding="2dp"
+                android:clickable="true"
+                android:src="@drawable/ic_copy_small"
+                android:contentDescription="Copy"
+                android:scaleType="fitCenter" />
+
+        </LinearLayout>
+
+        <!-- Content Snippet -->
         <TextView
             android:id="@+id/clipboard_item_content"
             android:layout_width="match_parent"
@@ -19,18 +73,10 @@
             android:text="Clip Content"
             android:textSize="13sp"
             android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif"
+            android:lineSpacingMultiplier="1.2"
             android:maxLines="3"
             android:ellipsize="end" />
-
-        <TextView
-            android:id="@+id/clipboard_item_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="4dp"
-            android:text="Just now"
-            android:textSize="10sp"
-            android:textColor="@color/text_tertiary" />
 
     </LinearLayout>
 

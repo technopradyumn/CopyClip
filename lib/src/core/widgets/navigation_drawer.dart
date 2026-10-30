@@ -305,7 +305,15 @@ class _DrawerHeader extends StatelessWidget {
                   ],
                 ),
                 alignment: Alignment.center,
-                child: Image.asset(AppAssets.logo),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset(
+                    AppAssets.logo,
+                    width: 48,
+                    height: 48,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               const SizedBox(width: 14),
               Expanded(

@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:copyclip/src/core/theme/background_design.dart';
 import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
 
 import 'package:copyclip/src/features/journal/data/journal_model.dart';
@@ -10,26 +12,80 @@ import 'package:intl/intl.dart';
 import 'dart:convert';
 
 class WidgetSyncService {
-  static const String appGroupId =
-      'group.copyclip_app'; // Optional: Use if you have iOS App Group later
+  static const String appGroupId = 'group.com.technopradyumn.copyclip';
 
   /// Syncs all widget data at once.
   /// Ensure Hive boxes are open before calling this.
   static Future<void> syncAll() async {
+    await syncThemeAndBackground();
     await Future.wait([
       syncNotes(),
       syncTodos(),
       syncJournal(),
       syncClipboard(),
     ]);
+  }
 
-    // Note: Individual syncX() methods already call updateWidget(), 
-    // so no additional calls are needed here to avoid redundant platform channel traffic.
+  /// Syncs app theme & background design preferences to home screen widgets.
+  static Future<void> syncThemeAndBackground({
+    BackgroundDesign? design,
+    bool? applyToWidgets,
+    Color? primaryColor,
+    ThemeMode? mode,
+  }) async {
+    try {
+      await HomeWidget.setAppGroupId(appGroupId);
+
+      final box = Hive.isBoxOpen('theme_box')
+          ? Hive.box('theme_box')
+          : await Hive.openBox('theme_box');
+
+      final bool actualApply = applyToWidgets ??
+          box.get('apply_background_to_widgets', defaultValue: false);
+      final String designStr = design?.name ??
+          box.get(
+            'background_design',
+            defaultValue: BackgroundDesign.classicBubbles.name,
+          );
+      final int colorVal = primaryColor?.value ??
+          box.get('primary_color_value', defaultValue: 0xFF6366F1);
+      final String modeStr =
+          mode?.name ?? box.get('theme_mode', defaultValue: 'system');
+
+      await HomeWidget.saveWidgetData<bool>('apply_app_background', actualApply);
+      await HomeWidget.saveWidgetData<String>(
+          'apply_app_background_str', actualApply ? 'true' : 'false');
+      await HomeWidget.saveWidgetData<String>('background_design', designStr);
+      await HomeWidget.saveWidgetData<int>('primary_color', colorVal);
+      await HomeWidget.saveWidgetData<String>(
+          'primary_color_str', colorVal.toString());
+      await HomeWidget.saveWidgetData<String>('theme_mode', modeStr);
+
+      await updateAllWidgets();
+    } catch (e) {
+      debugPrint('Error syncing theme and background to widget: $e');
+    }
+  }
+
+  /// Triggers platform refresh for all home widget providers.
+  static Future<void> updateAllWidgets() async {
+    try {
+      await Future.wait([
+        HomeWidget.updateWidget(androidName: 'NotesWidgetProvider'),
+        HomeWidget.updateWidget(androidName: 'TodosWidgetProvider'),
+        HomeWidget.updateWidget(androidName: 'JournalWidgetProvider'),
+        HomeWidget.updateWidget(androidName: 'ClipboardWidgetProvider'),
+        HomeWidget.updateWidget(androidName: 'CopyClipWidgetProvider'),
+      ]);
+    } catch (e) {
+      debugPrint('Error updating home widgets: $e');
+    }
   }
 
   // --- NOTES ---
   static Future<void> syncNotes() async {
     try {
+      await HomeWidget.setAppGroupId(appGroupId);
       final box = Hive.isBoxOpen('notes_box')
           ? Hive.box<Note>('notes_box')
           : await Hive.openBox<Note>('notes_box');
@@ -89,9 +145,12 @@ class WidgetSyncService {
           contentText = '${contentText.substring(0, 50)}...';
         }
 
+        final String titleText = e.title.isNotEmpty ? e.title : 'Untitled';
         return {
-          'title': contentText, // User requested content instead of title
-          'date': DateFormat('MMM d').format(e.updatedAt),
+          'title': titleText,
+          'content': contentText,
+          'date': DateFormat('MMM d • h:mm a').format(e.updatedAt),
+          'color': e.colorValue,
           'id': e.id,
         };
       }).toList();
@@ -113,11 +172,44 @@ class WidgetSyncService {
   // --- TODOS ---
   static Future<void> syncTodos() async {
     try {
+      await HomeWidget.setAppGroupId(appGroupId);
       final box = Hive.isBoxOpen('todos_box')
           ? Hive.box<Todo>('todos_box')
           : await Hive.openBox<Todo>(
               'todos_box',
             ); // Note: Box name 'todos_box' per edit screen
+
+      // Apply any pending todo toggles performed from home widget while app was in background
+      try {
+        final pendingJson = await HomeWidget.getWidgetData<String>(
+          'pending_todo_toggles',
+          defaultValue: '[]',
+        );
+        if (pendingJson != null && pendingJson != '[]') {
+          final dynamic decoded = jsonDecode(pendingJson);
+          if (decoded is List && decoded.isNotEmpty) {
+            for (final item in decoded) {
+              if (item is Map) {
+                final id = item['id'];
+                final isDone = item['isDone'];
+                final target =
+                    box.get(id) ??
+                    (box.values.any((t) => t.id == id)
+                        ? box.values.firstWhere((t) => t.id == id)
+                        : null);
+                if (target != null && target.isDone != isDone) {
+                  target.isDone = isDone == true;
+                  await target.save();
+                }
+              }
+            }
+            await HomeWidget.saveWidgetData<String>('pending_todo_toggles', '[]');
+          }
+        }
+      } catch (e) {
+        debugPrint('Error applying pending todo toggles: $e');
+      }
+
       final activeTodos = box.values.where((t) => !t.isDeleted);
       final total = activeTodos.length;
       final completed = activeTodos.where((t) => t.isDone).length;
@@ -156,7 +248,10 @@ class WidgetSyncService {
           'id': t.id,
           'isDone': t.isDone,
           'category': t.category,
-          'hasReminder': t.dueDate != null,
+          'hasReminder': t.hasReminder,
+          'dueDate': t.dueDate?.toIso8601String(),
+          'priority': t.priority,
+          'repeatInterval': t.repeatInterval,
         };
       }).toList();
 
@@ -174,6 +269,7 @@ class WidgetSyncService {
   // --- JOURNAL ---
   static Future<void> syncJournal() async {
     try {
+      await HomeWidget.setAppGroupId(appGroupId);
       final box = Hive.isBoxOpen('journal_box')
           ? Hive.box<JournalEntry>('journal_box')
           : await Hive.openBox<JournalEntry>('journal_box');
@@ -208,10 +304,35 @@ class WidgetSyncService {
         ..sort((a, b) => b.date.compareTo(a.date));
 
       final topEntries = entries.take(5).map((e) {
+        String contentText = '';
+        try {
+          if (e.content.isNotEmpty) {
+            final raw = e.content.trim();
+            if (raw.startsWith('[') || raw.startsWith('{')) {
+              final decoded = jsonDecode(raw);
+              if (decoded is List) {
+                contentText = decoded
+                    .map((op) => op['insert'] is String ? op['insert'] : '')
+                    .join()
+                    .trim();
+              }
+            } else {
+              contentText = raw;
+            }
+          }
+        } catch (_) {
+          contentText = e.content;
+        }
+        if (contentText.length > 80) {
+          contentText = '${contentText.substring(0, 80)}...';
+        }
+
         return {
-          'title': e.title.isEmpty ? 'Entry' : e.title,
-          'date': DateFormat('MMM d').format(e.date),
+          'title': e.title.isEmpty ? 'Journal Entry' : e.title,
+          'content': contentText,
+          'date': DateFormat('MMM d • h:mm a').format(e.date),
           'mood': _getEmojiForMood(e.mood),
+          'color': e.colorValue,
           'id': e.id,
         };
       }).toList();
@@ -283,6 +404,7 @@ class WidgetSyncService {
   // --- CLIPBOARD ---
   static Future<void> syncClipboard() async {
     try {
+      await HomeWidget.setAppGroupId(appGroupId);
       final box = Hive.isBoxOpen('clipboard_box')
           ? Hive.box<ClipboardItem>('clipboard_box')
           : await Hive.openBox<ClipboardItem>('clipboard_box');
@@ -323,7 +445,13 @@ class WidgetSyncService {
         } catch (_) {
           text = c.content;
         }
-        return {'content': text.trim(), 'id': c.id};
+        return {
+          'content': text.trim(),
+          'type': c.type,
+          'date': DateFormat('MMM d • h:mm a').format(c.createdAt),
+          'color': c.colorValue,
+          'id': c.id,
+        };
       }).toList();
 
       await HomeWidget.saveWidgetData<String>(

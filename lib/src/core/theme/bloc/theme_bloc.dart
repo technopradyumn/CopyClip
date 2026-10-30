@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
+import 'package:copyclip/src/core/utils/widget_sync_service.dart';
 import '../app_theme.dart';
 import '../app_colors.dart';
 import '../emotion.dart';
@@ -19,6 +20,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     on<ChangeThemeMode>(_onChangeThemeMode);
     on<ChangePrimaryColor>(_onChangePrimaryColor);
     on<ChangeBackgroundDesign>(_onChangeBackgroundDesign);
+    on<ToggleApplyBackgroundToWidgets>(_onToggleApplyBackgroundToWidgets);
     on<UpdateEmotionalColor>(_onUpdateEmotionalColor);
   }
 
@@ -54,12 +56,24 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
         orElse: () => BackgroundDesign.classicBubbles,
       );
 
+      // Load Apply Background to Widgets
+      final applyToWidgets =
+          box.get('apply_background_to_widgets', defaultValue: false);
+
       emit(
         state.copyWith(
           themeMode: mode,
           primaryColor: color,
           backgroundDesign: design,
+          applyBackgroundToWidgets: applyToWidgets,
         ),
+      );
+
+      await WidgetSyncService.syncThemeAndBackground(
+        design: design,
+        applyToWidgets: applyToWidgets,
+        primaryColor: color,
+        mode: mode,
       );
     } catch (e) {
       debugPrint("❌ Error loading theme: $e");
@@ -73,6 +87,29 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     final box = await Hive.openBox(_boxName);
     await box.put('background_design', event.design.name);
     emit(state.copyWith(backgroundDesign: event.design));
+
+    await WidgetSyncService.syncThemeAndBackground(
+      design: event.design,
+      applyToWidgets: state.applyBackgroundToWidgets,
+      primaryColor: state.primaryColor,
+      mode: state.themeMode,
+    );
+  }
+
+  Future<void> _onToggleApplyBackgroundToWidgets(
+    ToggleApplyBackgroundToWidgets event,
+    Emitter<ThemeState> emit,
+  ) async {
+    final box = await Hive.openBox(_boxName);
+    await box.put('apply_background_to_widgets', event.allow);
+    emit(state.copyWith(applyBackgroundToWidgets: event.allow));
+
+    await WidgetSyncService.syncThemeAndBackground(
+      design: state.backgroundDesign,
+      applyToWidgets: event.allow,
+      primaryColor: state.primaryColor,
+      mode: state.themeMode,
+    );
   }
 
   Future<void> _onChangeThemeMode(
@@ -82,6 +119,13 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     final box = await Hive.openBox(_boxName);
     await box.put('theme_mode', event.mode.name);
     emit(state.copyWith(themeMode: event.mode));
+
+    await WidgetSyncService.syncThemeAndBackground(
+      design: state.backgroundDesign,
+      applyToWidgets: state.applyBackgroundToWidgets,
+      primaryColor: state.primaryColor,
+      mode: event.mode,
+    );
   }
 
   Future<void> _onChangePrimaryColor(
@@ -91,6 +135,13 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     final box = await Hive.openBox(_boxName);
     await box.put('primary_color_value', event.color.toARGB32());
     emit(state.copyWith(primaryColor: event.color));
+
+    await WidgetSyncService.syncThemeAndBackground(
+      design: state.backgroundDesign,
+      applyToWidgets: state.applyBackgroundToWidgets,
+      primaryColor: event.color,
+      mode: state.themeMode,
+    );
   }
 
   Future<void> _onUpdateEmotionalColor(
@@ -105,5 +156,12 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     await box.put('primary_color_value', color.toARGB32());
 
     emit(state.copyWith(primaryColor: color));
+
+    await WidgetSyncService.syncThemeAndBackground(
+      design: state.backgroundDesign,
+      applyToWidgets: state.applyBackgroundToWidgets,
+      primaryColor: color,
+      mode: state.themeMode,
+    );
   }
 }

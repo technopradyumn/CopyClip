@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:copyclip/src/core/widgets/ad_widget/banner_ad_widget.dart';
 
 class GlassScaffold extends StatefulWidget {
-  static const double drawerWidthFraction = 0.7;
+  static const double drawerWidthFraction = 0.8;
 
   static void openDrawer(BuildContext context) {
     final state = context.findAncestorStateOfType<_GlassScaffoldState>();

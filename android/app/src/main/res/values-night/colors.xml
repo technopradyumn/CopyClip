@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="widget_background">#000000</color> <!-- iOS Dark BG -->
-    <color name="widget_surface">#1C1C1E</color> <!-- Card BG -->
-    <color name="text_primary">#FFFFFF</color>
-    <color name="text_secondary">#8E8E93</color>
-    <color name="text_tertiary">#48484A</color>
-    <color name="accent_primary">#0A84FF</color>
+    <color name="widget_background">#1C1C1E</color> <!-- Dark Grey for Dark Mode -->
+    <color name="widget_surface">#2C2C2E</color> <!-- Dark Grey Card Surface -->
+    <color name="widget_surface_translucent">#2C2C2E</color>
+    <color name="widget_card_border">#28FFFFFF</color> <!-- Subtle White Border -->
+    <color name="text_primary">#F3F4F6</color> <!-- Dark Text Primary -->
+    <color name="text_secondary">#9CA3AF</color> <!-- Dark Text Secondary -->
+    <color name="text_tertiary">#6B7280</color>
+    <color name="accent_primary">#6366F1</color>
     <color name="header_bg">#1C1C1E</color>
     <color name="divider_line">#00000000</color>
+    <color name="widget_divider">#20FFFFFF</color>
     <color name="todo_done">#30D158</color>
     <color name="todo_pending">#FF453A</color>
     <color name="widget_shadow">#66000000</color>

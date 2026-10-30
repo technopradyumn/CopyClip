@@ -18,6 +18,18 @@ class MainActivity: FlutterActivity() {
         private const val TAG = "MainActivity"
         private const val WIDGET_HANDLER_CHANNEL = "com.technopradyumn.copyclip/widget_handler"
         private const val WIDGET_PIN_CHANNEL = "com.technopradyumn.copyclip/widget"
+        @Volatile
+        var instance: MainActivity? = null
+    }
+
+    fun notifyTodoToggled(id: String) {
+        android.os.Handler(android.os.Looper.getMainLooper()).post {
+            try {
+                widgetHandlerChannel?.invokeMethod("toggleTodo", mapOf("id" to id))
+            } catch (e: Exception) {
+                Log.e(TAG, "Error invoking toggleTodo on channel", e)
+            }
+        }
     }
 
     private var widgetHandlerChannel: MethodChannel? = null
@@ -125,8 +137,16 @@ class MainActivity: FlutterActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        instance = this
         Log.d(TAG, "onCreate called")
         handleIntent(intent)
+    }
+
+    override fun onDestroy() {
+        if (instance == this) {
+            instance = null
+        }
+        super.onDestroy()
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -166,8 +186,8 @@ class MainActivity: FlutterActivity() {
                     if (host == "app") {
                         // Special Case: Todo Toggle
                         if (path?.contains("/todos") == true) {
-                            val action = intent.getStringExtra("todo_action")
-                            val id = intent.getStringExtra("todo_id")
+                            val action = intent.getStringExtra("todo_action") ?: uri.getQueryParameter("action")
+                            val id = intent.getStringExtra("todo_id") ?: uri.getQueryParameter("id")
                             if (action == "toggle" && id != null) {
                                 Log.d(TAG, "Toggling Todo: $id")
                                 android.os.Handler(mainLooper).postDelayed({

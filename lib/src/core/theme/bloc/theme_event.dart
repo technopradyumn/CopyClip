@@ -33,6 +33,14 @@ class ChangeBackgroundDesign extends ThemeEvent {
   List<Object?> get props => [design];
 }
 
+class ToggleApplyBackgroundToWidgets extends ThemeEvent {
+  final bool allow;
+  const ToggleApplyBackgroundToWidgets(this.allow);
+
+  @override
+  List<Object?> get props => [allow];
+}
+
 class UpdateEmotionalColor extends ThemeEvent {
   final Emotion emotion;
   const UpdateEmotionalColor(this.emotion);

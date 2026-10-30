@@ -6,6 +6,10 @@ import 'package:copyclip/src/core/providers/locale_provider.dart';
 import 'package:copyclip/src/core/services/bg_worker.dart';
 import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart';
 import 'package:copyclip/src/core/services/notification_engine.dart';
+import 'package:copyclip/src/features/notes/data/note_model.dart';
+import 'package:copyclip/src/features/todos/data/todo_model.dart';
+import 'package:copyclip/src/features/journal/data/journal_model.dart';
+import 'package:copyclip/src/features/clipboard/data/clipboard_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:copyclip/src/core/theme/bloc/theme_bloc.dart';
@@ -120,11 +124,14 @@ Future<void> _initializeApp() async {
     // Step 3: Critical System setup
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
-    // Step 4: Open ONLY critical boxes for UI
-    // Grouping awaits for parallelism
+    // Step 4: Open boxes for UI & deep link instant resolution with typed generics
     await Future.wait([
       _openBoxSafely('settings'),
       _openBoxSafely('theme_box'),
+      LazyBoxLoader.getBox<Note>('notes_box'),
+      LazyBoxLoader.getBox<Todo>('todos_box'),
+      LazyBoxLoader.getBox<JournalEntry>('journal_box'),
+      LazyBoxLoader.getBox<ClipboardItem>('clipboard_box'),
     ]);
 
     debugPrint("✅ Critical initialization complete");
@@ -325,9 +332,25 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
   // Redundant dispose removed from here
 
+  String? _lastWidgetUriStr;
+  DateTime? _lastWidgetNavTime;
+
   // Handle widget navigation
   void _handleWidgetNavigation(Uri? uri) {
     if (uri == null) return;
+    final uriStr = uri.toString();
+    final now = DateTime.now();
+
+    // Prevent duplicate widget navigation calls within 1 second
+    if (_lastWidgetUriStr == uriStr &&
+        _lastWidgetNavTime != null &&
+        now.difference(_lastWidgetNavTime!).inMilliseconds < 1000) {
+      debugPrint('⏳ Duplicate widget navigation ignored: $uriStr');
+      return;
+    }
+    _lastWidgetUriStr = uriStr;
+    _lastWidgetNavTime = now;
+
     final host = uri.host;
 
     // ✅ Handle 'app' host (Standard Deep Links)
@@ -339,7 +362,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
       if (fullPath.isNotEmpty && mounted) {
         debugPrint('🚀 Widget Deep Link Navigation: $fullPath');
-        router.push(fullPath);
+        router.go(fullPath);
       }
       return;
     }
@@ -354,7 +377,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
     final route = routesMap[host];
     if (route != null && mounted) {
-      router.push(route);
+      router.go(route);
     }
   }
 

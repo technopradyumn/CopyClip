@@ -1,5 +1,96 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:copyclip/src/core/theme/background_design.dart';
+
+CustomPainter? getBackgroundPainter({
+  required BackgroundDesign design,
+  required double animationValue,
+  required Color primaryColor,
+  required bool isDark,
+}) {
+  switch (design) {
+    case BackgroundDesign.classicBubbles:
+      return BubblesPainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.floatingStars:
+      return StarsPainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.meshGradient:
+      return MeshPainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.nebulaCloud:
+      return NebulaPainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.particleFlow:
+      return ParticlePainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.geometricFloat:
+      return GeometricPainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.snowfall:
+      return SnowPainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.matrixRain:
+      return MatrixPainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.waveMotion:
+      return WavePainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.bokehBlur:
+      return BokehPainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.aurora:
+      return AuroraPainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.magicalSpells:
+      return MagicalPainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.deepForest:
+      return ForestPainter(
+        animationValue: animationValue,
+        primaryColor: primaryColor,
+        isDark: isDark,
+      );
+    case BackgroundDesign.none:
+      return null;
+  }
+}
 
 abstract class BaseBackgroundPainter extends CustomPainter {
   final double animationValue;

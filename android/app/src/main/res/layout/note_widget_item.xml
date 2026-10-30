@@ -1,43 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- ✅ PREMIUM NOTE WIDGET ITEM - Matches in-app NoteCard design -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp">
+    android:paddingBottom="6dp">
 
     <LinearLayout
         android:id="@+id/note_item_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/widget_card_background"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:orientation="horizontal"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="11dp"
+        android:gravity="center_vertical">
+
+        <!-- Left Accent Bar (Color matched to note) -->
+        <FrameLayout
+            android:id="@+id/note_item_accent"
+            android:layout_width="3.5dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="12dp"
+            android:background="#FF8A65" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/note_item_title"
-                android:layout_width="0dp"
+            <!-- Title & Date Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Note Title"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary"
-                android:maxLines="1"
-                android:ellipsize="end" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
+                <TextView
+                    android:id="@+id/note_item_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Note Title"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+                <TextView
+                    android:id="@+id/note_item_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oct 29 • 10:00 AM"
+                    android:textSize="10.5sp"
+                    android:textColor="@color/text_secondary"
+                    android:fontFamily="sans-serif"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="6dp"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+                <!-- Copy Button -->
+                <ImageView
+                    android:id="@+id/note_item_copy"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="2dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_copy_small"
+                    android:contentDescription="Copy Note"
+                    android:scaleType="fitCenter" />
+
+            </LinearLayout>
+
+            <!-- Content Snippet -->
             <TextView
-                android:id="@+id/note_item_date"
-                android:layout_width="wrap_content"
+                android:id="@+id/note_item_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Jan 1"
+                android:layout_marginTop="3dp"
+                android:text="Note preview text..."
                 android:textSize="12sp"
                 android:textColor="@color/text_secondary"
-                android:layout_marginStart="8dp" />
+                android:fontFamily="sans-serif"
+                android:lineSpacingMultiplier="1.15"
+                android:maxLines="2"
+                android:ellipsize="end" />
 
         </LinearLayout>
 

@@ -22,8 +22,8 @@ class JournalRemoteViewsFactory(private val context: Context) : RemoteViewsServi
     override fun onDataSetChanged() {
         try {
             val widgetData = HomeWidgetPlugin.getData(context)
-            val jsonStr = widgetData.getString("journal_data", "[]")
-            journalArray = JSONArray(jsonStr)
+            val jsonStr = widgetData.getString("journal_data", "[]") ?: "[]"
+            journalArray = if (jsonStr.isBlank() || jsonStr == "null") JSONArray() else JSONArray(jsonStr)
         } catch (e: Exception) {
             e.printStackTrace()
             journalArray = JSONArray()
@@ -49,9 +49,18 @@ class JournalRemoteViewsFactory(private val context: Context) : RemoteViewsServi
             views.setTextViewText(R.id.journal_item_date, date)
             views.setTextViewText(R.id.journal_item_emoji, mood)
 
-            val fillInIntent = Intent()
-            fillInIntent.putExtra("journal_id", id) // Keep for legacy safety
-            fillInIntent.data = android.net.Uri.parse("copyclip://app/journal/edit?id=$id")
+            val content = item.optString("content", "")
+            if (content.isNotEmpty() && content != title) {
+                views.setTextViewText(R.id.journal_item_content, content)
+                views.setViewVisibility(R.id.journal_item_content, android.view.View.VISIBLE)
+            } else {
+                views.setViewVisibility(R.id.journal_item_content, android.view.View.GONE)
+            }
+
+            val fillInIntent = Intent().apply {
+                putExtra("journal_id", id)
+                data = android.net.Uri.parse("copyclip://app/journal/edit?id=$id")
+            }
             views.setOnClickFillInIntent(R.id.journal_item_root, fillInIntent)
         } catch (e: Exception) {
             e.printStackTrace()

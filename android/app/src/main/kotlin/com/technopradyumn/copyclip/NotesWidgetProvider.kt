@@ -20,6 +20,7 @@ class NotesWidgetProvider : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.note_widget_layout)
             updateWidget(context, views, widgetId)
             appWidgetManager.updateAppWidget(widgetId, views)
+            appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, R.id.notes_list)
         }
     }
 
@@ -27,6 +28,7 @@ class NotesWidgetProvider : AppWidgetProvider() {
         try {
             // Get Data from Flutter
             val widgetData = HomeWidgetPlugin.getData(context)
+            WidgetBackgroundHelper.applyBackground(context, views, widgetData)
             val notesCount = widgetData.getString("notes_count", "0 Notes")
 
             // Set Header & Title
@@ -46,7 +48,8 @@ class NotesWidgetProvider : AppWidgetProvider() {
             views.setEmptyView(R.id.notes_list, R.id.empty_state)
 
             // Toggle Visibility
-            val hasNotes = widgetData.getBoolean("has_notes", false)
+            val jsonStr = widgetData.getString("notes_data", "[]") ?: "[]"
+            val hasNotes = jsonStr != "[]" && jsonStr.length > 2
             if (hasNotes) {
                 views.setViewVisibility(R.id.notes_list, View.VISIBLE)
                 views.setViewVisibility(R.id.empty_state, View.GONE)
@@ -55,13 +58,10 @@ class NotesWidgetProvider : AppWidgetProvider() {
                 views.setViewVisibility(R.id.empty_state, View.VISIBLE)
             }
 
-            // Template for List Items
-            val itemIntent = Intent(context, MainActivity::class.java).apply {
-                action = Intent.ACTION_VIEW
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            }
-            val itemPendingIntent = PendingIntent.getActivity(
-                context, 100, itemIntent, // Unique Request Code
+            // Template for List Items (Item Click & Copy handled via WidgetActionReceiver)
+            val templateIntent = Intent(context, WidgetActionReceiver::class.java)
+            val itemPendingIntent = PendingIntent.getBroadcast(
+                context, 100, templateIntent, // Unique Request Code
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE // MUTABLE required for fillInIntent
             )
             views.setPendingIntentTemplate(R.id.notes_list, itemPendingIntent)

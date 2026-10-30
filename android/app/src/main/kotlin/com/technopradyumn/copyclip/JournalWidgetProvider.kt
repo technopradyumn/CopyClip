@@ -26,6 +26,8 @@ class JournalWidgetProvider : AppWidgetProvider() {
 
     private fun updateWidget(context: Context, views: RemoteViews, appWidgetId: Int) {
         try {
+            val widgetData = HomeWidgetPlugin.getData(context)
+            WidgetBackgroundHelper.applyBackground(context, views, widgetData)
             views.setTextViewText(R.id.widget_title, "My Journal")
             val dateFormat = java.text.SimpleDateFormat("EEE, MMM dd", java.util.Locale.getDefault())
             views.setTextViewText(R.id.today_date, dateFormat.format(java.util.Date()))
@@ -38,10 +40,10 @@ class JournalWidgetProvider : AppWidgetProvider() {
             views.setRemoteAdapter(R.id.journal_list, serviceIntent)
             views.setEmptyView(R.id.journal_list, R.id.empty_state)
 
-            // Manual Visibility Toggle (Like Notes Widget)
-            val widgetData = HomeWidgetPlugin.getData(context)
-            val totalEntries = widgetData.getInt("journal_total_entries", 0)
-            if (totalEntries > 0) {
+            // Manual Visibility Toggle (matches Notes and Todos widgets)
+            val jsonStr = widgetData.getString("journal_data", "[]") ?: "[]"
+            val hasEntries = jsonStr != "[]" && jsonStr.length > 2
+            if (hasEntries) {
                 views.setViewVisibility(R.id.journal_list, View.VISIBLE)
                 views.setViewVisibility(R.id.empty_state, View.GONE)
             } else {
@@ -76,9 +78,7 @@ class JournalWidgetProvider : AppWidgetProvider() {
             views.setOnClickPendingIntent(R.id.empty_state, headerPendingIntent)
 
         } catch (e: Exception) {
-            e.printStackTrace()
-            val errorViews = RemoteViews(context.packageName, R.layout.widget_error_layout)
-             AppWidgetManager.getInstance(context).updateAppWidget(appWidgetId, errorViews)
+            android.util.Log.e("JournalWidget", "Error updating journal widget", e)
         }
     }
 }

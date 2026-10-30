@@ -1,0 +1,41 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Body -->
+  <path d="M100 180C100 180 60 160 40 100C20 40 60 20 80 20C100 20 140 40 160 100C180 160 140 180 100 180Z" fill="#FFE135"/>
+  <path d="M40 100C35 85 35 70 45 60" stroke="#E6C200" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Stem -->
+  <path d="M75 25L85 10L115 10L125 25" fill="#8B4513"/>
+
+  <!-- Cozy Sleepy/Gentle Eyes -->
+  <path d="M68 86Q76 93 84 86" stroke="black" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M116 86Q124 93 132 86" stroke="black" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+  <!-- Rosy cheeks -->
+  <ellipse cx="64" cy="94" rx="7" ry="4" fill="#CE93D8" fill-opacity="0.6"/>
+  <ellipse cx="136" cy="94" rx="7" ry="4" fill="#CE93D8" fill-opacity="0.6"/>
+
+  <!-- Soft smile -->
+  <path d="M94 102Q100 108 106 102" stroke="black" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+  <!-- Cute Purple Book / Journal -->
+  <rect x="68" y="112" width="64" height="52" rx="7" fill="#BA68C8" stroke="#7B1FA2" stroke-width="2.5"/>
+  <rect x="74" y="116" width="54" height="44" rx="4" fill="#F3E5F5"/>
+  <!-- Gold Bookmark Ribbon -->
+  <path d="M96 112V136L101 131L106 136V112H96Z" fill="#FFD54F"/>
+  <!-- Heart on cover -->
+  <path d="M85 140C85 137 88 134 91 137C94 134 97 137 97 140C97 144 91 147 91 147C91 147 85 144 85 140Z" fill="#AB47BC"/>
+
+  <!-- Little hands hugging the book -->
+  <circle cx="65" cy="136" r="7.5" fill="#FFE135"/>
+  <circle cx="135" cy="136" r="7.5" fill="#FFE135"/>
+
+  <!-- Floating Moon & Night Sparkles -->
+  <path d="M165 35C158 35 152 41 152 48C152 55 158 61 165 61C167 61 169 60 171 59C166 58 162 53 162 48C162 43 166 38 171 37C169 36 167 35 165 35Z" fill="#FFD54F"/>
+  <path d="M35 55L37 60L42 62L37 64L35 69L33 64L28 62L33 60Z" fill="#E1BEE7"/>
+  <circle cx="48" cy="42" r="2.5" fill="#FFF59D"/>
+  <circle cx="140" cy="25" r="3" fill="#BA68C8"/>
+  <circle cx="178" cy="80" r="3" fill="#80DEEA"/>
+
+  <!-- Shadow -->
+  <ellipse cx="100" cy="190" rx="60" ry="10" fill="black" fill-opacity="0.1"/>
+</svg>

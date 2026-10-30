@@ -73,9 +73,16 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
 
       // Resolve Note
       _editingNote = widget.note;
-      if (_editingNote == null && widget.noteId != null) {
+      if (_editingNote == null && widget.noteId != null && widget.noteId!.isNotEmpty) {
         debugPrint("NoteEditScreen: Resolving ID ${widget.noteId}");
         _editingNote = _notesBox.get(widget.noteId);
+        if (_editingNote == null) {
+          try {
+            _editingNote = _notesBox.values.firstWhere(
+              (n) => n.id == widget.noteId,
+            );
+          } catch (_) {}
+        }
         debugPrint("NoteEditScreen: Found Note? ${_editingNote != null}");
       }
 
