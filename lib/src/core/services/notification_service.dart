@@ -118,43 +118,19 @@ class NotificationService {
   }
 
   NotificationDetails _notificationDetails(String channelId) {
-    String channelName = 'General';
-    String channelDesc = 'General notifications';
-    Importance importance = Importance.max;
-    Priority priority = Priority.high;
-
-    switch (channelId) {
-      case 'todos':
-        channelName = 'Tasks & Todos';
-        channelDesc = 'Reminders for your tasks';
-        break;
-      case 'journal':
-        channelName = 'Journaling';
-        channelDesc = 'Daily journaling reminders';
-        importance = Importance.defaultImportance;
-        priority = Priority.defaultPriority;
-        break;
-      case 'clipboard':
-        channelName = 'Clipboard';
-        channelDesc = 'Clipboard background updates';
-        importance = Importance.low;
-        priority = Priority.low;
-        break;
-    }
-
-    return NotificationDetails(
+    return const NotificationDetails(
       android: AndroidNotificationDetails(
-        channelId,
-        channelName,
-        channelDescription: channelDesc,
+        'todos',
+        'Tasks & Todos',
+        channelDescription: 'Reminders for your tasks',
         icon: '@drawable/copyclip_logo',
-        importance: importance,
-        priority: priority,
+        importance: Importance.max,
+        priority: Priority.high,
         ticker: 'ticker',
         playSound: true,
-        styleInformation: const BigTextStyleInformation(''),
+        styleInformation: BigTextStyleInformation(''),
       ),
-      iOS: const DarwinNotificationDetails(
+      iOS: DarwinNotificationDetails(
         presentAlert: true,
         presentBadge: true,
         presentSound: true,

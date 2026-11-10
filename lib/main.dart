@@ -5,7 +5,6 @@ import 'package:copyclip/src/core/utils/widget_sync_service.dart';
 import 'package:copyclip/src/core/providers/locale_provider.dart';
 import 'package:copyclip/src/core/services/bg_worker.dart';
 import 'package:copyclip/src/features/todos/services/todo_scheduler_service.dart';
-import 'package:copyclip/src/core/services/notification_engine.dart';
 import 'package:copyclip/src/features/notes/data/note_model.dart';
 import 'package:copyclip/src/features/todos/data/todo_model.dart';
 import 'package:copyclip/src/features/journal/data/journal_model.dart';
@@ -193,18 +192,6 @@ Future<void> _initializeBackgroundTasks() async {
     // ✅ NEW: Initialize BackgroundWorker before any registrations
     await BackgroundWorker.initialize();
     debugPrint('✅ Workmanager Initialized');
-
-    // ✅ NEW: Reschedule daily briefing to ensure it's set
-    await BackgroundWorker.rescheduleDailyBriefing();
-
-    // ✅ NEW: Initialize Smart Notification Engine (Timezone aware)
-    await NotificationEngine().initialize();
-
-    // ✅ NEW: Welcome Notification for first-time users
-    // This is fired slightly after startup
-    Future.delayed(const Duration(seconds: 2), () {
-      NotificationEngine().checkAndTriggerWelcome();
-    });
   } catch (e) {
     debugPrint("❌ Widget data init error: $e");
   }
@@ -317,10 +304,6 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       }
       if (payload == 'todos') {
         router.push(AppRouter.todos);
-      } else if (payload == 'journal') {
-        router.push(AppRouter.journal);
-      } else if (payload == 'clipboard') {
-        router.push(AppRouter.clipboard);
       } else {
         // Fallback: go to notes (dashboard removed)
         router.push(AppRouter.notes);

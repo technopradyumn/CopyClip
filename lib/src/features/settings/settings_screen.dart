@@ -82,7 +82,6 @@ class _SettingsScreenState extends State<SettingsScreen>
   String _buildNumber = "1";
 
   final ValueNotifier<bool> _clipboardAutoSaveNotifier = ValueNotifier(false);
-  final ValueNotifier<bool> _notificationEnabledNotifier = ValueNotifier(false);
 
   // ✅ Remove late final - will be computed lazily
 
@@ -118,17 +117,9 @@ class _SettingsScreenState extends State<SettingsScreen>
     _runAutoCleanup();
     _initPackageInfo();
     _loadAutoSaveSettings();
-    _checkNotificationPermission();
 
     // ✅ Load Ad on Init
     _loadInterstitialAd();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _checkNotificationPermission();
-    }
   }
 
   @override
@@ -136,7 +127,6 @@ class _SettingsScreenState extends State<SettingsScreen>
     _rotationController.dispose();
     _scrollController.dispose();
     _clipboardAutoSaveNotifier.dispose();
-    _notificationEnabledNotifier.dispose();
     _interstitialAd?.dispose(); // ✅ Dispose Ad
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
@@ -234,11 +224,6 @@ class _SettingsScreenState extends State<SettingsScreen>
         builder: _buildAppearanceSection,
       ),
       SettingsSection(
-        type: SettingsSectionType.notifications,
-        title: l10n.notificationsTitle,
-        builder: _buildNotificationSection,
-      ),
-      SettingsSection(
         type: SettingsSectionType.recycleBin,
         title: l10n.recycleBin,
         builder: _buildRecycleBinSection,
@@ -296,32 +281,7 @@ class _SettingsScreenState extends State<SettingsScreen>
     _showSnackBar(value ? l10n.autoSaveEnabled : l10n.autoSaveDisabled);
   }
 
-  Future<void> _checkNotificationPermission() async {
-    final status = await Permission.notification.status;
-    _notificationEnabledNotifier.value = status.isGranted;
-  }
 
-  Future<void> _toggleNotification(bool value) async {
-    if (value) {
-      final status = await Permission.notification.request();
-      _notificationEnabledNotifier.value = status.isGranted;
-      if (status.isPermanentlyDenied) {
-        final l10n = AppLocalizations.of(context)!;
-        _showSnackBar(l10n.permissionDeniedSettings, isError: true);
-        await openAppSettings();
-      } else if (!status.isGranted) {
-        final l10n = AppLocalizations.of(context)!;
-        _showSnackBar(l10n.notificationPermissionDenied, isError: true);
-      } else {
-        final l10n = AppLocalizations.of(context)!;
-        _showSnackBar(l10n.notificationsEnabled);
-      }
-    } else {
-      final l10n = AppLocalizations.of(context)!;
-      _showSnackBar(l10n.redirectingToSettings);
-      await openAppSettings();
-    }
-  }
 
   Future<void> _runAutoCleanup() async {
     final now = DateTime.now();
@@ -1021,42 +981,7 @@ class _SettingsScreenState extends State<SettingsScreen>
     );
   }
 
-  static Widget _buildNotificationSection(
-    BuildContext context,
-    _SettingsScreenState state,
-  ) {
-    final theme = Theme.of(context);
-    final primaryColor = theme.colorScheme.primary;
-    return _SectionCard(
-      color: primaryColor,
-      child: ValueListenableBuilder<bool>(
-        valueListenable: state._notificationEnabledNotifier,
-        builder: (context, isEnabled, _) => ListTile(
-          leading: Icon(
-            isEnabled
-                ? CupertinoIcons.bell_fill
-                : CupertinoIcons.bell_slash_fill,
-            color: primaryColor,
-          ),
-          title: Text(
-            AppLocalizations.of(context)!.pushNotifications,
-            style: theme.textTheme.bodyLarge,
-          ),
-          subtitle: Text(
-            isEnabled ? "Enabled" : "Disabled",
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
-            ),
-          ),
-          trailing: Switch(
-            value: isEnabled,
-            onChanged: state._toggleNotification,
-            activeColor: primaryColor,
-          ),
-        ),
-      ),
-    );
-  }
+
 
   static Widget _buildRecycleBinSection(
     BuildContext context,
